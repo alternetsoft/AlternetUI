@@ -1,27 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
+    /// <summary>
+    /// Represents a calendar control that allows users to select a date from a visual calendar interface.
+    /// </summary>
     public partial class XCalendar : Border
     {
+        /// <summary>
+        /// Gets the total number of day cells in the calendar control, which is 42 (6 rows x 7 columns).
+        /// </summary>
         public const int DayCellCount = 42;
 
+        /// <summary>
+        /// Gets the number of rows in the calendar control, which is 6,
+        /// representing the maximum number of weeks that can be displayed in a month view.
+        /// </summary>
         public const int DayRowCount = 6;
 
+        /// <summary>
+        /// Gets the number of columns in the calendar control, which is 7, 
+        /// representing the days of the week.
+        /// </summary>
         public const int ColumnCount = 7;
 
-        public static string RowHeightMeasureText = "Wg00";
-        public static string DayWidthMeasureText = "00";
+        /// <summary>
+        /// Gets the text used for measuring the height of a single row in the calendar control.
+        /// </summary>
+        public static readonly string RowHeightMeasureText = "Wg00";
 
+        /// <summary>
+        /// Gets the text used for measuring the width of a single day column in the calendar control.
+        /// </summary>
+        public static readonly string DayWidthMeasureText = "00";
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed by default.
+        /// </summary>
         public bool DefaultShowMonthDropDown = true;
 
+        /// <summary>
+        /// Gets or sets the default color used for surrounding days (days not in the current month) in the calendar control,
+        /// </summary>
         public static LightDarkColor DefaultSurroundDayColor = new(Color.Gray);
 
+        /// <summary>
+        /// Gets or sets the default kind of day names to be used in the calendar control,
+        /// </summary>
         public static DayNamesKind DefaultDayNamesKind = UI.DayNamesKind.Abbreviated;
 
+        /// <summary>
+        /// Gets or sets the default border settings used to highlight today's date in the calendar control,
+        /// </summary>
         public static BorderSettings? DefaultTodayBorder;
 
         private readonly CalendarCell[] cells = new CalendarCell[DayCellCount];
@@ -109,6 +145,10 @@ namespace Alternet.UI
             ShowMonthDropDown = DefaultShowMonthDropDown;
         }
 
+        /// <summary>
+        /// Occurs when the year picker in the calendar header is clicked, 
+        /// allowing subscribers to handle the event and perform actions based on the year selection.
+        /// </summary>
         public event EventHandler? HeaderYearClick
         {
             add
@@ -122,6 +162,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Occurs when the month picker in the calendar header is clicked,
+        /// allowing subscribers to handle the event and perform actions based on the month selection.
+        /// </summary>
         public event EventHandler? HeaderMonthClick
         {
             add
@@ -135,14 +179,35 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Occurs when the value of the calendar control changes,
+        /// allowing subscribers to handle the event and perform actions based on the new value.
+        /// </summary>
         public event EventHandler? ValueChanged;
 
+        /// <summary>
+        /// Occurs when the header of the calendar control is clicked, 
+        /// allowing subscribers to handle the event and perform actions based on the header click.
+        /// </summary>
         public event EventHandler<HeaderClickEventArgs>? HeaderClick;
 
+        /// <summary>
+        /// Occurs when a day cell in the calendar control is clicked,
+        /// allowing subscribers to handle the event and perform actions based on the selected date.
+        /// You can cancel the event by setting the <see cref="CancelEventArgs.Cancel"/> property to true,
+        /// in this case the new day will not be selected and the <see cref="Value"/> property will not be changed.
+        /// </summary>
         public event EventHandler<DayClickEventArgs>? DayClick;
 
+        /// <summary>
+        /// Gets the inner list box used in the calendar control,
+        /// which displays the days of the month in a grid format.
+        /// </summary>
         public CalendarListBox ListBox => listBox;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed,
+        /// </summary>
         public virtual bool ShowMonthDropDown
         {
             get
@@ -156,6 +221,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the currently selected date in the calendar control,
+        /// allowing users to select a specific date from the calendar interface.
+        /// </summary>
         public virtual DateOnly Value
         {
             get
@@ -187,6 +256,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the color used for surrounding days (days not in the current month) in the calendar control,
+        /// </summary>
         [Browsable(false)]
         public virtual LightDarkColor? SurroundDayColor
         {
@@ -200,6 +272,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the border settings used to highlight today's date in the calendar control,
+        /// allowing customization of the appearance of the current date.
+        /// </summary>
         public virtual BorderSettings? TodayBorder
         {
             get => todayBorder;
@@ -212,6 +288,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the kind of day names to be used in the calendar control, allowing customization of the day name format.
+        /// </summary>
         public virtual DayNamesKind? DayNamesKind
         {
             get => dayNamesKind;
@@ -225,6 +304,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the format provider used for formatting day names in the calendar control.
+        /// </summary>
         public virtual IFormatProvider? FormatProvider
         {
             get => formatProvider;
@@ -238,6 +320,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the first day of the week to be used in the calendar control.
+        /// </summary>
         public virtual DayOfWeek? FirstDayOfWeek
         {
             get => firstDayOfWeek;
@@ -249,24 +334,13 @@ namespace Alternet.UI
             }
         }
 
-        public virtual float GetTotalWidth(Graphics dc, Font font)
-        {
-            var totalWidth = GetColumnWidth(dc, font) * ColumnCount;
-            return totalWidth;
-        }
-
-        public virtual float GetRowHeight(Graphics dc, Font font)
-        {
-            var rowHeight = dc.GetTextExtent(RowHeightMeasureText, font).Height + 4;
-            return rowHeight;
-        }
-
-        public virtual float GetTotalHeight(Graphics dc, Font font)
-        {
-            var totalHeight = GetRowHeight(dc, font) * (DayRowCount + 1);
-            return totalHeight;
-        }
-
+        /// <summary>
+        /// Gets the width of a single column in the calendar control based
+        /// on the measured width of the day names and other properties.
+        /// </summary>
+        /// <param name="dc">The graphics context used for measuring text.</param>
+        /// <param name="font">The font used for measuring text.</param>
+        /// <returns>The width of a single column in the calendar control.</returns>
         public virtual float GetColumnWidth(Graphics dc, Font font)
         {
             var dayWidth = dc.GetTextExtent(DayWidthMeasureText, font).Width;
@@ -282,6 +356,13 @@ namespace Alternet.UI
             return dayWidth + 4;
         }
 
+        /// <summary>
+        /// Gets the <see cref="CalendarCell"/> at the specified row and column indices in the calendar grid.
+        /// </summary>
+        /// <param name="rowIndex">The zero-based row index of the cell.</param>
+        /// <param name="columnIndex">The zero-based column index of the cell.</param>
+        /// <returns>The <see cref="CalendarCell"/> at the specified row and column indices.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the row or column index is out of range.</exception>
         public CalendarCell GetCell(int rowIndex, int columnIndex)
         {
             if (rowIndex < 0 || rowIndex >= DayRowCount)
@@ -295,26 +376,52 @@ namespace Alternet.UI
             return cells[index];
         }
 
+        /// <summary>
+        /// Gets the effective border settings to be used for highlighting today's date in the calendar control,
+        /// considering the specified <see cref="TodayBorder"/> property and the default value.
+        /// </summary>
+        /// <returns>The effective border settings for highlighting today's date.</returns>
         public virtual BorderSettings EffectiveTodayBorder()
         {
             return TodayBorder ?? DefaultTodayBorder ?? BorderSettings.Default;
         }
 
+        /// <summary>
+        /// Gets the effective color to be used for surrounding days (days not in the current month) in the calendar control,
+        /// considering the specified <see cref="SurroundDayColor"/> property and the default value.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the color should be adjusted for a dark theme.</param>
+        /// <returns>The effective color for surrounding days.</returns>
         public virtual Color EffectiveSurroundDayColor(bool isDark)
         {
             return SurroundDayColor?.LightOrDark(isDark) ?? DefaultSurroundDayColor?.LightOrDark(isDark) ?? Color.Gray;
         }
 
+        /// <summary>
+        /// Gets the effective first day of the week to be used in the calendar control,
+        /// considering the specified <see cref="FirstDayOfWeek"/> property and the system default.
+        /// </summary>
+        /// <returns>The effective first day of the week.</returns>
         public virtual DayOfWeek EffectiveDayOfWeek()
         {
             return FirstDayOfWeek ?? DateUtils.SystemFirstDayOfWeek;
         }
 
+        /// <summary>
+        /// Gets the effective format provider to be used in the calendar control, 
+        /// considering the specified <see cref="FormatProvider"/> property and the current culture.
+        /// </summary>
+        /// <returns>The effective format provider.</returns>
         public virtual IFormatProvider EffectiveFormatProvider()
         {
             return FormatProvider ?? CultureInfo.CurrentCulture;
         }
 
+        /// <summary>
+        /// Gets the effective kind of day names to be used in the calendar control,
+        /// considering the specified <see cref="DayNamesKind"/> property and the default value.
+        /// </summary>
+        /// <returns>The effective kind of day names.</returns>
         public virtual DayNamesKind EffectiveDayNamesKind()
         {
             return DayNamesKind ?? DefaultDayNamesKind;
@@ -340,12 +447,34 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Gets the index of the specified day of the week based on the effective first day of the week.
+        /// </summary>
+        /// <param name="dayOfWeek">The day of the week.</param>
+        /// <returns>The index of the day of the week.</returns>
         public virtual int GetDayOfWeekIndex(DayOfWeek dayOfWeek)
         {
             var index = DateUtils.GetDayOfWeekIndex(dayOfWeek, EffectiveDayOfWeek());
             return index;
         }
 
+        /// <summary>
+        /// Gets the height of a single row in the calendar control based
+        /// on the measured height of the day names and other properties.
+        /// </summary>
+        /// <param name="dc">The graphics context used for measuring text.</param>
+        /// <param name="font">The font used for measuring text.</param>
+        /// <returns>The height of a single row in the calendar control.</returns>  
+        internal virtual float GetRowHeight(Graphics dc, Font font)
+        {
+            var rowHeight = dc.GetTextExtent(RowHeightMeasureText, font).Height + 4;
+            return rowHeight;
+        }
+
+        /// <summary>
+        /// Updates the width of the columns in the calendar control
+        /// based on the measured width of the day names and other properties.
+        /// </summary>
         protected virtual void UpdateColumnWidth()
         {
             var minWidth = GetColumnWidth(listBox.MeasureCanvas, listBox.RealFont);
@@ -355,6 +484,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Called when a cell in the list box is clicked, handling the click event for both header and day cells.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A ListBoxCellClickEventArgs that contains the event data.</param>
         protected virtual void OnListBoxCellClick(object? sender, ListBoxCellClickEventArgs e)
         {
             if (e.Cell is CalendarHeaderCellItem headerCell)
@@ -388,12 +522,21 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Called when the value of the calendar header changes, updating the calendar's value accordingly.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnHeaderValueChanged(object? sender, EventArgs e)
         {
             if (suspendHeaderEventsCounter > 0) return;
             Value = header.Value;
         }
 
+        /// <summary>
+        /// Creates the columns in the calendar control, initializing the list box with the appropriate number
+        /// of columns for displaying days of the week.
+        /// </summary>
         protected virtual void CreateColumns()
         {
             listBox.Columns.Clear();
@@ -407,6 +550,9 @@ namespace Alternet.UI
             UpdateColumnWidth();
         }
 
+        /// <summary>
+        /// Updates the day names displayed in the calendar header, refreshing the text of each header cell.
+        /// </summary>
         protected virtual void UpdateDayNames()
         {
             var dayNames = GetDayNames();
@@ -419,11 +565,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Called when the back color of the inner list box changes,
+        /// updating the back color of the calendar control to match the inner list box's back color.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnListBoxBackColorChanged(object? sender, EventArgs e)
         {
             BackColor = listBox.BackColor;
         }
 
+        /// <inheritdoc/>
         protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             if (context.AvailableSize.AnyIsEmptyOrNegative)
@@ -457,6 +610,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Updates the day items in the calendar control, refreshing the display of each day cell
+        /// based on the current date selection and other properties.
+        /// </summary>
+        /// <param name="invalidate">A boolean value indicating whether to invalidate
+        /// the list box and trigger a repaint.</param>
         protected virtual void UpdateDayItems(bool invalidate)
         {
             if (listBox.Items.Count == 0)
@@ -482,6 +641,10 @@ namespace Alternet.UI
                 listBox.Invalidate();
         }
 
+        /// <summary>
+        /// Creates the day items in the calendar control, populating the list box with header
+        /// and day cells for each week of the month.
+        /// </summary>
         protected virtual void CreateDayItems()
         {
             var newSource = new ListSource<ListControlItem>();
@@ -505,6 +668,12 @@ namespace Alternet.UI
             listBox.Items = newSource;
         }
 
+        /// <summary>
+        /// Called when a key is pressed while the list box has focus,
+        /// suppressing the default key handling behavior to prevent unintended actions in the calendar control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="KeyEventArgs"/> that contains the event data.</param>
         protected virtual void OnListBoxKeyDown(object? sender, KeyEventArgs e)
         {
             e.Suppressed();
@@ -525,6 +694,9 @@ namespace Alternet.UI
             PerformLayoutAndInvalidate();
         }
 
+        /// <summary>
+        /// Called when the value of the calendar changes, updating the day items to reflect the new date selection.
+        /// </summary>
         protected virtual void OnValueChanged()
         {
             var firstDayOfMonth = DateUtils.GetFirstDateOfMonth(date);
@@ -620,8 +792,15 @@ namespace Alternet.UI
             yearPicker.Parent = this;
         }
 
+        /// <summary>
+        /// Gets or sets the current value of the calendar header, representing the selected month and year.
+        /// </summary>
         public event EventHandler? ValueChanged;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the month
+        /// picker in the calendar header should display a dropdown list for selecting months.
+        /// </summary>
         public virtual bool ShowMonthDropDown
         {
             get
@@ -636,6 +815,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the kind of month names displayed in the month picker, allowing customization of the month name format.
+        /// </summary>
         public virtual MonthNamesKind Kind
         {
             get => kind;
@@ -648,6 +830,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the format provider used for formatting month and year values in the calendar header.
+        /// </summary>
         public virtual IFormatProvider? FormatProvider
         {
             get => formatProvider;
@@ -660,6 +845,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the current value of the calendar header, representing the selected month and year.
+        /// </summary>
         public virtual DateOnly Value
         {
             get
@@ -678,30 +866,59 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the previous button in the calendar header, which allows users to navigate to the previous month.
+        /// </summary>
         public SpeedButton PrevButton => prevButton;
 
+        /// <summary>
+        /// Gets the next button in the calendar header, which allows users to navigate to the next month.
+        /// </summary>
         public SpeedButton NextButton => nextButton;
 
+        /// <summary>
+        /// Gets the month picker in the calendar header, which allows users to select a month from a dropdown list.
+        /// </summary>
         public MonthPicker MonthPicker => monthPicker;
 
-        public SpeedTextButton YearPicker => yearPicker;
+        /// <summary>
+        /// Gets the year picker in the calendar header, which allows users to select a year from a dropdown list.
+        /// </summary>
+        public GenericControl YearPicker => yearPicker;
 
+        /// <summary>
+        /// Updates the values of the month and year pickers based on the current value of the calendar header.
+        /// </summary>
         protected virtual void UpdatePickerValues()
         {
             monthPicker.ValueAsInt = Value.Month;
             yearPicker.Text = date.Year.ToString();
         }
 
+        /// <summary>
+        /// Handles the event when the previous button is clicked, updating the calendar's value to the previous month.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
         protected virtual void OnPrevButtonClick(object? sender, EventArgs e)
         {
             Value = Value.AddMonths(-1);
         }
 
+        /// <summary>
+        /// Handles the event when the next button is clicked, updating the calendar's value to the next month.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
         protected virtual void OnNextButtonClick(object? sender, EventArgs e)
         {
             Value = Value.AddMonths(1);
         }
 
+        /// <summary>
+        /// Called when the value of the calendar header changes, updating the month and year pickers
+        /// accordingly and raising the <see cref="ValueChanged"/> event.
+        /// </summary>
         protected virtual void OnValueChanged()
         {
             suspendCounter++;
@@ -717,12 +934,22 @@ namespace Alternet.UI
             ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Handles the event when the value of the year picker changes, updating the calendar's value accordingly.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
         protected virtual void OnYearPickerValueChanged(object? sender, EventArgs e)
         {
             if (suspendCounter > 0)
                 return;
         }
 
+        /// <summary>
+        /// Handles the event when the value of the month picker changes, updating the calendar's value accordingly.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event arguments.</param>
         protected virtual void OnMonthPickerValueChanged(object? sender, EventArgs e)
         {
             if (suspendCounter > 0)
@@ -790,6 +1017,10 @@ namespace Alternet.UI
     /// </summary>
     public class CalendarHeaderCellItem : ListControlItem
     {
+        /// <summary>
+        /// Gets the day of the week represented by the header cell,
+        /// providing information about the specific day in the calendar.
+        /// </summary>
         public DayOfWeek DayOfWeek { get; internal set; }
     }
 
@@ -798,6 +1029,9 @@ namespace Alternet.UI
     /// </summary>
     public class CalendarListBox : VirtualListBox
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarListBox"/> class.
+        /// </summary>
         public CalendarListBox()
         {
             SelectionMode = ListBoxSelectionMode.None;
@@ -810,14 +1044,25 @@ namespace Alternet.UI
     /// </summary>
     public class DayClickEventArgs : BaseCancelEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DayClickEventArgs"/>
+        /// class with the specified list box cell click event arguments.
+        /// </summary>
+        /// <param name="e">The list box cell click event arguments.</param>
         public DayClickEventArgs(ListBoxCellClickEventArgs e)
         {
-            OriginalEventArgs = e;
+            ClickArgs = e;
         }
 
-        public ListBoxCellClickEventArgs OriginalEventArgs { get; set; }
+        /// <summary>
+        /// Gets the original list box cell click event arguments that triggered the day click event,
+        /// </summary>
+        public ListBoxCellClickEventArgs ClickArgs { get; set; }
 
-        public CalendarCellItem Cell => (CalendarCellItem)OriginalEventArgs.Cell!;
+        /// <summary>
+        /// Gets the calendar cell item that was clicked, providing information about the specific day.
+        /// </summary>
+        public CalendarCellItem Cell => (CalendarCellItem)ClickArgs.Cell!;
     }
 
     /// <summary>
@@ -825,14 +1070,25 @@ namespace Alternet.UI
     /// </summary>
     public class HeaderClickEventArgs : BaseCancelEventArgs
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HeaderClickEventArgs"/>
+        /// class with the specified list box cell click event arguments.
+        /// </summary>
+        /// <param name="e">The list box cell click event arguments.</param>
         public HeaderClickEventArgs(ListBoxCellClickEventArgs e)
         {
-            OriginalEventArgs = e;
+            ClickArgs = e;
         }
 
-        public ListBoxCellClickEventArgs OriginalEventArgs { get; set; }
+        /// <summary>
+        /// Gets the original list box cell click event arguments that triggered the header click event,
+        /// </summary>
+        public ListBoxCellClickEventArgs ClickArgs { get; set; }
 
-        public CalendarHeaderCellItem Cell => (CalendarHeaderCellItem)OriginalEventArgs.Cell!;
+        /// <summary>
+        /// Gets the header cell item that was clicked, providing information about the specific day of the week.
+        /// </summary>
+        public CalendarHeaderCellItem Cell => (CalendarHeaderCellItem)ClickArgs.Cell!;
     }
 
     /// <summary>
@@ -841,24 +1097,49 @@ namespace Alternet.UI
     /// </summary>
     public class CalendarCell : BaseObject
     {
+        /// <summary>
+        /// Gets the default instance of the <see cref="CalendarCell"/> class,
+        /// which can be used as a placeholder or default value.
+        /// </summary>
         public static CalendarCell Default = new();
 
         internal CalendarCell()
         {
         }
 
+        /// <summary>
+        /// Gets the row index of the cell in the calendar grid.
+        /// </summary>
         public int RowIndex { get; internal set; }
 
+        /// <summary>
+        /// Gets the column index of the cell in the calendar grid.
+        /// </summary>
         public int ColumnIndex { get; internal set; }
 
+        /// <summary>
+        /// Gets the date represented by the cell in the calendar.
+        /// </summary>
         public DateOnly Date { get; internal set; }
 
+        /// <summary>
+        /// Gets a value indicating whether the cell represents a day in the current month.
+        /// </summary>
         public bool IsCurrentMonth { get; internal set; }
 
+        /// <summary>
+        /// Gets a value indicating whether the cell represents today's date.
+        /// </summary>
         public bool IsToday { get; internal set; }
 
+        /// <summary>
+        /// Gets a value indicating whether the cell represents the currently selected date in the calendar.
+        /// </summary>
         public bool IsCurrent { get; internal set; }
 
+        /// <summary>
+        /// Gets a value indicating whether the cell is selected in the calendar.
+        /// </summary>
         public bool IsSelected { get; internal set; }
     }
 }
