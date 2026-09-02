@@ -755,6 +755,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
+            OnBackColorChanged(EventArgs.Empty);
             BackColorChanged?.Invoke(this, EventArgs.Empty);
 
             DoInsideUpdate(() =>
@@ -779,6 +780,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
+            OnForeColorChanged(EventArgs.Empty);
             ForeColorChanged?.Invoke(this, EventArgs.Empty);
 
             DoInsideUpdate(() =>

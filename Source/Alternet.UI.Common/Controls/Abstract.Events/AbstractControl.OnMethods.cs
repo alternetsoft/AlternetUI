@@ -10,6 +10,22 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Called when the <see cref="BackColor" /> property is changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        protected virtual void OnBackColorChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="ForeColor" /> property is changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        protected virtual void OnForeColorChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when drag operation is started.
         /// </summary>
         /// <param name="e">An <see cref="GiveFeedbackEventArgs" /> that contains the event data.</param>
