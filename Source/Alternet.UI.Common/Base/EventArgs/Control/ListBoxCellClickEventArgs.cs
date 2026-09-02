@@ -47,5 +47,16 @@ namespace Alternet.UI
         /// Gets or sets the column that was clicked.
         /// </summary>
         public ListControlColumn Column { get; set; }
+
+        /// <summary>
+        /// Gets the cell that was clicked, which is determined by the item and column.
+        /// </summary>
+        public ListControlItem? Cell
+        {
+            get
+            {
+                return Item.GetCell(Column);
+            }
+        }
     }
 }
