@@ -23,6 +23,18 @@ namespace Alternet.UI.Extensions
         }
 
         /// <summary>
+        /// Converts a <see cref="DateOnly"/> to a <see cref="DateTime"/> by combining it with the minimum time value (00:00:00).
+        /// </summary>
+        /// <param name="date">The <see cref="DateOnly"/> to convert.</param>
+        /// <returns>A <see cref="DateTime"/> representing the specified <see cref="DateOnly"/>
+        /// combined with the minimum time value (00:00:00).</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateTime ToDateTime(this DateOnly date)
+        {
+            return date.ToDateTime(TimeOnly.MinValue);
+        }
+
+        /// <summary>
         /// Converts a <see cref="DateTime"/> to a <see cref="DateOnly"/> by extracting the date component.
         /// </summary>
         /// <param name="dateTime">The <see cref="DateTime"/> to convert.</param>

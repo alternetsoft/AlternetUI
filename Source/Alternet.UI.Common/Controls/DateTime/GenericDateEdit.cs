@@ -35,6 +35,11 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Gets or sets the format provider used for culture-specific formatting of date and time values.
+        /// </summary>
+        public virtual IFormatProvider? FormatProvider { get; set; }
+
         /// <summary>Gets or sets the maximum date and time that can be
         /// selected in the control.</summary>
         /// <returns>The maximum date and time that can be selected
@@ -59,10 +64,10 @@ namespace Alternet.UI
             {
                 if (value != max)
                 {
-                    if (value < DateUtils.EffectiveMinDate(min))
+                    if (value < DateUtils.EffectiveMinDate(min, FormatProvider))
                         throw new ArgumentOutOfRangeException(nameof(MaxDate));
 
-                    if (value > DateUtils.MaximumDateTime)
+                    if (value > DateUtils.MaximumDateTime(FormatProvider))
                         throw new ArgumentOutOfRangeException(nameof(MaxDate));
 
                     max = value;
@@ -160,9 +165,9 @@ namespace Alternet.UI
             {
                 if (value != min)
                 {
-                    if (value > DateUtils.EffectiveMaxDate(max))
+                    if (value > DateUtils.EffectiveMaxDate(max, FormatProvider))
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
-                    if (value < DateUtils.MinimumDateTime)
+                    if (value < DateUtils.MinimumDateTime(FormatProvider))
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
                     min = value;
                     SetRange();

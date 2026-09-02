@@ -18,6 +18,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
         /// </summary>
         public static bool DefaultShowDropDownImage = false;
+        private IFormatProvider? formatProvider;
 
         /// <summary>
         /// Gets the default padding for the <see cref="RepeatPatternPicker"/> control.
@@ -196,6 +197,26 @@ namespace Alternet.UI
         /// Its pages contain controls for selecting specific repeat pattern rules.
         /// </summary>
         public TabControl InnerTabControl => tabControl;
+
+        /// <summary>
+        /// Gets or sets the format provider used for culture-specific formatting of date and time values.
+        /// </summary>
+        public virtual IFormatProvider? FormatProvider
+        {
+            get => formatProvider;
+            set
+            {
+                if (value == formatProvider) return;
+
+                formatProvider = value;
+                startDatePicker.FormatProvider = value;
+                endDatePicker.MainControl.FormatProvider = value;
+                dailyPicker.FormatProvider = value;
+                weeklyPicker.FormatProvider = value;
+                monthlyPicker.FormatProvider = value;
+                yearlyPicker.FormatProvider = value;
+            }
+        }
 
         /// <summary>
         /// Gets the <see cref="DailyPatternPicker"/> control for selecting a daily repeat pattern.

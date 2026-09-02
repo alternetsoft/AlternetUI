@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -18,13 +20,11 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>Specifies the maximum date value of the
-        /// <see cref="DateTimePicker"/> and other date editors.
+        /// <summary>Specifies the maximum date value of the date editors.
         /// This field is read-only.</summary>
         public static readonly DateTime MaxDateTime = new(9998, 12, 31);
 
-        /// <summary>Gets the minimum date value of the
-        /// <see cref="DateTimePicker"/> and other date editors.</summary>
+        /// <summary>Gets the minimum date value of the date editors.</summary>
         public static readonly DateTime MinDateTime = new(1753, 1, 1);
 
         /// <summary>
@@ -60,37 +60,33 @@ namespace Alternet.UI
         /// <summary>Gets the maximum date value allowed for the control.</summary>
         /// <returns>A <see cref="System.DateTime" /> representing the
         /// maximum date value for the control.</returns>
-        public static DateTime MaximumDateTime
+        public static DateTime MaximumDateTime(IFormatProvider? formatProvider = null)
         {
-            get
-            {
-                DateTime maxSupportedDateTime =
-                    CultureInfo.CurrentCulture.Calendar.MaxSupportedDateTime;
-                if (maxSupportedDateTime.Year > MaxDateTime.Year)
-                {
-                    return MaxDateTime;
-                }
+            var info = GetFormatInfo(formatProvider);
 
-                return maxSupportedDateTime;
+            DateTime maxSupportedDateTime = info.Calendar.MaxSupportedDateTime;
+            if (maxSupportedDateTime.Year > MaxDateTime.Year)
+            {
+                return MaxDateTime;
             }
+
+            return maxSupportedDateTime;
         }
 
         /// <summary>Gets the minimum date value allowed for the control.</summary>
         /// <returns>A <see cref="System.DateTime"/> representing the
         /// minimum date value for the control.</returns>
-        public static DateTime MinimumDateTime
+        public static DateTime MinimumDateTime(IFormatProvider? formatProvider = null)
         {
-            get
-            {
-                DateTime minSupportedDateTime =
-                    CultureInfo.CurrentCulture.Calendar.MinSupportedDateTime;
-                if (minSupportedDateTime.Year < MinDateTime.Year)
-                {
-                    return MinDateTime;
-                }
+            var info = GetFormatInfo(formatProvider);
 
-                return minSupportedDateTime;
+            DateTime minSupportedDateTime = info.Calendar.MinSupportedDateTime;
+            if (minSupportedDateTime.Year < MinDateTime.Year)
+            {
+                return MinDateTime;
             }
+
+            return minSupportedDateTime;
         }
 
         /// <summary>
@@ -385,10 +381,28 @@ namespace Alternet.UI
         /// Gets the effective maximum date value, ensuring it does not exceed the defined maximum date limit.
         /// </summary>
         /// <param name="maxDate">The maximum date to evaluate.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.</param>
         /// <returns>The effective maximum date.</returns>
-        public static DateTime EffectiveMaxDate(DateTime maxDate)
+        public static DateTime EffectiveMaxDate(DateTime maxDate, IFormatProvider? formatProvider = null)
         {
-            DateTime maximumDateTime = MaximumDateTime;
+            DateTime maximumDateTime = MaximumDateTime(formatProvider);
+            if (maxDate > maximumDateTime)
+            {
+                return maximumDateTime;
+            }
+
+            return maxDate;
+        }
+
+        /// <summary>
+        /// Gets the effective maximum date value, ensuring it does not exceed the defined maximum date limit.
+        /// </summary>
+        /// <param name="maxDate">The maximum date to evaluate.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.</param>
+        /// <returns>The effective maximum date.</returns>
+        public static DateOnly EffectiveMaxDate(DateOnly maxDate, IFormatProvider? formatProvider = null)
+        {
+            DateOnly maximumDateTime = MaximumDateTime(formatProvider).ToDateOnly();
             if (maxDate > maximumDateTime)
             {
                 return maximumDateTime;
@@ -401,10 +415,28 @@ namespace Alternet.UI
         /// Gets the effective minimum date value, ensuring it does not fall below the defined minimum date limit.
         /// </summary>
         /// <param name="minDate">The minimum date to evaluate.</param>
+        /// <param name="formatProvider">The format provider to use for culture-specific formatting.</param>
         /// <returns>The effective minimum date.</returns>
-        public static DateTime EffectiveMinDate(DateTime minDate)
+        public static DateTime EffectiveMinDate(DateTime minDate, IFormatProvider? formatProvider = null)
         {
-            DateTime minimumDateTime = MinimumDateTime;
+            DateTime minimumDateTime = MinimumDateTime(formatProvider);
+            if (minDate < minimumDateTime)
+            {
+                return minimumDateTime;
+            }
+
+            return minDate;
+        }
+
+        /// <summary>
+        /// Gets the effective minimum date value, ensuring it does not fall below the defined minimum date limit.
+        /// </summary>
+        /// <param name="minDate">The minimum date to evaluate.</param>
+        /// <param name="formatProvider">The format provider to use for culture-specific formatting.</param>
+        /// <returns>The effective minimum date.</returns>
+        public static DateOnly EffectiveMinDate(DateOnly minDate, IFormatProvider? formatProvider = null)
+        {
+            DateOnly minimumDateTime = MinimumDateTime(formatProvider).ToDateOnly();
             if (minDate < minimumDateTime)
             {
                 return minimumDateTime;

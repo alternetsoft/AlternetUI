@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -155,10 +156,10 @@ namespace Alternet.UI
             {
                 if (value != max)
                 {
-                    if (value < DateUtils.EffectiveMinDate(min))
+                    if (value < DateUtils.EffectiveMinDate(min, FormatProvider))
                         throw new ArgumentOutOfRangeException(nameof(MaxDate));
 
-                    if (value > DateUtils.MaximumDateTime)
+                    if (value > DateUtils.MaximumDateTime(FormatProvider))
                         throw new ArgumentOutOfRangeException(nameof(MaxDate));
 
                     max = value;
@@ -251,9 +252,9 @@ namespace Alternet.UI
             {
                 if (value != min)
                 {
-                    if (value > DateUtils.EffectiveMaxDate(max))
+                    if (value > DateUtils.EffectiveMaxDate(max, FormatProvider))
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
-                    if (value < DateUtils.MinimumDateTime)
+                    if (value < DateUtils.MinimumDateTime(FormatProvider))
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
                     min = value;
                     SetRange();
@@ -312,14 +313,13 @@ namespace Alternet.UI
             if (DisposingOrDisposed || !IsPopupWindowCreated)
                 return;
 
-            var effectiveMin = DateUtils.EffectiveMinDate(min);
-            var effectiveMax = DateUtils.EffectiveMaxDate(max);
-            /*
-            Calendar.MinDate = effectiveMin;
-            Calendar.MaxDate = effectiveMax;
+            var effectiveMin = DateUtils.EffectiveMinDate(min, FormatProvider);
+            var effectiveMax = DateUtils.EffectiveMaxDate(max, FormatProvider);
+
+            Calendar.MinDate = effectiveMin.ToDateOnly();
+            Calendar.MaxDate = effectiveMax.ToDateOnly();
             Calendar.UseMinDate = UseMinDate;
             Calendar.UseMaxDate = UseMaxDate;
-            */
         }
 
         /// <inheritdoc/>
