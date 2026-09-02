@@ -195,7 +195,7 @@ namespace Alternet.UI
                 if (surroundDayColor == value)
                     return;
                 surroundDayColor = value;
-                UpdateDayItems();
+                UpdateDayItems(true);
             }
         }
 
@@ -207,7 +207,7 @@ namespace Alternet.UI
                 if (todayBorder == value)
                     return;
                 todayBorder = value;
-                UpdateDayItems();
+                UpdateDayItems(true);
             }
         }
 
@@ -220,6 +220,7 @@ namespace Alternet.UI
                     return;
                 dayNamesKind = value;
                 UpdateDayNames();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -232,6 +233,7 @@ namespace Alternet.UI
                 formatProvider = value;
                 header.FormatProvider = value;
                 UpdateDayNames();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -436,7 +438,7 @@ namespace Alternet.UI
             return result;
         }
 
-        protected virtual void UpdateDayItems()
+        protected virtual void UpdateDayItems(bool invalidate)
         {
             if (listBox.Items.Count == 0)
                 return;
@@ -457,7 +459,8 @@ namespace Alternet.UI
                 }
             }
 
-            listBox.Invalidate();
+            if (invalidate)
+                listBox.Invalidate();
         }
 
         protected virtual void CreateDayItems()
@@ -481,7 +484,7 @@ namespace Alternet.UI
             }
 
             listBox.Items = newSource;
-            UpdateDayItems();
+            UpdateDayItems(false);
         }
 
         protected virtual void OnListBoxKeyDown(object? sender, KeyEventArgs e)
@@ -493,7 +496,7 @@ namespace Alternet.UI
         protected override void OnBackColorChanged(EventArgs e)
         {
             base.OnBackColorChanged(e);
-            UpdateDayItems();
+            UpdateDayItems(true);
         }
 
         /// <inheritdoc/>
@@ -501,7 +504,7 @@ namespace Alternet.UI
         {
             base.OnFontChanged(e);
             UpdateColumnWidth();
-            PerformLayout();
+            PerformLayoutAndInvalidate();
         }
 
         protected virtual void OnValueChanged()
@@ -539,7 +542,7 @@ namespace Alternet.UI
                 cell.IsToday = false;
             }
 
-            UpdateDayItems();
+            UpdateDayItems(false);
         }
     }
 
@@ -644,6 +647,7 @@ namespace Alternet.UI
                     return;
                 this.date = value;
                 OnValueChanged();
+                Invalidate();
             }
         }
 
