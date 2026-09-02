@@ -42,7 +42,14 @@ namespace Alternet.UI
         public static readonly string DayWidthMeasureText = "00";
 
         /// <summary>
-        /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed by default.
+        /// Gets or sets a value indicating whether the year dropdown in the calendar header should be displayed by default
+        /// when the year picker is clicked, allowing users to select a specific year.
+        /// </summary>
+        public bool DefaultShowYearDropDown = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed by default
+        /// when the month picker is clicked, allowing users to select a specific month.
         /// </summary>
         public bool DefaultShowMonthDropDown = true;
 
@@ -65,6 +72,8 @@ namespace Alternet.UI
         private readonly CalendarListBox listBox;
         private readonly CalendarHeader header;
         private readonly CalendarHeaderItem headerItem;
+        private readonly YearPicker yearPicker;
+        private readonly TransparentPanel yearPickerPanel;
 
         private RestrictedDate restrictedDate;
         private DateOnly date;
@@ -90,8 +99,13 @@ namespace Alternet.UI
                 {
                 });
 
+            yearPicker = new();
+            yearPickerPanel = new();
             listBox = new();
             header = new();
+
+            yearPickerPanel.Visible = false;
+            yearPicker.Parent = yearPickerPanel;
 
             CreateColumns();
             headerItem = new();
@@ -122,6 +136,7 @@ namespace Alternet.UI
 
             Layout = LayoutStyle.Vertical;
 
+            yearPickerPanel.MarginBottom = 5;
             header.MarginBottom = 5;
 
             ParentBackColor = false;
@@ -147,10 +162,43 @@ namespace Alternet.UI
             DoInsideLayout(() =>
             {
                 header.Parent = this;
+                yearPickerPanel.Parent = this;
                 listBox.Parent = this;
             });
 
             ShowMonthDropDown = DefaultShowMonthDropDown;
+            ShowYearDropDown = DefaultShowYearDropDown;
+
+            yearPickerPanel.VisibleChanged += (s, e) =>
+            {
+                header.YearPicker.Sticky = yearPickerPanel.Visible;
+            };
+
+            yearPicker.TextPicker.EnterPressed += (s,e) =>
+            {
+                yearPicker.TextPicker.CancelEdit();
+                yearPickerPanel.Visible = false;
+            };
+
+            yearPicker.TextPicker.EscapePressed += (s, e) =>
+            {
+                yearPicker.TextPicker.CancelEdit();
+                yearPickerPanel.Visible = false;
+            };
+
+            yearPicker.ValueChanged += (s, e) =>
+            {
+                if(suspendHeaderEventsCounter > 0)
+                    return;
+                Value = new DateOnly(yearPicker.Value, Value.Month, Value.Day);
+            };
+
+            HeaderYearClick += (s, e) =>
+            {
+                if (!ShowYearDropDown)
+                    return;
+                yearPickerPanel.Visible = !yearPickerPanel.Visible;
+            };
         }
 
         /// <summary>
@@ -215,6 +263,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed,
+        /// when the month picker is clicked, allowing users to select a specific month.
         /// </summary>
         public virtual bool ShowMonthDropDown
         {
@@ -228,6 +277,12 @@ namespace Alternet.UI
                 header.ShowMonthDropDown = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the year dropdown in the calendar header should be displayed
+        /// when the year picker is clicked, allowing users to select a specific year.
+        /// </summary>
+        public virtual bool ShowYearDropDown { get; set; }
 
         /// <summary>Gets or sets the minimum date and time that can be
         /// selected in the control.</summary>
@@ -367,7 +422,8 @@ namespace Alternet.UI
                 suspendHeaderEventsCounter++;
                 try
                 {
-                    header.Value = value;
+                    header.Value = restrictedDate.Value;
+                    yearPicker.Value = restrictedDate.Value.Year;
                 }
                 finally
                 {
@@ -728,6 +784,11 @@ namespace Alternet.UI
                             height += headerHeight.Height + listBox.Margin.Vertical + header.Margin.Vertical;
                             width = Math.Max(width, headerHeight.Width) + listBox.Margin.Horizontal + header.Margin.Horizontal;
 
+                            if (yearPickerPanel.Visible)
+                            {
+                                height += yearPickerPanel.GetPreferredSize(context).Height + yearPickerPanel.Margin.Vertical;
+                            }
+
                             return new SizeD(width, height);
                         });
 
@@ -1017,7 +1078,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the year picker in the calendar header, which allows users to select a year from a dropdown list.
         /// </summary>
-        public GenericControl YearPicker => yearPicker;
+        public SpeedButton YearPicker => yearPicker;
 
         /// <summary>
         /// Updates the values of the month and year pickers based on the current value of the calendar header.
