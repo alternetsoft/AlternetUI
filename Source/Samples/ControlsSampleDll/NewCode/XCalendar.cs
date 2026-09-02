@@ -524,22 +524,30 @@ namespace Alternet.UI
                 cell.Date = d;
                 cell.IsCurrentMonth = true;
                 cell.IsToday = d == today;
+                cell.IsCurrent = d == Value;
+                cell.IsSelected = cell.IsCurrent;
             }
 
             for (int i = daysInMonth + index; i < DayCellCount; i++)
             {
                 var cell = cells[i];
-                cell.Date = lastDayOfMonth.AddDays(i - daysInMonth - index + 1);
+                var d = lastDayOfMonth.AddDays(i - daysInMonth - index + 1);
+                cell.Date = d;
                 cell.IsCurrentMonth = false;
                 cell.IsToday = false;
+                cell.IsCurrent = d == Value;
+                cell.IsSelected = cell.IsCurrent;
             }
 
             for (int i = index - 1; i >= 0; i--)
             {
                 var cell = cells[i];
-                cell.Date = firstDayOfMonth.AddDays(i - index);
+                var d = firstDayOfMonth.AddDays(i - index);
+                cell.Date = d;
                 cell.IsCurrentMonth = false;
                 cell.IsToday = false;
+                cell.IsCurrent = d == Value;
+                cell.IsSelected = cell.IsCurrent;
             }
 
             UpdateDayItems(false);
@@ -643,6 +651,7 @@ namespace Alternet.UI
 
             set
             {
+                value = new(value.Year, value.Month, 1);
                 if (this.date == value)
                     return;
                 this.date = value;
@@ -719,7 +728,36 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the data associated with the calendar cell.
         /// </summary>
-        public CalendarCell? Data { get; internal set; }
+        public CalendarCell Data { get; internal set; } = CalendarCell.Default;
+
+        /// <inheritdoc/>
+        public override void DrawCellBackground(in DrawCellParams prm)
+        {
+            if (!Data.IsCurrent)
+                return;
+
+            var container = prm.Container;
+            var e = prm.PaintArgs;
+            var item = e.Item;
+            var rect = prm.Rect;
+            var dc = e.Graphics;
+            var control = container?.Control;
+
+            var selectionBorder = container?.Defaults.SelectionBorder;
+
+            dc.FillBorderRectangle(
+                rect,
+                GetSelectedItemBackColor(item, container)?.AsBrush,
+                selectionBorder,
+                hasBorder: false,
+                control);
+        }
+
+        /// <inheritdoc/>
+        public override void DrawCellForeground(in DrawCellParams prm)
+        {
+            base.DrawCellForeground(in prm);
+        }
     }
 
     /// <summary>
@@ -785,6 +823,8 @@ namespace Alternet.UI
     /// </summary>
     public class CalendarCell : BaseObject
     {
+        public static CalendarCell Default = new();
+
         internal CalendarCell()
         {
         }
@@ -798,5 +838,9 @@ namespace Alternet.UI
         public bool IsCurrentMonth { get; internal set; }
 
         public bool IsToday { get; internal set; }
+
+        public bool IsCurrent {  get; internal set; }
+
+        public bool IsSelected { get; internal set; }
     }
 }
