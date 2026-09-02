@@ -42,42 +42,6 @@ namespace Alternet.UI
         /// </summary>
         public IFormatProvider? FormatProvider { get; set; }
 
-        /// <summary>Gets or sets the maximum date and time that can be
-        /// selected in the control.</summary>
-        /// <returns>The maximum date and time that can be selected
-        /// in the control. The default is determined as the minimum of the
-        /// CurrentCulture's Calendar's
-        /// <see cref="System.Globalization.Calendar.MaxSupportedDateTime" />
-        /// property and <see cref="DateUtils.MaxDateTime"/>.</returns>
-        /// <exception cref="System.ArgumentException">The value assigned is less
-        /// than the <see cref="MinDate" />
-        /// value.</exception>
-        /// <exception cref="System.SystemException">The value assigned is greater
-        /// than the <see cref="DateUtils.MaxDateTime" />
-        /// value.</exception>
-        public DateOnly MaxDate
-        {
-            readonly get
-            {
-                return DateUtils.EffectiveMaxDate(max, FormatProvider);
-            }
-
-            set
-            {
-                if (value != max)
-                {
-                    if (value < DateUtils.EffectiveMinDate(min, FormatProvider))
-                        throw new ArgumentOutOfRangeException(nameof(MaxDate));
-
-                    if (value > DateUtils.MaximumDateTime(FormatProvider).ToDateOnly())
-                        throw new ArgumentOutOfRangeException(nameof(MaxDate));
-
-                    max = value;
-                    SetPossibleRange();
-                }
-            }
-        }
-
         /// <summary>
         /// Gets or sets whether to use <see cref="MinDate"/> for the date range limitation.
         /// </summary>
@@ -151,14 +115,14 @@ namespace Alternet.UI
 
             set
             {
-                    var v = value;
+                var v = CoerceSystemMinimumMaximum(value);
 
-                    if (UseMinDate && v < min)
-                        v = min;
-                    if (UseMaxDate && v > max)
-                        v = max;
+                if (UseMinDate && v < min)
+                    v = min;
+                if (UseMaxDate && v > max)
+                    v = max;
 
-                    valueSetter(v);
+                valueSetter(v);
             }
         }
 
@@ -167,12 +131,6 @@ namespace Alternet.UI
         /// <returns>The minimum date and time that can be selected in the
         /// control. The default is <see cref="DateUtils.MinDateTime"/>.
         /// </returns>
-        /// <exception cref="System.ArgumentException">The value assigned is
-        /// not less than the <see cref="MaxDate" /> value.
-        /// </exception>
-        /// <exception cref="System.SystemException">The value assigned is
-        /// less than the <see cref="DateUtils.MinDateTime" /> value.
-        /// </exception>
         public DateOnly MinDate
         {
             readonly get
@@ -182,12 +140,12 @@ namespace Alternet.UI
 
             set
             {
+                value = CoerceSystemMinimumMaximum(value);
+
                 if (value != min)
                 {
-                    if (value > DateUtils.EffectiveMaxDate(max, FormatProvider))
-                        throw new ArgumentOutOfRangeException(nameof(MinDate));
-                    if (value < DateUtils.MinimumDateTime(FormatProvider).ToDateOnly())
-                        throw new ArgumentOutOfRangeException(nameof(MinDate));
+                    if (value > max)
+                        return;
 
                     min = value;
                     SetPossibleRange();
@@ -195,12 +153,77 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>Gets or sets the maximum date and time that can be
+        /// selected in the control.</summary>
+        /// <returns>The maximum date and time that can be selected
+        /// in the control. The default is determined as the minimum of the
+        /// CurrentCulture's Calendar's
+        /// <see cref="System.Globalization.Calendar.MaxSupportedDateTime" />
+        /// property and <see cref="DateUtils.MaxDateTime"/>.</returns>
+        public DateOnly MaxDate
+        {
+            readonly get
+            {
+                return DateUtils.EffectiveMaxDate(max, FormatProvider);
+            }
+
+            set
+            {
+                value = CoerceSystemMinimumMaximum(value);
+
+                if (value != max)
+                {
+                    if (value < min)
+                        return;
+
+                    max = value;
+                    SetPossibleRange();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Coerces the specified date to ensure it falls within the system minimum and maximum date range.
+        /// </summary>
+        /// <param name="date">The date to coerce.</param>
+        /// <returns>The coerced date.</returns>
+        public readonly DateOnly CoerceSystemMinimumMaximum(DateOnly date)
+        {
+            var systemMin = DateUtils.MinimumDateTime(FormatProvider).ToDateOnly();
+            var systemMax = DateUtils.MaximumDateTime(FormatProvider).ToDateOnly();
+            if (date < systemMin)
+                return systemMin;
+            if (date > systemMax)
+                return systemMax;
+            return date;
+        }
+
+        /// <summary>
+        /// Determines whether the specified date is restricted based on the current minimum and maximum date settings.
+        /// </summary>
+        /// <param name="date">The date to check for restriction.</param>
+        /// <returns><c>true</c> if the date is restricted; otherwise, <c>false</c>.</returns>
+        public readonly bool IsRestricted(DateOnly date)
+        {
+            if (UseMinDate && date < min)
+                return true;
+            if (UseMaxDate && date > max)
+                return true;
+
+            if (date < DateUtils.MinimumDateTime(FormatProvider).ToDateOnly())
+                return true;
+            if (date > DateUtils.MaximumDateTime(FormatProvider).ToDateOnly())
+                return true;
+
+            return false;
+        }
+
         /// <summary>
         /// Sets possible date range in the native control.
         /// </summary>
         /// <param name="min">Minimal possible date.</param>
         /// <param name="max">Maximal possible date.</param>
-        public readonly void SetRange(DateOnly min, DateOnly max)
+        private readonly void SetRange(DateOnly min, DateOnly max)
         {
             setRange?.Invoke(min, max);
         }
@@ -208,7 +231,7 @@ namespace Alternet.UI
         /// <summary>
         /// Updates possible date range using current settings.
         /// </summary>
-        public void SetPossibleRange()
+        private void SetPossibleRange()
         {
             if (UseMinDate)
             {

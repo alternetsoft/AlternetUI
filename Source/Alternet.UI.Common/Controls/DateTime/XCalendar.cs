@@ -83,7 +83,12 @@ namespace Alternet.UI
         /// </summary>
         public XCalendar()
         {
-            restrictedDate = new(() => date, v => date = v, null);
+            restrictedDate = new(
+                () => date,
+                v => date = v,
+                (min, max) =>
+                {
+                });
 
             listBox = new();
             header = new();
@@ -229,12 +234,6 @@ namespace Alternet.UI
         /// <returns>The minimum date and time that can be selected in the
         /// control. The default is <see cref="DateUtils.MinDateTime"/>.
         /// </returns>
-        /// <exception cref="System.ArgumentException">The value assigned is
-        /// not less than the <see cref="MaxDate" /> value.
-        /// </exception>
-        /// <exception cref="System.SystemException">The value assigned is
-        /// less than the <see cref="DateUtils.MinDateTime" /> value.
-        /// </exception>
         public virtual DateOnly MinDate
         {
             get
@@ -244,7 +243,11 @@ namespace Alternet.UI
 
             set
             {
+                if (restrictedDate.MinDate == value)
+                    return;
                 restrictedDate.MinDate = value;
+                OnValueChanged();
+                Invalidate();
             }
         }
 
@@ -255,12 +258,6 @@ namespace Alternet.UI
         /// CurrentCulture's Calendar's
         /// <see cref="System.Globalization.Calendar.MaxSupportedDateTime" />
         /// property and <see cref="DateUtils.MaxDateTime"/>.</returns>
-        /// <exception cref="System.ArgumentException">The value assigned is less
-        /// than the <see cref="MinDate" />
-        /// value.</exception>
-        /// <exception cref="System.SystemException">The value assigned is greater
-        /// than the <see cref="DateUtils.MaxDateTime" />
-        /// value.</exception>
         public virtual DateOnly MaxDate
         {
             get
@@ -270,7 +267,11 @@ namespace Alternet.UI
 
             set
             {
+                if (restrictedDate.MaxDate == value)
+                    return;
                 restrictedDate.MaxDate = value;
+                OnValueChanged();
+                Invalidate();
             }
         }
 
@@ -286,7 +287,11 @@ namespace Alternet.UI
 
             set
             {
+                if (restrictedDate.UseMinDate == value)
+                    return;
                 restrictedDate.UseMinDate = value;
+                OnValueChanged();
+                Invalidate();
             }
         }
 
@@ -323,7 +328,11 @@ namespace Alternet.UI
 
             set
             {
+                if (restrictedDate.UseMaxDate == value)
+                    return;
                 restrictedDate.UseMaxDate = value;
+                OnValueChanged();
+                Invalidate();
             }
         }
 
@@ -368,7 +377,6 @@ namespace Alternet.UI
                 ValueChanged?.Invoke(this, EventArgs.Empty);
 
                 OnValueChanged();
-
                 Invalidate();
             }
         }
@@ -748,9 +756,12 @@ namespace Alternet.UI
                 {
                     var rowItem = listBox.Items[row];
                     var cellItem = (CalendarCellItem)rowItem.Cells[col];
+
                     var cell = cellItem.Data;
+                    var isGrey = cell.IsRestricted || !cell.IsCurrentMonth;
+
                     cellItem.Text = cell!.Date.Day.ToString();
-                    cellItem.ForegroundColor = !cell.IsCurrentMonth ? otherMonthForeColor : null;
+                    cellItem.ForegroundColor = isGrey ? otherMonthForeColor : null;
                     cellItem.Border = cell.IsToday ? EffectiveTodayBorder() : null;
                 }
             }
@@ -834,6 +845,7 @@ namespace Alternet.UI
                 cell.IsToday = d == today;
                 cell.IsCurrent = d == Value;
                 cell.IsSelected = cell.IsCurrent;
+                cell.IsRestricted = restrictedDate.IsRestricted(d);
             }
 
             for (int i = daysInMonth + index; i < DayCellCount; i++)
@@ -845,6 +857,7 @@ namespace Alternet.UI
                 cell.IsToday = false;
                 cell.IsCurrent = d == Value;
                 cell.IsSelected = cell.IsCurrent;
+                cell.IsRestricted = restrictedDate.IsRestricted(d);
             }
 
             for (int i = index - 1; i >= 0; i--)
@@ -856,6 +869,7 @@ namespace Alternet.UI
                 cell.IsToday = false;
                 cell.IsCurrent = d == Value;
                 cell.IsSelected = cell.IsCurrent;
+                cell.IsRestricted = restrictedDate.IsRestricted(d);
             }
 
             UpdateDayItems(false);
@@ -934,7 +948,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the kind of month names displayed in the month picker, allowing customization of the month name format.
+        /// Gets or sets the kind of month names displayed in the month picker,
+        /// allowing customization of the month name format.
         /// </summary>
         public virtual MonthNamesKind Kind
         {
@@ -1259,5 +1274,10 @@ namespace Alternet.UI
         /// Gets a value indicating whether the cell is selected in the calendar.
         /// </summary>
         public bool IsSelected { get; internal set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the cell's date is restricted based on the calendar's date range limitations.
+        /// </summary>
+        public bool IsRestricted { get; internal set; }
     }
 }

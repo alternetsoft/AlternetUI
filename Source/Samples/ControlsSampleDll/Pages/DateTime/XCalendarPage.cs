@@ -34,16 +34,6 @@ namespace ControlsSample
             tabControl.Dock = DockStyle.Right;
             tabControl.Width = 400;
 
-            DoInsideLayout(Fn);
-
-            void Fn()
-            {
-                var checkboxPanel = new VerticalStackPanel();
-                checkboxPanel.Margin = 5;
-                checkboxPanel.Title = GenericStrings.Options;
-                tabControl.Add(checkboxPanel);
-            }
-
             calendar.DayClick += (s, e) =>
             {
                 App.Log("Day clicked: " + e.Cell.Text);
@@ -75,9 +65,31 @@ namespace ControlsSample
             calendar.VerticalAlignment = VerticalAlignment.Center;
             calendar.Parent = calendarPanel;
 
-            calendarPanel.Parent = this;
-            splitter.Parent = this;
-            tabControl.Parent = this;
+            calendar.MinDate = DateTime.Now.AddDays(-10).ToDateOnly();
+            calendar.UseMinDate = false;
+
+            calendar.MaxDate = DateTime.Now.AddDays(60).ToDateOnly();
+            calendar.UseMaxDate = false;
+
+            DoInsideLayout(Fn);
+
+            void Fn()
+            {
+                calendarPanel.Parent = this;
+                splitter.Parent = this;
+                tabControl.Parent = this;
+
+                var settingsPanel = new PanelSettings();
+                settingsPanel.Margin = 5;
+                settingsPanel.Title = GenericStrings.Options;
+
+                settingsPanel.AddInput("MinDate", calendar, nameof(calendar.MinDate));
+                settingsPanel.AddInput("MaxDate", calendar, nameof(calendar.MaxDate));
+                settingsPanel.AddInput("Use MinDate", calendar, nameof(calendar.UseMinDate));
+                settingsPanel.AddInput("Use MaxDate", calendar, nameof(calendar.UseMaxDate));
+
+                tabControl.Add(settingsPanel);
+            }
         }
 
         private void LogEvent(string evName)
