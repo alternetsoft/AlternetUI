@@ -396,20 +396,40 @@ namespace Alternet.UI
             {
                 var vertLineColor = GetEffectiveVertGridLinesColor(isDark);
 
-                r = paintRectangle;
+                var rectangles = GetVertLinesRectangles(paintRectangle);
 
-                var x = r.Left;
-
-                var halfOfColumnSeparatorWidth = (ListControlItem.GetColumnSeparatorWidth(this) - 1) / 2;
-
-                for (int i = 0; i < Columns.Count; i++)
+                for (int i = 0; i < rectangles.Length; i++)
                 {
-                    x += Columns[i].SuggestedWidth + halfOfColumnSeparatorWidth;
-                    var p1 = new PointD(x, r.Top);
-                    dc.DrawVertLine(vertLineColor.AsBrush, p1, r.Height, 1);
-                    x += halfOfColumnSeparatorWidth + 1;
+                    var rect = rectangles[i];
+                    dc.DrawVertLine(vertLineColor.AsBrush, rect.StartPoint, rect.Length, rect.Width);
                 }
             }
+        }
+
+        /// <summary>
+        /// Calculates the rectangles for vertical grid lines based on the current column layout and the specified painting rectangle.
+        /// </summary>
+        /// <param name="paintRectangle">The painting rectangle to use for calculating the vertical grid line rectangles.</param>
+        /// <returns>An array of <see cref="VertGridLineInfo"/> representing the vertical grid line rectangles.</returns>
+        public virtual VertGridLineInfo[] GetVertLinesRectangles(RectD? paintRectangle = null)
+        {
+            var r = paintRectangle ?? GetPaintRectangle();
+
+            var x = r.Left;
+
+            var halfOfColumnSeparatorWidth = (ListControlItem.GetColumnSeparatorWidth(this) - 1) / 2;
+
+            VertGridLineInfo[] result = new VertGridLineInfo[Columns.Count];
+
+            for (int i = 0; i < Columns.Count; i++)
+            {
+                x += Columns[i].SuggestedWidth + halfOfColumnSeparatorWidth;
+                var p1 = new PointD(x, r.Top);
+                result[i] = new VertGridLineInfo(Columns[i], p1, r.Height, 1);
+                x += halfOfColumnSeparatorWidth + 1;
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -513,6 +533,43 @@ namespace Alternet.UI
                 }
 
                 return result;
+            }
+        }
+
+        /// <summary>
+        /// Represents information about a vertical grid line, including its location, length, width, and associated column.
+        /// </summary>
+        public struct VertGridLineInfo
+        {
+            /// <summary>
+            /// Gets or sets the start point of the vertical grid line.
+            /// </summary>
+            public PointD StartPoint;
+            
+            /// <summary>
+            /// Gets or sets the length of the vertical grid line.
+            /// </summary>
+            public float Length;
+
+            /// <summary>
+            /// Gets or sets the width of the vertical grid line.
+            /// </summary>
+            public float Width;
+
+            /// <summary>
+            /// Gets or sets the column associated with the vertical grid line.
+            /// </summary>
+            public ListControlColumn Column;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="VertGridLineInfo"/> struct.
+            /// </summary>
+            public VertGridLineInfo(ListControlColumn Column, PointD StartPoint, float Length, float Width)
+            {
+                this.StartPoint = StartPoint;
+                this.Length = Length;
+                this.Width = Width;
+                this.Column = Column;
             }
         }
 

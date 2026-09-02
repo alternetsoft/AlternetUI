@@ -126,6 +126,11 @@ namespace Alternet.UI
         public event EventHandler<ListBoxItemTextRequestEventArgs>? EditorTextRequested;
 
         /// <summary>
+        /// Occurs when a cell is clicked in a list control that has columns.
+        /// </summary>
+        public event EventHandler<ListBoxCellClickEventArgs>? CellClick;
+
+        /// <summary>
         /// Occurs when the horizontal scroll offset is changed, for example, when the user scrolls horizontally
         /// or when the offset is changed programmatically.
         /// </summary>
@@ -2406,7 +2411,54 @@ namespace Alternet.UI
                     flags |= ItemClickFlags.Ctrl;
 
                 DoHandleItemClick(itemIndex.Value, flags);
+
+                if (HasColumns)
+                {
+                    var item = GetItem(itemIndex.Value);
+                    if (item != null)
+                        RaiseCellClick(itemIndex.Value, item, e);
+                }
             }
+        }
+
+        /// <summary>
+        /// Gets the column at the specified location.
+        /// </summary>
+        /// <param name="item">The item to hit test.</param>
+        /// <param name="location">The location to hit test.</param>
+        /// <returns>The <see cref="ListControlColumn"/> at the specified location, or null if no column is found.</returns>
+        public virtual ListControlColumn? HitTestColumn(ListControlItem item, PointD location)
+        {
+            if (!HasColumns)
+                return null;
+
+            var lineInfos = GetVertLinesRectangles();
+
+            foreach (var lineInfo in lineInfos)
+            {
+                if (location.X < lineInfo.StartPoint.X)
+                    return lineInfo.Column;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Called when a cell is clicked in a list control that has columns.
+        /// </summary>
+        /// <param name="itemIndex">The zero-based index of the item that was clicked.</param>
+        /// <param name="item">The item that was clicked.</param>
+        /// <param name="e">The mouse event arguments.</param>
+        protected virtual void RaiseCellClick(int itemIndex, ListControlItem item, MouseEventArgs e)
+        {
+            if (CellClick is null)
+                return;
+
+            var column = HitTestColumn(item, e.Location);
+            if (column is null)
+                return;
+            ListBoxCellClickEventArgs args = new(itemIndex, item, column, e);
+            CellClick.Invoke(this, args);
         }
 
         /// <summary>

@@ -15,9 +15,8 @@ namespace Alternet.UI
     /// <summary>
     /// Abstract list control with <see cref="ListControlItem"/> support.
     /// </summary>
-    public abstract partial class VirtualListControl
-        : ListControl<ListControlItem>, ICustomListBox<ListControlItem>,
-        IListControlItemContainer, IListControlItemDefaults,
+    public abstract partial class VirtualListControl : ListControl<ListControlItem>,
+        ICustomListBox<ListControlItem>, IListControlItemContainer, IListControlItemDefaults,
         ICheckListBox<ListControlItem>
     {
         /// <summary>
@@ -891,7 +890,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the zero-based index of the item, if the mouse cursor is over an item in the control; otherwise, returns <c>null</c>.
+        /// Returns the zero-based index of the item, if the mouse cursor is over an item
+        /// in the control; otherwise, returns <c>null</c>.
         /// </summary>
         /// <returns>The zero-based index of the item, or <c>null</c> if the mouse cursor is not over any item.</returns>
         public int? HitTest()

@@ -173,7 +173,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the selection mode (single or multiple).
+        /// Gets or sets the selection mode (none, single or multiple).
         /// </summary>
         /// <remarks>The selection mode determines whether multiple items can be selected
         /// at once and how the selection behaves.
