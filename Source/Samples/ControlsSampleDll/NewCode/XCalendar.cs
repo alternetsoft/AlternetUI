@@ -91,9 +91,8 @@ namespace Alternet.UI
 
             listBox.KeyDown += OnListBoxKeyDown;
 
-            UpdateDayNames();
             CreateDayItems();
-
+            UpdateDayNames();
             OnValueChanged();
 
             header.ValueChanged += OnHeaderValueChanged;
@@ -183,6 +182,8 @@ namespace Alternet.UI
                 ValueChanged?.Invoke(this, EventArgs.Empty);
 
                 OnValueChanged();
+
+                Invalidate();
             }
         }
 
@@ -358,13 +359,31 @@ namespace Alternet.UI
         {
             if (e.Cell is CalendarHeaderCellItem headerCell)
             {
-                HeaderClick?.Invoke(this, new HeaderClickEventArgs(e));
+                if (HeaderClick is not null)
+                {
+                    var args = new HeaderClickEventArgs(e);
+                    HeaderClick?.Invoke(this, args);
+
+                    if (args.Cancel)
+                        return;
+                }
+
                 return;
             }
 
             if (e.Cell is CalendarCellItem itemCell)
             {
-                DayClick?.Invoke(this, new DayClickEventArgs(e));
+                if (DayClick is not null)
+                {
+                    var args = new DayClickEventArgs(e);
+                    DayClick?.Invoke(this, args);
+
+                    if (args.Cancel)
+                        return;
+
+                    Value = itemCell.Data.Date;
+                }
+
                 return;
             }
         }
@@ -484,7 +503,6 @@ namespace Alternet.UI
             }
 
             listBox.Items = newSource;
-            UpdateDayItems(false);
         }
 
         protected virtual void OnListBoxKeyDown(object? sender, KeyEventArgs e)
@@ -790,7 +808,7 @@ namespace Alternet.UI
     /// Represents the event arguments for a day click event in the calendar control,
     /// providing information about the clicked day cell.
     /// </summary>
-    public class DayClickEventArgs : BaseEventArgs
+    public class DayClickEventArgs : BaseCancelEventArgs
     {
         public DayClickEventArgs(ListBoxCellClickEventArgs e)
         {
@@ -805,7 +823,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents the event arguments for a header click event in the calendar control,
     /// </summary>
-    public class HeaderClickEventArgs : BaseEventArgs
+    public class HeaderClickEventArgs : BaseCancelEventArgs
     {
         public HeaderClickEventArgs(ListBoxCellClickEventArgs e)
         {
@@ -839,7 +857,7 @@ namespace Alternet.UI
 
         public bool IsToday { get; internal set; }
 
-        public bool IsCurrent {  get; internal set; }
+        public bool IsCurrent { get; internal set; }
 
         public bool IsSelected { get; internal set; }
     }
