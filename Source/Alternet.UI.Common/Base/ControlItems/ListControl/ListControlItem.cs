@@ -2583,6 +2583,75 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the cell for the specified column identifier.
+        /// If the cell does not exist, it is created and added to the <see cref="Cells"/> collection.
+        /// </summary>
+        /// <param name="columnId">The unique identifier of the column.</param>
+        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified column identifier.
+        /// If the cell does not exist,
+        /// a default or placeholder cell is returned.</returns>
+        public virtual ListControlItem SafeCell(ObjectUniqueId columnId)
+        {
+            var result = GetCell(columnId);
+
+            if (result is null)
+            {
+                result = new ListControlItem();
+                result.ColumnId = columnId;
+                Cells.Add(result);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Adds a new cell of the specified type to the <see cref="Cells"/> collection for the given column identifier.
+        /// </summary>
+        /// <typeparam name="TItem">The type of the cell to add.</typeparam>
+        /// <param name="columnId">The unique identifier of the column.</param>
+        /// <returns>The newly added cell of the specified type.</returns>
+        public virtual TItem AddCell<TItem>(ObjectUniqueId columnId)
+            where TItem : ListControlItem, new()
+        {
+            var result = new TItem();
+            result.ColumnId = columnId;
+            Cells.Add(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds a new cell to the <see cref="Cells"/> collection for the specified column identifier.
+        /// </summary>
+        /// <param name="columnId">The unique identifier of the column.</param>
+        /// <returns>The newly added <see cref="ListControlItem"/>.</returns>
+        public virtual ListControlItem AddCell(ObjectUniqueId columnId)
+        {
+            return AddCell<ListControlItem>(columnId);
+        }
+
+        /// <summary>
+        /// Adds a new cell of the specified type to the <see cref="Cells"/> collection for the given column.
+        /// </summary>
+        /// <typeparam name="TItem">The type of the cell to add.</typeparam>
+        /// <param name="column">The column for which to add the cell. Cannot be null.</param>
+        /// <returns>The newly added cell of the specified type.</returns>
+        public virtual TItem AddCell<TItem>(ListControlColumn column)
+            where TItem : ListControlItem, new()
+        {
+            return AddCell<TItem>(column.UniqueId);
+        }
+
+        /// <summary>
+        /// Adds a new cell to the <see cref="Cells"/> collection for the specified column.
+        /// </summary>
+        /// <param name="column">The column for which to add the cell. Cannot be null.</param>
+        /// <returns>The newly added <see cref="ListControlItem"/>.</returns>
+        public virtual ListControlItem AddCell(ListControlColumn column)
+        {
+            return AddCell<ListControlItem>(column.UniqueId);
+        }
+
+        /// <summary>
         /// Retrieves the cell associated with the specified column in the current row, ensuring that a valid cell is
         /// always returned.
         /// </summary>
@@ -2611,28 +2680,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the cell for the specified column identifier.
-        /// If the cell does not exist, it is created and added to the <see cref="Cells"/> collection.
-        /// </summary>
-        /// <param name="columnId">The unique identifier of the column.</param>
-        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified column identifier.
-        /// If the cell does not exist,
-        /// a default or placeholder cell is returned.</returns>
-        public virtual ListControlItem SafeCell(ObjectUniqueId columnId)
-        {
-            var result = GetCell(columnId);
-
-            if (result is null)
-            {
-                result = new ListControlItem();
-                result.ColumnId = columnId;
-                Cells.Add(result);
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Gets the cell associated with the specified column in the list control.
         /// </summary>
         /// <param name="column">The column for which to retrieve the corresponding cell. Cannot be null.</param>
@@ -2657,6 +2704,37 @@ namespace Alternet.UI
             {
                 if (cell.ColumnId == columnId)
                     return cell;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the index of the cell associated with the specified column.
+        /// </summary>
+        /// <param name="column">The column for which to retrieve the cell index. Cannot be null.</param>
+        /// <returns>The index of the cell associated with the specified column,
+        /// or null if no cell exists for the column.</returns>
+        public int? GetCellIndex(ListControlColumn column)
+        {
+            return GetCellIndex(column.UniqueId);
+        }
+
+        /// <summary>
+        /// Gets the index of the cell associated with the specified column identifier.
+        /// </summary>
+        /// <param name="columnId">The unique identifier of the column.</param>
+        /// <returns>The index of the cell associated with the specified column identifier,
+        /// or null if no cell exists for the identifier.</returns>
+        public virtual int? GetCellIndex(ObjectUniqueId columnId)
+        {
+            if (!HasCells)
+                return null;
+
+            for (int i = 0; i < Cells.Count; i++)
+            {
+                if (Cells[i].ColumnId == columnId)
+                    return i;
             }
 
             return null;
