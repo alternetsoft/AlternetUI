@@ -29,29 +29,12 @@ namespace ControlsSample
             panel.Parent = this;
 
             showPopupButton.Parent = panel;
-            UseGenericCheckBox.Visible = false;
-            UseGenericCheckBox.Parent = panel;
-            UseGenericCheckBox.BindBoolProp(this, nameof(UseGeneric));
 
             panel.ChildrenSet.Margin(10).HorizontalAlignment(HorizontalAlignment.Left);
 
             showPopupButton.Click += ShowPopupButton_Click;
 
             popupCalendar.AfterHide += PopupListBox_AfterHide;
-        }
-
-        public bool UseGeneric
-        {
-            get
-            {
-                return popupCalendar.MainControl.UseGeneric;
-            }
-
-            set
-            {
-                popupCalendar.MainControl.UseGeneric = value;
-                popupCalendar.SetClientSizeTo();
-            }
         }
 
         private void PopupListBox_AfterHide(object? sender, EventArgs e)

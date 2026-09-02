@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a specialized speed button control that displays a date
     /// and shows popup calendar when it is clicked.
     /// </summary>
-    public partial class SpeedDateButton : SpeedButtonWithPopup<PopupCalendar, Calendar>
+    public partial class SpeedDateButton : SpeedButtonWithPopup<PopupCalendar, XCalendar>
     {
         /// <summary>
         /// Gets or sets the default left padding for the text displayed in the control.
@@ -129,7 +129,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the calendar control used in the popup window.
         /// </summary>
-        public Calendar Calendar => PopupWindow.MainControl;
+        public XCalendar Calendar => PopupWindow.MainControl;
 
         /// <summary>Gets or sets the maximum date that can be
         /// selected in the control.</summary>
@@ -266,7 +266,7 @@ namespace Alternet.UI
         {
             Calendar.Required();
             SetRange();
-            Calendar.Value = Value ?? DateTime.Now;
+            Calendar.AsDateTime = Value ?? DateTime.Now;
             base.ShowPopup();
         }
 
@@ -314,11 +314,12 @@ namespace Alternet.UI
 
             var effectiveMin = DateUtils.EffectiveMinDate(min);
             var effectiveMax = DateUtils.EffectiveMaxDate(max);
-
+            /*
             Calendar.MinDate = effectiveMin;
             Calendar.MaxDate = effectiveMax;
             Calendar.UseMinDate = UseMinDate;
             Calendar.UseMaxDate = UseMaxDate;
+            */
         }
 
         /// <inheritdoc/>
@@ -326,7 +327,7 @@ namespace Alternet.UI
         {
             if (PopupWindow.IsPopupAccepted)
             {
-                Value = PopupWindow.MainControl.Value;
+                Value = PopupWindow.MainControl.AsDateTime;
             }
         }
     }

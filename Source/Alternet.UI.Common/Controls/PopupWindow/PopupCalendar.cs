@@ -10,10 +10,22 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Popup window with <see cref="Calendar"/> control.
+    /// Popup window with <see cref="XCalendar"/> control.
     /// </summary>
-    public partial class PopupCalendar : PopupWindow<Calendar>
+    public partial class PopupCalendar : PopupWindow<XCalendar>
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup window
+        /// should be hidden when the user clicks outside of it by default.
+        /// </summary>
+        public static bool DefaultHideOnClick = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup window
+        /// should be hidden when the "Today" button is clicked by default.
+        /// </summary>
+        public static bool DefaultHidePopupOnTodayClick = true;
+
         /// <summary>
         /// Gets or sets a value indicating whether the "Today" button is visible by default.
         /// </summary>
@@ -22,7 +34,6 @@ namespace Alternet.UI
         private static PopupCalendar? defaultCalendar;
         
         private readonly SpeedButton todayButton;
-        private readonly ToolBar calendarToolBar = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupCalendar"/> class.
@@ -30,7 +41,7 @@ namespace Alternet.UI
         public PopupCalendar()
         {
             Title = CommonStrings.Default.WindowTitleSelectDate;
-            HideOnClick = false;
+            HideOnClick = DefaultHideOnClick;
             HideOnDoubleClick = false;
 
             todayButton = LeftBottomToolBar.AddSpeedBtnCore(
@@ -40,6 +51,18 @@ namespace Alternet.UI
                 OnTodayButtonClick);
             todayButton.UseTheme = ButtonOk.UseTheme;
             todayButton.Visible = DefaultIsTodayButtonVisible;
+
+            MainControl.MouseLeftButtonUp -= OnMainControlMouseLeftButtonUp;
+
+            MainControl.ListBox.MouseLeftButtonUp += (s, e) =>
+            {
+                var itemIndex = MainControl.ListBox.HitTest();
+
+                if (itemIndex is null || itemIndex == 0)
+                    return;
+
+                OnMainControlMouseLeftButtonUp(s, e);
+            };
         }
 
         /// <summary>
@@ -71,13 +94,15 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected virtual void OnTodayButtonClick(object? sender, EventArgs e)
         {
-            MainControl.Value = DateTime.Now;
+            MainControl.AsDateTime = DateTime.Now;
+            if (DefaultHidePopupOnTodayClick)
+                HidePopup(ModalResult.Accepted);
         }
 
         /// <inheritdoc/>
-        protected override Calendar CreateMainControl()
+        protected override XCalendar CreateMainControl()
         {
-            var result = new Calendar()
+            var result = new XCalendar()
             {
                 HasBorder = false,
             };
@@ -98,8 +123,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override bool HideOnClickPoint(PointD point)
         {
-            var result = MainControl.HitTest(point) == Calendar.HitTestResult.Day;
-            return result;
+            return true;
         }
     }
 }

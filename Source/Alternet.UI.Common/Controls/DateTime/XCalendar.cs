@@ -222,6 +222,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the current value of the calendar control as a <see cref="DateTime"/> object,
+        /// </summary>
+        [Browsable(false)]
+        public DateTime AsDateTime
+        {
+            get => Value.ToDateTime(new TimeOnly(0, 0));
+            set => Value = DateOnly.FromDateTime(value);
+        }
+
+        /// <summary>
         /// Gets or sets the currently selected date in the calendar control,
         /// allowing users to select a specific date from the calendar interface.
         /// </summary>
@@ -515,8 +525,9 @@ namespace Alternet.UI
                     if (args.Cancel)
                         return;
 
-                    Value = itemCell.Data.Date;
                 }
+
+                Value = itemCell.Data.Date;
 
                 return;
             }
