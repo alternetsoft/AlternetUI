@@ -12,6 +12,7 @@ namespace ControlsSample
     public partial class XCalendarPage : Panel
     {
         private readonly XCalendar calendar = new();
+        private readonly Panel calendarPanel = new();
         private readonly TabControl tabControl = new();
         private readonly Splitter splitter = new();
 
@@ -23,10 +24,12 @@ namespace ControlsSample
         {
             Padding = 5;
 
+            calendarPanel.HasBorder = true;
+
             splitter.Dock = DockStyle.Right;
 
             Layout = LayoutStyle.Dock;
-            calendar.Dock = DockStyle.Fill;
+            calendarPanel.Dock = DockStyle.Fill;
 
             tabControl.Dock = DockStyle.Right;
             tabControl.Width = 400;
@@ -66,9 +69,13 @@ namespace ControlsSample
                 App.Log("Month clicked");
             };
 
-            calendar.HasBorder = true;
+            calendarPanel.HasBorder = true;
 
-            calendar.Parent = this;
+            calendar.HorizontalAlignment = HorizontalAlignment.Center;
+            calendar.VerticalAlignment = VerticalAlignment.Center;
+            calendar.Parent = calendarPanel;
+
+            calendarPanel.Parent = this;
             splitter.Parent = this;
             tabControl.Parent = this;
         }

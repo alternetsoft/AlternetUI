@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    public partial class XCalendar : HiddenBorder
+    public partial class XCalendar : Border
     {
         public const int DayCellCount = 42;
 
@@ -25,8 +25,8 @@ namespace Alternet.UI
         public static BorderSettings? DefaultTodayBorder;
 
         private readonly CalendarCell[] cells = new CalendarCell[DayCellCount];
-        private readonly CalendarListBox listBox = new();
-        private readonly CalendarHeader header = new();
+        private readonly CalendarListBox listBox;
+        private readonly CalendarHeader header;
         private readonly CalendarHeaderItem headerItem;
 
         private DateOnly date;
@@ -46,6 +46,9 @@ namespace Alternet.UI
         /// </summary>
         public XCalendar()
         {
+            listBox = new();
+            header = new();
+
             CreateColumns();
             headerItem = new();
             headerItem.HideSelection = true;
@@ -98,8 +101,11 @@ namespace Alternet.UI
             listBox.BackColorChanged += OnListBoxBackColorChanged;
             listBox.CellClick += OnListBoxCellClick;
 
-            header.Parent = this;
-            listBox.Parent = this;
+            DoInsideLayout(() =>
+            {
+                header.Parent = this;
+                listBox.Parent = this;
+            });
 
             ShowMonthDropDown = DefaultShowMonthDropDown;
         }
@@ -254,7 +260,7 @@ namespace Alternet.UI
 
         public virtual float GetTotalHeight(Graphics dc, Font font)
         {
-            var totalHeight = GetRowHeight(dc, font) * DayRowCount;
+            var totalHeight = GetRowHeight(dc, font) * (DayRowCount + 1);
             return totalHeight;
         }
 
@@ -397,6 +403,39 @@ namespace Alternet.UI
             BackColor = listBox.BackColor;
         }
 
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
+        {
+            if (context.AvailableSize.AnyIsEmptyOrNegative)
+                return SizeD.Empty;
+
+            var result = GetDefaultPreferredSize(
+                        context.AvailableSize,
+                        withPadding: true,
+                        (size) =>
+                        {
+                            var dc = MeasureCanvas;
+
+                            VirtualListBox.MeasureContentSizeResult measureResult = listBox.GetContentSize(
+                                dc,
+                                fromIndex: null,
+                                toIndex: null,
+                                prm: null);
+
+                            var width = measureResult.ContentSize.Width;
+                            var height = measureResult.ContentSize.Height;
+                            var headerHeight = header.GetPreferredSize(context);
+
+                            height += headerHeight.Height + listBox.Margin.Vertical + header.Margin.Vertical;
+                            width = Math.Max(width, headerHeight.Width) + listBox.Margin.Horizontal + header.Margin.Horizontal;
+
+                            return new SizeD(width, height);
+                        });
+
+            result = result.Ceiling();
+
+            return result;
+        }
+
         protected virtual void UpdateDayItems()
         {
             if (listBox.Items.Count == 0)
@@ -405,7 +444,7 @@ namespace Alternet.UI
             var isDark = IsDarkBackground;
             var otherMonthForeColor = EffectiveSurroundDayColor(isDark);
 
-            for (var row = 1; row < XCalendar.DayRowCount; row++)
+            for (var row = 1; row <= XCalendar.DayRowCount; row++)
             {
                 for (var col = 0; col < XCalendar.ColumnCount; col++)
                 {
@@ -462,6 +501,7 @@ namespace Alternet.UI
         {
             base.OnFontChanged(e);
             UpdateColumnWidth();
+            PerformLayout();
         }
 
         protected virtual void OnValueChanged()
