@@ -72,8 +72,8 @@ namespace Alternet.UI
         private readonly CalendarListBox listBox;
         private readonly CalendarHeader header;
         private readonly CalendarHeaderItem headerItem;
-        private readonly YearPicker yearPicker;
-        private readonly TransparentPanel yearPickerPanel;
+        private readonly YearPicker popupYearPicker;
+        private readonly TransparentPanel popupYearPickerPanel;
 
         private RestrictedDate restrictedDate;
         private DateOnly date;
@@ -99,13 +99,13 @@ namespace Alternet.UI
                 {
                 });
 
-            yearPicker = new();
-            yearPickerPanel = new();
+            popupYearPicker = new();
+            popupYearPickerPanel = new();
             listBox = new();
             header = new();
 
-            yearPickerPanel.Visible = false;
-            yearPicker.Parent = yearPickerPanel;
+            popupYearPickerPanel.Visible = false;
+            popupYearPicker.Parent = popupYearPickerPanel;
 
             CreateColumns();
             headerItem = new();
@@ -136,7 +136,7 @@ namespace Alternet.UI
 
             Layout = LayoutStyle.Vertical;
 
-            yearPickerPanel.MarginBottom = 5;
+            popupYearPickerPanel.MarginBottom = 5;
             header.MarginBottom = 5;
 
             ParentBackColor = false;
@@ -162,43 +162,19 @@ namespace Alternet.UI
             DoInsideLayout(() =>
             {
                 header.Parent = this;
-                yearPickerPanel.Parent = this;
+                popupYearPickerPanel.Parent = this;
                 listBox.Parent = this;
             });
 
             ShowMonthDropDown = DefaultShowMonthDropDown;
             ShowYearDropDown = DefaultShowYearDropDown;
 
-            yearPickerPanel.VisibleChanged += (s, e) =>
-            {
-                header.YearPicker.Sticky = yearPickerPanel.Visible;
-            };
+            popupYearPickerPanel.VisibleChanged += OnPopupYearPickerVisibleChanged;
 
-            yearPicker.TextPicker.EnterPressed += (s,e) =>
-            {
-                yearPicker.TextPicker.CancelEdit();
-                yearPickerPanel.Visible = false;
-            };
-
-            yearPicker.TextPicker.EscapePressed += (s, e) =>
-            {
-                yearPicker.TextPicker.CancelEdit();
-                yearPickerPanel.Visible = false;
-            };
-
-            yearPicker.ValueChanged += (s, e) =>
-            {
-                if(suspendHeaderEventsCounter > 0)
-                    return;
-                Value = new DateOnly(yearPicker.Value, Value.Month, Value.Day);
-            };
-
-            HeaderYearClick += (s, e) =>
-            {
-                if (!ShowYearDropDown)
-                    return;
-                yearPickerPanel.Visible = !yearPickerPanel.Visible;
-            };
+            popupYearPicker.TextPicker.EnterPressed += OnPopupYearPickerEnterPressed;
+            popupYearPicker.TextPicker.EscapePressed += OnPopupYearPickerEscapePressed;
+            popupYearPicker.ValueChanged += OnPopupYearPickerValueChanged;
+            HeaderYearClick += OnHeaderYearClick;
         }
 
         /// <summary>
@@ -260,6 +236,16 @@ namespace Alternet.UI
         /// which displays the days of the month in a grid format.
         /// </summary>
         public CalendarListBox ListBox => listBox;
+
+        /// <summary>
+        /// Gets the popup panel that contains the year picker.
+        /// </summary>
+        public TransparentPanel PopupYearPickerPanel => popupYearPickerPanel;
+
+        /// <summary>
+        /// Gets the year picker used in the popup panel.
+        /// </summary>
+        public YearPicker PopupYearPicker => popupYearPicker;
 
         /// <summary>
         /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed,
@@ -423,7 +409,7 @@ namespace Alternet.UI
                 try
                 {
                     header.Value = restrictedDate.Value;
-                    yearPicker.Value = restrictedDate.Value.Year;
+                    popupYearPicker.Value = restrictedDate.Value.Year;
                 }
                 finally
                 {
@@ -784,9 +770,9 @@ namespace Alternet.UI
                             height += headerHeight.Height + listBox.Margin.Vertical + header.Margin.Vertical;
                             width = Math.Max(width, headerHeight.Width) + listBox.Margin.Horizontal + header.Margin.Horizontal;
 
-                            if (yearPickerPanel.Visible)
+                            if (popupYearPickerPanel.Visible)
                             {
-                                height += yearPickerPanel.GetPreferredSize(context).Height + yearPickerPanel.Margin.Vertical;
+                                height += popupYearPickerPanel.GetPreferredSize(context).Height + popupYearPickerPanel.Margin.Vertical;
                             }
 
                             return new SizeD(width, height);
@@ -874,6 +860,63 @@ namespace Alternet.UI
         {
             base.OnBackColorChanged(e);
             UpdateDayItems(true);
+        }
+
+        /// <summary>
+        /// Called when the visibility of the year picker popup panel changes,
+        /// updating the sticky state of the year picker in the calendar header accordingly.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnPopupYearPickerVisibleChanged(object? sender, EventArgs e)
+        {
+            header.YearPicker.Sticky = popupYearPickerPanel.Visible;
+        }
+
+        /// <summary>
+        /// Called when the enter key is pressed in the year picker, canceling the edit and hiding the year dropdown panel.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnPopupYearPickerEnterPressed(object? sender, EventArgs e)
+        {
+            popupYearPicker.TextPicker.CancelEdit();
+            popupYearPickerPanel.Visible = false;
+        }
+
+        /// <summary>
+        /// Called when the escape key is pressed in the year picker, canceling the edit and hiding the year dropdown panel.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnPopupYearPickerEscapePressed(object? sender, EventArgs e)
+        {
+            popupYearPicker.TextPicker.CancelEdit();
+            popupYearPickerPanel.Visible = false;
+        }
+
+        /// <summary>
+        /// Called when the value of the year picker in the calendar header changes, updating the calendar's value accordingly.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnPopupYearPickerValueChanged(object? sender, EventArgs e)
+        {
+            if (suspendHeaderEventsCounter > 0)
+                return;
+            Value = new DateOnly(popupYearPicker.Value, Value.Month, Value.Day);
+        }
+
+        /// <summary>
+        /// Called when the year picker in the calendar header is clicked, toggling the visibility of the year dropdown panel.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnHeaderYearClick(object? sender, EventArgs e)
+        {
+            if (!ShowYearDropDown)
+                return;
+            popupYearPickerPanel.Visible = !popupYearPickerPanel.Visible;
         }
 
         /// <inheritdoc/>
