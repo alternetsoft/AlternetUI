@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs before popup window is shown.
         /// </summary>
-        public event EventHandler? BeforeShowPopup;
+        public event EventHandler<BaseCancelEventArgs>? BeforeShowPopup;
 
         /// <summary>
         /// Occurs when selected value is changed.
@@ -269,6 +269,11 @@ namespace Alternet.UI
         public virtual AbstractControl? PopupOwner { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the popup window is allowed to be shown.
+        /// </summary>
+        public virtual bool AllowPopupWindow { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets value as <see cref="string"/>.
         /// </summary>
         [Browsable(false)]
@@ -311,9 +316,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ShowPopup()
         {
-            if (!Enabled)
+            if (!Enabled || !AllowPopupWindow)
                 return;
-            RaiseBeforeShowPopup(EventArgs.Empty);
+            var e = new BaseCancelEventArgs();
+            RaiseBeforeShowPopup(e);
+            
+            if (e.Cancel)
+                return;
+            
             PopupWindow.ShowPopup(PopupOwner ?? this, PopupWindowPosition);
         }
 
@@ -321,9 +331,9 @@ namespace Alternet.UI
         /// Raises the <see cref="ValueChanged"/> event and calls
         /// <see cref="OnValueChanged(EventArgs)"/>.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// <param name="e">An <see cref="BaseCancelEventArgs"/> that contains the
         /// event data.</param>
-        public void RaiseBeforeShowPopup(EventArgs e)
+        public void RaiseBeforeShowPopup(BaseCancelEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -487,9 +497,9 @@ namespace Alternet.UI
         /// <summary>
         /// Called before popup window is shown..
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// <param name="e">An <see cref="BaseCancelEventArgs"/> that contains the
         /// event data.</param>
-        protected virtual void OnBeforeShowPopup(EventArgs e)
+        protected virtual void OnBeforeShowPopup(BaseCancelEventArgs e)
         {
         }
 
