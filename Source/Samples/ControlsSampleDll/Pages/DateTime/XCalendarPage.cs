@@ -12,7 +12,6 @@ namespace ControlsSample
     public partial class XCalendarPage : Panel
     {
         private readonly XCalendar calendar = new();
-        private readonly Panel calendarPanel = new();
         private readonly TabControl tabControl = new();
         private readonly Splitter splitter = new();
 
@@ -24,12 +23,10 @@ namespace ControlsSample
         {
             Padding = 5;
 
-            calendarPanel.HasBorder = true;
-
             splitter.Dock = DockStyle.Right;
 
             Layout = LayoutStyle.Dock;
-            calendarPanel.Dock = DockStyle.Fill;
+            calendar.Dock = DockStyle.Fill;
 
             tabControl.Dock = DockStyle.Right;
             tabControl.Width = 400;
@@ -59,11 +56,10 @@ namespace ControlsSample
                 App.Log("Month clicked");
             };
 
-            calendarPanel.HasBorder = true;
+            calendar.HasBorder = true;
 
             calendar.HorizontalAlignment = HorizontalAlignment.Center;
             calendar.VerticalAlignment = VerticalAlignment.Center;
-            calendar.Parent = calendarPanel;
 
             calendar.MinDate = DateTime.Now.AddDays(-10).ToDateOnly();
             calendar.UseMinDate = false;
@@ -75,7 +71,7 @@ namespace ControlsSample
 
             void Fn()
             {
-                calendarPanel.Parent = this;
+                calendar.Parent = this;
                 splitter.Parent = this;
                 tabControl.Parent = this;
 

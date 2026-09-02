@@ -163,7 +163,7 @@ namespace Alternet.UI
             IFormatProvider? formatProvider = null)
         {
             var monthNames = GetMonthNames(kind, formatProvider);
-            return monthNames[(int)month];
+            return monthNames[(int)month - 1];
         }
 
         /// <summary>

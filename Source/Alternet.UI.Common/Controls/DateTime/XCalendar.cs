@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a calendar control that allows users to select a date from a visual calendar interface.
     /// </summary>
-    public partial class XCalendar : Border
+    public partial class XCalendar : ScrollViewer
     {
         /// <summary>
         /// Gets the total number of day cells in the calendar control, which is 42 (6 rows x 7 columns).
@@ -74,6 +74,8 @@ namespace Alternet.UI
         private readonly CalendarHeaderItem headerItem;
         private readonly YearPicker popupYearPicker;
         private readonly TransparentPanel popupYearPickerPanel;
+        private readonly MonthPickerPanel monthPicker;
+        private readonly CalendarContainer container;
 
         private RestrictedDate restrictedDate;
         private DateOnly date;
@@ -92,6 +94,9 @@ namespace Alternet.UI
         /// </summary>
         public XCalendar()
         {
+            Interior.VertScrollBar?.SetVisible(false);
+            Interior.HorzScrollBar?.SetVisible(false);
+
             restrictedDate = new(
                 () => date,
                 v => date = v,
@@ -103,6 +108,12 @@ namespace Alternet.UI
             popupYearPickerPanel = new();
             listBox = new();
             header = new();
+            monthPicker = new();
+            container = new();
+            
+            container.Layout = LayoutStyle.Vertical;
+
+            monthPicker.Visible = false;
 
             popupYearPickerPanel.Visible = false;
             popupYearPicker.Parent = popupYearPickerPanel;
@@ -134,13 +145,10 @@ namespace Alternet.UI
 
             restrictedDate.Value = DateTime.Now.Date.ToDateOnly();
 
-            Layout = LayoutStyle.Vertical;
-
             popupYearPickerPanel.MarginBottom = 5;
             header.MarginBottom = 5;
 
             ParentBackColor = false;
-            Padding = 10;
             BackColor = listBox.BackColor;
 
             listBox.VertGridLines = false;
@@ -159,12 +167,12 @@ namespace Alternet.UI
             listBox.BackColorChanged += OnListBoxBackColorChanged;
             listBox.CellClick += OnListBoxCellClick;
 
-            DoInsideLayout(() =>
-            {
-                header.Parent = this;
-                popupYearPickerPanel.Parent = this;
-                listBox.Parent = this;
-            });
+            header.Parent = container;
+            popupYearPickerPanel.Parent = container;
+            monthPicker.Parent = container;
+            listBox.Parent = container;
+
+            container.Parent = this.Content;
 
             ShowMonthDropDown = DefaultShowMonthDropDown;
             ShowYearDropDown = DefaultShowYearDropDown;
@@ -175,6 +183,15 @@ namespace Alternet.UI
             popupYearPicker.TextPicker.EscapePressed += OnPopupYearPickerEscapePressed;
             popupYearPicker.ValueChanged += OnPopupYearPickerValueChanged;
             HeaderYearClick += OnHeaderYearClick;
+
+            HeaderMonthClick += (s, e) =>
+            {
+                if (!ShowMonthDropDown)
+                    return;
+                monthPicker.Visible = !monthPicker.Visible;
+            };
+
+            UpdateListBoxSize();
         }
 
         /// <summary>
@@ -251,7 +268,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed,
         /// when the month picker is clicked, allowing users to select a specific month.
         /// </summary>
-        public virtual bool ShowMonthDropDown { get; set; } 
+        public virtual bool ShowMonthDropDown { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the year dropdown in the calendar header should be displayed
@@ -733,43 +750,28 @@ namespace Alternet.UI
             BackColor = listBox.BackColor;
         }
 
+        /// <summary>
+        /// Updates the size of the inner list box based on the measured content size,
+        /// ensuring it meets the minimum total height requirement.
+        /// </summary>
+        protected virtual void UpdateListBoxSize()
+        {
+            VirtualListBox.MeasureContentSizeResult measureResult = listBox.GetContentSize(MeasureCanvas);
+
+            var minTotalHeight = listBox.MinItemHeight * 7;
+
+            listBox.Interior.RequestScrollBarSize(listBox, listBox.ScaleFactor, out float vertWidth, out float horzHeight);
+
+            var w = measureResult.ContentSize.Width;
+            var h = Math.Max(measureResult.ContentSize.Height, minTotalHeight);
+
+            listBox.SuggestedSize = new(w, h);
+        }
+
         /// <inheritdoc/>
         protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
-            if (context.AvailableSize.AnyIsEmptyOrNegative)
-                return SizeD.Empty;
-
-            var result = GetDefaultPreferredSize(
-                        context.AvailableSize,
-                        withPadding: true,
-                        (size) =>
-                        {
-                            var dc = MeasureCanvas;
-
-                            VirtualListBox.MeasureContentSizeResult measureResult = listBox.GetContentSize(
-                                dc,
-                                fromIndex: null,
-                                toIndex: null,
-                                prm: null);
-
-                            var width = measureResult.ContentSize.Width;
-                            var height = measureResult.ContentSize.Height;
-                            var headerHeight = header.GetPreferredSize(context);
-
-                            height += headerHeight.Height + listBox.Margin.Vertical + header.Margin.Vertical;
-                            width = Math.Max(width, headerHeight.Width) + listBox.Margin.Horizontal + header.Margin.Horizontal;
-
-                            if (popupYearPickerPanel.Visible)
-                            {
-                                height += popupYearPickerPanel.GetPreferredSize(context).Height + popupYearPickerPanel.Margin.Vertical;
-                            }
-
-                            return new SizeD(width, height);
-                        });
-
-            result = result.Ceiling();
-
-            return result;
+            return base.GetPreferredSizeInternal(context);
         }
 
         /// <summary>
@@ -913,7 +915,10 @@ namespace Alternet.UI
         {
             base.OnFontChanged(e);
             UpdateColumnWidth();
-            PerformLayoutAndInvalidate();
+            PerformLayoutAndInvalidate(() =>
+            {
+                UpdateListBoxSize();
+            });
         }
 
         /// <summary>
@@ -1243,6 +1248,27 @@ namespace Alternet.UI
     }
 
     /// <summary>
+    /// Represents a container panel used in the calendar control, which provides a layout for its child controls.
+    /// </summary>
+    public partial class CalendarContainer : HiddenBorder
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarContainer"/> class,
+        /// </summary>
+        public CalendarContainer()
+        {
+            Padding = 10;
+            Layout = LayoutStyle.Vertical;
+        }
+
+        /// <inheritdoc/>
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
+        {
+            return base.GetPreferredSizeInternal(context);
+        }
+    }
+
+    /// <summary>
     /// Represents the event arguments for a day click event in the calendar control,
     /// providing information about the clicked day cell.
     /// </summary>
@@ -1350,5 +1376,191 @@ namespace Alternet.UI
         /// Gets a value indicating whether the cell's date is restricted based on the calendar's date range limitations.
         /// </summary>
         public bool IsRestricted { get; internal set; }
+    }
+
+    /// <summary>
+    /// Represents a panel used as the month picker in the calendar control,
+    /// allowing users to select a month.
+    /// </summary>
+    public partial class MonthPickerPanel : TransparentPanel
+    {
+        private readonly TransparentPanel[] rows;
+        private readonly List<SpeedTextButton> buttons = new(12);
+        private IFormatProvider? formatProvider;
+        private MonthNamesKind kind = MonthNamesKind.Abbreviated;
+        private CalendarMonth data = CalendarMonth.January;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MonthPickerPanel"/> class.
+        /// </summary>
+        public MonthPickerPanel()
+        {
+            var row1 = CreateRow([CalendarMonth.January, CalendarMonth.February, CalendarMonth.March, CalendarMonth.April]);
+            var row2 = CreateRow([CalendarMonth.May, CalendarMonth.June, CalendarMonth.July, CalendarMonth.August]);
+            var row3 = CreateRow([CalendarMonth.September, CalendarMonth.October, CalendarMonth.November, CalendarMonth.December]);
+
+            rows = [row1, row2, row3];
+
+            Layout = LayoutStyle.Vertical;
+
+            row1.Parent = this;
+            row2.Parent = this;
+            row3.Parent = this;
+
+            var line = Add<HorizontalLine>();
+            line.Margin = (5, 5, 5, 5);
+            line.Parent = this;
+
+            UpdateMonthNames();
+        }
+
+        /// <summary>
+        /// Occurs when the selected month value changes, allowing subscribers to respond to the change in selection.
+        /// </summary>
+        public event EventHandler? ValueChanged;
+
+        /// <summary>
+        /// Gets or sets the kind of month names displayed in the month picker,
+        /// allowing customization of the month name format.
+        /// </summary>
+        public virtual MonthNamesKind MonthNamesKind
+        {
+            get => kind;
+            set
+            {
+                if (value == kind) return;
+                kind = value;
+                UpdateMonthNames();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected month in the month picker, allowing users to select a specific month.
+        /// </summary>
+        public virtual CalendarMonth Value
+        {
+            get
+            {
+                return data;
+            }
+
+            set
+            {
+                if (value == data) return;
+                data = value;
+                UpdateSelectedMonth();
+                ValueChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the format provider used for formatting month values.
+        /// </summary>
+        public virtual IFormatProvider? FormatProvider
+        {
+            get => formatProvider;
+            set
+            {
+                if (value == formatProvider) return;
+                formatProvider = value;
+                UpdateMonthNames();
+            }
+        }
+
+        /// <summary>
+        /// Updates the values of the month buttons in the month picker panel based on the current kind and format provider.
+        /// </summary>
+        /// <param name="months">The months to include in the row.</param>
+        /// <returns>The created <see cref="TransparentPanel"/> instance representing the row.</returns>
+        protected virtual TransparentPanel CreateRow(CalendarMonth[] months)
+        {
+            var result = new TransparentPanel();
+            result.Layout = LayoutStyle.Horizontal;
+
+            foreach (var m in months)
+            {
+                var button = CreateButton(m);
+                button.Parent = result;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Updates the month names displayed on the buttons in the month picker panel
+        /// based on the current kind and format provider.
+        /// </summary>
+        protected virtual void UpdateMonthNames()
+        {
+            var monthNames = DateUtils.GetMonthNames(MonthNamesKind, formatProvider);
+            var width = GetMaxWidth(MeasureCanvas, RealFont);
+
+            foreach (var button in buttons)
+            {
+                if (button.Tag is CalendarMonth month)
+                {
+                    button.Text = monthNames[(int)month - 1];
+                    button.MinWidth = width;
+                }
+            }
+
+            float GetMaxWidth(Graphics dc, Font font)
+            {
+                var result = 0f;
+
+                foreach (var month in monthNames)
+                {
+                    var monthNameWidth = dc.GetTextExtent(month, font).Width;
+                    if (monthNameWidth > result)
+                        result = monthNameWidth;
+                }
+
+                return result + 12;
+            }
+        }
+
+        /// <summary>
+        /// Updates the selected month in the month picker panel, setting the sticky state of the corresponding button.
+        /// </summary>
+        protected virtual void UpdateSelectedMonth()
+        {
+            foreach (var button in buttons)
+            {
+                if (button.Tag is CalendarMonth month)
+                {
+                    button.Sticky = month == data;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            UpdateMonthNames();
+        }
+
+        /// <summary>
+        /// Creates a button for a specific month in the month picker panel, initializing its properties and click action.
+        /// </summary>
+        /// <param name="month">The month for which to create the button.</param>
+        /// <returns>The created <see cref="SpeedTextButton"/> instance.</returns>
+        protected virtual SpeedTextButton CreateButton(CalendarMonth month)
+        {
+            var result = new SpeedTextButton();
+            result.Tag = month;
+            result.Text = DateUtils.GetMonthName(month, MonthNamesKind, FormatProvider);
+            result.HorizontalAlignment = HorizontalAlignment.Center;
+            result.VerticalAlignment = VerticalAlignment.Center;
+            result.Sticky = data == month;
+            buttons.Add(result);
+
+            result.ClickAction = () =>
+            {
+                Value = month;
+            };
+
+            return result;
+        }
     }
 }

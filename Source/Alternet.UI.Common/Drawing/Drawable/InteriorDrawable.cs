@@ -425,6 +425,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Requests the preferred size of the vertical and horizontal scrollbars based on the current metrics and scale factor.
+        /// </summary>
+        /// <param name="control">The control for which to request the scrollbar size.</param>
+        /// <param name="scaleFactor">The scale factor to apply.</param>
+        /// <param name="vertWidth">The preferred width of the vertical scrollbar.</param>
+        /// <param name="horzHeight">The preferred height of the horizontal scrollbar.</param>
+        public virtual void RequestScrollBarSize(
+            AbstractControl control,
+            float scaleFactor,
+            out float vertWidth,
+            out float horzHeight)
+        {
+            var metrics = GetRealMetrics(control);
+
+            vertWidth = metrics.GetPreferredSize(isVertical: true, scaleFactor).Width;
+            horzHeight = metrics.GetPreferredSize(isVertical: false, scaleFactor).Height;
+
+            vertWidth = Math.Max(vertWidth, MinScrollBarSize);
+            horzHeight = Math.Max(horzHeight, MinScrollBarSize);
+        }
+
+        /// <summary>
         /// Performs layout of the drawable children and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
@@ -488,13 +510,7 @@ namespace Alternet.Drawing
             var bothVisible = vertVisible && horzVisible;
             var cornerVisible = CornerVisible && bothVisible;
 
-            var metrics = GetRealMetrics(control);
-
-            var vertWidth = metrics.GetPreferredSize(true, scaleFactor).Width;
-            var horzHeight = metrics.GetPreferredSize(false, scaleFactor).Height;
-
-            vertWidth = Math.Max(vertWidth, MinScrollBarSize);
-            horzHeight = Math.Max(horzHeight, MinScrollBarSize);
+            RequestScrollBarSize(control, scaleFactor, out float vertWidth, out float horzHeight);
 
             var vertHeight = boundsInsideBorder.Height;
             var vertLeft = boundsInsideBorder.Right - vertWidth;
