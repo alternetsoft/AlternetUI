@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -65,12 +66,12 @@ namespace Alternet.UI
         private readonly CalendarHeader header;
         private readonly CalendarHeaderItem headerItem;
 
+        private RestrictedDate restrictedDate;
         private DateOnly date;
         private int suspendHeaderEventsCounter;
         private LightDarkColor? surroundDayColor;
         private BorderSettings? todayBorder;
         private DayNamesKind? dayNamesKind;
-        private IFormatProvider? formatProvider;
         private DayOfWeek? firstDayOfWeek;
 
         static XCalendar()
@@ -82,6 +83,8 @@ namespace Alternet.UI
         /// </summary>
         public XCalendar()
         {
+            restrictedDate = new(() => date, v => date = v, null);
+
             listBox = new();
             header = new();
 
@@ -110,7 +113,7 @@ namespace Alternet.UI
                 }
             }
 
-            date = DateOnly.FromDateTime(DateTime.Now.Date);
+            restrictedDate.Value = DateTime.Now.Date.ToDateOnly();
 
             Layout = LayoutStyle.Vertical;
 
@@ -221,13 +224,117 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>Gets or sets the minimum date and time that can be
+        /// selected in the control.</summary>
+        /// <returns>The minimum date and time that can be selected in the
+        /// control. The default is <see cref="DateUtils.MinDateTime"/>.
+        /// </returns>
+        /// <exception cref="System.ArgumentException">The value assigned is
+        /// not less than the <see cref="MaxDate" /> value.
+        /// </exception>
+        /// <exception cref="System.SystemException">The value assigned is
+        /// less than the <see cref="DateUtils.MinDateTime" /> value.
+        /// </exception>
+        public virtual DateOnly MinDate
+        {
+            get
+            {
+                return restrictedDate.MinDate;
+            }
+
+            set
+            {
+                restrictedDate.MinDate = value;
+            }
+        }
+
+        /// <summary>Gets or sets the maximum date and time that can be
+        /// selected in the control.</summary>
+        /// <returns>The maximum date and time that can be selected
+        /// in the control. The default is determined as the minimum of the
+        /// CurrentCulture's Calendar's
+        /// <see cref="System.Globalization.Calendar.MaxSupportedDateTime" />
+        /// property and <see cref="DateUtils.MaxDateTime"/>.</returns>
+        /// <exception cref="System.ArgumentException">The value assigned is less
+        /// than the <see cref="MinDate" />
+        /// value.</exception>
+        /// <exception cref="System.SystemException">The value assigned is greater
+        /// than the <see cref="DateUtils.MaxDateTime" />
+        /// value.</exception>
+        public virtual DateOnly MaxDate
+        {
+            get
+            {
+                return restrictedDate.MaxDate;
+            }
+
+            set
+            {
+                restrictedDate.MaxDate = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to use <see cref="MinDate"/> for the date range limitation.
+        /// </summary>
+        public virtual bool UseMinDate
+        {
+            get
+            {
+                return restrictedDate.UseMinDate;
+            }
+
+            set
+            {
+                restrictedDate.UseMinDate = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to use <see cref="MaxDate"/> and
+        /// <see cref="MinDate"/> for the date range limitation.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool UseMinMaxDate
+        {
+            get
+            {
+                return UseMinDate && UseMaxDate;
+            }
+
+            set
+            {
+                if (UseMinDate == value && UseMaxDate == value)
+                    return;
+                UseMinDate = value;
+                UseMaxDate = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to use <see cref="MaxDate"/> for the date range limitation.
+        /// </summary>
+        public virtual bool UseMaxDate
+        {
+            get
+            {
+                return restrictedDate.UseMaxDate;
+            }
+
+            set
+            {
+                restrictedDate.UseMaxDate = value;
+            }
+        }
+
+
         /// <summary>
         /// Gets or sets the current value of the calendar control as a <see cref="DateTime"/> object,
         /// </summary>
         [Browsable(false)]
         public DateTime AsDateTime
         {
-            get => Value.ToDateTime(new TimeOnly(0, 0));
+            get => Value.ToDateTime();
             set => Value = DateOnly.FromDateTime(value);
         }
 
@@ -244,9 +351,9 @@ namespace Alternet.UI
 
             set
             {
-                if (this.date == value)
+                if (Value == value)
                     return;
-                this.date = value;
+                restrictedDate.Value = value;
 
                 suspendHeaderEventsCounter++;
                 try
@@ -319,11 +426,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual IFormatProvider? FormatProvider
         {
-            get => formatProvider;
+            get => restrictedDate.FormatProvider;
             set
             {
-                if (formatProvider == value) return;
-                formatProvider = value;
+                if (restrictedDate.FormatProvider == value) return;
+                restrictedDate.FormatProvider = value;
                 header.FormatProvider = value;
                 UpdateDayNames();
                 PerformLayoutAndInvalidate();
@@ -710,9 +817,9 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnValueChanged()
         {
-            var firstDayOfMonth = DateUtils.GetFirstDateOfMonth(date);
-            var lastDayOfMonth = DateUtils.GetLastDateOfMonth(date);
-            var daysInMonth = DateUtils.GetDaysInMonth(date);
+            var firstDayOfMonth = DateUtils.GetFirstDateOfMonth(Value);
+            var lastDayOfMonth = DateUtils.GetLastDateOfMonth(Value);
+            var daysInMonth = DateUtils.GetDaysInMonth(Value);
             var dayOfWeek = firstDayOfMonth.DayOfWeek;
             var index = GetDayOfWeekIndex(dayOfWeek);
 
