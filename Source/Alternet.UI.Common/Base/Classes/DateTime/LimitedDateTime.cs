@@ -14,7 +14,7 @@ namespace Alternet.UI
     internal interface IRestrictedDateTimeContainer : IValueSource<DateTime?>
     {
         /// <summary>
-        /// Sets the possible date range in the native control.
+        /// Sets the minimum and maximum date and time that can be selected in the control.
         /// </summary>
         /// <param name="min">The minimum date and time.</param>
         /// <param name="max">The maximum date and time.</param>
