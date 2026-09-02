@@ -503,7 +503,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void ShowPopup()
         {
-            if (!Enabled)
+            if (!Enabled || !AllowPopupWindow)
                 return;
 
             var kind = PopupKind ?? DefaultPopupKind;
@@ -514,7 +514,12 @@ namespace Alternet.UI
             if (App.IsLinuxOS)
                 kind = PickerPopupKind.ListBox;
 
-            RaiseBeforeShowPopup(EventArgs.Empty);
+            BaseCancelEventArgs e = new ();
+
+            RaiseBeforeShowPopup(e);
+
+            if (e.Cancel)
+                return;
 
             if (AllowContextMenuPopup)
             {
