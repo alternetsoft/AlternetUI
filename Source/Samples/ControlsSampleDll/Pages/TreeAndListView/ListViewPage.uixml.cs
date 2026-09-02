@@ -68,8 +68,22 @@ namespace ControlsSample
                 App.Log($"Item text edited: {e.NewText}");
             };
 
-            /*
+            listView.ListBox.CellClick += (s, e) =>
+            {
+                var logged = false;
+
+                if (!logged)
+                    return;
+
+                var columnHeader = e.Column.Title ?? e.Column.Name ?? "<none>";
+                var itemText = e.Item.SafeCell(e.Column).Text ?? "<none>";
+                Log($"CellClick: Cell: '{itemText}', Column: '{columnHeader}', " +
+                    $"ItemIndex: {e.ItemIndex}, Location: '{e.MouseEventArgs.Location}'");
+            };
+
             listView.SelectionMode = ListViewSelectionMode.Multiple;
+
+            /*
             listView.AllowLabelEdit = true;
             */
         }

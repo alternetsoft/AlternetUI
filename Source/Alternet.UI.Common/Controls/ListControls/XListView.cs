@@ -19,5 +19,26 @@ namespace Alternet.UI
             IsHeaderVisible = true;
             TreeButtons = TreeViewButtonsKind.Null;
         }
+
+        /// <summary>
+        /// Gets or sets the selection mode (none, single or multiple).
+        /// </summary>
+        /// <remarks>The selection mode determines whether multiple items can be selected
+        /// at once and how the selection behaves.
+        /// For example, <see cref="ListViewSelectionMode.Single"/> allows only one item to be
+        /// selected, while  <see cref="ListViewSelectionMode.Multiple"/> allows multiple
+        /// items to be selected.</remarks>
+        public new ListViewSelectionMode SelectionMode
+        {
+            get
+            {
+                return (ListViewSelectionMode)ListBox.SelectionMode;
+            }
+
+            set
+            {
+                ListBox.SelectionMode = (ListBoxSelectionMode)value;
+            }
+        }
     }
 }
