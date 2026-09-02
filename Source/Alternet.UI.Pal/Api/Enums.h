@@ -575,16 +575,6 @@ namespace Alternet::UI
         Intersect = 1,
     };
     
-    enum class CombineMode
-    {
-        Replace = 0,
-        Intersect = 1,
-        Union = 2,
-        Xor = 3,
-        Exclude = 4,
-        Complement = 5,
-    };
-    
     enum class CoordUnit
     {
         Pixel = 0,
@@ -912,6 +902,12 @@ namespace Alternet::UI
         AllPages = 0,
         Selection = 1,
         SomePages = 2,
+    };
+    
+    enum class CombineMode
+    {
+        Intersect = 1,
+        Exclude = 4,
     };
     
     enum class ContentAlignment
@@ -1457,6 +1453,22 @@ namespace Alternet::UI
         Round = 2,
     };
     
+    enum class CalendarMonth
+    {
+        January = 1,
+        February = 2,
+        March = 3,
+        April = 4,
+        May = 5,
+        June = 6,
+        July = 7,
+        August = 8,
+        September = 9,
+        October = 10,
+        November = 11,
+        December = 12,
+    };
+    
     enum class DatePickerStyleFlags
     {
         Default = 0,
@@ -1478,6 +1490,66 @@ namespace Alternet::UI
         Default = 0,
         Spin = 1,
         DropDown = 2,
+    };
+    
+    enum class DayNamesKind
+    {
+        Full = 0,
+        Abbreviated = 1,
+        Shortest = 2,
+    };
+    
+    enum class DaysOfWeek
+    {
+        None = 0,
+        Sunday = 1,
+        Monday = 2,
+        Tuesday = 4,
+        Wednesday = 8,
+        Thursday = 16,
+        Friday = 32,
+        Weekdays = 62,
+        Saturday = 64,
+        Weekend = 65,
+        All = 127,
+    };
+    
+    enum class ExtendedDayOfWeek
+    {
+        Sunday = 0,
+        Monday = 1,
+        Tuesday = 2,
+        Wednesday = 3,
+        Thursday = 4,
+        Friday = 5,
+        Saturday = 6,
+        Day = 7,
+        Weekday = 8,
+        Weekend = 9,
+    };
+    
+    enum class MonthNamesKind
+    {
+        Full = 0,
+        Abbreviated = 1,
+    };
+    
+    enum class RelativeWeekday
+    {
+        First = 0,
+        Second = 1,
+        Third = 2,
+        Fourth = 3,
+        Last = 4,
+    };
+    
+    enum class ScheduleRepeatPattern
+    {
+        None = 0,
+        Daily = 1,
+        Weekly = 2,
+        Monthly = 3,
+        Yearly = 4,
     };
     
     enum class TimePeriodUnit
@@ -2579,8 +2651,9 @@ namespace Alternet::UI
     
     enum class ListViewSelectionMode
     {
-        Single = 0,
-        Multiple = 1,
+        None = 0,
+        Single = 1,
+        Multiple = 2,
     };
     
     enum class ListViewSortMode
@@ -2711,8 +2784,9 @@ namespace Alternet::UI
     
     enum class ListBoxSelectionMode
     {
-        Single = 0,
-        Multiple = 1,
+        None = 0,
+        Single = 1,
+        Multiple = 2,
     };
     
     enum class MenuItemType
@@ -2738,6 +2812,16 @@ namespace Alternet::UI
         One = 1,
         MultiSimple = 2,
         MultiExtended = 3,
+    };
+    
+    enum class TextCaseRule
+    {
+        None = 0,
+        Lower = 1,
+        Upper = 2,
+        LowerInvariant = 3,
+        UpperInvariant = 4,
+        SentenceCase = 5,
     };
     
     enum class PropertyGridApplyFlags
@@ -3506,8 +3590,9 @@ namespace Alternet::UI
     
     enum class TreeViewSelectionMode
     {
-        Single = 0,
-        Multiple = 1,
+        None = 0,
+        Single = 1,
+        Multiple = 2,
     };
     
     enum class NumericTypeCode
@@ -3782,6 +3867,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::ListBoxHandlerFlags> { 
 template<> struct enable_bitmask_operators<Alternet::UI::SetBoundsFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::VisualControlStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DatePickerStyleFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DaysOfWeek> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::LogItemKindFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::MessageBoxOptions> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontDialogRestrictSelection> { static const bool enable = true; };

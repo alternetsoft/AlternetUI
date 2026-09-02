@@ -673,8 +673,7 @@ namespace Alternet::UI
 	{
 		long style =
 			(_hideRoot ? wxTR_HIDE_ROOT : 0) |
-			(_selectionMode == TreeViewSelectionMode::Single ?
-				wxTR_SINGLE : wxTR_MULTIPLE) |
+			(_selectionMode == TreeViewSelectionMode::Multiple ? wxTR_MULTIPLE : wxTR_SINGLE) |
 			(_allowLabelEdit ? wxTR_EDIT_LABELS : 0) |
 			(_showRootLines ? wxTR_LINES_AT_ROOT : 0) |
 			(_showLines ? 0 : wxTR_NO_LINES) |

@@ -6,6 +6,11 @@ namespace Alternet.UI
     public enum ListViewSelectionMode
     {
         /// <summary>
+        /// No items can be selected.
+        /// </summary>
+        None,
+
+        /// <summary>
         /// Only one item can be selected.
         /// </summary>
         Single,

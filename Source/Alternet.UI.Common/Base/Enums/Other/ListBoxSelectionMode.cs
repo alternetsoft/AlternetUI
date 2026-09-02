@@ -6,6 +6,11 @@ namespace Alternet.UI
     public enum ListBoxSelectionMode
     {
         /// <summary>
+        /// No items can be selected.
+        /// </summary>
+        None,
+
+        /// <summary>
         /// Only one item can be selected.
         /// </summary>
         Single,
@@ -14,10 +19,5 @@ namespace Alternet.UI
         /// Multiple items can be selected.
         /// </summary>
         Multiple,
-
-        /// <summary>
-        /// No items can be selected.
-        /// </summary>
-        None,
     }
 }
