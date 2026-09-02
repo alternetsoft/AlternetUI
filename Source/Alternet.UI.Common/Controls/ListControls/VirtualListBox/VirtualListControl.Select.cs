@@ -341,9 +341,6 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return ListBoxSelectionMode.Single;
-
                 return selectionMode;
             }
 
@@ -994,6 +991,9 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual bool SetSelectedCore(int index, bool value, bool onlyVisible = true)
         {
+            if (SelectionMode == ListBoxSelectionMode.None)
+                return false;
+
             var item = GetItem(index);
 
             if (item is null)
