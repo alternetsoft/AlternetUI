@@ -50,7 +50,7 @@ namespace Alternet.UI
             SpeedButton.DefaultRoundBorderRadius,
             SpeedButton.DefaultRoundBorderRadiusIsPercent);
 
-        private readonly TextPicker textPicker = new ();
+        private readonly TextPicker textPicker = new();
 
         private int smallChange = 1;
         private int largeChange = 5;
@@ -738,7 +738,7 @@ namespace Alternet.UI
             textUpdateSuppressed++;
             try
             {
-                if(int.TryParse(Text, out var newValue))
+                if (int.TryParse(Text, out var newValue))
                 {
                     Value = newValue;
                 }
