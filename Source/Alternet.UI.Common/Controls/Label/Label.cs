@@ -1121,4 +1121,18 @@ namespace Alternet.UI
                 BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
         }
     }
+    
+    /// <summary>
+    /// Represents a label with bold text style.
+    /// </summary>
+    public class BoldLabel : Label
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BoldLabel"/> class with bold text style.
+        /// </summary>
+        public BoldLabel()
+        {
+            IsBold = true;
+        }
+    }
 }
