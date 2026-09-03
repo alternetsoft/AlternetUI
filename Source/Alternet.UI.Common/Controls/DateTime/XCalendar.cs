@@ -74,7 +74,7 @@ namespace Alternet.UI
         private readonly CalendarHeaderItem headerItem;
         private readonly YearPicker popupYearPicker;
         private readonly TransparentPanel popupYearPickerPanel;
-        private readonly MonthPickerPanel monthPicker;
+        private readonly MonthPickerPanel popupMonthPicker;
         private readonly CalendarContainer container;
 
         private RestrictedDate restrictedDate;
@@ -108,12 +108,12 @@ namespace Alternet.UI
             popupYearPickerPanel = new();
             listBox = new();
             header = new();
-            monthPicker = new();
+            popupMonthPicker = new();
             container = new();
             
             container.Layout = LayoutStyle.Vertical;
 
-            monthPicker.Visible = false;
+            popupMonthPicker.Visible = false;
 
             popupYearPickerPanel.Visible = false;
             popupYearPicker.Parent = popupYearPickerPanel;
@@ -169,7 +169,7 @@ namespace Alternet.UI
 
             header.Parent = container;
             popupYearPickerPanel.Parent = container;
-            monthPicker.Parent = container;
+            popupMonthPicker.Parent = container;
             listBox.Parent = container;
 
             container.Parent = this.Content;
@@ -178,20 +178,33 @@ namespace Alternet.UI
             ShowYearDropDown = DefaultShowYearDropDown;
 
             popupYearPickerPanel.VisibleChanged += OnPopupYearPickerVisibleChanged;
+            popupMonthPicker.VisibleChanged += OnPopupMonthPickerVisibleChanged;
 
             popupYearPicker.TextPicker.EnterPressed += OnPopupYearPickerEnterPressed;
             popupYearPicker.TextPicker.EscapePressed += OnPopupYearPickerEscapePressed;
             popupYearPicker.ValueChanged += OnPopupYearPickerValueChanged;
             HeaderYearClick += OnHeaderYearClick;
+            HeaderMonthClick += OnHeaderMonthClick;
 
-            HeaderMonthClick += (s, e) =>
+            popupMonthPicker.MonthClick += (s, e) =>
             {
-                if (!ShowMonthDropDown)
-                    return;
-                monthPicker.Visible = !monthPicker.Visible;
+                popupMonthPicker.Visible = false;
+                Value = new DateOnly(Value.Year, (int)e.Value, Value.Day);
             };
 
             UpdateListBoxSize();
+        }
+
+        /// <summary>
+        /// Called when the month picker in the calendar header is clicked, toggling the visibility of the month dropdown panel.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnHeaderMonthClick(object? sender, EventArgs e)
+        {
+            if (!ShowMonthDropDown)
+                return;
+            popupMonthPicker.Visible = !popupMonthPicker.Visible;
         }
 
         /// <summary>
@@ -865,6 +878,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the visibility of the month picker popup panel changes,
+        /// updating the sticky state of the month picker in the calendar header accordingly.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnPopupMonthPickerVisibleChanged(object? sender, EventArgs e)
+        {
+            header.MonthPicker.Sticky = popupMonthPicker.Visible;
+        }
+
+        /// <summary>
         /// Called when the enter key is pressed in the year picker, canceling the edit and hiding the year dropdown panel.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -1415,6 +1439,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a month button is clicked in the month picker panel,
+        /// allowing subscribers to respond to the month selection.
+        /// </summary>
+        public event EventHandler<BaseEventArgs<CalendarMonth>>? MonthClick;
+
+        /// <summary>
         /// Occurs when the selected month value changes, allowing subscribers to respond to the change in selection.
         /// </summary>
         public event EventHandler? ValueChanged;
@@ -1558,6 +1588,7 @@ namespace Alternet.UI
             result.ClickAction = () =>
             {
                 Value = month;
+                MonthClick?.Invoke(this, new BaseEventArgs<CalendarMonth>(month));
             };
 
             return result;
