@@ -263,7 +263,7 @@ namespace ControlsSample
                 new("TimePicker", () => new TimePage()),
                 new("DatePicker", () => new DatePage()),
                 new("Calendar", () => new CalendarPage()),
-                new("Popup", () => new DateTimePopups()),
+                new("Other", () => new DateTimeOther()),
             };
 
             return CreateCustomPage(pages);
