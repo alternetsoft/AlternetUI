@@ -80,6 +80,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the first day of the week according to the specified format provider's settings.
+        /// </summary>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns>The first day of the week.</returns>
+        public static DayOfWeek GetFirstDayOfWeek(IFormatProvider? formatProvider = null)
+        {
+            var info = GetFormatInfo(formatProvider);
+            return info.FirstDayOfWeek;
+        }
+
         /// <summary>Gets the maximum date value allowed for the control.</summary>
         /// <returns>A <see cref="System.DateTime" /> representing the
         /// maximum date value for the control.</returns>
