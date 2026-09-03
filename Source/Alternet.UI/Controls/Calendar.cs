@@ -874,7 +874,7 @@ namespace Alternet.UI
         /// <param name="attr">The attributes to apply to the matching dates. Pass <c>null</c> to reset attributes.</param>
         public virtual void MarkWithRule(RepeatPatternRule rule, ICalendarDateAttr? attr)
         {
-            RepeatPatternRule.RuleGetDatesParams prm = new();
+            IDateRepeatPatternRule.RuleGetDatesParams prm = new();
             prm.MinDate = FirstDateOfMonth;
             prm.MaxDate = LastDateOfMonth;
 

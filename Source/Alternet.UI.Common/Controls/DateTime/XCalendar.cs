@@ -773,8 +773,6 @@ namespace Alternet.UI
 
             var minTotalHeight = listBox.MinItemHeight * 7;
 
-            listBox.Interior.RequestScrollBarSize(listBox, listBox.ScaleFactor, out float vertWidth, out float horzHeight);
-
             var w = measureResult.ContentSize.Width;
             var h = Math.Max(measureResult.ContentSize.Height, minTotalHeight);
 
