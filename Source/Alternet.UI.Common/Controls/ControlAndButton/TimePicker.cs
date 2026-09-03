@@ -65,10 +65,6 @@ namespace Alternet.UI
             time = DateTime.Now;
             InnerOuterBorder = InnerOuterSelector.Outer;
 
-            var timeSeparator = GetTimeSeparator() ?? ":";
-            var amPM = GetAmPmValue();
-            var is12HourFormat = amPM is not null;
-
             hoursButton = MainControl.AddTextBtnCore();
             hoursAndMinutesSeparator = MainControl.AddTextCore();
             minutesButton = MainControl.AddTextBtnCore();
@@ -482,7 +478,7 @@ namespace Alternet.UI
                     IncSeconds(value);
                     break;
                 case TimePickerValuePart.AmPm:
-                    if (HourFormat == TimePickerHourFormat.Hour24)
+                    if (Uses24HourFormat())
                         return;
                     IncHours(12);
                     break;
@@ -561,12 +557,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the <c>TimePicker</c> uses 24-hour format.
+        /// </summary>
+        /// <returns><c>true</c> if the <c>TimePicker</c> uses 24-hour format; otherwise, <c>false</c>.</returns>
+        protected virtual bool Uses24HourFormat()
+        {
+            switch (HourFormat ?? DefaultHourFormat)
+            {
+                default:
+                case TimePickerHourFormat.System:
+                    var uses24Hour = DateUtils.Uses24Hour(FormatProvider);
+                    return uses24Hour;
+                case TimePickerHourFormat.Hour12:
+                    return false;
+                case TimePickerHourFormat.Hour24:
+                    return true;
+            }
+        }
+
+        /// <summary>
         /// Gets am/pm value for the current value selected in <c>TimePicker</c>.
         /// </summary>
         /// <returns>The formatted string representing the am/pm value.</returns>
         protected virtual string? GetAmPmValue()
         {
-            if (HourFormat == TimePickerHourFormat.Hour24)
+            if (Uses24HourFormat())
                 return null;
             var result = DateUtils.GetAmOrPmDesignator(time, FormatProvider);
             if (string.IsNullOrWhiteSpace(result))

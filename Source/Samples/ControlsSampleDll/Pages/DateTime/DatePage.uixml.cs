@@ -29,6 +29,7 @@ namespace ControlsSample
             InitializeComponent();
 
             tabControl2.HorizontalAlignment = HorizontalAlignment.Fill;
+            tabControl2.VerticalAlignment = VerticalAlignment.Fill;
 
             datePicker.Value = DateTime.Now;
 
