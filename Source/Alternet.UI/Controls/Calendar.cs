@@ -1109,7 +1109,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateCalendarHandler(this);
+            return new WxCalendarHandler();
         }
 
         /// <inheritdoc/>

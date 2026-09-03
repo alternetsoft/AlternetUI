@@ -57,12 +57,5 @@ namespace Alternet.UI
         /// <param name="control">Owner.</param>
         /// <returns></returns>
         IControlHandler CreateControlHandler(AbstractControl control);
-
-        /// <summary>
-        /// Creates <see cref="ICalendarHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateCalendarHandler(Calendar control);        
     }
 }

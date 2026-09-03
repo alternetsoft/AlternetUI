@@ -20,11 +20,6 @@ namespace Alternet.UI
             return popupEntryHandler ??= new Alternet.Maui.MauiPopupEntryHandler();
         }
 
-        IControlHandler IControlFactoryHandler.CreateCalendarHandler(Calendar control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IPropertyGridChoices IControlFactoryHandler.CreateChoices()
         {
             throw new NotImplementedException();

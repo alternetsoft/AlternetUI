@@ -11,10 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// This is dummy handler used for the disposed controls in some cases.
     /// </summary>
-    public class HandlerForDisposed : PlessControlHandler,
-        ICalendarHandler,
-        ITextBoxHandler,
-        IWindowHandler
+    public class HandlerForDisposed : PlessControlHandler, ITextBoxHandler, IWindowHandler
     {
         /// <summary>
         /// Gets dummy control handler.
@@ -24,20 +21,6 @@ namespace Alternet.UI
 #pragma warning disable
         public event EventHandler? CurrentPositionChanged;
 #pragma warning enable
-
-        public bool IsOk { get; }
-
-        public Image? NormalImage { get; set; }
-
-        public Image? HoveredImage { get; set; }
-
-        public Image? PressedImage { get; set; }
-
-        public Image? DisabledImage { get; set; }
-
-        public Image? FocusedImage { get; set; }
-
-        public Action? Click { get; set; }
 
         public bool HasBorder { get; set; }
 
@@ -1014,303 +997,13 @@ namespace Alternet.UI
             return string.Empty;
         }
 
-        public Cursor GetTextCursor()
-        {
-            return Cursors.Default;
-        }
-
-        public int GetTopBorderForSizer()
-        {
-            return default;
-        }
-
-        public Cursor GetURLCursor()
-        {
-            return Cursors.Default;
-        }
-
-        public string GetValue()
-        {
-            return string.Empty;
-        }
-
-        public bool GetVerticalScrollbarEnabled()
-        {
-            return default;
-        }
-
-        public bool GetVirtualAttributesEnabled()
-        {
-            return default;
-        }
-
-        public int GetVisibleBegin()
-        {
-            return default;
-        }
-
-        public int GetVisibleEnd()
-        {
-            return default;
-        }
-
-        public bool GoBack()
-        {
-            return default;
-        }
-
-        public bool GoForward()
-        {
-            return default;
-        }
-
-        public bool HasSelection()
-        {
-            return default;
-        }
-
-        public bool HasUnfocusedSelection()
-        {
-            return default;
-        }
-
-        public Calendar.HitTestResult HitTest(PointD point)
-        {
-            return default;
-        }
-
-        public bool HitTest(PointD point, out TreeViewItem? item, out TreeViewHitTestLocations locations, bool needItem = true)
-        {
-            locations = default;
-            item = null;
-            return default;
-        }
-
-        public bool IsCurrent(int current)
-        {
-            return default;
-        }
-
-        public bool IsDefaultStyleShowing()
-        {
-            return default;
-        }
-
-        public bool IsEditable()
-        {
-            return default;
-        }
-
-        public bool IsItemFocused(TreeViewItem item)
-        {
-            return default;
-        }
-
-        public bool IsItemSelected(TreeViewItem item)
-        {
-            return default;
-        }
-
-        public bool IsModified()
-        {
-            return default;
-        }
-
-        public bool IsMultiLine()
-        {
-            return default;
-        }
-
-        public bool IsPlaying()
-        {
-            return default;
-        }
-
-        public bool IsPositionVisible(long pos)
-        {
-            return default;
-        }
-
-        public bool IsSelected(int line)
-        {
-            return default;
-        }
-
-        public bool IsSelectionAligned(TextBoxTextAttrAlignment alignment)
-        {
-            return default;
-        }
-
-        public bool IsSelectionBold()
-        {
-            return default;
-        }
-
-        public bool IsSelectionItalics()
-        {
-            return default;
-        }
-
-        public bool IsSelectionUnderlined()
-        {
-            return default;
-        }
-
-        public bool IsSingleLine()
-        {
-            return default;
-        }
-
         public bool IsValidPosition(long pos)
-        {
-            return default;
-        }
-
-        public bool IsVisible(int line)
-        {
-            return default;
-        }
-
-        public int ItemHitTest(PointD position)
-        {
-            return default;
-        }
-
-        public bool LayoutContent(bool onlyVisibleRect = false)
-        {
-            return default;
-        }
-
-        public bool LineBreak()
-        {
-            return default;
-        }
-
-        public bool Load(Stream stream, AnimationType type = AnimationType.Any)
-        {
-            return default;
-        }
-
-        public bool LoadFile(string filename, AnimationType type = AnimationType.Any)
-        {
-            return default;
-        }
-
-        public bool LoadFromFile(string file, RichTextFileType type = RichTextFileType.Any)
-        {
-            return default;
-        }
-
-        public bool LoadFromStream(Stream stream, RichTextFileType type)
-        {
-            return default;
-        }
-
-        public void LoadURL(string url)
-        {
-        }
-
-        public void MakeAsListBox()
-        {
-        }
-
-        public void Mark(int day, bool mark)
-        {
-        }
-
-        public void MarkDirty()
-        {
-        }
-
-        public void MoveCaretBack(long oldPosition)
-        {
-        }
-
-        public void MoveCaretForward(long oldPosition)
-        {
-        }
-
-        public bool MoveDown(int noLines = 1, RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveEnd(RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveHome(RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveLeft(int noPositions = 1, RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveRight(int noPositions = 1, RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveToLineEnd(RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveToLineStart(RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveToParagraphEnd(RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveToParagraphStart(RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool MoveUp(int noLines = 1, RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public void NavigateToString(string html, string? baseUrl = null)
-        {
-        }
-
-        public bool NewLine()
-        {
-            return default;
-        }
-
-        public bool NumberList(long startRange, long endRange, string defName, RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo, int startFrom = 1, int specifiedLevel = -1)
-        {
-            return default;
-        }
-
-        public bool PageDown(int noPages = 1, RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool PageUp(int noPages = 1, RichTextMoveCaretFlags flags = 0)
         {
             return default;
         }
 
         public void Paste()
         {
-        }
-
-        public bool Play()
-        {
-            return default;
         }
 
         public PointD PositionToCoord(long pos)
@@ -1323,45 +1016,11 @@ namespace Alternet.UI
             return default;
         }
 
-        public void Print()
-        {
-        }
-
-        public bool ProcessDelayedImageLoading(bool refresh)
-        {
-            return default;
-        }
-
-        public bool PromoteList(int promoteBy, long startRange, long endRange, string defName, RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo, int specifiedLevel = -1)
-        {
-            return default;
-        }
-
         public void Redo()
         {
         }
 
-        public void RefreshRow(int row)
-        {
-        }
-
-        public void RefreshRows(int from, int to)
-        {
-        }
-
-        public void Reload()
-        {
-        }
-
-        public void Reload(bool noCache)
-        {
-        }
-
         public void Remove(long from, long to)
-        {
-        }
-
-        public void RemoveAllUserScripts()
         {
         }
 
@@ -1374,52 +1033,7 @@ namespace Alternet.UI
         {
         }
 
-        public void RequestDelayedImageProcessing()
-        {
-        }
-
-        public void ResetAttr(int day)
-        {
-        }
-
-        public void RunScriptAsync(string javaScript, IntPtr? clientData)
-        {
-        }
-
-        public bool SaveToFile(string file, RichTextFileType type = RichTextFileType.Any)
-        {
-            return default;
-        }
-
-        public bool SaveToStream(Stream stream, RichTextFileType type)
-        {
-            return default;
-        }
-
-        public void ScrollIntoView(TreeViewItem item)
-        {
-        }
-
-        public bool ScrollRowPages(int pages)
-        {
-            return default;
-        }
-
-        public bool ScrollRows(int rows)
-        {
-            return default;
-        }
-
-        public bool ScrollToRow(int row)
-        {
-            return default;
-        }
-
         public void SelectAll()
-        {
-        }
-
-        public void SelectAllText()
         {
         }
 
@@ -1427,121 +1041,7 @@ namespace Alternet.UI
         {
         }
 
-        public void SelectTextRange(int start, int length)
-        {
-        }
-
-        public bool SelectWord(long position)
-        {
-            return default;
-        }
-
-        public void SetAttr(int day, ICalendarDateAttr? dateAttr)
-        {
-        }
-
-        public void SetCaretAtLineStart(bool atStart)
-        {
-        }
-
-        public void SetCaretPosition(long position, bool showAtLineStart = false)
-        {
-        }
-
-        public void SetCaretPositionForDefaultStyle(long pos)
-        {
-        }
-
-        public void SetColumnTitle(long columnIndex, string title)
-        {
-        }
-
-        public void SetColumnWidth(long columnIndex, Coord width, ListViewColumnWidthMode widthMode)
-        {
-        }
-
-        public bool SetDefaultStyleToCursorStyle()
-        {
-            return default;
-        }
-
-        public void SetDelayedImageProcessingRequired(bool b)
-        {
-        }
-
-        public void SetDelayedImageProcessingTime(long t)
-        {
-        }
-
-        public void SetDelayedLayoutThreshold(long threshold)
-        {
-        }
-
-        public void SetDragging(bool dragging)
-        {
-        }
-
-        public void SetEditable(bool editable)
-        {
-        }
-
-        public void SetFileHandlerFlags(RichTextHandlerFlags knownFlags, int customFlags = 0)
-        {
-        }
-
-        public void SetFileName(string filename)
-        {
-        }
-
-        public void SetFocused(TreeViewItem item, bool value)
-        {
-        }
-
-        public void SetFontScale(Coord fontScale, bool refresh = false)
-        {
-        }
-
-        public void SetFullLayoutRequired(bool b)
-        {
-        }
-
-        public void SetFullLayoutSavedPosition(long p)
-        {
-        }
-
-        public void SetFullLayoutTime(long t)
-        {
-        }
-
-        public void SetHeaderColors(Color colorFg, Color colorBg)
-        {
-        }
-
-        public void SetHighlightColors(Color colorFg, Color colorBg)
-        {
-        }
-
-        public void SetHoliday(int day)
-        {
-        }
-
-        public void SetHolidayColors(Color colorFg, Color colorBg)
-        {
-        }
-
         public void SetIcon(IconSet? value)
-        {
-        }
-
-        public void SetImageMargins(Coord x, Coord y)
-        {
-        }
-
-        public void SetImagePosition(ElementContentAlign dir)
-        {
-        }
-
-        public void SetInactiveBitmap(ImageSet? bitmap)
         {
         }
 
@@ -1553,65 +1053,7 @@ namespace Alternet.UI
         {
         }
 
-        public void SetItemBackgroundColor(TreeViewItem item, Color? color)
-        {
-        }
-
-        public void SetItemImageIndex(long itemIndex, long columnIndex, int? imageIndex)
-        {
-        }
-
-        public void SetItemImageIndex(TreeViewItem item, int? imageIndex)
-        {
-        }
-
-        public void SetItemIsBold(TreeViewItem item, bool isBold)
-        {
-        }
-
-        public void SetItemText(long itemIndex, long columnIndex, string text)
-        {
-        }
-
-        public void SetItemText(TreeViewItem item, string text)
-        {
-        }
-
-        public void SetItemTextColor(TreeViewItem item, Color? color)
-        {
-        }
-
-        public void SetLineHeight(int height)
-        {
-        }
-
-        public bool SetListStyle(long startRange, long endRange, string defName, RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo, int startFrom = 1, int specifiedLevel = -1)
-        {
-            return default;
-        }
-
         public void SetMaxLength(ulong len)
-        {
-        }
-
-        public void SetMenu(DisposableObject? value)
-        {
-        }
-
-        public bool SetRange(bool useMinValue, bool useMaxValue)
-        {
-            return default;
-        }
-
-        public void SetRange(DateTime min, DateTime max, bool useMin, bool useMax)
-        {
-        }
-
-        public void SetScrollbar(int? position, int? range, int? pageSize, bool refresh = true)
-        {
-        }
-
-        public void SetSelected(int index, bool value)
         {
         }
 
@@ -1620,80 +1062,12 @@ namespace Alternet.UI
 
         }
 
-        public void SetSelection(int selection)
-        {
-        }
-
-        public void SetSelectionAnchor(long anchor)
-        {
-        }
-
-        public void SetSelectionBackground(Color color)
-        {
-        }
-
-        public void SetSelectionRange(long startRange, long endRange)
-        {
-        }
-
-        public void SetTextCursor(Cursor? cursor)
-        {
-        }
-
-        public void SetURLCursor(Cursor? cursor)
-        {
-        }
-
-        public void SetValue(string value)
-        {
-        }
-
-        public void SetVirtualHostNameToFolderMapping(string hostName, string folderPath, WebBrowserHostResourceAccessKind accessKind)
-        {
-        }
-
-        public void Show(
-            AbstractControl control,
-            PointD? position = null,
-            Action? onClose = null)
-        {
-        }
-
-        public ModalResult ShowModal(IWindow? owner)
-        {
-            return default;
-        }
-
-        public void ShowPopup()
-        {
-        }
-
         public void ShowPosition(long pos)
         {
         }
 
-        public void Stop()
-        {
-
-        }
-
-        public bool SuppressingUndo()
-        {
-            return default;
-        }
-
         public void Undo()
         {
-        }
-
-        public bool WordLeft(int noPages = 1, RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool WordRight(int noPages = 1, RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
         }
 
         public void WriteText(string text)
@@ -1705,21 +1079,12 @@ namespace Alternet.UI
             return default;
         }
 
-        public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
-        {
-        }
-
         public void SetMinSize(SizeD size)
         {
         }
 
         public void SetMaxSize(SizeD size)
         {
-        }
-
-        public void SetNativeText(ReadOnlySpan<char> text)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="ICalendarDateAttr"/> is a custom attributes for a <see cref="Calendar"/> date.
+    /// <see cref="ICalendarDateAttr"/> is a custom attributes for a date in the calendar.
     /// </summary>
     public interface ICalendarDateAttr : IDisposableObject
     {

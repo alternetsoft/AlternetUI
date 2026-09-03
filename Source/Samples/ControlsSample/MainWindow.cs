@@ -259,11 +259,11 @@ namespace ControlsSample
         {
             NameValue<Func<AbstractControl>>[] pages =
             {
+                new("XCalendar", () => new XCalendarPage()),
                 new("TimePicker", () => new TimePage()),
                 new("DatePicker", () => new DatePage()),
                 new("Calendar", () => new CalendarPage()),
                 new("Popup", () => new DateTimePopups()),
-                new("XCalendar", () => new XCalendarPage()),
             };
 
             return CreateCustomPage(pages);
