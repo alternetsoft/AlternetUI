@@ -1003,6 +1003,21 @@ namespace Alternet.UI
     /// </summary>
     public class CalendarHeader : TransparentPanel
     {
+        /// <summary>
+        /// Gets or sets the default horizontal alignment for the left button in the calendar header.
+        /// </summary>
+        public static HorizontalAlignment DefaultLeftButtonHorzAlignment = HorizontalAlignment.Right;
+
+        /// <summary>
+        /// Gets or sets the default horizontal alignment for the month picker in the calendar header.
+        /// </summary>
+        public static HorizontalAlignment DefaultMonthHorzAlignment = HorizontalAlignment.Left;
+
+        /// <summary>
+        /// Gets or sets the default horizontal alignment for the year picker in the calendar header.
+        /// </summary>
+        public static HorizontalAlignment DefaultYearHorzAlignment = HorizontalAlignment.Left;
+
         private readonly SpeedTextButton monthPicker = new();
         private readonly SpeedTextButton yearPicker = new();
         private readonly SpeedButton prevButton = new();
@@ -1023,8 +1038,9 @@ namespace Alternet.UI
             OnValueChanged();
 
             prevButton.VerticalAlignment = VerticalAlignment.Center;
-            prevButton.SvgImage = KnownSvgImages.ImgAngleLeft;
-            prevButton.HorizontalAlignment = HorizontalAlignment.Left;
+            prevButton.SvgImage = KnownSvgImages.ImgAngleLeft;            
+
+            prevButton.HorizontalAlignment = DefaultLeftButtonHorzAlignment;
             prevButton.Parent = this;
             prevButton.Click += OnPrevButtonClick;
 
@@ -1037,10 +1053,10 @@ namespace Alternet.UI
             monthPicker.MarginRight = 0;
             monthPicker.ImageVisible = false;
             monthPicker.VerticalAlignment = VerticalAlignment.Stretch;
-            monthPicker.HorizontalAlignment = HorizontalAlignment.Center;
+            monthPicker.HorizontalAlignment = DefaultMonthHorzAlignment;
             monthPicker.Parent = this;
 
-            yearPicker.HorizontalAlignment = HorizontalAlignment.Center;
+            yearPicker.HorizontalAlignment = DefaultYearHorzAlignment;
             yearPicker.VerticalAlignment = VerticalAlignment.Stretch;
             yearPicker.Parent = this;
         }
@@ -1209,32 +1225,12 @@ namespace Alternet.UI
         public CalendarCell Data { get; internal set; } = CalendarCell.Default;
 
         /// <inheritdoc/>
-        public override void DrawCellBackground(in DrawCellParams prm)
+        public override bool IsSelectedCell
         {
-            if (!Data.IsCurrent)
-                return;
-
-            var container = prm.Container;
-            var e = prm.PaintArgs;
-            var item = e.Item;
-            var rect = prm.Rect;
-            var dc = e.Graphics;
-            var control = container?.Control;
-
-            var selectionBorder = container?.Defaults.SelectionBorder;
-
-            dc.FillBorderRectangle(
-                rect,
-                GetSelectedItemBackColor(item, container)?.AsBrush,
-                selectionBorder,
-                hasBorder: false,
-                control);
-        }
-
-        /// <inheritdoc/>
-        public override void DrawCellForeground(in DrawCellParams prm)
-        {
-            base.DrawCellForeground(in prm);
+            get => Data.IsCurrent;
+            set
+            {
+            }
         }
     }
 
@@ -1410,6 +1406,8 @@ namespace Alternet.UI
     {
         private readonly TransparentPanel[] rows;
         private readonly List<SpeedTextButton> buttons = new(12);
+        private readonly HorizontalLine bottomLine;
+
         private IFormatProvider? formatProvider;
         private MonthNamesKind kind = MonthNamesKind.Abbreviated;
         private CalendarMonth data = CalendarMonth.January;
@@ -1431,9 +1429,9 @@ namespace Alternet.UI
             row2.Parent = this;
             row3.Parent = this;
 
-            var line = Add<HorizontalLine>();
-            line.Margin = (5, 5, 5, 5);
-            line.Parent = this;
+            bottomLine = Add<HorizontalLine>();
+            bottomLine.Margin = (5, 5, 5, 5);
+            bottomLine.Parent = this;
 
             UpdateMonthNames();
         }
@@ -1448,6 +1446,11 @@ namespace Alternet.UI
         /// Occurs when the selected month value changes, allowing subscribers to respond to the change in selection.
         /// </summary>
         public event EventHandler? ValueChanged;
+
+        /// <summary>
+        /// Gets the bottom line control in the month picker panel, which can be used for visual separation or styling purposes.
+        /// </summary>
+        public HorizontalLine BottomLine => bottomLine;
 
         /// <summary>
         /// Gets or sets the kind of month names displayed in the month picker,
