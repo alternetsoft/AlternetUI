@@ -178,6 +178,107 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
+        {
+            DateOnly minDate = StartDate;
+            DateOnly maxDate;
+
+            switch (EndCondition)
+            {
+                default:
+                case EndConditionKind.Never:
+                case EndConditionKind.AfterOccurrence:
+                    maxDate = prm.MaxDate;
+                    break;
+                case EndConditionKind.OnDate:
+                    maxDate = DateUtils.Min(EndDate, prm.MaxDate);
+                    break;
+            }
+
+            int startYear = minDate.Year;
+            int endYear = maxDate.Year;
+
+            IEnumerable<DateOnly> GetDatesUnfiltered()
+            {
+                for (int year = startYear; year <= endYear; year += IntervalYears)
+                {
+                    DateOnly? occurrenceDate = GetDate(year);
+
+                    if (occurrenceDate is null)
+                        continue;
+
+                    var d = occurrenceDate.Value;
+
+                    if (d < minDate)
+                        continue;
+                    if (d > maxDate)
+                        break;
+                    yield return d;
+                }
+            }
+
+            IEnumerable<DateOnly> GetDates()
+            {
+                foreach (var date in GetDatesUnfiltered())
+                {
+                    if (date >= prm.MinDate)
+                        yield return date;
+                }
+            }
+
+            IEnumerable<DateOnly> GetDatesEndsAfterOccurrence()
+            {
+                var count = OccurrenceCount;
+
+                if (count <= 0)
+                    yield break;
+
+                var numProcessed = 0;
+
+                foreach (var date in GetDatesUnfiltered())
+                {
+                    if (date >= prm.MinDate)
+                        yield return date;
+
+                    numProcessed++;
+                    if (numProcessed >= count)
+                        yield break;
+                }
+            }
+
+            if (EndCondition == EndConditionKind.AfterOccurrence)
+            {
+                return new(GetDatesEndsAfterOccurrence());
+            }
+            else
+            {
+                return new(GetDates());
+            }
+        }
+
+        /// <summary>
+        /// Gets the date for the specified year based on the yearly repeat pattern.
+        /// </summary>
+        /// <param name="year">The year for which to get the date.</param>
+        /// <returns>The calculated date, or <c>null</c> if the date is invalid.</returns>
+        public virtual DateOnly? GetDate(int year)
+        {
+            if (Kind == RepeatKind.DayOfMonth)
+            {
+                if (DayOfMonth < 1 || DayOfMonth > DateUtils.GetDaysInMonth(year, Month))
+                    return null;
+                return new DateOnly(year, (int)Month, DayOfMonth);
+            }
+            else if (Kind == RepeatKind.RelativeWeekday)
+            {
+                var relativeWeekday = new RelativeWeekdayOfMonth(DayOfWeekIndex, DayOfWeek, Month);
+                return relativeWeekday.GetDate(year);
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return (IntervalYears, Month, DayOfWeek, DayOfMonth, DayOfWeekIndex, Kind, StartDate, EndDate, OccurrenceCount)
