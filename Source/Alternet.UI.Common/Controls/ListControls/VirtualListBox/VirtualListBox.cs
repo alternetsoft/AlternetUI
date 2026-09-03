@@ -896,6 +896,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Requests the size of the vertical and horizontal scroll bars,
+        /// </summary>
+        /// <param name="vertWidth">The width of the vertical scroll bar.</param>
+        /// <param name="horzHeight">The height of the horizontal scroll bar.</param>
+        public virtual void RequestScrollBarSize(out float vertWidth, out float horzHeight)
+        {
+            Interior.RequestScrollBarSize(this, ScaleFactor, out vertWidth, out horzHeight);
+        }
+
+        /// <summary>
         /// Sets items from the specified collection to the control's items as fast as possible.
         /// </summary>
         public virtual void SetItemsFast<TItemFrom>(
