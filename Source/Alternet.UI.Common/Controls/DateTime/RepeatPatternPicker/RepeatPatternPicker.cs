@@ -64,7 +64,6 @@ namespace Alternet.UI
             startDateLabel.IsBold = true;
             startDateLabel.Parent = this;
 
-            startDatePicker.Format = DefaultDateFormat;
             startDatePicker.ImageVisible = DefaultShowDropDownImage;
             startDatePicker.AsDateOnly = data.StartDate;
             startDatePicker.Parent = this;
@@ -82,7 +81,6 @@ namespace Alternet.UI
 
             endDatePicker.Label.Text = CommonStrings.Default.OnPrefix;
             endDatePicker.Label.InputTransparent = true;
-            endDatePicker.MainControl.Format = DefaultDateFormat;
             endDatePicker.MainControl.ImageVisible = DefaultShowDropDownImage;
             endDatePicker.MainControl.AsDateOnly = data.EndDate;
             endDatePicker.MainControl.ValueChanged += (s, e) =>
@@ -193,6 +191,8 @@ namespace Alternet.UI
 
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
             data.PropertyChanged += OnValuePropertyChanged;
+
+            DateFormat = DefaultDateFormat;
         }
 
         /// <summary>
@@ -256,6 +256,19 @@ namespace Alternet.UI
         /// pattern and its associated rules.
         /// </summary>
         public virtual RepeatPatternRule Value => data;
+
+        /// <summary>
+        /// Gets or sets the date format used for displaying dates in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public virtual string? DateFormat
+        {
+            get => startDatePicker.Format;
+            set
+            {
+                startDatePicker.Format = value;
+                endDatePicker.MainControl.Format = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the selected repeat pattern.
