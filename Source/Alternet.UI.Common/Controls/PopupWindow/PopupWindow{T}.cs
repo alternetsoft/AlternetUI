@@ -664,8 +664,13 @@ namespace Alternet.UI
         /// This parameter cannot be <see langword="null"/>.</param>
         /// <param name="position">The optional horizontal and vertical alignment of the popup
         /// relative to the control. If <see langword="null"/>, the default alignment is used.</param>
-        public virtual void ShowPopup(AbstractControl control, HVDropDownAlignment? position = null)
+        public virtual void ShowPopup(AbstractControl? control, HVDropDownAlignment? position = null)
         {
+            control ??= App.MainWindow;
+
+            if (control is null)
+                return;
+
             ControlFactory.PopupEntryHandler?.CloseAllPopupEntries();
 
             PopupOwner = control;
