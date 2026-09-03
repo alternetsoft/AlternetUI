@@ -15,6 +15,11 @@ namespace Alternet.UI
     public partial class SpeedDateButton : SpeedButtonWithPopup<PopupCalendar, XCalendar>
     {
         /// <summary>
+        /// Gets or sets the default date format used for displaying dates in the control.
+        /// </summary>
+        public static string DefaultDateFormat = "D";
+
+        /// <summary>
         /// Gets or sets the default left padding for the text displayed in the control.
         /// </summary>
         public static float DefaultTextLeftPadding = 7;
@@ -36,6 +41,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedDateButton()
         {
+            Format = DefaultDateFormat;
             Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
             PopupWindowTitle = CommonStrings.Default.WindowTitleSelectDate;
             Value = DateTime.Now;
