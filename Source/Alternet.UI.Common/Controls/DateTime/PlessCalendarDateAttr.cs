@@ -22,33 +22,30 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public Color? TextColor { get; set; }
+        public virtual Color? TextColor { get; set; }
 
         /// <inheritdoc/>
-        public Color? BackgroundColor { get; set; }
+        public virtual Color? BackgroundColor { get; set; }
 
         /// <inheritdoc/>
-        public Color? BorderColor { get; set; }
+        public virtual Color? BorderColor { get; set; }
 
         /// <inheritdoc/>
-        public bool IsHoliday { get; set; }
+        public virtual bool IsHoliday { get; set; }
 
         /// <inheritdoc/>
-        public CalendarDateBorder Border { get; set; }
+        public virtual CalendarDateBorder Border { get; set; }
 
         /// <inheritdoc/>
-        public bool HasTextColor { get; set; }
+        public bool HasTextColor => TextColor != null;
 
         /// <inheritdoc/>
-        public bool HasBackgroundColor { get; set; }
+        public bool HasBackgroundColor => BackgroundColor != null;
 
         /// <inheritdoc/>
-        public bool HasBorderColor { get; set; }
+        public bool HasBorderColor => BorderColor != null;
 
         /// <inheritdoc/>
-        public bool HasFont { get; set; }
-
-        /// <inheritdoc/>
-        public bool HasBorder { get; set; }
+        public bool HasBorder => Border != CalendarDateBorder.None;
     }
 }
