@@ -12,7 +12,7 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods related to <see cref="DateTime"/>.
+    /// Contains static methods related to <see cref="DateTime"/>, <see cref="DateOnly"/> and <see cref="TimeOnly"/>.
     /// </summary>
     public static class DateUtils
     {
@@ -110,6 +110,32 @@ namespace Alternet.UI
             {
                 systemFirstDayOfWeek = value;
             }
+        }
+
+        /// <summary>
+        /// Determines whether the current culture's time format uses AM/PM
+        /// designators (12-hour format) or not (24-hour format).
+        /// </summary>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns><c>true</c> if the time format uses AM/PM designators; otherwise, <c>false</c>.</returns>
+        public static bool UsesAmPm(IFormatProvider? formatProvider = null)
+        {
+            var info = GetFormatInfo(formatProvider);
+            var timePattern = info.ShortTimePattern;
+            return timePattern.Contains("tt");
+        }
+
+        /// <summary>
+        /// Determines whether the current culture's time format uses 24-hour format
+        /// or not (12-hour format with AM/PM designators).
+        /// </summary>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns><c>true</c> if the time format uses 24-hour format; otherwise, <c>false</c>.</returns>
+        public static bool Uses24Hour(IFormatProvider? formatProvider = null)
+        {
+            return !UsesAmPm(formatProvider);
         }
 
         /// <summary>
