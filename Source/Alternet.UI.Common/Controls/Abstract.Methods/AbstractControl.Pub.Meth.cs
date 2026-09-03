@@ -174,6 +174,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a new child control of the specified type to the current instance and sets its text.
+        /// </summary>
+        /// <typeparam name="TControl">The type of the child control to add.</typeparam>
+        /// <param name="text">The text to set for the newly added child control.</param>
+        /// <returns>The newly added child control with the specified text.</returns>
+        public virtual TControl Add<TControl>(string text)
+            where TControl : AbstractControl, new()
+        {
+            var result = new TControl();
+            result.Text = text;
+            result.Parent = this;
+            return result;
+        }
+
+        /// <summary>
         /// Adds a new child control of the specified type to the current instance and configures it using the provided action.
         /// </summary>
         /// <typeparam name="TControl">The type of the child control to add.</typeparam>
