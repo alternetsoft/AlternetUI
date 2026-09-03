@@ -234,5 +234,24 @@ namespace Alternet.UI
             ValueChanged?.Invoke(this, e);
             return this;
         }
+
+        /// <summary>
+        /// Sets click action for the editor control associated with the item.
+        /// </summary>
+        /// <param name="clickAction">The action to be invoked when the editor is clicked.</param>
+        public virtual void SetEditorClick(Action? clickAction)
+        {
+            if (Editor is null)
+                return;
+            Editor.Click -= OnEditorClick;
+            
+            if (clickAction is not null)
+                Editor.Click += OnEditorClick;
+            
+            void OnEditorClick(object? sender, EventArgs e)
+            {
+                clickAction?.Invoke();
+            }
+        }
     }
 }

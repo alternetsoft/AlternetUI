@@ -965,7 +965,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual PanelSettingsItem AddButton(
             object label,
-            Action? clickAction,
+            Action? clickAction = null,
             CustomEventArgs? e = null)
         {
             return AddButton(
