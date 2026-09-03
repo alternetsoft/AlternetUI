@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 
 using Alternet.UI;
 using Alternet.UI.Extensions;
@@ -227,9 +228,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a <see cref="SolidBrush"/> with the <see cref="Color"/> of this pen.
+        /// This property is added for the compatibility with the legacy code.
+        /// </summary>
+        [Browsable(false)]
+        public SolidBrush Brush => AsBrush;
+
+        /// <summary>
         /// Gets <see cref="SolidBrush"/> with <see cref="Color"/> of this pen.
         /// Uses <see cref="Color.AsBrush"/> internally.
         /// </summary>
+        [Browsable(false)]
         public virtual SolidBrush AsBrush => Color.AsBrush;
 
         /// <summary>
