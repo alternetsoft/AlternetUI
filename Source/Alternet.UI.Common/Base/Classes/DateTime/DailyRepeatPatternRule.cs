@@ -100,7 +100,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override RuleGetDatesResult GetDates(RuleGetDatesParams prm)
+        public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
             return GetDates(prm, IsDateInPattern, GetNextDate);
         }

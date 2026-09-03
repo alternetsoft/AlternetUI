@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -23,7 +25,7 @@ namespace Alternet.UI
         /// </summary>
         public RepeatPatternRule()
         {
-            StartDate = DateOnly.FromDateTime(DateTime.Now);
+            StartDate = DateTime.Now.ToDateOnly();
             EndDate = StartDate;
 
             dailyRule = CreateDailyRule();
@@ -164,9 +166,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override RuleGetDatesResult GetDates(RuleGetDatesParams prm)
+        public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
-            return GetSelectedRule()?.GetDates(prm) ?? RuleGetDatesResult.Empty;
+            return GetSelectedRule()?.GetDates(prm) ?? IDateRepeatPatternRule.RuleGetDatesResult.Empty;
         }
 
         /// <summary>
