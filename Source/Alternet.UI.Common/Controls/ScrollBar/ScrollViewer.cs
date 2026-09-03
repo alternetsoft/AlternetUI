@@ -173,6 +173,21 @@ namespace Alternet.UI
             DrawInterior(dc);
         }
 
+        /// <summary>
+        /// Sets the visibility of the vertical or horizontal scrollbar within the scroll viewer.
+        /// Hidden scrollbars will not be displayed even if the content exceeds the viewport,
+        /// while visible scrollbars will be shown based on the content size and layout.
+        /// </summary>
+        /// <param name="isVert">Indicates whether the scrollbar is vertical.</param>
+        /// <param name="isVisible">Indicates whether the scrollbar should be visible.</param>
+        public virtual void SetScrollBarVisible(bool isVert, bool isVisible)
+        {
+            if (isVert)
+                Interior.VertScrollBar?.SetVisible(isVisible);
+            else
+                Interior.HorzScrollBar?.SetVisible(isVisible);
+        }
+
         /// <inheritdoc/>
         protected override void OnBeforeChildMouseWheel(object? sender, MouseEventArgs e)
         {
