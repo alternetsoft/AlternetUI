@@ -735,13 +735,23 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
-            var specifiedWidth = SuggestedWidth;
-            var specifiedHeight = SuggestedHeight;
-            if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
-                return new SizeD(specifiedWidth, specifiedHeight);
+            var suggestedSize = SuggestedSize;
+
+            var widthSpecified = !Coord.IsNaN(suggestedSize.Width);
+            var heightSpecified = !Coord.IsNaN(suggestedSize.Height);
+
+            if (widthSpecified && heightSpecified)
+                return suggestedSize;
 
             var result = GetImageAndTextSize();
-            if (result != SizeD.Empty)
+
+            if (widthSpecified)
+                result.Width = suggestedSize.Width;
+
+            if (heightSpecified)
+                result.Height = suggestedSize.Height;
+
+            if (!result.AnyIsEmptyOrNegative)
                 return result + Padding.Size;
 
             return base.GetPreferredSizeInternal(context);
