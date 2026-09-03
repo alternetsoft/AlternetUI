@@ -75,16 +75,35 @@ namespace ControlsSample
                 splitter.Parent = this;
                 tabControl.Parent = this;
 
-                var settingsPanel = new PanelSettings();
-                settingsPanel.Margin = 5;
-                settingsPanel.Title = GenericStrings.Options;
+                calendar.SetScrollBarVisible(isVert: false, isVisible: true);
 
-                settingsPanel.AddInput("MinDate", calendar, nameof(calendar.MinDate));
-                settingsPanel.AddInput("MaxDate", calendar, nameof(calendar.MaxDate));
-                settingsPanel.AddInput("Use MinDate", calendar, nameof(calendar.UseMinDate));
-                settingsPanel.AddInput("Use MaxDate", calendar, nameof(calendar.UseMaxDate));
+                var panel = new ScrollablePanelSettings();
+                panel.Margin = 5;
+                panel.Title = GenericStrings.Options;
 
-                tabControl.Add(settingsPanel);
+                var p = panel.ScrolledControl;
+
+                p.Add<BoldLabel>("Options");
+                
+                p.AddInput("Show Month DropDown", calendar, nameof(calendar.ShowMonthDropDown));
+                p.AddInput("Show Year DropDown", calendar, nameof(calendar.ShowYearDropDown));
+
+                var dayNamesKindItem = p.AddInput("Day Names Kind:", calendar, nameof(calendar.DayNamesKind));
+                dayNamesKindItem.WithEditor<EnumPickerAndButton>(c =>
+                {
+                });
+
+                var firstDayOfWeekItem = p.AddInput("First Day Of Week:", calendar, nameof(calendar.FirstDayOfWeek));
+
+                p.AddHorizontalLine();
+                p.Add<BoldLabel>("Range Settings");
+
+                p.AddInput("MinDate:", calendar, nameof(calendar.MinDate));
+                p.AddInput("MaxDate:", calendar, nameof(calendar.MaxDate));
+                p.AddInput("Use MinDate", calendar, nameof(calendar.UseMinDate));
+                p.AddInput("Use MaxDate", calendar, nameof(calendar.UseMaxDate));
+
+                tabControl.Add(panel);
             }
         }
 
