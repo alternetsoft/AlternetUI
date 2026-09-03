@@ -94,8 +94,8 @@ namespace Alternet.UI
         /// </summary>
         public XCalendar()
         {
-            Interior.VertScrollBar?.SetVisible(false);
-            Interior.HorzScrollBar?.SetVisible(false);
+            SetScrollBarVisible(isVert: true, isVisible: false);
+            SetScrollBarVisible(isVert: false, isVisible: false);
 
             restrictedDate = new(
                 () => date,
@@ -454,7 +454,8 @@ namespace Alternet.UI
                 if (surroundDayColor == value)
                     return;
                 surroundDayColor = value;
-                UpdateDayItems(true);
+                OnValueChanged();
+                Invalidate();
             }
         }
 
@@ -470,7 +471,8 @@ namespace Alternet.UI
                 if (todayBorder == value)
                     return;
                 todayBorder = value;
-                UpdateDayItems(true);
+                OnValueChanged();
+                Invalidate();
             }
         }
 
@@ -485,8 +487,13 @@ namespace Alternet.UI
                 if (dayNamesKind == value)
                     return;
                 dayNamesKind = value;
-                UpdateDayNames();
-                PerformLayoutAndInvalidate();
+                PerformLayoutAndInvalidate(() =>
+                {
+                    UpdateDayNames();
+                    UpdateColumnWidth();
+                    UpdateListBoxSize();
+                    OnValueChanged();
+                });
             }
         }
 
@@ -502,7 +509,11 @@ namespace Alternet.UI
                 restrictedDate.FormatProvider = value;
                 header.FormatProvider = value;
                 UpdateDayNames();
-                PerformLayoutAndInvalidate();
+                UpdateColumnWidth();
+                PerformLayoutAndInvalidate(() =>
+                {
+                    UpdateListBoxSize();
+                });
             }
         }
 
@@ -517,6 +528,8 @@ namespace Alternet.UI
                 if (firstDayOfWeek == value) return;
                 firstDayOfWeek = value;
                 UpdateDayNames();
+                UpdateDayItems(true);
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -540,6 +553,15 @@ namespace Alternet.UI
             }
 
             return dayWidth + 4;
+        }
+
+        /// <summary>
+        /// Creates <see cref="ICalendarDateAttr"/> instance.
+        /// </summary>
+        /// <param name="border">Date border settings.</param>
+        public virtual ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = 0)
+        {
+            return new PlessCalendarDateAttr();
         }
 
         /// <summary>
@@ -590,7 +612,7 @@ namespace Alternet.UI
         /// <returns>The effective first day of the week.</returns>
         public virtual DayOfWeek EffectiveDayOfWeek()
         {
-            return FirstDayOfWeek ?? DateUtils.SystemFirstDayOfWeek;
+            return FirstDayOfWeek ?? DateUtils.GetFirstDayOfWeek(EffectiveFormatProvider());
         }
 
         /// <summary>
