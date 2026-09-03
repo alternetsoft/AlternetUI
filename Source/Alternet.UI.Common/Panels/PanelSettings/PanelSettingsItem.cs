@@ -236,6 +236,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes the specified action on the editor control if it is of the specified type.
+        /// </summary>
+        /// <typeparam name="TControl">The type of the editor control.</typeparam>
+        /// <param name="action">The action to be executed on the editor control.</param>
+        public virtual void WithEditor<TControl>(Action<TControl>? action = null)
+        {
+            if (Editor is TControl control)
+            {
+                action?.Invoke(control);
+            }
+        }
+
+        /// <summary>
         /// Sets click action for the editor control associated with the item.
         /// </summary>
         /// <param name="clickAction">The action to be invoked when the editor is clicked.</param>
