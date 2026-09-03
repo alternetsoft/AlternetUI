@@ -57,6 +57,29 @@ namespace Alternet.UI
         
         private static DayOfWeek? systemFirstDayOfWeek;
 
+        /// <summary>
+        /// Gets <see cref="DateTime"/> format used in JavaScript
+        /// or in other situations.
+        /// </summary>
+        public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
+
+        /// <summary>
+        /// Gets the first day of the week according to the current culture's settings.
+        /// You can set this property to override the default behavior and specify a custom first day of the week.
+        /// </summary>
+        public static DayOfWeek SystemFirstDayOfWeek
+        {
+            get
+            {
+                return systemFirstDayOfWeek ?? System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
+            }
+
+            set
+            {
+                systemFirstDayOfWeek = value;
+            }
+        }
+
         /// <summary>Gets the maximum date value allowed for the control.</summary>
         /// <returns>A <see cref="System.DateTime" /> representing the
         /// maximum date value for the control.</returns>
@@ -90,29 +113,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="DateTime"/> format used in JavaScript
-        /// or in other situations.
-        /// </summary>
-        public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
-
-        /// <summary>
-        /// Gets the first day of the week according to the current culture's settings.
-        /// You can set this property to override the default behavior and specify a custom first day of the week.
-        /// </summary>
-        public static DayOfWeek SystemFirstDayOfWeek
-        {
-            get
-            {
-                return systemFirstDayOfWeek ?? System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
-            }
-
-            set
-            {
-                systemFirstDayOfWeek = value;
-            }
-        }
-
-        /// <summary>
         /// Determines whether the current culture's time format uses AM/PM
         /// designators (12-hour format) or not (24-hour format).
         /// </summary>
@@ -133,6 +133,7 @@ namespace Alternet.UI
         /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
         /// If null, the current culture is used.</param>
         /// <returns><c>true</c> if the time format uses 24-hour format; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Uses24Hour(IFormatProvider? formatProvider = null)
         {
             return !UsesAmPm(formatProvider);
@@ -183,6 +184,7 @@ namespace Alternet.UI
         /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
         /// If null, the current culture is used.</param>
         /// <returns>The name of the specified month.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetMonthName(
             CalendarMonth month,
             MonthNamesKind kind = MonthNamesKind.Full,
@@ -258,6 +260,7 @@ namespace Alternet.UI
         /// <param name="dayOfWeek">The day of the week to get the index for.</param>
         /// <param name="firstDayOfWeek">The first day of the week.</param>
         /// <returns>The index of the specified day of the week relative to the first day of the week.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetDayOfWeekIndex(DayOfWeek dayOfWeek, DayOfWeek firstDayOfWeek)
         {
             return ((int)dayOfWeek - (int)firstDayOfWeek + 7) % 7;
@@ -268,6 +271,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dayOfWeek">The day of the week to get the next day for.</param>
         /// <returns>The next day of the week.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DayOfWeek GetNextDayOfWeek(DayOfWeek dayOfWeek)
         {
             return (DayOfWeek)(((int)dayOfWeek + 1) % 7);
@@ -291,6 +295,7 @@ namespace Alternet.UI
         /// culture will be used.</param>
         /// <returns>The <see cref="DateTimeFormatInfo"/> associated with
         /// the specified format provider.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateTimeFormatInfo GetFormatInfo(IFormatProvider? formatProvider = null)
         {
             return DateTimeFormatInfo.GetInstance(formatProvider ?? CultureInfo.CurrentCulture);
@@ -314,6 +319,7 @@ namespace Alternet.UI
         /// <param name="day">The day of the week to look for.</param>
         /// <returns><c>true</c> if the specified <see cref="DaysOfWeek"/> contains the specified <see cref="DayOfWeek"/>;
         /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasDay(this DaysOfWeek days, DayOfWeek day)
         {
             return (days & (DaysOfWeek)(1 << (int)day)) != 0;
@@ -342,6 +348,7 @@ namespace Alternet.UI
         /// <param name="dt">The date and time value to evaluate.</param>
         /// <returns>true if the hour component of the specified date and time is less than 12;
         /// otherwise, false.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsAM(DateTime dt)
         {
             if (dt.Hour < 12)
@@ -487,6 +494,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
         /// <returns>The start of the week for the specified date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly GetStartOfWeek(DateOnly date)
         {
             return GetStartOfWeek(date, SystemFirstDayOfWeek);
@@ -497,6 +505,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
         /// <returns>The start of the week for the specified date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateTime GetStartOfWeek(DateTime date)
         {
             return GetStartOfWeek(date, SystemFirstDayOfWeek);
@@ -508,6 +517,7 @@ namespace Alternet.UI
         /// <param name="date">The date to evaluate.</param>
         /// <param name="firstDayOfWeek">The first day of the week.</param>
         /// <returns>The start of the week for the specified date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateTime GetStartOfWeek(DateTime date, DayOfWeek firstDayOfWeek)
         {
             int diff = (7 + (date.DayOfWeek - firstDayOfWeek)) % 7;
@@ -520,6 +530,7 @@ namespace Alternet.UI
         /// <param name="date">The date to evaluate.</param>
         /// <param name="firstDayOfWeek">The first day of the week.</param>
         /// <returns>The start of the week for the specified date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly GetStartOfWeek(DateOnly date, DayOfWeek firstDayOfWeek)
         {
             int diff = (7 + (date.DayOfWeek - firstDayOfWeek)) % 7;
@@ -531,9 +542,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
         /// <returns>The first date of the month.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly GetFirstDateOfMonth(DateOnly date)
         {
             return new DateOnly(date.Year, date.Month, 1);
+        }
+
+        /// <summary>
+        /// Gets the first date of the specified month and year.
+        /// </summary>
+        /// <param name="year">The year to evaluate.</param>
+        /// <param name="month">The month to evaluate.</param>
+        /// <returns>The first date of the specified month and year.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateOnly GetFirstDateOfMonth(int year, CalendarMonth month)
+        {
+            return new DateOnly(year, (int)month, 1);
         }
 
         /// <summary>
@@ -541,6 +565,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
         /// <returns>The number of days in the month.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int GetDaysInMonth(DateOnly date)
         {
             return DateTime.DaysInMonth(date.Year, date.Month);
@@ -552,6 +577,7 @@ namespace Alternet.UI
         /// <param name="a">The first date to compare.</param>
         /// <param name="b">The second date to compare.</param>
         /// <returns>The earlier of the two dates.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly Min(DateOnly a, DateOnly b)
         {
             return a < b ? a : b;
@@ -563,6 +589,7 @@ namespace Alternet.UI
         /// <param name="a">The first date to compare.</param>
         /// <param name="b">The second date to compare.</param>
         /// <returns>The later of the two dates.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly Max(DateOnly a, DateOnly b)
         {
             return a > b ? a : b;
@@ -573,9 +600,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
         /// <returns><c>true</c> if the date falls on a weekend; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsWeekend(DateOnly date)
         {
-            return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+            var dayOfWeek = date.DayOfWeek;
+            return dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="DateOnly"/> falls on a workday (Monday to Friday).
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns><c>true</c> if the date falls on a workday; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsWorkday(DateOnly date)
+        {
+            return !IsWeekend(date);
         }
 
         /// <summary>
@@ -583,6 +623,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
         /// <returns>An enumerable of dates that fall on weekends.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<DateOnly> GetWeekendsOfMonth(DateOnly date)
         {
             return GetDatesOfMonth(date, IsWeekend);
@@ -651,9 +692,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
         /// <returns>The last date of the month.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly GetLastDateOfMonth(DateOnly date)
         {
             return new DateOnly(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+        }
+
+        /// <summary>
+        /// Gets the last date of the specified month and year.
+        /// </summary>
+        /// <param name="year">The year to evaluate.</param>
+        /// <param name="month">The month to evaluate.</param>
+        /// <returns>The last date of the specified month and year.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateOnly GetLastDateOfMonth(int year, CalendarMonth month)
+        {
+            return GetLastDateOfMonth(new DateOnly(year, (int)month, 1));
         }
 
         /// <summary>
@@ -690,6 +744,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="time">The date and time value to compare with the current time.</param>
         /// <returns>The elapsed time in milliseconds. Returned value is always non-negative.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetAbsElapsedMilliseconds(DateTime time)
         {
             return Math.Abs(GetNowInMilliseconds() - GetInMilliseconds(time));
@@ -702,6 +757,110 @@ namespace Alternet.UI
         /// <returns>The current time in Unix milliseconds.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetNowInUnixMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+        /// <summary>
+        /// Gets the dates in the specified range, inclusive of the start and end dates.
+        /// </summary>
+        /// <param name="start">The start date of the range.</param>
+        /// <param name="end">The end date of the range.</param>
+        /// <returns>An enumerable collection of dates within the specified range.</returns>
+        public static IEnumerable<DateOnly> EachDay(DateOnly start, DateOnly end)
+        {
+            if (end < start)
+            {
+                (start, end) = (end, start);
+            }
+
+            for (var date = start; date <= end; date = date.AddDays(1))
+            {
+                yield return date;
+            }
+        }
+
+        /// <summary>
+        /// Gets the dates in the specified range that satisfy the given predicate, inclusive of the start and end dates.
+        /// </summary>
+        /// <param name="start">The start date of the range.</param>
+        /// <param name="end">The end date of the range.</param>
+        /// <param name="predicate">The predicate to evaluate each date.</param>
+        /// <returns>An enumerable collection of dates within the specified range that satisfy the predicate.</returns>
+        public static IEnumerable<DateOnly> DaysWhere(DateOnly start, DateOnly end, Predicate<DateOnly> predicate)
+        {
+            if (end < start)
+            {
+                (start, end) = (end, start);
+            }
+
+            for (var date = start; date <= end; date = date.AddDays(1))
+            {
+                if (predicate(date))
+                {
+                    yield return date;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the dates in the specified range that match the given extended day of the week,
+        /// inclusive of the start and end dates.
+        /// </summary>
+        /// <param name="start">The start date of the range.</param>
+        /// <param name="end">The end date of the range.</param>
+        /// <param name="dayOfWeek">The extended day of the week to match.</param>
+        /// <returns>An enumerable collection of dates within the specified range
+        /// that match the extended day of the week.</returns>    
+        public static IEnumerable<DateOnly> DaysWhere(DateOnly start, DateOnly end, ExtendedDayOfWeek dayOfWeek)
+        {
+            return DaysWhere(start, end, date => IsDayOfWeek(date, dayOfWeek));
+        }
+
+        /// <summary>
+        /// Gets the date corresponding to the specified relative weekday (first, second, third, fourth, or last)
+        /// </summary>
+        /// <param name="dates">The collection of dates to evaluate.</param>
+        /// <param name="number">The relative weekday to find.</param>
+        /// <returns>The date corresponding to the specified relative weekday, or <c>null</c> if not found.</returns>
+        public static DateOnly? GetRelativeDay(IEnumerable<DateOnly> dates, RelativeWeekday number)
+        {
+            var array = dates.ToArray();
+            if (array.Length == 0)
+                return null;
+
+            switch (number)
+            {
+                case RelativeWeekday.First:
+                    return array.Length >= 1 ? array[0] : null;
+                case RelativeWeekday.Second:
+                    return array.Length >= 2 ? array[1] : null;
+                case RelativeWeekday.Third:
+                    return array.Length >= 3 ? array[2] : null;
+                case RelativeWeekday.Fourth:
+                    return array.Length >= 4 ? array[3] : null;
+                case RelativeWeekday.Last:
+                    return array[array.Length - 1];
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="DateOnly"/> matches the given <see cref="ExtendedDayOfWeek"/>.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <param name="dayOfWeek">The extended day of the week to compare with.</param>
+        /// <returns><c>true</c> if the date matches the specified extended day of the week; otherwise, <c>false</c>.</returns>
+        public static bool IsDayOfWeek(DateOnly date, ExtendedDayOfWeek dayOfWeek)
+        {
+            switch (dayOfWeek)
+            {
+                case ExtendedDayOfWeek.Weekday:
+                    return IsWorkday(date);
+                case ExtendedDayOfWeek.Weekend:
+                    return IsWeekend(date);
+                default:
+                    return date.DayOfWeek == (DayOfWeek)dayOfWeek;
+            }
+        }
     }
 }
 
@@ -709,57 +868,71 @@ namespace Alternet.UI
 https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
 
 ============
-"d" The day of the month, from 1 to 31.
+The day of the month, from 1 to 31.
+"d" 
 ============
-"dd" The day of the month, from 01 to 31.
+The day of the month, from 01 to 31.
+"dd" 
 ============
-"ddd" The abbreviated name of the day of the week.
+The abbreviated name of the day of the week.
 2009-06-15T13:45:30 -> Mon (en-US)
 2009-06-15T13:45:30 -> Пн (ru-RU)
+"ddd" 
 ============
-"dddd" The full name of the day of the week.
+The full name of the day of the week.
 2009-06-15T13:45:30 -> Monday (en-US)
 2009-06-15T13:45:30 -> понедельник (ru-RU)
+"dddd" 
 ============
-"f" The tenths of a second.
+The tenths of a second.
 2009-06-15T13:45:30.6170000 -> 6
 2009-06-15T13:45:30.05 -> 0
+"f" 
 ============
-"ff" The hundredths of a second.
+The hundredths of a second.
 2009-06-15T13:45:30.6170000 -> 61
 2009-06-15T13:45:30.0050000 -> 00
+"ff" 
 ============
-"fff" The milliseconds.
+The milliseconds.
 6/15/2009 13:45:30.617 -> 617
 6/15/2009 13:45:30.0005 -> 000
+"fff" 
 ============
-"ffff" The ten thousandths of a second.
+The ten thousandths of a second.
 2009-06-15T13:45:30.6175000 -> 6175
 2009-06-15T13:45:30.0000500 -> 0000
+"ffff" 
 ============
-"fffff" The hundred thousandths of a second.
+The hundred thousandths of a second.
 2009-06-15T13:45:30.6175400 -> 61754
 6/15/2009 13:45:30.000005 -> 00000
+"fffff" 
 ============
-"ffffff" The millionths of a second.
+The millionths of a second.
 2009-06-15T13:45:30.6175420 -> 617542
 2009-06-15T13:45:30.0000005 -> 000000
+"ffffff" 
 ============
-"fffffff" The ten millionths of a second.
+The ten millionths of a second.
 2009-06-15T13:45:30.6175425 -> 6175425
 2009-06-15T13:45:30.0001150 -> 0001150
+"fffffff" 
 ============
-"F" If non-zero, the tenths of a second.
+If non-zero, the tenths of a second.
 2009-06-15T13:45:30.6170000 -> 6
 2009-06-15T13:45:30.0500000 -> (no output)
+"F" 
 ============
-"FF" If non-zero, the hundredths of a second.
+If non-zero, the hundredths of a second.
 2009-06-15T13:45:30.6170000 -> 61
 2009-06-15T13:45:30.0050000 -> (no output)
+"FF" 
 ============
-"FFF" If non-zero, the milliseconds.
+If non-zero, the milliseconds.
 The "FFF" Custom Format Specifier. 2009-06-15T13:45:30.6170000 -> 617
 2009-06-15T13:45:30.0005000 -> (no output)
+"FFF" 
 ============
 "FFFF" If non-zero, the ten thousandths of a second.
 The "FFFF" Custom Format Specifier. 2009-06-15T13:45:30.5275000 -> 5275
