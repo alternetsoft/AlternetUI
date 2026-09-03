@@ -572,6 +572,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the number of days in the specified month and year.
+        /// </summary>
+        /// <param name="year">The year to evaluate.</param>
+        /// <param name="month">The month to evaluate.</param>
+        /// <returns>The number of days in the specified month and year.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GetDaysInMonth(int year, CalendarMonth month)
+        {
+            return DateTime.DaysInMonth(year, (int)month);
+        }
+
+        /// <summary>
         /// Gets the earlier of two <see cref="DateOnly"/> values.
         /// </summary>
         /// <param name="a">The first date to compare.</param>
