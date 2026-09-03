@@ -25,6 +25,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RelativeWeekdayOfMonth"/> struct with default values.
+        /// </summary>
+        public RelativeWeekdayOfMonth()
+        {
+            RelativeWeekday = RelativeWeekday.First;
+            DayOfWeek = ExtendedDayOfWeek.Day;
+            Month = CalendarMonth.January;
+        }
+
+        /// <summary>
         /// Gets the relative weekday occurrence (e.g., First, Second, Last).
         /// </summary>
         public RelativeWeekday RelativeWeekday { get; }
@@ -71,6 +81,39 @@ namespace Alternet.UI
         public (RelativeWeekday RelativeWeekday, ExtendedDayOfWeek DayOfWeek, CalendarMonth Month) AsTuple()
         {
             return (RelativeWeekday, DayOfWeek, Month);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RelativeWeekdayOfMonth"/> instance with the specified month,
+        /// using the current instance's relative weekday and day of the week.
+        /// </summary>
+        /// <param name="month">The month to use.</param>
+        /// <returns>A new <see cref="RelativeWeekdayOfMonth"/> instance with the specified month.</returns>
+        public RelativeWeekdayOfMonth WithMonth(CalendarMonth month)
+        {
+            return new RelativeWeekdayOfMonth(RelativeWeekday, DayOfWeek, month);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RelativeWeekdayOfMonth"/> instance with the specified day of the week,
+        /// using the current instance's relative weekday and month.
+        /// </summary>
+        /// <param name="dayOfWeek">The day of the week to use.</param>
+        /// <returns>A new <see cref="RelativeWeekdayOfMonth"/> instance with the specified day of the week.</returns>
+        public RelativeWeekdayOfMonth WithDayofWeek(ExtendedDayOfWeek dayOfWeek)
+        {
+            return new RelativeWeekdayOfMonth(RelativeWeekday, dayOfWeek, Month);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RelativeWeekdayOfMonth"/> instance with the specified relative weekday,
+        /// using the current instance's day of the week and month.
+        /// </summary>
+        /// <param name="relativeWeekday">The relative weekday to use.</param>
+        /// <returns>A new <see cref="RelativeWeekdayOfMonth"/> instance with the specified relative weekday.</returns>
+        public RelativeWeekdayOfMonth WithRelativeWeekday(RelativeWeekday relativeWeekday)
+        {
+            return new RelativeWeekdayOfMonth(relativeWeekday, DayOfWeek, Month);
         }
 
         /// <summary>
