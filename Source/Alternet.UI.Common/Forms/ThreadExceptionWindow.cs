@@ -113,7 +113,8 @@ namespace Alternet.UI
             Quit,
 
             /// <summary>
-            /// Indicates a button for throwing the exception to be handled by the development environment or default exception handler.
+            /// Indicates a button for throwing the exception to be handled by
+            /// the development environment or default exception handler.
             /// </summary>
             Throw,
         }
@@ -124,7 +125,8 @@ namespace Alternet.UI
         public IReadOnlyList<ExceptionInfoItem> Exceptions => exceptions;
 
         /// <summary>
-        /// Gets the type of the last clicked button in the window, which can be used to determine the user's action and respond accordingly.
+        /// Gets the type of the last clicked button in the window, which can be used to determine
+        /// the user's action and respond accordingly.
         /// </summary>
         public virtual ButtonKind LastClickedButton { get; private set; } = ButtonKind.None;
 
@@ -434,7 +436,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows another exception in the same window. This method can be used when another exception occurs while the window is already shown.
+        /// Shows another exception in the same window. This method can be used when another
+        /// exception occurs while the window is already shown.
         /// </summary>
         /// <param name="ex">The exception to be displayed.</param>
         /// <param name="additionalInfo">Additional information related to the exception.</param>
@@ -468,7 +471,8 @@ namespace Alternet.UI
         protected virtual AbstractControl CreateButtonsGrid()
         {
             var buttonContainer = new HorizontalStackPanel();
-            buttonContainer.Padding = 10;
+            buttonContainer.MinChildMargin = 5;
+            buttonContainer.PaddingTop = 5;
 
             detailsButton = new XButton
             {
@@ -504,7 +508,6 @@ namespace Alternet.UI
                 IsDefault = true,
                 Visible = canQuit,
                 HorizontalAlignment = HorizontalAlignment.Right,
-                Margin = (5, 0, 0, 0),
                 Parent = buttonContainer,
             };
 
