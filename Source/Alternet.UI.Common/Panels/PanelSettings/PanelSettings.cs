@@ -498,10 +498,11 @@ namespace Alternet.UI
             enumEditor.ButtonClick += ButtonClick;
 
             if (item.ValueType is not null)
-               enumEditor.EnumPicker.EnumType = AssemblyUtils.GetRealType(item.ValueType);
+               enumEditor.EnumPicker.EnumType = item.ValueType;
 
             if (item.Value is not null)
                 enumEditor.EnumPicker.Value = item.Value;
+            enumEditor.MainControl.ReassignValue();
 
             enumEditor.EnumPicker.ValueChanged -= ValueChanged;
             enumEditor.EnumPicker.ValueChanged += ValueChanged;

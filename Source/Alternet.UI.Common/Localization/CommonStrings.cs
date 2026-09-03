@@ -18,6 +18,8 @@ namespace Alternet.UI.Localization
         /// </summary>
         public static CommonStrings Default { get; set; } = new();
 
+        public string NoValue { get; set; } = "no value";
+
         public string ButtonOk { get; set; } = "Ok";
 
         public string TransparentColorDisplayName { get; set; } = "Transparent";

@@ -252,7 +252,7 @@ namespace Alternet.UI
         /// <param name="culture">The culture to use when changing the case. If null, the current culture is used.</param>
         public virtual void ChangeItemsCase(TextCaseRule rule, CultureInfo? culture = null)
         {
-            if(ListItems.Count == 0)
+            if (ListItems.Count == 0)
                 return;
 
             foreach (var item in ListItems)
@@ -383,6 +383,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes the item with the specified value from the list control shown in the popup.
+        /// </summary>
+        /// <param name="value">The value of the item to remove.</param>
+        public virtual void RemoveItemWithValue(object? value)
+        {
+            var item = FindItemWithValue(value);
+            if (item is not null)
+                ListItems.Remove(item);
+        }
+
+        /// <summary>
         /// Finds the item with <see cref="ListControlItem.Value"/> property which is
         /// equal to the specified value.
         /// </summary>
@@ -391,14 +402,24 @@ namespace Alternet.UI
         public virtual ListControlItem? FindItemWithValue(object? value)
         {
             if (value is null)
-                return null;
-
-            for (int i = 0; i < ListItems.Count; i++)
             {
-                var item = ListItems[i];
+                for (int i = 0; i < ListItems.Count; i++)
+                {
+                    var item = ListItems[i];
 
-                if (value.Equals(item.Value))
-                    return item;
+                    if (item.Value is null)
+                        return item;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < ListItems.Count; i++)
+                {
+                    var item = ListItems[i];
+
+                    if (value.Equals(item.Value))
+                        return item;
+                }
             }
 
             return null;
@@ -409,7 +430,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Display text of the item which is shown to the user.</param>
         /// <param name="value">Value associated with the item.</param>
-        public virtual ListControlItem Add(string title, object value)
+        public virtual ListControlItem Add(string title, object? value)
         {
             ListControlItem newItem = new()
             {
@@ -514,7 +535,7 @@ namespace Alternet.UI
             if (App.IsLinuxOS)
                 kind = PickerPopupKind.ListBox;
 
-            BaseCancelEventArgs e = new ();
+            BaseCancelEventArgs e = new();
 
             RaiseBeforeShowPopup(e);
 
@@ -677,7 +698,7 @@ namespace Alternet.UI
         {
             if (PopupWindow.PopupResult == ModalResult.Accepted)
             {
-                Value = PopupWindow.ResultItem?.Value ?? PopupWindow.ResultItem;
+                Value = PopupWindow.ResultItem?.Value;
             }
 
             var focusedControl = PopupWindow.PopupOwner;

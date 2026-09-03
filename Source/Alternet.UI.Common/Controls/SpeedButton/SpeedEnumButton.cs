@@ -25,6 +25,7 @@ namespace Alternet.UI
         public static new PickerPopupKind DefaultPopupKind = PickerPopupKind.ListBox;
 
         private Type? enumType;
+        private bool isNullableEnum;
         private IEnumerable? excludeValues;
         private ListControlItem? cachedItem;
 
@@ -61,12 +62,30 @@ namespace Alternet.UI
 
             set
             {
-                if (enumType == value)
+                if (value is null)
+                {
+                    enumType = null;
+                    isNullableEnum = false;
+                    ReloadItems();
                     return;
-                enumType = value;
+                }
+
+                var isNullable = AssemblyUtils.IsNullableType(value);
+                var realType = AssemblyUtils.GetRealType(value);
+
+                if (enumType == realType && isNullableEnum == isNullable)
+                    return;
+                enumType = realType;
+                isNullableEnum = isNullable;
                 ReloadItems();
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the enumeration type is nullable.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsNullableEnum => isNullableEnum;
 
         /// <summary>
         /// Gets or sets value as <see cref="string"/>.
@@ -144,7 +163,7 @@ namespace Alternet.UI
         /// <param name="value">The value of the enum item.</param>
         /// <param name="text">The display text to assign.</param>
         /// <returns></returns>
-        public virtual bool SetDisplayText(object value, string text)
+        public virtual bool SetDisplayText(object? value, string text)
         {
             var item = FindItemWithValue(value);
             if (item is not null)
@@ -219,6 +238,12 @@ namespace Alternet.UI
 
                     return true;
                 });
+
+            if (IsNullableEnum)
+            {
+                ListControlItem nullItem = new($"({CommonStrings.Default.NoValue})");
+                collection?.Add(nullItem);
+            }
 
             return new ListSource<ListControlItem>(collection);
         }

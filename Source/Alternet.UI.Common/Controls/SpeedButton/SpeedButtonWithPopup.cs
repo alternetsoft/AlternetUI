@@ -44,6 +44,7 @@ namespace Alternet.UI
         private DateTime popupLastClosedAt;
         private BaseCollection<BorderSettings>? errorBorder;
         private bool showErrorBorder;
+        private int skipOldValueCheckCounter;
 
         /// <summary>
         /// Initializes a new instance of the
@@ -146,7 +147,7 @@ namespace Alternet.UI
 
             set
             {
-                if (data == value)
+                if (data == value && skipOldValueCheckCounter == 0)
                     return;
                 PerformLayoutAndInvalidate(() =>
                 {
@@ -383,8 +384,15 @@ namespace Alternet.UI
             try
             {
                 var savedValue = Value;
-                data = null;
-                Value = savedValue;
+                skipOldValueCheckCounter++;
+                try
+                {
+                    Value = savedValue;
+                }
+                finally
+                {
+                    skipOldValueCheckCounter--;
+                }
             }
             finally
             {
