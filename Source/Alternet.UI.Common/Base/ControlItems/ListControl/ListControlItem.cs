@@ -446,14 +446,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether the current item is a cell within a list control
-        /// and should be treated as selected for drawing purposes.
-        /// </summary>
-        /// <returns><c>true</c> if the current item is a selected cell; otherwise, <c>false</c>.</returns>
-        [Browsable(false)]
-        public virtual bool IsSelectedCell { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the item is checked.
         /// Uses <see cref="CheckState"/> internally.
         /// </summary>
@@ -2316,7 +2308,7 @@ namespace Alternet.UI
         /// including its rectangle, colors, and other settings.</param>
         public virtual void DrawCellBackground(in DrawCellParams prm)
         {
-            if (!IsSelectedCell)
+            if (!IsSelectedCell(prm.Container))
                 return;
 
             var container = prm.Container;
@@ -2901,6 +2893,17 @@ namespace Alternet.UI
                 AdditionalImages.EnsureCountAtLeast(imageToUse, () => new ItemImageInfoRef());
                 AdditionalImages[imageToUse - 1].SvgImage = svgImage;
             }
+        }
+
+        /// <summary>
+        /// Determines whether the current item is a cell within a list control
+        /// and should be treated as selected for drawing purposes.
+        /// </summary>
+        /// <returns><c>true</c> if the current item is a selected cell; otherwise, <c>false</c>.</returns>
+        [Browsable(false)]
+        public virtual bool IsSelectedCell(IListControlItemContainer? container)
+        {
+            return false;
         }
 
         /// <summary>

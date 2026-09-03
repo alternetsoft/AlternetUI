@@ -1222,12 +1222,9 @@ namespace Alternet.UI
             public CalendarCell Data { get; internal set; } = CalendarCell.Default;
 
             /// <inheritdoc/>
-            public override bool IsSelectedCell
+            public override bool IsSelectedCell(IListControlItemContainer? container)
             {
-                get => Data.IsCurrent;
-                set
-                {
-                }
+                return Data.IsCurrent;
             }
         }
 
