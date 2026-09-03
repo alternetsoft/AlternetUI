@@ -18,6 +18,12 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
         /// </summary>
         public static bool DefaultShowDropDownImage = false;
+
+        /// <summary>
+        /// Gets or sets the default date format used for displaying dates in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public static string DefaultDateFormat = "D";
+
         private IFormatProvider? formatProvider;
 
         /// <summary>
@@ -58,6 +64,7 @@ namespace Alternet.UI
             startDateLabel.IsBold = true;
             startDateLabel.Parent = this;
 
+            startDatePicker.Format = DefaultDateFormat;
             startDatePicker.ImageVisible = DefaultShowDropDownImage;
             startDatePicker.AsDateOnly = data.StartDate;
             startDatePicker.Parent = this;
@@ -75,6 +82,7 @@ namespace Alternet.UI
 
             endDatePicker.Label.Text = CommonStrings.Default.OnPrefix;
             endDatePicker.Label.InputTransparent = true;
+            endDatePicker.MainControl.Format = DefaultDateFormat;
             endDatePicker.MainControl.ImageVisible = DefaultShowDropDownImage;
             endDatePicker.MainControl.AsDateOnly = data.EndDate;
             endDatePicker.MainControl.ValueChanged += (s, e) =>
