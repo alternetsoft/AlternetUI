@@ -69,9 +69,9 @@ namespace Alternet.UI
         public static Coord DefaultMinImageSize = 24;
 
         private static BorderSettings? defaultToolTipBorder;
-        private static TemplateControls.RichToolTipTemplate? defaultTemplate;
+        private static IRichToolTipTemplate? defaultTemplate;
 
-        private readonly TemplateControls.RichToolTipTemplate template;
+        private readonly IRichToolTipTemplate template;
         private readonly ImageDrawable drawable = new();
         private RichToolTipParams data = new();
 
@@ -89,7 +89,7 @@ namespace Alternet.UI
         /// </summary>
         public RichToolTip()
         {
-            template = new();
+            template = new TemplateControls.RichToolTipTemplate();
             drawable.Visible = false;
             ParentBackColor = true;
             ParentForeColor = true;
@@ -176,11 +176,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default template used for rich tooltips.
         /// </summary>
-        internal static TemplateControls.RichToolTipTemplate DefaultTemplate
+        internal static IRichToolTipTemplate DefaultTemplate
         {
             get
             {
-                return defaultTemplate ??= new();
+                return defaultTemplate ??= new TemplateControls.RichToolTipTemplate();
             }
 
             set
@@ -213,7 +213,7 @@ namespace Alternet.UI
         /// Gets template control used to layout tooltip elements.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl ToolTipTemplate => template;
+        public GenericControl ToolTipTemplate => template.RootControl;
 
         /// <summary>
         /// Gets or sets the maximum width, in device-independent units (DIPs), that text can occupy before it is
@@ -498,7 +498,7 @@ namespace Alternet.UI
         /// text, title, colors, and optional image or icon.
         /// If no content is provided, a default informational icon is
         /// displayed. The resulting tooltip is rendered as an image.</remarks>
-        /// <param name="template">The <see cref="TemplateControls.RichToolTipTemplate"/>
+        /// <param name="templateIntf">The <see cref="IRichToolTipTemplate"/>
         /// used to define the layout and appearance of the
         /// tooltip.</param>
         /// <param name="data">The <see cref="RichToolTipParams"/> containing
@@ -506,10 +506,12 @@ namespace Alternet.UI
         /// text, title, colors, font, and image.</param>
         /// <returns>An <see cref="Image"/> object representing the rendered tooltip.</returns>
         public static Image CreateToolTipImage(
-            TemplateControls.RichToolTipTemplate template,
+            IRichToolTipTemplate templateIntf,
             RichToolTipParams data)
         {
-            template ??= DefaultTemplate;
+            templateIntf ??= DefaultTemplate;
+
+            var template = templateIntf.RootControl;
 
             var rect = template.Bounds;
 
@@ -526,8 +528,8 @@ namespace Alternet.UI
             {
                 if (data.MaxWidth is not null)
                 {
-                    template.TitleLabel.MaxTextWidth = data.MaxWidth;
-                    template.MessageLabel.MaxTextWidth = data.MaxWidth;
+                    templateIntf.TitleLabel.MaxTextWidth = data.MaxWidth;
+                    templateIntf.MessageLabel.MaxTextWidth = data.MaxWidth;
                 }
 
                 template.Font = data.Font ?? Control.DefaultFont;
@@ -538,24 +540,24 @@ namespace Alternet.UI
                 template.RaiseBackgroundColorChanged();
                 template.ForegroundColor
                 = data.ForegroundColor?.Current ?? RichToolTip.DefaultToolTipForegroundColor.Current;
-                template.TitleLabel.ParentForeColor = false;
-                template.TitleLabel.ParentFont = false;
-                template.TitleLabel.Text = data.Title;
+                templateIntf.TitleLabel.ParentForeColor = false;
+                templateIntf.TitleLabel.ParentFont = false;
+                templateIntf.TitleLabel.Text = data.Title;
 
-                template.TitleLabel.Font
+                templateIntf.TitleLabel.Font
                     = data.TitleFont ?? template.Font?.Scaled(DefaultTitleFontScaleFactor) ?? Control.DefaultFont.Scaled(DefaultTitleFontScaleFactor);
-                template.TitleLabel.ForegroundColor
+                templateIntf.TitleLabel.ForegroundColor
                     = data.TitleForegroundColor?.Current ?? RichToolTip.DefaultToolTipTitleForegroundColor.Current;
-                template.MessageLabel.Text = data.Text;
+                templateIntf.MessageLabel.Text = data.Text;
 
-                template.TitleLabel.Visible = !string.IsNullOrEmpty(data.Title);
-                template.MessageLabel.Visible = !string.IsNullOrEmpty(data.Text);
+                templateIntf.TitleLabel.Visible = !string.IsNullOrEmpty(data.Title);
+                templateIntf.MessageLabel.Visible = !string.IsNullOrEmpty(data.Text);
 
                 var sizeInPixels
                 = GraphicsFactory.PixelFromDip(RichToolTip.DefaultMinImageSize, data.ScaleFactor);
 
-                var titleVisible = template.TitleLabel.Visible;
-                var messageVisible = template.MessageLabel.Visible;
+                var titleVisible = templateIntf.TitleLabel.Visible;
+                var messageVisible = templateIntf.MessageLabel.Visible;
                 var anyTextVisible = titleVisible || messageVisible;
 
                 var imageMargin = DefaultImageMargin;
@@ -567,28 +569,28 @@ namespace Alternet.UI
 
                 if (data.Image != null)
                 {
-                    template.PictureBox.ImageSet = data.Image;
-                    template.PictureBox.Visible = true;
+                    templateIntf.PictureBox.ImageSet = data.Image;
+                    templateIntf.PictureBox.Visible = true;
                 }
                 else
                 {
-                    var hasIcon = template.PictureBox.SetIcon(
+                    var hasIcon = templateIntf.PictureBox.SetIcon(
                         data.Icon ?? MessageBoxIcon.None,
                         sizeInPixels);
-                    template.PictureBox.Visible = hasIcon;
+                    templateIntf.PictureBox.Visible = hasIcon;
                 }
 
-                var imageVisible = template.PictureBox.Visible;
+                var imageVisible = templateIntf.PictureBox.Visible;
                 var anyVisible = imageVisible || anyTextVisible;
 
                 if (!anyVisible)
                 {
-                    template.PictureBox.SetIcon(MessageBoxIcon.Information, sizeInPixels);
-                    template.PictureBox.Visible = true;
+                    templateIntf.PictureBox.SetIcon(MessageBoxIcon.Information, sizeInPixels);
+                    templateIntf.PictureBox.Visible = true;
                     imageVisible = true;
                 }
 
-                template.PictureBox.Margin = imageMargin;
+                templateIntf.PictureBox.Margin = imageMargin;
             },
             false);
 

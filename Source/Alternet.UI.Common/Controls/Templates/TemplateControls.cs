@@ -12,7 +12,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sample template control with text which has a middle part with bold font.
         /// </summary>
-        public class RichToolTipTemplate : TemplateControl
+        public class RichToolTipTemplate : TemplateControl, IRichToolTipTemplate
         {
             private readonly HiddenGenericBorder labels = new();
 
@@ -35,6 +35,8 @@ namespace Alternet.UI
                     pictureBox.VerticalAlignment = VerticalAlignment.Top;
                     pictureBox.Margin = RichToolTip.DefaultImageMargin;
                     pictureBox.Parent = this;
+                    pictureBox.CenterVert = true;
+                    pictureBox.CenterHorz = true;
 
                     labels.Layout = LayoutStyle.Vertical;
                     labels.HorizontalAlignment = HorizontalAlignment.Fill;
@@ -45,6 +47,16 @@ namespace Alternet.UI
                     titleLabel.Margin = RichToolTip.DefaultTitleMargin;
                     titleLabel.Parent = labels;
                     titleLabel.MaxTextWidth = 500;
+
+                    titleLabel.VisibleChanged += (s, e) =>
+                    {
+                        UpdateImageSize();
+                    };
+
+                    titleLabel.SizeChanged += (s, e) =>
+                    {
+                        UpdateImageSize();
+                    };
 
                     messageLabel.Margin = RichToolTip.DefaultMessageMargin;
                     messageLabel.WordWrap = true;
@@ -71,6 +83,17 @@ namespace Alternet.UI
             /// Gets control which contains image.
             /// </summary>
             public PictureBox PictureBox => pictureBox;
+
+            TemplateControl IRichToolTipTemplate.RootControl => this;
+
+            /// <summary>
+            /// Updates the image size based on the title label height.
+            /// </summary>
+            protected virtual void UpdateImageSize()
+            {
+                if (titleLabel.Visible)
+                    pictureBox.MinHeight = titleLabel.Height;
+            }
         }
 
         /// <summary>
