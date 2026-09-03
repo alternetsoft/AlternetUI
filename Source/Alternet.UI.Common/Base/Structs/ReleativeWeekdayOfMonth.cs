@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Alternet.UI
@@ -60,6 +61,31 @@ namespace Alternet.UI
         public static bool operator !=(RelativeWeekdayOfMonth left, RelativeWeekdayOfMonth right)
         {
             return !(left == right);
+        }
+
+        /// <summary>
+        /// Returns a tuple representation of the <see cref="RelativeWeekdayOfMonth"/> instance,
+        /// containing the relative weekday, day of the week, and month.
+        /// </summary>
+        /// <returns>A tuple containing the relative weekday, day of the week, and month.</returns>
+        public (RelativeWeekday RelativeWeekday, ExtendedDayOfWeek DayOfWeek, CalendarMonth Month) AsTuple()
+        {
+            return (RelativeWeekday, DayOfWeek, Month);
+        }
+
+        /// <summary>
+        /// Gets the date corresponding to the specified year based on the relative weekday, day of the week, and month.
+        /// </summary>
+        /// <param name="year">The year for which to get the date.</param>
+        /// <returns>The date corresponding to the specified year, or <c>null</c> if not found.</returns>
+        public DateOnly? GetDate(int year)
+        {
+            var start = DateUtils.GetFirstDateOfMonth(year, Month);
+            var end = DateUtils.GetLastDateOfMonth(year, Month);
+
+            var days = DateUtils.DaysWhere(start, end, DayOfWeek);
+
+            return DateUtils.GetRelativeDay(days, RelativeWeekday);
         }
 
         /// <inheritdoc/>
