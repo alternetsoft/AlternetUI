@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Alternet.UI;
@@ -10,6 +11,8 @@ namespace ControlsSample
         private readonly string?[] dateFormats = new[]
         {
             null,           // Default format
+            "d",            // Short date pattern
+            "D",            // Long date pattern
             "M/d/yyyy",     // 4/5/2017
             "M/d/yy",       // 4/5/17
             "MM/dd/yy",     // 04/05/17
@@ -36,11 +39,20 @@ namespace ControlsSample
         public ContextMenu CreateDateFormatContextMenu()
         {
             var contextMenu = new ContextMenu();
+
+            List<string> addedFormats = new ();
+
             foreach (var format in dateFormats)
             {
+                var s = DateTime.Now.ToString(format);
+
+                if(addedFormats.Contains(s))
+                    continue;
+
+                addedFormats.Add(s);
+
                 var menuItem = new MenuItem();
-                menuItem.Text = format is null
-                    ? "Default" : DateTime.Now.ToString(format);
+                menuItem.Text = format is null ? "Default" : s;
                 menuItem.Tag = format;
                 menuItem.Click += (s, e) =>
                 {
