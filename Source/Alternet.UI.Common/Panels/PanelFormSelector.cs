@@ -42,6 +42,7 @@ namespace Alternet.UI
             openButton.Parent = buttonPanel;
             openButton.Click += HandleOpenButtonClick;
 
+            view.ListBox.ItemMargin = (10, 0, 10, 0);
             view.HorizontalAlignment = HorizontalAlignment.Fill;
             view.Parent = this;
 
@@ -107,6 +108,15 @@ namespace Alternet.UI
         {
             HasGroups = true;
 
+            if (RootItem.HasItems)
+            {
+                RootItem.Add(new TreeViewSeparatorItem());
+            }
+            else
+            {
+                RootItem.Add(new TreeViewEmptyItem());
+            }
+
             TreeViewItem item = new(title)
             {
                 Font = GroupFont ??= Control.DefaultFont.Larger().AsBold,
@@ -115,6 +125,7 @@ namespace Alternet.UI
                 IsExpanded = true,
                 ExpandOnClick = true,
                 AutoCollapseSiblings = true,
+                IsCheckRightAligned = true,
             };
 
             item.CustomAttr["IsGroupItem"] = true;
