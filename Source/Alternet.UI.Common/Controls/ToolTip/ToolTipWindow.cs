@@ -384,8 +384,9 @@ namespace Alternet.UI
         /// <param name="e">An object that contains the event data.</param>
         private static void OnGlobalMouseHover(object? sender, EventArgs e)
         {
-
+            ShowToolTip(sender as AbstractControl);
         }
+
         private void HideToolTip<T>(object? sender, T e)
         {
             if (!Visible || DisposingOrDisposed)
