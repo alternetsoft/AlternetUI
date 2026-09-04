@@ -74,7 +74,6 @@ namespace ControlsSample
             propGrid.Add<BoldLabel>("XCalendar.MonthPickerPanel");
             propGrid.Add<XCalendar.MonthPickerPanel>((c) =>
             {
-                c.BottomLine.Visible = false;
             });
             propGrid.AddHorizontalLine();
 

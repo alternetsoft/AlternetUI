@@ -1682,12 +1682,10 @@ namespace Alternet.UI
         /// Represents a panel used as the month picker in the calendar control,
         /// allowing users to select a month.
         /// </summary>
-        public partial class MonthPickerPanel : TransparentPanel
+        public partial class MonthPickerPanel : HiddenGenericBorder
         {
             private readonly TransparentPanel[] rows;
             private readonly List<SpeedTextButton> buttons = new(12);
-            private readonly HorizontalLine bottomLine;
-
             private IFormatProvider? formatProvider;
             private MonthNamesKind kind = MonthNamesKind.Abbreviated;
             private CalendarMonth data = CalendarMonth.January;
@@ -1697,6 +1695,10 @@ namespace Alternet.UI
             /// </summary>
             public MonthPickerPanel()
             {
+                this.RoundCorners();
+                Padding = 10;
+                HasBorder = true;
+
                 var row1 = CreateRow([CalendarMonth.January, CalendarMonth.February, CalendarMonth.March, CalendarMonth.April]);
                 var row2 = CreateRow([CalendarMonth.May, CalendarMonth.June, CalendarMonth.July, CalendarMonth.August]);
                 var row3 = CreateRow([CalendarMonth.September, CalendarMonth.October, CalendarMonth.November, CalendarMonth.December]);
@@ -1708,10 +1710,6 @@ namespace Alternet.UI
                 row1.Parent = this;
                 row2.Parent = this;
                 row3.Parent = this;
-
-                bottomLine = Add<HorizontalLine>();
-                bottomLine.Margin = (5, 5, 5, 5);
-                bottomLine.Parent = this;
 
                 UpdateMonthNames();
             }
@@ -1726,11 +1724,6 @@ namespace Alternet.UI
             /// Occurs when the selected month value changes, allowing subscribers to respond to the change in selection.
             /// </summary>
             public event EventHandler? ValueChanged;
-
-            /// <summary>
-            /// Gets the bottom line control in the month picker panel, which can be used for visual separation or styling purposes.
-            /// </summary>
-            public HorizontalLine BottomLine => bottomLine;
 
             /// <summary>
             /// Gets or sets the kind of month names displayed in the month picker,
