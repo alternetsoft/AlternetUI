@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// Gets or sets default color of the accent marker which is optionally painted for the current item in the list control.
         /// If this property is null, default accent color is used.
         /// </summary>
-        public static LightDarkColor? DefaultAccentMarkerColor;
+        public static LightDarkColor DefaultAccentMarkerColor = new(light: Color.White, dark: new(76, 194, 255));
 
         /// <summary>
         /// Gets or sets default margin of the accent marker which is optionally painted for the current item in the list control.
@@ -2124,13 +2124,16 @@ namespace Alternet.UI
         {
             var result = rect;
             var checkboxesVisible = rect.Width < e.PaintRectangle.Width;
-
+            var control = container?.Control;
             var showAccentMarker = container?.ShowAccentMarker ?? false;
 
             if (!checkboxesVisible && showAccentMarker && !e.HideAccentMarker)
             {
+                var isEnabled = IsContainerEnabled(container);
+                var focused = control?.Focused ?? false;
+
                 var isDark = ListControlItem.IsContainerDark(container);
-                var accentColor = (DefaultAccentMarkerColor ?? DefaultColors.AccentColor).LightOrDark(isDark);
+                var accentColor = isEnabled && focused ? DefaultAccentMarkerColor.LightOrDark(isDark) : Color.Transparent;
                 var accentWidth = DefaultAccentMarkerWidth;
                 Thickness accentMargin = DefaultAccentMargin;
 
