@@ -32,6 +32,13 @@ namespace Alternet.UI
         public const int ColumnCount = 7;
 
         /// <summary>
+        /// Gets or sets the default <see cref="ICalendarDateAttr"/> attributes for holidays in the calendar control.
+        /// You can use <see cref="PlessCalendarDateAttr"/>
+        /// in order to create a new instance of <see cref="ICalendarDateAttr"/> with the desired attributes.
+        /// </summary>
+        public static ICalendarDateAttr? DefaultHolidayAttr;
+
+        /// <summary>
         /// Gets the text used for measuring the height of a single row in the calendar control.
         /// </summary>
         public static readonly string RowHeightMeasureText = "Wg00";
@@ -245,6 +252,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the selected date changed. This is the same as the <see cref="ValueChanged"/> event
         /// and is provided for compatibility with other calendar controls that use the SelectionChanged event.
+        /// Control is invalidated automatically after this event handler executes.
         /// </summary>
         public event EventHandler? SelectionChanged
         {
@@ -261,12 +269,17 @@ namespace Alternet.UI
 
         /// <summary>
         /// Occurs when the selected month (and/or year) changed.
+        /// In the event handler, you can assign day attributes for the new month
+        /// as they are cleared each time the month or year changes.
+        /// You can set attributes without invalidating the control as it is invalidated
+        /// automatically after this event handler executes.
         /// </summary>
         public event EventHandler? PageChanged;
 
         /// <summary>
         /// Occurs when the value of the calendar control changes,
         /// allowing subscribers to handle the event and perform actions based on the new value.
+        /// Control is invalidated automatically after this event handler executes.
         /// </summary>
         public event EventHandler? ValueChanged;
 
@@ -321,6 +334,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the <see cref="ICalendarDateAttr"/> attributes for holidays in the calendar control,
+        /// If not set, the default holiday attributes will be used. You can use <see cref="CreateDateAttr"/>
+        /// in order to create a new instance of <see cref="ICalendarDateAttr"/> with the desired attributes.
         /// </summary>
         [Browsable(false)]
         public virtual ICalendarDateAttr? HolidayAttr
@@ -487,12 +502,22 @@ namespace Alternet.UI
                     suspendHeaderEventsCounter--;
                 }
 
-                ValueChanged?.Invoke(this, EventArgs.Empty);
+                var pageChanged = oldValue.Year != newValue.Year || oldValue.Month != newValue.Month;
 
-                if (oldValue.Year != newValue.Year || oldValue.Month != newValue.Month)
-                    PageChanged?.Invoke(this, EventArgs.Empty);
+                if(pageChanged)
+                {
+                    ResetAttrAll(invalidate: false);
+                }
 
                 OnValueChanged();
+
+                ValueChanged?.Invoke(this, EventArgs.Empty);
+
+                if (pageChanged)
+                {
+                    PageChanged?.Invoke(this, EventArgs.Empty);
+                }
+
                 Invalidate();
             }
         }
@@ -654,7 +679,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="rule">The repeat pattern rule to match dates.</param>
         /// <param name="attr">The attributes to apply to the matching dates. Pass <c>null</c> to reset attributes.</param>
-        public virtual void MarkWithRule(RepeatPatternRule rule, ICalendarDateAttr? attr)
+        /// <param name="invalidate">Indicates whether to invalidate the control after setting the attributes.</param>
+        public virtual void MarkWithRule(RepeatPatternRule rule, ICalendarDateAttr? attr, bool invalidate = true)
         {
             IDateRepeatPatternRule.RuleGetDatesParams prm = new();
             prm.MinDate = FirstDateOfMonth;
@@ -662,31 +688,71 @@ namespace Alternet.UI
 
             var result = rule.GetDates(prm).Dates;
 
+            var needInvalidate = false;
+
             foreach (var date in result)
             {
-                SetAttr(date.Day, attr);
+                needInvalidate |= SetAttr(date.Day, attr, invalidate: false);
             }
+
+            if (invalidate && needInvalidate)
+                Invalidate();
         }
 
         /// <summary>
         /// Marks the specified day as being a holiday in the current month.
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
-        public virtual void SetHoliday(int day)
+        /// <param name="invalidate">Indicates whether to invalidate the control after setting the holiday attribute.</param>
+        public virtual void SetHoliday(int day, bool invalidate = true)
         {
-            SetAttr(day, HolidayAttr ?? DateAttributes.Red);
+            SetAttr(day, HolidayAttr ?? DefaultHolidayAttr ?? DateAttributes.Red, invalidate);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ICalendarDateAttr"/> attributes for the given date.
+        /// This method can be used to customize the appearance and behavior of current month days.
+        /// If the date is not in the current month, the method will return false and no attributes will be set.
+        /// After month or year is changed, this method should be called again to set attributes for the new month.
+        /// </summary>
+        /// <param name="date">The date for which to set the attributes.</param>
+        /// <param name="dateAttr">The attributes to set for the date. Pass <c>null</c> to reset attributes.</param>
+        /// <param name="invalidate">Indicates whether to invalidate the control after setting the attributes.</param>
+        /// <returns><c>true</c> if the attributes were successfully set; otherwise, <c>false</c>.</returns>
+        public virtual bool SetAttr(DateOnly date, ICalendarDateAttr? dateAttr, bool invalidate = true)
+        {
+            foreach (var cell in cells)
+            {
+                if (cell.Date == date)
+                {
+                    cell.DateAttr = dateAttr;
+                    if (invalidate)
+                        Invalidate();
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
         /// Sets the <see cref="ICalendarDateAttr"/> attributes for the given day.
+        /// This method can be used to customize the appearance and behavior of current month days.
+        /// If the date is not in the current month, the method will return false and no attributes will be set.
+        /// After month or year is changed, this method should be called again to set attributes for the new month.
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="dateAttr">Day attributes. Pass <c>null</c> to reset attributes.</param>
+        /// <param name="invalidate">Indicates whether to invalidate the control after setting the attributes.</param>
         /// <remarks>
         /// After current page is changed, this method should be called again to set attributes for the new month.
         /// </remarks>
-        public virtual void SetAttr(int day, ICalendarDateAttr? dateAttr)
+        public virtual bool SetAttr(int day, ICalendarDateAttr? dateAttr, bool invalidate = true)
         {
+            if (day < 1 || day > DateTime.DaysInMonth(Value.Year, Value.Month))
+                return false;
+            var dateToSet = new DateOnly(Value.Year, Value.Month, day);
+            return SetAttr(dateToSet, dateAttr, invalidate);
         }
 
         /// <summary>
@@ -793,7 +859,7 @@ namespace Alternet.UI
         /// Resets the attributes of all cells in the calendar control,
         /// clearing any custom date attributes and restoring the default appearance of the cells.
         /// </summary>
-        public virtual void ResetAttrAll()
+        public virtual void ResetAttrAll(bool invalidate = true)
         {
             var needInvalidate = false;
 
@@ -805,7 +871,7 @@ namespace Alternet.UI
                 cell.DateAttr = null;
             }
 
-            if (needInvalidate)
+            if (needInvalidate && invalidate)
                 Invalidate();
         }
 
@@ -1396,6 +1462,34 @@ namespace Alternet.UI
             /// Gets the data associated with the calendar cell.
             /// </summary>
             public CalendarCell Data { get; internal set; } = CalendarCell.Default;
+
+            /// <inheritdoc/>
+            public override Color? ForegroundColor
+            {
+                get
+                {
+                    return Data.DateAttr?.TextColor ?? base.ForegroundColor;
+                }
+
+                set
+                {
+                    base.ForegroundColor = value;
+                }
+            }
+
+            /// <inheritdoc/>
+            public override Color? BackgroundColor
+            {
+                get
+                {
+                    return Data.DateAttr?.BackgroundColor ?? base.BackgroundColor;
+                }
+
+                set
+                {
+                    base.BackgroundColor = value;
+                }
+            }
 
             /// <inheritdoc/>
             public override bool IsSelectedCell(IListControlItemContainer? container)

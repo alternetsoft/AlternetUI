@@ -150,6 +150,8 @@ namespace ControlsSample
                     UpdateHighlightedDates();
                 };
             }
+
+            UpdateHighlightedDates();
         }
 
         public bool HighlightDates
@@ -166,7 +168,7 @@ namespace ControlsSample
 
         private void UpdateHighlightedDates()
         {
-            calendar.ResetAttrAll();
+            calendar.MarkWeekendsAsHolidays();
 
             if (HighlightDates)
             {
@@ -174,7 +176,6 @@ namespace ControlsSample
             }
             else
             {
-                calendar.MarkWeekendsAsHolidays();
             }
         }
     }
