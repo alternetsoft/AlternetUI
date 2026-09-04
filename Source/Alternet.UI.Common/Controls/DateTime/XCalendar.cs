@@ -100,6 +100,16 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="XCalendar"/> class.
         /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public XCalendar(AbstractControl parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XCalendar"/> class.
+        /// </summary>
         public XCalendar()
         {
             SetScrollBarVisible(isVert: true, isVisible: false);
@@ -766,6 +776,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Changes <see cref="Value"/> property to the today date.
+        /// </summary>
+        public virtual void SelectToday()
+        {
+            Value = DateTime.Now.Date.ToDateOnly();
+        }
+
+        /// <summary>
         /// Creates <see cref="IXCalendarDateAttr"/> instance.
         /// </summary>
         public virtual IXCalendarDateAttr CreateDateAttr()
@@ -1135,6 +1153,12 @@ namespace Alternet.UI
         protected virtual void OnPopupMonthPickerVisibleChanged(object? sender, EventArgs e)
         {
             header.MonthPicker.Sticky = popupMonthPicker.Visible;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
         }
 
         /// <summary>
