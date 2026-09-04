@@ -82,7 +82,7 @@ namespace Alternet.UI
             {
             };
 
-            if(eventsControl is not null)
+            if (eventsControl is not null)
             {
                 eventsControl.ShowDebugWelcomeMessage = true;
                 eventsControl.BindApplicationLog();
@@ -189,9 +189,10 @@ namespace Alternet.UI
                 eventsControl.Parent = splitterPanel;
             }
 
-            if(pageContainer.LeftControlKind == SplittedTreeAndCards.TreeKind.ListBox)
+            if (pageContainer.LeftControlKind == SplittedTreeAndCards.TreeKind.ListBox)
             {
                 pageContainer.ListBox!.HorizontalScrollbar = true;
+                pageContainer.ListBox.ShowAccentMarker = true;
             }
 
             var logSizeChanged = false;
