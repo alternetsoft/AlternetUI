@@ -601,7 +601,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets root tooltip provider. This provider is used when control and its parents don't have their own tooltip provider or
+        /// Gets or sets root tooltip provider. This provider is used when control and its parents
+        /// don't have their own tooltip provider or
         /// when a global tooltip provider is needed.
         /// </summary>
         [Browsable(false)]
