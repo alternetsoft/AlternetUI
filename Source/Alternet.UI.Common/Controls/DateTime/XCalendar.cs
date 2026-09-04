@@ -110,7 +110,7 @@ namespace Alternet.UI
             header = new();
             popupMonthPicker = new();
             container = new();
-            
+
             container.Layout = LayoutStyle.Vertical;
 
             popupMonthPicker.Visible = false;
@@ -240,6 +240,28 @@ namespace Alternet.UI
                 header.MonthPicker.Click -= value;
             }
         }
+
+        /// <summary>
+        /// Occurs when the selected date changed. This is the same as the <see cref="ValueChanged"/> event
+        /// and is provided for compatibility with other calendar controls that use the SelectionChanged event.
+        /// </summary>
+        public event EventHandler? SelectionChanged
+        {
+            add
+            {
+                ValueChanged += value;
+            }
+
+            remove
+            {
+                ValueChanged -= value;
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the selected month (and/or year) changed.
+        /// </summary>
+        public event EventHandler? PageChanged;
 
         /// <summary>
         /// Occurs when the value of the calendar control changes,
@@ -422,13 +444,18 @@ namespace Alternet.UI
             {
                 if (Value == value)
                     return;
+
+                var oldValue = restrictedDate.Value;
+
                 restrictedDate.Value = value;
+
+                var newValue = restrictedDate.Value;
 
                 suspendHeaderEventsCounter++;
                 try
                 {
-                    header.Value = restrictedDate.Value;
-                    popupYearPicker.Value = restrictedDate.Value.Year;
+                    header.Value = newValue;
+                    popupYearPicker.Value = newValue.Year;
                 }
                 finally
                 {
@@ -436,6 +463,9 @@ namespace Alternet.UI
                 }
 
                 ValueChanged?.Invoke(this, EventArgs.Empty);
+
+                if (oldValue.Year != newValue.Year || oldValue.Month != newValue.Month)
+                    PageChanged?.Invoke(this, EventArgs.Empty);
 
                 OnValueChanged();
                 Invalidate();

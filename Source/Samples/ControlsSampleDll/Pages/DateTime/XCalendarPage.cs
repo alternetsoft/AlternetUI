@@ -57,6 +57,12 @@ namespace ControlsSample
                 App.Log("Header clicked: " + e.Cell.Text);
             };
 
+            calendar.PageChanged += (s, e) =>
+            {
+                UpdateHighlightedDates();
+                App.Log("Page changed");
+            };
+
             calendar.ValueChanged += (s, e) =>
             {
                 App.Log("Value changed: " + calendar.Value);
