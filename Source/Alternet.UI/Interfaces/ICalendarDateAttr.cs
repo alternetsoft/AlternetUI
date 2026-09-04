@@ -26,33 +26,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color assigned for the calendar date.
         /// </summary>
-        /// <remarks>
-        /// This property is not used by the <see cref="XCalendar"/> control.
-        /// </remarks>
         Color? BackgroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets the border color assigned for the calendar date.
         /// </summary>
-        /// <remarks>
-        /// This property is not used by the <see cref="XCalendar"/> control.
-        /// </remarks>
         Color? BorderColor { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this calendar day is displayed as a holiday.
         /// </summary>
-        /// <remarks>
-        /// This property is not used by the <see cref="XCalendar"/> control.
-        /// </remarks>
         bool IsHoliday { get; set; }
 
         /// <summary>
         /// Gets or sets the border assigned for the calendar date.
         /// </summary>
-        /// <remarks>
-        /// This property is not used by the <see cref="XCalendar"/> control.
-        /// </remarks>
         CalendarDateBorder Border { get; set; }
 
         /// <summary>

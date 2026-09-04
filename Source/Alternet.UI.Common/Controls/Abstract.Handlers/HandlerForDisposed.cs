@@ -58,8 +58,6 @@ namespace Alternet.UI
 
         public DateTime MaxValue { get; set; }
 
-        public ICalendarDateAttr? MarkDateAttr { get; set; }
-
         public CheckState CheckState { get; set; }
 
         public bool AllowAllStatesForUser { get; set; }
@@ -517,11 +515,6 @@ namespace Alternet.UI
         {
         }
 
-        public ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = CalendarDateBorder.None)
-        {
-            return new PlessCalendarDateAttr();
-        }
-
         public void Cut()
         {
         }
@@ -753,11 +746,6 @@ namespace Alternet.UI
         }
 
         public long GetAdjustedCaretPosition(long caretPos)
-        {
-            return default;
-        }
-
-        public ICalendarDateAttr? GetAttr(int day)
         {
             return default;
         }

@@ -32,11 +32,11 @@ namespace Alternet.UI
         public const int ColumnCount = 7;
 
         /// <summary>
-        /// Gets or sets the default <see cref="ICalendarDateAttr"/> attributes for holidays in the calendar control.
-        /// You can use <see cref="PlessCalendarDateAttr"/>
-        /// in order to create a new instance of <see cref="ICalendarDateAttr"/> with the desired attributes.
+        /// Gets or sets the default <see cref="IXCalendarDateAttr"/> attributes for holidays in the calendar control.
+        /// You can use <see cref="XCalendarDateAttr"/>
+        /// in order to create a new instance of <see cref="IXCalendarDateAttr"/> with the desired attributes.
         /// </summary>
-        public static ICalendarDateAttr? DefaultHolidayAttr;
+        public static IXCalendarDateAttr? DefaultHolidayAttr;
 
         /// <summary>
         /// Gets the text used for measuring the height of a single row in the calendar control.
@@ -91,7 +91,7 @@ namespace Alternet.UI
         private BorderSettings? todayBorder;
         private DayNamesKind? dayNamesKind;
         private DayOfWeek? firstDayOfWeek;
-        private ICalendarDateAttr? holidayAttr;
+        private IXCalendarDateAttr? holidayAttr;
 
         static XCalendar()
         {
@@ -333,12 +333,12 @@ namespace Alternet.UI
         public virtual CalendarDateAttributes DateAttributes { get; } = new CalendarDateAttributes();
 
         /// <summary>
-        /// Gets or sets the <see cref="ICalendarDateAttr"/> attributes for holidays in the calendar control,
+        /// Gets or sets the <see cref="IXCalendarDateAttr"/> attributes for holidays in the calendar control,
         /// If not set, the default holiday attributes will be used. You can use <see cref="CreateDateAttr"/>
-        /// in order to create a new instance of <see cref="ICalendarDateAttr"/> with the desired attributes.
+        /// in order to create a new instance of <see cref="IXCalendarDateAttr"/> with the desired attributes.
         /// </summary>
         [Browsable(false)]
-        public virtual ICalendarDateAttr? HolidayAttr
+        public virtual IXCalendarDateAttr? HolidayAttr
         {
             get => holidayAttr;
 
@@ -682,13 +682,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Marks all days that match the given <see cref="RepeatPatternRule"/> with
-        /// the given <see cref="ICalendarDateAttr"/> attributes. After current month or year is changed,
+        /// the given <see cref="IXCalendarDateAttr"/> attributes. After current month or year is changed,
         /// this method should be called again to mark dates in the new month.
         /// </summary>
         /// <param name="rule">The repeat pattern rule to match dates.</param>
         /// <param name="attr">The attributes to apply to the matching dates. Pass <c>null</c> to reset attributes.</param>
         /// <param name="invalidate">Indicates whether to invalidate the control after setting the attributes.</param>
-        public virtual void MarkWithRule(RepeatPatternRule rule, ICalendarDateAttr? attr, bool invalidate = true)
+        public virtual void MarkWithRule(RepeatPatternRule rule, IXCalendarDateAttr? attr, bool invalidate = true)
         {
             IDateRepeatPatternRule.RuleGetDatesParams prm = new();
             prm.MinDate = FirstDateOfMonth;
@@ -720,7 +720,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the <see cref="ICalendarDateAttr"/> attributes for the given date.
+        /// Sets the <see cref="IXCalendarDateAttr"/> attributes for the given date.
         /// This method can be used to customize the appearance and behavior of current month days.
         /// If the date is not in the current month, the method will return false and no attributes will be set.
         /// After month or year is changed, this method should be called again to set attributes for the new month.
@@ -729,7 +729,7 @@ namespace Alternet.UI
         /// <param name="dateAttr">The attributes to set for the date. Pass <c>null</c> to reset attributes.</param>
         /// <param name="invalidate">Indicates whether to invalidate the control after setting the attributes.</param>
         /// <returns><c>true</c> if the attributes were successfully set; otherwise, <c>false</c>.</returns>
-        public virtual bool SetAttr(DateOnly date, ICalendarDateAttr? dateAttr, bool invalidate = true)
+        public virtual bool SetAttr(DateOnly date, IXCalendarDateAttr? dateAttr, bool invalidate = true)
         {
             foreach (var cell in cells)
             {
@@ -746,7 +746,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the <see cref="ICalendarDateAttr"/> attributes for the given day.
+        /// Sets the <see cref="IXCalendarDateAttr"/> attributes for the given day.
         /// This method can be used to customize the appearance and behavior of current month days.
         /// If the date is not in the current month, the method will return false and no attributes will be set.
         /// After month or year is changed, this method should be called again to set attributes for the new month.
@@ -757,7 +757,7 @@ namespace Alternet.UI
         /// <remarks>
         /// After current page is changed, this method should be called again to set attributes for the new month.
         /// </remarks>
-        public virtual bool SetAttr(int day, ICalendarDateAttr? dateAttr, bool invalidate = true)
+        public virtual bool SetAttr(int day, IXCalendarDateAttr? dateAttr, bool invalidate = true)
         {
             if (day < 1 || day > DateTime.DaysInMonth(Value.Year, Value.Month))
                 return false;
@@ -766,12 +766,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates <see cref="ICalendarDateAttr"/> instance.
+        /// Creates <see cref="IXCalendarDateAttr"/> instance.
         /// </summary>
-        /// <param name="border">Date border settings.</param>
-        public virtual ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = 0)
+        public virtual IXCalendarDateAttr CreateDateAttr()
         {
-            return new PlessCalendarDateAttr(border);
+            return new XCalendarDateAttr();
         }
 
         /// <summary>
@@ -1230,6 +1229,7 @@ namespace Alternet.UI
                 cell.IsCurrent = d == Value;
                 cell.IsSelected = cell.IsCurrent;
                 cell.IsRestricted = restrictedDate.IsRestricted(d);
+                cell.DateAttr = null;
             }
 
             for (int i = index - 1; i >= 0; i--)
@@ -1242,6 +1242,7 @@ namespace Alternet.UI
                 cell.IsCurrent = d == Value;
                 cell.IsSelected = cell.IsCurrent;
                 cell.IsRestricted = restrictedDate.IsRestricted(d);
+                cell.DateAttr = null;
             }
 
             UpdateDayItems(false);
@@ -1488,20 +1489,6 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override Color? BackgroundColor
-            {
-                get
-                {
-                    return Data.DateAttr?.BackgroundColor ?? base.BackgroundColor;
-                }
-
-                set
-                {
-                    base.BackgroundColor = value;
-                }
-            }
-
-            /// <inheritdoc/>
             public override bool IsSelectedCell(IListControlItemContainer? container)
             {
                 return Data.IsCurrent;
@@ -1650,7 +1637,7 @@ namespace Alternet.UI
             /// Gets the date attributes associated with the cell, providing additional information
             /// about the date's characteristics.
             /// </summary>
-            public ICalendarDateAttr? DateAttr { get; internal set; }
+            public IXCalendarDateAttr? DateAttr { get; internal set; }
 
             /// <summary>
             /// Gets a value indicating whether the cell represents a day in the current month.
@@ -1876,9 +1863,9 @@ namespace Alternet.UI
         /// </summary>
         public partial class CalendarDateAttributes : BaseObject
         {
-            private ICalendarDateAttr? red;
-            private ICalendarDateAttr? blue;
-            private ICalendarDateAttr? green;
+            private IXCalendarDateAttr? red;
+            private IXCalendarDateAttr? blue;
+            private IXCalendarDateAttr? green;
 
             /// <summary>
             /// Initializes a new instance
@@ -1889,10 +1876,10 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Gets the <see cref="ICalendarDateAttr"/> attributes with red color of the foreground
+            /// Gets the <see cref="IXCalendarDateAttr"/> attributes with red color of the foreground
             /// used as a highlight for specific dates.
             /// </summary>
-            public ICalendarDateAttr? Red
+            public IXCalendarDateAttr? Red
             {
                 get
                 {
@@ -1901,10 +1888,10 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Gets the <see cref="ICalendarDateAttr"/> attributes with blue color of the foreground
+            /// Gets the <see cref="IXCalendarDateAttr"/> attributes with blue color of the foreground
             /// used as a highlight for specific dates.
             /// </summary>
-            public ICalendarDateAttr? Blue
+            public IXCalendarDateAttr? Blue
             {
                 get
                 {
@@ -1913,10 +1900,10 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Gets the <see cref="ICalendarDateAttr"/> attributes with green color of the foreground
+            /// Gets the <see cref="IXCalendarDateAttr"/> attributes with green color of the foreground
             /// used as a highlight for specific dates.
             /// </summary>
-            public ICalendarDateAttr? Green
+            public IXCalendarDateAttr? Green
             {
                 get
                 {
@@ -1925,13 +1912,13 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Creates a new instance of <see cref="ICalendarDateAttr"/> with the specified text color.
+            /// Creates a new instance of <see cref="IXCalendarDateAttr"/> with the specified text color.
             /// </summary>
             /// <param name="textColor">The text color for the calendar date.</param>
-            /// <returns>The created <see cref="ICalendarDateAttr"/> instance.</returns>
-            protected virtual ICalendarDateAttr Create(Color textColor)
+            /// <returns>The created <see cref="IXCalendarDateAttr"/> instance.</returns>
+            protected virtual IXCalendarDateAttr Create(Color textColor)
             {
-                var result = new PlessCalendarDateAttr();
+                var result = new XCalendarDateAttr();
                 result.TextColor = textColor;
                 result.SetImmutable();
                 return result;
