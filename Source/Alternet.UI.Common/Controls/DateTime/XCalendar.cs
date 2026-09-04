@@ -660,21 +660,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Marks all weekends as holidays. After current page is changed,
+        /// Marks all weekends as holidays. This method updates attributes only for the weekends of the currently
+        /// displayed month in the calendar control, attributes for other days are not affected. 
+        /// After current month or year is changed,
         /// this method should be called again to mark weekends in the new month.
         /// </summary>
-        public virtual void MarkWeekendsAsHolidays()
+        public virtual void MarkWeekendsAsHolidays(bool invalidate = true)
         {
             var weekEnds = DateUtils.GetWeekendsOfMonth(Value);
+
+            var needInvalidate = false;
+
             foreach (var date in weekEnds)
             {
-                SetHoliday(date.Day);
+                needInvalidate |= SetHoliday(date.Day, invalidate: false);
             }
+
+            if (invalidate && needInvalidate)
+                Invalidate();    
         }
 
         /// <summary>
         /// Marks all days that match the given <see cref="RepeatPatternRule"/> with
-        /// the given <see cref="ICalendarDateAttr"/> attributes. After current page is changed,
+        /// the given <see cref="ICalendarDateAttr"/> attributes. After current month or year is changed,
         /// this method should be called again to mark dates in the new month.
         /// </summary>
         /// <param name="rule">The repeat pattern rule to match dates.</param>
@@ -701,12 +709,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Marks the specified day as being a holiday in the current month.
+        /// After current month or year is changed,
+        /// this method should be called again to mark dates in the new month.
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="invalidate">Indicates whether to invalidate the control after setting the holiday attribute.</param>
-        public virtual void SetHoliday(int day, bool invalidate = true)
+        public virtual bool SetHoliday(int day, bool invalidate = true)
         {
-            SetAttr(day, HolidayAttr ?? DefaultHolidayAttr ?? DateAttributes.Red, invalidate);
+            return SetAttr(day, HolidayAttr ?? DefaultHolidayAttr ?? DateAttributes.Red, invalidate);
         }
 
         /// <summary>

@@ -16,9 +16,6 @@ namespace ControlsSample
         private readonly Splitter splitter = new();
         private readonly ScrollableRepeatPatternPicker patternPickerContainer;
         private readonly RepeatPatternPicker patternPicker;
-        private readonly ICalendarDateAttr blueColor;
-        private readonly ICalendarDateAttr greenColor;
-
         private bool highlightDates;
 
         static XCalendarPage()
@@ -30,12 +27,6 @@ namespace ControlsSample
             patternPickerContainer = new ScrollableRepeatPatternPicker();
             patternPicker = patternPickerContainer.ScrolledControl;
             patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
-
-            blueColor = calendar.CreateDateAttr();
-            blueColor.TextColor = LightDarkColors.Blue;
-
-            greenColor = calendar.CreateDateAttr();
-            greenColor.TextColor = LightDarkColors.Green;
 
             Padding = 5;
 
@@ -168,15 +159,18 @@ namespace ControlsSample
 
         private void UpdateHighlightedDates()
         {
-            calendar.MarkWeekendsAsHolidays();
+            calendar.ResetAttrAll(invalidate: false);
+            calendar.MarkWeekendsAsHolidays(invalidate: false);
 
             if (HighlightDates)
             {
-                calendar.MarkWithRule(patternPicker.Value, greenColor);
+                calendar.MarkWithRule(patternPicker.Value, calendar.DateAttributes.Green, invalidate: false);
             }
             else
             {
             }
+
+            calendar.Invalidate();
         }
     }
 }
