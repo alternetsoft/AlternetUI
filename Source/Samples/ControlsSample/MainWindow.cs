@@ -156,10 +156,10 @@ namespace ControlsSample
             NameValue<Func<AbstractControl>>?[] pages =
             {
                 new("Virtual", () => new VListBoxSamplePage()),
+                new("Colors", () => new ColorListBoxSamplePage()),
                 new("List", () => new ListBoxPage()),
                 new("Check", () => new CheckListBoxPage()),
                 new("Combo", () => new ComboBoxPage()),
-                new("Colors", () => new ColorListBoxSamplePage()),
                 new("Header", () => new ListBoxHeaderTestPage()),
                 new("Other", () => new ListControlsOtherPage()),               
 
