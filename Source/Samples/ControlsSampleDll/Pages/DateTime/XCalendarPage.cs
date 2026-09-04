@@ -14,6 +14,12 @@ namespace ControlsSample
         private readonly XCalendar calendar = new();
         private readonly TabControl tabControl = new();
         private readonly Splitter splitter = new();
+        private readonly ScrollableRepeatPatternPicker patternPickerContainer;
+        private readonly RepeatPatternPicker patternPicker;
+        private readonly ICalendarDateAttr blueColor;
+        private readonly ICalendarDateAttr greenColor;
+
+        private bool highlightDates;
 
         static XCalendarPage()
         {
@@ -21,6 +27,16 @@ namespace ControlsSample
 
         public XCalendarPage()
         {
+            patternPickerContainer = new ScrollableRepeatPatternPicker();
+            patternPicker = patternPickerContainer.ScrolledControl;
+            patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
+
+            blueColor = calendar.CreateDateAttr();
+            blueColor.TextColor = LightDarkColors.Blue;
+
+            greenColor = calendar.CreateDateAttr();
+            greenColor.TextColor = LightDarkColors.Green;
+
             Padding = 5;
 
             splitter.Dock = DockStyle.Right;
@@ -77,6 +93,8 @@ namespace ControlsSample
 
                 calendar.SetScrollBarVisible(isVert: false, isVisible: true);
 
+                // Options Panel
+
                 var panel = new ScrollablePanelSettings();
                 panel.Margin = 5;
                 panel.Title = GenericStrings.Options;
@@ -104,7 +122,56 @@ namespace ControlsSample
                 p.AddInput("Use MaxDate", calendar, nameof(calendar.UseMaxDate));
 
                 tabControl.Add(panel);
+
+                // Repeat Pattern Panel
+
+                var patternSettings = new PanelSettings();
+                patternSettings.SetMinChildMarginLeftRight();
+                patternSettings.AddInput("Highlight dates", this, nameof(XCalendarPage.HighlightDates));
+
+                patternPicker.Children.Prepend(patternSettings);
+
+                patternPicker.Value.StartDate = DateUtils.GetFirstDateOfMonth(DateTime.Today.ToDateOnly());
+                patternPicker.Value.EndDate = DateUtils.GetLastDateOfMonth(DateTime.Today.ToDateOnly());
+
+                patternPickerContainer.Margin = 5;
+                patternPickerContainer.Title = "Highlight";
+                tabControl.Add(patternPickerContainer);
+
+                patternPickerContainer.ValueChanged += (s, e) =>
+                {
+                    App.Log($"RepeatPatternPicker: ValueChanged");
+                    UpdateHighlightedDates();
+                };
             }
+        }
+
+        public bool HighlightDates
+        {
+            get => highlightDates;
+            set
+            {
+                if (highlightDates == value)
+                    return;
+                highlightDates = value;
+                UpdateHighlightedDates();
+            }
+        }
+
+        private void UpdateHighlightedDates()
+        {
+            /*
+            calendar.ResetAttrAll();
+
+            if (HighlightDates)
+            {
+                calendar.MarkWithRule(patternPicker.Value, greenColor);
+            }
+            else
+            {
+                calendar.MarkWeekendsAsHolidays();
+            }
+            */
         }
 
         private void LogEvent(string evName)
