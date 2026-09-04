@@ -187,6 +187,7 @@ namespace ControlsSample
             ControlsTestWindow.AddPage<NativeProgressBarPage>("Native ProgressBar");
 
             ControlsTestWindow.AddPage<NativeButtonPage>("Native Button");
+            ControlsTestWindow.AddPage<CalendarPage>("Native Calendar");
             ControlsTestWindow.AddPage<NativeCheckBoxesPage>("Native CheckBox");
             ControlsTestWindow.AddPage<NativeRadioButtonsPage>("Native RadioButton");
 

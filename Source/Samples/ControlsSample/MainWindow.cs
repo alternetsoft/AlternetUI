@@ -262,7 +262,6 @@ namespace ControlsSample
                 new("XCalendar", () => new XCalendarPage()),
                 new("TimePicker", () => new TimePage()),
                 new("DatePicker", () => new DatePage()),
-                new("Calendar", () => new CalendarPage()),
                 new("Other", () => new DateTimeOther()),
             };
 
