@@ -61,7 +61,12 @@ namespace Alternet.UI
         /// Gets the editor container control associated with the item.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl? EditorContainer => owner?.GetItemControl(this);
+        public AbstractControl? EditorContainer
+        {
+            get;
+
+            internal set;
+        }
 
         /// <summary>
         /// Gets the editor label control associated with the item.

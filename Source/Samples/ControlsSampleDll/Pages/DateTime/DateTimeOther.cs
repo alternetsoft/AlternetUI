@@ -24,8 +24,11 @@ namespace ControlsSample
 
             propGrid.Padding = 10;
 
-            propGrid.Add<BoldLabel>("PopupCalendar");
-            var showPopupItem = propGrid.AddButton("Show");
+            propGrid.Add<BoldLabel>("DateTimePicker");
+            propGrid.Add<DateTimePicker>((c) =>
+            {
+                c.Kind = DateTimePickerKind.DateTime;
+            });
             propGrid.AddHorizontalLine();
 
             propGrid.Add<BoldLabel>("MonthPicker");
@@ -36,11 +39,20 @@ namespace ControlsSample
             propGrid.Add<YearPicker>();
             propGrid.AddHorizontalLine();
 
-            propGrid.Add<BoldLabel>("DateTimePicker");
-            propGrid.Add<DateTimePicker>((c) =>
+            propGrid.Horizontal(c =>
             {
-                c.Kind = DateTimePickerKind.DateTime;
+                c.Add<BoldLabel>("PopupCalendar").WithAlignment(VerticalAlignment.Center);
+
+                var showPopupItem = propGrid.AddButton("Show");
+
+                void ShowPopupCalendar()
+                {
+                    popupCalendar.ShowPopup(showPopupItem.Editor);
+                }
+
+                showPopupItem.SetEditorClick(ShowPopupCalendar);
             });
+
             propGrid.AddHorizontalLine();
 
             propGrid.Add<BoldLabel>("DayOfWeekPicker");
@@ -73,13 +85,6 @@ namespace ControlsSample
             propGrid.Add<BoldLabel>("MonthSpeedButton");
             propGrid.Add<MonthSpeedButton>();
             propGrid.AddHorizontalLine();
-
-            void ShowPopupCalendar()
-            {
-                popupCalendar.ShowPopup(showPopupItem.Editor);
-            }
-
-            showPopupItem.SetEditorClick(ShowPopupCalendar);
 
             popupCalendar.AfterHide += PopupListBox_AfterHide;
         }

@@ -84,6 +84,7 @@ namespace Alternet.UI
         private readonly BaseCollection<PanelSettingsItem> items;
         private readonly bool autoCreate = true;
         private BaseConcurrentStack<ObjectUniqueId>? radioGroupStack;
+        private BaseConcurrentStack<AbstractControl>? containerStack;
 
         static PanelSettings()
         {
@@ -498,7 +499,7 @@ namespace Alternet.UI
             enumEditor.ButtonClick += ButtonClick;
 
             if (item.ValueType is not null)
-               enumEditor.EnumPicker.EnumType = item.ValueType;
+                enumEditor.EnumPicker.EnumType = item.ValueType;
 
             if (item.Value is not null)
                 enumEditor.EnumPicker.Value = item.Value;
@@ -897,15 +898,8 @@ namespace Alternet.UI
         {
             if (item == null)
                 return null;
-            var id = item.UniqueId;
 
-            foreach (var itemControl in Children)
-            {
-                if (itemControl.CustomAttr["PanelSettingsItem"]?.Equals(id) == true)
-                    return itemControl;
-            }
-
-            return null;
+            return item.EditorContainer;
         }
 
         /// <summary>
@@ -920,6 +914,83 @@ namespace Alternet.UI
             if (itemControl is IControlAndLabel controlAndLabel)
                 return controlAndLabel.Label;
             return null;
+        }
+
+        /// <summary>
+        /// Pushes the specified container control onto the container stack.
+        /// After this call, all new items added to the panel settings will be added
+        /// to this container until it is popped from the stack using <see cref="PopContainer"/>.
+        /// </summary>
+        /// <param name="container">The container control to push onto the stack.</param>
+        public virtual void PushContainer(AbstractControl container)
+        {
+            containerStack ??= new();
+            container.Parent = GetItemParent();
+            containerStack.Push(container);
+        }
+
+        /// <summary>
+        /// Pushes a new container control of the specified type onto the container stack.
+        /// </summary>
+        /// <typeparam name="TContainer">The type of the container control.</typeparam>
+        /// <param name="action">An action to perform on the container control.</param>
+        public virtual TContainer PushContainer<TContainer>(Action<TContainer>? action = null)
+            where TContainer : AbstractControl, new()
+        {
+            var container = new TContainer();
+            containerStack ??= new();
+            var previousParent = GetItemParent();
+            containerStack.Push(container);
+            action?.Invoke(container);
+            container.Parent = previousParent;
+            return container;
+        }
+
+        /// <summary>
+        /// Pushes a new <see cref="HorizontalStackPanel"/> container control onto the container stack,
+        /// performs the specified action on it, and then pops it from the stack.
+        /// This method can be used to group multiple items horizontally within the panel settings.
+        /// </summary>
+        /// <param name="action">An action to perform on the container control.</param>
+        /// <returns>The container control that was pushed onto the stack.</returns>
+        public HorizontalStackPanel Horizontal(Action<HorizontalStackPanel> action)
+        {
+            return DoInsideContainer<HorizontalStackPanel>(action);
+        }
+
+        /// <summary>
+        /// Pushes a new container control of the specified type onto the container stack,
+        /// performs the specified action on it, and then pops it from the stack.
+        /// </summary>
+        /// <typeparam name="TContainer">The type of the container control.</typeparam>
+        /// <param name="action">An action to perform on the container control.</param>
+        /// <returns>The container control that was pushed onto the stack.</returns>
+        public virtual TContainer DoInsideContainer<TContainer>(Action<TContainer>? action = null)
+            where TContainer : AbstractControl, new()
+        {
+            var result = PushContainer<TContainer>(action);
+            PopContainer();
+            return result;
+        }
+
+        /// <summary>
+        /// Pushes a new container control of the specified type onto the container stack and sets its text.
+        /// </summary>
+        /// <typeparam name="TContainer">The type of the container control.</typeparam>
+        /// <param name="text">The text to set on the container control.</param>
+        /// <returns>The container control that was pushed onto the stack.</returns>
+        public virtual TContainer PushContainer<TContainer>(string text)
+            where TContainer : AbstractControl, new()
+        {
+            return PushContainer<TContainer>(container => container.Text = text);
+        }
+
+        /// <summary>
+        /// Pops the top container control from the container stack.
+        /// </summary>
+        public virtual void PopContainer()
+        {
+            containerStack?.TryPop(out _);
         }
 
         /// <summary>
@@ -1224,7 +1295,7 @@ namespace Alternet.UI
         {
             labels ??= propNames;
             PanelSettingsItem[] items = new PanelSettingsItem[propNames.Length];
-            
+
             for (int i = 0; i < propNames.Length; i++)
             {
                 items[i] = AddInput(labels[i], propContainer, propNames[i], e);
@@ -1315,6 +1386,7 @@ namespace Alternet.UI
 
             if (itemControl != null)
             {
+                item.EditorContainer = null;
                 itemControl.Parent = null;
                 itemControl.Dispose();
             }
@@ -1348,7 +1420,23 @@ namespace Alternet.UI
             if (obj is not AbstractControl control)
                 return;
             control.CustomAttr["PanelSettingsItem"] = item.UniqueId;
-            control.Parent = this;
+            item.EditorContainer = control;
+            control.Parent = GetItemParent();
+        }
+
+        /// <summary>
+        /// Gets the parent control for the item editor controls.
+        /// </summary>
+        /// <returns>The parent control for the item editor controls.</returns>
+        protected virtual AbstractControl GetItemParent()
+        {
+            if (containerStack is not null && containerStack.Count > 0)
+            {
+                if (containerStack.TryPeek(out var container))
+                    return container;
+            }
+
+            return this;
         }
 
         private static void UpdateCommonProps(PanelSettings sender, PanelSettingsItem item, AbstractControl control)
