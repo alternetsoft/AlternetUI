@@ -151,13 +151,20 @@ namespace Alternet.UI
             if (other == null)
             {
                 SuspendPropertyChanged();
-                IntervalYears = 1;
-                Month = CalendarMonth.January;
-                DayOfWeek = ExtendedDayOfWeek.Day;
-                DayOfMonth = 1;
-                DayOfWeekIndex = RelativeWeekday.First;
-                Kind = RepeatKind.DayOfMonth;
-                ResumePropertyChanged();
+                try
+                {
+                    IntervalYears = 1;
+                    Month = CalendarMonth.January;
+                    DayOfWeek = ExtendedDayOfWeek.Day;
+                    DayOfMonth = 1;
+                    DayOfWeekIndex = RelativeWeekday.First;
+                    Kind = RepeatKind.DayOfMonth;
+                }
+                finally
+                {
+                    ResumePropertyChanged();
+                }
+
                 return;
             }
 
@@ -167,93 +174,27 @@ namespace Alternet.UI
                     return;
 
                 SuspendPropertyChanged();
-                IntervalYears = otherRule.IntervalYears;
-                Month = otherRule.Month;
-                DayOfWeek = otherRule.DayOfWeek;
-                DayOfMonth = otherRule.DayOfMonth;
-                DayOfWeekIndex = otherRule.DayOfWeekIndex;
-                Kind = otherRule.Kind;
-                ResumePropertyChanged();
+
+                try
+                {
+                    IntervalYears = otherRule.IntervalYears;
+                    Month = otherRule.Month;
+                    DayOfWeek = otherRule.DayOfWeek;
+                    DayOfMonth = otherRule.DayOfMonth;
+                    DayOfWeekIndex = otherRule.DayOfWeekIndex;
+                    Kind = otherRule.Kind;
+                }
+                finally
+                {
+                    ResumePropertyChanged();
+                }
             }
         }
 
         /// <inheritdoc/>
         public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
-            DateOnly minDate = StartDate;
-            DateOnly maxDate;
-
-            switch (EndCondition)
-            {
-                default:
-                case EndConditionKind.Never:
-                case EndConditionKind.AfterOccurrence:
-                    maxDate = prm.MaxDate;
-                    break;
-                case EndConditionKind.OnDate:
-                    maxDate = DateUtils.Min(EndDate, prm.MaxDate);
-                    break;
-            }
-
-            int startYear = minDate.Year;
-            int endYear = maxDate.Year;
-
-            IEnumerable<DateOnly> GetDatesUnfiltered()
-            {
-                for (int year = startYear; year <= endYear; year += IntervalYears)
-                {
-                    DateOnly? occurrenceDate = GetDate(year);
-
-                    if (occurrenceDate is null)
-                        continue;
-
-                    var d = occurrenceDate.Value;
-
-                    if (d < minDate)
-                        continue;
-                    if (d > maxDate)
-                        break;
-                    yield return d;
-                }
-            }
-
-            IEnumerable<DateOnly> GetDates()
-            {
-                foreach (var date in GetDatesUnfiltered())
-                {
-                    if (date >= prm.MinDate)
-                        yield return date;
-                }
-            }
-
-            IEnumerable<DateOnly> GetDatesEndsAfterOccurrence()
-            {
-                var count = OccurrenceCount;
-
-                if (count <= 0)
-                    yield break;
-
-                var numProcessed = 0;
-
-                foreach (var date in GetDatesUnfiltered())
-                {
-                    if (date >= prm.MinDate)
-                        yield return date;
-
-                    numProcessed++;
-                    if (numProcessed >= count)
-                        yield break;
-                }
-            }
-
-            if (EndCondition == EndConditionKind.AfterOccurrence)
-            {
-                return new(GetDatesEndsAfterOccurrence());
-            }
-            else
-            {
-                return new(GetDates());
-            }
+            return GetDates(prm, GetDatesUnfiltered);
         }
 
         /// <summary>
@@ -261,18 +202,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="year">The year for which to get the date.</param>
         /// <returns>The calculated date, or <c>null</c> if the date is invalid.</returns>
-        public virtual DateOnly? GetDate(int year)
+        public virtual DateOnly[]? GetDates(int year)
         {
             if (Kind == RepeatKind.DayOfMonth)
             {
                 if (DayOfMonth < 1 || DayOfMonth > DateUtils.GetDaysInMonth(year, Month))
                     return null;
-                return new DateOnly(year, (int)Month, DayOfMonth);
+                return [new DateOnly(year, (int)Month, DayOfMonth)];
             }
             else if (Kind == RepeatKind.RelativeWeekday)
             {
                 var relativeWeekday = new RelativeWeekdayOfMonth(DayOfWeekIndex, DayOfWeek, Month);
-                return relativeWeekday.GetDate(year);
+                return relativeWeekday.GetDates(year);
             }
 
             return null;
@@ -283,6 +224,36 @@ namespace Alternet.UI
         {
             return (IntervalYears, Month, DayOfWeek, DayOfMonth, DayOfWeekIndex, Kind, StartDate, EndDate, OccurrenceCount)
                 .GetHashCode();
+        }
+
+        /// <summary>
+        /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date, 
+        /// without applying any end condition or occurrence count filtering.
+        /// </summary>
+        /// <param name="minDate">The minimum date for the range.</param>
+        /// <param name="maxDate">The maximum date for the range.</param>
+        /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
+        protected virtual IEnumerable<DateOnly> GetDatesUnfiltered(DateOnly minDate, DateOnly maxDate)
+        {
+            int startYear = minDate.Year;
+            int endYear = maxDate.Year;
+
+            for (int year = startYear; year <= endYear; year += IntervalYears)
+            {
+                DateOnly[]? occurrenceDates = GetDates(year);
+
+                if (occurrenceDates is null)
+                    continue;
+
+                foreach (var d in occurrenceDates)
+                {
+                    if (d < minDate)
+                        continue;
+                    if (d > maxDate)
+                        break;
+                    yield return d;
+                }
+            }
         }
     }
 }

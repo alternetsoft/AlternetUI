@@ -121,14 +121,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="year">The year for which to get the date.</param>
         /// <returns>The date corresponding to the specified year, or <c>null</c> if not found.</returns>
-        public DateOnly? GetDate(int year)
+        public DateOnly[]? GetDates(int year)
         {
             var start = DateUtils.GetFirstDateOfMonth(year, Month);
             var end = DateUtils.GetLastDateOfMonth(year, Month);
 
             var days = DateUtils.DaysWhere(start, end, DayOfWeek);
 
-            return DateUtils.GetRelativeDay(days, RelativeWeekday);
+            return DateUtils.GetRelativeDays(days, RelativeWeekday);
         }
 
         /// <inheritdoc/>

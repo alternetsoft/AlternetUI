@@ -5,6 +5,14 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Represents a delegate for getting unfiltered dates based on a repeat pattern rule.
+    /// </summary>
+    /// <param name="minDate">The minimum date for the range.</param>
+    /// <param name="maxDate">The maximum date for the range.</param>
+    /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
+    public delegate IEnumerable<DateOnly> GetDatesUnfilteredDelegate(DateOnly minDate, DateOnly maxDate);
+
+    /// <summary>
     /// Defines an interface for a repeat pattern rule that can generate occurrences of dates based on specific rules.
     /// </summary>
     public interface IDateRepeatPatternRule
@@ -259,6 +267,76 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnOccurrenceCountChanged()
         {
+        }
+
+        /// <summary>
+        /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date,
+        /// taking into account the end condition and occurrence count.
+        /// </summary>
+        /// <param name="prm">The parameters specifying the date range and maximum date.</param>
+        /// <param name="getDatesUnfiltered">A delegate to get unfiltered dates within the specified range.</param>
+        /// <returns>A <see cref="IDateRepeatPatternRule.RuleGetDatesResult"/> containing the filtered dates.</returns>
+        protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDates(
+            IDateRepeatPatternRule.RuleGetDatesParams prm,
+            GetDatesUnfilteredDelegate getDatesUnfiltered)
+        {
+            DateOnly minDate = StartDate;
+            DateOnly maxDate;
+
+            switch (EndCondition)
+            {
+                default:
+                case EndConditionKind.Never:
+                case EndConditionKind.AfterOccurrence:
+                    maxDate = prm.MaxDate;
+                    break;
+                case EndConditionKind.OnDate:
+                    maxDate = DateUtils.Min(EndDate, prm.MaxDate);
+                    break;
+            }
+
+            IEnumerable<DateOnly> GetUnfiltered()
+            {
+                return getDatesUnfiltered(minDate, maxDate);
+            }
+
+            IEnumerable<DateOnly> GetDates()
+            {
+                foreach (var date in GetUnfiltered())
+                {
+                    if (date >= prm.MinDate)
+                        yield return date;
+                }
+            }
+
+            IEnumerable<DateOnly> GetDatesEndsAfterOccurrence()
+            {
+                var count = OccurrenceCount;
+
+                if (count <= 0)
+                    yield break;
+
+                var numProcessed = 0;
+
+                foreach (var date in GetUnfiltered())
+                {
+                    if (date >= prm.MinDate)
+                        yield return date;
+
+                    numProcessed++;
+                    if (numProcessed >= count)
+                        yield break;
+                }
+            }
+
+            if (EndCondition == EndConditionKind.AfterOccurrence)
+            {
+                return new(GetDatesEndsAfterOccurrence());
+            }
+            else
+            {
+                return new(GetDates());
+            }
         }
     }
 }

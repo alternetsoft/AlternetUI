@@ -844,7 +844,7 @@ namespace Alternet.UI
         /// <param name="dates">The collection of dates to evaluate.</param>
         /// <param name="number">The relative weekday to find.</param>
         /// <returns>The date corresponding to the specified relative weekday, or <c>null</c> if not found.</returns>
-        public static DateOnly? GetRelativeDay(IEnumerable<DateOnly> dates, RelativeWeekday number)
+        public static DateOnly[]? GetRelativeDays(IEnumerable<DateOnly> dates, RelativeWeekday number)
         {
             var array = dates.ToArray();
             if (array.Length == 0)
@@ -853,15 +853,36 @@ namespace Alternet.UI
             switch (number)
             {
                 case RelativeWeekday.First:
-                    return array.Length >= 1 ? array[0] : null;
+                    return array.Length >= 1 ? [array[0]] : null;
                 case RelativeWeekday.Second:
-                    return array.Length >= 2 ? array[1] : null;
+                    return array.Length >= 2 ? [array[1]] : null;
                 case RelativeWeekday.Third:
-                    return array.Length >= 3 ? array[2] : null;
+                    return array.Length >= 3 ? [array[2]] : null;
                 case RelativeWeekday.Fourth:
-                    return array.Length >= 4 ? array[3] : null;
+                    return array.Length >= 4 ? [array[3]] : null;
+                case RelativeWeekday.Fifth:
+                    return array.Length >= 5 ? [array[4]] : null;
                 case RelativeWeekday.Last:
-                    return array[array.Length - 1];
+                    return [array[array.Length - 1]];
+                case RelativeWeekday.Every:
+                    return array;
+                case RelativeWeekday.Odd:
+                    return array.Where((_, index) => index % 2 == 0).ToArray();
+                case RelativeWeekday.Even:
+                    return array.Where((_, index) => index % 2 != 0).ToArray();
+                case RelativeWeekday.Penultimate:
+                    return array.Length >= 2 ? [array[array.Length - 2]] : null;
+                case RelativeWeekday.Middle:
+                    if (array.Length == 0)
+                        return null;
+                    if (array.Length == 1)
+                        return [array[0]];
+                    int middleIndex = array.Length / 2;
+
+                    if (middleIndex > 0)
+                        middleIndex -= 1;
+
+                    return [array[middleIndex]];
                 default:
                     return null;
             }
@@ -881,6 +902,8 @@ namespace Alternet.UI
                     return IsWorkday(date);
                 case ExtendedDayOfWeek.Weekend:
                     return IsWeekend(date);
+                case ExtendedDayOfWeek.Day:
+                    return true;
                 default:
                     return date.DayOfWeek == (DayOfWeek)dayOfWeek;
             }
