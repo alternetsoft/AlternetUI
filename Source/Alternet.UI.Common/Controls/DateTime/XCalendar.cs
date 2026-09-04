@@ -84,6 +84,7 @@ namespace Alternet.UI
         private BorderSettings? todayBorder;
         private DayNamesKind? dayNamesKind;
         private DayOfWeek? firstDayOfWeek;
+        private ICalendarDateAttr? holidayAttr;
 
         static XCalendar()
         {
@@ -311,6 +312,30 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool ShowYearDropDown { get; set; }
 
+        /// <summary>
+        /// Gets the collection of custom attributes for specific dates in the calendar control,
+        /// allowing you to customize the appearance and behavior of individual dates.
+        /// </summary>
+        [Browsable(false)]
+        public virtual CalendarDateAttributes DateAttributes { get; } = new CalendarDateAttributes();
+
+        /// <summary>
+        /// Gets or sets the <see cref="ICalendarDateAttr"/> attributes for holidays in the calendar control,
+        /// </summary>
+        [Browsable(false)]
+        public virtual ICalendarDateAttr? HolidayAttr
+        {
+            get => holidayAttr;
+
+            set
+            {
+                if (value == holidayAttr)
+                    return;
+                holidayAttr = value;
+                Invalidate();
+            }
+        }
+
         /// <summary>Gets or sets the minimum date and time that can be
         /// selected in the control.</summary>
         /// <returns>The minimum date and time that can be selected in the
@@ -473,6 +498,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first date of the currently displayed month in the calendar.
+        /// </summary>
+        [Browsable(false)]
+        public DateOnly FirstDateOfMonth
+        {
+            get
+            {
+                return DateUtils.GetFirstDateOfMonth(Value);
+            }
+        }
+
+        /// <summary>
+        /// Gets the last date of the currently displayed month in the calendar.
+        /// </summary>
+        [Browsable(false)]
+        public DateOnly LastDateOfMonth
+        {
+            get
+            {
+                return DateUtils.GetLastDateOfMonth(Value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the color used for surrounding days (days not in the current month) in the calendar control,
         /// </summary>
         [Browsable(false)]
@@ -586,12 +635,67 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Marks all weekends as holidays. After current page is changed,
+        /// this method should be called again to mark weekends in the new month.
+        /// </summary>
+        public virtual void MarkWeekendsAsHolidays()
+        {
+            var weekEnds = DateUtils.GetWeekendsOfMonth(Value);
+            foreach (var date in weekEnds)
+            {
+                SetHoliday(date.Day);
+            }
+        }
+
+        /// <summary>
+        /// Marks all days that match the given <see cref="RepeatPatternRule"/> with
+        /// the given <see cref="ICalendarDateAttr"/> attributes. After current page is changed,
+        /// this method should be called again to mark dates in the new month.
+        /// </summary>
+        /// <param name="rule">The repeat pattern rule to match dates.</param>
+        /// <param name="attr">The attributes to apply to the matching dates. Pass <c>null</c> to reset attributes.</param>
+        public virtual void MarkWithRule(RepeatPatternRule rule, ICalendarDateAttr? attr)
+        {
+            IDateRepeatPatternRule.RuleGetDatesParams prm = new();
+            prm.MinDate = FirstDateOfMonth;
+            prm.MaxDate = LastDateOfMonth;
+
+            var result = rule.GetDates(prm).Dates;
+
+            foreach (var date in result)
+            {
+                SetAttr(date.Day, attr);
+            }
+        }
+
+        /// <summary>
+        /// Marks the specified day as being a holiday in the current month.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
+        public virtual void SetHoliday(int day)
+        {
+            SetAttr(day, HolidayAttr ?? DateAttributes.Red);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="ICalendarDateAttr"/> attributes for the given day.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
+        /// <param name="dateAttr">Day attributes. Pass <c>null</c> to reset attributes.</param>
+        /// <remarks>
+        /// After current page is changed, this method should be called again to set attributes for the new month.
+        /// </remarks>
+        public virtual void SetAttr(int day, ICalendarDateAttr? dateAttr)
+        {
+        }
+
+        /// <summary>
         /// Creates <see cref="ICalendarDateAttr"/> instance.
         /// </summary>
         /// <param name="border">Date border settings.</param>
         public virtual ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = 0)
         {
-            return new PlessCalendarDateAttr();
+            return new PlessCalendarDateAttr(border);
         }
 
         /// <summary>
@@ -683,6 +787,26 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Resets the attributes of all cells in the calendar control,
+        /// clearing any custom date attributes and restoring the default appearance of the cells.
+        /// </summary>
+        public virtual void ResetAttrAll()
+        {
+            var needInvalidate = false;
+
+            foreach (var cell in cells)
+            {
+                if (cell.DateAttr is not null)
+                    needInvalidate = true;
+
+                cell.DateAttr = null;
+            }
+
+            if (needInvalidate)
+                Invalidate();
         }
 
         /// <summary>
@@ -1419,6 +1543,12 @@ namespace Alternet.UI
             public DateOnly Date { get; internal set; }
 
             /// <summary>
+            /// Gets the date attributes associated with the cell, providing additional information
+            /// about the date's characteristics.
+            /// </summary>
+            public ICalendarDateAttr? DateAttr { get; internal set; }
+
+            /// <summary>
             /// Gets a value indicating whether the cell represents a day in the current month.
             /// </summary>
             public bool IsCurrentMonth { get; internal set; }
@@ -1640,6 +1770,73 @@ namespace Alternet.UI
                     MonthClick?.Invoke(this, new BaseEventArgs<CalendarMonth>(month));
                 };
 
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Represents a collection of predefined date attributes for the calendar control,
+        /// </summary>
+        public partial class CalendarDateAttributes : BaseObject
+        {
+            private ICalendarDateAttr? red;
+            private ICalendarDateAttr? blue;
+            private ICalendarDateAttr? green;
+
+            /// <summary>
+            /// Initializes a new instance
+            /// of the <see cref="CalendarDateAttributes"/> class with the specified owner calendar control.
+            /// </summary>
+            internal CalendarDateAttributes()
+            {
+            }
+
+            /// <summary>
+            /// Gets the <see cref="ICalendarDateAttr"/> attributes with red color of the foreground
+            /// used as a highlight for specific dates.
+            /// </summary>
+            public ICalendarDateAttr? Red
+            {
+                get
+                {
+                    return red ??= Create(LightDarkColors.Red);
+                }
+            }
+
+            /// <summary>
+            /// Gets the <see cref="ICalendarDateAttr"/> attributes with blue color of the foreground
+            /// used as a highlight for specific dates.
+            /// </summary>
+            public ICalendarDateAttr? Blue
+            {
+                get
+                {
+                    return blue ??= Create(LightDarkColors.Blue);
+                }
+            }
+
+            /// <summary>
+            /// Gets the <see cref="ICalendarDateAttr"/> attributes with green color of the foreground
+            /// used as a highlight for specific dates.
+            /// </summary>
+            public ICalendarDateAttr? Green
+            {
+                get
+                {
+                    return green ??= Create(LightDarkColors.Green);
+                }
+            }
+
+            /// <summary>
+            /// Creates a new instance of <see cref="ICalendarDateAttr"/> with the specified text color.
+            /// </summary>
+            /// <param name="textColor">The text color for the calendar date.</param>
+            /// <returns>The created <see cref="ICalendarDateAttr"/> instance.</returns>
+            protected virtual ICalendarDateAttr Create(Color textColor)
+            {
+                var result = new PlessCalendarDateAttr();
+                result.TextColor = textColor;
+                result.SetImmutable();
                 return result;
             }
         }

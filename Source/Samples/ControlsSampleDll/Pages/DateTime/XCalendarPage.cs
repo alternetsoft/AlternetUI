@@ -166,7 +166,6 @@ namespace ControlsSample
 
         private void UpdateHighlightedDates()
         {
-            /*
             calendar.ResetAttrAll();
 
             if (HighlightDates)
@@ -177,12 +176,6 @@ namespace ControlsSample
             {
                 calendar.MarkWeekendsAsHolidays();
             }
-            */
-        }
-
-        private void LogEvent(string evName)
-        {
-            App.Log($"Calendar: {evName}");
         }
     }
 }
