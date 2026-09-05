@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -336,6 +337,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Asserts that the specified control can be a parent of this control and that this control
+        /// can be a child of the specified control. Use <see cref="DebugUtils.AssertParentChildRelationship"/>
+        /// to enable or disable this check. This method is called when the parent of the control is changed.
+        /// If the relationship is invalid, an error message is logged and a debug assertion is triggered.
+        /// </summary>
+        /// <param name="newParent">The new parent control to assert.</param>
+        protected virtual void AssertParentChild(AbstractControl? newParent)
+        {
+            if (newParent is null || !DebugUtils.AssertParentChildRelationship)
+                return; 
+
+            if (!IsValidParent(newParent))
+            {
+                ReportError();
+                return;
+            }
+
+            if (!newParent.IsValidChild(this))
+            {
+                ReportError();
+                return;
+            }
+
+            void ReportError()
+            {
+                var newParentType = newParent.GetType().Name;
+                var thisType = this.GetType().Name;
+                var errMessage = $"Parent control [{newParentType}] doesn't accept [{thisType}] control as a child.";
+
+                App.LogError(errMessage);
+
+                if (DebugUtils.IsDebuggerAttached)
+                    Debug.Assert(false, errMessage);
+                else
+                    Debug.WriteLine(errMessage);
+            }
+        }
+
+        /// <summary>
         /// Adjusts the specified rectangle to conform to minimum and maximum size constraints,
         /// and optionally restricts its position based on <see cref="MinimumLocation"/>.
         /// </summary>
@@ -361,14 +401,19 @@ namespace Alternet.UI
                 value.Y = Math.Max(MinimumLocation.Value.Y, value.Y);
             }
 
+            if (MaximumLocation is not null)
+            {
+                value.X = Math.Min(MaximumLocation.Value.X, value.X);
+                value.Y = Math.Min(MaximumLocation.Value.Y, value.Y);
+            }
+
             return value;
         }
 
         /// <summary>
-        /// Sets visible field value. This is internal method and should not be called
-        /// directly.
+        /// Sets visible field value. This is internal method and should not be calleddirectly.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The value to set for the visible field.</param>
         protected void SetVisibleValue(bool value) => visible = value;
 
         /// <summary>
@@ -376,17 +421,6 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         protected virtual HandlerType GetRequiredHandlerType() => HandlerType.Native;
-
-        /// <summary>
-        /// Called when this control is inserted into a parent control.
-        /// </summary>
-        /// <remarks>This method provides an opportunity to perform any initialization or setup required
-        /// when the control becomes part of a parent control. Override this method in a derived  class to implement
-        /// custom behavior.</remarks>
-        /// <param name="parentControl">The parent control into which this control is inserted. Cannot be null.</param>
-        protected virtual void OnInsertedToParent(AbstractControl parentControl)
-        {
-        }
 
         /// <summary>
         /// Handles a click trigger event and performs the appropriate action based
@@ -434,18 +468,6 @@ namespace Alternet.UI
             {
                 DropDownMenu.ShowAsDropDown(this, afterShow, DropDownMenuPosition);
             }
-        }
-
-        /// <summary>
-        /// Called when the control is removed from its parent control.
-        /// </summary>
-        /// <remarks>This method provides an opportunity to perform cleanup or respond to the removal of
-        /// the control  from its parent. Override this method in a derived class to implement custom
-        /// behavior.</remarks>
-        /// <param name="parentControl">The parent control from which this control was removed.
-        /// Cannot be null.</param>
-        protected virtual void OnRemovedFromParent(AbstractControl parentControl)
-        {
         }
     }
 }

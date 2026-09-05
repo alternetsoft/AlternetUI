@@ -714,6 +714,12 @@ namespace Alternet.UI
                 Handler.HorzScrollBarInfo = value;
         }
 
+        /// <inheritdoc/>
+        public override bool IsValidParent(AbstractControl control)
+        {
+            return control is Control;
+        }
+
         /// <summary>
         /// Updates cursor and call's <see cref="IControlHandler.SetCursor"/>.
         /// </summary>

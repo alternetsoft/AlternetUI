@@ -101,6 +101,7 @@ namespace Alternet.UI
         private Thickness backgroundPadding;
 
         private PointD? minimumLocation;
+        private PointD? maximumLocation;
         private PointD layoutOffset;
         private SizeD? layoutMaxSize;
 
@@ -2077,7 +2078,8 @@ namespace Alternet.UI
                 {
                     if (item.Value != null)
                         yield return item.Value;
-                };
+                }
+                ;
             }
         }
 
@@ -2146,19 +2148,7 @@ namespace Alternet.UI
                 if (parent == value)
                     return;
 
-                if (value is not null)
-                {
-                    if (!value.IsValidChild(this))
-                    {
-                        var newParentType = value.GetType().Name;
-                        var thisType = this.GetType().Name;
-                        var errMessage = $"Parent control [{newParentType}] doesn't accept [{thisType}] control as a child.";
-                        Debug.WriteLine(errMessage);
-                        if (DebugUtils.IsDebuggerAttached)
-                            Debug.Assert(false, errMessage);
-                        return;
-                    }
-                }
+                AssertParentChild(value);
 
                 if (parent is not null)
                 {
@@ -2947,6 +2937,29 @@ namespace Alternet.UI
                 if (minimumLocation == value)
                     return;
                 minimumLocation = value;
+                PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum location constraint for layout positioning.
+        /// </summary>
+        /// <remarks>
+        /// When set, any changes trigger a layout recalculation via <see cref="PerformLayout"/>.
+        /// </remarks>
+        /// <value>
+        /// A nullable <see cref="PointD"/> indicating the maximum allowable location,
+        /// or <c>null</c> if unconstrained.
+        /// </value>
+        [Browsable(false)]
+        public virtual PointD? MaximumLocation
+        {
+            get => maximumLocation;
+            set
+            {
+                if (maximumLocation == value)
+                    return;
+                maximumLocation = value;
                 PerformLayout();
             }
         }

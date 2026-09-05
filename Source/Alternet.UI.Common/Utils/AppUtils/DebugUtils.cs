@@ -16,6 +16,14 @@ namespace Alternet.UI
     public static class DebugUtils
     {
         /// <summary>
+        /// Gets or sets whether to check parent-child relationship of controls. Default is true.
+        /// If this property is false, the library will not check whether a control can be a child of the specified parent control.
+        /// If this property is true, the library will check whether a control can be a child of the specified parent control.
+        /// <see cref="AbstractControl.IsValidParent"/> and <see cref="AbstractControl.IsValidChild"/> methods are used for this check.
+        /// </summary>
+        public static bool AssertParentChildRelationship = true;
+
+        /// <summary>
         /// Gets a value that indicates whether DEBUG conditional is defined.
         /// </summary>
         public static readonly bool IsDebugDefined;

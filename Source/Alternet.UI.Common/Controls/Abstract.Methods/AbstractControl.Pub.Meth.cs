@@ -2038,6 +2038,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether this control can be a child of the specified control.
+        /// </summary>
+        /// <param name="control">The control to check.</param>
+        /// <returns><c>true</c> if this control can be a child of the specified control; otherwise, <c>false</c>.</returns>
+        public virtual bool IsValidParent(AbstractControl control)
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Gets clipping rectangle which is used when generic child controls are painted.
         /// </summary>
         /// <returns>The clipping rectangle.</returns>
