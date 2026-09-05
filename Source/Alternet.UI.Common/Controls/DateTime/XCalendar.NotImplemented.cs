@@ -22,17 +22,6 @@ namespace Alternet.UI
         internal static readonly bool DefaultSequentialMonthSelect = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether to show the neighboring weeks in the
-        /// previous and next months.
-        /// </summary>
-        internal virtual bool ShowSurroundWeeks
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
         /// Occurs when the user clicked on the week of the year number
         /// (fired only in generic calendar).
         /// </summary>

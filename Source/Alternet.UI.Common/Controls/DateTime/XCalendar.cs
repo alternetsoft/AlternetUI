@@ -55,6 +55,11 @@ namespace Alternet.UI
         public static bool DefaultShowHolidays = true;
 
         /// <summary>
+        /// Gets or sets default value for the <see cref="ShowSurroundWeeks"/> property. Default is True.
+        /// </summary>
+        public static bool DefaultShowSurroundWeeks = true;
+
+        /// <summary>
         /// Gets or sets the default color used for surrounding days (days not in the current month) in the calendar control,
         /// </summary>
         public static LightDarkColor DefaultSurroundDayColor = new(Color.Gray);
@@ -86,6 +91,7 @@ namespace Alternet.UI
         private DayOfWeek? firstDayOfWeek;
         private IXCalendarDateAttr? holidayAttr;
         private bool showHolidays = DefaultShowHolidays;
+        private bool showSurroundWeeks = DefaultShowSurroundWeeks;
 
         static XCalendar()
         {
@@ -462,6 +468,25 @@ namespace Alternet.UI
                 if (restrictedDate.UseMaxDate == value)
                     return;
                 restrictedDate.UseMaxDate = value;
+                OnValueChanged();
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to show the neighboring weeks in the
+        /// previous and next months.
+        /// </summary>
+        public virtual bool ShowSurroundWeeks
+        {
+            get => showSurroundWeeks;
+
+            set
+            {
+                if (showSurroundWeeks == value)
+                    return;
+                showSurroundWeeks = value;
+
                 OnValueChanged();
                 Invalidate();
             }
@@ -1137,7 +1162,16 @@ namespace Alternet.UI
                     var isGrey = cell.IsRestricted || !cell.IsCurrentMonth;
 
                     cellItem.Text = cell!.Date.Day.ToString();
-                    cellItem.ForegroundColor = isGrey ? otherMonthForeColor : null;
+
+                    if (cell.IsVisible)
+                    {
+                        cellItem.ForegroundColor = isGrey ? otherMonthForeColor : null;
+                    }
+                    else
+                    {
+                        cellItem.ForegroundColor = Color.Transparent;
+                    }
+
                     cellItem.Border = cell.IsToday ? EffectiveTodayBorder() : null;
                 }
             }
@@ -1248,6 +1282,7 @@ namespace Alternet.UI
                 cell.Date = d;
                 cell.IsCurrentMonth = true;
                 cell.IsToday = d == today;
+                cell.IsVisible = true;
                 cell.IsCurrent = d == Value;
                 cell.IsSelected = cell.IsCurrent;
                 cell.IsRestricted = restrictedDate.IsRestricted(d);
@@ -1264,6 +1299,7 @@ namespace Alternet.UI
                 cell.IsSelected = cell.IsCurrent;
                 cell.IsRestricted = restrictedDate.IsRestricted(d);
                 cell.DateAttr = null;
+                cell.IsVisible = showSurroundWeeks;
             }
 
             for (int i = index - 1; i >= 0; i--)
@@ -1277,6 +1313,7 @@ namespace Alternet.UI
                 cell.IsSelected = cell.IsCurrent;
                 cell.IsRestricted = restrictedDate.IsRestricted(d);
                 cell.DateAttr = null;
+                cell.IsVisible = showSurroundWeeks;
             }
 
             UpdateDayItems(false);

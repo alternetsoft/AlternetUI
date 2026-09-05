@@ -703,6 +703,11 @@ namespace Alternet.UI
             public bool IsCurrentMonth { get; internal set; }
 
             /// <summary>
+            /// Gets a value indicating whether the cell is visible in the calendar grid.
+            /// </summary>
+            public bool IsVisible { get; internal set; }
+
+            /// <summary>
             /// Gets a value indicating whether the cell represents today's date.
             /// </summary>
             public bool IsToday { get; internal set; }

@@ -106,6 +106,7 @@ namespace ControlsSample
                 p.AddInput("Show Year DropDown", calendar, nameof(calendar.ShowYearDropDown));
                 p.AddInput("No Month Change", calendar, nameof(calendar.NoMonthChange));
                 p.AddInput("No Year Change", calendar, nameof(calendar.NoYearChange));
+                p.AddInput("Show Surround Weeks", calendar, nameof(calendar.ShowSurroundWeeks));
 
                 var dayNamesKindItem = p.AddInput("Day Names Kind:", calendar, nameof(calendar.DayNamesKind));
                 dayNamesKindItem.WithEditor<EnumPickerAndButton>(c =>
