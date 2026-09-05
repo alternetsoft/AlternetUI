@@ -123,6 +123,10 @@ namespace ControlsSample
                 p.AddInput("Use MinDate", calendar, nameof(calendar.UseMinDate));
                 p.AddInput("Use MaxDate", calendar, nameof(calendar.UseMaxDate));
 
+                p.AddHorizontalLine();
+
+                p.AddInput("Is Bold", calendar, nameof(calendar.IsBold));
+
                 tabControl.Add(panel);
 
                 // Repeat Pattern Panel
