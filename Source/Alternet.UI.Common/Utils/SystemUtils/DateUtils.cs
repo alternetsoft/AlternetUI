@@ -12,7 +12,8 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods related to <see cref="DateTime"/>, <see cref="DateOnly"/> and <see cref="TimeOnly"/>.
+    /// Provides utility methods for working with dates and times, including culture-specific formatting,
+    /// date calculations, and conversions between different date and time representations.
     /// </summary>
     public static class DateUtils
     {
@@ -833,6 +834,7 @@ namespace Alternet.UI
         /// <param name="dayOfWeek">The extended day of the week to match.</param>
         /// <returns>An enumerable collection of dates within the specified range
         /// that match the extended day of the week.</returns>    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static IEnumerable<DateOnly> DaysWhere(DateOnly start, DateOnly end, ExtendedDayOfWeek dayOfWeek)
         {
             return DaysWhere(start, end, date => IsDayOfWeek(date, dayOfWeek));
@@ -906,6 +908,90 @@ namespace Alternet.UI
                     return true;
                 default:
                     return date.DayOfWeek == (DayOfWeek)dayOfWeek;
+            }
+        }
+
+        /// <summary>
+        /// Provides utility methods for working with U.S. holidays.
+        /// </summary>
+        public static class USAHolidayHelper
+        {
+            /// <summary>
+            /// Gets the date of Independence Day (July 4th) for the specified year.
+            /// </summary>
+            /// <param name="year">The year for which to get Independence Day.</param>
+            /// <returns>The date of Independence Day for the specified year.</returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static DateOnly GetIndependenceDay(int year)
+            {
+                return new DateOnly(year, (int)CalendarMonth.July, 4);
+            }
+
+            /// <summary>
+            /// Determines whether the specified date is a known U.S. holiday
+            /// (Independence Day, Thanksgiving, Labor Day, or Memorial Day).
+            /// </summary>
+            /// <param name="date">The date to evaluate.</param>
+            /// <returns><c>true</c> if the date is a known U.S. holiday; otherwise, <c>false</c>.</returns>
+            public static bool IsKnownHoliday(DateOnly date)
+            {
+                return IsIndependenceDay(date) || IsThanksgiving(date) || IsLaborDay(date) || IsMemorialDay(date);
+            }
+
+            /// <summary>
+            /// Determines whether the specified date is Independence Day (July 4th).
+            /// </summary>
+            /// <param name="date">The date to evaluate.</param>
+            /// <returns><c>true</c> if the date is Independence Day; otherwise, <c>false</c>.</returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static bool IsIndependenceDay(DateOnly date)
+            {
+                return date == GetIndependenceDay(date.Year);
+            }
+
+            /// <summary>
+            /// Gets the date of Thanksgiving for the specified year (observed on the fourth Thursday in November).
+            /// </summary>
+            /// <param name="date">The date to evaluate.</param>
+            /// <returns><c>true</c> if the date is Thanksgiving; otherwise, <c>false</c>.</returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static bool IsThanksgiving(DateOnly date)
+            {
+                return RelativeWeekdayOfMonth.IsDay(
+                    date,
+                    RelativeWeekday.Fourth,
+                    ExtendedDayOfWeek.Thursday,
+                    CalendarMonth.November);
+            }
+
+            /// <summary>
+            /// Determines whether the specified date is Labor Day (observed on the first Monday in September).
+            /// </summary>
+            /// <param name="date">The date to evaluate.</param>
+            /// <returns><c>true</c> if the date is Labor Day; otherwise, <c>false</c>.</returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static bool IsLaborDay(DateOnly date)
+            {
+                return RelativeWeekdayOfMonth.IsDay(
+                    date,
+                    RelativeWeekday.First,
+                    ExtendedDayOfWeek.Monday,
+                    CalendarMonth.September);
+            }
+
+            /// <summary>
+            /// Determines whether the specified date is Memorial Day (observed on the last Monday in May).
+            /// </summary>
+            /// <param name="date">The date to evaluate.</param>
+            /// <returns><c>true</c> if the date is Memorial Day; otherwise, <c>false</c>.</returns>
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static bool IsMemorialDay(DateOnly date)
+            {
+                return RelativeWeekdayOfMonth.IsDay(
+                    date,
+                    RelativeWeekday.Last,
+                    ExtendedDayOfWeek.Monday,
+                    CalendarMonth.May);
             }
         }
     }
