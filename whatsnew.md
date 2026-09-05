@@ -1,10 +1,47 @@
+# 1.1.9 (2026 September 5)
+
+- Add controls: XCalendar, BoldLabel, MonthSpeedButton.
+- PanelSettings: Support live changes for some controls.
+- ListControlItem: Fix accent paint when disabled or unfocused.
+- Demo: Improve ColorListBox sample.
+- Add classes: LightDarkBackColors, RestrictedDate.
+- Improve repeat pattern rules.
+- PanelFormSelector: Improve appearance.
+- PanelSettings: Introduce a container stack so new editors can be added inside custom controls, including a convenience helper for horizontal groups.
+- ToolTipWindow: Fix tooltip not showing.
+- SpeedButtonWithListPopup: Support null item values.
+- Demo: Add Other page to DateTime section.
+- AbstractControl: Add a generic Add{TControl}(string text) overload that creates a new child control, sets its text, and attaches it to the current parent. This simplifies constructing and initializing child controls in a single call.
+- TimePicker: Respect the system time format.
+- Adjust exception-window button spacing.
+- Refactor RichToolTip to depend on IRichToolTipTemplate instead of the concrete TemplateControls.RichToolTipTemplate.
+- PictureBox: Fix preferred size to support partial suggested sizes.
+- ListControlItem: Draw background for selected list cells. Add a new IsSelectedCell property to explicitly mark cell-level selection state for rendering.
+- Improve format-provider support in various controls.
+- Use XCalendar in PopupCalendar.
+- ListControlItem: Refactor column cell rendering to call new virtual DrawCellBackground and DrawCellForeground methods, enabling custom per-cell drawing in derived classes.
+- SpeedButtonWithListPopup: Make popup showing cancellable and configurable.
+- AbstractControl: Add protected methods OnBackColorChanged and OnForeColorChanged.
+- AbstractControl: Add BackColorChanged and ForeColorChanged events.
+- VirtualListBox: Implement cell-click detection for list boxes with columns. Add a CellClick event that fires when a user clicks a cell, along with a HitTestColumn() method to determine which column was clicked. The event provides access to the item index, item, column, and mouse event information.
+- Support None in the selection mode of various controls.
+- EnumPicker: Refactor to support speed-button presentation by introducing a new overridable ShowAsSpeedButton() method.
+- ScrollViewer.SetScrollBarVisible, VirtualListBox.RequestScrollBarSize, Border.GetDefaultPreferredSize, XListView.SelectionMode, MonthPicker.ValueAsInt.
+- Fix cell painting in multi-column list boxes. Item border is now painted if specified. Item foreground color is used if specified.
+- AbstractControl.Add{TControl} method.
+- Graphics: SetClip with CombineMode parameter.
+- Add DrawDualColorLine method to Graphics. It draws a line alternating between two colors/brushes using configurable segment sizes, supporting both horizontal and vertical orientations, clipped to the specified bounds.
+- Add static Color.IsVisible helper to check whether a nullable color should be treated as visible by rejecting null, uninitialized, and fully transparent values. This centralizes a common visibility check and makes calling code simpler.
+
+---
+
 # 1.1.8 (2026 August 31)
 
 - Create controls: PinCodePicker, YearPicker, GenericControlAndLabel, MonthAndDayPicker, RelativeWeekdayOfMonthPicker, ControlAndSuffix, XRadioButtonAndSuffix, XIntPickerWithLabels, ScrollableRepeatPatternPicker, ScrollViewer{TControl}, DayOfWeekPicker, MonthPicker, RelativeWeekdayPicker, ScrollableGenericControl, RelativeWeekdayPicker.
 - PanelSettings: Refactor type-to-control mapping. Replaced hardcoded type checks and method calls with extensible delegate maps (TypeCodeToControl, DefaultTypeDelegates and ItemToControlMethods).
 - PanelSettings: Introduced configurable defaults for button and link-label margins, and applied them when creating those controls.
 - PanelSettings.AddInputs.
-- Calendar: Add MarkWithRule method. It marks calendar days matching a RepeatPatternRule with given date attributes.
+- Calendar: Add MarkWithRule method. It marks calendar days matching a RepeatPatternRule with the given date attributes.
 - DateUtils: Add DateOnly related helper methods.
 - Demo: Add RepeatPatternPicker to calendar page and implement marking of days with repeat pattern rules.
 - Implement ShowAccentMarker feature in VirtualListBox and its descendants.
@@ -14,18 +51,18 @@
 - Add GenericImageList - a faster and more flexible replacement for the existing ImageList class. It can be used with generic controls.
 - ListControlItem: Allow to specify multiple images using AdditionalImages property and related methods.
 - Make SvgImage image APIs non-nullable.
-- Graphics.DrawLabelWithImages - it allows to draw a label with multiple linked images, respecting text visibility and image order.
+- Graphics.DrawLabelWithImages: allows drawing a label with multiple linked images, respecting text visibility and image order.
 - Fix default layout for different picker controls.
 - Thickness: WithTopBottom and WithLeftRight.
 - PopupCalendar: Add Today button in the bottom toolbar.
 - PopupWindow: BottomToolBarPanel, LeftBottomToolBar.
 - BaseObjectWithNotify: Add new SetProperty overload.
-- BaseObjectWithNotify: Remove GetNewFieldValue as it raised changed event before setting the value.
+- BaseObjectWithNotify: Remove GetNewFieldValue because it raised the changed event before setting the value.
 - Create classes: ImageLists.
 - Inherit TransparentPanel from HiddenGenericBorder.
 - Inherit GenericControlAndPicture from TransparentPanel.
 - Change VerticalLine to inherit from GenericControl.
-- PanelSettings: Fix exception if value is nulllable enum.
+- PanelSettings: Fix exception when value is a nullable enum.
 - ColorListBox: TextOverItemImageStyle, DrawTextOverItemImage.
 - XIntPicker.DefaultMinWidth, BaseCollection.EnsureCountAtLeast, VirtualListBox.PaintText, Font.HasGlyph, SpeedButtonWithListPopup.ChangeItemsCase.
 - Calculator: IsDisplayReadOnly, IsPasswordDisplay.
