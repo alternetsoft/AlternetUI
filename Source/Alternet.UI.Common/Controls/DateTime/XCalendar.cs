@@ -259,14 +259,15 @@ namespace Alternet.UI
         /// Occurs when the value of the calendar control changes,
         /// allowing subscribers to handle the event and perform actions based on the new value.
         /// Control is invalidated automatically after this event handler executes.
+        /// This is the same as <see cref="SelectionChanged"/>.
         /// </summary>
         public event EventHandler? ValueChanged;
 
         /// <summary>
-        /// Occurs when the header of the calendar control is clicked, 
+        /// Occurs when the user clicked on the week day header,
         /// allowing subscribers to handle the event and perform actions based on the header click.
         /// </summary>
-        public event EventHandler<HeaderClickEventArgs>? HeaderClick;
+        public event EventHandler<DayHeaderClickEventArgs>? DayHeaderClick;
 
         /// <summary>
         /// Occurs when a day cell in the calendar control is clicked,
@@ -1056,13 +1057,11 @@ namespace Alternet.UI
         {
             if (e.Cell is CalendarHeaderCellItem headerCell)
             {
-                if (HeaderClick is not null)
+                if (DayHeaderClick is not null)
                 {
-                    var args = new HeaderClickEventArgs(e);
-                    HeaderClick?.Invoke(this, args);
-
-                    if (args.Cancel)
-                        return;
+                    var args = new DayHeaderClickEventArgs(e);
+                    args.DayOfWeek = headerCell.DayOfWeek;
+                    DayHeaderClick?.Invoke(this, args);
                 }
 
                 return;

@@ -28,11 +28,6 @@ namespace Alternet.UI
         internal event EventHandler? WeekNumberClick;
 
         /// <summary>
-        /// Occurs when the user clicked on the week day header (fired only in generic calendar).
-        /// </summary>
-        internal event EventHandler? DayHeaderClick;
-
-        /// <summary>
         /// Occurs when a day was double clicked in the calendar.
         /// </summary>
         internal event EventHandler? DayDoubleClick;
@@ -325,19 +320,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises <see cref="DayHeaderClick"/> event and calls
-        /// <see cref="OnDayHeaderClick"/> method.
-        /// </summary>
-        /// <param name="e">Event arguments.</param>
-        internal void RaiseDayHeaderClick(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            OnDayHeaderClick(e);
-            DayHeaderClick?.Invoke(this, e);
-        }
-
-        /// <summary>
         /// Raises <see cref="DayDoubleClick"/> event and calls
         /// <see cref="OnDayDoubleClick"/> method.
         /// </summary>
@@ -363,15 +345,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
         internal virtual void OnDayDoubleClick(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called when the user clicked on the week day header (fired only in generic calendar).
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains
-        /// the event data.</param>
-        internal virtual void OnDayHeaderClick(EventArgs e)
         {
         }
 

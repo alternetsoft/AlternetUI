@@ -588,19 +588,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Represents the event arguments for a header click event in the calendar control,
+        /// Represents the event arguments for a day header click event in the calendar control
         /// </summary>
-        public class HeaderClickEventArgs : BaseCancelEventArgs
+        public class DayHeaderClickEventArgs : BaseEventArgs
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="HeaderClickEventArgs"/>
+            /// Initializes a new instance of the <see cref="DayHeaderClickEventArgs"/>
             /// class with the specified list box cell click event arguments.
             /// </summary>
             /// <param name="e">The list box cell click event arguments.</param>
-            public HeaderClickEventArgs(ListBoxCellClickEventArgs e)
+            public DayHeaderClickEventArgs(ListBoxCellClickEventArgs e)
             {
                 ClickArgs = e;
             }
+
+            /// <summary>
+            /// Gets the day of the week represented by the header cell that was clicked.
+            /// </summary>
+            public DayOfWeek DayOfWeek { get; set; }
 
             /// <summary>
             /// Gets the original list box cell click event arguments that triggered the header click event,

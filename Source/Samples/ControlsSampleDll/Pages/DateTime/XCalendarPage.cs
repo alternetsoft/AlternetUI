@@ -43,9 +43,9 @@ namespace ControlsSample
                 App.Log("Day clicked: " + e.Cell.Text);
             };
 
-            calendar.HeaderClick += (s, e) =>
+            calendar.DayHeaderClick += (s, e) =>
             {
-                App.Log("Header clicked: " + e.Cell.Text);
+                App.Log("Day header clicked: " + e.DayOfWeek);
             };
 
             calendar.PageChanged += (s, e) =>
