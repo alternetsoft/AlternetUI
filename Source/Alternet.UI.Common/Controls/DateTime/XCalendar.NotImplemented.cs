@@ -116,17 +116,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to disable the month
-        /// (and, implicitly, the year) changing. Not implemented on all platforms.
-        /// </summary>
-        public virtual bool NoMonthChange
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to use alternative, more compact,
         /// style for the month and year selection controls.
         /// </summary>

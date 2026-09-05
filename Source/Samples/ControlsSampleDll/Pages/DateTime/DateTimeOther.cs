@@ -85,6 +85,14 @@ namespace ControlsSample
             propGrid.Add<MonthSpeedButton>();
             propGrid.AddHorizontalLine();
 
+            propGrid.Add<BoldLabel>("XCalendar.CalendarHeader");
+            propGrid.Add<XCalendar.CalendarHeader>(c =>
+            {
+                c.IgnoreTransparency = true;
+            });
+
+            propGrid.AddHorizontalLine();
+
             popupCalendar.AfterHide += PopupListBox_AfterHide;
         }
 

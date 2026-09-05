@@ -99,9 +99,11 @@ namespace ControlsSample
                 var p = panel.ScrolledControl;
 
                 p.Add<BoldLabel>("Options");
-                
+
+                p.AddInput("Show Header Border", calendar, nameof(calendar.ShowHeaderBorder));
                 p.AddInput("Show Month DropDown", calendar, nameof(calendar.ShowMonthDropDown));
                 p.AddInput("Show Year DropDown", calendar, nameof(calendar.ShowYearDropDown));
+                p.AddInput("No Month Change", calendar, nameof(calendar.NoMonthChange));
 
                 var dayNamesKindItem = p.AddInput("Day Names Kind:", calendar, nameof(calendar.DayNamesKind));
                 dayNamesKindItem.WithEditor<EnumPickerAndButton>(c =>
