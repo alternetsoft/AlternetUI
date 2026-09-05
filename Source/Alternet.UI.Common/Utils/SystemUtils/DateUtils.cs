@@ -458,6 +458,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the calendar week rule used for determining the first week of the year,
+        /// based on the specified format provider.
+        /// </summary>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.</param>
+        /// <returns>The calendar week rule.</returns>
+        public static CalendarWeekRule GetCalendarWeekRule(IFormatProvider? formatProvider = null)
+        {
+            var info = GetFormatInfo(formatProvider);
+            return info.CalendarWeekRule;
+        }
+
+        /// <summary>
         /// Gets the effective minimum date value, ensuring it does not fall below the defined minimum date limit.
         /// </summary>
         /// <param name="minDate">The minimum date to evaluate.</param>

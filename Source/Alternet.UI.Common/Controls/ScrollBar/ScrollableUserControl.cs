@@ -331,8 +331,8 @@ namespace Alternet.UI
         /// <summary>
         /// Retrieves the bounding rectangle of the horizontal scroll bar, if present.
         /// </summary>
-        /// <returns>A <see cref="RectD"/> representing the bounds of the horizontal scroll bar, or <see langword="null"/> if the
-        /// scroll bar is not available.</returns>
+        /// <returns>A <see cref="RectD"/> representing the bounds of the horizontal scroll bar,
+        /// or <see langword="null"/> if the scroll bar is not available.</returns>
         protected virtual RectD? GetHorzScrollBarRectangle()
         {
             return GetInteriorRectangle(InteriorDrawable.HitTestResult.HorzScrollBar);
@@ -348,7 +348,9 @@ namespace Alternet.UI
         /// in the calculations. Default is <see langword="true"/>.</param>
         /// <returns>An <see cref="InteriorScrollableAreaRects"/> object containing
         /// the rectangles for each scroll bar visibility state.</returns>
-        protected virtual InteriorScrollableAreaRects GetInteriorScrollableAreaRectangles(bool allowHorz = true, bool allowVert = true)
+        protected virtual InteriorScrollableAreaRects GetInteriorScrollableAreaRectangles(
+            bool allowHorz = true,
+            bool allowVert = true)
         {
             InteriorScrollableAreaRects result = new()
             {
@@ -423,7 +425,9 @@ namespace Alternet.UI
             base.OnSystemColorsChanged(e);
 
             if (HasInterior)
-                Interior.UpdateThemeMetrics();
+            {
+                Interior.UpdateThemeMetrics(IsDarkBackground);
+            }
         }
 
         /// <summary>

@@ -406,7 +406,7 @@ namespace Alternet.UI
             base.OnSystemColorsChanged(e);
 
             if (HasInterior)
-                Interior.UpdateThemeMetrics();
+                Interior.UpdateThemeMetrics(IsDarkBackground);
         }
 
         /// <summary>

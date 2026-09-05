@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Alternet.UI
@@ -73,6 +74,41 @@ namespace Alternet.UI
             /// Gets or sets the maximum date to consider.
             /// </summary>
             public DateOnly MaxDate { get; set; }
+
+            /// <summary>
+            /// Gets or sets the format provider to use for formatting dates, if applicable.
+            /// </summary>
+            public IFormatProvider? FormatProvider { get; set; }
+
+            /// <summary>
+            /// Gets or sets the calendar week rule to use for determining week boundaries, if applicable.
+            /// </summary>
+            public CalendarWeekRule? WeekRule { get; set; }
+
+            /// <summary>
+            /// Gets or sets the first day of the week to use for determining week boundaries, if applicable.
+            /// </summary>
+            public DayOfWeek? FirstDayOfWeek { get; set; }
+
+            /// <summary>
+            /// Gets the effective first day of the week based on the provided
+            /// format provider or defaults to the system's culture settings.
+            /// </summary>
+            /// <returns>The effective first day of the week.</returns>
+            public readonly DayOfWeek EffectiveFirstDayOfWeek() => DateUtils.GetFirstDayOfWeek(FormatProvider);
+
+            /// <summary>
+            /// Gets the effective calendar week rule based on the provided
+            /// format provider or defaults to the system's culture settings.
+            /// </summary>
+            /// <returns>The effective calendar week rule.</returns>
+            public readonly CalendarWeekRule EffectiveWeekRule() => DateUtils.GetCalendarWeekRule(FormatProvider);
+
+            /// <summary>
+            /// Gets the effective format info based on the provided format provider or defaults to the system's culture settings.
+            /// </summary>
+            /// <returns>The effective format info.</returns>
+            public readonly DateTimeFormatInfo EffectiveFormatInfo() => DateUtils.GetFormatInfo(FormatProvider);
         }
     }
 
