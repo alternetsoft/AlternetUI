@@ -407,9 +407,17 @@ namespace Alternet.UI
             checkBox.CheckedChanged -= CheckBoxChecked;
             checkBox.CheckedChanged += CheckBoxChecked;
 
+            item.ValueChanged -= ItemValueChanged;
+            item.ValueChanged += ItemValueChanged;
+
             void CheckBoxChecked(object? sender, EventArgs e)
             {
                 item.Value = checkBox.IsChecked;
+            }
+
+            void ItemValueChanged(object? sender, EventArgs e)
+            {
+                checkBox.Checked = item.Value is bool isChecked && isChecked;
             }
 
             return checkBox;
@@ -638,18 +646,53 @@ namespace Alternet.UI
 
             var dateEditor = result.MainControl;
 
-            if (item.Value is DateTime dateTimeValue)
-                dateEditor.Value = dateTimeValue;
-            else
-                if (item.Value is DateOnly dateOnlyValue)
-                    dateEditor.AsDateOnly = dateOnlyValue;
+            ItemValueChanged();
+
+            int changeCounter = 0;
 
             dateEditor.ValueChanged -= ValueChanged;
             dateEditor.ValueChanged += ValueChanged;
 
+            item.ValueChanged -= OnItemValueChanged;
+            item.ValueChanged += OnItemValueChanged;
+
             void ValueChanged(object? sender, EventArgs e)
             {
-                item.Value = dateEditor.AsDateOnly;
+                if (changeCounter > 0)
+                    return;
+                changeCounter++;
+                try
+                {
+                    item.Value = dateEditor.AsDateOnly;
+                }
+                finally
+                {
+                    changeCounter--;
+                }
+            }
+
+            void OnItemValueChanged(object? sender, EventArgs e)
+            {
+                if (changeCounter > 0)
+                    return;
+                changeCounter++;
+                try
+                {
+                    ItemValueChanged();
+                }
+                finally
+                {
+                    changeCounter--;
+                }
+            }
+
+            void ItemValueChanged()
+            {
+                if (item.Value is DateTime dateTimeValue)
+                    dateEditor.Value = dateTimeValue;
+                else
+                    if (item.Value is DateOnly dateOnlyValue)
+                        dateEditor.AsDateOnly = dateOnlyValue;
             }
 
             return result;
