@@ -74,6 +74,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified <see cref="DateOnly"/> instance corresponds to the given relative weekday,
+        /// day of the week, and month.
+        /// </summary>
+        /// <param name="day">The date to evaluate.</param>
+        /// <param name="relativeWeekday">The relative weekday to compare with.</param>
+        /// <param name="dayOfWeek">The day of the week to compare with.</param>
+        /// <param name="month">The month to compare with.</param>
+        /// <returns><c>true</c> if the date corresponds to the specified relative weekday, day of the week, and month;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool IsDay(DateOnly day, RelativeWeekday relativeWeekday, ExtendedDayOfWeek dayOfWeek, CalendarMonth month)
+        {
+            var dayOfMonth = new RelativeWeekdayOfMonth(relativeWeekday, dayOfWeek, month);
+            var result = dayOfMonth.TryGetDate(day.Year, out DateOnly th);
+            return result && day == th;
+        }
+
+        /// <summary>
         /// Returns a tuple representation of the <see cref="RelativeWeekdayOfMonth"/> instance,
         /// containing the relative weekday, day of the week, and month.
         /// </summary>
@@ -114,6 +131,26 @@ namespace Alternet.UI
         public RelativeWeekdayOfMonth WithRelativeWeekday(RelativeWeekday relativeWeekday)
         {
             return new RelativeWeekdayOfMonth(relativeWeekday, DayOfWeek, Month);
+        }
+
+        /// <summary>
+        /// Tries to get the date corresponding to the specified year based on the relative weekday, day of the week, and month.
+        /// Uses the <see cref="GetDates(int)"/> method to retrieve the dates and returns the first date if found.
+        /// </summary>
+        /// <param name="year">The year for which to get the date.</param>
+        /// <param name="date">When this method returns, contains the date corresponding to the specified year,
+        /// if found; otherwise, the default value.</param>
+        /// <returns><c>true</c> if the date was found; otherwise, <c>false</c>.</returns>
+        public bool TryGetDate(int year, out DateOnly date)
+        {
+            var dates = GetDates(year);
+            if (dates != null && dates.Length > 0)
+            {
+                date = dates[0];
+                return true;
+            }
+            date = default;
+            return false;
         }
 
         /// <summary>
