@@ -490,7 +490,7 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return Data.DateAttr?.TextColor ?? base.ForegroundColor;
+                    return base.ForegroundColor ?? Data.DateAttr?.TextColor;
                 }
 
                 set
@@ -502,7 +502,7 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public override bool IsSelectedCell(IListControlItemContainer? container)
             {
-                return Data.IsCurrent;
+                return Data.IsCurrent && Data.IsVisible && !Data.IsRestricted && Data.IsCurrentMonth;
             }
         }
 

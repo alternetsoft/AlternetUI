@@ -107,6 +107,18 @@ namespace ControlsSample
                 p.AddInput("No Month Change", calendar, nameof(calendar.NoMonthChange));
                 p.AddInput("No Year Change", calendar, nameof(calendar.NoYearChange));
                 p.AddInput("Show Surround Weeks", calendar, nameof(calendar.ShowSurroundWeeks));
+                p.AddInput("Enabled", calendar, nameof(calendar.Enabled));
+                p.AddInput("Is Bold", calendar, nameof(calendar.IsBold));
+
+                var valueItem = p.AddInput("Value", calendar, nameof(calendar.Value));
+
+                valueItem.WithEditor<DatePicker>(c =>
+                {
+                    calendar.ValueChanged += (s, e) =>
+                    {
+                        c.AsDateOnly = calendar.Value;
+                    };
+                });
 
                 var dayNamesKindItem = p.AddInput("Day Names Kind:", calendar, nameof(calendar.DayNamesKind));
                 dayNamesKindItem.WithEditor<EnumPickerAndButton>(c =>
@@ -115,17 +127,57 @@ namespace ControlsSample
 
                 var firstDayOfWeekItem = p.AddInput("First Day Of Week:", calendar, nameof(calendar.FirstDayOfWeek));
 
+                // Range Settings
+
                 p.AddHorizontalLine();
                 p.Add<BoldLabel>("Range Settings");
 
-                p.AddInput("MinDate:", calendar, nameof(calendar.MinDate));
-                p.AddInput("MaxDate:", calendar, nameof(calendar.MaxDate));
-                p.AddInput("Use MinDate", calendar, nameof(calendar.UseMinDate));
-                p.AddInput("Use MaxDate", calendar, nameof(calendar.UseMaxDate));
+                var minDateItem = p.AddInput("MinDate:", calendar, nameof(calendar.MinDate));
+                var maxDateItem = p.AddInput("MaxDate:", calendar, nameof(calendar.MaxDate));
+                var useMinDateItem = p.AddInput("Use MinDate", calendar, nameof(calendar.UseMinDate));
+                var useMaxDateItem = p.AddInput("Use MaxDate", calendar, nameof(calendar.UseMaxDate));
+
+                void RangeAnyDate()
+                {
+                    useMinDateItem.Value = false;
+                    useMaxDateItem.Value = false;
+                }
+
+                void RangeTomorrow()
+                {
+                    RangeAnyDate();
+                    maxDateItem.Value = DateTime.Today.AddDays(1).ToDateOnly();
+                    useMaxDateItem.Value = true;
+                }
+
+                void RangeYesterday()
+                {
+                    RangeAnyDate();
+                    minDateItem.Value = DateTime.Today.AddDays(-1).ToDateOnly();
+                    useMinDateItem.Value = true;
+                }
+
+                void RangeYesterdayTomorrow()
+                {
+                    RangeAnyDate();
+                    maxDateItem.Value = DateTime.Today.AddDays(1).ToDateOnly();
+                    minDateItem.Value = DateTime.Today.AddDays(-1).ToDateOnly();
+                    useMinDateItem.Value = true;
+                    useMaxDateItem.Value = true;
+                }
+
+                // Actions
 
                 p.AddHorizontalLine();
+                p.Add<BoldLabel>("Actions");
 
-                p.AddInput("Is Bold", calendar, nameof(calendar.IsBold));
+                p.AddButton("Today", calendar.SelectToday);
+                p.AddButton("Clear Day Attributes", () => calendar.ClearAttrAll());
+                p.AddButton("Reset Day Attributes", () => calendar.ResetAttrAll());
+                p.AddButton($"{GenericStrings.Allow} {GenericStrings.AnyDate}", RangeAnyDate);
+                p.AddButton($"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}", RangeTomorrow);
+                p.AddButton($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday);
+                p.AddButton($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow);
 
                 tabControl.Add(panel);
 

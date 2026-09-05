@@ -935,10 +935,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets the attributes of all cells in the calendar control,
-        /// clearing any custom date attributes and restoring the default appearance of the cells.
+        /// Clears the attributes of all cells in the calendar control, removing any custom date attributes.
         /// </summary>
-        public virtual void ResetAttrAll(bool invalidate = true)
+        /// <param name="invalidate">Indicates whether the control should be invalidated after clearing the attributes.</param>
+        public virtual void ClearAttrAll(bool invalidate = true)
         {
             var needInvalidate = false;
 
@@ -946,6 +946,28 @@ namespace Alternet.UI
             {
                 if (cell.DateAttr is not null)
                     needInvalidate = true;
+
+                cell.DateAttr = null;
+            }
+
+            if (needInvalidate && invalidate)
+                Invalidate();
+        }
+
+        /// <summary>
+        /// Resets the attributes of all cells in the calendar control,
+        /// clearing any custom date attributes and restoring the default appearance of the cells.
+        /// If <see cref="ShowHolidays"/> is true, holidays will be marked with the effective holiday attributes.
+        /// If event handlers are subscribed to the <see cref="QueryDayAttributes"/> event,
+        /// they will be invoked for each cell to allow customization of the attributes.
+        /// </summary>
+        public virtual void ResetAttrAll(bool invalidate = true)
+        {
+            var needInvalidate = false;
+
+            foreach (var cell in cells)
+            {
+                var oldValue = cell.DateAttr;
 
                 cell.DateAttr = null;
 
@@ -966,6 +988,9 @@ namespace Alternet.UI
                     OnQueryDayAttributes(queryDayAttributesEventArgs);
                     cell.DateAttr = queryDayAttributesEventArgs.DateAttr;
                 }
+
+                if (oldValue != cell.DateAttr)
+                    needInvalidate = true;
             }
 
             if (needInvalidate && invalidate)
@@ -1165,7 +1190,14 @@ namespace Alternet.UI
 
                     if (cell.IsVisible)
                     {
-                        cellItem.ForegroundColor = isGrey ? otherMonthForeColor : null;
+                        if (isGrey)
+                        {
+                            cellItem.ForegroundColor = otherMonthForeColor;
+                        }
+                        else
+                        {
+                            cellItem.ForegroundColor = null;
+                        }
                     }
                     else
                     {
