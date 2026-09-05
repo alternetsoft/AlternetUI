@@ -212,6 +212,11 @@ namespace Alternet.UI
             public virtual bool NoMonthChange { get; set; }
 
             /// <summary>
+            /// Gets or sets a value indicating whether to disable the year changing.
+            /// </summary>
+            public virtual bool NoYearChange { get; set; }
+
+            /// <summary>
             /// Gets the first row panel in the calendar header, which contains the month and year pickers.
             /// </summary>
             [Browsable(false)]
@@ -347,7 +352,7 @@ namespace Alternet.UI
             /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
             protected virtual void OnHeaderYearClick(object? sender, EventArgs e)
             {
-                if (!ShowYearDropDown || NoMonthChange)
+                if (!ShowYearDropDown || NoMonthChange || NoYearChange)
                     return;
                 popupYearPickerPanel.Visible = !popupYearPickerPanel.Visible;
             }
@@ -389,7 +394,15 @@ namespace Alternet.UI
                 if (NoMonthChange)
                     return;
 
-                Value = Value.AddMonths(-1);
+                var newValue = Value.AddMonths(-1);
+
+                if (NoYearChange)
+                {
+                    if (!DateUtils.IsThisYear(newValue))
+                        return;
+                }
+
+                Value = newValue;
             }
 
             /// <summary>
@@ -402,7 +415,15 @@ namespace Alternet.UI
                 if (NoMonthChange)
                     return;
 
-                Value = Value.AddMonths(1);
+                var newValue = Value.AddMonths(1);
+
+                if (NoYearChange)
+                {
+                    if (!DateUtils.IsThisYear(newValue))
+                        return;
+                }
+
+                Value = newValue;
             }
 
             /// <summary>

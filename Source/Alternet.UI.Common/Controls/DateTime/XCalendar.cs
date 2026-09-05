@@ -479,6 +479,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to disable the year changing.
+        /// </summary>
+        public virtual bool NoYearChange
+        {
+            get => header.NoYearChange;
+
+            set => header.NoYearChange = value;
+        }
+
+        /// <summary>
         /// Gets or sets the current value of the calendar control as a <see cref="DateTime"/> object,
         /// </summary>
         [Browsable(false)]

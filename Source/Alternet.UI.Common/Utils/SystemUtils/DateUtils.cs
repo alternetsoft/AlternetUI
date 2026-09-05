@@ -609,6 +609,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified <see cref="DateOnly"/> falls within the current year.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns><c>true</c> if the date falls within the current year; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsThisYear(DateOnly date)
+        {
+            return date.Year == DateTime.Now.Year;
+        }
+
+        /// <summary>
         /// Gets the later of two <see cref="DateOnly"/> values.
         /// </summary>
         /// <param name="a">The first date to compare.</param>
