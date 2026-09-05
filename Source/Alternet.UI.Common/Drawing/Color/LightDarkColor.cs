@@ -191,8 +191,10 @@ namespace Alternet.Drawing
         /// Calculates and returns a new color pair with the light and dark colors adjusted
         /// according to the specified operations.
         /// </summary>
-        /// <param name="lightOp">The color adjustment operation to apply to the light color. Determines how the light color is modified.</param>
-        /// <param name="darkOp">The color adjustment operation to apply to the dark color. Determines how the dark color is modified.</param>
+        /// <param name="lightOp">The color adjustment operation to apply to the light color.
+        /// Determines how the light color is modified.</param>
+        /// <param name="darkOp">The color adjustment operation to apply to the dark color.
+        /// Determines how the dark color is modified.</param>
         /// <returns>A new LightDarkColor instance containing the adjusted light and dark colors after applying the specified
         /// operations.</returns>
         public LightDarkColor GetAdjustedColorPair(ColorAdjustmentOperation lightOp, ColorAdjustmentOperation darkOp)

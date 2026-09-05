@@ -179,6 +179,17 @@ namespace ControlsSample
                 p.AddButton($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday);
                 p.AddButton($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow);
 
+                // Theme
+
+                /*
+                p.AddHorizontalLine();
+                p.Add<BoldLabel>("Theme");
+
+                p.AddButton("Auto", calendar.SetColorThemeToAuto);
+                p.AddButton("Dark", calendar.SetColorThemeToDark);
+                p.AddButton("Light", calendar.SetColorThemeToLight);
+                */
+
                 tabControl.Add(panel);
 
                 // Repeat Pattern Panel

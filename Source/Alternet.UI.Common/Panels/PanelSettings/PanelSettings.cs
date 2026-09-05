@@ -1467,6 +1467,12 @@ namespace Alternet.UI
             control.Parent = GetItemParent();
         }
 
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+        }
+
         /// <summary>
         /// Gets the parent control for the item editor controls.
         /// </summary>

@@ -305,21 +305,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets colors used in the control to the light theme.
-        /// </summary>
-        internal virtual void SetColorThemeToLight()
-        {
-        }
-
-        /// <summary>
-        /// Sets colors used in the control to the auto theme (takes colors from the
-        /// system colors).
-        /// </summary>
-        internal virtual void SetColorThemeToAuto()
-        {
-        }
-
-        /// <summary>
         /// Raises <see cref="DayDoubleClick"/> event and calls
         /// <see cref="OnDayDoubleClick"/> method.
         /// </summary>
@@ -330,13 +315,6 @@ namespace Alternet.UI
                 return;
             OnDayDoubleClick(e);
             DayDoubleClick?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Sets colors used in the control to the dark theme.
-        /// </summary>
-        internal virtual void SetColorThemeToDark()
-        {
         }
 
         /// <summary>

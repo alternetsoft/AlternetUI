@@ -242,6 +242,38 @@ namespace Alternet.UI
                 }
             }
 
+            /// <inheritdoc/>
+            public override bool? IsDarkBackgroundOverride
+            {
+                get => base.IsDarkBackgroundOverride;
+                set
+                {
+                    /*
+                    monthPicker.IsDarkBackgroundOverride = value;
+                    yearPicker.IsDarkBackgroundOverride = value;
+                    prevButton.IsDarkBackgroundOverride = value;
+                    nextButton.IsDarkBackgroundOverride = value;
+                    popupYearPicker.IsDarkBackgroundOverride = value;
+                    popupYearPickerPanel.IsDarkBackgroundOverride = value;
+                    popupMonthPicker.IsDarkBackgroundOverride = value;
+                    firstRowPanel.IsDarkBackgroundOverride = value;
+                    */
+
+                    base.IsDarkBackgroundOverride = value;
+
+                    /*
+                    monthPicker.RaiseSystemColorsChanged(EventArgs.Empty);
+                    yearPicker.RaiseSystemColorsChanged(EventArgs.Empty);
+                    prevButton.RaiseSystemColorsChanged(EventArgs.Empty);
+                    nextButton.RaiseSystemColorsChanged(EventArgs.Empty);
+                    popupYearPicker.RaiseSystemColorsChanged(EventArgs.Empty);
+                    popupYearPickerPanel.RaiseSystemColorsChanged(EventArgs.Empty);
+                    popupMonthPicker.RaiseSystemColorsChanged(EventArgs.Empty);
+                    firstRowPanel.RaiseSystemColorsChanged(EventArgs.Empty);
+                    */
+                }
+            }
+
             /// <summary>
             /// Gets or sets the current value of the calendar header, representing the selected month and year.
             /// </summary>

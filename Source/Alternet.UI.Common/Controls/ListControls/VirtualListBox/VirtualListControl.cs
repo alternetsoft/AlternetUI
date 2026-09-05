@@ -1305,6 +1305,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets colors used in the control to the specified theme.
+        /// </summary>
+        /// <param name="isDark">A boolean value indicating whether to use the dark theme.
+        /// If null, the default theme is used.</param>
+        public virtual void SetColorTheme(bool? isDark)
+        {
+            if (isDark == null)
+                SetColorThemeToDefault();
+            else if (isDark.Value)
+                SetColorThemeToDark();
+            else
+                SetColorThemeToLight();
+        }
+
+        /// <summary>
         /// Sets colors used in the control to the dark theme.
         /// </summary>
         public virtual void SetColorThemeToDark()

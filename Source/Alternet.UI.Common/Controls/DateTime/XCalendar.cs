@@ -1036,6 +1036,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets colors used in the control to the light theme.
+        /// </summary>
+        internal virtual void SetColorThemeToLight()
+        {
+            SetColorTheme(false);
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the auto theme (takes colors from the
+        /// system colors).
+        /// </summary>
+        internal virtual void SetColorThemeToAuto()
+        {
+            SetColorTheme(null);
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the dark theme.
+        /// </summary>
+        internal virtual void SetColorThemeToDark()
+        {
+            SetColorTheme(true);
+        }
+
+        /// <summary>
         /// Updates the width of the columns in the calendar control
         /// based on the measured width of the day names and other properties.
         /// </summary>
@@ -1083,6 +1108,22 @@ namespace Alternet.UI
 
                 return;
             }
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the light, dark or auto theme.
+        /// </summary>
+        /// <param name="isDark">A boolean value indicating whether to use the dark theme.
+        /// If null, the auto theme is used.</param>
+        protected virtual void SetColorTheme(bool? isDark)
+        {
+            IsDarkBackgroundOverride = isDark;
+
+            listBox.SetColorTheme(isDark);
+            header.IsDarkBackgroundOverride = isDark;
+            container.IsDarkBackgroundOverride = isDark;
+
+            Invalidate();
         }
 
         /// <summary>
