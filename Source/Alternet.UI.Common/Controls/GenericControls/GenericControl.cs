@@ -232,6 +232,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool IsTransparentBackgroundSupported()
+        {
+            return true;
+        }
+
+        /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.DoInsideClipped(
