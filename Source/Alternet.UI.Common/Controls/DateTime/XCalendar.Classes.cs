@@ -593,10 +593,57 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Represents the event arguments for querying whether a specific date is a holiday in the calendar control.
+        /// </summary>
+        public class QueryHolidayEventArgs : BaseEventArgs
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="QueryHolidayEventArgs"/> class.
+            /// </summary>
+            public QueryHolidayEventArgs()
+            {
+            }
+
+            /// <summary>
+            /// Gets the calendar cell associated with the queried day.
+            /// </summary>
+            public DateOnly Date { get; internal set; }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the specified date is a holiday.
+            /// </summary>
+            public bool IsHoliday { get; set; }
+        }
+
+        /// <summary>
+        /// Represents the event arguments for querying day attributes in the calendar control.
+        /// </summary>
+        public class QueryDayAttributesEventArgs : BaseEventArgs
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="QueryDayAttributesEventArgs"/> class.
+            /// </summary>
+            public QueryDayAttributesEventArgs()
+            {
+            }
+
+            /// <summary>
+            /// Gets the calendar cell associated with the queried day.
+            /// </summary>
+            public CalendarCell Cell { get; internal set; } = CalendarCell.Default;
+
+            /// <summary>
+            /// Gets or sets the date attributes associated with the queried day,
+            /// allowing customization of the day's appearance and behavior.
+            /// </summary>
+            public IXCalendarDateAttr? DateAttr { get; set; }
+        }
+
+        /// <summary>
         /// Represents a cell in the calendar control, which contains information about a specific day,
         /// including its date, position in the grid, and whether it belongs to the current month or is today.
         /// </summary>
-        public class CalendarCell : BaseObject
+        public partial class CalendarCell : BaseObject
         {
             /// <summary>
             /// Gets the default instance of the <see cref="CalendarCell"/> class,

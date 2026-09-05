@@ -22,12 +22,6 @@ namespace Alternet.UI
         internal static readonly bool DefaultSequentialMonthSelect = true;
 
         /// <summary>
-        /// Gets or sets default value for the <see cref="ShowHolidays"/> property.
-        /// Default is True.
-        /// </summary>
-        internal static bool DefaultShowHolidays = true;
-
-        /// <summary>
         /// Gets or sets a value indicating whether to show the neighboring weeks in the
         /// previous and next months.
         /// </summary>
@@ -107,19 +101,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to highlight holidays in the calendar
-        /// </summary>
-        public virtual bool ShowHolidays
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to use alternative, more compact,
         /// style for the month and year selection controls.
         /// </summary>
-        public virtual bool SequentialMonthSelect
+        internal virtual bool SequentialMonthSelect
         {
             get;
 

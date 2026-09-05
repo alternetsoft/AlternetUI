@@ -100,6 +100,7 @@ namespace ControlsSample
 
                 p.Add<BoldLabel>("Options");
 
+                p.AddInput("Show Holidays", calendar, nameof(calendar.ShowHolidays));
                 p.AddInput("Show Header Border", calendar, nameof(calendar.ShowHeaderBorder));
                 p.AddInput("Show Month DropDown", calendar, nameof(calendar.ShowMonthDropDown));
                 p.AddInput("Show Year DropDown", calendar, nameof(calendar.ShowYearDropDown));
@@ -144,6 +145,22 @@ namespace ControlsSample
                 };
             }
 
+            calendar.QueryHoliday += (s, e) =>
+            {
+                if (DateUtils.USAHolidayHelper.IsKnownHoliday(e.Date))
+                {
+                    e.IsHoliday = true;
+                }
+            };
+
+            calendar.QueryDayAttributes += (s, e) =>
+            {
+                if (e.Cell.Date.Day == 5)
+                {
+                    e.DateAttr = calendar.DateAttributes.Blue;
+                }
+            };
+
             UpdateHighlightedDates();
         }
 
@@ -162,7 +179,6 @@ namespace ControlsSample
         private void UpdateHighlightedDates()
         {
             calendar.ResetAttrAll(invalidate: false);
-            calendar.MarkWeekendsAsHolidays(invalidate: false);
 
             if (HighlightDates)
             {

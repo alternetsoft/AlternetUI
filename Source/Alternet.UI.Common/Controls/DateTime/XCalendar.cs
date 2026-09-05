@@ -49,6 +49,12 @@ namespace Alternet.UI
         public static readonly string DayWidthMeasureText = "00";
 
         /// <summary>
+        /// Gets or sets default value for the <see cref="ShowHolidays"/> property.
+        /// Default is True.
+        /// </summary>
+        public static bool DefaultShowHolidays = true;
+
+        /// <summary>
         /// Gets or sets the default color used for surrounding days (days not in the current month) in the calendar control,
         /// </summary>
         public static LightDarkColor DefaultSurroundDayColor = new(Color.Gray);
@@ -68,6 +74,8 @@ namespace Alternet.UI
         private readonly CalendarHeader header;
         private readonly CalendarHeaderItem headerItem;
         private readonly CalendarContainer container;
+        private readonly QueryDayAttributesEventArgs queryDayAttributesEventArgs = new();
+        private readonly QueryHolidayEventArgs queryHolidayEventArgs = new();
 
         private RestrictedDate restrictedDate;
         private DateOnly date;
@@ -77,6 +85,7 @@ namespace Alternet.UI
         private DayNamesKind? dayNamesKind;
         private DayOfWeek? firstDayOfWeek;
         private IXCalendarDateAttr? holidayAttr;
+        private bool showHolidays = DefaultShowHolidays;
 
         static XCalendar()
         {
@@ -168,6 +177,16 @@ namespace Alternet.UI
 
             UpdateListBoxSize();
         }
+
+        /// <summary>
+        /// Occurs when the <see cref="XCalendar"/> control needs to query the attributes for a specific day,
+        /// </summary>
+        public event EventHandler<QueryDayAttributesEventArgs>? QueryDayAttributes;
+
+        /// <summary>
+        /// Occurs when the <see cref="XCalendar"/> control needs to query whether a specific date is a holiday.
+        /// </summary>
+        public event EventHandler<QueryHolidayEventArgs>? QueryHoliday;
 
         /// <summary>
         /// Occurs when the year picker in the calendar header is clicked, 
@@ -291,6 +310,24 @@ namespace Alternet.UI
         public virtual CalendarDateAttributes DateAttributes { get; } = new CalendarDateAttributes();
 
         /// <summary>
+        /// Gets or sets a value indicating whether to highlight holidays in the calendar.
+        /// </summary>
+        public virtual bool ShowHolidays
+        {
+            get
+            {
+                return showHolidays;
+            }
+            set
+            {
+                if (showHolidays == value)
+                    return;
+                showHolidays = value;
+                ResetAttrAll(invalidate: true);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the header of the calendar control should display a border.
         /// </summary>
         public virtual bool ShowHeaderBorder
@@ -298,7 +335,7 @@ namespace Alternet.UI
             get => header.IgnoreTransparency;
             set
             {
-                if(ShowHeaderBorder == value)
+                if (ShowHeaderBorder == value)
                     return;
                 header.IgnoreTransparency = value;
             }
@@ -485,7 +522,7 @@ namespace Alternet.UI
 
                 var pageChanged = oldValue.Year != newValue.Year || oldValue.Month != newValue.Month;
 
-                if(pageChanged)
+                if (pageChanged)
                 {
                     ResetAttrAll(invalidate: false);
                 }
@@ -658,7 +695,7 @@ namespace Alternet.UI
             }
 
             if (invalidate && needInvalidate)
-                Invalidate();    
+                Invalidate();
         }
 
         /// <summary>
@@ -689,6 +726,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the effective <see cref="IXCalendarDateAttr"/> attributes to be used for holidays in the calendar control.
+        /// </summary>
+        /// <returns>The effective <see cref="IXCalendarDateAttr"/> attributes for holidays.</returns>
+        public virtual IXCalendarDateAttr? EffectiveHolidayAttr()
+        {
+            return HolidayAttr ?? DefaultHolidayAttr ?? DateAttributes.Red;
+        }
+
+        /// <summary>
         /// Marks the specified day as being a holiday in the current month.
         /// After current month or year is changed,
         /// this method should be called again to mark dates in the new month.
@@ -697,7 +743,7 @@ namespace Alternet.UI
         /// <param name="invalidate">Indicates whether to invalidate the control after setting the holiday attribute.</param>
         public virtual bool SetHoliday(int day, bool invalidate = true)
         {
-            return SetAttr(day, HolidayAttr ?? DefaultHolidayAttr ?? DateAttributes.Red, invalidate);
+            return SetAttr(day, EffectiveHolidayAttr(), invalidate);
         }
 
         /// <summary>
@@ -867,10 +913,41 @@ namespace Alternet.UI
                     needInvalidate = true;
 
                 cell.DateAttr = null;
+
+                if (cell.IsCurrentMonth)
+                {
+                    if (ShowHolidays)
+                    {
+                        bool isHoliday = IsHoliday(cell.Date);
+
+                        if (isHoliday)
+                        {
+                            cell.DateAttr = EffectiveHolidayAttr();
+                        }
+                    }
+
+                    queryDayAttributesEventArgs.Cell = cell;
+                    queryDayAttributesEventArgs.DateAttr = cell.DateAttr;
+                    OnQueryDayAttributes(queryDayAttributesEventArgs);
+                    cell.DateAttr = queryDayAttributesEventArgs.DateAttr;
+                }
             }
 
             if (needInvalidate && invalidate)
                 Invalidate();
+        }
+
+        /// <summary>
+        /// Determines whether the specified date is considered a holiday in the calendar control.
+        /// </summary>
+        /// <param name="date">The date to check.</param>
+        /// <returns><c>true</c> if the specified date is a holiday; otherwise, <c>false</c>.</returns>
+        public virtual bool IsHoliday(DateOnly date)
+        {
+            queryHolidayEventArgs.Date = date;
+            queryHolidayEventArgs.IsHoliday = DateUtils.IsWeekend(date);
+            OnQueryHoliday(queryHolidayEventArgs);
+            return queryHolidayEventArgs.IsHoliday;
         }
 
         /// <summary>
@@ -1119,6 +1196,26 @@ namespace Alternet.UI
             {
                 UpdateListBoxSize();
             });
+        }
+
+        /// <summary>
+        /// Raises the <see cref="QueryDayAttributes"/> event, allowing customization of day attributes
+        /// for specific dates in the calendar control.
+        /// </summary>
+        /// <param name="e">A <see cref="QueryDayAttributesEventArgs"/> that contains the event data.</param>
+        protected virtual void OnQueryDayAttributes(QueryDayAttributesEventArgs e)
+        {
+            QueryDayAttributes?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="QueryHoliday"/> event, allowing to query whether a specific date is considered
+        /// a holiday in the calendar control.
+        /// </summary>
+        /// <param name="e">A <see cref="QueryHolidayEventArgs"/> that contains the event data.</param>
+        protected virtual void OnQueryHoliday(QueryHolidayEventArgs e)
+        {
+            QueryHoliday?.Invoke(this, e);
         }
 
         /// <summary>
