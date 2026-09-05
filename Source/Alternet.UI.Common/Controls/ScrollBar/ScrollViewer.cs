@@ -159,6 +159,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+        }
+
+        /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
             if (DisposingOrDisposed)
@@ -311,6 +317,12 @@ namespace Alternet.UI
                     - layoutOffset.Y,
                     unboundedPreferredSize.Width,
                     unboundedPreferredSize.Height);
+            }
+
+            /// <inheritdoc/>
+            protected override void OnSystemColorsChanged(EventArgs e)
+            {
+                base.OnSystemColorsChanged(e);
             }
 
             /// <inheritdoc/>
