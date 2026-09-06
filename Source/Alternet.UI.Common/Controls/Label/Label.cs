@@ -1134,5 +1134,15 @@ namespace Alternet.UI
         {
             IsBold = true;
         }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BoldLabel"/> class with the specified text.
+        /// </summary>
+        /// <param name="text">The text to display in the label.</param>
+        public BoldLabel(string text)
+            : base(text)
+        {
+            IsBold = true;
+        }
     }
 }
