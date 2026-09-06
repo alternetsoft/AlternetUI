@@ -231,6 +231,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets editors for the specified items.
+        /// </summary>
+        /// <param name="items">The collection of <see cref="PanelSettingsItem"/> objects.</param>
+        /// <returns>An enumerable collection of <see cref="AbstractControl"/> objects. Each item is not null.</returns>
+        public static IEnumerable<AbstractControl> GetEditors(IEnumerable<PanelSettingsItem> items)
+        {
+            foreach (var item in items)
+            {
+                var editor = item.Editor;
+                if (editor is not null)
+                    yield return editor;
+            }
+        }
+
+        /// <summary>
         /// Raises <see cref="ValueChanged"/> event.
         /// </summary>
         public virtual PanelSettingsItem RaiseValueChanged(EventArgs e)
