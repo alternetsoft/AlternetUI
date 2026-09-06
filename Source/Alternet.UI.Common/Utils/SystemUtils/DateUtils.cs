@@ -226,6 +226,73 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates the days of the week based on the specified first day of the week
+        /// and returns the corresponding <see cref="DayOfWeek"/> values and titles.
+        /// </summary>
+        /// <param name="firstDayOfWeek">The first day of the week.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <param name="weekdays">The array of <see cref="DayOfWeek"/> values.</param>
+        /// <param name="titles">The list of day names.</param>
+        /// <param name="kind">The kind of day names to retrieve (full, abbreviated, or shortest).</param>
+        public static void GetDayOfWeekWithTitles(
+            out DayOfWeek[] weekdays,
+            out string[] titles,
+            DayNamesKind kind = DayNamesKind.Full,
+            DayOfWeek? firstDayOfWeek = null, 
+            IFormatProvider? formatProvider = null)
+        {
+            List<string> titlesList = new();
+            List<DayOfWeek> weekdaysList = new();
+            var dayNames = DateUtils.GetDayNames(kind, formatProvider);
+
+            var fd = firstDayOfWeek ?? GetFirstDayOfWeek(formatProvider);
+
+            for (int i = 0; i < 7; i++)
+            {
+                var title = dayNames[(int)fd];
+                titlesList.Add(title);
+                weekdaysList.Add(fd);
+                fd = GetNextDayOfWeek(fd);
+            }
+
+            weekdays = weekdaysList.ToArray();
+            titles = titlesList.ToArray();
+        }
+
+        /// <summary>
+        /// Enumerates the days of the week based on the specified first day of the week
+        /// and returns the corresponding <see cref="DaysOfWeek"/> values and titles.
+        /// </summary>
+        /// <param name="firstDayOfWeek">The first day of the week.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <param name="weekdays">The array of <see cref="DaysOfWeek"/> values.</param>
+        /// <param name="titles">The list of day names.</param>
+        /// <param name="kind">The kind of day names to retrieve (full, abbreviated, or shortest).</param>
+        public static void GetDaysOfWeekWithTitles(
+            out DaysOfWeek[] weekdays,
+            out string[] titles,
+            DayNamesKind kind = DayNamesKind.Full,
+            DayOfWeek? firstDayOfWeek = null,
+            IFormatProvider? formatProvider = null)
+        {
+            GetDayOfWeekWithTitles(
+                        out DayOfWeek[] wkdays,
+                        out titles,
+                        kind,
+                        firstDayOfWeek,
+                        formatProvider);
+
+            weekdays = new DaysOfWeek[wkdays.Length];
+
+            foreach(var day in wkdays)
+            {
+                weekdays[(int)day] = (DaysOfWeek)(1 << (int)day);
+            }
+        }
+
+        /// <summary>
         /// Gets the names of the days of the week in the Gregorian calendar, based on the specified kind and format provider. 
         /// The result array contains names for
         /// "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", and "Saturday".
@@ -727,12 +794,52 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="DateOnly"/> falls on a workday (Monday to Friday).
+        /// Determines whether the specified <see cref="DaysOfWeek"/> falls on a weekend (Saturday or Sunday).
+        /// </summary>
+        /// <param name="dayOfWeek">The days of the week to evaluate.</param>
+        /// <returns><c>true</c> if the days fall on a weekend; otherwise, <c>false</c>.</returns>
+        public static bool IsWeekend(this DaysOfWeek dayOfWeek)
+        {
+            return dayOfWeek.HasFlag(DaysOfWeek.Saturday) || dayOfWeek.HasFlag(DaysOfWeek.Sunday);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="DaysOfWeek"/> falls on a weekday (Monday to Friday).
+        /// </summary>
+        /// <param name="daysOfWeek">The days of the week to evaluate.</param>
+        /// <returns><c>true</c> if the days fall on a weekday (Monday to Friday); otherwise, <c>false</c>.</returns>
+        public static bool IsWeekday(this DaysOfWeek daysOfWeek)
+        {
+            return !IsWeekend(daysOfWeek);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="DayOfWeek"/> falls on a weekday (Monday to Friday).
+        /// </summary>
+        /// <param name="dayOfWeek">The day of the week to evaluate.</param>
+        /// <returns><c>true</c> if the day falls on a weekday (Monday to Friday); otherwise, <c>false</c>.</returns>
+        public static bool IsWeekday(DayOfWeek dayOfWeek)
+        {
+            return !IsWeekend(dayOfWeek);
+        }
+        
+        /// <summary>
+        /// Determines whether the specified <see cref="DayOfWeek"/> falls on a weekend (Saturday or Sunday).
+        /// </summary>
+        /// <param name="dayOfWeek">The day of the week to evaluate.</param>
+        /// <returns><c>true</c> if the day falls on a weekend; otherwise, <c>false</c>.</returns>  
+        public static bool IsWeekend(DayOfWeek dayOfWeek)
+        {
+            return dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="DateOnly"/> falls on a weekday (Monday to Friday).
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
-        /// <returns><c>true</c> if the date falls on a workday; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the date falls on a weekday (Monday to Friday); otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool IsWorkday(DateOnly date)
+        public static bool IsWeekday(DateOnly date)
         {
             return !IsWeekend(date);
         }
@@ -995,7 +1102,7 @@ namespace Alternet.UI
             switch (dayOfWeek)
             {
                 case ExtendedDayOfWeek.Weekday:
-                    return IsWorkday(date);
+                    return IsWeekday(date);
                 case ExtendedDayOfWeek.Weekend:
                     return IsWeekend(date);
                 case ExtendedDayOfWeek.Day:
