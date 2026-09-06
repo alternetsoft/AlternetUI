@@ -954,19 +954,52 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds event handler to 'CheckedChanged' event.
+        /// Sets the 'Checked' property for all controls in the set that implement the <see cref="ICheckedProperty"/> interface.
+        /// </summary>
+        /// <param name="value">The value to set the 'Checked' property to.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet<T> Checked(bool value = true)
+        {
+            foreach (var item in items)
+            {
+                if (item is ICheckedProperty checkProperty)
+                    checkProperty.Checked = value;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the 'Checked' property for all controls in the set that implement the <see cref="ICheckedProperty"/> interface
+        /// based on the specified value returned by the predicate.
+        /// </summary>
+        /// <param name="getValue">A predicate that determines the value to set for the 'Checked' property.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet<T> Checked(Predicate<T> getValue)
+        {
+            foreach (var item in items)
+            {
+                if (item is ICheckedProperty checkProperty)
+                {
+                    checkProperty.Checked = getValue(item);
+                }
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds event handler to 'CheckedChanged' event for all controls in the set
+        /// that implement the <see cref="ICheckedProperty"/> interface.
         /// </summary>
         /// <param name="evt">Event Handler.</param>
-        /// <returns></returns>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet<T> WhenCheckedChanged(EventHandler evt)
         {
             foreach (var item in items)
             {
-                if (item is XCheckBox checkBox)
-                    checkBox.CheckedChanged += evt;
-                else
-                if (item is XRadioButton radioButton)
-                    radioButton.CheckedChanged += evt;
+                if (item is ICheckedProperty checkProperty)
+                    checkProperty.CheckedChanged += evt;
             }
 
             return this;
