@@ -133,18 +133,20 @@ namespace Alternet.UI
         /// <summary>
         /// Assigns the values from another <see cref="DateRepeatPatternRule"/> instance to the current instance.
         /// </summary>
-        /// <param name="other"></param>
+        /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
+        /// If the instance is not of type <see cref="MonthlyRepeatPatternRule"/>, no values are copied.</param>
         public virtual void Assign(object? other)
         {
             if (other == null)
             {
-                SuspendPropertyChanged();
-                IntervalMonths = 1;
-                DayOfWeek = ExtendedDayOfWeek.Day;
-                DayOfMonth = 1;
-                DayOfWeekIndex = RelativeWeekday.First;
-                Kind = RepeatKind.DayOfMonth;
-                ResumePropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    IntervalMonths = 1;
+                    DayOfWeek = ExtendedDayOfWeek.Day;
+                    DayOfMonth = 1;
+                    DayOfWeekIndex = RelativeWeekday.First;
+                    Kind = RepeatKind.DayOfMonth;
+                });
                 return;
             }
 
@@ -153,13 +155,14 @@ namespace Alternet.UI
                 if (Equals(other))
                     return;
 
-                SuspendPropertyChanged();
-                IntervalMonths = otherRule.IntervalMonths;
-                DayOfWeek = otherRule.DayOfWeek;
-                DayOfMonth = otherRule.DayOfMonth;
-                DayOfWeekIndex = otherRule.DayOfWeekIndex;
-                Kind = otherRule.Kind;
-                ResumePropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    IntervalMonths = otherRule.IntervalMonths;
+                    DayOfWeek = otherRule.DayOfWeek;
+                    DayOfMonth = otherRule.DayOfMonth;
+                    DayOfWeekIndex = otherRule.DayOfWeekIndex;
+                    Kind = otherRule.Kind;
+                });
             }
         }
 
@@ -202,28 +205,31 @@ namespace Alternet.UI
         /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date, 
         /// without applying any end condition or occurrence count filtering.
         /// </summary>
-        /// <param name="minDate">The minimum date for the range.</param>
-        /// <param name="maxDate">The maximum date for the range.</param>
         /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
-        protected virtual IEnumerable<DateOnly> GetDatesUnfiltered(DateOnly minDate, DateOnly maxDate)
+        protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDatesUnfiltered(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
-            var start = new DateOnly(minDate.Year, minDate.Month, 1);
-            var end = maxDate;
+            return new(Internal());
 
-            for (var date = start; date <= end; date = date.AddMonths(IntervalMonths))
+            IEnumerable<DateOnly> Internal()
             {
-                DateOnly[]? occurrenceDates = GetDates(date.Year, (CalendarMonth)date.Month);
+                var start = new DateOnly(prm.MinDate.Year, prm.MinDate.Month, 1);
+                var end = prm.MaxDate;
 
-                if (occurrenceDates is null)
-                    continue;
-
-                foreach (var d in occurrenceDates)
+                for (var date = start; date <= end; date = date.AddMonths(IntervalMonths))
                 {
-                    if (d < minDate)
+                    DateOnly[]? occurrenceDates = GetDates(date.Year, (CalendarMonth)date.Month);
+
+                    if (occurrenceDates is null)
                         continue;
-                    if (d > maxDate)
-                        break;
-                    yield return d;
+
+                    foreach (var d in occurrenceDates)
+                    {
+                        if (d < prm.MinDate)
+                            continue;
+                        if (d > prm.MaxDate)
+                            break;
+                        yield return d;
+                    }
                 }
             }
         }

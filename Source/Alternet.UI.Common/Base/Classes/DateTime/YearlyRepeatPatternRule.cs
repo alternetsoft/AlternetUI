@@ -145,13 +145,13 @@ namespace Alternet.UI
         /// <summary>
         /// Assigns the values from another instance to the current instance.
         /// </summary>
-        /// <param name="other">The instance from which to copy values.</param>
+        /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
+        /// If the instance is not of type <see cref="YearlyRepeatPatternRule"/>, no values are copied.</param>
         public virtual void Assign(object? other)
         {
             if (other == null)
             {
-                SuspendPropertyChanged();
-                try
+                DoInsideSuspendedPropertyChanged(() =>
                 {
                     IntervalYears = 1;
                     Month = CalendarMonth.January;
@@ -159,12 +159,7 @@ namespace Alternet.UI
                     DayOfMonth = 1;
                     DayOfWeekIndex = RelativeWeekday.First;
                     Kind = RepeatKind.DayOfMonth;
-                }
-                finally
-                {
-                    ResumePropertyChanged();
-                }
-
+                });
                 return;
             }
 
@@ -173,9 +168,7 @@ namespace Alternet.UI
                 if (Equals(other))
                     return;
 
-                SuspendPropertyChanged();
-
-                try
+                DoInsideSuspendedPropertyChanged(() =>
                 {
                     IntervalYears = otherRule.IntervalYears;
                     Month = otherRule.Month;
@@ -183,11 +176,7 @@ namespace Alternet.UI
                     DayOfMonth = otherRule.DayOfMonth;
                     DayOfWeekIndex = otherRule.DayOfWeekIndex;
                     Kind = otherRule.Kind;
-                }
-                finally
-                {
-                    ResumePropertyChanged();
-                }
+                });
             }
         }
 
@@ -230,28 +219,31 @@ namespace Alternet.UI
         /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date, 
         /// without applying any end condition or occurrence count filtering.
         /// </summary>
-        /// <param name="minDate">The minimum date for the range.</param>
-        /// <param name="maxDate">The maximum date for the range.</param>
         /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
-        protected virtual IEnumerable<DateOnly> GetDatesUnfiltered(DateOnly minDate, DateOnly maxDate)
+        protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDatesUnfiltered(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
-            int startYear = minDate.Year;
-            int endYear = maxDate.Year;
+            return new(Internal());
 
-            for (int year = startYear; year <= endYear; year += IntervalYears)
+            IEnumerable<DateOnly> Internal()
             {
-                DateOnly[]? occurrenceDates = GetDates(year);
+                int startYear = prm.MinDate.Year;
+                int endYear = prm.MaxDate.Year;
 
-                if (occurrenceDates is null)
-                    continue;
-
-                foreach (var d in occurrenceDates)
+                for (int year = startYear; year <= endYear; year += IntervalYears)
                 {
-                    if (d < minDate)
+                    DateOnly[]? occurrenceDates = GetDates(year);
+
+                    if (occurrenceDates is null)
                         continue;
-                    if (d > maxDate)
-                        break;
-                    yield return d;
+
+                    foreach (var d in occurrenceDates)
+                    {
+                        if (d < prm.MinDate)
+                            continue;
+                        if (d > prm.MaxDate)
+                            break;
+                        yield return d;
+                    }
                 }
             }
         }

@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a calendar control that allows users to select a date from a visual calendar interface.
     /// </summary>
-    public partial class XCalendar : ScrollViewer
+    public partial class XCalendar : ScrollViewer, IWeekFormatProvider
     {
         /// <summary>
         /// Gets the total number of day cells in the calendar control, which is 42 (6 rows x 7 columns).
@@ -577,6 +577,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the calendar week rule to use for determining week numbers.
+        /// </summary>
+        public virtual CalendarWeekRule? WeekRule { get; set; }
+
+        /// <summary>
         /// Gets the first date of the currently displayed month in the calendar.
         /// </summary>
         [Browsable(false)]
@@ -747,6 +752,7 @@ namespace Alternet.UI
             IDateRepeatPatternRule.RuleGetDatesParams prm = new();
             prm.MinDate = FirstDateOfMonth;
             prm.MaxDate = LastDateOfMonth;
+            prm.WeekFormat = this;
 
             var result = rule.GetDates(prm).Dates;
 
@@ -759,6 +765,17 @@ namespace Alternet.UI
 
             if (invalidate && needInvalidate)
                 Invalidate();
+        }
+
+        /// <summary>
+        /// Gets the effective week of the year for the specified date,
+        /// considering the calendar's week rule and first day of the week.
+        /// </summary>
+        /// <param name="date">The date for which to get the week of the year.</param>
+        /// <returns>The effective week of the year.</returns>
+        public virtual int EffectiveWeekOfYear(DateOnly date)
+        {
+            return DateUtils.GetWeekOfYear(date, EffectiveFormatProvider(), EffectiveWeekRule(), EffectiveFirstDayOfWeek());
         }
 
         /// <summary>
@@ -890,9 +907,21 @@ namespace Alternet.UI
         /// considering the specified <see cref="FirstDayOfWeek"/> property and the system default.
         /// </summary>
         /// <returns>The effective first day of the week.</returns>
-        public virtual DayOfWeek EffectiveDayOfWeek()
+        public virtual DayOfWeek EffectiveFirstDayOfWeek()
         {
             return FirstDayOfWeek ?? DateUtils.GetFirstDayOfWeek(EffectiveFormatProvider());
+        }
+
+        /// <summary>
+        /// Gets the start date of the specified week number in the given year,
+        /// considering the calendar's week rule and first day of the week.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="weekNumber">The week number.</param>
+        /// <returns>The start date of the specified week.</returns>
+        public virtual DateOnly GetStartOfWeek(int year, int weekNumber)
+        {
+            return DateUtils.GetStartOfWeek(year, weekNumber, EffectiveWeekRule(), EffectiveFirstDayOfWeek(), FormatProvider);
         }
 
         /// <summary>
@@ -917,7 +946,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the array of day names representing the days of the week.
-        /// The first day of the week is determined by the <see cref="EffectiveDayOfWeek"/> method.
+        /// The first day of the week is determined by the <see cref="EffectiveFirstDayOfWeek"/> method.
         /// </summary>
         /// <returns>An array of day names.</returns>
         public virtual (string Text, DayOfWeek DayOfWeek)[] GetDayNames()
@@ -934,6 +963,13 @@ namespace Alternet.UI
 
             return result;
         }
+
+        /// <summary>
+        /// Gets the effective calendar week rule based on the provided
+        /// format provider or defaults to the system's culture settings.
+        /// </summary>
+        /// <returns>The effective calendar week rule.</returns>
+        public virtual CalendarWeekRule EffectiveWeekRule() => DateUtils.GetCalendarWeekRule(FormatProvider);
 
         /// <summary>
         /// Clears the attributes of all cells in the calendar control, removing any custom date attributes.
@@ -1018,7 +1054,7 @@ namespace Alternet.UI
         /// <returns>The index of the day of the week.</returns>
         public virtual int GetDayOfWeekIndex(DayOfWeek dayOfWeek)
         {
-            var index = DateUtils.GetDayOfWeekIndex(dayOfWeek, EffectiveDayOfWeek());
+            var index = DateUtils.GetDayOfWeekIndex(dayOfWeek, EffectiveFirstDayOfWeek());
             return index;
         }
 

@@ -65,15 +65,17 @@ namespace Alternet.UI
         /// <summary>
         /// Assigns the values from another instance to the current instance.
         /// </summary>
-        /// <param name="other">The instance from which to copy values.</param>
+        /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
+        /// If the instance is not of type <see cref="WeeklyRepeatPatternRule"/>, no values are copied.</param>
         public virtual void Assign(object? other)
         {
             if (other == null)
             {
-                SuspendPropertyChanged();
-                IntervalWeeks = 1;
-                WeekDays = DaysOfWeek.None;
-                ResumePropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    IntervalWeeks = 1;
+                    WeekDays = DaysOfWeek.None;
+                });
                 return;
             }
 
@@ -82,10 +84,11 @@ namespace Alternet.UI
                 if (Equals(other))
                     return;
 
-                SuspendPropertyChanged();
-                IntervalWeeks = otherRule.IntervalWeeks;
-                WeekDays = otherRule.WeekDays;
-                ResumePropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    IntervalWeeks = otherRule.IntervalWeeks;
+                    WeekDays = otherRule.WeekDays;
+                });
             }
         }
 
@@ -98,7 +101,40 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
-            return IDateRepeatPatternRule.RuleGetDatesResult.Empty;
+            return GetDates(prm, GetDatesUnfiltered);
+        }
+
+        /// <summary>
+        /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date, 
+        /// without applying any end condition or occurrence count filtering.
+        /// </summary>
+        /// <param name="prm">The parameters specifying the date range and maximum date.</param>
+        /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
+        protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDatesUnfiltered(IDateRepeatPatternRule.RuleGetDatesParams prm)
+        {
+            return new( Array.Empty<DateOnly>());
+
+            /*
+            int startWeek = prm.MinDate.Year;
+            int endYear = prm.MaxDate.Year;
+
+            for (int year = startYear; year <= endYear; year += IntervalYears)
+            {
+                DateOnly[]? occurrenceDates = GetDates(year);
+
+                if (occurrenceDates is null)
+                    continue;
+
+                foreach (var d in occurrenceDates)
+                {
+                    if (d < prm.MinDate)
+                        continue;
+                    if (d > prm.MaxDate)
+                        break;
+                    yield return d;
+                }
+            }
+            */
         }
     }
 }

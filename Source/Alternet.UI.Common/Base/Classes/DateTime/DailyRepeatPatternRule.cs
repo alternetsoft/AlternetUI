@@ -146,15 +146,17 @@ namespace Alternet.UI
         /// <summary>
         /// Assigns the values from another instance to the current instance.
         /// </summary>
-        /// <param name="other">The instance from which to copy values.</param>
+        /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
+        /// If the instance is not of type <see cref="DailyRepeatPatternRule"/>, no values are copied.</param>
         public virtual void Assign(object? other)
         {
             if (other == null)
             {
-                SuspendPropertyChanged();
-                IntervalDays = 1;
-                Kind = RepeatKind.EveryDay;
-                ResumePropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    IntervalDays = 1;
+                    Kind = RepeatKind.EveryDay;
+                });
                 return;
             }
 
@@ -162,11 +164,11 @@ namespace Alternet.UI
             {
                 if (Equals(other))
                     return;
-
-                SuspendPropertyChanged();
-                IntervalDays = otherRule.IntervalDays;
-                Kind = otherRule.Kind;
-                ResumePropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    IntervalDays = otherRule.IntervalDays;
+                    Kind = otherRule.Kind;
+                });
             }
         }
 

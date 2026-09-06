@@ -6,113 +6,6 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a delegate for getting unfiltered dates based on a repeat pattern rule.
-    /// </summary>
-    /// <param name="minDate">The minimum date for the range.</param>
-    /// <param name="maxDate">The maximum date for the range.</param>
-    /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
-    public delegate IEnumerable<DateOnly> GetDatesUnfilteredDelegate(DateOnly minDate, DateOnly maxDate);
-
-    /// <summary>
-    /// Defines an interface for a repeat pattern rule that can generate occurrences of dates based on specific rules.
-    /// </summary>
-    public interface IDateRepeatPatternRule
-    {
-        /// <summary>
-        /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date.
-        /// </summary>
-        /// <param name="prm">The parameters specifying the minimum and maximum
-        /// dates to consider for the occurrences.</param>
-        /// <returns>An enumerable of the occurrence dates.</returns>
-        RuleGetDatesResult GetDates(RuleGetDatesParams prm);
-
-        /// <summary>
-        /// Defines a structure to hold the result of getting dates from the repeat pattern rule.
-        /// </summary>
-        public readonly struct RuleGetDatesResult
-        {
-            /// <summary>
-            /// Gets an empty instance of the <see cref="RuleGetDatesResult"/> struct, representing no dates found.
-            /// </summary>
-            public static readonly RuleGetDatesResult Empty = new(Array.Empty<DateOnly>());
-
-            /// <summary>
-            /// Gets the collection of dates that match the repeat pattern within the specified range.
-            /// </summary>
-            public IEnumerable<DateOnly> Dates { get; }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="RuleGetDatesResult"/> struct
-            /// with the specified collection of dates.
-            /// </summary>
-            /// <param name="dates">The collection of dates that match the repeat pattern within the specified range.</param>
-            public RuleGetDatesResult(IEnumerable<DateOnly> dates)
-            {
-                Dates = dates;
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="RuleGetDatesResult"/> struct.
-            /// </summary>
-            public RuleGetDatesResult()
-                : this(Array.Empty<DateOnly>())
-            {
-            }
-        }
-
-        /// <summary>
-        /// Defines a structure to hold parameters for getting dates from the repeat pattern rule.
-        /// </summary>
-        public struct RuleGetDatesParams
-        {
-            /// <summary>
-            /// Gets or sets the minimum date to consider.
-            /// </summary>
-            public DateOnly MinDate { get; set; }
-
-            /// <summary>
-            /// Gets or sets the maximum date to consider.
-            /// </summary>
-            public DateOnly MaxDate { get; set; }
-
-            /// <summary>
-            /// Gets or sets the format provider to use for formatting dates, if applicable.
-            /// </summary>
-            public IFormatProvider? FormatProvider { get; set; }
-
-            /// <summary>
-            /// Gets or sets the calendar week rule to use for determining week boundaries, if applicable.
-            /// </summary>
-            public CalendarWeekRule? WeekRule { get; set; }
-
-            /// <summary>
-            /// Gets or sets the first day of the week to use for determining week boundaries, if applicable.
-            /// </summary>
-            public DayOfWeek? FirstDayOfWeek { get; set; }
-
-            /// <summary>
-            /// Gets the effective first day of the week based on the provided
-            /// format provider or defaults to the system's culture settings.
-            /// </summary>
-            /// <returns>The effective first day of the week.</returns>
-            public readonly DayOfWeek EffectiveFirstDayOfWeek() => DateUtils.GetFirstDayOfWeek(FormatProvider);
-
-            /// <summary>
-            /// Gets the effective calendar week rule based on the provided
-            /// format provider or defaults to the system's culture settings.
-            /// </summary>
-            /// <returns>The effective calendar week rule.</returns>
-            public readonly CalendarWeekRule EffectiveWeekRule() => DateUtils.GetCalendarWeekRule(FormatProvider);
-
-            /// <summary>
-            /// Gets the effective format info based on the provided format provider or defaults to the system's culture settings.
-            /// </summary>
-            /// <returns>The effective format info.</returns>
-            public readonly DateTimeFormatInfo EffectiveFormatInfo() => DateUtils.GetFormatInfo(FormatProvider);
-        }
-    }
-
-    /// <summary>
     /// Represents a rule for a repeat pattern in scheduling events or tasks.
     /// </summary>
     public abstract partial class DateRepeatPatternRule : BaseObjectWithNotify, IDateRepeatPatternRule
@@ -313,9 +206,11 @@ namespace Alternet.UI
         /// <param name="getDatesUnfiltered">A delegate to get unfiltered dates within the specified range.</param>
         /// <returns>A <see cref="IDateRepeatPatternRule.RuleGetDatesResult"/> containing the filtered dates.</returns>
         protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDates(
-            IDateRepeatPatternRule.RuleGetDatesParams prm,
-            GetDatesUnfilteredDelegate getDatesUnfiltered)
+            in IDateRepeatPatternRule.RuleGetDatesParams prm,
+            GetDatesDelegate getDatesUnfiltered)
         {
+            var weekFormat = prm.WeekFormat;
+            var prmMinDate = prm.MinDate;
             DateOnly minDate = StartDate;
             DateOnly maxDate;
 
@@ -333,14 +228,21 @@ namespace Alternet.UI
 
             IEnumerable<DateOnly> GetUnfiltered()
             {
-                return getDatesUnfiltered(minDate, maxDate);
+                IDateRepeatPatternRule.RuleGetDatesParams unfilteredPrm = new()
+                {
+                    MinDate = minDate,
+                    MaxDate = maxDate,
+                    WeekFormat = weekFormat,
+                };
+
+                return getDatesUnfiltered(unfilteredPrm).Dates;
             }
 
             IEnumerable<DateOnly> GetDates()
             {
                 foreach (var date in GetUnfiltered())
                 {
-                    if (date >= prm.MinDate)
+                    if (date >= prmMinDate)
                         yield return date;
                 }
             }
@@ -356,7 +258,7 @@ namespace Alternet.UI
 
                 foreach (var date in GetUnfiltered())
                 {
-                    if (date >= prm.MinDate)
+                    if (date >= prmMinDate)
                         yield return date;
 
                     numProcessed++;

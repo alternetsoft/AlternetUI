@@ -429,6 +429,7 @@ namespace Alternet.UI
         /// <param name="maxDate">The maximum date to evaluate.</param>
         /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.</param>
         /// <returns>The effective maximum date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateTime EffectiveMaxDate(DateTime maxDate, IFormatProvider? formatProvider = null)
         {
             DateTime maximumDateTime = MaximumDateTime(formatProvider);
@@ -446,6 +447,7 @@ namespace Alternet.UI
         /// <param name="maxDate">The maximum date to evaluate.</param>
         /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.</param>
         /// <returns>The effective maximum date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly EffectiveMaxDate(DateOnly maxDate, IFormatProvider? formatProvider = null)
         {
             DateOnly maximumDateTime = MaximumDateTime(formatProvider).ToDateOnly();
@@ -458,11 +460,78 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the start of the week for the specified year and week number, based on the specified
+        /// calendar week rule and first day of the week.
+        /// </summary>
+        /// <param name="year">The year.</param>
+        /// <param name="weekNumber">The week number.</param>
+        /// <param name="rule">The calendar week rule.</param>
+        /// <param name="firstDayOfWeek">The first day of the week.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.</param>
+        /// <returns>The start date of the specified week.</returns>
+        public static DateOnly GetStartOfWeek(
+            int year,
+            int weekNumber,
+            CalendarWeekRule rule,
+            DayOfWeek firstDayOfWeek,
+            IFormatProvider? formatProvider = null)
+        {
+            var info = GetFormatInfo(formatProvider);
+            var calendar = info.Calendar;
+
+            DateTime firstDayOfYear = new (year, 1, 1);
+
+            DateTime start = firstDayOfYear;
+            while (calendar.GetWeekOfYear(start, rule, firstDayOfWeek) != weekNumber)
+            {
+                start = start.AddDays(1);
+            }
+
+            int diff = (7 + (start.DayOfWeek - firstDayOfWeek)) % 7;
+            return start.AddDays(-diff).Date.ToDateOnly();
+        }
+
+        /// <summary>
+        /// Gets the current date as a <see cref="DateOnly"/> value, representing today's date without the time component.
+        /// </summary>
+        /// <returns>The current date as a <see cref="DateOnly"/> value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateOnly Today()
+        {
+            return DateTime.Now.ToDateOnly();
+        }
+
+        /// <summary>
+        /// Gets the week number of the specified date based on the specified format provider's calendar settings.
+        /// </summary>
+        /// <param name="date">The date for which to get the week number.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.</param>
+        /// <param name="calendarWeekRule">An optional calendar week rule to use for determining
+        /// the first week of the year.</param>
+        /// <param name="firstDayOfWeek">An optional value that specifies the first day of the week.</param>
+        /// <returns>The week number of the specified date.</returns>
+        public static int GetWeekOfYear(
+            DateOnly date,
+            IFormatProvider? formatProvider = null,
+            CalendarWeekRule? calendarWeekRule = null,
+            DayOfWeek? firstDayOfWeek = null)
+        {
+            var info = GetFormatInfo(formatProvider);
+            var calendar = info.Calendar;
+
+            var rule = calendarWeekRule ?? info.CalendarWeekRule;
+            var firstDay = firstDayOfWeek ?? info.FirstDayOfWeek;
+
+            return calendar.GetWeekOfYear(date.ToDateTime(), rule, firstDay);
+        }
+
+        /// <summary>
         /// Gets the calendar week rule used for determining the first week of the year,
         /// based on the specified format provider.
         /// </summary>
         /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.</param>
         /// <returns>The calendar week rule.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static CalendarWeekRule GetCalendarWeekRule(IFormatProvider? formatProvider = null)
         {
             var info = GetFormatInfo(formatProvider);
@@ -475,6 +544,7 @@ namespace Alternet.UI
         /// <param name="minDate">The minimum date to evaluate.</param>
         /// <param name="formatProvider">The format provider to use for culture-specific formatting.</param>
         /// <returns>The effective minimum date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateTime EffectiveMinDate(DateTime minDate, IFormatProvider? formatProvider = null)
         {
             DateTime minimumDateTime = MinimumDateTime(formatProvider);
@@ -492,6 +562,7 @@ namespace Alternet.UI
         /// <param name="minDate">The minimum date to evaluate.</param>
         /// <param name="formatProvider">The format provider to use for culture-specific formatting.</param>
         /// <returns>The effective minimum date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly EffectiveMinDate(DateOnly minDate, IFormatProvider? formatProvider = null)
         {
             DateOnly minimumDateTime = MinimumDateTime(formatProvider).ToDateOnly();
