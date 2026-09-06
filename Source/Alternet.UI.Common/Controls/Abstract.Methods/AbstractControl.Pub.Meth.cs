@@ -189,6 +189,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a new child control of the specified type to the current instance, sets its text,
+        /// and configures it using the provided action.
+        /// </summary>
+        /// <typeparam name="TControl">The type of the child control to add.</typeparam>
+        /// <param name="text">The text to set for the newly added child control.</param>
+        /// <param name="configure">An action to configure the newly added child control.</param>
+        /// <returns>The newly added child control with the specified text.</returns>
+        public virtual TControl Add<TControl>(string text, Action<TControl> configure)
+            where TControl : AbstractControl, new()
+        {
+            var result = new TControl();
+            result.Text = text;
+            configure(result);
+            result.Parent = this;
+            return result;
+        }
+
+        /// <summary>
         /// Adds a new child control of the specified type to the current instance and configures it using the provided action.
         /// </summary>
         /// <typeparam name="TControl">The type of the child control to add.</typeparam>
@@ -982,6 +1000,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="controls">Controls.</param>
         public ControlSet Group(params AbstractControl[] controls)
+        {
+            return new(controls);
+        }
+
+        /// <summary>
+        /// Creates <see cref="ControlSet"/> with the specified controls.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        /// <returns>A <see cref="ControlSet"/> containing the specified controls.</returns>
+        public ControlSet Group(IEnumerable<AbstractControl> controls)
         {
             return new(controls);
         }
