@@ -75,21 +75,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the start date of the specified week number in the given year,
-        /// considering the calendar's week rule and first day of the week.
+        /// Gets the start of the week for the specified year and week number, based on the specified week format provider.
         /// </summary>
         /// <param name="year">The year.</param>
         /// <param name="weekNumber">The week number.</param>
-        /// <param name="weekFormat">The week format provider. If null, the system's culture settings are used.</param>
+        /// <param name="weekFormat">The week format provider.</param>
         /// <returns>The start date of the specified week.</returns>
-        public static DateOnly GetStartOfWeek(int year, int weekNumber, IWeekFormatProvider? weekFormat = null)
+        public static DateOnly GetStartOfWeek(
+            int year,
+            int weekNumber,
+            IWeekFormatProvider? weekFormat = null)
         {
             return DateUtils.GetStartOfWeek(
-                year,
-                weekNumber,
-                EffectiveWeekRule(weekFormat),
-                EffectiveFirstDayOfWeek(weekFormat),
-                weekFormat?.FormatProvider);
+                        year,
+                        weekNumber,
+                        IWeekFormatProvider.EffectiveWeekRule(weekFormat),
+                        IWeekFormatProvider.EffectiveFirstDayOfWeek(weekFormat),
+                        IWeekFormatProvider.EffectiveFormatInfo(weekFormat));
         }
     }
 }
