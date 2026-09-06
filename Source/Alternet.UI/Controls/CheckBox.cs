@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// from mutually exclusive options.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Native)]
-    public partial class CheckBox : ButtonBase
+    public partial class CheckBox : ButtonBase, ICheckedProperty
     {
         private bool allowAllStatesForUser;
         private bool alignRight;

@@ -28,7 +28,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory(KnownControlCategory.Native)]
-    public partial class RadioButton : ButtonBase
+    public partial class RadioButton : ButtonBase, ICheckedProperty
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RadioButton"/> class.
@@ -110,6 +110,8 @@ namespace Alternet.UI
             get => base.Layout;
             set => base.Layout = value;
         }
+
+        bool ICheckedProperty.Checked { get => IsChecked; set => IsChecked = value; }
 
         /// <summary>
         /// Sets the value of the <see cref="IsChecked"/> property.

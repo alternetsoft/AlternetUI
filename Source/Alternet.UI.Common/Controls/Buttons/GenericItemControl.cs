@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a user interface control that displays a single <see cref="ListControlItem"/> item.
     /// </summary>
     public partial class GenericItemControl
-        : HiddenGenericBorder, IListControlItemContainer, ICommandSource, IControlStateObjectChanged, IControlAndLabel
+        : HiddenGenericBorder, IListControlItemContainer, ICommandSource, IControlStateObjectChanged, IControlAndLabel, ICheckedProperty
     {
         /// <summary>
         /// Gets the default margin applied to images.

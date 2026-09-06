@@ -182,9 +182,10 @@ namespace Alternet.UI
             object? result = propInfo?.GetValue(instance, null);
             IsChecked = result is true;
 
-            CheckedChanged += Editor_CheckedChanged;
+            CheckedChanged -= OnEditorCheckedChanged;
+            CheckedChanged += OnEditorCheckedChanged;
 
-            void Editor_CheckedChanged(object? sender, EventArgs e)
+            void OnEditorCheckedChanged(object? sender, EventArgs e)
             {
                 var value = (sender as XCheckBox)?.IsChecked;
                 propInfo?.SetValue(instance, value);
