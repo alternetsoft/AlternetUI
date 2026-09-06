@@ -5,6 +5,7 @@ using System.Text;
 
 using Alternet.UI.Localization;
 using Alternet.UI.Extensions;
+using System.Linq;
 
 namespace Alternet.UI
 {
@@ -17,7 +18,7 @@ namespace Alternet.UI
         public partial class WeeklyPatternPicker : DateRepeatPatternRulePicker<WeeklyRepeatPatternRule>
         {
             private readonly XIntPickerWithLabels intervalWeekPicker = new();
-            private readonly PanelSettings weekDaysPanel = new();
+            private readonly PanelSettings panel = new();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class.
@@ -35,54 +36,48 @@ namespace Alternet.UI
 
                 var firstDayOfWeek = DateUtils.SystemFirstDayOfWeek;
 
-                DaysOfWeek[] weekdays;
-                List<string> titles = new();
-                var dayNames = DateUtils.GetDayNames(DayNamesKind.Full, FormatProvider);
+                GetDaysOfWeekWithTitles(firstDayOfWeek, out var weekdays, out var titles);
 
-                if (firstDayOfWeek == DayOfWeek.Sunday)
+                IReadOnlyList<PanelSettingsItem> checkItems = [];
+
+                panel.Horizontal((h) =>
                 {
-                    weekdays = new DaysOfWeek[]
+                    panel.Vertical((v) =>
                     {
-                        DaysOfWeek.Sunday,
-                        DaysOfWeek.Monday,
-                        DaysOfWeek.Tuesday,
-                        DaysOfWeek.Wednesday,
-                        DaysOfWeek.Thursday,
-                        DaysOfWeek.Friday,
-                        DaysOfWeek.Saturday,
-                    };
+                        checkItems = panel.AddFlagCheckBoxes<DaysOfWeek>(
+                            label: null,
+                            getValue: () => Value.WeekDays,
+                            setValue: v => Value.WeekDays = v,
+                            itemTitles: titles,
+                            itemValues: weekdays,
+                            e: null);
+                    });
 
-                    titles.AddRange(dayNames);
-                }
-                else
-                {
-                    weekdays = new DaysOfWeek[]
+                    panel.Vertical((v) =>
                     {
-                        DaysOfWeek.Monday,
-                        DaysOfWeek.Tuesday,
-                        DaysOfWeek.Wednesday,
-                        DaysOfWeek.Thursday,
-                        DaysOfWeek.Friday,
-                        DaysOfWeek.Saturday,
-                        DaysOfWeek.Sunday,
-                    };
+                        var checkBoxes = Group(PanelSettingsItem.GetEditors(checkItems));
 
-                    titles.AddRange(dayNames);
-                    titles.RemoveAt(0);
-                    titles.Add(dayNames[0]);
-                }
-
-                weekDaysPanel.AddFlagCheckBoxes(
-                    label: null,
-                    getValue: () => Value.WeekDays,
-                    setValue: v => Value.WeekDays = v,
-                    itemTitles: titles.ToArray(),
-                    itemValues: weekdays,
-                    e: null);
+                        panel.AddLinkLabel(CommonStrings.Default.ButtonClearAll, () => checkBoxes.Checked(false));
+                        panel.AddLinkLabel(CommonStrings.Default.ButtonSelectAll, () => checkBoxes.Checked(true));
+                        panel.AddLinkLabel(CommonStrings.Default.ButtonSelectWeekdays, () =>
+                        {
+                            checkBoxes.Checked((c) => c.Tag is DaysOfWeek day && day.IsWeekday());
+                        });
+                        panel.AddLinkLabel(CommonStrings.Default.ButtonSelectWeekends, () =>
+                        {
+                            checkBoxes.Checked((c) => c.Tag is DaysOfWeek day && day.IsWeekend());
+                        });
+                    });
+                });
 
                 intervalWeekPicker.Parent = this;
-                weekDaysPanel.Parent = this;
+                panel.Parent = this;
             }
+
+            /// <summary>
+            /// Gets the panel that contains the checkboxes for selecting the days of the week in the weekly repeat pattern.
+            /// </summary>
+            public PanelSettings WeekdaysPanel => panel;
 
             /// <summary>
             /// Gets the integer picker control for selecting the interval week value in the weekly repeat pattern.
@@ -119,6 +114,23 @@ namespace Alternet.UI
             protected virtual void UpdateSuffixLabelText()
             {
                 intervalWeekPicker.SuffixLabel.Text = TimePeriodUnit.Weeks.ToDisplayString(intervalWeekPicker.Value);
+            }
+
+            /// <summary>
+            /// Enumerates the days of the week based on the specified first day of the week
+            /// and returns the corresponding <see cref="DaysOfWeek"/> values and titles.
+            /// </summary>
+            /// <param name="firstDayOfWeek">The first day of the week.</param>
+            /// <param name="weekdays">The array of <see cref="DaysOfWeek"/> values.</param>
+            /// <param name="titles">The list of day names.</param>
+            protected virtual void GetDaysOfWeekWithTitles(DayOfWeek firstDayOfWeek, out DaysOfWeek[] weekdays, out string[] titles)
+            {
+                DateUtils.GetDaysOfWeekWithTitles(
+                    out weekdays,
+                    out titles,
+                    DayNamesKind.Full,
+                    firstDayOfWeek,
+                    FormatProvider);
             }
         }
     }

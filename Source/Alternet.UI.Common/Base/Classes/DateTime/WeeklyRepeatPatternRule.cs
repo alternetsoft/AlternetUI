@@ -105,6 +105,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified date is included in the repeat pattern based on the defined days of the week.
+        /// </summary>
+        /// <param name="date">The date to check.</param>
+        /// <returns><c>true</c> if the date is included in the repeat pattern; otherwise, <c>false</c>.</returns>
+        protected virtual bool IsDateInWeekDays(DateOnly date)
+        {
+            return WeekDays.HasDay(date.DayOfWeek);
+        }
+
+        /// <summary>
         /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date, 
         /// without applying any end condition or occurrence count filtering.
         /// </summary>
@@ -112,29 +122,34 @@ namespace Alternet.UI
         /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
         protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDatesUnfiltered(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
-            return new( Array.Empty<DateOnly>());
+            return new(Internal());
 
-            /*
-            int startWeek = prm.MinDate.Year;
-            int endYear = prm.MaxDate.Year;
-
-            for (int year = startYear; year <= endYear; year += IntervalYears)
+            IEnumerable<DateOnly> Internal()
             {
-                DateOnly[]? occurrenceDates = GetDates(year);
+                int startWeek = IWeekFormatProvider.EffectiveWeekOfYear(prm.MinDate, prm.WeekFormat);
+                var startDate = IWeekFormatProvider.GetStartOfWeek(prm.MinDate.Year, startWeek, prm.WeekFormat);
+                var maxDate = prm.MaxDate;
 
-                if (occurrenceDates is null)
-                    continue;
-
-                foreach (var d in occurrenceDates)
+                while (startDate <= maxDate)
                 {
-                    if (d < prm.MinDate)
-                        continue;
-                    if (d > prm.MaxDate)
-                        break;
-                    yield return d;
+                    for (int i = 0; i < 7; i++)
+                    {
+                        var weekDate = startDate.AddDays(i);
+
+                        if (weekDate < prm.MinDate)
+                            continue;
+                        if (weekDate > maxDate)
+                            break;
+
+                        if (IsDateInWeekDays(weekDate))
+                        {
+                            yield return weekDate;
+                        }
+                    }
+
+                    startDate = startDate.AddDays(7 * IntervalWeeks);
                 }
             }
-            */
         }
     }
 }

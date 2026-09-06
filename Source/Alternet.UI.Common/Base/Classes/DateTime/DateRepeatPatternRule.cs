@@ -213,6 +213,7 @@ namespace Alternet.UI
             var prmMinDate = prm.MinDate;
             DateOnly minDate = StartDate;
             DateOnly maxDate;
+            var min = DateUtils.Max(StartDate, prmMinDate);
 
             switch (EndCondition)
             {
@@ -242,7 +243,7 @@ namespace Alternet.UI
             {
                 foreach (var date in GetUnfiltered())
                 {
-                    if (date >= prmMinDate)
+                    if (date >= min)
                         yield return date;
                 }
             }
@@ -258,7 +259,7 @@ namespace Alternet.UI
 
                 foreach (var date in GetUnfiltered())
                 {
-                    if (date >= prmMinDate)
+                    if (date >= min)
                         yield return date;
 
                     numProcessed++;
