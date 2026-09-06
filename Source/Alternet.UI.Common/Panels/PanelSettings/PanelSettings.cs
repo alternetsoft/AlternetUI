@@ -23,6 +23,11 @@ namespace Alternet.UI
         public static Thickness DefaultMinChildMargin = (5, 1, 5, 1);
 
         /// <summary>
+        /// Gets or sets default vertical line margin.
+        /// </summary>
+        public static Thickness DefaultVerticalLineMargin = (10, 5, 10, 5);
+
+        /// <summary>
         /// Gets or sets default horizontal line margin.
         /// </summary>
         public static Thickness DefaultHorizontalLineMargin = (5, 10, 5, 10);
@@ -202,9 +207,20 @@ namespace Alternet.UI
         /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
         public static object? DefaultItemToLineControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var spacer = CreateOrUpdateControl<HorizontalLine>(sender, item, control);
-            spacer.Margin = DefaultHorizontalLineMargin;
-            return spacer;
+            var isVertical = item.CreateArg?.CustomFlags["IsVertical"] as bool?;
+
+            if (isVertical == true)
+            {
+                var spacer = CreateOrUpdateControl<VerticalLine>(sender, item, control);
+                spacer.Margin = DefaultVerticalLineMargin;
+                return spacer;
+            }
+            else
+            {
+                var spacer = CreateOrUpdateControl<HorizontalLine>(sender, item, control);
+                spacer.Margin = DefaultHorizontalLineMargin;
+                return spacer;
+            }
         }
 
         /// <summary>
@@ -1002,6 +1018,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Pushes a new <see cref="VerticalStackPanel"/> container control onto the container stack,
+        /// performs the specified action on it, and then pops it from the stack.
+        /// This method can be used to group multiple items vertically within the panel settings.
+        /// </summary>
+        /// <param name="action">An action to perform on the container control.</param>
+        /// <returns>The container control that was pushed onto the stack.</returns>
+        public VerticalStackPanel Vertical(Action<VerticalStackPanel> action)
+        {
+            return DoInsideContainer<VerticalStackPanel>(action);
+        }
+
+        /// <summary>
         /// Pushes a new container control of the specified type onto the container stack,
         /// performs the specified action on it, and then pops it from the stack.
         /// </summary>
@@ -1181,7 +1209,7 @@ namespace Alternet.UI
         /// If not provided, the values will be used as titles.</param>
         /// <param name="itemValues">The values for the checkboxes. Enum elements are specified here.</param>
         /// <param name="e">Additional arguments.</param>
-        public virtual void AddFlagCheckBoxes<TEnum>(
+        public virtual IReadOnlyList<PanelSettingsItem> AddFlagCheckBoxes<TEnum>(
             object? label,
             Func<TEnum> getValue,
             Action<TEnum> setValue,
@@ -1194,6 +1222,8 @@ namespace Alternet.UI
             {
                 AddLabel(label);
             }
+
+            List<PanelSettingsItem> result = new();
 
             for (int i = 0; i < itemValues.Length; i++)
             {
@@ -1224,7 +1254,18 @@ namespace Alternet.UI
                         setValue(newValue);
                     },
                     e);
+
+                var editor = item.Editor;
+
+                if (editor is not null)
+                {
+                    editor.Tag = value;
+                }
+
+                result.Add(item);
             }
+
+            return result;
         }
 
         /// <summary>
@@ -1239,7 +1280,7 @@ namespace Alternet.UI
         /// If not provided, the values will be used as titles.</param>
         /// <param name="itemValues">The values for the radio buttons.</param>
         /// <param name="e">Additional arguments.</param>
-        public virtual void AddRadioButtons<T>(
+        public virtual IReadOnlyList<PanelSettingsItem> AddRadioButtons<T>(
             object? label,
             Func<T> getValue,
             Action<T> setValue,
@@ -1256,6 +1297,7 @@ namespace Alternet.UI
             e.CustomFlags["IsRadioButton"] = true;
 
             var groupIdentifier = BeginRadioGroup();
+            List<PanelSettingsItem> result = new();
 
             for (int i = 0; i < itemValues.Length; i++)
             {
@@ -1274,15 +1316,18 @@ namespace Alternet.UI
                             setValue(value);
                     },
                     e);
+                result.Add(item);
                 var control = GetItemControl(item);
 
                 if (control is XRadioButton radioButton)
                 {
                     radioButton.RadioGroupId = groupIdentifier;
+                    radioButton.Tag = value;
                 }
             }
 
             EndRadioGroup();
+            return result;
         }
 
         /// <summary>
@@ -1313,11 +1358,24 @@ namespace Alternet.UI
         /// Adds horizontal line.
         /// </summary>
         /// <param name="e">Additional arguments.</param>
-        /// <returns></returns>
+        /// <returns>The created PanelSettingsItem object.</returns>
         public virtual PanelSettingsItem AddHorizontalLine(CustomEventArgs? e = null)
         {
             PanelSettingsItem item
                 = CreateItemCore("HorizontalLine", PanelSettingsItemKind.Line, null, e);
+            Items.Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds horizontal line.
+        /// </summary>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns>The created PanelSettingsItem object.</returns>
+        public virtual PanelSettingsItem AddVerticalLine(CustomEventArgs? e = null)
+        {
+            e ??= new CustomEventArgs("IsVertical");
+            PanelSettingsItem item = CreateItemCore("VerticalLine", PanelSettingsItemKind.Line, null, e);
             Items.Add(item);
             return item;
         }
