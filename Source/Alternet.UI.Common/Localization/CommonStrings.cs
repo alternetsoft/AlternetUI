@@ -48,6 +48,10 @@ namespace Alternet.UI.Localization
 
         public string ButtonFindNext { get; set; } = "Find Next";
 
+        public string ButtonSelectWeekdays { get; set; } = "Select weekdays";
+
+        public string ButtonSelectWeekends { get; set; } = "Select weekends";
+
         public string ButtonOptions { get; set; } = "Options";
 
         public string ButtonFindPrevious { get; set; } = "Find Previous";
@@ -87,6 +91,8 @@ namespace Alternet.UI.Localization
         public string ButtonClear { get; set; } = "Clear";
 
         public string ButtonClearAll { get; set; } = "Clear All";
+
+        public string ButtonSelectAll { get; set; } = "Select All";
 
         public string ButtonClose { get; set; } = "Close";
 
