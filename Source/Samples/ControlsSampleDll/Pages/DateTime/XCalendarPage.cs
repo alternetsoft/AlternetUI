@@ -212,6 +212,14 @@ namespace ControlsSample
                     App.Log($"RepeatPatternPicker: ValueChanged");
                     UpdateHighlightedDates();
                 };
+
+                p.SizeChanged += (s, e) =>
+                {
+                    Post(() =>
+                    {
+                        p.MinWidth = Math.Max(p.MinWidth ?? 0, p.Width);
+                    });
+                };
             }
 
             calendar.QueryHoliday += (s, e) =>
