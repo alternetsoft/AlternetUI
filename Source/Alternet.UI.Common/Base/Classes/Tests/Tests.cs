@@ -164,7 +164,7 @@ namespace Alternet.UI.Tests
             data.Icon = MessageBoxIcon.Information;
             data.Text = "This is tooltip text";
             data.Title = "This is title";
-            var image = RichToolTip.CreateToolTipImage(template, data);
+            var image = RichToolTip.CreateToolTipImage(template, data, SystemSettings.AppearanceIsDark);
             LogUtils.LogImage(image);
         }
 

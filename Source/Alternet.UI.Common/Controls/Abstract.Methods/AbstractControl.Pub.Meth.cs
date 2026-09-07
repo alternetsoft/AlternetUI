@@ -528,8 +528,8 @@ namespace Alternet.UI
 
             if (isDark is null)
             {
-                BackColor = DefaultColors.ControlBackColor.Current;
-                ForeColor = DefaultColors.ControlForeColor.Current;
+                BackColor = DefaultColors.ControlBackColor.LightOrDark();
+                ForeColor = DefaultColors.ControlForeColor.LightOrDark();
             }
             else
             {
@@ -552,8 +552,8 @@ namespace Alternet.UI
             {
                 ParentBackColor = false;
                 ParentForeColor = false;
-                BackColor = DefaultColors.ControlBackColor.Current;
-                ForeColor = DefaultColors.ControlForeColor.Current;
+                BackColor = DefaultColors.ControlBackColor.LightOrDark();
+                ForeColor = DefaultColors.ControlForeColor.LightOrDark();
             }
             else
             {

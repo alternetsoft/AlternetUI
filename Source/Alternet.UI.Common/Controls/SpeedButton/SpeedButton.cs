@@ -231,6 +231,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool? IsDarkBackgroundOverride
+        {
+            get => base.IsDarkBackgroundOverride;
+            set
+            {
+                if (IsDarkBackgroundOverride == value)
+                    return;
+                base.IsDarkBackgroundOverride = value;
+                label.IsDarkBackgroundOverride = value;
+                OnDpiOrSystemColorsChanged();
+            }
+        }
+
         /// <summary>
         /// Gets a value indicating whether text is not empty and visible.
         /// </summary>
@@ -1903,6 +1917,7 @@ namespace Alternet.UI
         {
             var state = VisualState;
 
+            var isDark = IsDarkBackground;
             var isNormal = state == VisualControlState.Normal;
             var isNormalOrDisabled = isNormal || state == VisualControlState.Disabled;
 
@@ -1920,7 +1935,7 @@ namespace Alternet.UI
 
             if (HasVisibleText)
             {
-                Label.ForegroundColor = GetLabelTextColor(state);
+                Label.ForegroundColor = GetLabelTextColor(state)?.LightOrDark(isDark);
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
             }
 
@@ -2427,7 +2442,7 @@ namespace Alternet.UI
         /// <returns>A new instance of the inner picture spacer.</returns>
         protected virtual GenericControl CreateInnerPictureSpacer()
         {
-            return new Spacer();
+            return new TransparentPanel();
         }
 
         /// <summary>
@@ -2437,7 +2452,7 @@ namespace Alternet.UI
         /// <returns>A new instance of the inner spacer control.</returns>
         protected virtual GenericControl CreateInnerSpacer()
         {
-            return new Spacer();
+            return new TransparentPanel();
         }
 
         /// <inheritdoc/>

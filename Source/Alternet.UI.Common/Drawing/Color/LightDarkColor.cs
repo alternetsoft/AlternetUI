@@ -77,11 +77,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the current color based on whether a dark or light color scheme is in use.
-        /// </summary>
-        public override Color Current => LightOrDark(IsUsingDarkColor);
-
-        /// <summary>
         /// Gets dark color.
         /// </summary>
         public Color Dark
@@ -122,6 +117,11 @@ namespace Alternet.Drawing
                     $" Light: {Light.ARGBWeb}, Dark: {Dark.ARGBWeb})";
             }
         }
+
+        /// <summary>
+        /// Gets the current color based on whether a dark or light color scheme is in use.
+        /// </summary>
+        public override Color Current => LightOrDark(IsUsingDarkColor);
 
         /// <summary>
         /// Tests whether two specified <see cref="LightDarkColor"/> structures are different.
@@ -235,24 +235,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a new LightDarkColor instance that represents a darker version of the current color.
         /// </summary>
-        /// <returns>A LightDarkColor object whose light and dark components are each darkened compared to the current instance.</returns>
+        /// <returns>A LightDarkColor object whose light and dark components
+        /// are each darkened compared to the current instance.</returns>
         public LightDarkColor DarkerPair()
         {
             return new LightDarkColor(Light.Darker(), Dark.Darker());
-        }
-
-        /// <summary>
-        /// Gets <see cref="Dark"/> or <see cref="Light"/> color depending on
-        /// <paramref name="isDark"/> parameter value.
-        /// </summary>
-        /// <param name="isDark">Whether to get dark or light color.</param>
-        /// <returns></returns>
-        public Color LightOrDark(bool isDark)
-        {
-            if (isDark)
-                return Dark;
-            else
-                return Light;
         }
 
         /// <summary>
@@ -286,6 +273,18 @@ namespace Alternet.Drawing
             if (other is null)
                 return false;
             return this == other;
+        }
+
+        /// <inheritdoc/>
+        protected override Color GetDark()
+        {
+            return Dark;
+        }
+
+        /// <inheritdoc/>
+        protected override Color GetLight()
+        {
+            return Light;
         }
 
         /// <inheritdoc/>

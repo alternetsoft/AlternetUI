@@ -631,7 +631,7 @@ namespace Alternet.UI
                     toolTipTemplate.Parent = this;
                 }
 
-                var asImage = RichToolTip.CreateToolTipImage(toolTipTemplate, toolTip);
+                var asImage = RichToolTip.CreateToolTipImage(toolTipTemplate, toolTip, IsDarkBackground);
                 Image = asImage;
             });
 

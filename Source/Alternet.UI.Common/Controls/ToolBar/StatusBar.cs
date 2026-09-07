@@ -52,8 +52,8 @@ namespace Alternet.UI
 
             ParentBackColor = false;
             ParentForeColor = false;
-            BackgroundColor = DefaultBackgroundColor.Current;
-            ForegroundColor = DefaultForegroundColor.Current;
+            BackgroundColor = DefaultBackgroundColor.LightOrDark();
+            ForegroundColor = DefaultForegroundColor.LightOrDark();
             SizingGripVisible = true;
         }
 

@@ -504,11 +504,15 @@ namespace Alternet.UI
         /// <param name="data">The <see cref="RichToolTipParams"/> containing
         /// the content and styling options for the tooltip, such as
         /// text, title, colors, font, and image.</param>
+        /// <param name="isDark">A value indicating whether the tooltip should be rendered in dark mode.</param>
         /// <returns>An <see cref="Image"/> object representing the rendered tooltip.</returns>
         public static Image CreateToolTipImage(
             IRichToolTipTemplate templateIntf,
-            RichToolTipParams data)
+            RichToolTipParams data,
+            bool? isDark = null)
         {
+            var appearanceIsDark = isDark ?? SystemSettings.AppearanceIsDark;
+
             templateIntf ??= DefaultTemplate;
 
             var template = templateIntf.RootControl;
@@ -536,18 +540,22 @@ namespace Alternet.UI
                 template.NormalBorder = RealDefaultToolTipBorder;
                 template.HasBorder = data.HasToolTipBorder;
                 template.BackgroundColor
-                = data.BackgroundColor?.Current ?? RichToolTip.DefaultToolTipBackgroundColor.Current;
+                = data.BackgroundColor?.LightOrDark(appearanceIsDark)
+                ?? RichToolTip.DefaultToolTipBackgroundColor.LightOrDark(appearanceIsDark);
                 template.RaiseBackgroundColorChanged();
                 template.ForegroundColor
-                = data.ForegroundColor?.Current ?? RichToolTip.DefaultToolTipForegroundColor.Current;
+                = data.ForegroundColor?.LightOrDark(appearanceIsDark)
+                ?? RichToolTip.DefaultToolTipForegroundColor.LightOrDark(appearanceIsDark);
                 templateIntf.TitleLabel.ParentForeColor = false;
                 templateIntf.TitleLabel.ParentFont = false;
                 templateIntf.TitleLabel.Text = data.Title;
 
                 templateIntf.TitleLabel.Font
-                    = data.TitleFont ?? template.Font?.Scaled(DefaultTitleFontScaleFactor) ?? Control.DefaultFont.Scaled(DefaultTitleFontScaleFactor);
+                    = data.TitleFont ?? template.Font?.Scaled(DefaultTitleFontScaleFactor)
+                    ?? Control.DefaultFont.Scaled(DefaultTitleFontScaleFactor);
                 templateIntf.TitleLabel.ForegroundColor
-                    = data.TitleForegroundColor?.Current ?? RichToolTip.DefaultToolTipTitleForegroundColor.Current;
+                    = data.TitleForegroundColor?.LightOrDark(appearanceIsDark)
+                    ?? RichToolTip.DefaultToolTipTitleForegroundColor.LightOrDark(appearanceIsDark);
                 templateIntf.MessageLabel.Text = data.Text;
 
                 templateIntf.TitleLabel.Visible = !string.IsNullOrEmpty(data.Title);
@@ -873,7 +881,7 @@ namespace Alternet.UI
             data.MaxWidth = MaxTextWidth ?? DefaultMaxWidth;
             data.ScaleFactor = ScaleFactor;
 
-            var result = CreateToolTipImage(template, data);
+            var result = CreateToolTipImage(template, data, IsDarkBackground);
             return result;
         }
 

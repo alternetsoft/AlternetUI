@@ -254,29 +254,17 @@ namespace Alternet.UI
                 get => base.IsDarkBackgroundOverride;
                 set
                 {
-                    /*
                     monthPicker.IsDarkBackgroundOverride = value;
                     yearPicker.IsDarkBackgroundOverride = value;
                     prevButton.IsDarkBackgroundOverride = value;
+                    actionsButton.IsDarkBackgroundOverride = value;
                     nextButton.IsDarkBackgroundOverride = value;
                     popupYearPicker.IsDarkBackgroundOverride = value;
                     popupYearPickerPanel.IsDarkBackgroundOverride = value;
                     popupMonthPicker.IsDarkBackgroundOverride = value;
                     firstRowPanel.IsDarkBackgroundOverride = value;
-                    */
 
                     base.IsDarkBackgroundOverride = value;
-
-                    /*
-                    monthPicker.RaiseSystemColorsChanged(EventArgs.Empty);
-                    yearPicker.RaiseSystemColorsChanged(EventArgs.Empty);
-                    prevButton.RaiseSystemColorsChanged(EventArgs.Empty);
-                    nextButton.RaiseSystemColorsChanged(EventArgs.Empty);
-                    popupYearPicker.RaiseSystemColorsChanged(EventArgs.Empty);
-                    popupYearPickerPanel.RaiseSystemColorsChanged(EventArgs.Empty);
-                    popupMonthPicker.RaiseSystemColorsChanged(EventArgs.Empty);
-                    firstRowPanel.RaiseSystemColorsChanged(EventArgs.Empty);
-                    */
                 }
             }
 
@@ -862,6 +850,36 @@ namespace Alternet.UI
             /// Occurs when the selected month value changes, allowing subscribers to respond to the change in selection.
             /// </summary>
             public event EventHandler? ValueChanged;
+
+            /// <inheritdoc/>
+            public override bool? IsDarkBackgroundOverride
+            {
+                get => base.IsDarkBackgroundOverride;
+                set
+                {
+                    base.IsDarkBackgroundOverride = value;
+
+                    foreach (var row in rows)
+                    {
+                        row.IsDarkBackgroundOverride = value;
+                    }
+
+                    foreach (var button in buttons)
+                    {
+                        button.IsDarkBackgroundOverride = value;
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Gets the rows of the month picker panel, which contain the month buttons for selection.
+            /// </summary>
+            public IReadOnlyList<TransparentPanel> Rows => rows;
+
+            /// <summary>
+            /// Gets the buttons in the month picker panel, which represent the individual months for selection.
+            /// </summary>
+            public IReadOnlyList<SpeedTextButton> Buttons => buttons;
 
             /// <summary>
             /// Gets or sets the kind of month names displayed in the month picker,

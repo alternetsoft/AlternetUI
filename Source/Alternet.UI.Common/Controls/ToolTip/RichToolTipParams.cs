@@ -69,7 +69,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color of the title.
         /// </summary>
-        public virtual Color? TitleForegroundColor { get => record.TitleForegroundColor; set => record.TitleForegroundColor = value; }
+        public virtual Color? TitleForegroundColor
+        { 
+            get => record.TitleForegroundColor;
+            set => record.TitleForegroundColor = value;
+        }
 
         /// <summary>
         /// Gets or sets the font used for rendering the title.

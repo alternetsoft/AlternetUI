@@ -2376,8 +2376,8 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            BackColor = DefaultColors.WindowBackColor.Current;
-            ForeColor = DefaultColors.WindowForeColor.Current;
+            BackColor = DefaultColors.WindowBackColor.LightOrDark();
+            ForeColor = DefaultColors.WindowForeColor.LightOrDark();
         }
 
         private void InflateAndDeflateSize()

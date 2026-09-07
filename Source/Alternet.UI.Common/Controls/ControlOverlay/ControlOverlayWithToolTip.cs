@@ -68,7 +68,7 @@ namespace Alternet.UI
         /// before generating the image.</remarks>
         public virtual void UpdateImage()
         {
-            var image = RichToolTip.CreateToolTipImage(Template, ToolTip);
+            var image = RichToolTip.CreateToolTipImage(Template, ToolTip, SystemSettings.AppearanceIsDark);
             Image = image;
         }
     }

@@ -772,9 +772,10 @@ namespace Alternet.UI
                 return RectD.Empty;
 
             var labelFont = font ?? GetLabelFont(state);
+            var isDark = IsDarkBackground;
 
-            var labelForeColor = foreColor ?? GetLabelForeColor(state);
-            var labelBackColor = backColor ?? GetLabelBackColor(state);
+            var labelForeColor = (foreColor ?? GetLabelForeColor(state)).LightOrDark(isDark);
+            var labelBackColor = (backColor ?? GetLabelBackColor(state)).LightOrDark(isDark);
 
             labelText = GetWithoutMnemonicMarkers(labelText, out var mnemonicCharIndex);
             labelText = GetWrappedText(labelText);
