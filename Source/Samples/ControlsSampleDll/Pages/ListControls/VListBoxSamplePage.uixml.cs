@@ -149,6 +149,23 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
+            contextMenu.AddSeparator();
+
+            contextMenu.Add("Set Color Theme: Auto", () =>
+            {
+                listBox.SetColorThemeToDefault();
+            });
+
+            contextMenu.Add("Set Color Theme: Dark", () =>
+            {
+                listBox.SetColorThemeToDark();
+            });
+
+            contextMenu.Add("Set Color Theme: Light", () =>
+            {
+                listBox.SetColorThemeToLight();
+            });
+
             var item = listBox.GetItem(1);
 
             if (item is not null)

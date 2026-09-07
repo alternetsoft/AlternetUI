@@ -2348,7 +2348,7 @@ namespace Alternet.UI
         {
             var isEnabled = IsContainerEnabled(prm.Container);
             var control = prm.Container?.Control;
-            var isSelected = prm.PaintArgs.HasSelection;
+            var isSelected = IsSelectedCell(prm.Container);
 
             var s = DefaultGetItemText(this, forDisplay: true, prm.Container?.FormatProvider);
 
@@ -3606,7 +3606,7 @@ namespace Alternet.UI
             /// Gets or sets the cached SVG image associated with the item.
             /// </summary>
             public CachedSvgImage<Image> CachedSvg = new();
-            
+
             /// <summary>
             /// Gets or sets the margin of the image.
             /// </summary>  

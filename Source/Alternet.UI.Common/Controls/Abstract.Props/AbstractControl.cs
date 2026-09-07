@@ -155,6 +155,7 @@ namespace Alternet.UI
         private bool bubbleKeys;
         private HVDropDownAlignment? dropDownMenuPosition;
         private long? lastClickedTimestamp;
+        private bool? isDarkBackgroundOverride;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -3735,7 +3736,14 @@ namespace Alternet.UI
         /// Gets or sets an override value for the <see cref="IsDarkBackground"/> property.
         /// </summary>
         [Browsable(false)]
-        public virtual bool? IsDarkBackgroundOverride { get; set; }
+        public virtual bool? IsDarkBackgroundOverride
+        {
+            get => isDarkBackgroundOverride;
+            set
+            {
+                isDarkBackgroundOverride = value;
+            }
+        }
 
         /// <summary>
         /// Returns true if control's background color is darker than foreground color.

@@ -2874,8 +2874,10 @@ namespace Alternet.UI
                 else
                     SetColorThemeToLight();
             }
-
-            ResetCachedImages();
+            else
+            {
+                ResetCachedImages();
+            }
 
             base.OnSystemColorsChanged(e);
         }

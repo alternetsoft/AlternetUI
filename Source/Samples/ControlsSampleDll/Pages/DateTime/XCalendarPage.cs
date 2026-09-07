@@ -241,6 +241,17 @@ namespace ControlsSample
                     ToggleBold();
                 });
 
+                // Color Theme
+
+                p.AddHorizontalLine();
+                p.Add<BoldLabel>("Color Theme");
+
+                p.AddLinkLabel("Light Theme", () => calendar.SetColorThemeToLight());
+                p.AddLinkLabel("Auto Theme", () => calendar.SetColorThemeToAuto());
+                p.AddLinkLabel("Dark Theme", () => calendar.SetColorThemeToDark());
+
+                // Other
+
                 void ToggleBold()
                 {
                     var attr = calendar.GetOrCreateAttr(calendar.Value.Day);

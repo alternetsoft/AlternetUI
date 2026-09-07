@@ -1326,6 +1326,7 @@ namespace Alternet.UI
         {
             DoInsideUpdate(() =>
             {
+                ResetCachedImages();
                 BackgroundColor = DefaultColors.ControlBackColor.Dark;
                 ForegroundColor = DefaultColors.ControlForeColor.Dark;
 
@@ -1344,6 +1345,7 @@ namespace Alternet.UI
         {
             DoInsideUpdate(() =>
             {
+                ResetCachedImages();
                 BackColor = DefaultColors.ControlBackColor;
                 ForeColor = DefaultColors.ControlForeColor;
 
@@ -1362,6 +1364,7 @@ namespace Alternet.UI
         {
             DoInsideUpdate(() =>
             {
+                ResetCachedImages();
                 BackColor = DefaultColors.ControlBackColor.Light;
                 ForeColor = DefaultColors.ControlForeColor.Light;
 

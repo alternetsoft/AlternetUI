@@ -12,6 +12,9 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a calendar control that allows users to select a date from a visual calendar interface.
+    /// You can use <see cref="Value"/> property to get or set the selected date.
+    /// You can use <see cref="MinDate"/>, <see cref="MaxDate"/>, <see cref="UseMinDate"/> and <see cref="UseMaxDate"/>
+    /// to restrict the selectable date range.
     /// </summary>
     public partial class XCalendar : ScrollViewer, IWeekFormatProvider
     {
@@ -1215,22 +1218,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the height of a single row in the calendar control based
-        /// on the measured height of the day names and other properties.
-        /// </summary>
-        /// <param name="dc">The graphics context used for measuring text.</param>
-        /// <param name="font">The font used for measuring text.</param>
-        /// <returns>The height of a single row in the calendar control.</returns>  
-        internal virtual float GetRowHeight(Graphics dc, Font font)
-        {
-            var rowHeight = dc.GetTextExtent(RowHeightMeasureText, font).Height + 4;
-            return rowHeight;
-        }
-
-        /// <summary>
         /// Sets colors used in the control to the light theme.
         /// </summary>
-        internal virtual void SetColorThemeToLight()
+        public virtual void SetColorThemeToLight()
         {
             SetColorTheme(false);
         }
@@ -1239,7 +1229,7 @@ namespace Alternet.UI
         /// Sets colors used in the control to the auto theme (takes colors from the
         /// system colors).
         /// </summary>
-        internal virtual void SetColorThemeToAuto()
+        public virtual void SetColorThemeToAuto()
         {
             SetColorTheme(null);
         }
@@ -1247,7 +1237,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets colors used in the control to the dark theme.
         /// </summary>
-        internal virtual void SetColorThemeToDark()
+        public virtual void SetColorThemeToDark()
         {
             SetColorTheme(true);
         }
@@ -1348,9 +1338,13 @@ namespace Alternet.UI
         {
             IsDarkBackgroundOverride = isDark;
 
+            dayView.IsDarkBackgroundOverride = isDark;
             dayView.SetColorTheme(isDark);
             header.IsDarkBackgroundOverride = isDark;
             container.IsDarkBackgroundOverride = isDark;
+
+            ResetAttrAll(invalidate: InvalidateMethod.None);
+            OnValueChanged();
 
             Invalidate();
         }
