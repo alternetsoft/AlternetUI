@@ -43,6 +43,7 @@ namespace Alternet.UI
     /// locale, and these styles have no effect on it.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Native)]
+    [Obsolete("Calendar is deprecated. Use XCalendar instead.")]
     public partial class Calendar : CustomDateEdit
     {
         /// <summary>
