@@ -179,16 +179,28 @@ namespace ControlsSample
                 p.AddButton($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday);
                 p.AddButton($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow);
 
-                // Theme
+                // Day Border
 
-                /*
                 p.AddHorizontalLine();
-                p.Add<BoldLabel>("Theme");
+                p.Add<BoldLabel>("Day Border");
 
-                p.AddButton("Auto", calendar.SetColorThemeToAuto);
-                p.AddButton("Dark", calendar.SetColorThemeToDark);
-                p.AddButton("Light", calendar.SetColorThemeToLight);
-                */
+                p.AddButton("Clear Day Borders", () =>
+                {
+                    calendar.ClearDayBorders();
+                });
+                p.AddButton("Toggle Selected Day Border", () =>
+                {
+                    var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
+
+                    if (attr.Border != null)
+                    {
+                        attr.Border = null;
+                    }
+                    else
+                    {
+                        attr.Border = new BorderSettings(Color.Red);
+                    }
+                });
 
                 tabControl.Add(panel);
 

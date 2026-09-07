@@ -856,6 +856,64 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Clears the border settings for all day cells in the calendar control,
+        /// effectively removing any custom borders that may have been applied to individual days.
+        /// </summary>
+        /// <param name="invalidate">Indicates whether to invalidate the control after clearing the day borders.</param>
+        public virtual void ClearDayBorders(InvalidateMethod invalidate = InvalidateMethod.Invalidate)
+        {
+            foreach (var cell in cells)
+            {
+                if (cell.DateAttr != null)
+                {
+                    cell.DateAttr.Border = null;
+                }
+            }
+
+            Invalidate(invalidate);
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IXCalendarDateAttr"/> attributes for the given day.
+        /// If the attributes do not exist, a new instance will be created and set.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
+        /// <returns>The <see cref="IXCalendarDateAttr"/> attributes for the given day.</returns>
+        public virtual IXCalendarDateAttr GetOrCreateAttr(int day)
+        {
+            var attr = GetAttr(day);
+            if (attr == null)
+            {
+                attr = CreateDateAttr();
+                SetAttr(day, attr);
+            }
+
+            return attr;
+        }
+
+        /// <summary>
+        /// Returns the <see cref="IXCalendarDateAttr"/> attributes for the
+        /// given day or <c>null</c>.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
+        public virtual IXCalendarDateAttr? GetAttr(int day)
+        {
+            if (day < 1 || day > DateTime.DaysInMonth(Value.Year, Value.Month))
+                return null;
+            var dateToGet = new DateOnly(Value.Year, Value.Month, day);
+
+            foreach (var cell in cells)
+            {
+                if (cell.Date == dateToGet)
+                {
+                    return cell.DateAttr;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Sets the <see cref="IXCalendarDateAttr"/> attributes for the given day.
         /// This method can be used to customize the appearance and behavior of current month days.
         /// If the date is not in the current month, the method will return false and no attributes will be set.
@@ -876,6 +934,17 @@ namespace Alternet.UI
                 return false;
             var dateToSet = new DateOnly(Value.Year, Value.Month, day);
             return SetAttr(dateToSet, dateAttr, invalidate);
+        }
+
+        /// <summary>
+        /// Clears any attributes associated with the given day.
+        /// </summary>
+        /// <param name="day">Day (in the range 1...31).</param>
+        /// <param name="invalidate">Indicates whether to invalidate the control after resetting the attributes.</param>
+        /// <returns><c>true</c> if the attributes were successfully reset; otherwise, <c>false</c>.</returns>
+        public virtual bool ResetAttr(int day, InvalidateMethod invalidate = InvalidateMethod.Invalidate)
+        {
+            return SetAttr(day, null, invalidate);
         }
 
         /// <summary>

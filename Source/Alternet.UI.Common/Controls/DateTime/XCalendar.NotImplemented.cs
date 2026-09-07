@@ -186,14 +186,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Clears any attributes associated with the given day.
-        /// </summary>
-        /// <param name="day">Day (in the range 1...31).</param>
-        internal virtual void ResetAttr(int day)
-        {
-        }
-
-        /// <summary>
         /// Marks or unmarks all days in the month.
         /// </summary>
         /// <remarks>
@@ -202,14 +194,6 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="mark"><c>true</c> to mark the days, <c>false</c> to unmark them.</param>
         internal virtual void MarkAll(bool mark = true)
-        {
-        }
-
-        /// <summary>
-        /// Marks the specified day as being a holiday in the current month.
-        /// </summary>
-        /// <param name="day">Day (in the range 1...31).</param>
-        internal virtual void SetHoliday(int day)
         {
         }
 
@@ -251,16 +235,6 @@ namespace Alternet.UI
         internal virtual HitTestResult HitTest(PointD point)
         {
             return HitTestResult.None;
-        }
-
-        /// <summary>
-        /// Returns the <see cref="IXCalendarDateAttr"/> attributes for the
-        /// given day or <c>null</c>.
-        /// </summary>
-        /// <param name="day">Day (in the range 1...31).</param>
-        internal virtual IXCalendarDateAttr? GetAttr(int day)
-        {
-            return default;
         }
 
         /// <summary>
