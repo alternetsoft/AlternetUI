@@ -360,7 +360,11 @@ namespace Alternet.UI.Localization
 
         public string Today { get; set; } = "Today";
 
-        public string GoToDate { get; set; } = "Go to Date...";
+        public string GoToMonth { get; set; } = "Go to Month";
+
+        public string GoToYear { get; set; } = "Go to Year";
+
+        public string GoToDate { get; set; } = "Go to Date";
  
         public string GoToToday { get; set; } = "Go to Today";
     }

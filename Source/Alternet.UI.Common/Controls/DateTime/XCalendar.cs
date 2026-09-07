@@ -195,8 +195,7 @@ namespace Alternet.UI
 
             UpdateListBoxSize();
 
-            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToToday, SelectToday));
-            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToDate, () => SelectDateWithTextBoxPopup()));
+            InitActionsMenu();
 
             header.PopupDateTextPicker.TextEdited += (s, e) =>
             {
@@ -344,6 +343,13 @@ namespace Alternet.UI
                 header.ShowYearDropDown = value;
             }
         }
+
+        /// <summary>
+        /// Gets the context menu that is shown when actions button is clicked in the top right corner
+        /// of the calendar control, allowing users to perform actions such as navigating to today,
+        /// selecting a specific month or year, or going to a specific date.
+        /// </summary>
+        public ContextMenu ActionsMenu => actionsMenu;
 
         /// <summary>
         /// Gets the collection of custom attributes for specific dates in the calendar control,
@@ -984,14 +990,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Opens a popup for the user to select a date using a text box.
-        /// </summary>
-        public virtual void SelectDateWithTextBoxPopup()
-        {
-            header.PopupDateTextPicker.Visible = true;
-        }
-
-        /// <summary>
         /// Changes <see cref="Value"/> property to the today date.
         /// </summary>
         public virtual void SelectToday()
@@ -1432,6 +1430,21 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnPageChanged(EventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Initializes the actions menu for the calendar control, adding menu items for navigating to today,
+        /// selecting a month, selecting a year, selecting a specific date, and other actions as needed.
+        /// </summary>
+        protected virtual void InitActionsMenu()
+        {
+            const string suffix = "...";
+
+            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToToday, SelectToday));
+            actionsMenu.AddSeparator();
+            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToMonth + suffix, () => header.ShowPopupMonthPicker()));
+            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToYear + suffix, () => header.ShowPopupYearPicker()));
+            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToDate + suffix, () => header.ShowPopupDateTextBox()));
         }
 
         /// <summary>

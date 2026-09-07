@@ -141,16 +141,7 @@ namespace Alternet.UI
 
                 popupDateTextPicker.EnterPressed += OnPopupTextPickerEnterPressed;
                 popupDateTextPicker.EscapePressed += OnPopupTextPickerEscapePressed;
-
-                popupDateTextPicker.VisibleChanged += (s, e) =>
-                {
-                    if (!popupDateTextPicker.Visible)
-                        return;
-                    popupMonthPicker.Visible = false;
-                    popupYearPickerPanel.Visible = false;
-                    popupDateTextPicker.Text = Value.ToString(DefaultDateFormatForTextBox, FormatProvider);
-                    popupDateTextPicker.BeginEdit();
-                };
+                popupDateTextPicker.VisibleChanged += OnPopupTextPickerVisibleChanged;
             }
 
             /// <summary>
@@ -340,6 +331,30 @@ namespace Alternet.UI
             public SpeedButton YearPicker => yearPicker;
 
             /// <summary>
+            /// Opens a popup for the user to select a year using a year picker.
+            /// </summary>
+            public virtual void ShowPopupYearPicker()
+            {
+                PopupYearPickerPanel.Visible = true;
+            }
+
+            /// <summary>
+            /// Opens a popup for the user to select a month using a month picker.
+            /// </summary>
+            public virtual void ShowPopupMonthPicker()
+            {
+                PopupMonthPicker.Visible = true;
+            }
+
+            /// <summary>
+            /// Opens a popup for the user to select a date using a text box.
+            /// </summary>
+            public virtual void ShowPopupDateTextBox()
+            {
+                PopupDateTextPicker.Visible = true;
+            }
+
+            /// <summary>
             /// Called when the month picker in the calendar header is clicked, toggling the visibility of the month dropdown panel.
             /// </summary>
             /// <param name="sender">The source of the event.</param>
@@ -371,6 +386,21 @@ namespace Alternet.UI
             {
                 popupYearPicker.TextPicker.CancelEdit();
                 popupYearPickerPanel.Visible = false;
+            }
+
+            /// <summary>
+            /// Called when the visibility of the text picker popup panel changes.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">An EventArgs that contains the event data.</param>
+            protected virtual void OnPopupTextPickerVisibleChanged(object? sender, EventArgs e)
+            {
+                if (!popupDateTextPicker.Visible)
+                    return;
+                popupMonthPicker.Visible = false;
+                popupYearPickerPanel.Visible = false;
+                popupDateTextPicker.Text = Value.ToString(DefaultDateFormatForTextBox, FormatProvider);
+                popupDateTextPicker.BeginEdit();
             }
 
             /// <summary>
@@ -420,6 +450,7 @@ namespace Alternet.UI
                 if (popupYearPickerPanel.Visible)
                 {
                     popupMonthPicker.Visible = false;
+                    popupDateTextPicker.Visible = false;
                 }
             }
 
@@ -448,6 +479,7 @@ namespace Alternet.UI
                 if (popupMonthPicker.Visible)
                 {
                     popupYearPickerPanel.Visible = false;
+                    popupDateTextPicker.Visible = false;
                 }
             }
 
