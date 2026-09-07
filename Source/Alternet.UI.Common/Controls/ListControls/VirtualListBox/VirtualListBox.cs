@@ -131,6 +131,11 @@ namespace Alternet.UI
         public event EventHandler<ListBoxCellClickEventArgs>? CellClick;
 
         /// <summary>
+        /// Occurs when a cell is double-clicked in a list control that has columns.
+        /// </summary>
+        public event EventHandler<ListBoxCellClickEventArgs>? CellDoubleClick;
+
+        /// <summary>
         /// Occurs when the horizontal scroll offset is changed, for example, when the user scrolls horizontally
         /// or when the offset is changed programmatically.
         /// </summary>
@@ -2186,6 +2191,20 @@ namespace Alternet.UI
                 }
             }
 
+            if (HasColumns)
+            {
+                var itemIndex = HitTest(e.Location);
+
+                if (itemIndex >= 0)
+                {
+                    var item = GetItem(itemIndex.Value);
+                    if (item != null)
+                    {
+                        RaiseCellDoubleClick(itemIndex.Value, item, e);
+                    }
+                }
+            }
+
             base.OnMouseDoubleClick(e);
         }
 
@@ -2469,6 +2488,24 @@ namespace Alternet.UI
                 return;
             ListBoxCellClickEventArgs args = new(itemIndex, item, column, e);
             CellClick.Invoke(this, args);
+        }
+
+        /// <summary>
+        /// Called when a cell is double-clicked in a list control that has columns.
+        /// </summary>
+        /// <param name="itemIndex">The zero-based index of the item that was double-clicked.</param>
+        /// <param name="item">The item that was double-clicked.</param>
+        /// <param name="e">The mouse event arguments.</param>
+        protected virtual void RaiseCellDoubleClick(int itemIndex, ListControlItem item, MouseEventArgs e)
+        {
+            if (CellDoubleClick is null)
+                return;
+
+            var column = HitTestColumn(item, e.Location);
+            if (column is null)
+                return;
+            ListBoxCellClickEventArgs args = new(itemIndex, item, column, e);
+            CellDoubleClick.Invoke(this, args);
         }
 
         /// <summary>
