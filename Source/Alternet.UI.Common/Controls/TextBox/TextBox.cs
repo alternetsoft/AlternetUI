@@ -976,7 +976,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     Raises the <see cref="EnterPressed"/> event.
+        /// Raises the <see cref="EnterPressed"/> event.
         /// </summary>
         public virtual void OnEnterPressed()
         {

@@ -1811,7 +1811,7 @@ namespace Alternet.UI
         {
             if (itemEditorCalled)
             {
-                ControlFactory.PopupEntryHandler?.CloseActivePopupEntry(UniqueId);
+                ControlFactory.PopupEntryHandler?.CloseActivePopupEntry(UniqueId, ModalResult.Canceled);
             }
         }
 

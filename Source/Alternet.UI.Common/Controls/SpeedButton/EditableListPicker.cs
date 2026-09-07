@@ -122,6 +122,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is committed on each key press.
+        /// </summary>
+        public virtual bool CommitOnKeyPress { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is committed when the Enter key is pressed.
+        /// </summary>
+        public virtual bool CommitOnEnter { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets empty text hint displayed in the control when the text is empty.
         /// </summary>
         public virtual string? EmptyTextHint
@@ -205,11 +215,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Ends the editing of the text in the control.
+        /// Ends the editing of the text in the control and commits the changes.
+        /// </summary>
+        public virtual void ApplyEdit()
+        {
+            ControlFactory.PopupEntryHandler?.CloseActivePopupEntry(UniqueId, ModalResult.Accepted);
+        }
+
+        /// <summary>
+        /// Cancels the editing of the text in the control.
         /// </summary>
         public virtual void CancelEdit()
         {
-            ControlFactory.PopupEntryHandler?.CloseActivePopupEntry(UniqueId);
+            ControlFactory.PopupEntryHandler?.CloseActivePopupEntry(UniqueId, ModalResult.Canceled);
         }
 
         /// <summary>
@@ -249,9 +267,9 @@ namespace Alternet.UI
                 Font = Label.RealFont,
                 ForeColor = foreColor,
                 HideClickOnParent = false,
-                CommitTextOnKeyPress = true,
+                CommitTextOnKeyPress = CommitOnKeyPress,
                 HideOnEscape = false,
-                HideOnEnter = false,
+                HideOnEnter = CommitOnEnter,
                 HasBorder = false,
                 IsPassword = this.IsPassword,
                 EmptyTextHint = this.EmptyTextHint,

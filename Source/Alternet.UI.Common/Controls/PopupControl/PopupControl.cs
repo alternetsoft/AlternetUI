@@ -85,6 +85,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the action to be performed when the Enter key is pressed while the popup is active.
+        /// </summary>
+        public Action? EnterPressedAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action to be performed when the Tab key is pressed while the popup is active.
+        /// </summary>
+        public Action? TabPressedAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action to be performed when the Space key is pressed while the popup is active.
+        /// </summary>
+        public Action? SpacePressedAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action to be performed when the Escape key is pressed while the popup is active.
+        /// </summary>
+        public Action? EscapePressedAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action to be performed when a key is pressed while the popup is active.
+        /// </summary>
+        public KeyEventHandler? ContentKeyDownAction { get; set; }
+
+        /// <summary>
         /// Gets or sets the action to be executed when the popup is closed.
         /// </summary>
         /// <remarks>This property allows you to define a custom action to be invoked
@@ -260,7 +285,7 @@ namespace Alternet.UI
                 if (!allowNegativeLocation)
                 {
                     var location = Location;
-                    if(location.X < 0 || location.Y < 0)
+                    if (location.X < 0 || location.Y < 0)
                         Location = location;
                 }
             }
@@ -434,7 +459,7 @@ namespace Alternet.UI
             Hide();
             Parent = null;
             App.DoEvents();
-            if(FocusContainerOnClose)
+            if (FocusContainerOnClose)
                 Container?.SetFocusIfPossible();
             App.DoEvents();
             App.AddIdleTask(() =>
@@ -500,19 +525,19 @@ namespace Alternet.UI
                 if (rect.X < containerBounds.Left)
                     position.X = containerBounds.Left + 1;
                 else
-                if (rect.Right > containerBounds.Right)
-                    position.X = containerBounds.Right - rect.Width - 1;
+                    if (rect.Right > containerBounds.Right)
+                        position.X = containerBounds.Right - rect.Width - 1;
 
                 if (rect.Y < containerBounds.Top)
                     position.Y = containerBounds.Top + 1;
                 else
                     if (rect.Bottom > containerBounds.Bottom)
-                {
-                    var h = adjustLine ? GetContainerFontHeight() : 0;
-                    position.Y = Math.Min(
-                        position.Y - rect.Height - h,
-                        containerBounds.Bottom - rect.Height) - 1;
-                }
+                    {
+                        var h = adjustLine ? GetContainerFontHeight() : 0;
+                        position.Y = Math.Min(
+                            position.Y - rect.Height - h,
+                            containerBounds.Bottom - rect.Height) - 1;
+                    }
             }
 
             bool IntersectWithExcludedArea(PointD p)
@@ -691,7 +716,7 @@ namespace Alternet.UI
         {
             base.OnBeforeParentKeyDown(sender, e);
 
-            if(!Visible)
+            if (!Visible)
                 return;
 
             if (HideOnEscape && e.IsEscape)
@@ -744,7 +769,7 @@ namespace Alternet.UI
             base.OnLostFocus(e);
             if (ContainsFocus)
                 return;
-            if(CancelOnLostFocus || AcceptOnLostFocus)
+            if (CancelOnLostFocus || AcceptOnLostFocus)
             {
                 CloseWhenIdle(
                     GetPopupResult(UI.PopupCloseReason.FocusLost),
@@ -761,7 +786,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSiblingVisibleChanged(AbstractControl sibling)
         {
-            if(sibling.Visible)
+            if (sibling.Visible)
                 return;
             if (Visible)
             {
@@ -828,38 +853,66 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnBeforeChildKeyDown(object? sender, KeyEventArgs e)
         {
+            ContentKeyDownAction?.Invoke(sender, e);
+
             if (e.IsEscape)
             {
-                if(HideOnEscape)
-                    CloseWithResult(ModalResult.Canceled);
+                EscapePressedAction?.Invoke();
+                if (HideOnEscape)
+                {
+                    CloseWithResult(ModalResult.Canceled, new(Key.Escape));
+                }
+
+                e.Suppressed();
+
                 return;
             }
 
             if (e.IsEnter)
             {
-                if(HideOnEnter)
-                    CloseWithResult(ModalResult.Accepted);
+                EnterPressedAction?.Invoke();
+
+                if (HideOnEnter)
+                {
+                    CloseWithResult(ModalResult.Accepted, new(Key.Enter));
+                }
+
+                e.Suppressed();
+
                 return;
             }
 
             if (e.IsSimpleKey(Key.Tab))
             {
-                if(AcceptOnTab)
-                    CloseWithResult(ModalResult.Accepted);
+                TabPressedAction?.Invoke();
+                if (AcceptOnTab)
+                {
+                    CloseWithResult(ModalResult.Accepted, new(Key.Tab));
+                }
+
+                e.Suppressed();
+
                 return;
             }
 
             if (e.IsSimpleKey(Key.Space))
             {
-                if(AcceptOnSpace)
-                    CloseWithResult(ModalResult.Accepted);
+                SpacePressedAction?.Invoke();
+
+                if (AcceptOnSpace)
+                {
+                    CloseWithResult(ModalResult.Accepted, new(Key.Space));
+                }
+
+                e.Suppressed();
+
                 return;
             }
 
-            void CloseWithResult(ModalResult value)
+            void CloseWithResult(ModalResult value, PopupCloseReason? reason)
             {
                 PopupResult = value;
-                Close();
+                Close(reason);
                 e.Suppressed();
             }
         }

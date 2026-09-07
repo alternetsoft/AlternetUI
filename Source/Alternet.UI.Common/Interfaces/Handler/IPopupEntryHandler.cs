@@ -33,8 +33,9 @@ namespace Alternet.UI
         /// the control with the specified unique identifier.
         /// </summary>
         /// <param name="id">The unique identifier of the control for which the popup is used.</param>
+        /// <param name="result">The modal result to use when closing the popup entry.</param>
         /// <returns><c>true</c> if the popup entry was closed; otherwise, <c>false</c>.</returns>
-        bool CloseActivePopupEntry(ObjectUniqueId id);
+        bool CloseActivePopupEntry(ObjectUniqueId id, ModalResult result);
 
         /// <summary>
         /// Gets a value indicating whether the popup entry is currently being used for editing

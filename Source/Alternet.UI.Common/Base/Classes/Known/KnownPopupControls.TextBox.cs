@@ -43,13 +43,14 @@ namespace Alternet.UI
         /// the control with the specified unique identifier.
         /// </summary>
         /// <param name="id">The unique identifier of the control.</param>
+        /// <param name="result">The modal result to use when closing the popup entry.</param>
         /// <returns><c>true</c> if the popup entry was closed; otherwise, <c>false</c>.</returns>
-        protected virtual bool CloseActivePopupEntry(ObjectUniqueId id)
+        protected virtual bool CloseActivePopupEntry(ObjectUniqueId id, ModalResult result)
         {
             var activePopup = GetActivePopupTextBox(id);
             if (activePopup != null)
             {
-                activePopup.Close(ModalResult.Canceled, new(PopupControl.CloseReason.Other));
+                activePopup.Close(result, new(PopupControl.CloseReason.Other));
                 return true;
             }
             return false;
@@ -147,9 +148,9 @@ namespace Alternet.UI
             CloseAllPopupEntries();
         }
 
-        bool IPopupEntryHandler.CloseActivePopupEntry(ObjectUniqueId id)
+        bool IPopupEntryHandler.CloseActivePopupEntry(ObjectUniqueId id, ModalResult result)
         {
-            return CloseActivePopupEntry(id);
+            return CloseActivePopupEntry(id, result);
         }
 
         bool IPopupEntryHandler.HasActivePopupEntry(ObjectUniqueId id)

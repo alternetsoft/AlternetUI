@@ -51,26 +51,6 @@ namespace Alternet.UI
         public ObjectUniqueId? TargetControlUniqueId => targetControlUniqueId;
 
         /// <summary>
-        /// Gets or sets the action to be performed when the Tab key is pressed while the popup is active.
-        /// </summary>
-        public Action? TabPressedAction { get; set; }
-
-        /// <summary>
-        /// Gets or sets the action to be performed when the Enter key is pressed while the popup is active.
-        /// </summary>
-        public Action? EnterPressedAction { get; set; }
-
-        /// <summary>
-        /// Gets or sets the action to be performed when the Escape key is pressed while the popup is active.
-        /// </summary>
-        public Action? EscapePressedAction { get; set; }
-
-        /// <summary>
-        /// Gets or sets the action to be performed when a key is pressed while the popup is active.
-        /// </summary>
-        public KeyEventHandler? ContentKeyDownAction { get; set; }
-
-        /// <summary>
         /// Shows the popup control as an item editor for a specified item.
         /// </summary>
         /// <param name="prm">The parameters for showing the item editor.</param>
@@ -96,6 +76,7 @@ namespace Alternet.UI
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
             Content.IsPassword = prm.IsPassword;
+            Content.ProcessEnter = true;
 
             void OnContentTextChanged(object? sender, EventArgs e)
             {
@@ -109,7 +90,12 @@ namespace Alternet.UI
             Content.TextChanged += OnContentTextChanged;
 
             TabPressedAction = prm.TabPressed;
-            EnterPressedAction = prm.EnterPressed;
+            
+            EnterPressedAction = () =>
+            {
+                prm.EnterPressed?.Invoke();
+            };
+
             EscapePressedAction = prm.EscapePressed;
             ContentKeyDownAction = prm.KeyDown;
 
@@ -177,40 +163,6 @@ namespace Alternet.UI
         /// <param name="e">The event data.</param>
         protected virtual void OnContentKeyDown(object? sender, KeyEventArgs e)
         {
-            ContentKeyDownAction?.Invoke(sender, e);
-
-            if (e.Key == Key.Tab)
-            {
-                TabPressedAction?.Invoke();
-                e.Suppressed();
-                return;
-            }
-
-            if (e.Key == Key.Enter && !e.HasModifiers)
-            {
-                EnterPressedAction?.Invoke();
-
-                if (HideOnEnter)
-                {
-                    Close(ModalResult.Accepted, new(Key.Enter));
-                }
-
-                e.Suppressed();
-                return;
-            }
-
-            if (e.Key == Key.Escape && !e.HasModifiers)
-            {
-                EscapePressedAction?.Invoke();
-
-                if (HideOnEscape)
-                {
-                    Close(ModalResult.Canceled, new(Key.Escape));
-                }
-
-                e.Suppressed();
-                return;
-            }
         }
 
         /// <summary>

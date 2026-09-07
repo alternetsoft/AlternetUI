@@ -34,7 +34,7 @@ namespace Alternet.Maui
         private readonly List<WeakReferenceValue<BasePopupEntry>> activeEntries = new();
 
         /// <inheritdoc/>
-        public virtual bool CloseActivePopupEntry(ObjectUniqueId id)
+        public virtual bool CloseActivePopupEntry(ObjectUniqueId id, ModalResult result)
         {
             var removed = false;
 
@@ -217,7 +217,7 @@ namespace Alternet.Maui
                 prm.EscapePressed?.Invoke();
                 if (!prm.HideOnEscape)
                     return;
-                CloseEntry();
+                CloseEntry(ModalResult.Canceled);
             }
 
             void OnEntryTabClicked()
@@ -225,17 +225,17 @@ namespace Alternet.Maui
                 prm.TabPressed?.Invoke();
             }
 
-            void CloseEntry()
+            void CloseEntry(ModalResult result)
             {
                 entry.ResetEventActions();
                 var id = prm.TargetControl?.UniqueId;
                 if (id is not null)
-                    CloseActivePopupEntry(id.Value);
+                    CloseActivePopupEntry(id.Value, result);
             }
 
             void OnEntryUnfocused()
             {
-                CloseEntry();
+                CloseEntry(ModalResult.Canceled);
             }
 
             void OnEntryCompleted()
@@ -244,7 +244,7 @@ namespace Alternet.Maui
                 if (!prm.HideOnEnter)
                     return;
                 prm.SetItemText?.Invoke(entry.Text);
-                CloseEntry();
+                CloseEntry(ModalResult.Accepted);
             }
 
             void OnEntryTextChanged(string oldText, string newText)
