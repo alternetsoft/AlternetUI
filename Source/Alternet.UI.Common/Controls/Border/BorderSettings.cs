@@ -752,6 +752,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets a uniform corner radius for all corners of the border.
+        /// </summary>
+        /// <param name="corners">The corner radius to apply to all corners. If <c>null</c>, the default corner radius is used.</param>
+        public virtual void RoundCorners(BorderCornerRadius? corners = null)
+        {
+            corners ??= new BorderCornerRadius(GenericBorder.DefaultCornerRadius);
+            SetCornerRadius(corners);
+        }
+
+        /// <summary>
         /// Gets this border with all colors set to <see cref="SystemColors.GrayText"/>
         /// </summary>
         /// <returns></returns>
