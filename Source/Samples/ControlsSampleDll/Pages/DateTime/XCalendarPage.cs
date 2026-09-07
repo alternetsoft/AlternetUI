@@ -171,24 +171,48 @@ namespace ControlsSample
                 p.AddHorizontalLine();
                 p.Add<BoldLabel>("Actions");
 
-                p.AddButton("Today", calendar.SelectToday);
-                p.AddButton("Clear Day Attributes", () => calendar.ClearAttrAll());
-                p.AddButton("Reset Day Attributes", () => calendar.ResetAttrAll());
-                p.AddButton($"{GenericStrings.Allow} {GenericStrings.AnyDate}", RangeAnyDate);
-                p.AddButton($"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}", RangeTomorrow);
-                p.AddButton($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday);
-                p.AddButton($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow);
+                p.AddLinkLabel("Today", calendar.SelectToday);
+                p.AddLinkLabel("Clear Day Attributes", () => calendar.ClearAttrAll());
+                p.AddLinkLabel("Reset Day Attributes", () => calendar.ResetAttrAll());
+                p.AddLinkLabel($"{GenericStrings.Allow} {GenericStrings.AnyDate}", RangeAnyDate);
+                p.AddLinkLabel($"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}", RangeTomorrow);
+                p.AddLinkLabel($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday);
+                p.AddLinkLabel($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow);
 
                 // Day Border
 
                 p.AddHorizontalLine();
-                p.Add<BoldLabel>("Day Border");
+                p.Add<BoldLabel>("Selected Day Border");
 
-                p.AddButton("Clear Day Borders", () =>
+                p.AddLinkLabel("Clear All", () =>
                 {
                     calendar.ClearDayBorders();
                 });
-                p.AddButton("Toggle Selected Day Border", () =>
+                p.AddLinkLabel("Rectangle", () =>
+                {
+                    ToggleBorder(() => new BorderSettings(LightDarkColors.Red));
+                });
+
+                p.AddLinkLabel("Round rectangle", () =>
+                {
+                    ToggleBorder(() =>
+                    {
+                        var border = new BorderSettings(LightDarkColors.Green);
+                        border.RoundCorners();
+                        return border;
+                    });
+                });
+
+                p.AddLinkLabel("Underline", () =>
+                {
+                    ToggleBorder(() =>
+                    {
+                        var border = BorderSettings.BottomLineBorder.WithColor(LightDarkColors.Blue);
+                        return border;
+                    });
+                });
+
+                void ToggleBorder(Func<BorderSettings> createBorder)
                 {
                     var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
 
@@ -198,9 +222,9 @@ namespace ControlsSample
                     }
                     else
                     {
-                        attr.Border = new BorderSettings(Color.Red);
+                        attr.Border = createBorder();
                     }
-                });
+                }
 
                 tabControl.Add(panel);
 
