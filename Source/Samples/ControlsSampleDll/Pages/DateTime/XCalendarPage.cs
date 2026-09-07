@@ -172,8 +172,6 @@ namespace ControlsSample
                 p.Add<BoldLabel>("Actions");
 
                 p.AddLinkLabel("Today", calendar.SelectToday);
-                p.AddLinkLabel("Clear Day Attributes", () => calendar.ClearAttrAll());
-                p.AddLinkLabel("Reset Day Attributes", () => calendar.ResetAttrAll());
                 p.AddLinkLabel($"{GenericStrings.Allow} {GenericStrings.AnyDate}", RangeAnyDate);
                 p.AddLinkLabel($"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}", RangeTomorrow);
                 p.AddLinkLabel($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday);
@@ -182,18 +180,16 @@ namespace ControlsSample
                 // Day Border
 
                 p.AddHorizontalLine();
-                p.Add<BoldLabel>("Selected Day Border");
+                p.Add<BoldLabel>("Selected Day Attributes");
 
-                p.AddLinkLabel("Clear All", () =>
-                {
-                    calendar.ClearDayBorders();
-                });
-                p.AddLinkLabel("Rectangle", () =>
-                {
-                    ToggleBorder(() => new BorderSettings(LightDarkColors.Red));
-                });
+                p.AddLinkLabel("Clear All Days Attributes", () => calendar.ClearAttrAll());
+                p.AddLinkLabel("Reset All Days Attributes", () => calendar.ResetAttrAll());
 
-                p.AddLinkLabel("Round rectangle", () =>
+                p.AddLinkLabel("Clear All Days Borders", () => calendar.ClearDayBorders());
+
+                p.AddLinkLabel("Rectangle Border", () => ToggleBorder(() => new BorderSettings(LightDarkColors.Red)));
+
+                p.AddLinkLabel("Round Rectangle Border", () =>
                 {
                     ToggleBorder(() =>
                     {
@@ -203,7 +199,7 @@ namespace ControlsSample
                     });
                 });
 
-                p.AddLinkLabel("Circle", () =>
+                p.AddLinkLabel("Circle Border", () =>
                 {
                     ToggleBorder(() =>
                     {
@@ -216,7 +212,7 @@ namespace ControlsSample
                     });
                 });
 
-                p.AddLinkLabel("Underline", () =>
+                p.AddLinkLabel("Bottom Line Border", () =>
                 {
                     ToggleBorder(() =>
                     {
@@ -224,6 +220,44 @@ namespace ControlsSample
                         return border;
                     });
                 });
+
+                p.AddLinkLabel("Blue Foreground", () =>
+                {
+                    ToggleColor(() => LightDarkColors.Blue);
+                });
+
+                p.AddLinkLabel("Toggle Bold", () =>
+                {
+                    ToggleBold();
+                });
+
+                void ToggleBold()
+                {
+                    var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
+
+                    if (attr.FontStyle != null)
+                    {
+                        attr.FontStyle = null;
+                    }
+                    else
+                    {
+                        attr.FontStyle = FontStyle.Bold;
+                    }
+                }
+
+                void ToggleColor(Func<Color> getColor)
+                {
+                    var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
+
+                    if (attr.TextColor != null)
+                    {
+                        attr.TextColor = null;
+                    }
+                    else
+                    {
+                        attr.TextColor = getColor();
+                    }
+                }
 
                 void ToggleBorder(Func<BorderSettings> createBorder)
                 {

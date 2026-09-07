@@ -543,6 +543,34 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
+            public override FontStyle? FontStyle
+            {
+                get
+                {
+                    return base.FontStyle ?? Data.DateAttr?.FontStyle;
+                }
+
+                set
+                {
+                    base.FontStyle = value;
+                }
+            }
+
+            /// <inheritdoc/>
+            public override Color? BackgroundColor
+            {
+                get
+                {
+                    return base.BackgroundColor;
+                }
+
+                set
+                {
+                    base.BackgroundColor = value;
+                }
+            }
+
+            /// <inheritdoc/>
             public override BorderSettings? Border
             {
                 get => base.Border ?? Data.DateAttr?.Border;

@@ -50,6 +50,12 @@ namespace Alternet.UI
         public static readonly string DayWidthMeasureText = "00";
 
         /// <summary>
+        /// Gets or sets the default date format used for displaying the selected date in a text box
+        /// associated with the calendar control.
+        /// </summary>
+        public static string DefaultDateFormatForTextBox = "d";
+
+        /// <summary>
         /// Gets or sets default value for the <see cref="ShowHolidays"/> property.
         /// Default is True.
         /// </summary>
@@ -77,7 +83,7 @@ namespace Alternet.UI
 
         private readonly ContextMenu actionsMenu = new ContextMenu();
         private readonly CalendarCell[] cells = new CalendarCell[DayCellCount];
-        private readonly CalendarListBox listBox;
+        private readonly CalendarListBox dayView;
         private readonly CalendarHeader header;
         private readonly CalendarHeaderItem headerItem;
         private readonly CalendarContainer container;
@@ -124,7 +130,7 @@ namespace Alternet.UI
                 {
                 });
 
-            listBox = new();
+            dayView = new();
             header = new();
             container = new();
 
@@ -136,7 +142,7 @@ namespace Alternet.UI
 
             for (var col = 0; col < XCalendar.ColumnCount; col++)
             {
-                var cellItem = headerItem.AddCell<CalendarHeaderCellItem>(listBox.Columns[col]);
+                var cellItem = headerItem.AddCell<CalendarHeaderCellItem>(dayView.Columns[col]);
                 cellItem.HorizontalAlignment = HorizontalAlignment.Center;
             }
 
@@ -160,14 +166,14 @@ namespace Alternet.UI
             header.MarginBottom = 5;
 
             ParentBackColor = false;
-            BackColor = listBox.BackColor;
+            BackColor = dayView.BackColor;
 
-            listBox.VertGridLines = false;
-            listBox.HasBorder = false;
-            listBox.HorzGridLines = false;
-            listBox.VerticalAlignment = VerticalAlignment.Fill;
+            dayView.VertGridLines = false;
+            dayView.HasBorder = false;
+            dayView.HorzGridLines = false;
+            dayView.VerticalAlignment = VerticalAlignment.Fill;
 
-            listBox.KeyDown += OnListBoxKeyDown;
+            dayView.KeyDown += OnListBoxKeyDown;
 
             CreateDayItems();
             UpdateDayNames();
@@ -175,17 +181,18 @@ namespace Alternet.UI
 
             header.ValueChanged += OnHeaderValueChanged;
 
-            listBox.BackColorChanged += OnListBoxBackColorChanged;
-            listBox.CellClick += OnListBoxCellClick;
+            dayView.BackColorChanged += OnListBoxBackColorChanged;
+            dayView.CellClick += OnListBoxCellClick;
 
             header.Parent = container;
-            listBox.Parent = container;
+            dayView.Parent = container;
 
             container.Parent = this.Content;
 
             UpdateListBoxSize();
 
             actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToToday, SelectToday));
+            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToDate, () => SelectDateWithDialog()));
 
             if (header.PrevButton.HorizontalAlignment == HorizontalAlignment.Right)
             {
@@ -288,10 +295,9 @@ namespace Alternet.UI
         public event EventHandler<DayClickEventArgs>? DayClick;
 
         /// <summary>
-        /// Gets the inner list box used in the calendar control,
-        /// which displays the days of the month in a grid format.
+        /// Gets the control that displays the days of the month in the calendar control.
         /// </summary>
-        public CalendarListBox ListBox => listBox;
+        public CalendarListBox DayView => dayView;
 
         /// <summary>
         /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed,
@@ -661,7 +667,7 @@ namespace Alternet.UI
                 PerformLayoutAndInvalidate(() =>
                 {
                     UpdateDayNames();
-                    UpdateColumnWidth();
+                    UpdateDayItemSize();
                     UpdateListBoxSize();
                     OnValueChanged();
                 });
@@ -680,7 +686,7 @@ namespace Alternet.UI
                 restrictedDate.FormatProvider = value;
                 header.FormatProvider = value;
                 UpdateDayNames();
-                UpdateColumnWidth();
+                UpdateDayItemSize();
                 PerformLayoutAndInvalidate(() =>
                 {
                     UpdateListBoxSize();
@@ -966,6 +972,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Opens a dialog for the user to select a date using text box,
+        /// and updates the <see cref="Value"/> property with the selected date.
+        /// </summary>
+        public virtual void SelectDateWithDialog(AskTextAsyncDelegate? askTextAsync = null)
+        {
+            askTextAsync ??= DialogFactory.AskTextAsync;
+
+            askTextAsync(
+                CommonStrings.Default.WindowTitleSelectDate,
+                (s) =>
+                {
+                    var result = DateOnly.TryParse(s, EffectiveFormatProvider(), out var dt);
+
+                    if (result)
+                    {
+                        Value = dt;
+                    }
+                    else
+                    {
+                        dayView.ShowOverlayToolTipWithError(null, CommonStrings.Default.ErrInvalidDateFormat);
+                    }
+                },
+                Value.ToString(DefaultDateFormatForTextBox, EffectiveFormatProvider()));
+        }
+
+        /// <summary>
         /// Creates <see cref="IXCalendarDateAttr"/> instance.
         /// </summary>
         public virtual IXCalendarDateAttr CreateDateAttr()
@@ -1212,13 +1244,15 @@ namespace Alternet.UI
         /// Updates the width of the columns in the calendar control
         /// based on the measured width of the day names and other properties.
         /// </summary>
-        protected virtual void UpdateColumnWidth()
+        protected virtual void UpdateDayItemSize()
         {
-            var minWidth = GetColumnWidth(listBox.MeasureCanvas, listBox.RealFont);
-            foreach (var col in listBox.Columns)
+            var minWidth = GetColumnWidth(dayView.MeasureCanvas, dayView.RealFont);
+            foreach (var col in dayView.Columns)
             {
                 col.SuggestedWidth = minWidth;
             }
+
+            dayView.MinItemHeight = Math.Max(VirtualListBox.DefaultMinItemHeight, minWidth);
         }
 
         /// <summary>
@@ -1267,7 +1301,7 @@ namespace Alternet.UI
         {
             IsDarkBackgroundOverride = isDark;
 
-            listBox.SetColorTheme(isDark);
+            dayView.SetColorTheme(isDark);
             header.IsDarkBackgroundOverride = isDark;
             container.IsDarkBackgroundOverride = isDark;
 
@@ -1291,15 +1325,15 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void CreateColumns()
         {
-            listBox.Columns.Clear();
+            dayView.Columns.Clear();
 
             for (var col = 0; col < XCalendar.ColumnCount; col++)
             {
                 var column = new ListControlColumn($"Col{col}");
-                listBox.Columns.Add(column);
+                dayView.Columns.Add(column);
             }
 
-            UpdateColumnWidth();
+            UpdateDayItemSize();
         }
 
         /// <summary>
@@ -1343,7 +1377,7 @@ namespace Alternet.UI
         /// <param name="e">An EventArgs that contains the event data.</param>
         protected virtual void OnListBoxBackColorChanged(object? sender, EventArgs e)
         {
-            BackColor = listBox.BackColor;
+            BackColor = dayView.BackColor;
         }
 
         /// <summary>
@@ -1352,14 +1386,14 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateListBoxSize()
         {
-            VirtualListBox.MeasureContentSizeResult measureResult = listBox.GetContentSize(MeasureCanvas);
+            VirtualListBox.MeasureContentSizeResult measureResult = dayView.GetContentSize(MeasureCanvas);
 
-            var minTotalHeight = listBox.MinItemHeight * 7;
+            var minTotalHeight = dayView.MinItemHeight * 7;
 
             var w = measureResult.ContentSize.Width;
             var h = Math.Max(measureResult.ContentSize.Height, minTotalHeight);
 
-            listBox.SuggestedSize = new(w, h);
+            dayView.SuggestedSize = new(w, h);
         }
 
         /// <inheritdoc/>
@@ -1376,7 +1410,7 @@ namespace Alternet.UI
         /// the inner list box and trigger a repaint.</param>
         protected virtual void UpdateDayItems(InvalidateMethod invalidate)
         {
-            if (listBox.Items.Count == 0)
+            if (dayView.Items.Count == 0)
                 return;
 
             var isDark = IsDarkBackground;
@@ -1386,7 +1420,7 @@ namespace Alternet.UI
             {
                 for (var col = 0; col < XCalendar.ColumnCount; col++)
                 {
-                    var rowItem = listBox.Items[row];
+                    var rowItem = dayView.Items[row];
                     var cellItem = (CalendarCellItem)rowItem.Cells[col];
 
                     var cell = cellItem.Data;
@@ -1414,7 +1448,7 @@ namespace Alternet.UI
                 }
             }
 
-            listBox.Invalidate(invalidate);
+            dayView.Invalidate(invalidate);
         }
 
         /// <summary>
@@ -1432,7 +1466,7 @@ namespace Alternet.UI
 
                 for (var col = 0; col < XCalendar.ColumnCount; col++)
                 {
-                    var cellItem = rowItem.AddCell<CalendarCellItem>(listBox.Columns[col]);
+                    var cellItem = rowItem.AddCell<CalendarCellItem>(dayView.Columns[col]);
                     var cell = GetCell(row, col);
                     cellItem.Data = cell;
                     cellItem.HorizontalAlignment = HorizontalAlignment.Center;
@@ -1441,7 +1475,7 @@ namespace Alternet.UI
                 newSource.Add(rowItem);
             }
 
-            listBox.Items = newSource;
+            dayView.Items = newSource;
         }
 
         /// <summary>
@@ -1472,7 +1506,7 @@ namespace Alternet.UI
         protected override void OnFontChanged(EventArgs e)
         {
             base.OnFontChanged(e);
-            UpdateColumnWidth();
+            UpdateDayItemSize();
             PerformLayoutAndInvalidate(() =>
             {
                 UpdateListBoxSize();

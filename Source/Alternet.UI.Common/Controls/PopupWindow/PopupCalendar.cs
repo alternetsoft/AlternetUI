@@ -54,9 +54,9 @@ namespace Alternet.UI
 
             MainControl.MouseLeftButtonUp -= OnMainControlMouseLeftButtonUp;
 
-            MainControl.ListBox.MouseLeftButtonUp += (s, e) =>
+            MainControl.DayView.MouseLeftButtonUp += (s, e) =>
             {
-                var itemIndex = MainControl.ListBox.HitTest();
+                var itemIndex = MainControl.DayView.HitTest();
 
                 if (itemIndex is null || itemIndex == 0)
                     return;

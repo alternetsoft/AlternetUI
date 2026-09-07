@@ -115,8 +115,7 @@ namespace Alternet.UI
         {
             get
             {
-                var itemFont = ListControlItem.GetFont(Item, ListBox, IsSelected);
-                return itemFont;
+                return GetItemFont(Item);
             }
         }
 
@@ -257,6 +256,17 @@ namespace Alternet.UI
 
             var color = ListControlItem.GetSelectedTextColor(item, listBox);
             return ListControlItem.GetItemImages(item, listBox, color, onlyNormal: false, imageToUse);
+        }
+
+        /// <summary>
+        /// Gets font of the specified item.
+        /// </summary>
+        /// <param name="item">The item for which to get the font.</param>
+        /// <returns>The font of the specified item.</returns>
+        public virtual Font GetItemFont(ListControlItem? item)
+        {
+            var itemFont = ListControlItem.GetFont(item, ListBox, IsSelected);
+            return itemFont;
         }
 
         /// <summary>

@@ -359,7 +359,9 @@ namespace Alternet.UI.Localization
         public string Repeat { get; set; } = "Repeat";
 
         public string Today { get; set; } = "Today";
-        
+
+        public string GoToDate { get; set; } = "Go to Date...";
+ 
         public string GoToToday { get; set; } = "Go to Today";
     }
 }
