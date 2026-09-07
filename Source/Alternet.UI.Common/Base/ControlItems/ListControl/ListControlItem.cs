@@ -2358,9 +2358,11 @@ namespace Alternet.UI
 
             var cellColor = prm.PaintArgs.GetTextColor(this, isSelected) ?? prm.ForeColor;
 
+            var font = prm.PaintArgs.GetItemFont(this);
+
             Graphics.DrawLabelParams labelPrm = new(
                 s,
-                prm.PaintArgs.ItemFont,
+                font,
                 cellColor,
                 backColor: Color.Empty,
                 image: cellImage,
