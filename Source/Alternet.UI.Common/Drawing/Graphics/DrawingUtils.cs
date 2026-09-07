@@ -837,11 +837,12 @@ namespace Alternet.UI
         /// that contains the parameters for the
         /// operation, including the rectangle to fill, the brush to use,
         /// the border settings, and the canvas.</param>
-        public static void FillBorderRectangle(Graphics canvas, ref DrawBorderParams prm)
+        public static void FillBorderRectangle(this Graphics canvas, ref DrawBorderParams prm)
         {
+            var brush = prm.Brush;
             var borderPen = prm.GetEffectiveBorderPen();
             var hasBorder = borderPen is not null;
-            var hasBrush = prm.Brush is not null;
+            var hasBrush = brush is not null;
 
             if (!hasBrush && !hasBorder)
                 return;
@@ -849,47 +850,29 @@ namespace Alternet.UI
             var radius = GetCornerRadius(ref prm);
             var rect = prm.Rect;
 
+            var shape = prm.Border?.ShapeBackground;
+
+            if (shape is not null)
+            {
+                shape.Bounds = rect;
+                shape.Draw(prm.Control!, canvas);
+            }
+
             if (radius is null)
             {
-                if (hasBrush)
-                {
-                    canvas.FillRectangle(prm.Brush!, rect);
-                }
-
-                if (hasBorder)
-                {
-                    DrawBorder(canvas, ref prm);
-                }
+                DrawRectangleBorder(ref prm);
             }
             else
             {
-                var inflatedRect = rect.InflatedBy(-1, -1);
-
-                if (hasBrush)
-                {
-                    if (borderPen is null)
-                    {
-                        canvas.FillRoundedRectangle(prm.Brush!, inflatedRect, radius.Value);
-                    }
-                    else
-                    {
-                        canvas.RoundedRectangle(borderPen, prm.Brush!, inflatedRect, radius.Value);
-                    }
-                }
-                else
-                {
-                    if (borderPen is not null)
-                    {
-                        canvas.DrawRoundedRectangle(borderPen, inflatedRect, radius.Value);
-                    }
-                    else
-                    {
-                        // Do nothing here
-                    }
-                }
+                DrawRoundRectangleBorder();
             }
 
             if (prm.InnerBorderVisible)
+            {
+                DrawInnerBorder(ref prm);
+            }
+
+            void DrawInnerBorder(ref DrawBorderParams prm)
             {
                 var margin = prm.InnerBorderMargin;
                 var deflatedRect = rect.DeflatedWithPadding(margin);
@@ -904,6 +887,47 @@ namespace Alternet.UI
                         control: prm.Control);
                     FillBorderRectangle(canvas, ref innerParams);
                     deflatedRect = deflatedRect.DeflatedWithPadding(margin);
+                }
+            }
+
+            void DrawRectangleBorder(ref DrawBorderParams prm)
+            {
+                if (hasBrush)
+                {
+                    canvas.FillRectangle(brush!, rect);
+                }
+
+                if (hasBorder)
+                {
+                    DrawBorder(canvas, ref prm);
+                }
+            }
+
+            void DrawRoundRectangleBorder()
+            {
+                var inflatedRect = rect.InflatedBy(-1, -1);
+
+                if (hasBrush)
+                {
+                    if (borderPen is null)
+                    {
+                        canvas.FillRoundedRectangle(brush!, inflatedRect, radius.Value);
+                    }
+                    else
+                    {
+                        canvas.RoundedRectangle(borderPen, brush!, inflatedRect, radius.Value);
+                    }
+                }
+                else
+                {
+                    if (borderPen is not null)
+                    {
+                        canvas.DrawRoundedRectangle(borderPen, inflatedRect, radius.Value);
+                    }
+                    else
+                    {
+                        BaseObject.Nop();
+                    }
                 }
             }
         }
@@ -947,7 +971,7 @@ namespace Alternet.UI
         /// <param name="prm">A reference to a <see cref="DrawBorderParams"/> structure
         /// that specifies the border properties, the
         /// rectangle to draw around, and other rendering details.</param>
-        public static void DrawBorder(Graphics dc, ref DrawBorderParams prm)
+        public static void DrawBorder(this Graphics dc, ref DrawBorderParams prm)
         {
             var border = prm.Border;
 
@@ -958,6 +982,15 @@ namespace Alternet.UI
 
             if (!border.DrawDefaultBorder)
                 return;
+
+            var shape = prm.Border?.ShapeForeground;
+
+            if (shape is not null)
+            {
+                shape.Bounds = prm.Rect;
+                shape.Draw(prm.Control!, dc);
+                return;
+            }
 
             var radius = GetCornerRadius(ref prm);
             var defaultColor = ColorUtils.GetDefaultBorderColor(prm.Control);

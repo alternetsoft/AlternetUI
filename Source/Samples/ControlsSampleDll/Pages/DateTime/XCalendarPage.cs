@@ -203,6 +203,19 @@ namespace ControlsSample
                     });
                 });
 
+                p.AddLinkLabel("Circle", () =>
+                {
+                    ToggleBorder(() =>
+                    {
+                        var border = new BorderSettings();
+                        var shapeDrawable = new ShapeDrawable();
+                        shapeDrawable.Pen = LightDarkColors.Blue.AsPen;
+                        shapeDrawable.ShapeType = DrawingShapeType.Circle;
+                        border.ShapeForeground = shapeDrawable;
+                        return border;
+                    });
+                });
+
                 p.AddLinkLabel("Underline", () =>
                 {
                     ToggleBorder(() =>
