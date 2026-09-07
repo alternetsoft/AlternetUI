@@ -2,6 +2,8 @@ using System;
 
 using Alternet.Drawing;
 
+#pragma warning disable
+
 namespace Alternet.UI
 {
     internal class WxCalendarHandler : WxControlHandler, ICalendarHandler

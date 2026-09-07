@@ -61,7 +61,6 @@ namespace PropertyGridSample
 
                 ToolBoxAdd<Border>(ObjectInit.InitBorder);
                 ToolBoxAdd<Calculator>();
-                ToolBoxAdd<Calendar>();
                 ToolBoxAdd<CardPanel>(ObjectInit.InitCardPanel);
                 ToolBoxAdd<CardPanelHeader>(ObjectInit.InitCardPanelHeader);
                 ToolBoxAdd<ColorListBox>();

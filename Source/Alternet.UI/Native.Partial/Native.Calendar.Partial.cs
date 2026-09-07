@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Security;
 
+#pragma warning disable
+
 namespace Alternet.UI.Native
 {
     internal partial class Calendar

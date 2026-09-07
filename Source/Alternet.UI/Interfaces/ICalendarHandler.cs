@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#pragma warning disable
+
 namespace Alternet.UI
 {
     /// <summary>
     /// Contains methods and properties which allow to work with calendar control.
     /// </summary>
-    public interface ICalendarHandler
+    internal interface ICalendarHandler
     {
         /// <summary>
         /// Gets or sets whether or not the first day of week is Sunday.
@@ -21,7 +23,6 @@ namespace Alternet.UI
         /// </summary>
         bool MondayFirst { get; set; }
 
-        /// <inheritdoc cref="Calendar.ShowHolidays"/>
         bool ShowHolidays { get; set; }
 
         /// <summary>
@@ -29,22 +30,17 @@ namespace Alternet.UI
         /// </summary>
         bool NoYearChange { get; set; }
 
-        /// <inheritdoc cref="Calendar.NoMonthChange"/>
         bool NoMonthChange { get; set; }
 
-        /// <inheritdoc cref="Calendar.SequentialMonthSelect"/>
         bool SequentialMonthSelect { get; set; }
 
-        /// <inheritdoc cref="Calendar.ShowSurroundWeeks"/>
         bool ShowSurroundWeeks { get; set; }
 
         /// <inheritdoc cref="Calendar.ShowWeekNumbers"/>
         bool ShowWeekNumbers { get; set; }
 
-        /// <inheritdoc cref="Calendar.UseGeneric"/>
         bool UseGeneric { get; set; }
 
-        /// <inheritdoc cref="Calendar.Value"/>
         DateTime Value { get; set; }
 
         /// <inheritdoc cref="CustomDateEdit.MinDate"/>
@@ -53,22 +49,16 @@ namespace Alternet.UI
         /// <inheritdoc cref="CustomDateEdit.MaxDate"/>
         DateTime MaxValue { get; set; }
 
-        /// <inheritdoc cref="Calendar.MarkDateAttr"/>
         ICalendarDateAttr? MarkDateAttr { get; set; }
 
-        /// <inheritdoc cref="Calendar.GetAttr"/>
         ICalendarDateAttr? GetAttr(int day);
 
-        /// <inheritdoc cref="Calendar.SetAttr"/>
         void SetAttr(int day, ICalendarDateAttr? dateAttr);
 
-        /// <inheritdoc cref="Calendar.CreateDateAttr"/>
         ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = 0);
 
-        /// <inheritdoc cref="Calendar.SetRange"/>
         bool SetRange(bool useMinValue, bool useMaxValue);
 
-        /// <inheritdoc cref="Calendar.SetHolidayColors"/>
         void SetHolidayColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg);
 
         /// <summary>
@@ -83,10 +73,8 @@ namespace Alternet.UI
         /// <returns></returns>
         Alternet.Drawing.Color GetHolidayColorBg();
 
-        /// <inheritdoc cref="Calendar.HitTest"/>
         Calendar.HitTestResult HitTest(Alternet.Drawing.PointD point);
 
-        /// <inheritdoc cref="Calendar.SetHeaderColors"/>
         void SetHeaderColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg);
 
         /// <summary>
@@ -116,22 +104,17 @@ namespace Alternet.UI
         /// <returns></returns>
         Alternet.Drawing.Color GetHighlightColorBg();
 
-        /// <inheritdoc cref="Calendar.AllowMonthChange"/>
         bool AllowMonthChange();
 
         /// Sets value of <see cref="NoMonthChange"/> property.
         bool SetNoMonthChange(bool enable);
 
-        /// <inheritdoc cref="Calendar.Mark"/>
         void Mark(int day, bool mark);
 
-        /// <inheritdoc cref="Calendar.ResetAttr"/>
         void ResetAttr(int day);
 
-        /// <inheritdoc cref="Calendar.EnableHolidayDisplay"/>
         void EnableHolidayDisplay(bool display);
 
-        /// <inheritdoc cref="Calendar.SetHoliday"/>
         void SetHoliday(int day);
     }
 }
