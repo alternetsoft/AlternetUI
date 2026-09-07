@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// </summary>
         public static BorderSettings? DefaultTodayBorder;
 
-        private readonly ContextMenu actionsMenu = new ContextMenu();
+        private readonly ContextMenu actionsMenu = new ();
         private readonly CalendarCell[] cells = new CalendarCell[DayCellCount];
         private readonly CalendarListBox dayView;
         private readonly CalendarHeader header;
@@ -183,6 +183,7 @@ namespace Alternet.UI
 
             dayView.BackColorChanged += OnListBoxBackColorChanged;
             dayView.CellClick += OnListBoxCellClick;
+            dayView.CellDoubleClick += OnListBoxCellDoubleClick;
 
             header.Parent = container;
             dayView.Parent = container;
@@ -287,12 +288,23 @@ namespace Alternet.UI
         public event EventHandler<DayHeaderClickEventArgs>? DayHeaderClick;
 
         /// <summary>
+        /// Occurs when the user double clicked on the week day header,
+        /// allowing subscribers to handle the event and perform actions based on the header double click.
+        /// </summary>
+        public event EventHandler<DayHeaderClickEventArgs>? DayHeaderDoubleClick;
+
+        /// <summary>
         /// Occurs when a day cell in the calendar control is clicked,
         /// allowing subscribers to handle the event and perform actions based on the selected date.
         /// You can cancel the event by setting the <see cref="CancelEventArgs.Cancel"/> property to true,
         /// in this case the new day will not be selected and the <see cref="Value"/> property will not be changed.
         /// </summary>
         public event EventHandler<DayClickEventArgs>? DayClick;
+
+        /// <summary>
+        /// Occurs when a day was double clicked in the calendar.
+        /// </summary>
+        public event EventHandler<DayClickEventArgs>? DayDoubleClick;
 
         /// <summary>
         /// Gets the control that displays the days of the month in the calendar control.
@@ -1253,6 +1265,41 @@ namespace Alternet.UI
             }
 
             dayView.MinItemHeight = Math.Max(VirtualListBox.DefaultMinItemHeight, minWidth);
+        }
+
+        /// <summary>
+        /// Called when a cell in the list box is double-clicked,
+        /// handling the double-click event for both header and day cells.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A ListBoxCellClickEventArgs that contains the event data.</param>
+        protected virtual void OnListBoxCellDoubleClick(object? sender, ListBoxCellClickEventArgs e)
+        {
+            if (e.Cell is CalendarHeaderCellItem headerCell)
+            {
+                if (DayHeaderDoubleClick is not null)
+                {
+                    var args = new DayHeaderClickEventArgs(e);
+                    args.DayOfWeek = headerCell.DayOfWeek;
+                    DayHeaderDoubleClick?.Invoke(this, args);
+                }
+
+                return;
+            }
+
+            if (e.Cell is CalendarCellItem itemCell)
+            {
+                if (DayDoubleClick is not null)
+                {
+                    var args = new DayClickEventArgs(e);
+                    DayDoubleClick?.Invoke(this, args);
+
+                    if (args.Cancel)
+                        return;
+                }
+
+                return;
+            }
         }
 
         /// <summary>

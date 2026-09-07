@@ -38,6 +38,16 @@ namespace ControlsSample
             tabControl.Dock = DockStyle.Right;
             tabControl.Width = 400;
 
+            calendar.DayDoubleClick += (s, e) =>
+            {
+                App.Log("Day double-clicked: " + e.Cell.Text);
+            };
+
+            calendar.DayHeaderDoubleClick += (s, e) =>
+            {
+                App.Log("Day header double-clicked: " + e.DayOfWeek);
+            };
+
             calendar.DayClick += (s, e) =>
             {
                 App.Log("Day clicked: " + e.Cell.Text);

@@ -22,11 +22,6 @@ namespace Alternet.UI
         internal event EventHandler? WeekNumberClick;
 
         /// <summary>
-        /// Occurs when a day was double clicked in the calendar.
-        /// </summary>
-        internal event EventHandler? DayDoubleClick;
-
-        /// <summary>
         /// Possible return values from <see cref="HitTest"/>.
         /// </summary>
         internal enum HitTestResult
@@ -135,28 +130,6 @@ namespace Alternet.UI
                 return;
             OnWeekNumberClick(e);
             WeekNumberClick?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Raises <see cref="DayDoubleClick"/> event and calls
-        /// <see cref="OnDayDoubleClick"/> method.
-        /// </summary>
-        /// <param name="e">Event arguments.</param>
-        internal void RaiseDayDoubleClick(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            OnDayDoubleClick(e);
-            DayDoubleClick?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Called when a day was double clicked in the calendar.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains
-        /// the event data.</param>
-        internal virtual void OnDayDoubleClick(EventArgs e)
-        {
         }
 
         /// <summary>
