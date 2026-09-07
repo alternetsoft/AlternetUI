@@ -16,12 +16,6 @@ namespace Alternet.UI
         internal static bool DefaultShowWeekNumbers = false;
 
         /// <summary>
-        /// Gets or sets default value for the <see cref="SequentialMonthSelect"/> property.
-        /// Default is True.
-        /// </summary>
-        internal static readonly bool DefaultSequentialMonthSelect = true;
-
-        /// <summary>
         /// Occurs when the user clicked on the week of the year number
         /// (fired only in generic calendar).
         /// </summary>
@@ -85,87 +79,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use alternative, more compact,
-        /// style for the month and year selection controls.
-        /// </summary>
-        internal virtual bool SequentialMonthSelect
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to show week numbers on the left side
         /// of the calendar.
         /// </summary>
         internal virtual bool ShowWeekNumbers
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the foreground color currently used for holiday highlighting.
-        /// </summary>
-        [Browsable(false)]
-        internal virtual Color? HolidayColorFg
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the background color currently used for holiday highlighting.
-        /// </summary>
-        [Browsable(false)]
-        internal virtual Color? HolidayColorBg
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the foreground color of the header part of the calendar control.
-        /// </summary>
-        [Browsable(false)]
-        internal virtual Color? HeaderColorFg
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the background color of the header part of the calendar control.
-        /// </summary>
-        [Browsable(false)]
-        internal virtual Color? HeaderColorBg
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the foreground highlight color.
-        /// </summary>
-        [Browsable(false)]
-        internal virtual Color? HighlightColorFg
-        {
-            get;
-
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the background highlight color.
-        /// </summary>
-        [Browsable(false)]
-        internal virtual Color? HighlightColorBg
         {
             get;
 
@@ -194,36 +111,6 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="mark"><c>true</c> to mark the days, <c>false</c> to unmark them.</param>
         internal virtual void MarkAll(bool mark = true)
-        {
-        }
-
-        /// <summary>
-        /// Sets values for <see cref="HighlightColorBg"/> and
-        /// <see cref="HighlightColorFg"/> properties.
-        /// </summary>
-        /// <param name="colorFg">New value of the <see cref="HighlightColorFg"/> property.</param>
-        /// <param name="colorBg">New value of the <see cref="HighlightColorBg"/> property.</param>
-        internal virtual void SetHighlightColors(Color? colorFg, Color? colorBg)
-        {
-        }
-
-        /// <summary>
-        /// Sets values for <see cref="HolidayColorBg"/> and
-        /// <see cref="HolidayColorFg"/> properties.
-        /// </summary>
-        /// <param name="colorFg">New value of the <see cref="HolidayColorFg"/> property.</param>
-        /// <param name="colorBg">New value of the <see cref="HolidayColorBg"/> property.</param>
-        internal virtual void SetHolidayColors(Color? colorFg, Color? colorBg)
-        {
-        }
-
-        /// <summary>
-        /// Sets values for <see cref="HeaderColorBg"/> and
-        /// <see cref="HeaderColorFg"/> properties.
-        /// </summary>
-        /// <param name="colorFg">New value of the <see cref="HeaderColorFg"/> property.</param>
-        /// <param name="colorBg">New value of the <see cref="HeaderColorBg"/> property.</param>
-        internal virtual void SetHeaderColors(Color? colorFg, Color? colorBg)
         {
         }
 

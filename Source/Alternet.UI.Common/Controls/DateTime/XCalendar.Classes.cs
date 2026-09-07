@@ -43,6 +43,7 @@ namespace Alternet.UI
 
             private readonly SpeedTextButton monthPicker = new();
             private readonly SpeedTextButton yearPicker = new();
+            private readonly SpeedButton actionsButton = new();
             private readonly SpeedButton prevButton = new();
             private readonly SpeedButton nextButton = new();
             private readonly YearPicker popupYearPicker;
@@ -80,9 +81,14 @@ namespace Alternet.UI
 
                 OnValueChanged();
 
+                actionsButton.Visible = false;
+                actionsButton.VerticalAlignment = VerticalAlignment.Center;
+                actionsButton.SvgImage = KnownSvgImages.ImgMoreActionsHorz;
+                actionsButton.HorizontalAlignment = HorizontalAlignment.Right;
+                actionsButton.Parent = firstRowPanel;
+
                 prevButton.VerticalAlignment = VerticalAlignment.Center;
                 prevButton.SvgImage = KnownSvgImages.ImgAngleLeft;
-
                 prevButton.HorizontalAlignment = DefaultLeftButtonHorzAlignment;
                 prevButton.Parent = firstRowPanel;
                 prevButton.Click += OnPrevButtonClick;
@@ -299,6 +305,11 @@ namespace Alternet.UI
             /// Gets the previous button in the calendar header, which allows users to navigate to the previous month.
             /// </summary>
             public SpeedButton PrevButton => prevButton;
+
+            /// <summary>
+            /// Gets the actions button in the calendar header, which allows users to perform additional actions.
+            /// </summary>
+            public SpeedButton ActionsButton => actionsButton;
 
             /// <summary>
             /// Gets the next button in the calendar header, which allows users to navigate to the next month.

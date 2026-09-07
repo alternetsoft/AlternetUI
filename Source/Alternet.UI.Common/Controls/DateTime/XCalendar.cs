@@ -6,6 +6,7 @@ using System.Text;
 
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -74,6 +75,7 @@ namespace Alternet.UI
         /// </summary>
         public static BorderSettings? DefaultTodayBorder;
 
+        private readonly ContextMenu actionsMenu = new ContextMenu();
         private readonly CalendarCell[] cells = new CalendarCell[DayCellCount];
         private readonly CalendarListBox listBox;
         private readonly CalendarHeader header;
@@ -182,6 +184,14 @@ namespace Alternet.UI
             container.Parent = this.Content;
 
             UpdateListBoxSize();
+
+            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToToday, SelectToday));
+
+            if (header.PrevButton.HorizontalAlignment == HorizontalAlignment.Right)
+            {
+                header.ActionsButton.Visible = true;
+                header.ActionsButton.DropDownMenu = actionsMenu;
+            }
         }
 
         /// <summary>
