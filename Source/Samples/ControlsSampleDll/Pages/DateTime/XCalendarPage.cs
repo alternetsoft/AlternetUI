@@ -255,11 +255,11 @@ namespace ControlsSample
 
         private void UpdateHighlightedDates()
         {
-            calendar.ResetAttrAll(invalidate: false);
+            calendar.ResetAttrAll(InvalidateMethod.None);
 
             if (HighlightDates)
             {
-                calendar.MarkWithRule(patternPicker.Value, calendar.DateAttributes.Green, invalidate: false);
+                calendar.MarkWithRule(patternPicker.Value, calendar.DateAttributes.Green, InvalidateMethod.None);
             }
             else
             {

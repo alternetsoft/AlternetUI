@@ -330,7 +330,7 @@ namespace Alternet.UI
                 if (showHolidays == value)
                     return;
                 showHolidays = value;
-                ResetAttrAll(invalidate: true);
+                ResetAttrAll(invalidate: InvalidateMethod.Invalidate);
             }
         }
 
@@ -560,16 +560,14 @@ namespace Alternet.UI
 
                 if (pageChanged)
                 {
-                    ResetAttrAll(invalidate: false);
+                    ResetAttrAll(invalidate: InvalidateMethod.None);
                 }
 
-                OnValueChanged();
-
-                ValueChanged?.Invoke(this, EventArgs.Empty);
+                RaiseSelectionChanged(EventArgs.Empty);
 
                 if (pageChanged)
                 {
-                    PageChanged?.Invoke(this, EventArgs.Empty);
+                    RaisePageChanged(EventArgs.Empty);
                 }
 
                 Invalidate();
@@ -691,7 +689,7 @@ namespace Alternet.UI
                 if (firstDayOfWeek == value) return;
                 firstDayOfWeek = value;
                 UpdateDayNames();
-                UpdateDayItems(true);
+                UpdateDayItems(InvalidateMethod.Invalidate);
                 PerformLayoutAndInvalidate();
             }
         }
@@ -724,7 +722,7 @@ namespace Alternet.UI
         /// After current month or year is changed,
         /// this method should be called again to mark weekends in the new month.
         /// </summary>
-        public virtual void MarkWeekendsAsHolidays(bool invalidate = true)
+        public virtual void MarkWeekendsAsHolidays(InvalidateMethod invalidate = InvalidateMethod.Invalidate)
         {
             var weekEnds = DateUtils.GetWeekendsOfMonth(Value);
 
@@ -732,11 +730,38 @@ namespace Alternet.UI
 
             foreach (var date in weekEnds)
             {
-                needInvalidate |= SetHoliday(date.Day, invalidate: false);
+                needInvalidate |= SetHoliday(date.Day, InvalidateMethod.None);
             }
 
-            if (invalidate && needInvalidate)
-                Invalidate();
+            if (needInvalidate)
+                Invalidate(invalidate);
+        }
+
+        /// <summary>
+        /// Raises <see cref="SelectionChanged"/> event and calls
+        /// <see cref="OnSelectionChanged"/> method
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public void RaiseSelectionChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnValueChanged();
+            OnSelectionChanged(e);
+            ValueChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises <see cref="PageChanged"/> event and calls
+        /// <see cref="OnPageChanged"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public void RaisePageChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnPageChanged(e);
+            PageChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -747,7 +772,10 @@ namespace Alternet.UI
         /// <param name="rule">The repeat pattern rule to match dates.</param>
         /// <param name="attr">The attributes to apply to the matching dates. Pass <c>null</c> to reset attributes.</param>
         /// <param name="invalidate">Indicates whether to invalidate the control after setting the attributes.</param>
-        public virtual void MarkWithRule(RepeatPatternRule rule, IXCalendarDateAttr? attr, bool invalidate = true)
+        public virtual void MarkWithRule(
+            RepeatPatternRule rule,
+            IXCalendarDateAttr? attr,
+            InvalidateMethod invalidate = InvalidateMethod.Invalidate)
         {
             IDateRepeatPatternRule.RuleGetDatesParams prm = new();
             prm.MinDate = FirstDateOfMonth;
@@ -760,11 +788,11 @@ namespace Alternet.UI
 
             foreach (var date in result)
             {
-                needInvalidate |= SetAttr(date.Day, attr, invalidate: false);
+                needInvalidate |= SetAttr(date.Day, attr, InvalidateMethod.None);
             }
 
-            if (invalidate && needInvalidate)
-                Invalidate();
+            if (needInvalidate)
+                Invalidate(invalidate);
         }
 
         /// <summary>
@@ -794,7 +822,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="invalidate">Indicates whether to invalidate the control after setting the holiday attribute.</param>
-        public virtual bool SetHoliday(int day, bool invalidate = true)
+        public virtual bool SetHoliday(int day, InvalidateMethod invalidate = InvalidateMethod.Invalidate)
         {
             return SetAttr(day, EffectiveHolidayAttr(), invalidate);
         }
@@ -809,15 +837,17 @@ namespace Alternet.UI
         /// <param name="dateAttr">The attributes to set for the date. Pass <c>null</c> to reset attributes.</param>
         /// <param name="invalidate">Indicates whether to invalidate the control after setting the attributes.</param>
         /// <returns><c>true</c> if the attributes were successfully set; otherwise, <c>false</c>.</returns>
-        public virtual bool SetAttr(DateOnly date, IXCalendarDateAttr? dateAttr, bool invalidate = true)
+        public virtual bool SetAttr(
+            DateOnly date,
+            IXCalendarDateAttr? dateAttr,
+            InvalidateMethod invalidate = InvalidateMethod.Invalidate)
         {
             foreach (var cell in cells)
             {
                 if (cell.Date == date)
                 {
                     cell.DateAttr = dateAttr;
-                    if (invalidate)
-                        Invalidate();
+                    Invalidate(invalidate);
                     return true;
                 }
             }
@@ -837,7 +867,10 @@ namespace Alternet.UI
         /// <remarks>
         /// After current page is changed, this method should be called again to set attributes for the new month.
         /// </remarks>
-        public virtual bool SetAttr(int day, IXCalendarDateAttr? dateAttr, bool invalidate = true)
+        public virtual bool SetAttr(
+            int day,
+            IXCalendarDateAttr? dateAttr,
+            InvalidateMethod invalidate = InvalidateMethod.Invalidate)
         {
             if (day < 1 || day > DateTime.DaysInMonth(Value.Year, Value.Month))
                 return false;
@@ -975,7 +1008,7 @@ namespace Alternet.UI
         /// Clears the attributes of all cells in the calendar control, removing any custom date attributes.
         /// </summary>
         /// <param name="invalidate">Indicates whether the control should be invalidated after clearing the attributes.</param>
-        public virtual void ClearAttrAll(bool invalidate = true)
+        public virtual void ClearAttrAll(InvalidateMethod invalidate = InvalidateMethod.Invalidate)
         {
             var needInvalidate = false;
 
@@ -987,8 +1020,8 @@ namespace Alternet.UI
                 cell.DateAttr = null;
             }
 
-            if (needInvalidate && invalidate)
-                Invalidate();
+            if (needInvalidate)
+                Invalidate(invalidate);
         }
 
         /// <summary>
@@ -998,7 +1031,7 @@ namespace Alternet.UI
         /// If event handlers are subscribed to the <see cref="QueryDayAttributes"/> event,
         /// they will be invoked for each cell to allow customization of the attributes.
         /// </summary>
-        public virtual void ResetAttrAll(bool invalidate = true)
+        public virtual void ResetAttrAll(InvalidateMethod invalidate = InvalidateMethod.Invalidate)
         {
             var needInvalidate = false;
 
@@ -1030,8 +1063,8 @@ namespace Alternet.UI
                     needInvalidate = true;
             }
 
-            if (needInvalidate && invalidate)
-                Invalidate();
+            if (needInvalidate)
+                Invalidate(invalidate);
         }
 
         /// <summary>
@@ -1206,6 +1239,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the selected month (and/or year) changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnPageChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the selected date changed.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains
+        /// the event data.</param>
+        protected virtual void OnSelectionChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the back color of the inner list box changes,
         /// updating the back color of the calendar control to match the inner list box's back color.
         /// </summary>
@@ -1242,9 +1293,9 @@ namespace Alternet.UI
         /// Updates the day items in the calendar control, refreshing the display of each day cell
         /// based on the current date selection and other properties.
         /// </summary>
-        /// <param name="invalidate">A boolean value indicating whether to invalidate
-        /// the list box and trigger a repaint.</param>
-        protected virtual void UpdateDayItems(bool invalidate)
+        /// <param name="invalidate">A value indicating whether to invalidate
+        /// the inner list box and trigger a repaint.</param>
+        protected virtual void UpdateDayItems(InvalidateMethod invalidate)
         {
             if (listBox.Items.Count == 0)
                 return;
@@ -1284,8 +1335,7 @@ namespace Alternet.UI
                 }
             }
 
-            if (invalidate)
-                listBox.Invalidate();
+            listBox.Invalidate(invalidate);
         }
 
         /// <summary>
@@ -1330,7 +1380,7 @@ namespace Alternet.UI
         protected override void OnBackColorChanged(EventArgs e)
         {
             base.OnBackColorChanged(e);
-            UpdateDayItems(true);
+            UpdateDayItems(InvalidateMethod.Invalidate);
         }
 
         /// <inheritdoc/>
@@ -1424,7 +1474,7 @@ namespace Alternet.UI
                 cell.IsVisible = showSurroundWeeks;
             }
 
-            UpdateDayItems(false);
+            UpdateDayItems(InvalidateMethod.None);
         }
     }
 }

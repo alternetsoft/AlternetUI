@@ -264,34 +264,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises <see cref="SelectionChanged"/> event and calls
-        /// <see cref="OnSelectionChanged"/> method
-        /// </summary>
-        /// <param name="e">Event arguments.</param>
-        internal void RaiseSelectionChanged(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            OnSelectionChanged(e);
-            /*
-            SelectionChanged?.Invoke(this, e);
-            */
-        }
-
-        /// <summary>
-        /// Raises <see cref="PageChanged"/> event and calls
-        /// <see cref="OnPageChanged"/> method.
-        /// </summary>
-        /// <param name="e">Event arguments.</param>
-        internal void RaisePageChanged(EventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            OnPageChanged(e);
-            PageChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
         /// Raises <see cref="WeekNumberClick"/> event and calls
         /// <see cref="OnWeekNumberClick"/> method.
         /// </summary>
@@ -333,24 +305,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> that contains
         /// the event data.</param>
         internal virtual void OnWeekNumberClick(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called when the selected month (and/or year) changed.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains
-        /// the event data.</param>
-        internal virtual void OnPageChanged(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called when the selected date changed.
-        /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains
-        /// the event data.</param>
-        internal virtual void OnSelectionChanged(EventArgs e)
         {
         }
     }
