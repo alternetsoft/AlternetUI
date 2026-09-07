@@ -68,6 +68,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BorderSettings"/> class with the specified color.
+        /// </summary>
+        /// <param name="color">The color of the border.</param>
+        public BorderSettings(Color color)
+            : this()
+        {
+            if (color != null)
+                Color = color;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the BorderSettings class with the specified border width and color.
         /// </summary>
         /// <param name="width">The thickness of the border to apply. Specifies the width for each side.</param>
