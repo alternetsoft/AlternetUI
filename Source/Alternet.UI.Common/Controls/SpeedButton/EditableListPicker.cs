@@ -37,6 +37,11 @@ namespace Alternet.UI
         public event EventHandler<StringEventArgs>? TextEdited;
 
         /// <summary>
+        /// Occurs when the text is changed.
+        /// </summary>
+        public event EventHandler<StringEventArgs>? TextEditing;
+
+        /// <summary>
         /// Occurs when the text is requested for the editor. In the event handler
         /// you need to provide the text which will be assigned to the text box editor.
         /// The event is raised when the user starts editing the text.   
@@ -84,6 +89,11 @@ namespace Alternet.UI
                 return ControlFactory.PopupEntryHandler?.HasActivePopupEntry(UniqueId) ?? false;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating what happens when the popup text box loses focus.
+        /// </summary>
+        public ModalResult? PopupLostFocusBehavior { get; set; } = ModalResult.Canceled;
 
         /// <summary>
         /// Gets or sets a value specifying the style of the control.
@@ -208,6 +218,20 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="TextEditing"/> event when the text is changed.
+        /// </summary>
+        /// <param name="text">The new text.</param>
+        protected virtual void RaiseTextEditing(string? text)
+        {
+            if (TextEditing != null)
+            {
+                var args = new StringEventArgs(text ?? string.Empty);
+
+                TextEditing(this, args);
+            }
+        }
+
         /// <inheritdoc/>
         public override void UpdateBaseText()
         {
@@ -273,6 +297,7 @@ namespace Alternet.UI
                 HasBorder = false,
                 IsPassword = this.IsPassword,
                 EmptyTextHint = this.EmptyTextHint,
+                LostFocusBehavior = this.PopupLostFocusBehavior,
                 TabPressed = () =>
                 {
                     TabPressed?.Invoke(this, EventArgs.Empty);
@@ -288,6 +313,10 @@ namespace Alternet.UI
                 EntryHeightChanged = OnPopupEntryHeightChanged,
                 KeyDown = (s, e) => EditorKeyDown?.Invoke(this, e),
                 GetItemText = () => s,
+                TextChanged = text =>
+                {
+                    RaiseTextEditing(text);
+                },
                 SetItemText = text =>
                 {
                     RaiseTextEdited(text);

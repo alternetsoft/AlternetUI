@@ -19,6 +19,11 @@ public struct PopupEntryParams
     public PopupEntryParams()
     {
     }
+    
+    /// <summary>
+    /// Gets or sets the popup result to be used when the popup loses focus.
+    /// </summary>  
+    public ModalResult? LostFocusBehavior { get; set; }
 
     /// <summary>
     /// Gets or sets the debug identifier of the entry.
@@ -36,6 +41,11 @@ public struct PopupEntryParams
     /// the text is commited only when the user presses Enter.
     /// </summary>
     public bool CommitTextOnKeyPress { get; set; }
+
+    /// <summary>
+    /// Gets or sets the action to be performed when the text in the popup changes.
+    /// </summary>
+    public Action<string?>? TextChanged { get; set; }
 
     /// <summary>
     /// Gets or sets the action to be performed when the Tab key is pressed while the popup is active.

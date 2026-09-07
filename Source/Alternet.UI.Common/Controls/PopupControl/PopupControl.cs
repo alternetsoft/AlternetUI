@@ -477,7 +477,7 @@ namespace Alternet.UI
         public virtual void Close(ModalResult result, PopupCloseReason? reason = null)
         {
             PopupResult = result;
-            Close();
+            Close(reason);
         }
 
         /// <summary>

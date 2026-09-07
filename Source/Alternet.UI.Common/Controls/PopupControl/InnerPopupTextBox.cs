@@ -73,6 +73,8 @@ namespace Alternet.UI
             ParentFont = false;
             Font = prm.Font ?? Control.DefaultFont;
             HasBorder = prm.HasBorder;
+            CancelOnLostFocus = prm.LostFocusBehavior == ModalResult.Canceled;
+            AcceptOnLostFocus = prm.LostFocusBehavior == ModalResult.Accepted;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
             Content.IsPassword = prm.IsPassword;
@@ -80,9 +82,10 @@ namespace Alternet.UI
 
             void OnContentTextChanged(object? sender, EventArgs e)
             {
+                var newText = Content.Text;
+                prm.TextChanged?.Invoke(newText);
                 if (!prm.CommitTextOnKeyPress)
                     return;
-                var newText = Content.Text;
                 prm.SetItemText?.Invoke(newText);
             }
 
