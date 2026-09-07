@@ -655,6 +655,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls <see cref="PerformLayout"/> and <see cref="Refresh()"/>.
+        /// </summary>
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        /// <param name="action">
+        /// The action to execute between calls to <see cref="SuspendLayout"/>
+        /// and <see cref="ResumeLayout"/>.
+        /// </param>
+        [Browsable(false)]
+        public virtual void PerformLayoutAndRefresh(
+            Action? action = null,
+            bool layoutParent = true)
+        {
+            if (action is null)
+                PerformLayout(layoutParent);
+            else
+                DoInsideLayout(action, layoutParent);
+            Refresh();
+        }
+
+        /// <summary>
         /// Shows the context menu for the control if it has one.
         /// </summary>
         public virtual void ShowContextMenu(HVDropDownAlignment? contextMenuPosition = null)
@@ -1002,6 +1023,29 @@ namespace Alternet.UI
         public ControlSet Group(params AbstractControl[] controls)
         {
             return new(controls);
+        }
+
+        /// <summary>
+        /// Invalidates the control using the specified method.
+        /// </summary>
+        /// <param name="method">The method to use for invalidation.</param>
+        public virtual void Invalidate(InvalidateMethod method)
+        {
+            switch (method)
+            {
+                case InvalidateMethod.Invalidate:
+                    Invalidate();
+                    break;
+                case InvalidateMethod.Refresh:
+                    Refresh();
+                    break;
+                case InvalidateMethod.LayoutAndInvalidate:
+                    PerformLayoutAndInvalidate();
+                    break;
+                case InvalidateMethod.LayoutAndRefresh:
+                    PerformLayoutAndRefresh();
+                    break;
+            }
         }
 
         /// <summary>
