@@ -798,6 +798,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="dayOfWeek">The days of the week to evaluate.</param>
         /// <returns><c>true</c> if the days fall on a weekend; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsWeekend(this DaysOfWeek dayOfWeek)
         {
             return dayOfWeek.HasFlag(DaysOfWeek.Saturday) || dayOfWeek.HasFlag(DaysOfWeek.Sunday);
@@ -808,6 +809,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="daysOfWeek">The days of the week to evaluate.</param>
         /// <returns><c>true</c> if the days fall on a weekday (Monday to Friday); otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsWeekday(this DaysOfWeek daysOfWeek)
         {
             return !IsWeekend(daysOfWeek);
@@ -822,15 +824,27 @@ namespace Alternet.UI
         {
             return !IsWeekend(dayOfWeek);
         }
-        
+
         /// <summary>
         /// Determines whether the specified <see cref="DayOfWeek"/> falls on a weekend (Saturday or Sunday).
         /// </summary>
         /// <param name="dayOfWeek">The day of the week to evaluate.</param>
         /// <returns><c>true</c> if the day falls on a weekend; otherwise, <c>false</c>.</returns>  
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsWeekend(DayOfWeek dayOfWeek)
         {
             return dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday;
+        }
+
+        /// <summary>
+        /// Gets the number of days in the specified year, accounting for leap years.
+        /// </summary>
+        /// <param name="year">The year to evaluate.</param>
+        /// <returns>The number of days in the specified year.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int DaysInYear(int year)
+        {
+            return DateTime.IsLeapYear(year) ? 366 : 365;
         }
 
         /// <summary>
