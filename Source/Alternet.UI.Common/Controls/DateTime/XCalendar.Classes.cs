@@ -50,6 +50,7 @@ namespace Alternet.UI
             private readonly TransparentPanel popupYearPickerPanel;
             private readonly MonthPickerPanel popupMonthPicker;
             private readonly TransparentPanel firstRowPanel = new();
+            private readonly TextPicker popupDateTextPicker = new();
 
             private DateOnly date = DateOnly.FromDateTime(DateTime.Now);
             private int suspendCounter;
@@ -109,7 +110,13 @@ namespace Alternet.UI
                 yearPicker.VerticalAlignment = VerticalAlignment.Stretch;
                 yearPicker.Parent = firstRowPanel;
 
+                popupDateTextPicker.Visible = false;
+                popupDateTextPicker.MarginTop = 5;
+                popupDateTextPicker.CommitOnKeyPress = false;
+                popupDateTextPicker.CommitOnEnter = true;
+
                 firstRowPanel.Parent = this;
+                popupDateTextPicker.Parent = this;
                 popupYearPickerPanel.Parent = this;
                 popupMonthPicker.Parent = this;
 
@@ -131,6 +138,19 @@ namespace Alternet.UI
 
                 YearClick += OnHeaderYearClick;
                 MonthClick += OnHeaderMonthClick;
+
+                popupDateTextPicker.EnterPressed += OnPopupTextPickerEnterPressed;
+                popupDateTextPicker.EscapePressed += OnPopupTextPickerEscapePressed;
+
+                popupDateTextPicker.VisibleChanged += (s, e) =>
+                {
+                    if (!popupDateTextPicker.Visible)
+                        return;
+                    popupMonthPicker.Visible = false;
+                    popupYearPickerPanel.Visible = false;
+                    popupDateTextPicker.Text = Value.ToString(DefaultDateFormatForTextBox, FormatProvider);
+                    popupDateTextPicker.BeginEdit();
+                };
             }
 
             /// <summary>
@@ -186,6 +206,11 @@ namespace Alternet.UI
                     UpdatePickerValues();
                 }
             }
+
+            /// <summary>
+            /// Gets the date text picker.
+            /// </summary>
+            public TextPicker PopupDateTextPicker => popupDateTextPicker;
 
             /// <summary>
             /// Gets the popup panel that contains the year picker.
@@ -346,6 +371,28 @@ namespace Alternet.UI
             {
                 popupYearPicker.TextPicker.CancelEdit();
                 popupYearPickerPanel.Visible = false;
+            }
+
+            /// <summary>
+            /// Called when the enter key is pressed in the text picker, canceling the edit and hiding the text dropdown panel.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+            protected virtual void OnPopupTextPickerEnterPressed(object? sender, EventArgs e)
+            {
+                popupDateTextPicker.ApplyEdit();
+                popupDateTextPicker.Visible = false;
+            }
+
+            /// <summary>
+            /// Called when the escape key is pressed in the text picker, canceling the edit and hiding the text dropdown panel.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+            protected virtual void OnPopupTextPickerEscapePressed(object? sender, EventArgs e)
+            {
+                popupDateTextPicker.CancelEdit();
+                popupDateTextPicker.Visible = false;
             }
 
             /// <summary>

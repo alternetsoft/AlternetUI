@@ -196,7 +196,12 @@ namespace Alternet.UI
             UpdateListBoxSize();
 
             actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToToday, SelectToday));
-            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToDate, () => SelectDateWithDialog()));
+            actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToDate, () => SelectDateWithTextBoxPopup()));
+
+            header.PopupDateTextPicker.TextEdited += (s, e) =>
+            {
+                StringToValue(e.Value, showError: true);
+            };
 
             if (header.PrevButton.HorizontalAlignment == HorizontalAlignment.Right)
             {
@@ -979,6 +984,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Opens a popup for the user to select a date using a text box.
+        /// </summary>
+        public virtual void SelectDateWithTextBoxPopup()
+        {
+            header.PopupDateTextPicker.Visible = true;
+        }
+
+        /// <summary>
         /// Changes <see cref="Value"/> property to the today date.
         /// </summary>
         public virtual void SelectToday()
@@ -998,18 +1011,38 @@ namespace Alternet.UI
                 CommonStrings.Default.WindowTitleSelectDate,
                 (s) =>
                 {
-                    var result = DateOnly.TryParse(s, EffectiveFormatProvider(), out var dt);
-
-                    if (result)
-                    {
-                        Value = dt;
-                    }
-                    else
-                    {
-                        dayView.ShowOverlayToolTipWithError(null, CommonStrings.Default.ErrInvalidDateFormat);
-                    }
+                    StringToValue(s, showError: true);
                 },
                 Value.ToString(DefaultDateFormatForTextBox, EffectiveFormatProvider()));
+        }
+
+        /// <summary>
+        /// Converts the specified string representation of a date to a <see cref="DateOnly"/> value
+        /// and updates the <see cref="Value"/> property.
+        /// </summary>
+        /// <param name="s">The string representation of the date.</param>
+        /// <param name="showError">Indicates whether to show an error if the conversion fails.</param>
+        /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c>.</returns>
+        public virtual bool StringToValue(string s, bool showError)
+        {
+            var result = DateOnly.TryParse(s, EffectiveFormatProvider(), out var dt);
+
+            if (result)
+            {
+                Value = dt;
+                return true;
+            }
+            else
+            {
+                if (showError)
+                {
+                    dayView.ShowOverlayToolTipWithError(
+                        null,
+                        CommonStrings.Default.ErrInvalidDateFormat,
+                        HVAlignment.BottomLeft);
+                }
+                return false;
+            }
         }
 
         /// <summary>
