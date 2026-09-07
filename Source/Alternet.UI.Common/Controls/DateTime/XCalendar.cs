@@ -195,18 +195,17 @@ namespace Alternet.UI
 
             UpdateListBoxSize();
 
-            InitActionsMenu();
+            actionsMenu.Opening += OnActionsMenuOpening;
 
-            header.PopupDateTextPicker.TextEdited += (s, e) =>
-            {
-                StringToValue(e.Value, showError: true);
-            };
+            InitActionsMenu();
 
             if (header.PrevButton.HorizontalAlignment == HorizontalAlignment.Right)
             {
                 header.ActionsButton.Visible = true;
                 header.ActionsButton.DropDownMenu = actionsMenu;
             }
+
+            header.OverlayProvider = dayView;
         }
 
         /// <summary>
@@ -710,7 +709,7 @@ namespace Alternet.UI
             {
                 if (restrictedDate.FormatProvider == value) return;
                 restrictedDate.FormatProvider = value;
-                header.FormatProvider = value;
+                header.FormatProvider = EffectiveFormatProvider();
                 UpdateDayNames();
                 UpdateDayItemSize();
                 PerformLayoutAndInvalidate(() =>
@@ -995,52 +994,6 @@ namespace Alternet.UI
         public virtual void SelectToday()
         {
             Value = DateTime.Now.Date.ToDateOnly();
-        }
-
-        /// <summary>
-        /// Opens a dialog for the user to select a date using text box,
-        /// and updates the <see cref="Value"/> property with the selected date.
-        /// </summary>
-        public virtual void SelectDateWithDialog(AskTextAsyncDelegate? askTextAsync = null)
-        {
-            askTextAsync ??= DialogFactory.AskTextAsync;
-
-            askTextAsync(
-                CommonStrings.Default.WindowTitleSelectDate,
-                (s) =>
-                {
-                    StringToValue(s, showError: true);
-                },
-                Value.ToString(DefaultDateFormatForTextBox, EffectiveFormatProvider()));
-        }
-
-        /// <summary>
-        /// Converts the specified string representation of a date to a <see cref="DateOnly"/> value
-        /// and updates the <see cref="Value"/> property.
-        /// </summary>
-        /// <param name="s">The string representation of the date.</param>
-        /// <param name="showError">Indicates whether to show an error if the conversion fails.</param>
-        /// <returns><c>true</c> if the conversion was successful; otherwise, <c>false</c>.</returns>
-        public virtual bool StringToValue(string s, bool showError)
-        {
-            var result = DateOnly.TryParse(s, EffectiveFormatProvider(), out var dt);
-
-            if (result)
-            {
-                Value = dt;
-                return true;
-            }
-            else
-            {
-                if (showError)
-                {
-                    dayView.ShowOverlayToolTipWithError(
-                        null,
-                        CommonStrings.Default.ErrInvalidDateFormat,
-                        HVAlignment.BottomLeft);
-                }
-                return false;
-            }
         }
 
         /// <summary>
@@ -1358,6 +1311,17 @@ namespace Alternet.UI
 
                 return;
             }
+        }
+
+        /// <summary>
+        /// Called when actions drop down menu is opening,
+        /// allowing subscribers to handle the event and perform actions before the menu is displayed.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="CancelEventArgs"/> instance containing the event data.</param>
+        protected virtual void OnActionsMenuOpening(object? sender, CancelEventArgs e)
+        {
+            header.ShowAllPopups(false);
         }
 
         /// <summary>
