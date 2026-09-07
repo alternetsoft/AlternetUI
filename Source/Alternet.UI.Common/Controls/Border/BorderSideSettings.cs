@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies <see cref="Border"/> drawing settings for the individual side.
     /// </summary>
-    public class BorderSideSettings : ImmutableObject
+    public partial class BorderSideSettings : ImmutableObject
     {
         /// <summary>
         /// Gets or sets default border width. This value is used when border is creatded.

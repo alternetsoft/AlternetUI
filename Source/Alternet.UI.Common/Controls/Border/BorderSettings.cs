@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies <see cref="Border"/> drawing settings.
     /// </summary>
-    public class BorderSettings : ImmutableObject
+    public partial class BorderSettings : ImmutableObject
     {
         /// <summary>
         /// Default border settings.
@@ -55,6 +55,8 @@ namespace Alternet.UI
         private BaseCollection<BorderSettings>? innerBorders;
         private Thickness innerBorderMargin = Thickness.One;
         private bool innerBorderVisible;
+        private BaseDrawable? shapeForeground;
+        private BaseDrawable? shapeBackground;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BorderSettings"/> class.
@@ -288,6 +290,44 @@ namespace Alternet.UI
                     return;
                 cornerRadius.IsPercent = value;
                 RaisePropertyChanged(nameof(UniformCornerRadius));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ShapeDrawable"/> used to draw the border foreground shape.
+        /// </summary>
+        public virtual BaseDrawable? ShapeForeground
+        {
+            get
+            {
+                return shapeForeground;
+            }
+
+            set
+            {
+                if (shapeForeground == value || Immutable)
+                    return;
+                shapeForeground = value;
+                RaisePropertyChanged(nameof(ShapeForeground));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ShapeDrawable"/> used to draw the border background shape.
+        /// </summary>
+        public virtual BaseDrawable? ShapeBackground
+        {
+            get
+            {
+                return shapeBackground;
+            }
+
+            set
+            {
+                if (shapeBackground == value || Immutable)
+                    return;
+                shapeBackground = value;
+                RaisePropertyChanged(nameof(ShapeBackground));
             }
         }
 
@@ -577,7 +617,8 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the visibility of the inner border.
         /// </summary>
-        /// <param name="value">A boolean value indicating whether the inner border should be visible. Pass <see langword="true"/> to show
+        /// <param name="value">A boolean value indicating whether the inner border should be visible.
+        /// Pass <see langword="true"/> to show
         /// the inner border; otherwise, pass <see langword="false"/> to hide it.</param>
         public void SetInnerBorderVisible(bool value)
         {
@@ -626,7 +667,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>The order of precedence is left, then top, then right, then bottom. This method is
         /// useful when a default pen is needed from any side.</remarks>
-        /// <returns>A <see cref="Pen"/> instance from the first non-null side, or <see langword="null"/> if all sides have null
+        /// <returns>A <see cref="Pen"/> instance from the first non-null side,
+        /// or <see langword="null"/> if all sides have null
         /// pens.</returns>
         public virtual Pen? GetPen()
         {
@@ -754,7 +796,8 @@ namespace Alternet.UI
         /// <summary>
         /// Sets a uniform corner radius for all corners of the border.
         /// </summary>
-        /// <param name="corners">The corner radius to apply to all corners. If <c>null</c>, the default corner radius is used.</param>
+        /// <param name="corners">The corner radius to apply to all corners.
+        /// If <c>null</c>, the default corner radius is used.</param>
         public virtual void RoundCorners(BorderCornerRadius? corners = null)
         {
             corners ??= new BorderCornerRadius(GenericBorder.DefaultCornerRadius);
