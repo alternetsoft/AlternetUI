@@ -15,6 +15,7 @@ namespace Alternet.UI
     public partial class XCalendarDateAttr : ImmutableObject, IXCalendarDateAttr
     {
         private Color? textColor;
+        private BorderSettings? border;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XCalendarDateAttr"/> class.
@@ -32,6 +33,45 @@ namespace Alternet.UI
             this.textColor = textColor;
         }
 
+        /// <summary>
+        /// Gets or sets the border color assigned for the calendar date.
+        /// </summary>
+        public virtual Color? BorderColor
+        {
+            get
+            {
+                return Border?.Color;
+            }
+
+            set
+            {
+                if (value is null)
+                {
+                    Border = null;
+                    return;
+                }
+
+                if (Border == null)
+                {
+                    Border = new BorderSettings(value);
+                }
+                else
+                {
+                    Border.Color = value;
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual BorderSettings? Border
+        {
+            get => border;
+            set
+            {
+                SetProperty(ref border, value);
+            }
+        }
+
         /// <inheritdoc/>
         public virtual Color? TextColor
         {
@@ -44,5 +84,8 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public bool HasTextColor => TextColor != null;
+
+        /// <inheritdoc/>
+        public bool HasBorderColor => BorderColor != null;
     }
 }

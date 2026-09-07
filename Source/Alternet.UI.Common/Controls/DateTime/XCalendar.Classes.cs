@@ -532,6 +532,13 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
+            public override BorderSettings? Border
+            {
+                get => base.Border ?? Data.DateAttr?.Border;
+                set => base.Border = value;
+            }
+
+            /// <inheritdoc/>
             public override bool IsSelectedCell(IListControlItemContainer? container)
             {
                 return Data.IsCurrent && Data.IsVisible && !Data.IsRestricted && Data.IsCurrentMonth;
@@ -763,6 +770,11 @@ namespace Alternet.UI
             /// Gets a value indicating whether the cell's date is restricted based on the calendar's date range limitations.
             /// </summary>
             public bool IsRestricted { get; internal set; }
+
+            /// <summary>
+            /// Gets the border settings associated with the cell, allowing customization of the cell's border appearance.
+            /// </summary>
+            public BorderSettings? Border { get; internal set; }
         }
 
         /// <summary>
@@ -966,6 +978,7 @@ namespace Alternet.UI
             private IXCalendarDateAttr? red;
             private IXCalendarDateAttr? blue;
             private IXCalendarDateAttr? green;
+            private IXCalendarDateAttr? transparent;
 
             /// <summary>
             /// Initializes a new instance
@@ -996,6 +1009,18 @@ namespace Alternet.UI
                 get
                 {
                     return blue ??= Create(LightDarkColors.Blue);
+                }
+            }
+
+            /// <summary>
+            /// Gets the <see cref="IXCalendarDateAttr"/> attributes with green color of the foreground
+            /// used as a highlight for specific dates.
+            /// </summary>
+            public IXCalendarDateAttr? Transparent
+            {
+                get
+                {
+                    return transparent ??= Create(Color.Transparent);
                 }
             }
 
