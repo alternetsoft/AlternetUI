@@ -76,6 +76,7 @@ namespace Alternet.UI
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.Margin = DefaultTitleMargin;
             label.InputTransparent = true;
+            label.IsBold = true;
             label.Parent = gripControl;
 
             toolBar.AddControl(gripControl);
@@ -152,6 +153,19 @@ namespace Alternet.UI
             remove
             {
                 icon.Click -= value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool? IsDarkBackgroundOverride
+        {
+            get => base.IsDarkBackgroundOverride;
+            set
+            {
+                if (IsDarkBackgroundOverride == value)
+                    return;
+                base.IsDarkBackgroundOverride = value;
+                AssignDefaultColors();
             }
         }
 
@@ -311,7 +325,7 @@ namespace Alternet.UI
             if (!AutoUpdateColors)
                 return;
 
-            var isDark = SystemSettings.AppearanceIsDark;
+            var isDark = IsDarkBackgroundOverride ?? SystemSettings.AppearanceIsDark;
 
             toolBar.DoInsideUpdate(() =>
             {

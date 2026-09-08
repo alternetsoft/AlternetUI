@@ -162,6 +162,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool? IsDarkBackgroundOverride
+        {
+            get => base.IsDarkBackgroundOverride;
+            set
+            {
+                base.IsDarkBackgroundOverride = value;
+                AssignDefaultColors();
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether to use default minimal popup toolbar width.
         /// </summary>
@@ -594,7 +605,7 @@ namespace Alternet.UI
             if (!AutoUpdateColors)
                 return;
 
-            var isDark = SystemSettings.AppearanceIsDark;
+            var isDark = IsDarkBackgroundOverride ?? SystemSettings.AppearanceIsDark;
 
             Content.ParentBackColor = true;
             Content.ParentForeColor = true;

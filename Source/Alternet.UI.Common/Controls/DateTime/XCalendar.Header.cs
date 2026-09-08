@@ -344,16 +344,6 @@ namespace Alternet.UI
                 get => base.IsDarkBackgroundOverride;
                 set
                 {
-                    monthPicker.IsDarkBackgroundOverride = value;
-                    yearPicker.IsDarkBackgroundOverride = value;
-                    prevButton.IsDarkBackgroundOverride = value;
-                    actionsButton.IsDarkBackgroundOverride = value;
-                    nextButton.IsDarkBackgroundOverride = value;
-                    popupYearPicker.IsDarkBackgroundOverride = value;
-                    popupYearPickerPanel.IsDarkBackgroundOverride = value;
-                    popupMonthPicker.IsDarkBackgroundOverride = value;
-                    firstRowPanel.IsDarkBackgroundOverride = value;
-
                     base.IsDarkBackgroundOverride = value;
                 }
             }

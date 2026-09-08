@@ -62,16 +62,6 @@ namespace Alternet.UI
                 set
                 {
                     base.IsDarkBackgroundOverride = value;
-
-                    foreach (var row in rows)
-                    {
-                        row.IsDarkBackgroundOverride = value;
-                    }
-
-                    foreach (var button in buttons)
-                    {
-                        button.IsDarkBackgroundOverride = value;
-                    }
                 }
             }
 
