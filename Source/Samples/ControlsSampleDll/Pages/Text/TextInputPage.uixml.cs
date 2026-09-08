@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+
 using Alternet.Drawing;
 using Alternet.UI;
 using Alternet.UI.Localization;
@@ -36,11 +37,11 @@ namespace ControlsSample
             textBox.TextMaxLength += TextBox_TextMaxLength;
             textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
             textBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
-            
+
             textBox.TextChanged += (s, e) =>
-            { 
-                if(LogText)
-                    ReportValueChanged(s,e);
+            {
+                if (LogText)
+                    ReportValueChanged(s, e);
             };
 
             textBox.KeyPress += TextBox_KeyPress;
@@ -94,6 +95,8 @@ namespace ControlsSample
                 panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
                 panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
                 panelSettings.AddInput("Process Enter", textBox, nameof(TextBox.ProcessEnter));
+
+                ControlUtils.AddContextMenuItemsForThemeSelection(panelSettings, scrollViewer);
 
                 textBox.EnterPressed += (s, e) =>
                 {
@@ -223,7 +226,7 @@ namespace ControlsSample
             if (errorCount == 0)
                 return;
 
-            if(errorCount == 1)
+            if (errorCount == 1)
             {
                 var firstError = errors.FirstOrDefault();
                 App.LogError(firstError);
@@ -238,7 +241,7 @@ namespace ControlsSample
             {
                 if (s != null)
                     s += Environment.NewLine;
-                s+=$"Error {index++}: {error}";
+                s += $"Error {index++}: {error}";
             }
 
             exception.AdditionalInformation = s;
@@ -334,7 +337,7 @@ namespace ControlsSample
         internal static void ReportValueChanged(object? sender, EventArgs e)
         {
             GetTextChangedInfo(sender, out var varName, out var varValue);
-            if(varName is not null)
+            if (varName is not null)
                 App.LogNameValueReplace(varName, varValue);
         }
 

@@ -291,6 +291,12 @@ namespace Alternet.UI
 
                 var message = LogUtils.GetExceptionMessageText(item.Exception, item.AdditionalInfo, IsDetailed);
                 result.AppendLine(message);
+
+                if (!IsDetailed)
+                {
+                    result.AppendLine($"Click \"Details\" to see the stack trace, inner exceptions and other information.");
+                    result.AppendLine();
+                }
             }
 
             return result.ToString();

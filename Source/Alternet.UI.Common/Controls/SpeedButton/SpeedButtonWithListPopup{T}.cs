@@ -635,6 +635,8 @@ namespace Alternet.UI
                 createdMenuId = DropDownMenu.UniqueId;
             }
 
+            DropDownMenu.ItemsTitle = PopupWindowTitle;
+
             var itemsCount = ListItems.Count;
 
             if (itemsCount > MaxItemsUsingContextMenu)

@@ -131,17 +131,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets foreground color of the item.
-        /// </summary>
-        public virtual Color? TextColor
-        {
-            get
-            {
-                return GetTextColor(IsSelected);
-            }
-        }
-
-        /// <summary>
         /// Gets text of the item.
         /// </summary>
         public virtual string ItemText
@@ -221,17 +210,6 @@ namespace Alternet.UI
         public virtual Graphics.DrawLabelParams LabelMetrics { get; set; }
 
         /// <summary>
-        /// Gets normal and disabled images of the item.
-        /// </summary>
-        public virtual EnumArrayStateImages ItemImages
-        {
-            get
-            {
-                return GetItemImages(Item, ListBox);
-            }
-        }
-
-        /// <summary>
         /// Gets container control in which item is painted.
         /// </summary>
         public virtual IListControlItemContainer ListBox { get; set; }
@@ -244,17 +222,19 @@ namespace Alternet.UI
         /// <param name="item">The list control item for which to obtain images.
         /// This parameter can be null to indicate no specific item.</param>
         /// <param name="listBox">The container that holds the list control item.</param>
+        /// <param name="isDark">Whether the background is dark.</param>
         /// <returns>An object containing the images representing the visual states of the specified item. The returned value
         /// reflects the item's current state within the provided container.</returns>
         public virtual EnumArrayStateImages GetItemImages(
             ListControlItem? item,
             IListControlItemContainer? listBox,
+            bool isDark,
             int imageToUse = 0)
         {
             if (item is not null)
-                return item.GetImages(listBox, imageToUse);
+                return item.GetImages(listBox, isDark, imageToUse);
 
-            var color = ListControlItem.GetSelectedTextColor(item, listBox);
+            var color = ListControlItem.GetSelectedTextColor(item, listBox, isDark);
             return ListControlItem.GetItemImages(item, listBox, color, onlyNormal: false, imageToUse);
         }
 
@@ -279,6 +259,7 @@ namespace Alternet.UI
         /// <param name="listBox">The container that holds the list control item. Can be null if
         /// the item is not associated with a container.</param>
         /// <param name="isSelected">true if the item is currently selected; otherwise, false.</param>
+        /// <param name="isDark">Whether the background is dark.</param>
         /// <param name="imageToUse">Specifies which image to use.</param>
         /// <returns>The image corresponding to the item's current state, or null if no image is available for the specified item
         /// and state.</returns>
@@ -286,12 +267,13 @@ namespace Alternet.UI
             ListControlItem? item,
             IListControlItemContainer? listBox,
             bool isSelected,
+            bool isDark,
             int imageToUse = 0)
         {
             if (item is not null)
-                return item.GetImage(listBox, isSelected, imageToUse);
+                return item.GetImage(listBox, isSelected, isDark, imageToUse);
 
-            var itemImages = GetItemImages(item, listBox, imageToUse);
+            var itemImages = GetItemImages(item, listBox, isDark, imageToUse);
             var normalImage = itemImages[VisualControlState.Normal];
             var disabledImage = itemImages[VisualControlState.Disabled];
             var selectedImage = itemImages[VisualControlState.Selected];
@@ -311,22 +293,24 @@ namespace Alternet.UI
         /// <param name="isSelected">true to retrieve the image for the selected state;
         /// false to retrieve the image for the normal or disabled
         /// state.</param>
+        /// <param name="isDark">Whether the background is dark.</param>
         /// <param name="imageToUse">Specifies which image to use.</param>
         /// <returns>An Image representing the item's visual state. Returns null if no image
         /// is defined for the current state.</returns>
-        public virtual Image? GetImage(bool isSelected, int imageToUse = 0)
+        public virtual Image? GetImage(bool isSelected, bool isDark, int imageToUse = 0)
         {
-            return GetImage(Item, ListBox, isSelected, imageToUse);
+            return GetImage(Item, ListBox, isSelected, isDark, imageToUse);
         }
 
         /// <summary>
         /// Gets text color for the item being painted, taking into account its selection state.
         /// </summary>
         /// <param name="isSelected">Whether to get text color for the selected state.</param>
+        /// <param name="isDark">Whether the background is dark.</param>
         /// <returns>The text color for the item being painted.</returns>
-        public virtual Color? GetTextColor(bool isSelected)
+        public virtual Color? GetTextColor(bool isSelected, bool isDark)
         {
-            return GetTextColor(Item, isSelected);
+            return GetTextColor(Item, isSelected, isDark);
         }
 
         /// <summary>
@@ -334,17 +318,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The list control item for which to get the text color.</param>
         /// <param name="isSelected">Whether to get text color for the selected state.</param>
+        /// <param name="isDark">Whether the background is dark.</param>
         /// <returns>The text color for the specified item and selection state.</returns>
-        public virtual Color? GetTextColor(ListControlItem? item, bool isSelected)
+        public virtual Color? GetTextColor(ListControlItem? item, bool isSelected, bool isDark)
         {
             Color? textColor;
             if (isSelected)
             {
-                textColor = ListControlItem.GetSelectedTextColor(item, ListBox);
+                textColor = ListControlItem.GetSelectedTextColor(item, ListBox, isDark);
             }
             else
             {
-                textColor = ListControlItem.GetItemTextColor(item, ListBox);
+                textColor = ListControlItem.GetItemTextColor(item, ListBox, isDark);
             }
 
             return textColor;

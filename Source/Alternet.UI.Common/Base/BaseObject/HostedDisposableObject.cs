@@ -63,6 +63,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes the specified action on the first host object of the specified type.
+        /// </summary>
+        /// <typeparam name="THost">The type of the host object.</typeparam>
+        /// <param name="action">The action to execute on the host object.</param>
+        public virtual void WithHostObject<THost>(Action<THost> action)
+            where THost : class
+        {
+            var hostControl = GetHostObject<THost>();
+
+            if (hostControl is not null)
+            {
+                action(hostControl);
+            }
+        }
+
+        /// <summary>
         /// Retrieves all host objects of the specified type from the collection.
         /// </summary>
         /// <remarks>This method filters the <c>HostObjects</c> collection and returns

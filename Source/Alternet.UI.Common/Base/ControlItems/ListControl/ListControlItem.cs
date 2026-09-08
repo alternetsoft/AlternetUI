@@ -1661,18 +1661,24 @@ namespace Alternet.UI
         /// </summary>
         public static Color? GetItemTextColor(
             ListControlItem? item,
-            IListControlItemContainer? container)
+            IListControlItemContainer? container,
+            bool isDark)
         {
-            if (IsContainerEnabled(container))
+            return Internal()?.LightOrDark(isDark);
+
+            Color? Internal()
             {
-                Color? itemColor
-                    = item?.ForegroundColor ?? GetContainerForegroundColor(container)
-                    ?? container?.Defaults.ItemTextColor
-                    ?? VirtualListBox.DefaultItemTextColor;
-                return itemColor;
+                if (IsContainerEnabled(container))
+                {
+                    Color? itemColor
+                        = item?.ForegroundColor ?? GetContainerForegroundColor(container)
+                        ?? container?.Defaults.ItemTextColor
+                        ?? VirtualListBox.DefaultItemTextColor;
+                    return itemColor;
+                }
+                else
+                    return GetDisabledTextColor(item, container);
             }
-            else
-                return GetDisabledTextColor(item, container);
         }
 
         /// <summary>
@@ -1697,31 +1703,37 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Color? GetSelectedItemBackColor(
             ListControlItem? item,
-            IListControlItemContainer? container)
+            IListControlItemContainer? container,
+            bool isDark)
         {
-            var control = container?.Control;
-            if (control is null)
-                return VirtualListBox.DefaultSelectedItemBackColor;
+            return Internal()?.LightOrDark(isDark);
 
-            var defaults = container!.Defaults;
-
-            if (control.Enabled && defaults.SelectionVisible)
+            Color? Internal()
             {
-                if (container.Focused)
+                var control = container?.Control;
+                if (control is null)
+                    return VirtualListBox.DefaultSelectedItemBackColor;
+
+                var defaults = container!.Defaults;
+
+                if (control.Enabled && defaults.SelectionVisible)
                 {
-                    return defaults.SelectedItemBackColor
-                        ?? VirtualListBox.DefaultSelectedItemBackColor;
+                    if (container.Focused)
+                    {
+                        return defaults.SelectedItemBackColor
+                            ?? VirtualListBox.DefaultSelectedItemBackColor;
+                    }
+                    else
+                    {
+                        var result = defaults.UnfocusedSelectedItemBackColor
+                            ?? VirtualListBox.DefaultUnfocusedSelectedItemBackColor;
+                        return result;
+                    }
                 }
                 else
                 {
-                    var result = defaults.UnfocusedSelectedItemBackColor
-                        ?? VirtualListBox.DefaultUnfocusedSelectedItemBackColor;
-                    return result;
+                    return control.RealBackgroundColor;
                 }
-            }
-            else
-            {
-                return control.RealBackgroundColor;
             }
         }
 
@@ -1762,6 +1774,7 @@ namespace Alternet.UI
 
             var control = container?.Control;
             var focused = control?.Focused ?? false;
+            var isDark = IsContainerDark(container);
             var selectionUnderImage = container?.Defaults.SelectionUnderImage ?? true;
             var rect = e.ClientRectangle;
             var dc = e.Graphics;
@@ -1805,7 +1818,7 @@ namespace Alternet.UI
 
                         dc.FillBorderRectangle(
                             rect,
-                            GetSelectedItemBackColor(item, container)?.AsBrush,
+                            GetSelectedItemBackColor(item, container, isDark)?.AsBrush,
                             selectionBorder,
                             hasBorder: false,
                             control);
@@ -2103,13 +2116,15 @@ namespace Alternet.UI
                 return paintRectangle;
 
             var isSelected = e.HasSelection;
+            var isDark = ListControlItem.IsContainerDark(container);
 
             var result = item.DrawCheckBox(
                         e.Graphics,
                         item,
                         container,
                         paintRectangle,
-                        isSelected);
+                        isSelected,
+                        isDark);
             return result;
         }
 
@@ -2172,9 +2187,10 @@ namespace Alternet.UI
             var item = e.Item;
             var itemMargin = item?.ForegroundMargin ?? 0;
             var isSelected = e.HasSelection;
+            var isDark = IsContainerDark(container);
             RectD paintRectangle;
             var s = e.VisibleTextForDisplay;
-            var itemColor = e.GetTextColor(isSelected) ?? SystemColors.WindowText;
+            var itemColor = e.GetTextColor(isSelected, isDark) ?? VirtualListControl.DefaultItemTextColor.LightOrDark(isDark);
             var useColumns = item is not null && e.UseColumns && container is not null;
 
             if (useColumns)
@@ -2186,7 +2202,7 @@ namespace Alternet.UI
             }
             else
             {
-                var image = e.ImageOverride ?? e.GetImage(isSelected);
+                var image = e.ImageOverride ?? e.GetImage(isSelected, isDark);
 
                 paintRectangle = DrawCheckBox(container, e);
                 paintRectangle = DrawAccentMarker(container, e, paintRectangle);
@@ -2235,7 +2251,7 @@ namespace Alternet.UI
                         {
                             for (int i = 0; i < item.AdditionalImages.Count; i++)
                             {
-                                var additionalImage = e.GetImage(isSelected, i + 1);
+                                var additionalImage = e.GetImage(isSelected, isDark, i + 1);
                                 if (additionalImage is not null)
                                     prm.AddAdditionalImage(additionalImage, item.AdditionalImages[i]);
                             }
@@ -2317,10 +2333,11 @@ namespace Alternet.UI
         /// including its rectangle, colors, and other settings.</param>
         public virtual void DrawCellBackground(in DrawCellParams prm)
         {
-            if (!IsSelectedCell(prm.Container))
+            if (!IsSelectedCell(prm.AsCellContext))
                 return;
 
             var container = prm.Container;
+            var isDark = IsContainerDark(container);
             var e = prm.PaintArgs;
             var item = e.Item;
             var rect = prm.Rect;
@@ -2331,7 +2348,7 @@ namespace Alternet.UI
 
             dc.FillBorderRectangle(
                 rect,
-                GetSelectedItemBackColor(item, container)?.AsBrush,
+                GetSelectedItemBackColor(item, container, isDark)?.AsBrush,
                 selectionBorder,
                 hasBorder: false,
                 control);
@@ -2348,15 +2365,16 @@ namespace Alternet.UI
         {
             var isEnabled = IsContainerEnabled(prm.Container);
             var control = prm.Container?.Control;
-            var isSelected = IsSelectedCell(prm.Container);
+            var isSelected = IsSelectedCell(prm.AsCellContext);
+            var isDark = IsContainerDark(prm.Container);
 
             var s = DefaultGetItemText(this, forDisplay: true, prm.Container?.FormatProvider);
 
-            var cellImage = prm.PaintArgs.GetImage(this, prm.Container, isSelected);
+            var cellImage = prm.PaintArgs.GetImage(this, prm.Container, isSelected, isDark);
 
             var itemAlignment = this.Alignment;
 
-            var cellColor = prm.PaintArgs.GetTextColor(this, isSelected) ?? prm.ForeColor;
+            var cellColor = prm.PaintArgs.GetTextColor(this, isSelected, isDark) ?? prm.ForeColor;
 
             var font = prm.PaintArgs.GetItemFont(this);
 
@@ -2427,28 +2445,34 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Color? GetSelectedTextColor(
             ListControlItem? item,
-            IListControlItemContainer? container)
+            IListControlItemContainer? container,
+            bool isDark)
         {
-            if (container?.Defaults.SelectionVisible ?? true)
+            return Internal()?.LightOrDark(isDark);
+
+            Color? Internal()
             {
-                if (IsContainerEnabled(container))
+                if (container?.Defaults.SelectionVisible ?? true)
                 {
-                    if (container?.Focused ?? true)
+                    if (IsContainerEnabled(container))
                     {
-                        return container?.Defaults.SelectedItemTextColor
-                                    ?? VirtualListBox.DefaultSelectedItemTextColor;
+                        if (container?.Focused ?? true)
+                        {
+                            return container?.Defaults.SelectedItemTextColor
+                                        ?? VirtualListBox.DefaultSelectedItemTextColor;
+                        }
+                        else
+                        {
+                            return container?.Defaults.UnfocusedSelectedItemTextColor
+                                        ?? VirtualListBox.DefaultUnfocusedSelectedItemTextColor;
+                        }
                     }
                     else
-                    {
-                        return container?.Defaults.UnfocusedSelectedItemTextColor
-                                    ?? VirtualListBox.DefaultUnfocusedSelectedItemTextColor;
-                    }
+                        return GetDisabledTextColor(item, container);
                 }
                 else
-                    return GetDisabledTextColor(item, container);
+                    return GetItemTextColor(item, container, isDark);
             }
-            else
-                return GetItemTextColor(item, container);
         }
 
         /// <summary>
@@ -2555,9 +2579,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets item text color when item is inside the container.
         /// </summary>
-        public virtual Color? GetTextColor(IListControlItemContainer? container)
+        public virtual Color? GetTextColor(IListControlItemContainer? container, bool isDark)
         {
-            return GetItemTextColor(this, container);
+            return GetItemTextColor(this, container, isDark);
         }
 
         /// <summary>
@@ -2610,12 +2634,13 @@ namespace Alternet.UI
         /// taking into account its state and the container's settings.
         /// </summary>
         /// <param name="listBox"> The container that holds the list control item.</param>
+        /// <param name="isDark">A boolean value indicating whether to use the dark theme.</param>
         /// <returns>An <see cref="EnumArrayStateImages"/> object containing the images
         /// for the different visual states of the item.</returns>
         /// <param name="imageToUse">Specifies which image to use.</param>
-        public virtual EnumArrayStateImages GetImages(IListControlItemContainer? listBox, int imageToUse = 0)
+        public virtual EnumArrayStateImages GetImages(IListControlItemContainer? listBox, bool isDark, int imageToUse = 0)
         {
-            var color = ListControlItem.GetSelectedTextColor(this, listBox);
+            var color = ListControlItem.GetSelectedTextColor(this, listBox, isDark);
             return ListControlItem.GetItemImages(this, listBox, color, onlyNormal: false, imageToUse);
         }
 
@@ -2624,13 +2649,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="listBox">The container that holds the list control item.</param>
         /// <param name="imageToUse">Specifies which image to use.</param>
+        /// <param name="isDark">A boolean value indicating whether to use the dark theme.</param>
         /// <param name="isSelected">true to retrieve the image for the selected state;
         /// false to retrieve the image for the normal or disabled state.</param>
         /// <returns>An Image representing the item's visual state. Returns null
         /// if no image is defined for the current state.</returns>
-        public virtual Image? GetImage(IListControlItemContainer? listBox, bool isSelected, int imageToUse = 0)
+        public virtual Image? GetImage(IListControlItemContainer? listBox, bool isSelected, bool isDark, int imageToUse = 0)
         {
-            var itemImages = GetImages(listBox, imageToUse);
+            var itemImages = GetImages(listBox, isDark, imageToUse);
             var normalImage = itemImages[VisualControlState.Normal];
             var disabledImage = itemImages[VisualControlState.Disabled];
             var selectedImage = itemImages[VisualControlState.Selected];
@@ -2912,7 +2938,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><c>true</c> if the current item is a selected cell; otherwise, <c>false</c>.</returns>
         [Browsable(false)]
-        public virtual bool IsSelectedCell(IListControlItemContainer? container)
+        public virtual bool IsSelectedCell(ItemCellContext prm)
         {
             return false;
         }
@@ -2993,6 +3019,7 @@ namespace Alternet.UI
         /// <param name="paintRectangle">The rectangle, in device-independent coordinates, that defines the area
         /// available for drawing the check box
         /// or radio button.</param>
+        /// <param name="isDark">true if the dark theme is applied; otherwise, false.</param>
         /// <param name="isSelected">true if the item is selected and the check box or radio button should
         /// be rendered in the selected state;
         /// otherwise, false.</param>
@@ -3004,7 +3031,8 @@ namespace Alternet.UI
             ListControlItem item,
             IListControlItemContainer? container,
             RectD paintRectangle,
-            bool isSelected)
+            bool isSelected,
+            bool isDark)
         {
             var info = item.GetCheckBoxInfo(container, paintRectangle);
             if (info.IsCheckBoxVisible)
@@ -3017,7 +3045,7 @@ namespace Alternet.UI
                     ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
                     : VisualControlState.Disabled;
                 if (info.SvgState == VisualControlState.Selected)
-                    info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
+                    info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container, isDark);
                 info.IsRadioButton = item.IsRadioButton;
                 BeforeDrawCheckBox?.Invoke(this, info);
 

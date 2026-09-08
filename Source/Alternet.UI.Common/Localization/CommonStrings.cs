@@ -172,6 +172,8 @@ namespace Alternet.UI.Localization
 
         public string WindowTitleSelectItem { get; set; } = "Select an Item";
 
+        public string WindowTitleSelectAction { get; set; } = "Select an Action";
+
         public string WindowTitleSelectItems { get; set; } = "Select Items";
 
         public string WindowTitleSelectFontName { get; set; } = "Select a Font Name";

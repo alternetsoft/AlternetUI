@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This value is commonly used to provide consistent spacing around content in user
         /// interface layouts.</remarks>
-        public static Thickness DefaultContentMargin = 1;
+        public static Thickness DefaultContentMargin = (1, 1, 1, 1);
 
         private static PopupToolBar? defaultPopup;
         private static int hideOnDeactivateSuppressCounter;

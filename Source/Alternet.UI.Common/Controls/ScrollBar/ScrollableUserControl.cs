@@ -159,6 +159,17 @@ namespace Alternet.UI
         [Browsable(false)]
         public bool HasVerticalScrollBarSettings => verticalScrollBarSettings is not null;
 
+        /// <inheritdoc/>
+        public override bool? IsDarkBackgroundOverride
+        {
+            get => base.IsDarkBackgroundOverride;
+            set
+            {
+                base.IsDarkBackgroundOverride = value;
+                Interior.UpdateThemeMetrics(IsDarkBackground);
+            }
+        }
+
         /// <summary>
         /// Gets the horizontal scrollbar settings. Initializes them if required.
         /// </summary>

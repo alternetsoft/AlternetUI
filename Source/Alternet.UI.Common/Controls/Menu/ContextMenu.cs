@@ -474,12 +474,14 @@ namespace Alternet.UI
         /// <see cref="HVDropDownAlignment.Center"/> is used if position is not specified.</param>
         /// <returns>The unique identifier of the host control displaying the context menu,
         /// or null if the context menu is not shown.</returns>
+        /// <param name="showMethod">The method to use for showing the popup.</param>
         public virtual ObjectUniqueId? ShowInsideControl(
             AbstractControl container,
             AbstractControl? source = null,
             PointD? position = null,
             Action? onClose = null,
-            HVDropDownAlignment? align = null)
+            HVDropDownAlignment? align = null,
+            ShowMethod showMethod = ShowMethod.Default)
         {
             if (position is null)
             {
@@ -506,7 +508,8 @@ namespace Alternet.UI
 
             if (hostControl is InnerPopupToolBar popupToolBar)
             {
-                popupToolBar.ShowInContainer(container, position, align);
+                popupToolBar.Title = ItemsTitle;
+                popupToolBar.ShowInContainer(container, position, align, showMethod);
             }
 
             return hostControl.UniqueId;

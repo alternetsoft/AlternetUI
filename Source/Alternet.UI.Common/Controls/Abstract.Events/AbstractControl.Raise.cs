@@ -867,10 +867,8 @@ namespace Alternet.UI
             {
                 DoInsideLayout(UpdateFontAndColor);
             }
-            else
-            {
-                UpdateFontAndColor();
-            }
+
+            UpdateFontAndColor();
 
             void UpdateFontAndColor()
             {
@@ -888,6 +886,9 @@ namespace Alternet.UI
                 {
                     childControl.ForeColor = RealForegroundColor;
                 }
+
+                if (childControl.UseParentDarkBackgroundOverride)
+                    childControl.IsDarkBackgroundOverride = IsDarkBackgroundOverride;
             }
 
             OnChildInserted(index, childControl);

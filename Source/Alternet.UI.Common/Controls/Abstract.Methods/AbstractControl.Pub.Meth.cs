@@ -538,7 +538,6 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
         /// Sets back and fore colors to <see cref="AbstractControl.BackColor"/>
         /// and <see cref="AbstractControl.ForeColor"/>.
@@ -552,8 +551,11 @@ namespace Alternet.UI
             {
                 ParentBackColor = false;
                 ParentForeColor = false;
-                BackColor = DefaultColors.ControlBackColor.LightOrDark();
-                ForeColor = DefaultColors.ControlForeColor.LightOrDark();
+
+                var isDark = IsDarkBackgroundOverride ?? SystemSettings.AppearanceIsDark;
+
+                BackColor = DefaultColors.ControlBackColor.LightOrDark(isDark);
+                ForeColor = DefaultColors.ControlForeColor.LightOrDark(isDark);
             }
             else
             {
@@ -990,7 +992,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Showing the control is equivalent to setting the
         /// <see cref="Visible"/> property to <c>true</c>.
-        /// After the <see cref="Show"/> method is called, the
+        /// After the <see cref="Show()"/> method is called, the
         /// <see cref="Visible"/> property
         /// returns a value of <c>true</c> until the <see cref="Hide"/> method
         /// is called.</remarks>
@@ -998,6 +1000,22 @@ namespace Alternet.UI
         {
             // This method must be virtual as it is overridden in some descendants.
             Visible = true;
+        }
+
+        /// <summary>
+        /// Displays the control to the user using the specified show method.
+        /// </summary>
+        /// <param name="method">The method to use for showing the control.</param>
+        public virtual void Show(ShowMethod method)
+        {
+            switch (method)
+            {
+                case ShowMethod.None:
+                    break;
+                case ShowMethod.Default:
+                    Show();
+                    break;
+            }
         }
 
         /// <summary>
@@ -1469,8 +1487,7 @@ namespace Alternet.UI
         /// <see cref="Visible"/> property to <c>false</c>.
         /// After the <see cref="Hide"/> method is called, the
         /// <see cref="Visible"/> property
-        /// returns a value of <c>false</c> until the <see cref="Show"/> method
-        /// is called.
+        /// returns a value of <c>false</c> until the <see cref="Show()"/> method is called.
         /// </remarks>
         public void Hide()
         {

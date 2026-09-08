@@ -45,7 +45,17 @@ namespace Alternet.UI
         public ListPicker()
         {
             Label.Margin = Label.Margin.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
-            UseControlColors(DefaultUseControlColors);
+        }
+
+        /// <inheritdoc/>
+        public override bool? IsDarkBackgroundOverride
+        {
+            get => base.IsDarkBackgroundOverride;
+            set
+            {
+                base.IsDarkBackgroundOverride = value;
+                UseControlColors(DefaultUseControlColors);
+            }
         }
 
         /// <summary>
@@ -73,8 +83,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            if (IsDarkBackgroundOverride is null)
-                UseControlColors(DefaultUseControlColors);
+            UseControlColors(DefaultUseControlColors);
             base.OnSystemColorsChanged(e);
         }
 

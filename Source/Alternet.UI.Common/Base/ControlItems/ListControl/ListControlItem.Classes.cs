@@ -10,6 +10,27 @@ namespace Alternet.UI
     public partial class ListControlItem
     {
         /// <summary>
+        /// Represents the context of a cell within a list control item, including its container, row index, and parent row item.
+        /// </summary>
+        public struct ItemCellContext
+        {
+            /// <summary>
+            /// The container that holds the list control item.
+            /// </summary>
+            public IListControlItemContainer? Container { get; set; }
+
+            /// <summary>
+            /// The index of the row item within the container.
+            /// </summary>
+            public int RowItemIndex { get; set; }
+
+            /// <summary>
+            /// The row item which is the parent of the cell.
+            /// </summary>
+            public ListControlItem? RowItem { get; set; }
+        }
+
+        /// <summary>
         /// Parameters used for drawing a specific cell within a list control item.
         /// </summary>
         public struct DrawCellParams
@@ -34,6 +55,22 @@ namespace Alternet.UI
             /// The foreground color to be used for drawing the cell's text.
             /// </summary>
             public Color ForeColor;
+
+            /// <summary>
+            /// Gets the context of the cell, including its container, row index, and parent row item.
+            /// </summary>
+            public ItemCellContext AsCellContext
+            {
+                get
+                {
+                    return new ItemCellContext
+                    {
+                        Container = Container,
+                        RowItemIndex = PaintArgs.ItemIndex,
+                        RowItem = PaintArgs.Item,
+                    };
+                }
+            }
         }
 
         /// <summary>

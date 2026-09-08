@@ -51,6 +51,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool? IsDarkBackgroundOverride
+        {
+            get => base.IsDarkBackgroundOverride;
+            set
+            {
+                base.IsDarkBackgroundOverride = value;
+                UseControlColors(DefaultUseControlColors);
+            }
+        }
+
         /// <summary>
         /// Determines whether the control should be displayed as a speed button or as a picker control.
         /// </summary>

@@ -10,7 +10,10 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// The calendar control allows the user to pick a date.
+    /// Represents a calendar control that allows the user to select a date. <see cref="Calendar"/>
+    /// uses the WxWidgets library and is limited to Windows, Linux, and macOS platforms. 
+    /// Library also includes <see cref="XCalendar"/> — a generic calendar control implemented in C# 
+    /// that works on all platforms.
     /// </summary>
     /// <remarks>
     /// The user can move the current selection using the keyboard and select the date
@@ -43,7 +46,6 @@ namespace Alternet.UI
     /// locale, and these styles have no effect on it.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Native)]
-    [Obsolete("Calendar is deprecated. Use XCalendar instead.")]
     public partial class Calendar : CustomDateEdit
     {
         /// <summary>
