@@ -202,7 +202,21 @@ namespace Alternet.UI
             if (header.PrevButton.HorizontalAlignment == HorizontalAlignment.Right)
             {
                 header.ActionsButton.Visible = true;
-                header.ActionsButton.DropDownMenu = actionsMenu;
+                header.ActionsButton.ClickAction = () =>
+                {
+                    actionsMenu.ItemsTitle = CommonStrings.Default.WindowTitleSelectAction;
+                    actionsMenu.ShowInsideControl(
+                        dayView,
+                        source: null,
+                        position: null,
+                        onClose: null,
+                        align: HVDropDownAlignment.Center);
+                    actionsMenu.WithHostObject<InnerPopupToolBar>(host =>
+                    {
+                        host.IsDarkBackgroundOverride = IsDarkBackground;
+                        host.HasBorder = true;
+                    });
+                };
             }
 
             header.OverlayProvider = dayView;
@@ -1405,7 +1419,6 @@ namespace Alternet.UI
             const string suffix = "...";
 
             actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToToday, SelectToday));
-            actionsMenu.AddSeparator();
             actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToMonth + suffix, () => header.ShowPopupMonthPicker()));
             actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToYear + suffix, () => header.ShowPopupYearPicker()));
             actionsMenu.Add(new MenuItem(CommonStrings.Default.GoToDate + suffix, () => header.ShowPopupDateTextBox()));
