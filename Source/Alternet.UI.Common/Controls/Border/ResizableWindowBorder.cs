@@ -15,6 +15,11 @@ namespace Alternet.UI
     public partial class ResizableWindowBorder : ResizableBorder
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the title label is bold by default.
+        /// </summary>
+        public static bool DefaultTitleLabelIsBold = true;
+
+        /// <summary>
         /// Gets or sets the default icon margin.
         /// </summary>
         public static Thickness DefaultIconMargin = (5, 0, 0, 0);
@@ -76,10 +81,12 @@ namespace Alternet.UI
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.Margin = DefaultTitleMargin;
             label.InputTransparent = true;
-            label.IsBold = true;
+            label.IsBold = DefaultTitleLabelIsBold;
+            label.Font = label.RealFont.IncSize();
             label.Parent = gripControl;
 
             toolBar.AddControl(gripControl);
+
 
             minimizeButton = toolBar.AddSpeedBtnCore(
                 null, KnownSvgImages.ImgWindowMinimize, CommonStrings.Default.ButtonMinimize);
