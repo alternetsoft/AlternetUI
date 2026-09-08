@@ -10,9 +10,10 @@ namespace Alternet.UI
     /// </summary>
     public partial class ResizablePopupControl : PopupControl
     {
+        private readonly CreateFlags flags;
+
         private ResizableWindowBorder? border;
         private ScrollViewer? scrollViewer;
-        private CreateFlags flags;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResizablePopupControl"/> class.

@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods and properties which are <see cref="AbstractControl"/> related.
+    /// Provides utility methods for working with controls.
     /// </summary>
     public static class ControlUtils
     {
@@ -32,12 +32,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets color theme for a panel like control.
+        /// </summary>
+        /// <param name="control">The control for which to set the color theme.</param>
+        /// <param name="isDark">A nullable boolean indicating whether to use the dark theme.
+        /// If null, the system theme will be used.</param>
+        public static void SetPanelColorTheme(AbstractControl control, bool? isDark)
+        {
+            if (isDark is null)
+            {
+                control.ParentBackColor = true;
+                control.ParentForeColor = true;
+                return;
+            }
+
+            control.ParentBackColor = false;
+            control.ParentForeColor = false;
+            control.BackgroundColor = DefaultColors.ControlBackColor.LightOrDark(isDark.Value);
+            control.ForegroundColor = DefaultColors.ControlForeColor.LightOrDark(isDark.Value);
+
+            control.IsDarkBackgroundOverride = isDark;
+            control.Invalidate();
+        }
+
+        /// <summary>
         /// Updates the control's background and foreground colors according to the current system theme.
         /// </summary>
         /// <param name="control">The control whose colors will be updated.</param>
-        public static void UpdateForeBackColors(AbstractControl control)
+        /// <param name="isDark">A nullable boolean indicating whether to use the dark theme.
+        /// If null, the system theme will be used.</param>
+        public static void UpdateForeBackColors(AbstractControl control, bool? isDark)
         {
-            if (SystemSettings.AppearanceIsDark)
+            if (isDark ?? SystemSettings.AppearanceIsDark)
             {
                 control.BackgroundColor = DefaultColors.ControlBackColor.Dark;
                 control.ForegroundColor = DefaultColors.ControlForeColor.Dark;
