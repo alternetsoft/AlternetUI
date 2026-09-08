@@ -33,3 +33,21 @@ Disallow: /api/
 
 User-agent: Amazonbot
 Disallow: /api/
+
+User-agent: Amzn-SearchBot
+Disallow: /api/
+
+User-agent: MJ12bot
+Disallow: /api/
+
+User-agent: Facebot
+Disallow: /api/
+
+User-agent: meta-externalagent
+Disallow: /api/
+
+User-agent: Amzn-SearchBot
+Disallow: /api/
+
+User-agent: Sogou web spider
+Disallow: /api/
