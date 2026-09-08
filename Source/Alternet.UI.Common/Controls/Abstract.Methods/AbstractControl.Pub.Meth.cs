@@ -538,7 +538,6 @@ namespace Alternet.UI
             }
         }
 
-
         /// <summary>
         /// Sets back and fore colors to <see cref="AbstractControl.BackColor"/>
         /// and <see cref="AbstractControl.ForeColor"/>.
@@ -552,8 +551,11 @@ namespace Alternet.UI
             {
                 ParentBackColor = false;
                 ParentForeColor = false;
-                BackColor = DefaultColors.ControlBackColor.LightOrDark();
-                ForeColor = DefaultColors.ControlForeColor.LightOrDark();
+
+                var isDark = IsDarkBackgroundOverride ?? SystemSettings.AppearanceIsDark;
+
+                BackColor = DefaultColors.ControlBackColor.LightOrDark(isDark);
+                ForeColor = DefaultColors.ControlForeColor.LightOrDark(isDark);
             }
             else
             {

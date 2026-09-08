@@ -147,6 +147,17 @@ namespace Alternet.UI
         [Browsable(false)]
         public SpeedButton ButtonPlus => FindTool(IdButtonPlus)!;
 
+        /// <inheritdoc/>
+        public override bool? IsDarkBackgroundOverride
+        {
+            get => base.IsDarkBackgroundOverride;
+            set
+            {
+                base.IsDarkBackgroundOverride = value;
+                UseControlColors(true);
+            }
+        }
+
         /// <summary>
         /// Gets 'Minus' button if it is available.
         /// </summary>
