@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// </summary>
         public static float DefaultMinPopupWidth = 200;
 
-        private readonly ControlSubscriber notification = new ();
+        private readonly ControlSubscriber notification = new();
 
         private WeakReferenceValue<AbstractControl> relatedControl = new();
 
@@ -43,12 +43,20 @@ namespace Alternet.UI
             Content.ParentForeColor = true;
             Content.ParentBackColor = true;
 
+            if (ScrollViewer is not null)
+            {
+                ScrollViewer.Content.SizeChanged += (s, e) =>
+                {
+                    Content.MinWidth = ScrollViewer.Content.ClientSize.Width;
+                };
+            }
+
             SuppressParentMouse = true;
             SuppressParentKeyDown = true;
             SuppressParentKeyPress = true;
             SuppressKeyPress = true;
             SuppressKeyDown = true;
-            HasBorder = false;
+            HasBorder = true;
             HideOnSiblingHide = true;
             HideOnSiblingShow = true;
             HideOnEscape = true;
@@ -73,7 +81,7 @@ namespace Alternet.UI
                     return;
                 var insidePopup = InsidePopup(s);
 
-                if(insidePopup || !SuppressKeyDown)
+                if (insidePopup || !SuppressKeyDown)
                     return;
                 e.Suppressed();
             };
@@ -378,10 +386,12 @@ namespace Alternet.UI
         /// If null, the current mouse position is used.</param>
         /// <param name="align">The alignment of the popup relative to the container.
         /// If null, the default alignment is used.</param>
+        /// <param name="showMethod">The method to use for showing the popup.</param>
         public virtual void ShowInContainer(
             AbstractControl container,
             PointD? position = null,
-            HVDropDownAlignment? align = null)
+            HVDropDownAlignment? align = null,
+            ShowMethod showMethod = ShowMethod.Default)
         {
             LastUsedAlignment = align;
 
@@ -398,7 +408,7 @@ namespace Alternet.UI
 
             Content.UpdateCommandState();
             ControlUtils.ResetIsMouseLeftButtonDown(this);
-            Show();
+            Show(showMethod);
         }
 
         /// <summary>
@@ -453,15 +463,15 @@ namespace Alternet.UI
                 pos = popupRect.Location;
             }
 
-            Location = pos.ClampToZero();
-
             if (align is not null && isValid)
             {
-                Location = AlignUtils.GetDropDownPosition(
+                pos = AlignUtils.GetDropDownPosition(
                         containerRect.Value.Size,
                         Size,
                         align);
             }
+
+            Location = pos.ClampToZero();
         }
 
         /// <summary>
@@ -499,7 +509,7 @@ namespace Alternet.UI
         /// any changes in its content or layout preferences.</remarks>
         public virtual void UpdateMinimumSize()
         {
-            if(!AllowUpdateMinimumSize)
+            if (!AllowUpdateMinimumSize)
                 return;
 
             if (NeedsRemainingImages)
@@ -532,7 +542,7 @@ namespace Alternet.UI
 
             preferredSize += Content.Padding.Size + Content.Margin.Size
                 + Margin.Size + Padding.Size + 2 + BorderControl.InteriorBorderSize;
-          
+
             if (UseDefaultMinPopupWidth)
                 preferredSize.Width = Math.Max(preferredSize.Width, DefaultMinPopupWidth);
 
@@ -659,7 +669,7 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
         protected virtual void OnToolClick(object? sender, EventArgs e)
         {
-            if(!CloseOnToolClick)
+            if (!CloseOnToolClick)
                 return;
 
             if (sender is not SpeedButton speedButton)
