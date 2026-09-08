@@ -506,6 +506,7 @@ namespace Alternet.UI
 
             if (hostControl is InnerPopupToolBar popupToolBar)
             {
+                popupToolBar.Title = ItemsTitle;
                 popupToolBar.ShowInContainer(container, position, align);
             }
 
