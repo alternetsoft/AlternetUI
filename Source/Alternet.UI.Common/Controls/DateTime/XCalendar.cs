@@ -210,11 +210,14 @@ namespace Alternet.UI
                         source: null,
                         position: null,
                         onClose: null,
-                        align: HVDropDownAlignment.Center);
+                        align: HVDropDownAlignment.Center,
+                        showMethod: ShowMethod.None);
                     actionsMenu.WithHostObject<InnerPopupToolBar>(host =>
                     {
                         host.IsDarkBackgroundOverride = IsDarkBackground;
-                        host.HasBorder = true;
+                        host.BorderControl.HasTitleBar = false;
+                        host.AlignInParent(HorizontalAlignment.Center, VerticalAlignment.Center);
+                        host.Show();
                     });
                 };
             }

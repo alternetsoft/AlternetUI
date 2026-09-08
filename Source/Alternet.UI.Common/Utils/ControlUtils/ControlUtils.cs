@@ -64,7 +64,7 @@ namespace Alternet.UI
             AbstractControl menuOwnerControl,
             AbstractControl targetControl)
         {
-            menuOwnerControl.ContextMenuStrip.AddSeparator();
+            menuOwnerControl.ContextMenuStrip.AddSeparatorIfNeeded();
 
             menuOwnerControl.ContextMenuStrip.Add("Auto Theme", () =>
             {
