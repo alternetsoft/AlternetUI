@@ -1191,7 +1191,7 @@ namespace Alternet.UI
         private static void FormatExceptionRecursive(Exception ex, StringBuilder sb, int indent, bool details = true)
         {
             if (ex == null) return;
-            string prefix = new string(' ', indent * 2);
+            string prefix = new (' ', indent * 2);
 
             sb.AppendLine($"{prefix}Exception: {ex.GetType().FullName}");
 
@@ -1213,6 +1213,9 @@ namespace Alternet.UI
                     }
                 }
             }
+            else
+            {
+            }
 
             if (details)
             {
@@ -1220,17 +1223,28 @@ namespace Alternet.UI
 
                 if (!string.IsNullOrEmpty(stackTrace))
                 {
+                    var stackTraceItems = StringUtils.Split(stackTrace.ToString());
+
                     sb.AppendLine();
+                    sb.AppendLine(LogUtils.SectionSeparator);
                     sb.AppendLine($"{prefix}StackTrace:");
+                    sb.AppendLine(LogUtils.SectionSeparator);
                     sb.AppendLine();
-                    sb.AppendLine($"{prefix}{stackTrace}");
+
+                    foreach (var item in stackTraceItems)
+                    {
+                        sb.AppendLine($"{prefix}{item}");
+                        sb.AppendLine();
+                    }
                 }
             }
 
             if (ex.InnerException != null)
             {
                 sb.AppendLine();
+                sb.AppendLine(LogUtils.SectionSeparator);
                 sb.AppendLine($"{prefix}Inner Exception:");
+                sb.AppendLine(LogUtils.SectionSeparator);
                 sb.AppendLine();
                 FormatExceptionRecursive(ex.InnerException, sb, indent + 1, details);
             }
