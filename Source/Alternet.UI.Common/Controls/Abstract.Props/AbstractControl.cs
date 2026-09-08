@@ -3746,7 +3746,12 @@ namespace Alternet.UI
             get => isDarkBackgroundOverride;
             set
             {
+                if (IsDarkBackgroundOverride == value)
+                    return;
+
                 isDarkBackgroundOverride = value;
+
+                ForEachChild(c => c.IsDarkBackgroundOverride = value, recursive: false);
             }
         }
 
