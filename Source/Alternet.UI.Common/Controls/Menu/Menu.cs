@@ -311,6 +311,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a separator item to the <see cref="ItemContainerElement{T}.Items"/> collection if needed.
+        /// If the last item in the collection is already a separator, no new separator is added.
+        /// If the collection is empty, no separator is added.
+        /// </summary>
+        /// <returns>The created separator item, or <c>null</c> if a separator was not needed.</returns>
+        public virtual MenuItem? AddSeparatorIfNeeded()
+        {
+            if (Items.Count == 0)
+                return null;
+            if (Items.Last?.IsSeparator == true)
+                return null;
+            return AddSeparator();
+        }
+
+        /// <summary>
         /// Adds a separator item to the <see cref="ItemContainerElement{T}.Items"/> collection.
         /// </summary>
         /// <returns>The created separator item.</returns>
@@ -457,7 +472,7 @@ namespace Alternet.UI
         /// <returns>The effective <see cref="HVDropDownAlignment"/> for the items popup window.</returns>
         public virtual HVDropDownAlignment GetEfectiveItemsPlacement(MenuPlacementKind kind)
         {
-            switch(kind)
+            switch (kind)
             {
                 case MenuPlacementKind.DropDown:
                     return ItemsDropDownPosition ?? DefaultItemsDropDownPosition;
