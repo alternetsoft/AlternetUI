@@ -76,7 +76,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override bool IsSelectedCell(IListControlItemContainer? container)
+            public override bool IsSelectedCell(in DrawCellParams prm)
             {
                 return Data.IsCurrent && Data.IsVisible && !Data.IsRestricted && Data.IsCurrentMonth;
             }

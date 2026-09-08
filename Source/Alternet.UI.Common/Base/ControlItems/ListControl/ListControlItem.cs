@@ -2317,7 +2317,7 @@ namespace Alternet.UI
         /// including its rectangle, colors, and other settings.</param>
         public virtual void DrawCellBackground(in DrawCellParams prm)
         {
-            if (!IsSelectedCell(prm.Container))
+            if (!IsSelectedCell(in prm))
                 return;
 
             var container = prm.Container;
@@ -2348,7 +2348,7 @@ namespace Alternet.UI
         {
             var isEnabled = IsContainerEnabled(prm.Container);
             var control = prm.Container?.Control;
-            var isSelected = IsSelectedCell(prm.Container);
+            var isSelected = IsSelectedCell(in prm);
 
             var s = DefaultGetItemText(this, forDisplay: true, prm.Container?.FormatProvider);
 
@@ -2912,7 +2912,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><c>true</c> if the current item is a selected cell; otherwise, <c>false</c>.</returns>
         [Browsable(false)]
-        public virtual bool IsSelectedCell(IListControlItemContainer? container)
+        public virtual bool IsSelectedCell(in DrawCellParams prm)
         {
             return false;
         }
