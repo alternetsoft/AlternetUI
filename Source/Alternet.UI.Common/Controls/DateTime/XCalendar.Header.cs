@@ -171,6 +171,33 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Defines the kinds of inner popups that can be displayed in the calendar header,
+            /// such as year picker, month picker, or date text box.
+            /// </summary>
+            public enum InnerPopupKind
+            {
+                /// <summary>
+                /// No popup.
+                /// </summary>
+                None,
+
+                /// <summary>
+                /// Popup for selecting year.
+                /// </summary>
+                YearPicker,
+
+                /// <summary>
+                /// Popup for selecting month.
+                /// </summary>
+                MonthPicker,
+
+                /// <summary>
+                /// Popup for entering date as text.
+                /// </summary>
+                DateTextBox,
+            }
+
+            /// <summary>
             /// Occurs when the year picker in the calendar header is clicked, 
             /// allowing subscribers to handle the event and perform actions based on the year selection.
             /// </summary>
@@ -386,11 +413,15 @@ namespace Alternet.UI
             /// Shows or hides all popups in the calendar header, including the year picker, month picker, and date text box.
             /// </summary>
             /// <param name="show">A value indicating whether to show or hide the popups.</param>
-            public virtual void ShowAllPopups(bool show = true)
+            /// <param name="except">The kind of inner popup to exclude from being shown or hidden.</param>
+            public virtual void ShowAllPopups(bool show = true, InnerPopupKind except = InnerPopupKind.None)
             {
-                ShowPopupYearPicker(show);
-                ShowPopupMonthPicker(show);
-                ShowPopupDateTextBox(show);
+                if (except != InnerPopupKind.YearPicker)
+                    ShowPopupYearPicker(show);
+                if (except != InnerPopupKind.MonthPicker)
+                    ShowPopupMonthPicker(show);
+                if (except != InnerPopupKind.DateTextBox)
+                    ShowPopupDateTextBox(show);
             }
 
             /// <summary>
@@ -495,8 +526,7 @@ namespace Alternet.UI
             {
                 if (!popupDateTextPicker.Visible)
                     return;
-                popupMonthPicker.Visible = false;
-                popupYearPickerPanel.Visible = false;
+                ShowAllPopups(show: false, except: InnerPopupKind.DateTextBox);
 
                 var s = Value.ToString(DefaultDateFormatForTextBox, FormatProvider);
                 popupDateTextPicker.Text = s;
@@ -576,8 +606,7 @@ namespace Alternet.UI
 
                 if (popupYearPickerPanel.Visible)
                 {
-                    popupMonthPicker.Visible = false;
-                    popupDateTextPicker.Visible = false;
+                    ShowAllPopups(show: false, except: InnerPopupKind.YearPicker);
                 }
             }
 
@@ -605,8 +634,7 @@ namespace Alternet.UI
 
                 if (popupMonthPicker.Visible)
                 {
-                    popupYearPickerPanel.Visible = false;
-                    popupDateTextPicker.Visible = false;
+                    ShowAllPopups(show: false, except: InnerPopupKind.MonthPicker);
                 }
             }
 
