@@ -151,20 +151,22 @@ namespace Alternet.UI
 
                 drawItemArgs.State = state;
 
+                var isDark = IsDarkBackground;
+
                 if (isSelectedItem)
                 {
                     drawItemArgs.BackColor
-                        = ListControlItem.GetSelectedItemBackColor(item, this)
+                        = ListControlItem.GetSelectedItemBackColor(item, this, isDark)
                         ?? RealBackgroundColor;
                     drawItemArgs.ForeColor
-                        = ListControlItem.GetSelectedTextColor(item, this)
+                        = ListControlItem.GetSelectedTextColor(item, this, isDark)
                         ?? RealForegroundColor;
                 }
                 else
                 {
                     drawItemArgs.BackColor = RealBackgroundColor;
                     drawItemArgs.ForeColor
-                        = ListControlItem.GetItemTextColor(item, this)
+                        = ListControlItem.GetItemTextColor(item, this, isDark)
                         ?? RealForegroundColor;
                 }
 

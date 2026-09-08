@@ -813,6 +813,7 @@ namespace Alternet.UI
 
                 var isRight = colorListBox.IsColorRightAligned;
                 var itemBrush = GetImageBrush(colorListBox, e);
+                var isDark = colorListBox.IsDarkBackground;
 
                 e.HideCheckboxes = false;
                 e.HideAccentMarker = false;
@@ -845,7 +846,7 @@ namespace Alternet.UI
                     if (item is not null && colorListBox.DrawTextOverItemImage && shapeIsOk)
                     {
                         var foreColor = (colorListBox.TextOverItemImageStyle as Color)
-                            ?? e.GetTextColor(isSelected: false) ?? colorListBox.ForeColor;
+                            ?? e.GetTextColor(isSelected: false, isDark: isDark) ?? colorListBox.ForeColor;
 
                         colorListBox.PaintText(
                                     e.Graphics,

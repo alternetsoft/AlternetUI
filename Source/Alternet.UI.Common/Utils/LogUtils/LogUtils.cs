@@ -479,7 +479,7 @@ namespace Alternet.UI
 
             var message = StringUtils.GetFirstLineOfText(e.Message);
 
-            var isBaseException = e is Exception || e is BaseException;
+            var isBaseException = e.GetType() == typeof(Exception) || e is BaseException;
             var exceptionType = isBaseException ? string.Empty : $" {e.GetType().Name}";
 
             var s = $"<b>{prefix}{exceptionType}</b>: {message}. [{doubleClickStr}...]";

@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// Gets or sets default selected item text color for the unfocused container.
         /// </summary>
         public static LightDarkColor DefaultUnfocusedSelectedItemTextColor
-            = Color.LightDark(light: SystemColors.WindowText, dark: SystemColors.HighlightText);
+            = Color.LightDark(light: Color.Black, dark: Color.White);
 
         /// <summary>
         /// Gets or sets default selected item background color for the unfocused container.
@@ -1279,9 +1279,9 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public Color? GetSelectedItemTextColor(int itemIndex)
+        public Color? GetSelectedItemTextColor(int itemIndex, bool isDark)
         {
-            return ListControlItem.GetSelectedTextColor(GetItem(itemIndex), this);
+            return ListControlItem.GetSelectedTextColor(GetItem(itemIndex), this, isDark);
         }
 
         /// <summary>
@@ -1289,9 +1289,9 @@ namespace Alternet.UI
         /// or <see cref="DefaultItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public Color? GetItemTextColor(int itemIndex)
+        public Color? GetItemTextColor(int itemIndex, bool isDark)
         {
-            return ListControlItem.GetItemTextColor(GetItem(itemIndex), this);
+            return ListControlItem.GetItemTextColor(GetItem(itemIndex), this, isDark);
         }
 
         /// <summary>
@@ -1299,9 +1299,9 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemBackColor"/>.
         /// </summary>
         /// <returns></returns>
-        public Color? GetSelectedItemBackColor(int itemIndex)
+        public Color? GetSelectedItemBackColor(int itemIndex, bool isDark)
         {
-            return ListControlItem.GetSelectedItemBackColor(GetItem(itemIndex), this);
+            return ListControlItem.GetSelectedItemBackColor(GetItem(itemIndex), this, isDark);
         }
 
         /// <summary>
