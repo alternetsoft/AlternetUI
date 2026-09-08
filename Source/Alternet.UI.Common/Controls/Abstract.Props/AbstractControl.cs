@@ -3251,22 +3251,6 @@ namespace Alternet.UI
         public virtual ControlSet ChildrenSet => new(Children);
 
         /// <summary>
-        /// Gets real background color for the control.
-        /// </summary>
-        /// <remarks>
-        /// This property returns color value even if <see cref="BackgroundColor"/>
-        /// is <c>null</c>.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual Color RealBackgroundColor
-        {
-            get
-            {
-                return SystemColors.Control;
-            }
-        }
-
-        /// <summary>
         /// Gets real font value.
         /// </summary>
         /// <remarks>
@@ -3287,6 +3271,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets real background color for the control.
+        /// </summary>
+        /// <remarks>
+        /// This property returns color value even if <see cref="BackgroundColor"/>
+        /// is <c>null</c>.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual Color RealBackgroundColor
+        {
+            get
+            {
+                var ovr = IsDarkBackgroundOverride;
+
+                if (ovr is null)
+                    return DefaultColors.ControlBackColor;
+
+                return DefaultColors.ControlBackColor.LightOrDark(ovr.Value);
+            }
+        }
+
+        /// <summary>
         /// Gets real foreground color for the control.
         /// </summary>
         /// <remarks>
@@ -3298,7 +3303,7 @@ namespace Alternet.UI
         {
             get
             {
-                return SystemColors.ControlText;
+                return DefaultColors.ControlForeColor.LightOrDark(IsDarkBackground);
             }
         }
 
