@@ -3738,6 +3738,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control's <see cref="IsDarkBackgroundOverride"/>
+        /// property is automatically assigned by the parent control. When <see cref="IsDarkBackgroundOverride"/>
+        /// is changed in the control, it's automatically assigned to all child controls
+        /// if their <see cref="UseParentDarkBackgroundOverride"/>
+        /// property is <see langword="true"/>. Default is true.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool UseParentDarkBackgroundOverride { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets an override value for the <see cref="IsDarkBackground"/> property.
         /// </summary>
         [Browsable(false)]
@@ -3751,7 +3761,11 @@ namespace Alternet.UI
 
                 isDarkBackgroundOverride = value;
 
-                ForEachChild(c => c.IsDarkBackgroundOverride = value, recursive: false);
+                ForEachChild(c =>
+                {
+                    if (c.UseParentDarkBackgroundOverride)
+                        c.IsDarkBackgroundOverride = value;
+                }, recursive: false);
             }
         }
 
