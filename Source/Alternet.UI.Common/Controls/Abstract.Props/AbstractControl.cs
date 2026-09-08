@@ -3303,7 +3303,12 @@ namespace Alternet.UI
         {
             get
             {
-                return DefaultColors.ControlForeColor.LightOrDark(IsDarkBackground);
+                var ovr = IsDarkBackgroundOverride;
+
+                if (ovr is null)
+                    return DefaultColors.ControlForeColor;
+
+                return DefaultColors.ControlForeColor.LightOrDark(ovr.Value);
             }
         }
 
