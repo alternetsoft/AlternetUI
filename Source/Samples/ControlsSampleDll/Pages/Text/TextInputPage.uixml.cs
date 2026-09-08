@@ -96,20 +96,7 @@ namespace ControlsSample
                 panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
                 panelSettings.AddInput("Process Enter", textBox, nameof(TextBox.ProcessEnter));
 
-                panelSettings.ContextMenuStrip.AddSeparator();
-
-                panelSettings.ContextMenuStrip.Add("Light Theme", () =>
-                {
-                    ControlUtils.SetPanelColorTheme(scrollViewer, false);
-                });
-                panelSettings.ContextMenuStrip.Add("Auto Theme", () =>
-                {
-                    ControlUtils.SetPanelColorTheme(scrollViewer, null);
-                });
-                panelSettings.ContextMenuStrip.Add("Dark Theme", () =>
-                {
-                    ControlUtils.SetPanelColorTheme(scrollViewer, true);
-                });
+                ControlUtils.AddContextMenuItemsForThemeSelection(panelSettings, scrollViewer);
 
                 textBox.EnterPressed += (s, e) =>
                 {

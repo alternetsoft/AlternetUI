@@ -108,6 +108,8 @@ namespace ControlsSample
 
                 var p = panel.ScrolledControl;
 
+                ControlUtils.AddContextMenuItemsForThemeSelection(p, panel);
+
                 p.Add<BoldLabel>("Options");
 
                 p.AddInput("Show Holidays", calendar, nameof(calendar.ShowHolidays));
@@ -309,6 +311,9 @@ namespace ControlsSample
 
                 patternPickerContainer.Margin = 5;
                 patternPickerContainer.Title = "Highlight";
+
+                ControlUtils.AddContextMenuItemsForThemeSelection(patternPicker, patternPickerContainer);
+
                 tabControl.Add(patternPickerContainer);
 
                 patternPickerContainer.ValueChanged += (s, e) =>

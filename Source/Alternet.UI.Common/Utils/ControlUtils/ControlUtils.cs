@@ -56,12 +56,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds context menu items to the specified control for selecting light, auto, or dark themes.
+        /// </summary>
+        /// <param name="menuOwnerControl">The control to which the context menu items will be added.</param>
+        /// <param name="targetControl">The control whose theme will be changed when a menu item is selected.</param>
+        public static void AddContextMenuItemsForThemeSelection(
+            AbstractControl menuOwnerControl,
+            AbstractControl targetControl)
+        {
+            menuOwnerControl.ContextMenuStrip.AddSeparator();
+
+            menuOwnerControl.ContextMenuStrip.Add("Auto Theme", () =>
+            {
+                ControlUtils.SetPanelColorTheme(targetControl, null);
+            });
+            menuOwnerControl.ContextMenuStrip.Add("Light Theme", () =>
+            {
+                ControlUtils.SetPanelColorTheme(targetControl, false);
+            });
+            menuOwnerControl.ContextMenuStrip.Add("Dark Theme", () =>
+            {
+                ControlUtils.SetPanelColorTheme(targetControl, true);
+            });
+        }
+
+        /// <summary>
         /// Updates the control's background and foreground colors according to the current system theme.
         /// </summary>
         /// <param name="control">The control whose colors will be updated.</param>
         /// <param name="isDark">A nullable boolean indicating whether to use the dark theme.
         /// If null, the system theme will be used.</param>
-        public static void UpdateForeBackColors(AbstractControl control, bool? isDark)
+        public static void UpdateForeBackColors(AbstractControl control, bool? isDark = null)
         {
             if (isDark ?? SystemSettings.AppearanceIsDark)
             {
