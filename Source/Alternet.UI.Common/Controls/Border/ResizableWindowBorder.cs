@@ -21,6 +21,11 @@ namespace Alternet.UI
         public static bool DefaultTitleLabelIsBold = true;
 
         /// <summary>
+        /// Gets or sets the default relative font size for the title label.
+        /// </summary>
+        public static RelativeFontSize DefaultTitleLabelRelativeFontSize = Drawing.RelativeFontSize.FromDelta(2);
+
+        /// <summary>
         /// Gets or sets the default icon margin.
         /// </summary>
         public static Thickness DefaultIconMargin = (5, 0, 0, 0);
@@ -83,7 +88,7 @@ namespace Alternet.UI
             label.Margin = DefaultTitleMargin;
             label.InputTransparent = true;
             label.IsBold = DefaultTitleLabelIsBold;
-            label.Font = label.RealFont.IncSize();
+            label.RelativeFontSize = DefaultTitleLabelRelativeFontSize;
             label.Parent = gripControl;
 
             toolBar.AddControl(gripControl);

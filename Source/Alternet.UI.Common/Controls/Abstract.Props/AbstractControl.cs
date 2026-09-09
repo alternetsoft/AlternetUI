@@ -106,6 +106,7 @@ namespace Alternet.UI
         private PointD layoutOffset;
         private SizeD? layoutMaxSize;
 
+        private Font? realFont;
         private BaseCollection<InputBinding>? inputBindings;
         private Caret? caret;
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
@@ -157,6 +158,7 @@ namespace Alternet.UI
         private HVDropDownAlignment? dropDownMenuPosition;
         private long? lastClickedTimestamp;
         private ControlColorMode? colorMode;
+        private RelativeFontSize? relativeFontSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -3262,12 +3264,32 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Font ?? AbstractControl.DefaultFont;
+                if (realFont is not null)
+                    return realFont;
 
-                if (fontStyle == 0)
-                    return result;
+                var baseFont = Font ?? AbstractControl.DefaultFont;
 
-                return result.WithStyle(fontStyle);
+                if (RelativeFontSize is null)
+                {
+                    if (fontStyle == 0)
+                        realFont = baseFont;
+                    else
+                        realFont = baseFont.WithStyle(fontStyle);
+                    return realFont;
+                }
+                else
+                {
+                    if (fontStyle == 0)
+                    {
+                        realFont = new(baseFont, RelativeFontSize.Value);
+                    }
+                    else
+                    {
+                        realFont = new(baseFont, RelativeFontSize.Value, fontStyle);
+                    }
+
+                    return realFont;
+                }
             }
         }
 
@@ -3644,6 +3666,27 @@ namespace Alternet.UI
             get
             {
                 return font is null;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets relative font size. This property is used to calculate real font size
+        /// based on the <see cref="Font"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public virtual RelativeFontSize? RelativeFontSize
+        {
+            get
+            {
+                return relativeFontSize;
+            }
+
+            set
+            {
+                if (relativeFontSize == value)
+                    return;
+                relativeFontSize = value;
+                RaiseFontChanged(EventArgs.Empty);
             }
         }
 
