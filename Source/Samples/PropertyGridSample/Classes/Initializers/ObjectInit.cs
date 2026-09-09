@@ -81,6 +81,93 @@ namespace PropertyGridSample
             control.Panels.Add(new("text2"));
         }
 
+        public static void InitValueEditorDouble(Alternet.UI.ValueEditorDouble control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorSingle(Alternet.UI.ValueEditorSingle control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorUDouble(Alternet.UI.ValueEditorUDouble control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorUSingle(Alternet.UI.ValueEditorUSingle control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorInt16(Alternet.UI.ValueEditorInt16 control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorInt32(Alternet.UI.ValueEditorInt32 control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorInt64(Alternet.UI.ValueEditorInt64 control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorSByte(Alternet.UI.ValueEditorSByte control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorEMail(Alternet.UI.ValueEditorEMail control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorString(Alternet.UI.ValueEditorString control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorUrl(Alternet.UI.ValueEditorUrl control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorByte(Alternet.UI.ValueEditorByte control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorUInt16(Alternet.UI.ValueEditorUInt16 control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorUInt32(Alternet.UI.ValueEditorUInt32 control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitValueEditorUInt64(Alternet.UI.ValueEditorUInt64 control)
+        {
+            control.Title = "label";
+        }
+
+        public static void InitEnumPickerAndButton(Alternet.UI.EnumPickerAndButton control)
+        {
+            control.MainControl.EnumType = typeof(HorizontalAlignment);
+            control.MainControl.Value = HorizontalAlignment.Center;
+        }
+
+        public static void InitSpeedEnumButton(Alternet.UI.SpeedEnumButton control)
+        {
+            control.EnumType = typeof(HorizontalAlignment);
+            control.Value = HorizontalAlignment.Center;
+        }
+
         public static void InitXTreeView(XTreeView treeView)
         {
             treeView.SuggestedSize = DemoUtils.DefaultListSize;

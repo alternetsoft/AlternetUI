@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="ColorPicker"/> with side buttons.
     /// </summary>
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class ColorPickerAndButton : GenericControlAndButton
     {
         /// <summary>
@@ -17,6 +18,7 @@ namespace Alternet.UI
         /// </summary>
         public ColorPickerAndButton()
         {
+            ButtonOverride = KnownButton.TextBoxEllipsis;
         }
 
         /// <summary>
