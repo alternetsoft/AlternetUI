@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="UI.ComboBox"/> with attached label.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Editors)]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class ComboBoxAndLabel : ControlAndLabel<ComboBox, Label>
     {
         /// <summary>

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -18,6 +19,11 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the title label is bold by default.
         /// </summary>
         public static bool DefaultTitleLabelIsBold = true;
+
+        /// <summary>
+        /// Gets or sets the default relative font size for the title label.
+        /// </summary>
+        public static RelativeFontSize DefaultTitleLabelRelativeFontSize = Drawing.RelativeFontSize.FromDelta(2);
 
         /// <summary>
         /// Gets or sets the default icon margin.
@@ -82,7 +88,7 @@ namespace Alternet.UI
             label.Margin = DefaultTitleMargin;
             label.InputTransparent = true;
             label.IsBold = DefaultTitleLabelIsBold;
-            label.Font = label.RealFont.IncSize();
+            label.RelativeFontSize = DefaultTitleLabelRelativeFontSize;
             label.Parent = gripControl;
 
             toolBar.AddControl(gripControl);
@@ -164,14 +170,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool? IsDarkBackgroundOverride
+        public override ControlColorMode? ColorMode
         {
-            get => base.IsDarkBackgroundOverride;
+            get => base.ColorMode;
             set
             {
-                if (IsDarkBackgroundOverride == value)
+                if (ColorMode == value)
                     return;
-                base.IsDarkBackgroundOverride = value;
+                base.ColorMode = value;
                 AssignDefaultColors();
             }
         }
@@ -332,7 +338,7 @@ namespace Alternet.UI
             if (!AutoUpdateColors)
                 return;
 
-            var isDark = IsDarkBackgroundOverride ?? SystemSettings.AppearanceIsDark;
+            var isDark = ColorMode.AppearanceIsDark();
 
             toolBar.DoInsideUpdate(() =>
             {

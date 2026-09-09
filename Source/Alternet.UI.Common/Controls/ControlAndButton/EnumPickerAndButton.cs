@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="EnumPicker"/> with side buttons.
     /// </summary>
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class EnumPickerAndButton : GenericControlAndButton
     {
         /// <summary>
@@ -17,6 +18,7 @@ namespace Alternet.UI
         /// </summary>
         public EnumPickerAndButton()
         {
+            ButtonOverride = KnownButton.TextBoxEllipsis;
         }
 
         /// <summary>

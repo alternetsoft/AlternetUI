@@ -2333,10 +2333,12 @@ namespace Alternet.UI
         /// including its rectangle, colors, and other settings.</param>
         public virtual void DrawCellBackground(in DrawCellParams prm)
         {
-            if (!IsSelectedCell(prm.AsCellContext))
+            var container = prm.Container;
+            var isEnabled = IsContainerEnabled(container);
+
+            if (!isEnabled)
                 return;
 
-            var container = prm.Container;
             var isDark = IsContainerDark(container);
             var e = prm.PaintArgs;
             var item = e.Item;
@@ -2344,14 +2346,24 @@ namespace Alternet.UI
             var dc = e.Graphics;
             var control = container?.Control;
 
-            var selectionBorder = container?.Defaults.SelectionBorder;
-
             dc.FillBorderRectangle(
                 rect,
-                GetSelectedItemBackColor(item, container, isDark)?.AsBrush,
-                selectionBorder,
-                hasBorder: false,
+                BackgroundColor?.AsBrush,
+                Border,
+                hasBorder: true,
                 control);
+
+            if (IsSelectedCell(prm.AsCellContext))
+            {
+                var selectionBorder = container?.Defaults.SelectionBorder;
+
+                dc.FillBorderRectangle(
+                    rect,
+                    GetSelectedItemBackColor(item, container, isDark)?.AsBrush,
+                    selectionBorder,
+                    hasBorder: false,
+                    control);
+            }
         }
 
         /// <summary>
@@ -2363,8 +2375,11 @@ namespace Alternet.UI
         /// including its rectangle, colors, and other settings.</param>
         public virtual void DrawCellForeground(in DrawCellParams prm)
         {
+            /*
             var isEnabled = IsContainerEnabled(prm.Container);
             var control = prm.Container?.Control;
+            */
+
             var isSelected = IsSelectedCell(prm.AsCellContext);
             var isDark = IsContainerDark(prm.Container);
 
@@ -2395,12 +2410,6 @@ namespace Alternet.UI
             labelPrm.DrawDebugCorners = false;
 
             prm.PaintArgs.Graphics.DrawLabel(ref labelPrm);
-
-            if (this.Border is not null)
-            {
-                var currentBorder = isEnabled ? this.Border : this.Border.ToGrayScale();
-                DrawingUtils.DrawBorder(control, prm.PaintArgs.Graphics, prm.Rect, currentBorder);
-            }
         }
 
         /// <summary>

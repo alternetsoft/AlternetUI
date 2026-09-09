@@ -7,6 +7,7 @@ using System.Linq;
 
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -105,6 +106,7 @@ namespace Alternet.UI
         private PointD layoutOffset;
         private SizeD? layoutMaxSize;
 
+        private Font? realFont;
         private BaseCollection<InputBinding>? inputBindings;
         private Caret? caret;
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
@@ -155,7 +157,8 @@ namespace Alternet.UI
         private bool bubbleKeys;
         private HVDropDownAlignment? dropDownMenuPosition;
         private long? lastClickedTimestamp;
-        private bool? isDarkBackgroundOverride;
+        private ControlColorMode? colorMode;
+        private RelativeFontSize? relativeFontSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -3261,12 +3264,32 @@ namespace Alternet.UI
         {
             get
             {
-                var result = Font ?? AbstractControl.DefaultFont;
+                if (realFont is not null)
+                    return realFont;
 
-                if (fontStyle == 0)
-                    return result;
+                var baseFont = Font ?? AbstractControl.DefaultFont;
 
-                return result.WithStyle(fontStyle);
+                if (RelativeFontSize is null)
+                {
+                    if (fontStyle == 0)
+                        realFont = baseFont;
+                    else
+                        realFont = baseFont.WithStyle(fontStyle);
+                    return realFont;
+                }
+                else
+                {
+                    if (fontStyle == 0)
+                    {
+                        realFont = new(baseFont, RelativeFontSize.Value);
+                    }
+                    else
+                    {
+                        realFont = new(baseFont, RelativeFontSize.Value, fontStyle);
+                    }
+
+                    return realFont;
+                }
             }
         }
 
@@ -3282,12 +3305,12 @@ namespace Alternet.UI
         {
             get
             {
-                var ovr = IsDarkBackgroundOverride;
+                var ovr = ColorMode;
 
                 if (ovr is null)
                     return DefaultColors.ControlBackColor;
 
-                return DefaultColors.ControlBackColor.LightOrDark(ovr.Value);
+                return DefaultColors.ControlBackColor.LightOrDark(ovr.IsDark());
             }
         }
 
@@ -3303,12 +3326,12 @@ namespace Alternet.UI
         {
             get
             {
-                var ovr = IsDarkBackgroundOverride;
+                var ovr = ColorMode;
 
                 if (ovr is null)
                     return DefaultColors.ControlForeColor;
 
-                return DefaultColors.ControlForeColor.LightOrDark(ovr.Value);
+                return DefaultColors.ControlForeColor.LightOrDark(ovr.IsDark());
             }
         }
 
@@ -3647,6 +3670,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets relative font size. This property is used to calculate real font size
+        /// based on the <see cref="Font"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public virtual RelativeFontSize? RelativeFontSize
+        {
+            get
+            {
+                return relativeFontSize;
+            }
+
+            set
+            {
+                if (relativeFontSize == value)
+                    return;
+                relativeFontSize = value;
+                RaiseFontChanged(EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="FontStyle"/> override. It is used instead of the
         /// <see cref="Font"/> style when real font value is calculated.
         /// This property is ignored when it equals <see cref="FontStyle.Regular"/> (default value).
@@ -3743,33 +3787,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the control's <see cref="IsDarkBackgroundOverride"/>
-        /// property is automatically assigned by the parent control. When <see cref="IsDarkBackgroundOverride"/>
+        /// Gets or sets a value indicating whether the control's <see cref="ColorMode"/>
+        /// property is automatically assigned by the parent control. When <see cref="ColorMode"/>
         /// is changed in the control, it's automatically assigned to all child controls
-        /// if their <see cref="UseParentDarkBackgroundOverride"/>
+        /// if their <see cref="ParentColorMode"/>
         /// property is <see langword="true"/>. Default is true.
         /// </summary>
         [Browsable(false)]
-        public virtual bool UseParentDarkBackgroundOverride { get; set; } = true;
+        public virtual bool ParentColorMode { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets an override value for the <see cref="IsDarkBackground"/> property.
+        /// Gets or sets color mode of the control. Default is null, which means that color
+        /// mode is automatically determined by the application settings.
         /// </summary>
         [Browsable(false)]
-        public virtual bool? IsDarkBackgroundOverride
+        public virtual ControlColorMode? ColorMode
         {
-            get => isDarkBackgroundOverride;
+            get => colorMode;
             set
             {
-                if (IsDarkBackgroundOverride == value)
+                if (ColorMode == value)
                     return;
 
-                isDarkBackgroundOverride = value;
+                colorMode = value;
 
                 ForEachChild(c =>
                 {
-                    if (c.UseParentDarkBackgroundOverride)
-                        c.IsDarkBackgroundOverride = value;
+                    if (c.ParentColorMode)
+                        c.ColorMode = value;
                 }, recursive: false);
             }
         }
@@ -3782,8 +3827,8 @@ namespace Alternet.UI
         {
             get
             {
-                if (IsDarkBackgroundOverride is not null)
-                    return IsDarkBackgroundOverride.Value;
+                if (ColorMode is not null)
+                    return ColorMode.IsDark();
 
                 var backgroundColor = RealBackgroundColor;
 

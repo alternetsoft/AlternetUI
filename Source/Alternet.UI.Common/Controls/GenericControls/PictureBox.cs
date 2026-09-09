@@ -94,6 +94,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlColorMode? ColorMode
+        {
+            get => base.ColorMode;
+            set
+            {
+                if (ColorMode == value) return;
+                base.ColorMode = value;
+                primitive.ResetCachedImages();
+            }
+        }
+
         /// <summary>
         /// Gets or sets the horizontal corner radius for rounded corners.
         /// </summary>

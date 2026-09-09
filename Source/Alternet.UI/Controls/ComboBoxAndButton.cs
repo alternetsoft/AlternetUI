@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="UI.ComboBox"/> with additional buttons.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Editors)]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class ComboBoxAndButton : ControlAndButton
     {
         /// <summary>

@@ -232,15 +232,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool? IsDarkBackgroundOverride
+        public override ControlColorMode? ColorMode
         {
-            get => base.IsDarkBackgroundOverride;
+            get => base.ColorMode;
             set
             {
-                if (IsDarkBackgroundOverride == value)
+                if (ColorMode == value)
                     return;
-                base.IsDarkBackgroundOverride = value;
-                label.IsDarkBackgroundOverride = value;
+                base.ColorMode = value;
+                label.ColorMode = value;
                 OnDpiOrSystemColorsChanged();
             }
         }

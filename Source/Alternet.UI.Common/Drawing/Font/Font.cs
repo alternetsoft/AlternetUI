@@ -47,6 +47,8 @@ namespace Alternet.Drawing
         private static string? defaultFontName;
         private static string? defaultMonoFontName;
 
+        private readonly GenericFontFamily genericFamily;
+
         private SkiaFontHandler handler;
         private SKFont? skiaFont;
         private FontStyle? style;
@@ -57,7 +59,6 @@ namespace Alternet.Drawing
         private FontFamily? fontFamily;
         private ObjectUniqueId? uniqueId;
         private int savedFontSettingsIteration;
-        private GenericFontFamily genericFamily;
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
@@ -155,6 +156,39 @@ namespace Alternet.Drawing
                 prototype.Name,
                 newSize,
                 prototype.Style)
+        {
+            baseFont = prototype;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
+        /// and <see cref="RelativeFontSize" />.
+        /// </summary>
+        /// <param name="prototype">The existing <see cref="Font" /> from which to create the new <see cref="Font" />.</param>
+        /// <param name="newSize">The new size of the font as a <see cref="RelativeFontSize" />.</param>
+        public Font(Font prototype, RelativeFontSize newSize)
+            : this(
+                prototype.fontFamily?.GenericFamily,
+                prototype.Name,
+                newSize.GetSize(prototype.Size),
+                prototype.Style)
+        {
+            baseFont = prototype;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />,
+        /// <see cref="RelativeFontSize" /> and <see cref="FontStyle" />.
+        /// </summary>
+        /// <param name="prototype">The existing <see cref="Font" /> from which to create the new <see cref="Font" />.</param>
+        /// <param name="newSize">The new size of the font as a <see cref="RelativeFontSize" />.</param>
+        /// <param name="newStyle">The new style of the font as a <see cref="FontStyle" />.</param>
+        public Font(Font prototype, RelativeFontSize newSize, FontStyle newStyle)
+            : this(
+                prototype.fontFamily?.GenericFamily,
+                prototype.Name,
+                newSize.GetSize(prototype.Size),
+                newStyle)
         {
             baseFont = prototype;
         }

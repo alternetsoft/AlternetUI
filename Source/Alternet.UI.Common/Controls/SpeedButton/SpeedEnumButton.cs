@@ -12,6 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="SpeedButton"/> for selecting of the enum values.
     /// </summary>
+    [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class SpeedEnumButton : SpeedButtonWithListPopup
     {
         /// <summary>

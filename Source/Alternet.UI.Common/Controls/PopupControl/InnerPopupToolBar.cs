@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -144,10 +145,13 @@ namespace Alternet.UI
 
             AssignDefaultColors();
 
-            ScrollViewer.Content.SizeChanged += (s, e) =>
+            if (ScrollViewer is not null)
             {
-                Content.Width = ScrollViewer.Content.ClientSize.Width;
-            };
+                ScrollViewer.Content.SizeChanged += (s, e) =>
+                {
+                    Content.Width = ScrollViewer.Content.ClientSize.Width;
+                };
+            }
         }
 
         /// <inheritdoc/>
@@ -171,12 +175,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool? IsDarkBackgroundOverride
+        public override ControlColorMode? ColorMode
         {
-            get => base.IsDarkBackgroundOverride;
+            get => base.ColorMode;
             set
             {
-                base.IsDarkBackgroundOverride = value;
+                base.ColorMode = value;
                 AssignDefaultColors();
             }
         }
@@ -615,7 +619,7 @@ namespace Alternet.UI
             if (!AutoUpdateColors)
                 return;
 
-            var isDark = IsDarkBackgroundOverride ?? SystemSettings.AppearanceIsDark;
+            var isDark = ColorMode.AppearanceIsDark();
 
             Content.ParentBackColor = true;
             Content.ParentForeColor = true;

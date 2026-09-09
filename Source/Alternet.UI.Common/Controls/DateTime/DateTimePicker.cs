@@ -191,6 +191,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlColorMode? ColorMode
+        {
+            get => base.ColorMode;
+            set
+            {
+                base.ColorMode = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets selected time as <see cref="TimeOnly"/>.
         /// </summary>

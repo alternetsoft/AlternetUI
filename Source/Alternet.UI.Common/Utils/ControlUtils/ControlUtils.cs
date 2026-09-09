@@ -15,6 +15,18 @@ namespace Alternet.UI
         private static Control? empty;
 
         /// <summary>
+        /// Converts a nullable boolean value indicating dark mode to a nullable <see cref="ControlColorMode"/>.
+        /// </summary>
+        /// <param name="isDark">A nullable boolean indicating whether to use the dark theme.</param>
+        /// <returns>A nullable <see cref="ControlColorMode"/> corresponding to the input value.</returns>
+        public static ControlColorMode? ToColorMode(bool? isDark)
+        {
+            if (isDark is null)
+                return null;
+            return isDark.Value ? ControlColorMode.Dark : ControlColorMode.Light;
+        }
+
+        /// <summary>
         /// Gets whether SkiaSharp is used for rendering controls.
         /// </summary>
         public static bool SkiaSharpRendering
@@ -51,7 +63,7 @@ namespace Alternet.UI
             control.BackgroundColor = DefaultColors.ControlBackColor.LightOrDark(isDark.Value);
             control.ForegroundColor = DefaultColors.ControlForeColor.LightOrDark(isDark.Value);
 
-            control.IsDarkBackgroundOverride = isDark;
+            control.ColorMode = ControlUtils.ToColorMode(isDark);
             control.Invalidate();
         }
 

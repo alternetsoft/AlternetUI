@@ -518,13 +518,13 @@ namespace Alternet.UI
             {
                 ParentBackColor = true;
                 ParentForeColor = true;
-                IsDarkBackgroundOverride = null;
+                ColorMode = null;
                 return;
             }
 
             ParentBackColor = false;
             ParentForeColor = false;
-            IsDarkBackgroundOverride = isDark;
+            ColorMode = ControlUtils.ToColorMode(isDark);
 
             if (isDark is null)
             {
@@ -552,7 +552,7 @@ namespace Alternet.UI
                 ParentBackColor = false;
                 ParentForeColor = false;
 
-                var isDark = IsDarkBackgroundOverride ?? SystemSettings.AppearanceIsDark;
+                var isDark = ColorMode.ToBool() ?? SystemSettings.AppearanceIsDark;
 
                 BackColor = DefaultColors.ControlBackColor.LightOrDark(isDark);
                 ForeColor = DefaultColors.ControlForeColor.LightOrDark(isDark);
