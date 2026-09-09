@@ -39,10 +39,35 @@ namespace PropertyGridSample
             LimitedTypes.Add(typeof(T));
         }
 
-        void ToolBoxAdd<T>(Action<T> action)
+        void ToolBoxAddComponent<T>(Action<T> action)
         {
             LimitedTypes.Add(typeof(T));
             ObjectInit.AddAction<T>(action);
+        }
+
+        void ToolBoxAdd<T>(Action<T> action)
+            where T : AbstractControl
+        {
+            LimitedTypes.Add(typeof(T));
+            ObjectInit.AddAction<T>(action);
+
+            AddControlAction<T>("ColorMode = null", (c) =>
+            {
+                c.ColorMode = null;
+                c.Invalidate();
+            });
+
+            AddControlAction<T>("ColorMode = Light", (c) =>
+            {
+                c.ColorMode = ControlColorMode.Light;
+                c.Invalidate();
+            });
+
+            AddControlAction<T>("ColorMode = Dark", (c) =>
+            {
+                c.ColorMode = ControlColorMode.Dark;
+                c.Invalidate();
+            });
         }
 
         private void InitToolBox()
@@ -65,7 +90,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<CardPanelHeader>(ObjectInit.InitCardPanelHeader);
                 ToolBoxAdd<ColorListBox>();
                 ToolBoxAdd<ColorPicker>(ObjectInit.InitColorPicker);
-                ToolBoxAdd<ContextMenu>(ObjectInit.InitContextMenu);
                 ToolBoxAdd<DatePicker>(ObjectInit.InitDatePicker);
                 ToolBoxAdd<DateTimePicker>(ObjectInit.InitDateTimePicker);
                 ToolBoxAdd<DayOfWeekPicker>();
