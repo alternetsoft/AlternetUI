@@ -87,6 +87,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override ControlColorMode? ColorMode
+        {
+            get => base.ColorMode;
+            set
+            {
+                base.ColorMode = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the border width for the <see cref="GenericBorder"/> control.
         /// </summary>
