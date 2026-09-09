@@ -1058,6 +1058,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="isDark">Whether to get dark or light color.</param>
         /// <returns>The color to be used for the specified theme.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color LightOrDark(bool isDark)
         {
             if (isDark)
@@ -1070,6 +1071,7 @@ namespace Alternet.Drawing
         /// Gets <see cref="GetDark"/> or <see cref="GetLight"/> color depending on the current theme.
         /// </summary>
         /// <returns>The color to be used for the current theme.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color LightOrDark()
         {
             return LightOrDark(LightDarkColor.IsUsingDarkColor);
@@ -1421,6 +1423,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rgb">Color.</param>
         /// <param name="on">Color on/off selector.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void MakeMono(ref RGBValue rgb, bool on)
         {
             byte v = on ? (byte)255 : (byte)0;
@@ -1474,6 +1477,7 @@ namespace Alternet.Drawing
         /// <param name="lightDark">The color to be used for both the light and dark themes.</param>
         /// <returns>A <see cref="LightDarkColor"/> instance where the same
         /// color is applied to both themes.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LightDarkColor LightDark(Color lightDark)
         {
             return new LightDarkColor(lightDark, lightDark);
@@ -1486,6 +1490,7 @@ namespace Alternet.Drawing
         /// <param name="light">Color used when light theme is on.</param>
         /// <param name="dark">Color used when dark theme is on.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static LightDarkColor LightDark(Color light, Color dark)
         {
             return new LightDarkColor(light, dark);
@@ -1668,6 +1673,7 @@ namespace Alternet.Drawing
         /// an <paramref name="alphaValue"/> of 100 returns the same color.
         /// </summary>
         /// <param name="alphaValue">Lightness value (0..200).</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Color ChangeLightness(int alphaValue)
         {
             RGBValue rgb = this;
@@ -1867,6 +1873,7 @@ namespace Alternet.Drawing
         /// default border color is used.</param>
         /// <param name="shape">Shape of the image. Optional.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Image AsImageWithBorder(
             SizeD size,
             Coord scaleFactor,

@@ -19,6 +19,46 @@ namespace Alternet.UI.Extensions
     public static partial class ExtensionsPublic
     {
         /// <summary>
+        /// Gets whether <see cref="ControlColorMode"/> is equal to <see cref="ControlColorMode.Dark"/>.
+        /// </summary>
+        /// <param name="colorMode">The color mode to check.</param>
+        /// <returns><c>true</c> if the color mode is dark; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsDark(this ControlColorMode? colorMode)
+        {
+            if (colorMode.HasValue)
+                return colorMode.Value == ControlColorMode.Dark;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets <see cref="ControlColorMode"/> as a nullable boolean value.
+        /// </summary>
+        /// <param name="colorMode">The color mode to check.</param>
+        /// <returns><c>true</c> if the color mode is dark; <c>false</c> if the color mode is light;
+        /// otherwise, <c>null</c>.</returns>
+        public static bool? ToBool(this ControlColorMode? colorMode)
+        {
+            if (colorMode.HasValue)
+                return colorMode.Value == ControlColorMode.Dark;
+            return null;
+        }
+
+        /// <summary>
+        /// Gets whether the appearance is dark based on the specified <see cref="ControlColorMode"/> value.
+        /// If the color mode is not specified, the method checks the system settings to determine if the appearance is dark.
+        /// </summary>
+        /// <param name="colorMode">The color mode to check.</param>
+        /// <returns><c>true</c> if the appearance is dark; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool AppearanceIsDark(this ControlColorMode? colorMode)
+        {
+            if (colorMode.HasValue)
+                return colorMode.Value == ControlColorMode.Dark;
+            return SystemSettings.AppearanceIsDark;
+        }
+
+        /// <summary>
         /// Returns display string for the <see cref="TimePeriodUnit"/>.
         /// If time period unit is not recognized, the method returns the unit's name in lowercase.
         /// If amount is greater than 1, the plural form of the unit is returned.
@@ -70,7 +110,8 @@ namespace Alternet.UI.Extensions
         /// automatically adjust their size when docked. If the specified dock style does not have an auto-size variant,
         /// the original value is returned.</remarks>
         /// <param name="dock">The dock style to convert to its auto-size variant.</param>
-        /// <returns>The auto-size variant of the specified dock style if one exists; otherwise, returns the original dock style.</returns>
+        /// <returns>The auto-size variant of the specified dock style if one exists;
+        /// otherwise, returns the original dock style.</returns>
         public static DockStyle WithAutoSize(this DockStyle dock)
         {
             return dock switch
@@ -86,6 +127,7 @@ namespace Alternet.UI.Extensions
         /// <summary>
         /// Returns a random single-precision float in the range [0.0f, 1.0f).
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float NextFloat(this Random rng)
         {
             return (float)rng.NextDouble();
@@ -142,6 +184,7 @@ namespace Alternet.UI.Extensions
         /// </summary>
         /// <param name="e">Event arguments.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasPropertyName(this PropertyChangedEventArgs e)
         {
             return !string.IsNullOrEmpty(e.PropertyName);

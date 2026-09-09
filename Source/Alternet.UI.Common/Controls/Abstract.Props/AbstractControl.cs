@@ -7,6 +7,7 @@ using System.Linq;
 
 using Alternet.Base.Collections;
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -155,7 +156,7 @@ namespace Alternet.UI
         private bool bubbleKeys;
         private HVDropDownAlignment? dropDownMenuPosition;
         private long? lastClickedTimestamp;
-        private bool? colorMode;
+        private ControlColorMode? colorMode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -3287,7 +3288,7 @@ namespace Alternet.UI
                 if (ovr is null)
                     return DefaultColors.ControlBackColor;
 
-                return DefaultColors.ControlBackColor.LightOrDark(ovr.Value);
+                return DefaultColors.ControlBackColor.LightOrDark(ovr.IsDark());
             }
         }
 
@@ -3308,7 +3309,7 @@ namespace Alternet.UI
                 if (ovr is null)
                     return DefaultColors.ControlForeColor;
 
-                return DefaultColors.ControlForeColor.LightOrDark(ovr.Value);
+                return DefaultColors.ControlForeColor.LightOrDark(ovr.IsDark());
             }
         }
 
@@ -3757,7 +3758,7 @@ namespace Alternet.UI
         /// mode is automatically determined by the application settings.
         /// </summary>
         [Browsable(false)]
-        public virtual bool? ColorMode
+        public virtual ControlColorMode? ColorMode
         {
             get => colorMode;
             set
@@ -3784,7 +3785,7 @@ namespace Alternet.UI
             get
             {
                 if (ColorMode is not null)
-                    return ColorMode.Value;
+                    return ColorMode.IsDark();
 
                 var backgroundColor = RealBackgroundColor;
 

@@ -47,6 +47,17 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override ControlColorMode? ColorMode
+        {
+            get => base.ColorMode;
+            set
+            {
+                base.ColorMode = value;
+                UseControlColors(DefaultUseControlColors);
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             UseControlColors(DefaultUseControlColors);

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -164,7 +165,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool? ColorMode
+        public override ControlColorMode? ColorMode
         {
             get => base.ColorMode;
             set
@@ -332,7 +333,7 @@ namespace Alternet.UI
             if (!AutoUpdateColors)
                 return;
 
-            var isDark = ColorMode ?? SystemSettings.AppearanceIsDark;
+            var isDark = ColorMode.AppearanceIsDark();
 
             toolBar.DoInsideUpdate(() =>
             {

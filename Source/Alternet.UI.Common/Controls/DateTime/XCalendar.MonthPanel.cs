@@ -56,7 +56,7 @@ namespace Alternet.UI
             public event EventHandler? ValueChanged;
 
             /// <inheritdoc/>
-            public override bool? ColorMode
+            public override ControlColorMode? ColorMode
             {
                 get => base.ColorMode;
                 set

@@ -52,7 +52,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool? ColorMode
+        public override ControlColorMode? ColorMode
         {
             get => base.ColorMode;
             set

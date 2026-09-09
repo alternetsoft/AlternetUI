@@ -524,7 +524,7 @@ namespace Alternet.UI
 
             ParentBackColor = false;
             ParentForeColor = false;
-            ColorMode = isDark;
+            ColorMode = ControlUtils.ToColorMode(isDark);
 
             if (isDark is null)
             {
@@ -552,7 +552,7 @@ namespace Alternet.UI
                 ParentBackColor = false;
                 ParentForeColor = false;
 
-                var isDark = ColorMode ?? SystemSettings.AppearanceIsDark;
+                var isDark = ColorMode.ToBool() ?? SystemSettings.AppearanceIsDark;
 
                 BackColor = DefaultColors.ControlBackColor.LightOrDark(isDark);
                 ForeColor = DefaultColors.ControlForeColor.LightOrDark(isDark);

@@ -160,7 +160,7 @@ namespace Alternet.UI
         public bool HasVerticalScrollBarSettings => verticalScrollBarSettings is not null;
 
         /// <inheritdoc/>
-        public override bool? ColorMode
+        public override ControlColorMode? ColorMode
         {
             get => base.ColorMode;
             set

@@ -230,13 +230,13 @@ namespace PropertyGridSample
 
             AddControlAction<XScrollBar>("Set dark theme", (c) =>
             {
-                c.ColorMode = true;
+                c.ColorMode = ControlColorMode.Dark;
                 c.Invalidate();
             });
 
             AddControlAction<XScrollBar>("Set light theme", (c) =>
             {
-                c.ColorMode = false;
+                c.ColorMode = ControlColorMode.Light;
                 c.Invalidate();
             });
         }
