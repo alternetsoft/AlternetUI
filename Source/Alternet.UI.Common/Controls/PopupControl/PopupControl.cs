@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// </summary>
         public PopupControl()
         {
-            UseParentDarkBackgroundOverride = false;
+            ParentColorMode = false;
             IgnoreLayout = true;
             Visible = false;
             ParentFont = true;

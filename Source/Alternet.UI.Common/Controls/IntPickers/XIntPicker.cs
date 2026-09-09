@@ -148,12 +148,12 @@ namespace Alternet.UI
         public SpeedButton ButtonPlus => FindTool(IdButtonPlus)!;
 
         /// <inheritdoc/>
-        public override bool? IsDarkBackgroundOverride
+        public override bool? ColorMode
         {
-            get => base.IsDarkBackgroundOverride;
+            get => base.ColorMode;
             set
             {
-                base.IsDarkBackgroundOverride = value;
+                base.ColorMode = value;
                 UseControlColors(true);
             }
         }

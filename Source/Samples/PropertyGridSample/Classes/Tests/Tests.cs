@@ -224,19 +224,19 @@ namespace PropertyGridSample
         {
             AddControlAction<XScrollBar>("Set auto theme", (c) =>
             {
-                c.IsDarkBackgroundOverride = null;
+                c.ColorMode = null;
                 c.Invalidate();
             });
 
             AddControlAction<XScrollBar>("Set dark theme", (c) =>
             {
-                c.IsDarkBackgroundOverride = true;
+                c.ColorMode = true;
                 c.Invalidate();
             });
 
             AddControlAction<XScrollBar>("Set light theme", (c) =>
             {
-                c.IsDarkBackgroundOverride = false;
+                c.ColorMode = false;
                 c.Invalidate();
             });
         }

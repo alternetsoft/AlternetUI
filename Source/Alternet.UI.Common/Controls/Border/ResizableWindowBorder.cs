@@ -164,14 +164,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool? IsDarkBackgroundOverride
+        public override bool? ColorMode
         {
-            get => base.IsDarkBackgroundOverride;
+            get => base.ColorMode;
             set
             {
-                if (IsDarkBackgroundOverride == value)
+                if (ColorMode == value)
                     return;
-                base.IsDarkBackgroundOverride = value;
+                base.ColorMode = value;
                 AssignDefaultColors();
             }
         }
@@ -332,7 +332,7 @@ namespace Alternet.UI
             if (!AutoUpdateColors)
                 return;
 
-            var isDark = IsDarkBackgroundOverride ?? SystemSettings.AppearanceIsDark;
+            var isDark = ColorMode ?? SystemSettings.AppearanceIsDark;
 
             toolBar.DoInsideUpdate(() =>
             {

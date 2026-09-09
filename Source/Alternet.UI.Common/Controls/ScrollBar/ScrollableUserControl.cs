@@ -160,12 +160,12 @@ namespace Alternet.UI
         public bool HasVerticalScrollBarSettings => verticalScrollBarSettings is not null;
 
         /// <inheritdoc/>
-        public override bool? IsDarkBackgroundOverride
+        public override bool? ColorMode
         {
-            get => base.IsDarkBackgroundOverride;
+            get => base.ColorMode;
             set
             {
-                base.IsDarkBackgroundOverride = value;
+                base.ColorMode = value;
                 Interior.UpdateThemeMetrics(IsDarkBackground);
             }
         }

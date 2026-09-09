@@ -887,8 +887,8 @@ namespace Alternet.UI
                     childControl.ForeColor = RealForegroundColor;
                 }
 
-                if (childControl.UseParentDarkBackgroundOverride)
-                    childControl.IsDarkBackgroundOverride = IsDarkBackgroundOverride;
+                if (childControl.ParentColorMode)
+                    childControl.ColorMode = ColorMode;
             }
 
             OnChildInserted(index, childControl);

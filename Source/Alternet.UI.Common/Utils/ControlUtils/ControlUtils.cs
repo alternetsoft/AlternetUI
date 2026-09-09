@@ -51,7 +51,7 @@ namespace Alternet.UI
             control.BackgroundColor = DefaultColors.ControlBackColor.LightOrDark(isDark.Value);
             control.ForegroundColor = DefaultColors.ControlForeColor.LightOrDark(isDark.Value);
 
-            control.IsDarkBackgroundOverride = isDark;
+            control.ColorMode = isDark;
             control.Invalidate();
         }
 

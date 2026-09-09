@@ -48,12 +48,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool? IsDarkBackgroundOverride
+        public override bool? ColorMode
         {
-            get => base.IsDarkBackgroundOverride;
+            get => base.ColorMode;
             set
             {
-                base.IsDarkBackgroundOverride = value;
+                base.ColorMode = value;
                 UseControlColors(DefaultUseControlColors);
             }
         }

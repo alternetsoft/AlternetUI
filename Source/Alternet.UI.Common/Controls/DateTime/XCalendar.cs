@@ -214,7 +214,7 @@ namespace Alternet.UI
                         showMethod: ShowMethod.None);
                     actionsMenu.WithHostObject<InnerPopupToolBar>(host =>
                     {
-                        host.IsDarkBackgroundOverride = IsDarkBackground;
+                        host.ColorMode = IsDarkBackground;
                         host.BorderControl.HasTitleBar = false;
                         host.AlignInParent(HorizontalAlignment.Center, VerticalAlignment.Center);
                         host.Show();
@@ -1348,12 +1348,12 @@ namespace Alternet.UI
         /// If null, the auto theme is used.</param>
         protected virtual void SetColorTheme(bool? isDark)
         {
-            IsDarkBackgroundOverride = isDark;
+            ColorMode = isDark;
 
-            dayView.IsDarkBackgroundOverride = isDark;
+            dayView.ColorMode = isDark;
             dayView.SetColorTheme(isDark);
-            header.IsDarkBackgroundOverride = isDark;
-            container.IsDarkBackgroundOverride = isDark;
+            header.ColorMode = isDark;
+            container.ColorMode = isDark;
 
             ResetAttrAll(invalidate: InvalidateMethod.None);
             OnValueChanged();
