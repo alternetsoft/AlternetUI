@@ -59,7 +59,7 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return base.BackgroundColor;
+                    return base.BackgroundColor ?? Data.DateAttr?.BackgroundColor;
                 }
 
                 set

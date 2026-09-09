@@ -24,6 +24,11 @@ namespace Alternet.UI
         Color? TextColor { get; set; }
 
         /// <summary>
+        /// Gets or sets the background color assigned for the calendar date.
+        /// </summary>
+        Color? BackgroundColor { get; set; }
+
+        /// <summary>
         /// Gets or sets the font style assigned for the calendar date.
         /// </summary>
         FontStyle? FontStyle { get; set; }
@@ -42,6 +47,11 @@ namespace Alternet.UI
         /// Gets a value indicating whether border color is assigned for the calendar date.
         /// </summary>
         bool HasBorderColor { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether background color is assigned for the calendar date.
+        /// </summary>
+        bool HasBackgroundColor { get; }
 
         /// <summary>
         /// Gets or sets the border assigned for the calendar date.

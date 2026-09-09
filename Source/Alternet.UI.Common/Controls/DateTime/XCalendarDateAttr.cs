@@ -17,6 +17,7 @@ namespace Alternet.UI
         private Color? textColor;
         private BorderSettings? border;
         private FontStyle? fontStyle;
+        private Color? backgroundColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XCalendarDateAttr"/> class.
@@ -90,7 +91,7 @@ namespace Alternet.UI
         public bool HasBorderColor => BorderColor != null;
 
         /// <inheritdoc/>
-        public FontStyle? FontStyle
+        public virtual FontStyle? FontStyle
         {
             get => fontStyle;
             set
@@ -98,5 +99,17 @@ namespace Alternet.UI
                 SetProperty(ref fontStyle, value);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the background color assigned for the calendar date.
+        /// </summary>
+        public virtual Color? BackgroundColor
+        {
+            get => backgroundColor;
+            set => SetProperty(ref backgroundColor, value);
+        }
+
+        /// <inheritdoc/>
+        public bool HasBackgroundColor => BackgroundColor != null;
     }
 }
