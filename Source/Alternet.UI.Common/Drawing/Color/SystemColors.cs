@@ -1,3 +1,5 @@
+using System;
+
 namespace Alternet.Drawing
 {
     /// <summary>Each property of the <see cref="SystemColors" /> class is a

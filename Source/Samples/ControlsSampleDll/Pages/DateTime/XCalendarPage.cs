@@ -238,6 +238,11 @@ namespace ControlsSample
                     ToggleColor(() => LightDarkColors.Blue);
                 });
 
+                p.AddLinkLabel("Red Background", () =>
+                {
+                    ToggleBackColor(() => LightDarkColors.Red);
+                });
+
                 p.AddLinkLabel("Toggle Bold", () =>
                 {
                     ToggleBold();
@@ -279,6 +284,20 @@ namespace ControlsSample
                     else
                     {
                         attr.TextColor = getColor();
+                    }
+                }
+
+                void ToggleBackColor(Func<Color> getColor)
+                {
+                    var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
+
+                    if (attr.BackgroundColor != null)
+                    {
+                        attr.BackgroundColor = null;
+                    }
+                    else
+                    {
+                        attr.BackgroundColor = getColor();
                     }
                 }
 
