@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\Version\Version.props" />
+  <Import Project="..\Version\VersionNugets.props" />
+  <Import Project="..\Keys\Keys.props" />
+  <Import Project="..\Version\CommonPackages.props" />
+  <Import Project="..\Version\TargetFrameworks.props" />
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net8.0'">
+    <Optimize>false</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);ALTERNETUI</DefineConstants>
+    <NuGetAuditMode>direct</NuGetAuditMode>
+    <Nullable>enable</Nullable>
+    <LangVersion>12.0</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <PackageId>Alternet.UI.Controls</PackageId>
+    <Description>AlterNET UI Controls: XControls for multi-platform use.</Description>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Package\readme.md" Pack="true" PackagePath="" />
+    <None Include="Package\icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-5f2m-466j-3848;https://github.com/advisories/GHSA-x5qj-9vmx-7g6g;https://github.com/advisories/GHSA-xhfc-gr8f-ffwc" />
+
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
+    <PackageReference Include="Alternet.UI.Common" Version="$(Version)">
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(AlternetUIPackagesBuild)' == ''">
+    <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Common\SignDll.proj" />
+
+</Project>

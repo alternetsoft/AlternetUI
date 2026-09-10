@@ -17,6 +17,12 @@
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="Debug|x86" Project="x86" />
     </Project>
+    <Project Path="Alternet.UI.Controls/Alternet.UI.Controls.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Debug|x86" Project="x86" />
+    </Project>
     <Project Path="Alternet.UI.Common/Alternet.UI.Enums.csproj">
       <BuildType Solution="DLL Debug|*" Project="Debug" />
       <BuildType Solution="DLL Release|*" Project="Release" />
