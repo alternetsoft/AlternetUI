@@ -1839,7 +1839,7 @@ namespace Alternet.Drawing
         public Image AsImageWithBorder(
             SizeD size,
             Coord scaleFactor,
-            Color? borderColor = null,
+            Color borderColor,
             DrawingShapeType? shape = null)
         {
             return AsBrush.AsImageWithBorder(size, scaleFactor, borderColor, shape);

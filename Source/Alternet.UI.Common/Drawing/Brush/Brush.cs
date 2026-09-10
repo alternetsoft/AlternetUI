@@ -190,11 +190,9 @@ namespace Alternet.Drawing
         public virtual Image AsImageWithBorder(
             SizeD size,
             Coord scaleFactor,
-            Color? borderColor = null,
+            Color borderColor,
             DrawingShapeType? shape = null)
         {
-            borderColor ??= ListControlItem.DefaultImageBorderColor;
-
             var graphics = SkiaUtils.CreateBitmapCanvas(size, scaleFactor, true);
 
             RectD rect = (PointD.Empty, size);

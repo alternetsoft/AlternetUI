@@ -46,10 +46,10 @@ namespace Alternet.UI
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
         private ClickActionKind longTapAction = ClickActionKind.None;
         private ClickActionKind ctrlAction = ClickActionKind.None;
-        private Color? disabledImageColor;
+        private LightDarkColor? disabledImageColor;
         private bool useDisabledImageColor = true;
         private DrawingShapeType? colorImageShape = DefaultColorImageShape;
-        private Color? colorImageBorder;
+        private LightDarkColor? colorImageBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// Gets or sets the border color of the color image.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? ColorImageBorder
+        public virtual LightDarkColor? ColorImageBorder
         {
             get => colorImageBorder;
             set
@@ -316,7 +316,7 @@ namespace Alternet.UI
         /// If this property is null, color image will be painted using
         /// <see cref="ColorListBox.DefaultDisabledImageColor"/>.
         /// </remarks>
-        public virtual Color? DisabledImageColor
+        public virtual LightDarkColor? DisabledImageColor
         {
             get
             {
@@ -598,10 +598,14 @@ namespace Alternet.UI
             {
                 var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
                 if (disabledColor is not null)
-                    imageColor = disabledColor;
+                    imageColor = disabledColor.LightOrDark(this);
             }
 
-            LabelImage = imageColor.AsImageWithBorder(colorImageSize, ScaleFactor, ColorImageBorder, ColorImageShape);
+            LabelImage = imageColor.AsImageWithBorder(
+                colorImageSize,
+                ScaleFactor,
+                ColorImageBorder?.LightOrDark(this),
+                ColorImageShape);
 
             if (refresh)
                 Refresh();

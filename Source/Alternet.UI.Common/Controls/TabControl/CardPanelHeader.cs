@@ -1437,9 +1437,7 @@ namespace Alternet.UI
             var colors = ActiveTabColors ?? DefaultActiveTabColors;
             if (colors is not null)
                 return colors;
-            Color activeColor = IsDarkBackground ? SystemColors.ControlText :
-                SystemColors.ControlText;
-            colors = new FontAndColor(activeColor);
+            colors = new FontAndColor(LightDarkColors.ControlText);
             return colors;
         }
 

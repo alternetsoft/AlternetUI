@@ -22,8 +22,8 @@ namespace PropertyGridSample
                 "bold",
                 " fragment",
                 new FontAndColor(
-                    Color.Red,
-                    Color.LightGoldenrodYellow,
+                    new(Color.Red),
+                    new(Color.LightGoldenrodYellow),
                     Control.DefaultFont.Scaled(1.5f)));
 
             return controlTemplate;

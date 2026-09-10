@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// If this property is null, color image will be painted in the same way like it is done
         /// when control is enabled.
         /// </remarks>
-        public static Color? DefaultDisabledImageColor = Color.LightGray;
+        public static LightDarkColor? DefaultDisabledImageColor = new(Color.LightGray);
 
         /// <summary>
         /// Gets or sets default painter for the <see cref="ColorListBox"/> items.
@@ -47,17 +47,17 @@ namespace Alternet.UI
         /// </summary>
         public static Action<ColorListBox>? InitColors = InitDefaultColors;
 
-        private Color? disabledImageColor;
+        private LightDarkColor? disabledImageColor;
         private bool useDisabledImageColor = true;
         private bool isColorRightAligned;
         private ItemImageSizeKind colorImageSizeKind = ItemImageSizeKind.Ratio;
         private SizeD? colorImageSize;
         private SizeD colorImageRatio = (3, 2);
         private DrawingShapeType? itemImageShape = DefaultItemImageShape;
-        private Color? itemImageBorder;
+        private LightDarkColor? itemImageBorder;
         private ShapeDrawable? shapeDrawable;
         private bool drawTextOverColor;
-        private object? textOverItemImageStyle;
+        private LightDarkColor? textOverItemImageStyle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorListBox"/> class.
@@ -112,7 +112,7 @@ namespace Alternet.UI
         /// Gets or sets the border color of the item image.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? ItemImageBorder
+        public virtual LightDarkColor? ItemImageBorder
         {
             get => itemImageBorder;
             set
@@ -129,7 +129,7 @@ namespace Alternet.UI
         /// Currently, it is possible to assign <see cref="Color"/> value to this property.
         /// </summary>
         [Browsable(false)]
-        public virtual object? TextOverItemImageStyle
+        public virtual LightDarkColor? TextOverItemImageStyle
         {
             get => textOverItemImageStyle;
             set
@@ -272,7 +272,7 @@ namespace Alternet.UI
         /// If this property is null, color image will be painted using
         /// <see cref="DefaultDisabledImageColor"/>.
         /// </remarks>
-        public virtual Color? DisabledImageColor
+        public virtual LightDarkColor? DisabledImageColor
         {
             get
             {
@@ -498,7 +498,7 @@ namespace Alternet.UI
                     canvas,
                     rect,
                     Color.Empty,
-                    borderColor);
+                    borderColor.LightOrDark(this));
 
                 canvas.FillRectangle(brush, colorRect);
             }
@@ -508,7 +508,7 @@ namespace Alternet.UI
 
                 shapeDrawable.Bounds = rect;
                 shapeDrawable.Brush = brush;
-                shapeDrawable.Pen = borderColor?.AsPen;
+                shapeDrawable.Pen = borderColor?.LightOrDark(this).AsPen;
                 shapeDrawable.ShapeType = ItemImageShape.Value;
                 shapeDrawable.Draw(this, canvas);
             }
@@ -767,7 +767,7 @@ namespace Alternet.UI
                 {
                     var disabledColor = sender.DisabledImageColor ?? DefaultDisabledImageColor;
                     if (disabledColor is not null)
-                        itemColor = disabledColor;
+                        itemColor = disabledColor.LightOrDark(sender);
                 }
 
                 return itemColor;
@@ -795,7 +795,7 @@ namespace Alternet.UI
                 {
                     var disabledColor = sender.DisabledImageColor ?? DefaultDisabledImageColor;
                     if (disabledColor is not null)
-                        result = disabledColor.AsBrush;
+                        result = disabledColor.LightOrDark(sender).AsBrush;
                 }
 
                 return result;
@@ -845,14 +845,14 @@ namespace Alternet.UI
 
                     if (item is not null && colorListBox.DrawTextOverItemImage && shapeIsOk)
                     {
-                        var foreColor = (colorListBox.TextOverItemImageStyle as Color)
-                            ?? e.GetTextColor(isSelected: false, isDark: isDark) ?? colorListBox.ForeColor;
+                        var foreColor = colorListBox.TextOverItemImageStyle
+                            ?? e.GetTextColor(isSelected: false) ?? colorListBox.RealForegroundColor;
 
                         colorListBox.PaintText(
                                     e.Graphics,
                                     item.DisplayText ?? item.Text,
                                     r,
-                                    foreColor,
+                                    foreColor.LightOrDark(colorListBox),
                                     Color.Empty,
                                     HorizontalAlignment.Center,
                                     VerticalAlignment.Center);

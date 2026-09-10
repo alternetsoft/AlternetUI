@@ -90,7 +90,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetSimpleProperty(ref dark, value);
+                SetNotNullProperty(ref dark, value);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetSimpleProperty(ref light, value);
+                SetNotNullProperty(ref light, value);
             }
         }
 
@@ -186,6 +186,20 @@ namespace Alternet.Drawing
             var result = new LightDarkColor(light, dark);
             result.SetImmutable();
             return result;
+        }
+
+        /// <summary>
+        /// Sets the light and dark color values of this instance to the specified values.
+        /// </summary>
+        /// <param name="light">The color value to use for the light theme variant.</param>
+        /// <param name="dark">The color value to use for the dark theme variant.</param>
+        public virtual void SetColors(Color light, Color dark)
+        {
+            DoInsideSuspendedPropertyChanged(() =>
+            {
+                Light = light;
+                Dark = dark;
+            });
         }
 
         /// <summary>

@@ -138,6 +138,7 @@ namespace PropertyGridSample
                         BorderSettings.DrawDesignCorners(
                             e.Graphics,
                             inflated,
+                            IsDarkBackground,
                             BorderSettings.DebugBorder);
                     }
                 };

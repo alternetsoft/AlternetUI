@@ -47,10 +47,10 @@ namespace Alternet.UI
         private PopupColorListBox? popupWindow;
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
         private ClickActionKind longTapAction = ClickActionKind.None;
-        private Color? disabledImageColor;
+        private LightDarkColor? disabledImageColor;
         private bool useDisabledImageColor = true;
         private DrawingShapeType? valueImageShape = DefaultValueImageShape;
-        private Color? valueImageBorder;
+        private LightDarkColor? valueImageBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
@@ -101,7 +101,7 @@ namespace Alternet.UI
         /// Gets or sets the border color of the value image.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? ValueImageBorder
+        public virtual LightDarkColor? ValueImageBorder
         {
             get => valueImageBorder;
             set
@@ -253,7 +253,7 @@ namespace Alternet.UI
         /// If this property is null, color image will be painted using
         /// <see cref="ColorListBox.DefaultDisabledImageColor"/>.
         /// </remarks>
-        public virtual Color? DisabledImageColor
+        public virtual LightDarkColor? DisabledImageColor
         {
             get
             {
@@ -481,7 +481,7 @@ namespace Alternet.UI
             {
                 var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
                 if (disabledColor is not null)
-                    imageResource = new(disabledColor);
+                    imageResource = new(disabledColor.LightOrDark(this));
             }
 
             imageResource ??= new(Color.Empty);
@@ -500,7 +500,11 @@ namespace Alternet.UI
                     brush = Color.Empty.AsBrush;
                 }
 
-            LabelImage = brush?.AsImageWithBorder(valueImageSize, ScaleFactor, ValueImageBorder, ValueImageShape);
+            LabelImage = brush?.AsImageWithBorder(
+                valueImageSize,
+                ScaleFactor,
+                (ValueImageBorder ?? ListControlItem.DefaultImageBorderColor).LightOrDark(this),
+                ValueImageShape);
 
             if (refresh)
                 Refresh();

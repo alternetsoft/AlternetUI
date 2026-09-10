@@ -85,12 +85,12 @@ namespace ControlsSample
             drawingResourcePicker.Parent = settings;
             drawingResourcePicker.MinWidth = 150;
 
-            var brush1 = new HatchBrush(BrushHatchStyle.Horizontal, LightDarkColors.Red);
+            var brush1 = new HatchBrush(BrushHatchStyle.Horizontal, LightDarkColors.Red.LightOrDark(this));
             DrawingResource brush1resource = new(brush1);
             var brush1Name = $"Horizontal Red";
             brush1resource.Title = brush1Name;
 
-            var brush2 = new HatchBrush(BrushHatchStyle.Vertical, LightDarkColors.Green);
+            var brush2 = new HatchBrush(BrushHatchStyle.Vertical, LightDarkColors.Green.LightOrDark(this));
             DrawingResource brush2resource = new(brush2);
             var brush2Name = $"Vertical Green";
             brush2resource.Title = brush2Name;
@@ -193,9 +193,9 @@ namespace ControlsSample
             settings.AddButton("Toggle text over color style", () =>
             {
                 if (listBox.TextOverItemImageStyle?.Equals(Color.White) == true)
-                    listBox.TextOverItemImageStyle = Color.Black;
+                    listBox.TextOverItemImageStyle = new LightDarkColor(Color.Black);
                 else
-                    listBox.TextOverItemImageStyle = Color.White;
+                    listBox.TextOverItemImageStyle = new LightDarkColor(Color.White);
             });
 
             settings.AddButton("Add Brush Item", () =>
@@ -217,7 +217,7 @@ namespace ControlsSample
             {
                 listBox.ItemImageShape = DrawingShapeType.Rectangle;
                 listBox.TextVisible = false;
-                listBox.TextOverItemImageStyle = isDark ? Color.White : Color.Black;
+                listBox.TextOverItemImageStyle = isDark ? new LightDarkColor(Color.White) : new LightDarkColor(Color.Black);
                 listBox.DrawTextOverItemImage = true;
             }
 

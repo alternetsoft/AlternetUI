@@ -1172,13 +1172,13 @@ namespace Alternet.UI
 
             if (propertyName == nameof(ListControlItem.BackgroundColor))
             {
-                Handler.SetItemBackgroundColor(item, item.BackgroundColor);
+                Handler.SetItemBackgroundColor(item, item.BackgroundColor?.LightOrDark(this));
                 return;
             }
 
             if (propertyName == nameof(ListControlItem.ForegroundColor))
             {
-                Handler.SetItemTextColor(item, item.ForegroundColor);
+                Handler.SetItemTextColor(item, item.ForegroundColor?.LightOrDark(this));
                 return;
             }
 

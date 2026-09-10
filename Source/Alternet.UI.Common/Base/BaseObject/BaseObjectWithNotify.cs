@@ -186,7 +186,7 @@ namespace Alternet.UI
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
         /// <returns>True if the property value was changed; otherwise, false.</returns>
-        protected virtual bool SetSimpleProperty<T>(ref T storage, T value)
+        protected virtual bool SetNotNullProperty<T>(ref T storage, T value)
         {
             if (Immutable || Equals(storage, value))
                 return false;

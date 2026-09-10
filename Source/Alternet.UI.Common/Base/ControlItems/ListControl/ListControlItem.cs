@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color of the image border.
         /// </summary>
-        public static Color DefaultImageBorderColor = SystemColors.GrayText;
+        public static LightDarkColor DefaultImageBorderColor = LightDarkColors.GrayText;
 
         /// <summary>
         /// Gets or sets default width of the accent marker.
@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default disabled text color.
         /// </summary>
-        public static Color DefaultDisabledTextColor = SystemColors.GrayText;
+        public static LightDarkColor DefaultDisabledTextColor = LightDarkColors.GrayText;
 
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.

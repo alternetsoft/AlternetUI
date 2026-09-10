@@ -31,8 +31,8 @@ namespace Alternet.UI
         /// </summary>
         public SideBarPanel()
         {
-            BackgroundColor = SystemColors.Window;
-            Header.BackgroundColor = SystemColors.ButtonFace;
+            BackgroundColor = LightDarkColors.Window;
+            Header.BackgroundColor = LightDarkColors.ButtonFace;
         }
     }
 }

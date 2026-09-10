@@ -99,6 +99,28 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override LightDarkColor RealBackgroundColor
+        {
+            get
+            {
+                if (BackgroundColor is not null)
+                    return BackgroundColor;
+                return DefaultBackColor;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override LightDarkColor RealForegroundColor
+        {
+            get
+            {
+                if (ForegroundColor is not null)
+                    return ForegroundColor;
+                return DefaultForeColor;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>

@@ -27,6 +27,8 @@ namespace Alternet.UI
         private int handlerTextChanging;
         private IControlHandler? handler;
         private bool userPaint;
+        private LightDarkColor? realBackgroundColor;
+        private LightDarkColor? realForegroundColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -99,7 +101,16 @@ namespace Alternet.UI
         {
             get
             {
-                return SafeHandler?.BackgroundColor ?? SystemColors.Window;
+                if (BackgroundColor is not null)
+                    return BackgroundColor;
+
+                var color = SafeHandler?.BackgroundColor ?? SystemColors.Window;
+                if (realBackgroundColor is null)
+                    realBackgroundColor = new(color);
+                else
+                    realBackgroundColor.SetColors(color, color);
+
+                return realBackgroundColor;
             }
         }
 
@@ -108,7 +119,15 @@ namespace Alternet.UI
         {
             get
             {
-                return SafeHandler?.ForegroundColor ?? SystemColors.WindowText;
+                if (ForegroundColor is not null)
+                    return ForegroundColor;
+                var color = SafeHandler?.ForegroundColor ?? SystemColors.WindowText;
+                if (realForegroundColor is null)
+                    realForegroundColor = new(color);
+                else
+                    realForegroundColor.SetColors(color, color);
+
+                return realForegroundColor;
             }
         }
 

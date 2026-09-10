@@ -378,7 +378,10 @@ namespace Alternet.Drawing
                 record.SuggestedHeight = bounds.Height;
             }
 
-            record.TextBackColor = backColor;
+            var bc = backColor ?? Color.Empty;
+
+            record.TextBackColor ??= new(bc);
+            record.TextBackColor.SetColors(bc, bc);
 
             dc.DrawText(text, font, foreColor.AsBrush, bounds, in record);
         }

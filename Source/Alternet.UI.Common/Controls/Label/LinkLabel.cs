@@ -91,7 +91,7 @@ namespace Alternet.UI
         {
             get
             {
-                return defaultNormalColor ??= new LightDarkColor((0, 0, 255), (86, 156, 198));
+                return defaultNormalColor ??= new LightDarkColor((0, 0, 255), new ColorStruct(86, 156, 198));
             }
 
             set
