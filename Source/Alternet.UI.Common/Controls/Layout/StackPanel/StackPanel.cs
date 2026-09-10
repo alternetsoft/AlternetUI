@@ -131,7 +131,7 @@ namespace Alternet.UI
         protected override void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle, IsDarkBackground);
         }
     }
 }

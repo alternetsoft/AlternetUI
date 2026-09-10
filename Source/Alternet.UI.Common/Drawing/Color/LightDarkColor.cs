@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,22 +12,11 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Extends <see cref="Color"/> with additional features.
-    /// Implements light and dark color pair, one of them
-    /// is used when argb of the <see cref="LightDarkColor"/> is requested. Returned argb
-    /// depends on the value specified in <see cref="IsDarkOverride"/> and a result
-    /// of <see cref="SystemSettings.IsUsingDarkBackground"/>.
+    /// Represents a two-color class that has different values for light and dark themes.
     /// </summary>
-    public class LightDarkColor : Color, IEquatable<LightDarkColor>
+    [DebuggerDisplay("{DebugString}")]
+    public partial class LightDarkColor : ImmutableObject, IEquatable<LightDarkColor>
     {
-        /// <summary>
-        /// Gets or sets whether dark or light color is returned
-        /// when argb of the color is requested. When this is null (default),
-        /// <see cref="SystemSettings.AppearanceIsDark"/> is used in order to determine
-        /// which argb to return.
-        /// </summary>
-        public static bool? IsDarkOverride;
-
         private Color light;
         private Color dark;
 
@@ -42,6 +32,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LightDarkColor"/> class 
+        /// with the same light and dark colors.
+        /// </summary>
+        /// <param name="r">Red component of the color.</param>
+        /// <param name="g">Green component of the color.</param>
+        /// <param name="b">Blue component of the color.</param>
+        public LightDarkColor(byte r, byte g, byte b)
+            : this(new Color(r, g, b))
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LightDarkColor"/> class
         /// with the light and dark colors assigned from <see cref="KnownSvgColor"/>.
         /// </summary>
@@ -53,33 +55,33 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LightDarkColor"/> class 
+        /// with the specified light and dark color values.
+        /// </summary>
+        /// <param name="light">Light color.</param>
+        /// <param name="dark">Dark color.</param>
+        public LightDarkColor(ColorStruct light, ColorStruct dark)
+        {
+            this.light = new Color(light);
+            this.dark = new Color(dark);
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LightDarkColor"/> class
         /// with the specified light and dark color values.
         /// </summary>
         /// <param name="light">Light color.</param>
         /// <param name="dark">Dark color.</param>
         public LightDarkColor(Color light, Color dark)
-            : base(0, StateFlags.ValueValid)
         {
             this.light = light;
             this.dark = dark;
         }
 
         /// <summary>
-        /// Gets whether dark or light color is returned.
+        /// Gets or sets dark color.
         /// </summary>
-        public static bool IsUsingDarkColor
-        {
-            get
-            {
-                return IsDarkOverride ?? SystemSettings.AppearanceIsDark;
-            }
-        }
-
-        /// <summary>
-        /// Gets dark color.
-        /// </summary>
-        public Color Dark
+        public virtual Color Dark
         {
             get
             {
@@ -88,14 +90,14 @@ namespace Alternet.Drawing
 
             set
             {
-                dark = value;
+                SetSimpleProperty(ref dark, value);
             }
         }
 
         /// <summary>
-        /// Gets light color.
+        /// Gets or sets light color.
         /// </summary>
-        public Color Light
+        public virtual Color Light
         {
             get
             {
@@ -104,24 +106,18 @@ namespace Alternet.Drawing
 
             set
             {
-                light = value;
+                SetSimpleProperty(ref light, value);
             }
         }
 
         /// <inheritdoc/>
-        public override string DebugString
+        public virtual string DebugString
         {
             get
             {
-                return $"(IsUsingDarkColor: {IsUsingDarkColor}," +
-                    $" Light: {Light.ARGBWeb}, Dark: {Dark.ARGBWeb})";
+                return $"(Light: {Light.DebugString}, Dark: {Dark.DebugString})";
             }
         }
-
-        /// <summary>
-        /// Gets the current color based on whether a dark or light color scheme is in use.
-        /// </summary>
-        public override Color Current => LightOrDark(IsUsingDarkColor);
 
         /// <summary>
         /// Tests whether two specified <see cref="LightDarkColor"/> structures are different.
@@ -167,24 +163,29 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Calls the specified action inside the block which temporary changes
-        /// value of the <see cref="IsDarkOverride"/> property.
+        /// Creates a new LightDarkColor instance with the specified light and dark color values and marks it as immutable.
         /// </summary>
-        /// <param name="tempIsDarkOverride">Temporary value for the
-        /// <see cref="IsDarkOverride"/> property.</param>
-        /// <param name="action">Action to call.</param>
-        public static void DoInsideTempIsDarkOverride(bool? tempIsDarkOverride, Action? action)
+        /// <param name="light">The color value to use for the light theme variant.</param>
+        /// <param name="dark">The color value to use for the dark theme variant.</param>
+        /// <returns>A new LightDarkColor instance with the specified light and dark color values marked as immutable.</returns>
+        public static LightDarkColor CreateImmutable(ColorStruct light, ColorStruct dark)
         {
-            var savedOverride = IsDarkOverride;
-            try
-            {
-                IsDarkOverride = tempIsDarkOverride;
-                action?.Invoke();
-            }
-            finally
-            {
-                IsDarkOverride = savedOverride;
-            }
+            var result = new LightDarkColor(new Color(light), new Color(dark));
+            result.SetImmutable();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a new LightDarkColor instance with the specified light and dark color values and marks it as immutable.
+        /// </summary>
+        /// <param name="light">The color value to use for the light theme variant.</param>
+        /// <param name="dark">The color value to use for the dark theme variant.</param>
+        /// <returns>A new LightDarkColor instance with the specified light and dark color values marked as immutable.</returns>
+        public static LightDarkColor CreateImmutable(Color light, Color dark)
+        {
+            var result = new LightDarkColor(light, dark);
+            result.SetImmutable();
+            return result;
         }
 
         /// <summary>
@@ -275,25 +276,61 @@ namespace Alternet.Drawing
             return this == other;
         }
 
-        /// <inheritdoc/>
-        protected override Color GetDark()
+        /// <summary>
+        /// Gets <see cref="Dark"/> or <see cref="Light"/> color depending on system settings.
+        /// </summary>
+        /// <returns>The color to be used for the current system theme.</returns>
+        public virtual Color LightOrDark()
         {
-            return Dark;
-        }
-
-        /// <inheritdoc/>
-        protected override Color GetLight()
-        {
-            return Light;
-        }
-
-        /// <inheritdoc/>
-        protected override void RequireArgb(ref ColorStruct val)
-        {
-            if (IsUsingDarkColor)
-                val = dark.AsStruct;
+            if (SystemSettings.AppearanceIsDark)
+                return Dark;
             else
-                val = light.AsStruct;
+                return Light;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Dark"/> or <see cref="Light"/> color depending on system settings and control color mode.
+        /// </summary>
+        /// <param name="control">The control for which to get the color.</param>
+        /// <returns>The color to be used for the specified control.</returns>
+        public virtual Color LightOrDark(AbstractControl control)
+        {
+            var colorMode = control.ColorMode;
+
+            if (colorMode is null)
+            {
+                return LightOrDark();
+            }
+
+            if (colorMode.Value == ControlColorMode.Dark)
+                return Dark;
+            else
+                return Light;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Dark"/> or <see cref="Light"/> color depending on
+        /// <paramref name="isDark"/> parameter value.
+        /// </summary>
+        /// <param name="isDark">Whether to get dark or light color.</param>
+        /// <returns>The color to be used for the specified theme.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public virtual Color LightOrDark(bool isDark)
+        {
+            if (isDark)
+                return Dark;
+            else
+                return Light;
+        }
+
+        /// <summary>
+        /// Sets this instance as immutable and returns it. After calling this method, the instance cannot be modified.
+        /// </summary>
+        /// <returns>The current instance.</returns>
+        public new LightDarkColor SetImmutable()
+        {
+            base.SetImmutable();
+            return this;
         }
     }
 }

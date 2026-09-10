@@ -115,8 +115,8 @@ namespace Alternet.UI
         private Coord minHeight;
         private FontStyle? fontStyle;
         private Font? font;
-        private Color? foregroundColor;
-        private Color? backgroundColor;
+        private LightDarkColor? foregroundColor;
+        private LightDarkColor? backgroundColor;
         private BorderSettings? border;
         private Thickness foregroundMargin;
         private Thickness checkBoxMargin;
@@ -609,7 +609,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetImage(VisualControlState.Normal);
+                return GetImage(VisualControlState.Normal, isDark: false);
             }
 
             set
@@ -629,7 +629,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetImage(VisualControlState.Disabled);
+                return GetImage(VisualControlState.Disabled, isDark: false);
             }
 
             set
@@ -720,7 +720,7 @@ namespace Alternet.UI
         {
             get
             {
-                return GetImage(VisualControlState.Selected);
+                return GetImage(VisualControlState.Selected, isDark: false);
             }
 
             set
@@ -871,7 +871,7 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual Color? ForegroundColor
+        public virtual LightDarkColor? ForegroundColor
         {
             get => foregroundColor;
             set => foregroundColor = value;
@@ -884,7 +884,7 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual Color? BackgroundColor
+        public virtual LightDarkColor? BackgroundColor
         {
             get => backgroundColor;
             set => backgroundColor = value;
@@ -1618,17 +1618,12 @@ namespace Alternet.UI
         /// </summary>
         public static bool IsContainerDark(IListControlItemContainer? container)
         {
-            if (LightDarkColor.IsDarkOverride is null)
-            {
-                var control = container?.Control;
+            var control = container?.Control;
 
-                if (control is not null)
-                    return control.IsDarkBackground;
-                else
-                    return SystemSettings.AppearanceIsDark;
-            }
-
-            return LightDarkColor.IsDarkOverride.Value;
+            if (control is not null)
+                return control.IsDarkBackground;
+            else
+                return SystemSettings.AppearanceIsDark;
         }
 
         /// <summary>
@@ -1636,7 +1631,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public static Color? GetContainerForegroundColor(IListControlItemContainer? container)
+        public static LightDarkColor? GetContainerForegroundColor(IListControlItemContainer? container)
         {
             var control = container?.Control;
             if (control is not null)
@@ -1648,7 +1643,7 @@ namespace Alternet.UI
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public static Color? GetDisabledTextColor(
+        public static LightDarkColor? GetDisabledTextColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
@@ -1659,18 +1654,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets item text color when item is inside the container.
         /// </summary>
-        public static Color? GetItemTextColor(
+        public static LightDarkColor? GetItemTextColor(
             ListControlItem? item,
-            IListControlItemContainer? container,
-            bool isDark)
+            IListControlItemContainer? container)
         {
-            return Internal()?.LightOrDark(isDark);
+            return Internal();
 
-            Color? Internal()
+            LightDarkColor? Internal()
             {
                 if (IsContainerEnabled(container))
                 {
-                    Color? itemColor
+                    LightDarkColor? itemColor
                         = item?.ForegroundColor ?? GetContainerForegroundColor(container)
                         ?? container?.Defaults.ItemTextColor
                         ?? VirtualListBox.DefaultItemTextColor;
@@ -1701,14 +1695,13 @@ namespace Alternet.UI
         /// Gets selected item back color.
         /// </summary>
         /// <returns></returns>
-        public static Color? GetSelectedItemBackColor(
+        public static LightDarkColor? GetSelectedItemBackColor(
             ListControlItem? item,
-            IListControlItemContainer? container,
-            bool isDark)
+            IListControlItemContainer? container)
         {
-            return Internal()?.LightOrDark(isDark);
+            return Internal();
 
-            Color? Internal()
+            LightDarkColor? Internal()
             {
                 var control = container?.Control;
                 if (control is null)
@@ -1789,7 +1782,7 @@ namespace Alternet.UI
             {
                 dc.FillBorderRectangle(
                     rect,
-                    item?.BackgroundColor?.AsBrush,
+                    item?.BackgroundColor?.LightOrDark(isDark)?.AsBrush,
                     item?.Border,
                     hasBorder: true,
                     control);
@@ -1818,7 +1811,7 @@ namespace Alternet.UI
 
                         dc.FillBorderRectangle(
                             rect,
-                            GetSelectedItemBackColor(item, container, isDark)?.AsBrush,
+                            GetSelectedItemBackColor(item, container)?.LightOrDark(isDark)?.AsBrush,
                             selectionBorder,
                             hasBorder: false,
                             control);
@@ -2190,7 +2183,7 @@ namespace Alternet.UI
             var isDark = IsContainerDark(container);
             RectD paintRectangle;
             var s = e.VisibleTextForDisplay;
-            var itemColor = e.GetTextColor(isSelected, isDark) ?? VirtualListControl.DefaultItemTextColor.LightOrDark(isDark);
+            var itemColor = e.GetTextColor(isSelected) ?? VirtualListControl.DefaultItemTextColor;
             var useColumns = item is not null && e.UseColumns && container is not null;
 
             if (useColumns)
@@ -2217,7 +2210,7 @@ namespace Alternet.UI
                 Graphics.DrawLabelParams prm = new(
                     s,
                     e.ItemFont,
-                    itemColor,
+                    itemColor.LightOrDark(isDark),
                     backColor: Color.Empty,
                     image,
                     paintRectangle,
@@ -2348,7 +2341,7 @@ namespace Alternet.UI
 
             dc.FillBorderRectangle(
                 rect,
-                BackgroundColor?.AsBrush,
+                BackgroundColor?.LightOrDark(isDark)?.AsBrush,
                 Border,
                 hasBorder: true,
                 control);
@@ -2359,7 +2352,7 @@ namespace Alternet.UI
 
                 dc.FillBorderRectangle(
                     rect,
-                    GetSelectedItemBackColor(item, container, isDark)?.AsBrush,
+                    GetSelectedItemBackColor(item, container)?.LightOrDark(isDark)?.AsBrush,
                     selectionBorder,
                     hasBorder: false,
                     control);
@@ -2389,14 +2382,14 @@ namespace Alternet.UI
 
             var itemAlignment = this.Alignment;
 
-            var cellColor = prm.PaintArgs.GetTextColor(this, isSelected, isDark) ?? prm.ForeColor;
+            var cellColor = prm.PaintArgs.GetTextColor(this, isSelected) ?? prm.ForeColor;
 
             var font = prm.PaintArgs.GetItemFont(this);
 
             Graphics.DrawLabelParams labelPrm = new(
                 s,
                 font,
-                cellColor,
+                cellColor.LightOrDark(isDark),
                 backColor: Color.Empty,
                 image: cellImage,
                 prm.Rect,
@@ -2444,6 +2437,7 @@ namespace Alternet.UI
                 BorderSettings.DrawDesignCorners(
                     e.Graphics,
                     prm.Rect,
+                    IsContainerDark(container),
                     BorderSettings.DebugBorderGreen);
             }
         }
@@ -2452,14 +2446,13 @@ namespace Alternet.UI
         /// Gets selected item text color when item is inside the container.
         /// </summary>
         /// <returns></returns>
-        public static Color? GetSelectedTextColor(
+        public static LightDarkColor? GetSelectedTextColor(
             ListControlItem? item,
-            IListControlItemContainer? container,
-            bool isDark)
+            IListControlItemContainer? container)
         {
-            return Internal()?.LightOrDark(isDark);
+            return Internal();
 
-            Color? Internal()
+            LightDarkColor? Internal()
             {
                 if (container?.Defaults.SelectionVisible ?? true)
                 {
@@ -2480,7 +2473,7 @@ namespace Alternet.UI
                         return GetDisabledTextColor(item, container);
                 }
                 else
-                    return GetItemTextColor(item, container, isDark);
+                    return GetItemTextColor(item, container);
             }
         }
 
@@ -2588,9 +2581,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets item text color when item is inside the container.
         /// </summary>
-        public virtual Color? GetTextColor(IListControlItemContainer? container, bool isDark)
+        public virtual LightDarkColor? GetTextColor(IListControlItemContainer? container)
         {
-            return GetItemTextColor(this, container, isDark);
+            return GetItemTextColor(this, container);
         }
 
         /// <summary>
@@ -2649,7 +2642,7 @@ namespace Alternet.UI
         /// <param name="imageToUse">Specifies which image to use.</param>
         public virtual EnumArrayStateImages GetImages(IListControlItemContainer? listBox, bool isDark, int imageToUse = 0)
         {
-            var color = ListControlItem.GetSelectedTextColor(this, listBox, isDark);
+            var color = ListControlItem.GetSelectedTextColor(this, listBox)?.LightOrDark(isDark);
             return ListControlItem.GetItemImages(this, listBox, color, onlyNormal: false, imageToUse);
         }
 
@@ -2867,7 +2860,7 @@ namespace Alternet.UI
         /// <param name="imageToUse">Specifies which image to use.</param>
         /// <returns>The image for the specified item state and light/dark theme flag,
         /// or <c>null</c> if no image is available.</returns>
-        public virtual Image? GetImage(VisualControlState state, bool? isDark = null, int imageToUse = 0)
+        public virtual Image? GetImage(VisualControlState state, bool isDark, int imageToUse = 0)
         {
             if (imageToUse == 0)
                 return imageInfo.CachedSvg.GetImage(state, isDark);
@@ -2975,7 +2968,7 @@ namespace Alternet.UI
         /// <param name="isDark">Light/dark theme flag</param>
         /// <param name="imageToUse">Specifies which image to use.</param>
         /// <returns></returns>
-        public virtual bool HasImage(VisualControlState state, bool? isDark = null, int imageToUse = 0)
+        public virtual bool HasImage(VisualControlState state, bool isDark, int imageToUse = 0)
         {
             return GetImage(state, isDark, imageToUse) != null;
         }
@@ -2988,7 +2981,7 @@ namespace Alternet.UI
         /// <param name="image">New image value.</param>
         /// <param name="isDark">Whether theme is dark.</param>
         /// <param name="imageToUse">Specifies which image to use.</param>
-        public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null, int imageToUse = 0)
+        public virtual void SetImage(VisualControlState state, Image? image, bool isDark, int imageToUse = 0)
         {
             if (imageToUse == 0)
                 imageInfo.CachedSvg.SetImage(state, image, isDark);
@@ -3054,7 +3047,7 @@ namespace Alternet.UI
                     ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
                     : VisualControlState.Disabled;
                 if (info.SvgState == VisualControlState.Selected)
-                    info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container, isDark);
+                    info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container)?.LightOrDark(isDark);
                 info.IsRadioButton = item.IsRadioButton;
                 BeforeDrawCheckBox?.Invoke(this, info);
 
@@ -3608,8 +3601,8 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="state">The visual control state.</param>
             /// <param name="image">The image to associate with the specified state.</param>
-            /// <param name="isDark">Optional parameter indicating whether dark mode is enabled.</param>
-            public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null)
+            /// <param name="isDark">Indicates whether dark mode is enabled.</param>
+            public virtual void SetImage(VisualControlState state, Image? image, bool isDark)
             {
                 this.image.CachedSvg.SetImage(state, image, isDark);
             }
@@ -3626,9 +3619,9 @@ namespace Alternet.UI
             /// Gets the image associated with the specified visual control state and optional dark mode setting.
             /// </summary>
             /// <param name="state">The visual control state.</param>
-            /// <param name="isDark">Optional parameter indicating whether dark mode is enabled.</param>
+            /// <param name="isDark">Indicates whether dark mode is enabled.</param>
             /// <returns>The image associated with the specified state and dark mode setting.</returns> 
-            public virtual Image? GetImage(VisualControlState state, bool? isDark = null)
+            public virtual Image? GetImage(VisualControlState state, bool isDark)
             {
                 return image.CachedSvg.GetImage(state, isDark);
             }

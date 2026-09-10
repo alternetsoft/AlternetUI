@@ -26,13 +26,13 @@ namespace Alternet.UI
         /// Gets or sets the color of the text.
         /// If <c>null</c>, the control's foreground color is used.
         /// </summary>
-        public virtual Color? TextColor { get; set; }
+        public virtual LightDarkColor? TextColor { get; set; }
 
         /// <summary>
         /// Gets or sets the background color of the text.
         /// If <c>null</c>, the background is transparent.
         /// </summary>
-        public virtual Color? BackColor { get; set; }
+        public virtual LightDarkColor? BackColor { get; set; }
 
         /// <summary>
         /// Gets or sets the font used to draw the text.
@@ -55,7 +55,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The control to use as a fallback for the text color.</param>
         /// <returns>The color to use for drawing the text.</returns>
-        public virtual Color GetTextColor(AbstractControl control)
+        public virtual LightDarkColor GetTextColor(AbstractControl control)
         {
             if (TextColor is not null)
                 return TextColor;
@@ -67,22 +67,24 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">The control to use as a fallback for the background color.</param>
         /// <returns>The background color to use for drawing the text.</returns>
-        public virtual Color GetBackColor(AbstractControl control)
+        public virtual LightDarkColor GetBackColor(AbstractControl control)
         {
             if (BackColor is not null)
                 return BackColor;
-            return Color.Transparent;
+            return LightDarkColors.Transparent;
         }
 
         /// <inheritdoc/>
         public override void OnPaint(AbstractControl control, PaintEventArgs e)
         {
+            var isDark = control.IsDarkBackground;
+
             e.Graphics.DrawText(
                 Text,
                 Location,
                 GetFont(control),
-                GetTextColor(control),
-                GetBackColor(control));
+                GetTextColor(control).LightOrDark(isDark),
+                GetBackColor(control).LightOrDark(isDark));
         }
     }
 }

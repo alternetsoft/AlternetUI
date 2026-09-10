@@ -239,7 +239,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets internal color.
         /// </summary>
-        protected virtual void InternalSetColor(bool isBackground, Color? color)
+        protected virtual void InternalSetColor(bool isBackground, LightDarkColor? color)
         {
             if (isBackground)
             {
@@ -274,11 +274,11 @@ namespace Alternet.UI
         /// <returns>By default returns <see cref="Color.Empty"/> which means do not
         /// draw background under the label text. In this case control's background
         /// is used.</returns>
-        protected virtual Color GetLabelBackColor(VisualControlState state)
+        protected virtual LightDarkColor GetLabelBackColor(VisualControlState state)
         {
             var color = StateObjects?.Colors?.GetObjectOrNull(state)?.BackgroundColor;
 
-            return color ?? TextBackColor ?? Color.Empty;
+            return color ?? TextBackColor ?? LightDarkColors.Empty;
         }
 
         /// <summary>
@@ -321,16 +321,16 @@ namespace Alternet.UI
         /// Gets <see cref="Color"/> which is used to draw label's text.
         /// </summary>
         /// <returns></returns>
-        protected virtual Color GetLabelForeColor(VisualControlState state)
+        protected virtual LightDarkColor GetLabelForeColor(VisualControlState state)
         {
             var color = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
 
             if (color is null)
             {
                 if (Enabled)
-                    color = ForeColor;
+                    color = RealForegroundColor;
                 else
-                    color = SystemColors.GrayText;
+                    color = LightDarkColors.GrayText;
             }
 
             return color;

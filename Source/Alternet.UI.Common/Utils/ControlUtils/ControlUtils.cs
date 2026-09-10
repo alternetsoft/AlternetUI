@@ -60,8 +60,8 @@ namespace Alternet.UI
 
             control.ParentBackColor = false;
             control.ParentForeColor = false;
-            control.BackgroundColor = DefaultColors.ControlBackColor.LightOrDark(isDark.Value);
-            control.ForegroundColor = DefaultColors.ControlForeColor.LightOrDark(isDark.Value);
+            control.BackgroundColor = DefaultColors.ControlBackColor;
+            control.ForegroundColor = DefaultColors.ControlForeColor;
 
             control.ColorMode = ControlUtils.ToColorMode(isDark);
             control.Invalidate();
@@ -102,13 +102,13 @@ namespace Alternet.UI
         {
             if (isDark ?? SystemSettings.AppearanceIsDark)
             {
-                control.BackgroundColor = DefaultColors.ControlBackColor.Dark;
-                control.ForegroundColor = DefaultColors.ControlForeColor.Dark;
+                control.BackgroundColor = DefaultColors.ControlBackColor;
+                control.ForegroundColor = DefaultColors.ControlForeColor;
             }
             else
             {
-                control.BackgroundColor = DefaultColors.ControlBackColor.Light;
-                control.ForegroundColor = DefaultColors.ControlForeColor.Light;
+                control.BackgroundColor = DefaultColors.ControlBackColor;
+                control.ForegroundColor = DefaultColors.ControlForeColor;
             }
         }
 

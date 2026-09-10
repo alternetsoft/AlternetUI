@@ -524,7 +524,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color RealForegroundColor
+        public override LightDarkColor RealForegroundColor
         {
             get
             {
@@ -533,7 +533,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color RealBackgroundColor
+        public override LightDarkColor RealBackgroundColor
         {
             get
             {
@@ -542,7 +542,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color? BackgroundColor
+        public override LightDarkColor? BackgroundColor
         {
             get => ListBox.BackgroundColor;
 
@@ -554,7 +554,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color? ForegroundColor
+        public override LightDarkColor? ForegroundColor
         {
             get => ListBox.ForegroundColor;
 

@@ -295,7 +295,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static ImageSet GetTemplateAsImageSet(
             TemplateControl template,
-            Color? backColor = null)
+            LightDarkColor? backColor = null)
         {
             ImageSet imageSet = new(GetTemplateAsImage(template, backColor));
             return imageSet;
@@ -308,7 +308,7 @@ namespace Alternet.UI
         /// <param name="backColor">Background color. Optional. If not specified, background color
         /// of the template control is used.</param>
         /// <returns></returns>
-        public static Image GetTemplateAsImage(TemplateControl template, Color? backColor = null)
+        public static Image GetTemplateAsImage(TemplateControl template, LightDarkColor? backColor = null)
         {
             var result = (Image)GetTemplateAsSKBitmap(template, backColor);
             return result;
@@ -323,7 +323,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static SKBitmap GetTemplateAsSKBitmap(
             TemplateControl template,
-            Color? backColor = null)
+            LightDarkColor? backColor = null)
         {
             try
             {
@@ -344,7 +344,7 @@ namespace Alternet.UI
 
                 if (backColor is not null)
                 {
-                    canvas.Canvas.Clear(backColor);
+                    canvas.Canvas.Clear(backColor.LightOrDark(template));
                 }
 
                 DrawControlTemplate(template, canvas);
@@ -435,7 +435,7 @@ namespace Alternet.UI
         private static void DefaultPaintDebug(Graphics canvas, RectD rect)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(canvas, rect);
+                BorderSettings.DrawDesignCorners(canvas, rect, SystemSettings.AppearanceIsDark);
         }
     }
 }

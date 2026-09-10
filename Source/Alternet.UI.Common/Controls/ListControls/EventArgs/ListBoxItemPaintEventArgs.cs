@@ -234,7 +234,7 @@ namespace Alternet.UI
             if (item is not null)
                 return item.GetImages(listBox, isDark, imageToUse);
 
-            var color = ListControlItem.GetSelectedTextColor(item, listBox, isDark);
+            var color = ListControlItem.GetSelectedTextColor(item, listBox)?.LightOrDark(isDark);
             return ListControlItem.GetItemImages(item, listBox, color, onlyNormal: false, imageToUse);
         }
 
@@ -306,11 +306,10 @@ namespace Alternet.UI
         /// Gets text color for the item being painted, taking into account its selection state.
         /// </summary>
         /// <param name="isSelected">Whether to get text color for the selected state.</param>
-        /// <param name="isDark">Whether the background is dark.</param>
         /// <returns>The text color for the item being painted.</returns>
-        public virtual Color? GetTextColor(bool isSelected, bool isDark)
+        public virtual LightDarkColor? GetTextColor(bool isSelected)
         {
-            return GetTextColor(Item, isSelected, isDark);
+            return GetTextColor(Item, isSelected);
         }
 
         /// <summary>
@@ -318,18 +317,17 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The list control item for which to get the text color.</param>
         /// <param name="isSelected">Whether to get text color for the selected state.</param>
-        /// <param name="isDark">Whether the background is dark.</param>
         /// <returns>The text color for the specified item and selection state.</returns>
-        public virtual Color? GetTextColor(ListControlItem? item, bool isSelected, bool isDark)
+        public virtual LightDarkColor? GetTextColor(ListControlItem? item, bool isSelected)
         {
-            Color? textColor;
+            LightDarkColor? textColor;
             if (isSelected)
             {
-                textColor = ListControlItem.GetSelectedTextColor(item, ListBox, isDark);
+                textColor = ListControlItem.GetSelectedTextColor(item, ListBox);
             }
             else
             {
-                textColor = ListControlItem.GetItemTextColor(item, ListBox, isDark);
+                textColor = ListControlItem.GetItemTextColor(item, ListBox);
             }
 
             return textColor;

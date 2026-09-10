@@ -52,8 +52,8 @@ namespace Alternet.UI
 
             ParentBackColor = false;
             ParentForeColor = false;
-            BackgroundColor = DefaultBackgroundColor.LightOrDark();
-            ForegroundColor = DefaultForegroundColor.LightOrDark();
+            BackgroundColor = DefaultBackgroundColor;
+            ForegroundColor = DefaultForegroundColor;
             SizingGripVisible = true;
         }
 
@@ -428,8 +428,8 @@ namespace Alternet.UI
         {
             DoInsideUpdate(() =>
             {
-                BackgroundColor = DefaultBackgroundColor.Dark;
-                ForegroundColor = DefaultForegroundColor.Dark;
+                BackgroundColor = DefaultBackgroundColor;
+                ForegroundColor = DefaultForegroundColor;
             });
         }
 
@@ -440,8 +440,8 @@ namespace Alternet.UI
         {
             DoInsideUpdate(() =>
             {
-                BackgroundColor = DefaultBackgroundColor.Light;
-                ForegroundColor = DefaultForegroundColor.Light;
+                BackgroundColor = DefaultBackgroundColor;
+                ForegroundColor = DefaultForegroundColor;
             });
         }
 

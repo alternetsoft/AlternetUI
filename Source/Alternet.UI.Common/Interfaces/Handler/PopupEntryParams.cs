@@ -70,12 +70,12 @@ public struct PopupEntryParams
     /// <summary>
     /// Gets or sets the background color of the popup.
     /// </summary>
-    public Color? BackColor { get; set; }
+    public LightDarkColor? BackColor { get; set; }
 
     /// <summary>
     /// Gets or sets the foreground color of the popup.
     /// </summary>
-    public Color? ForeColor { get; set; }
+    public LightDarkColor? ForeColor { get; set; }
 
     /// <summary>
     /// Gets or sets the font of the popup.

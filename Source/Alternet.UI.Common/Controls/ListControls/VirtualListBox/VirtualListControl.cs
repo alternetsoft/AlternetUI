@@ -75,12 +75,12 @@ namespace Alternet.UI
 
         private static BorderSettings? defaultCurrentItemBorder;
 
-        private Color? selectedItemTextColor;
-        private Color? itemTextColor;
-        private Color? selectedItemBackColor;
-        private Color? disabledItemTextColor;
-        private Color? unfocusedSelectedItemBackColor;
-        private Color? unfocusedSelectedItemTextColor;
+        private LightDarkColor? selectedItemTextColor;
+        private LightDarkColor? itemTextColor;
+        private LightDarkColor? selectedItemBackColor;
+        private LightDarkColor? disabledItemTextColor;
+        private LightDarkColor? unfocusedSelectedItemBackColor;
+        private LightDarkColor? unfocusedSelectedItemTextColor;
 
         private bool showAccentMarker;
         private Thickness itemMargin = DefaultItemMargin;
@@ -649,7 +649,7 @@ namespace Alternet.UI
         /// Gets or sets disabled item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? DisabledItemTextColor
+        public virtual LightDarkColor? DisabledItemTextColor
         {
             get
             {
@@ -708,7 +708,7 @@ namespace Alternet.UI
         /// Gets or sets selected item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? SelectedItemTextColor
+        public virtual LightDarkColor? SelectedItemTextColor
         {
             get
             {
@@ -728,7 +728,7 @@ namespace Alternet.UI
         /// Gets or sets selected item back color.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? SelectedItemBackColor
+        public virtual LightDarkColor? SelectedItemBackColor
         {
             get
             {
@@ -748,7 +748,7 @@ namespace Alternet.UI
         /// Gets or sets selected item text color for the unfocused control.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? UnfocusedSelectedItemTextColor
+        public virtual LightDarkColor? UnfocusedSelectedItemTextColor
         {
             get
             {
@@ -769,7 +769,7 @@ namespace Alternet.UI
         /// Gets or sets selected item back color for the unfocused control.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? UnfocusedSelectedItemBackColor
+        public virtual LightDarkColor? UnfocusedSelectedItemBackColor
         {
             get
             {
@@ -790,7 +790,7 @@ namespace Alternet.UI
         /// Gets or sets item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? ItemTextColor
+        public virtual LightDarkColor? ItemTextColor
         {
             get
             {
@@ -1279,9 +1279,9 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public Color? GetSelectedItemTextColor(int itemIndex, bool isDark)
+        public LightDarkColor? GetSelectedItemTextColor(int itemIndex)
         {
-            return ListControlItem.GetSelectedTextColor(GetItem(itemIndex), this, isDark);
+            return ListControlItem.GetSelectedTextColor(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1289,9 +1289,9 @@ namespace Alternet.UI
         /// or <see cref="DefaultItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public Color? GetItemTextColor(int itemIndex, bool isDark)
+        public LightDarkColor? GetItemTextColor(int itemIndex)
         {
-            return ListControlItem.GetItemTextColor(GetItem(itemIndex), this, isDark);
+            return ListControlItem.GetItemTextColor(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1299,9 +1299,9 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemBackColor"/>.
         /// </summary>
         /// <returns></returns>
-        public Color? GetSelectedItemBackColor(int itemIndex, bool isDark)
+        public LightDarkColor? GetSelectedItemBackColor(int itemIndex)
         {
-            return ListControlItem.GetSelectedItemBackColor(GetItem(itemIndex), this, isDark);
+            return ListControlItem.GetSelectedItemBackColor(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1327,14 +1327,14 @@ namespace Alternet.UI
             DoInsideUpdate(() =>
             {
                 ResetCachedImages();
-                BackgroundColor = DefaultColors.ControlBackColor.Dark;
-                ForegroundColor = DefaultColors.ControlForeColor.Dark;
+                BackgroundColor = DefaultColors.ControlBackColor;
+                ForegroundColor = DefaultColors.ControlForeColor;
 
                 SelectedItemTextColor = null;
                 SelectedItemBackColor = null;
                 CurrentItemBorder ??= new();
-                CurrentItemBorder.SetColor(DefaultCurrentItemBorderColor.Dark);
-                ItemTextColor = (204, 204, 204);
+                CurrentItemBorder.SetColor(DefaultCurrentItemBorderColor);
+                ItemTextColor = new(new Color(204, 204, 204));
             });
         }
 
@@ -1346,8 +1346,8 @@ namespace Alternet.UI
             DoInsideUpdate(() =>
             {
                 ResetCachedImages();
-                BackColor = DefaultColors.ControlBackColor;
-                ForeColor = DefaultColors.ControlForeColor;
+                BackgroundColor = DefaultColors.ControlBackColor;
+                ForegroundColor = DefaultColors.ControlForeColor;
 
                 SelectedItemTextColor = null;
                 SelectedItemBackColor = null;
@@ -1365,13 +1365,13 @@ namespace Alternet.UI
             DoInsideUpdate(() =>
             {
                 ResetCachedImages();
-                BackColor = DefaultColors.ControlBackColor.Light;
-                ForeColor = DefaultColors.ControlForeColor.Light;
+                BackgroundColor = DefaultColors.ControlBackColor;
+                ForegroundColor = DefaultColors.ControlForeColor;
 
                 SelectedItemTextColor = null;
                 SelectedItemBackColor = null;
                 CurrentItemBorder ??= new();
-                CurrentItemBorder.SetColor(VirtualListBox.DefaultCurrentItemBorderColor.Light);
+                CurrentItemBorder.SetColor(VirtualListBox.DefaultCurrentItemBorderColor);
                 ItemTextColor = null;
             });
         }
@@ -1380,7 +1380,7 @@ namespace Alternet.UI
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public Color? GetDisabledItemTextColor(int itemIndex)
+        public LightDarkColor? GetDisabledItemTextColor(int itemIndex)
         {
             return ListControlItem.GetDisabledTextColor(GetItem(itemIndex), this);
         }

@@ -156,8 +156,8 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public virtual void SetDebugColors()
         {
-            DebugBackgroundColor(Color.Green, nameof(SplittedTreeAndCards));
-            Cards.DebugBackgroundColor(Color.Yellow, "SplittedTreeAndCards.Cards");
+            DebugBackgroundColor(LightDarkColors.Green, nameof(SplittedTreeAndCards));
+            Cards.DebugBackgroundColor(LightDarkColors.Yellow, "SplittedTreeAndCards.Cards");
             Cards.CardPropertyChanged += CardPropertyChanged;
 
             static void CardPropertyChanged(object? sender, ObjectPropertyChangedEventArgs e)
@@ -165,7 +165,7 @@ namespace Alternet.UI
                 if (e.Instance is not CardPanelItem card)
                     return;
                 if (card.ControlCreated)
-                    card.Control.DebugBackgroundColor(Color.Navy, "SplittedTreeAndCards.Cards.card");
+                    card.Control.DebugBackgroundColor(LightDarkColors.Blue, "SplittedTreeAndCards.Cards.card");
             }
         }
 

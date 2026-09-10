@@ -458,8 +458,8 @@ namespace Alternet.UI
                 var r2 = tab.HeaderButton.Bounds;
                 r2.Offset(tc.Header.Location);
 
-                e.Graphics.FillRectangle(LightDarkColors.Green.WithAlpha(50).AsBrush, r1);
-                e.Graphics.FillRectangle(LightDarkColors.Red.WithAlpha(50).AsBrush, r2);
+                e.Graphics.FillRectangle(LightDarkColors.Green.LightOrDark(tc).WithAlpha(50).AsBrush, r1);
+                e.Graphics.FillRectangle(LightDarkColors.Red.LightOrDark(tc).WithAlpha(50).AsBrush, r2);
 
                 var scaleFactor = tc.ScaleFactor;
 
@@ -483,7 +483,7 @@ namespace Alternet.UI
                 tabLeft, tabRight, tabHeight,
                 5);
 
-                canvas.Canvas.DrawPath(path, LightDarkColors.Red.AsPen);
+                canvas.Canvas.DrawPath(path, LightDarkColors.Red.LightOrDark(tc).AsPen);
 
                 var skBitmap = canvas.Bitmap;
 

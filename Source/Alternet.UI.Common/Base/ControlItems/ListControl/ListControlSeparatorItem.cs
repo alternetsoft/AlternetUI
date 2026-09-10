@@ -52,24 +52,21 @@ namespace Alternet.UI
         /// <summary>
         /// Gets color of the separator line for the specified item.
         /// </summary>
-        /// <param name="isDark">A boolean value indicating whether to use the dark theme.</param>
         /// <param name="container">Container of the item. Optional.</param>
         /// <param name="item">Item for which to get the separator color. Optional.</param>
         /// <returns>The color of the separator line.</returns>
-        public static Color GetSeparatorColor(
-            bool isDark,
+        public static LightDarkColor GetSeparatorColor(
             IListControlItemContainer? container = null,
             ListControlItem? item = null)
         {
             var control = container?.Control;
 
             if (control is null)
-                return SystemColors.GrayText;
+                return LightDarkColors.GrayText;
 
-            var result = item?.GetTextColor(container, isDark);
+            var result = item?.GetTextColor(container);
 
-            result ??= DefaultSeparatorColor ?? SystemColors.GrayText;
-            result = result.LightOrDark(isDark);
+            result ??= DefaultSeparatorColor ?? LightDarkColors.GrayText;
 
             return result;
         }
@@ -95,8 +92,8 @@ namespace Alternet.UI
                 1);
 
             var isDark = ListControlItem.IsContainerDark(container);
-            var color = GetSeparatorColor(isDark, container, e.Item);
-            e.Graphics.FillRectangle(color.AsBrush, lineRect);
+            var color = GetSeparatorColor(container, e.Item);
+            e.Graphics.FillRectangle(color.LightOrDark(isDark).AsBrush, lineRect);
         }
     }
 }

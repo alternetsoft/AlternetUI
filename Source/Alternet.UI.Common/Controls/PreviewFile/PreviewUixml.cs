@@ -37,7 +37,6 @@ namespace Alternet.UI
         private readonly Border control = new()
         {
             MinimumSize = (400, 400),
-            BackgroundColor = SystemColors.ButtonFace,
             VerticalAlignment = VerticalAlignment.Top,
             HorizontalAlignment = HorizontalAlignment.Left,
         };

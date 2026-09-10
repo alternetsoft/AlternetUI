@@ -138,8 +138,8 @@ namespace PropertyGridSample
                         {
                                 new ("Complex", FontStyle.Regular, Color.Black, Color.Gray),
                                 new (" ", FontStyle.Regular),
-                                new ("formatted ", FontStyle.Bold, LightDarkColors.Red),
-                                new ("label", FontStyle.Underline, LightDarkColors.Green),
+                                new ("formatted ", FontStyle.Bold, LightDarkColors.Red.LightOrDark(c)),
+                                new ("label", FontStyle.Underline, LightDarkColors.Green.LightOrDark(c)),
                         };
                     }
                 }
@@ -329,8 +329,8 @@ namespace PropertyGridSample
                 {
                     Text = "Overlay text",
                     Location = (10, 10),
-                    TextColor = Color.Red,
-                    BackColor = Color.FromArgb(128, Color.Yellow),
+                    TextColor = new(Color.Red),
+                    BackColor = new(Color.FromArgb(128, Color.Yellow)),
                     Font = c.Font,
                 };
 

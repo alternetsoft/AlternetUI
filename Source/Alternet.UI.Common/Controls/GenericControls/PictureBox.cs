@@ -660,7 +660,7 @@ namespace Alternet.UI
         /// <param name="backColor">An optional background color to use when rendering the template.
         /// If null, the template's default background color is used.</param>
         /// <returns>The current PictureBox instance with the updated image.</returns>
-        public virtual PictureBox SetImageFrom(TemplateControl template, Color? backColor = null)
+        public virtual PictureBox SetImageFrom(TemplateControl template, LightDarkColor? backColor = null)
         {
             template.Visible = false;
             template.Parent = this;
@@ -794,11 +794,13 @@ namespace Alternet.UI
                     origin = alignedRect.Location;
                 }
 
+                color ??= RealForegroundColor;
+
                 dc.DrawText(
                     Text ?? string.Empty,
                     origin,
                     Font ?? UI.AbstractControl.DefaultFont,
-                    color ?? ForeColor,
+                    color.LightOrDark(this),
                     Color.Empty);
             }
             else

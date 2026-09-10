@@ -278,9 +278,8 @@ namespace Alternet.UI
             var backColor = GetBackColor(VisualControlState.Normal);
             var foreColor = GetLabelTextColor(VisualControlState.Normal);
 
-            var isDark = IsDarkBackground;
-            backColor ??= DefaultColors.ControlBackColor.LightOrDark(isDark);
-            foreColor ??= DefaultColors.ControlForeColor.LightOrDark(isDark);
+            backColor ??= DefaultColors.ControlBackColor;
+            foreColor ??= DefaultColors.ControlForeColor;
 
             var s = RequestTextForItemEditor();
 

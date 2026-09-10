@@ -316,13 +316,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sets default border.
         /// </summary>
-        /// <param name="isDarkBackground">Whether to use default border for the dark background
-        /// or for the light background.</param>
-        public virtual void SetDefaultBorder(bool isDarkBackground)
+        public virtual void SetDefaultBorder()
         {
             Border = new();
             Border.Border = new();
-            Border.Border.Color = ColorUtils.GetDefaultBorderColor(isDarkBackground);
+            Border.Border.Color = DefaultColors.BorderColor;
         }
 
         /// <summary>
@@ -628,7 +626,7 @@ namespace Alternet.Drawing
 
             bool savedHasBorder = HasBorder;
 
-            SetDefaultBorder(isDark);
+            SetDefaultBorder();
             var themeObj = UI.ScrollBarTheme.GetTheme(theme, isDark);
             themeObj.AssignTo(this);
 

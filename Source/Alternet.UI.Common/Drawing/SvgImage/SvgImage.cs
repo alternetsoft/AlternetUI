@@ -407,13 +407,8 @@ namespace Alternet.Drawing
         /// If <see langword="null"/>, the override is removed.</param>
         public virtual void SetColorOverride(KnownSvgColor knownColor, Color? value)
         {
-            if (value is LightDarkColor ldc)
-                SetColorOverride(knownColor, ldc);
-            else
-            {
-                SetColorOverride(knownColor, true, value);
-                SetColorOverride(knownColor, false, value);
-            }
+            SetColorOverride(knownColor, true, value);
+            SetColorOverride(knownColor, false, value);
         }
 
         /// <summary>

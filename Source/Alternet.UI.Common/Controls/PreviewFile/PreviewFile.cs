@@ -215,8 +215,8 @@ namespace Alternet.UI
             {
                 ParentForeColor = false;
                 ParentBackColor = false;
-                BackgroundColor = DefaultColors.ControlBackColor.Dark;
-                ForegroundColor = DefaultColors.ControlForeColor.Dark;
+                BackgroundColor = DefaultColors.ControlBackColor;
+                ForegroundColor = DefaultColors.ControlForeColor;
             });
         }
 
@@ -229,8 +229,8 @@ namespace Alternet.UI
             {
                 ParentForeColor = false;
                 ParentBackColor = false;
-                BackColor = DefaultColors.ControlBackColor.Light;
-                ForeColor = DefaultColors.ControlForeColor.Light;
+                BackgroundColor = DefaultColors.ControlBackColor;
+                ForegroundColor = DefaultColors.ControlForeColor;
             });
         }
 

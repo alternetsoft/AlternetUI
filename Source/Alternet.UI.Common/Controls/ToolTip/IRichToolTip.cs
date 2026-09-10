@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets foreground color of the tooltip title.
         /// </summary>
-        Color? ToolTipTitleForegroundColor { get; set; }
+        LightDarkColor? ToolTipTitleForegroundColor { get; set; }
 
         /// <summary>
         /// Gets font of the tooltip title.
@@ -48,12 +48,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets tooltip background color.
         /// </summary>
-        Color? ToolTipBackgroundColor { get; set; }
+        LightDarkColor? ToolTipBackgroundColor { get; set; }
 
         /// <summary>
         /// Gets tooltip foreground color.
         /// </summary>
-        Color? ToolTipForegroundColor { get; set; }
+        LightDarkColor? ToolTipForegroundColor { get; set; }
 
         /// <summary>
         /// Gets tooltip border.
@@ -164,7 +164,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">Background color.</param>
         /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
-        IRichToolTip SetToolTipBackgroundColor(Color? color);
+        IRichToolTip SetToolTipBackgroundColor(LightDarkColor? color);
 
         /// <summary>
         /// Sets the background brush.
@@ -179,7 +179,7 @@ namespace Alternet.UI
         /// <param name="color">The foreground color of the message text. If null is specified,
         /// default value is used.</param>
         /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
-        IRichToolTip SetToolTipForegroundColor(Color? color);
+        IRichToolTip SetToolTipForegroundColor(LightDarkColor? color);
 
         /// <summary>
         /// Sets foreground color of the title.
@@ -187,7 +187,7 @@ namespace Alternet.UI
         /// <param name="color">The foreground color of the title. If null is specified,
         /// default value is used.</param>
         /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
-        IRichToolTip SetTitleForegroundColor(Color? color);
+        IRichToolTip SetTitleForegroundColor(LightDarkColor? color);
 
         /// <summary>
         /// Sets timeout after which the tooltip should disappear, in milliseconds.
@@ -229,7 +229,7 @@ namespace Alternet.UI
         /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetToolTipFromTemplate(
             TemplateControl template,
-            Color? backColor = null);
+            LightDarkColor? backColor = null);
 
         /// <summary>
         /// Shows tooltip with the image built using the specified control template
@@ -242,7 +242,7 @@ namespace Alternet.UI
         /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip ShowToolTipFromTemplate(
             TemplateControl template,
-            Color? backColor = null,
+            LightDarkColor? backColor = null,
             PointD? location = null);
 
         /// <summary>

@@ -18,20 +18,20 @@ namespace Alternet.UI
         private SizeI? svgImageSize;
         private bool selectedItemIsBold = false;
         private float minItemHeight = VirtualListBox.DefaultMinItemHeight;
-        private Color? itemTextColor;
+        private LightDarkColor? itemTextColor;
         private HVAlignment itemAlignment = ListControlItem.DefaultItemAlignment;
-        private Color? selectedItemTextColor;
-        private Color? disabledItemTextColor;
+        private LightDarkColor? selectedItemTextColor;
+        private LightDarkColor? disabledItemTextColor;
         private bool selectionVisible = true;
         private bool checkBoxVisible = false;
         private bool checkBoxThreeState = false;
         private bool textVisible = true;
-        private Color? selectedItemBackColor;
+        private LightDarkColor? selectedItemBackColor;
         private bool currentItemBorderVisible = true;
         private BorderSettings? currentItemBorder;
         private BorderSettings? selectionBorder;
-        private Color? unfocusedSelectedItemTextColor;
-        private Color? unfocusedSelectedItemBackColor;
+        private LightDarkColor? unfocusedSelectedItemTextColor;
+        private LightDarkColor? unfocusedSelectedItemBackColor;
         private bool checkBoxAllowAllStatesForUser;
 
         /// <inheritdoc/>
@@ -89,7 +89,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? ItemTextColor
+        public virtual LightDarkColor? ItemTextColor
         {
             get => itemTextColor;
             set
@@ -109,7 +109,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? SelectedItemTextColor
+        public virtual LightDarkColor? SelectedItemTextColor
         {
             get => selectedItemTextColor;
             set
@@ -119,7 +119,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? DisabledItemTextColor
+        public virtual LightDarkColor? DisabledItemTextColor
         {
             get => disabledItemTextColor;
             set
@@ -169,7 +169,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? SelectedItemBackColor
+        public virtual LightDarkColor? SelectedItemBackColor
         {
             get => selectedItemBackColor;
             set
@@ -209,7 +209,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? UnfocusedSelectedItemTextColor
+        public virtual LightDarkColor? UnfocusedSelectedItemTextColor
         {
             get => unfocusedSelectedItemTextColor;
             set
@@ -219,7 +219,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? UnfocusedSelectedItemBackColor
+        public virtual LightDarkColor? UnfocusedSelectedItemBackColor
         {
             get => unfocusedSelectedItemBackColor;
             set

@@ -126,14 +126,19 @@ namespace Alternet.UI
             public readonly IEnumerable<BorderSettings> InnerBorders => Border?.InnerBorders ?? Enumerable.Empty<BorderSettings>();
 
             /// <summary>
+            /// Gets a value indicating whether the background of the associated control is dark.
+            /// </summary>
+            public readonly bool IsDark => Control?.IsDarkBackground ?? SystemSettings.AppearanceIsDark;
+
+            /// <summary>
             /// Gets the effective border color, or null if the border is hidden.
             /// </summary>
-            public readonly Color? GetEffectiveBorderColor()
+            public readonly Color? GetEffectiveBorderColor(bool isDark)
             {
                 if (!HasBorder)
                     return null;
 
-                var borderColor = Border?.Color ?? ColorUtils.GetDefaultBorderColor(Control);
+                var borderColor = Border?.Color?.LightOrDark(isDark) ?? ColorUtils.GetDefaultBorderColor(Control);
 
                 if (borderColor.IsEmptyOrTransparent)
                     return null;
@@ -145,14 +150,14 @@ namespace Alternet.UI
             /// Gets the effective border pen, or null if the border is hidden.
             /// </summary>
             /// <returns></returns>
-            public readonly Pen? GetEffectiveBorderPen()
+            public readonly Pen? GetEffectiveBorderPen(bool isDark)
             {
                 var pen = Border?.GetPen();
 
                 if (pen is not null)
                     return pen;
 
-                var color = GetEffectiveBorderColor();
+                var color = GetEffectiveBorderColor(isDark);
                 if (color == null)
                     return null;
                 return color.AsPen;

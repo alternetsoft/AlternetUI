@@ -44,8 +44,8 @@ namespace PropertyGridSample
             item.Image = Image.FromUrlCached(DemoUtils.CalendarUrl);
             item.CheckState = CheckState.Checked;
             item.DisabledImage = item.Image?.ToGrayScale();
-            item.ForegroundColor = Color.Black;
-            item.BackgroundColor = Color.BlanchedAlmond;
+            item.ForegroundColor = new(Color.Black);
+            item.BackgroundColor = new(Color.BlanchedAlmond);
             item.Text = "Sample <b>item</b> at center";
             item.LabelFlags = DrawLabelFlags.TextHasBold;
 

@@ -95,7 +95,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color RealBackgroundColor
+        public override LightDarkColor RealBackgroundColor
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color RealForegroundColor
+        public override LightDarkColor RealForegroundColor
         {
             get
             {
@@ -542,7 +542,7 @@ namespace Alternet.UI
             else
             {
                 if (!DisposingOrDisposed)
-                    Handler.BackgroundColor = BackgroundColor;
+                    Handler.BackgroundColor = RealBackgroundColor.LightOrDark(this);
             }
 
             base.RaiseBackgroundColorChanged();
@@ -744,9 +744,9 @@ namespace Alternet.UI
                 return;
 
             if (BackgroundColor is not null)
-                Handler.BackgroundColor = BackgroundColor;
+                Handler.BackgroundColor = RealBackgroundColor.LightOrDark(this);
             if (ForegroundColor is not null)
-                Handler.ForegroundColor = ForegroundColor;
+                Handler.ForegroundColor = RealForegroundColor.LightOrDark(this);
             base.RaiseHandleCreated(e);
         }
 
@@ -894,7 +894,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void InternalSetColor(bool isBackground, Color? color)
+        protected override void InternalSetColor(bool isBackground, LightDarkColor? color)
         {
             if (DisposingOrDisposed)
                 return;
@@ -906,14 +906,14 @@ namespace Alternet.UI
                 if (color is null)
                     Handler.ResetBackgroundColor();
                 else
-                    Handler.BackgroundColor = color;
+                    Handler.BackgroundColor = color.LightOrDark(this);
             }
             else
             {
                 if (color is null)
                     Handler.ResetForegroundColor();
                 else
-                    Handler.ForegroundColor = color;
+                    Handler.ForegroundColor = color.LightOrDark(this);
             }
         }
 
@@ -991,7 +991,7 @@ namespace Alternet.UI
     {
         public RedControl()
         {
-            BackgroundColor = Color.Red;
+            BackgroundColor = LightDarkColors.Red;
         }
     }
 #pragma warning restore

@@ -21,7 +21,7 @@ namespace Alternet.UI
         private Pen? pen;
         private Brush? brush;
         private Coord width = DefaultBorderWidth;
-        private Color? color;
+        private LightDarkColor? color;
         private bool incStartPoint;
         private bool decLength;
 
@@ -105,7 +105,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets border color.
         /// </summary>
-        public virtual Color? Color
+        public virtual LightDarkColor? Color
         {
             get
             {
@@ -146,26 +146,26 @@ namespace Alternet.UI
         /// <summary>
         /// Gets <see cref="Brush"/> which can be used to draw the border.
         /// </summary>
-        public virtual Brush GetBrush(Color defaultColor)
+        public virtual Brush GetBrush(LightDarkColor defaultColor, bool isDark)
         {
             if (brush is not null)
                 return brush;
 
             var c = color ?? defaultColor;
-            var result = c.AsBrush;
+            var result = c.LightOrDark(isDark).AsBrush;
             return result;
         }
 
         /// <summary>
         /// Gets <see cref="Pen"/> which can be used to draw the border.
         /// </summary>
-        public virtual Pen GetPen(Color defaultColor)
+        public virtual Pen GetPen(LightDarkColor defaultColor, bool isDark)
         {
             if (pen is not null)
                 return pen;
 
             var c = color ?? defaultColor;
-            var result = c.GetAsPen(Math.Max(1, width));
+            var result = c.LightOrDark(isDark).GetAsPen(Math.Max(1, width));
             return result;
         }
 

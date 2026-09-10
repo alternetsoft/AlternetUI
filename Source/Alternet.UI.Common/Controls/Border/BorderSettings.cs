@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// Gets or sets color of the debug border. Default value is Null.
         /// In this case red color is used.
         /// </summary>
-        public static Color? DefaultDebugBorderColor;
+        public static LightDarkColor? DefaultDebugBorderColor;
 
         /// <summary>
         /// Gets or sets size of the design corners.
@@ -73,7 +73,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="BorderSettings"/> class with the specified color.
         /// </summary>
         /// <param name="color">The color of the border.</param>
-        public BorderSettings(Color color)
+        public BorderSettings(LightDarkColor color)
             : this()
         {
             if (color != null)
@@ -85,7 +85,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="width">The thickness of the border to apply. Specifies the width for each side.</param>
         /// <param name="color">The color of the border. If null, the default color is used.</param>
-        public BorderSettings(Thickness width, Color? color = null)
+        public BorderSettings(Thickness width, LightDarkColor? color = null)
             : this()
         {
             Width = width;
@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <param name="right">The thickness of the right border, in device-independent units.</param>
         /// <param name="bottom">The thickness of the bottom border, in device-independent units.</param>
         /// <param name="color">The color of the border. If null, the default border color is used.</param>
-        public BorderSettings(float left, float top, float right, float bottom, Color? color = null)
+        public BorderSettings(float left, float top, float right, float bottom, LightDarkColor? color = null)
             : this(new Thickness(left, top, right, bottom), color)
         {
         }
@@ -172,7 +172,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = transparentBorder ??= Default.WithColor(Color.Transparent);
+                var result = transparentBorder ??= Default.WithColor(LightDarkColors.Transparent);
                 result.SetImmutable();
                 return result;
             }
@@ -188,7 +188,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = emptyBorder ??= Default.WithColor(Color.Empty);
+                var result = emptyBorder ??= Default.WithColor(LightDarkColors.Empty);
                 result.SetImmutable();
                 return result;
             }
@@ -429,7 +429,7 @@ namespace Alternet.UI
         /// Gets or sets uniform color of the border lines.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? Color
+        public virtual LightDarkColor? Color
         {
             get
             {
@@ -489,19 +489,6 @@ namespace Alternet.UI
             IsUniformVerticalColor && IsUniformHorizontalColor;
 
         /// <summary>
-        /// <see cref="Paint"/> event handler implementation which draws design corners used
-        /// to indicate control's bounds.
-        /// </summary>
-        /// <param name="sender"><see cref="BorderSettings"/> instance.</param>
-        /// <param name="args">Event arguments.</param>
-        public static void DrawDesignCornersHandler(object? sender, PaintEventArgs args)
-        {
-            if (sender is not BorderSettings border)
-                return;
-            DrawDesignCorners(args.Graphics, args.ClientRectangle, border);
-        }
-
-        /// <summary>
         /// Calculates a uniform corner radius for a rectangle, optionally
         /// treating the radius as a percentage of the rectangle's minimum dimension.
         /// </summary>
@@ -541,7 +528,7 @@ namespace Alternet.UI
         /// <summary>
         /// Draws design corners used to indicate element bounds.
         /// </summary>
-        public static void DrawDesignCorners(Graphics dc, RectD rect, BorderSettings? border = null)
+        public static void DrawDesignCorners(Graphics dc, RectD rect, bool isDark, BorderSettings? border = null)
         {
             border ??= BorderSettings.DebugBorder;
 
@@ -567,29 +554,38 @@ namespace Alternet.UI
                 dc.FillRectangle(brush, rect2);
             }
 
-            var defaultColor = SystemColors.GrayText;
+            var defaultColor = LightDarkColors.GrayText;
 
             if (border.Top.Width > 0)
             {
-                DrawHorizontal(dc, border.Top.GetBrush(defaultColor), border.GetTopRectangle(rect));
+                DrawHorizontal(
+                    dc,
+                    border.Top.GetBrush(defaultColor, isDark),
+                    border.GetTopRectangle(rect));
             }
 
             if (border.Bottom.Width > 0)
             {
                 DrawHorizontal(
                     dc,
-                    border.Bottom.GetBrush(defaultColor),
+                    border.Bottom.GetBrush(defaultColor, isDark),
                     border.GetBottomRectangle(rect));
             }
 
             if (border.Left.Width > 0)
             {
-                DrawVertical(dc, border.Left.GetBrush(defaultColor), border.GetLeftRectangle(rect));
+                DrawVertical(
+                    dc,
+                    border.Left.GetBrush(defaultColor, isDark),
+                    border.GetLeftRectangle(rect));
             }
 
             if (border.Right.Width > 0)
             {
-                DrawVertical(dc, border.Right.GetBrush(defaultColor), border.GetRightRectangle(rect));
+                DrawVertical(
+                    dc,
+                    border.Right.GetBrush(defaultColor, isDark),
+                    border.GetRightRectangle(rect));
             }
         }
 
@@ -713,18 +709,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether color is ok for painting the border.
         /// </summary>
-        /// <param name="color">Color to check.</param>
+        /// <param name="ld">LightDarkColor to check.</param>
         /// <returns></returns>
-        public virtual bool ColorIsOk(Color? color)
+        public virtual bool ColorIsOk(LightDarkColor? ld)
         {
-            return color is not null && color.IsOk && color != Color.Transparent && !color.IsEmpty;
+            return Internal(false) || Internal(true);
+
+            bool Internal(bool isDark)
+            {
+                var color = ld?.LightOrDark(isDark);
+
+                return color is not null && color.IsOk && color != Drawing.Color.Transparent && !color.IsEmpty;
+            }
         }
 
         /// <summary>
         /// Same as using <see cref="Color"/> property.
         /// </summary>
         /// <param name="value">New uniform border color.</param>
-        public void SetColor(Color? value)
+        public void SetColor(LightDarkColor? value)
         {
             Color = value;
         }
@@ -737,10 +740,10 @@ namespace Alternet.UI
         /// <param name="rightColor">Color of the right edge.</param>
         /// <param name="bottomColor">Color of the bottom edge.</param>
         public virtual bool SetColors(
-            Color? leftColor,
-            Color? topColor,
-            Color? rightColor,
-            Color? bottomColor)
+            LightDarkColor? leftColor,
+            LightDarkColor? topColor,
+            LightDarkColor? rightColor,
+            LightDarkColor? bottomColor)
         {
             if (Immutable)
                 return false;
@@ -782,7 +785,7 @@ namespace Alternet.UI
         /// Border side color is changed only if <see cref="ColorIsOk"/> returns <c>true</c>
         /// for this color.
         /// </remarks>
-        public virtual BorderSettings ToColor(Color value)
+        public virtual BorderSettings ToColor(LightDarkColor value)
         {
             var result = Clone();
             var leftColor = ColorIsOk(Left.Color) ? value : Left.Color;
@@ -805,12 +808,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets this border with all colors set to <see cref="SystemColors.GrayText"/>
+        /// Gets this border with all colors set to gray scale color.
+        /// This method is useful for creating a disabled or inactive appearance for the border.
         /// </summary>
         /// <returns></returns>
         public virtual BorderSettings ToGrayScale()
         {
-            var result = ToColor(SystemColors.GrayText);
+            var result = ToColor(LightDarkColors.GrayText);
             return result;
         }
 
@@ -829,7 +833,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">Border color of the new <see cref="BorderSettings"/>.</param>
         /// <returns></returns>
-        public virtual BorderSettings WithColor(Color color)
+        public virtual BorderSettings WithColor(LightDarkColor color)
         {
             var result = Clone();
             result.Color = color;

@@ -210,17 +210,38 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color.
         /// </summary>
-        public virtual Color? BackgroundColor { get => ToolTipParams.BackgroundColor; set { ToolTipParams.BackgroundColor = value; } }
+        public virtual LightDarkColor? BackgroundColor
+        {
+            get => ToolTipParams.BackgroundColor;
+            set
+            {
+                ToolTipParams.BackgroundColor = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the foreground color to be used for rendering.
         /// </summary>
-        public virtual Color? ForegroundColor { get => ToolTipParams.ForegroundColor; set { ToolTipParams.ForegroundColor = value; } }
+        public virtual LightDarkColor? ForegroundColor
+        {
+            get => ToolTipParams.ForegroundColor;
+            set
+            {
+                ToolTipParams.ForegroundColor = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the foreground color of the title.
         /// </summary>
-        public virtual Color? TitleForegroundColor { get => ToolTipParams.TitleForegroundColor; set { ToolTipParams.TitleForegroundColor = value; } }
+        public virtual LightDarkColor? TitleForegroundColor
+        { 
+            get => ToolTipParams.TitleForegroundColor;
+            set
+            {
+                ToolTipParams.TitleForegroundColor = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the font used for rendering the title.
@@ -269,7 +290,7 @@ namespace Alternet.UI
         /// <param name="cornerRadius">The uniform corner radius to apply to the border.
         /// Must be a non-negative value.</param>
         public virtual void SetBorder(
-            Color color,
+            LightDarkColor color,
             bool radiusIsPercent = true,
             Coord cornerRadius = 0)
         {
@@ -277,7 +298,3 @@ namespace Alternet.UI
         }
     }
 }
-
-
-/*
-*/

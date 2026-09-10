@@ -749,19 +749,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the current color based on whether a dark or light color scheme is in use.
-        /// For regular <see cref="Color"/> instances, it simply returns the instance itself.
-        /// For <see cref="LightDarkColor"/> instances, it returns either the dark or light color.
-        /// </summary>
-        public virtual Color Current
-        {
-            get
-            {
-                return this;
-            }
-        }
-
-        /// <summary>
         /// Gets this color as <see cref="SKColor"/>.
         /// </summary>
         [Browsable(false)]
@@ -1050,31 +1037,6 @@ namespace Alternet.Drawing
         public static Color FromArgb(byte alpha, byte red, byte green, byte blue)
         {
             return new(alpha, red, green, blue);
-        }
-
-        /// <summary>
-        /// Gets <see cref="GetDark"/> or <see cref="GetLight"/> color depending on
-        /// <paramref name="isDark"/> parameter value.
-        /// </summary>
-        /// <param name="isDark">Whether to get dark or light color.</param>
-        /// <returns>The color to be used for the specified theme.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Color LightOrDark(bool isDark)
-        {
-            if (isDark)
-                return GetDark();
-            else
-                return GetLight();
-        }
-
-        /// <summary>
-        /// Gets <see cref="GetDark"/> or <see cref="GetLight"/> color depending on the current theme.
-        /// </summary>
-        /// <returns>The color to be used for the current theme.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Color LightOrDark()
-        {
-            return LightOrDark(LightDarkColor.IsUsingDarkColor);
         }
 
         /// <summary>
@@ -2439,24 +2401,6 @@ namespace Alternet.Drawing
         {
             if (state.HasFlag(StateFlags.KnownColorValid))
                 val = KnownColorTable.KnownColorToArgb(knownColor);
-        }
-
-        /// <summary>
-        /// Gets this color for the dark theme. By default, returns the same color.
-        /// </summary>
-        /// <returns>The color to be used for the dark theme.</returns>
-        protected virtual Color GetDark()
-        {
-            return this;
-        }
-
-        /// <summary>
-        /// Gets this color for the light theme. By default, returns the same color.
-        /// </summary>
-        /// <returns>The color to be used for the light theme.</returns>
-        protected virtual Color GetLight()
-        {
-            return this;
         }
 
         private static void CheckByte(int value, string name)

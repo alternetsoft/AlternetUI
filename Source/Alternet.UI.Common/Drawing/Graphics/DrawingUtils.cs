@@ -839,8 +839,9 @@ namespace Alternet.UI
         /// the border settings, and the canvas.</param>
         public static void FillBorderRectangle(this Graphics canvas, ref DrawBorderParams prm)
         {
+            var isDark = prm.IsDark;
             var brush = prm.Brush;
-            var borderPen = prm.GetEffectiveBorderPen();
+            var borderPen = prm.GetEffectiveBorderPen(isDark);
             var hasBorder = borderPen is not null;
             var hasBrush = brush is not null;
 
@@ -993,12 +994,14 @@ namespace Alternet.UI
             }
 
             var radius = GetCornerRadius(ref prm);
-            var defaultColor = ColorUtils.GetDefaultBorderColor(prm.Control);
+            var defaultColor = DefaultColors.BorderColor;
+
+            var isDark = prm.Control?.IsDarkBackground ?? SystemSettings.AppearanceIsDark;
 
             if (radius != null)
             {
                 dc.DrawRoundedRectangle(
-                    border.Top.GetPen(defaultColor),
+                    border.Top.GetPen(defaultColor, isDark),
                     prm.Rect.InflatedBy(-1, -1),
                     radius.Value);
                 return;
@@ -1011,22 +1014,22 @@ namespace Alternet.UI
 
             if (border.Top.Width > 0 && border.ColorIsOk(topColor))
             {
-                dc.FillRectangle(topColor.AsBrush, border.GetTopRectangle(prm.Rect));
+                dc.FillRectangle(topColor.LightOrDark(isDark).AsBrush, border.GetTopRectangle(prm.Rect));
             }
 
             if (border.Bottom.Width > 0 && border.ColorIsOk(bottomColor))
             {
-                dc.FillRectangle(bottomColor.AsBrush, border.GetBottomRectangle(prm.Rect));
+                dc.FillRectangle(bottomColor.LightOrDark(isDark).AsBrush, border.GetBottomRectangle(prm.Rect));
             }
 
             if (border.Left.Width > 0 && border.ColorIsOk(leftColor))
             {
-                dc.FillRectangle(leftColor.AsBrush, border.GetLeftRectangle(prm.Rect));
+                dc.FillRectangle(leftColor.LightOrDark(isDark).AsBrush, border.GetLeftRectangle(prm.Rect));
             }
 
             if (border.Right.Width > 0 && border.ColorIsOk(rightColor))
             {
-                dc.FillRectangle(rightColor.AsBrush, border.GetRightRectangle(prm.Rect));
+                dc.FillRectangle(rightColor.LightOrDark(isDark).AsBrush, border.GetRightRectangle(prm.Rect));
             }
         }
 

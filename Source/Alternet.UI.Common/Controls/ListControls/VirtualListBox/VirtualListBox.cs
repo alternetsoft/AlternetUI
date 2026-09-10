@@ -35,12 +35,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color of the horizontal line that is drawn between items.
         /// </summary>
-        public static LightDarkColor DefaultHorzGridLinesColor = new(light: (229, 229, 229), dark: (99, 99, 99));
+        public static LightDarkColor DefaultHorzGridLinesColor = new(light: (229, 229, 229), dark: new Color(99, 99, 99));
 
         /// <summary>
         /// Gets or sets default color of the vertical line that is drawn between columns.
         /// </summary>
-        public static LightDarkColor DefaultVertGridLinesColor = new(light: (229, 229, 229), dark: (99, 99, 99));
+        public static LightDarkColor DefaultVertGridLinesColor = new(light: (229, 229, 229), dark: new Color(99, 99, 99));
 
         /// <summary>
         /// Gets or sets the default provider used to generate tooltips for items.
@@ -233,7 +233,7 @@ namespace Alternet.UI
         /// Gets or sets the default background color of the full item tooltip.
         /// </summary>
         public static LightDarkColor DefaultFullItemToolTipBackColor { get; set; }
-            = new(light: (240, 240, 240), dark: (51, 51, 51));
+            = new(light: (240, 240, 240), dark: new Color(51, 51, 51));
 
         /// <summary>
         /// Gets or sets the way how items are set when <see cref="SetItemsKind.Default"/>
@@ -672,7 +672,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color? BackgroundColor
+        public override LightDarkColor? BackgroundColor
         {
             get => base.BackgroundColor;
             set
@@ -2221,15 +2221,14 @@ namespace Alternet.UI
         /// the resolved background color for the tooltip.</param>
         /// <param name="borderColor">When this method returns, contains
         /// the resolved border color for the tooltip.</param>
-        protected virtual void ResolveOverlayToolTipColors(out Color foreColor, out Color backColor, out Color borderColor)
+        protected virtual void ResolveOverlayToolTipColors(
+            out LightDarkColor foreColor,
+            out LightDarkColor backColor,
+            out LightDarkColor borderColor)
         {
-            backColor = (FullItemToolTipBackColor ?? DefaultFullItemToolTipBackColor)
-                .LightOrDark(IsDarkBackground);
-            foreColor = (FullItemToolTipForeColor ?? DefaultFullItemToolTipForeColor)
-                .LightOrDark(IsDarkBackground);
-            borderColor = (FullItemToolTipBorderColor ?? DefaultFullItemToolTipBorderColor
-                ?? DefaultColors.BorderColor)
-                .LightOrDark(IsDarkBackground);
+            backColor = (FullItemToolTipBackColor ?? DefaultFullItemToolTipBackColor);
+            foreColor = (FullItemToolTipForeColor ?? DefaultFullItemToolTipForeColor);
+            borderColor = (FullItemToolTipBorderColor ?? DefaultFullItemToolTipBorderColor ?? DefaultColors.BorderColor);
         }
 
         /// <summary>

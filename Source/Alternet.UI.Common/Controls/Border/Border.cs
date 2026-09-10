@@ -183,7 +183,7 @@ namespace Alternet.UI
         public virtual bool AutoPadding { get; set; } = true;
 
         /// <inheritdoc/>
-        public override Color? BackgroundColor {
+        public override LightDarkColor? BackgroundColor {
             
             get => base.BackgroundColor;
 
@@ -235,21 +235,21 @@ namespace Alternet.UI
         /// If this property is null, <see cref="ColorUtils.GetDefaultBorderColor(bool)"/> is used
         /// for the border color.
         /// </remarks>
-        public virtual Color? BorderColor
+        public virtual LightDarkColor? BorderColor
         {
             get
             {
-                return NormalBorder.Color ?? ColorUtils.GetDefaultBorderColor(IsDarkBackground);
+                return NormalBorder.Color ?? DefaultColors.BorderColor;
             }
 
             set
             {
                 if (value == null)
                 {
-                    NormalBorder.Color = ColorUtils.GetDefaultBorderColor(IsDarkBackground);
+                    NormalBorder.Color = DefaultColors.BorderColor;
                 }
                 else
-                    NormalBorder.Color = (Color)value;
+                    NormalBorder.Color = value;
                 Refresh();
             }
         }
@@ -295,7 +295,7 @@ namespace Alternet.UI
         /// Creates border filled with default settings.
         /// </summary>
         /// <returns></returns>
-        public static BorderSettings CreateDefaultBorder(Color? color = null)
+        public static BorderSettings CreateDefaultBorder(LightDarkColor? color = null)
         {
             BorderSettings result = new(BorderSettings.Default);
             if (color is not null)
@@ -304,7 +304,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
-        public virtual void SetBorderColors(Color? left, Color? top, Color? right, Color? bottom)
+        public virtual void SetBorderColors(LightDarkColor? left, LightDarkColor? top, LightDarkColor? right, LightDarkColor? bottom)
         {
             if (NormalBorder.SetColors(left, top, right, bottom))
                 Refresh();
@@ -314,9 +314,9 @@ namespace Alternet.UI
         /// Sets the color for all four borders (left, right, top, bottom) simultaneously.
         /// </summary>
         /// <param name="value">
-        /// A <see cref="Color"/> to apply to all border sides.
+        /// A <see cref="LightDarkColor"/> to apply to all border sides.
         /// </param>
-        public virtual void SetBorderColors(Color? value)
+        public virtual void SetBorderColors(LightDarkColor? value)
         {
             SetBorderColors(value, value, value, value);
         }
@@ -325,12 +325,12 @@ namespace Alternet.UI
         /// Sets the color of the left border.
         /// </summary>
         /// <param name="value">
-        /// A <see cref="Color"/> to apply to the left border.
+        /// A <see cref="LightDarkColor"/> to apply to the left border.
         /// </param>
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetLeftBorderColor(Color? value)
+        public virtual void SetLeftBorderColor(LightDarkColor? value)
         {
             if (NormalBorder.Left.Color == value)
                 return;
@@ -347,7 +347,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetRightBorderColor(Color? value)
+        public virtual void SetRightBorderColor(LightDarkColor? value)
         {
             if (NormalBorder.Right.Color == value)
                 return;
@@ -364,7 +364,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetTopBorderColor(Color? value)
+        public virtual void SetTopBorderColor(LightDarkColor? value)
         {
             if (NormalBorder.Top.Color == value)
                 return;
@@ -381,7 +381,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetBottomBorderColor(Color? value)
+        public virtual void SetBottomBorderColor(LightDarkColor? value)
         {
             if (NormalBorder.Bottom.Color == value)
                 return;
@@ -636,7 +636,7 @@ namespace Alternet.UI
         protected override void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle, IsDarkBackground);
         }
     }
 }

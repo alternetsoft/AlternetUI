@@ -119,28 +119,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Sets <see cref="AbstractControl.StateObjects"/> colors and backgrounds
-        /// for the state specified
-        /// in the <paramref name="state"/> parameter to the
-        /// colors from <paramref name="fontAndColor"/>.
-        /// </summary>
-        /// <param name="state">Affected control state.</param>
-        /// <param name="fontAndColor">Colors.</param>
-        public virtual void SetStateColors(
-            VisualControlState state,
-            IReadOnlyFontAndColor? fontAndColor)
-        {
-            if (fontAndColor is null && StateObjects?.Colors is null
-                && StateObjects?.Backgrounds is null)
-                return;
-            StateObjects ??= new();
-            StateObjects.Colors ??= new();
-            StateObjects.Backgrounds ??= new();
-            StateObjects.Colors.SetObject(fontAndColor, state);
-            StateObjects.Backgrounds.SetObject(fontAndColor?.BackgroundColor?.AsBrush, state);
-        }
-
         /// <inheritdoc/>
         public override Brush? GetBackground(VisualControlState state)
         {

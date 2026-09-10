@@ -275,18 +275,19 @@ namespace Alternet.UI
         {
             AllStateColors colors = new()
             {
-                HoveredForeColor = (0, 0, 0),
-                HoveredBackColor = (229, 243, 255),
+                HoveredForeColor = new(0, 0, 0),
+                HoveredBackColor = new(229, 243, 255),
 
-                DisabledForeColor = SystemColors.GrayText,
+                DisabledForeColor = LightDarkColors.GrayText,
 
-                PressedForeColor = (0, 0, 0),
-                PressedBackColor = (204, 228, 247),
+                PressedForeColor = new(0, 0, 0),
+                PressedBackColor = new(204, 228, 247),
             };
 
-            theme.Borders = CreateBorders(color: (204, 232, 255), cornerRadius);
+            theme.Borders = CreateBorders(color: new LightDarkColor(new Color(204, 232, 255)), cornerRadius);
             theme.Colors = colors.AllStates;
-            theme.Backgrounds = theme.Colors;
+            theme.Backgrounds ??= new();
+            theme.Backgrounds.Assign(theme.Colors, isDark: false);
         }
 
         /// <summary>
@@ -327,18 +328,19 @@ namespace Alternet.UI
         {
             AllStateColors colors = new()
             {
-                HoveredForeColor = (250, 250, 250),
-                HoveredBackColor = (61, 61, 61),
+                HoveredForeColor = new(250, 250, 250),
+                HoveredBackColor = new(61, 61, 61),
 
-                DisabledForeColor = SystemColors.GrayText,
+                DisabledForeColor = LightDarkColors.GrayText,
 
-                PressedForeColor = (214, 214, 214),
-                PressedBackColor = (34, 34, 34),
+                PressedForeColor = new(214, 214, 214),
+                PressedBackColor = new(34, 34, 34),
             };
 
-            theme.Borders = CreateBorders((112, 112, 112), cornerRadius);
+            theme.Borders = CreateBorders(new(new Color(112, 112, 112)), cornerRadius);
             theme.Colors = colors.AllStates;
-            theme.Backgrounds = theme.Colors;
+            theme.Backgrounds ??= new();
+            theme.Backgrounds.Assign(theme.Colors, isDark: true);
         }
 
         /// <summary>
@@ -349,7 +351,7 @@ namespace Alternet.UI
         /// <param name="color">Border color.</param>
         /// <param name="cornerRadius">Corner radius for the border.</param>
         /// <returns></returns>
-        public static ControlStateBorders CreateBorders(Color color, BorderCornerRadius? cornerRadius = null)
+        public static ControlStateBorders CreateBorders(LightDarkColor color, BorderCornerRadius? cornerRadius = null)
         {
             BorderSettings hoveredBorder = new()
             {

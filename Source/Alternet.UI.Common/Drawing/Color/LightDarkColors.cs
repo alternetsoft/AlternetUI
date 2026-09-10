@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,263 @@ namespace Alternet.Drawing
         private static LightDarkColor? blue;
         private static LightDarkColor? blueDarker;
         private static LightDarkColor? blueLighter;
+
+        /// <summary>
+        /// Gets a <see cref="LightDarkColor"/> that is transparent.
+        /// </summary>
+        public static readonly LightDarkColor Transparent = new LightDarkColor(Color.Transparent, Color.Transparent).SetImmutable();
+
+        /// <summary>
+        /// Gets a <see cref="LightDarkColor"/> that is empty.
+        /// </summary>
+        public static readonly LightDarkColor Empty = new LightDarkColor(Color.Empty, Color.Empty).SetImmutable();
+
+        /// <summary>
+        /// Gets a <see cref="LightDarkColor"/> that is gray text.
+        /// </summary>
+        public static LightDarkColor GrayText;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color
+        /// of the active window's border.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the
+        /// active window's border.</returns>
+        public static LightDarkColor ActiveBorder;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color
+        /// of the background of the active window's title bar.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the
+        /// active window's title bar.</returns>
+        public static LightDarkColor ActiveCaption;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color
+        /// of the text in the active window's title bar.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the text in
+        /// the active window's title bar.</returns>
+        public static LightDarkColor ActiveCaptionText;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color
+        /// of the application workspace. </summary>
+        /// <returns>A <see cref="Color" /> that is the color of the
+        /// application workspace.</returns>
+        public static LightDarkColor AppWorkspace;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the face
+        /// color of a 3-D element.</summary>
+        /// <returns>A <see cref="Color" /> that is the face color of
+        /// a 3-D element.</returns>
+        public static LightDarkColor ButtonFace;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the
+        /// highlight color of a 3-D element. </summary>
+        /// <returns>A <see cref="Color" /> that is the highlight color
+        /// of a 3-D element.</returns>
+        public static LightDarkColor ButtonHighlight;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the shadow
+        /// color of a 3-D element. </summary>
+        /// <returns>A <see cref="Color" /> that is the shadow color of
+        /// a 3-D element.</returns>
+        public static LightDarkColor ButtonShadow;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the
+        /// face color of a 3-D element.</summary>
+        /// <returns>A <see cref="Color" /> that is the face color of
+        /// a 3-D element.</returns>
+        public static LightDarkColor Control;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the shadow color of a 3-D
+        /// element. </summary>
+        /// <returns>A <see cref="Color" /> that is the shadow color of a 3-D element.</returns>
+        public static LightDarkColor ControlDark;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the dark shadow color
+        /// of a 3-D element. </summary>
+        /// <returns>A <see cref="Color" /> that is the dark shadow
+        /// color of a 3-D element.</returns>
+        public static LightDarkColor ControlDarkDark;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the light color of a 3-D
+        /// element. </summary>
+        /// <returns>A <see cref="Color" /> that is the light color of a 3-D element.</returns>
+        public static LightDarkColor ControlLight;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the highlight color of
+        /// a 3-D element. </summary>
+        /// <returns>A <see cref="Color" /> that is the highlight color
+        /// of a 3-D element.</returns>
+        public static LightDarkColor ControlLightLight;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color
+        /// of the desktop.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the desktop.</returns>
+        public static LightDarkColor Desktop;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the lightest color in the
+        /// color gradient of an active window's title bar.</summary>
+        /// <returns>A <see cref="Color" /> that is the lightest color in the color gradient
+        /// of an active window's title bar.</returns>
+        public static LightDarkColor GradientActiveCaption;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the lightest color in the
+        /// color gradient of an inactive window's title bar.</summary>
+        /// <returns>A <see cref="Color" /> that is the lightest color in the color gradient
+        /// of an inactive window's title bar.</returns>
+        public static LightDarkColor GradientInactiveCaption;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the background
+        /// of selected items.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the background of selected
+        /// items.</returns>
+        public static LightDarkColor Highlight;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the text of
+        /// selected items.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the text of selected
+        /// items.</returns>
+        public static LightDarkColor HighlightText;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color used to designate
+        /// a hot-tracked item. </summary>
+        /// <returns>A <see cref="Color" /> that is the color used to designate a hot-tracked
+        /// item.</returns>
+        public static LightDarkColor HotTrack;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of an inactive
+        /// window's border.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of an inactive window's
+        /// border.</returns>
+        public static LightDarkColor InactiveBorder;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the background
+        /// of an inactive window's title bar.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the background of an
+        /// inactive window's title bar.</returns>
+        public static LightDarkColor InactiveCaption;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the text
+        /// in an inactive window's title bar.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the text in an inactive
+        /// window's title bar.</returns>
+        public static LightDarkColor InactiveCaptionText;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the background
+        /// of a ToolTip.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the background of a
+        /// ToolTip.</returns>
+        public static LightDarkColor Info;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the text
+        /// of a ToolTip.</summary>
+        /// <returns>A <see cref="Color" /> that is the color
+        /// of the text of a ToolTip.</returns>
+        public static LightDarkColor InfoText;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of a menu's
+        /// background.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of a menu's background.</returns>
+        public static LightDarkColor Menu;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the
+        /// background of a menu bar.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the background of a menu
+        /// bar.</returns>
+        public static LightDarkColor MenuBar;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color used to highlight
+        /// menu items when the menu appears as a flat menu.</summary>
+        /// <returns>A <see cref="Color" /> that is the color used to highlight menu items
+        /// when the menu appears as a flat menu.</returns>
+        public static LightDarkColor MenuHighlight;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of a menu's
+        /// text.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of a menu's text.</returns>
+        public static LightDarkColor MenuText;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the background
+        /// of a scroll bar.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the background of a scroll
+        /// bar.</returns>
+        public static LightDarkColor ScrollBar;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of
+        /// a window frame.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of a window frame.</returns>
+        public static LightDarkColor WindowFrame;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the background
+        /// in the client area of a window.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the background in the client
+        /// area of a window.</returns>
+        public static LightDarkColor Window;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of the text in the
+        /// client area of a window.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of the text in the client area
+        /// of a window.</returns>
+        public static LightDarkColor WindowText;
+
+        /// <summary>Gets a <see cref="Color" /> structure that is the color of text in a
+        /// 3-D element.</summary>
+        /// <returns>A <see cref="Color" /> that is the color of text in
+        /// a 3-D element.</returns>
+        public static LightDarkColor ControlText;
+
+        static LightDarkColors()
+        {
+            InitColors(SystemColorsLight.Default, SystemColorsDarkMacOs.Default);
+        }
+
+        /// <summary>
+        /// Initializes colors from the specified light and dark color sources.
+        /// </summary>
+        /// <param name="lightColorSource">The source of light colors.</param>
+        /// <param name="darkColorSource">The source of dark colors.</param>
+        [MemberNotNull(nameof(GrayText), nameof(ActiveBorder), nameof(ActiveCaption), nameof(ActiveCaptionText),
+            nameof(AppWorkspace), nameof(ButtonFace), nameof(ButtonHighlight), nameof(ButtonShadow), nameof(Control),
+            nameof(ControlDark), nameof(ControlDarkDark), nameof(ControlLight), nameof(ControlLightLight), nameof(Desktop),
+            nameof(GradientActiveCaption), nameof(GradientInactiveCaption), nameof(Highlight), nameof(HighlightText),
+            nameof(HotTrack), nameof(InactiveBorder), nameof(InactiveCaption), nameof(InactiveCaptionText),
+            nameof(Menu), nameof(MenuBar), nameof(MenuHighlight), nameof(MenuText), nameof(ScrollBar), nameof(WindowFrame),
+            nameof(Window), nameof(WindowText), nameof(ControlText), nameof(Info), nameof(InfoText))]
+        public static void InitColors(ISystemColorStructs lightColorSource, ISystemColorStructs darkColorSource)
+        {
+            GrayText = new LightDarkColor(lightColorSource.GrayText, darkColorSource.GrayText);
+            ActiveBorder = new LightDarkColor(lightColorSource.ActiveBorder, darkColorSource.ActiveBorder);
+            ActiveCaption = new LightDarkColor(lightColorSource.ActiveCaption, darkColorSource.ActiveCaption);
+            ActiveCaptionText = new LightDarkColor(lightColorSource.ActiveCaptionText, darkColorSource.ActiveCaptionText);
+            AppWorkspace = new LightDarkColor(lightColorSource.AppWorkspace, darkColorSource.AppWorkspace);
+            ButtonFace = new LightDarkColor(lightColorSource.ButtonFace, darkColorSource.ButtonFace);
+            ButtonHighlight = new LightDarkColor(lightColorSource.ButtonHighlight, darkColorSource.ButtonHighlight);
+            ButtonShadow = new LightDarkColor(lightColorSource.ButtonShadow, darkColorSource.ButtonShadow);
+            Control = new LightDarkColor(lightColorSource.Control, darkColorSource.Control);
+            ControlDark = new LightDarkColor(lightColorSource.ControlDark, darkColorSource.ControlDark);
+            ControlDarkDark = new LightDarkColor(lightColorSource.ControlDarkDark, darkColorSource.ControlDarkDark);
+            ControlLight = new LightDarkColor(lightColorSource.ControlLight, darkColorSource.ControlLight);
+            ControlLightLight = new LightDarkColor(lightColorSource.ControlLightLight, darkColorSource.ControlLightLight);
+            Desktop = new LightDarkColor(lightColorSource.Desktop, darkColorSource.Desktop);
+            GradientActiveCaption
+                = new LightDarkColor(lightColorSource.GradientActiveCaption, darkColorSource.GradientActiveCaption);
+            GradientInactiveCaption
+                = new LightDarkColor(lightColorSource.GradientInactiveCaption, darkColorSource.GradientInactiveCaption);
+            Highlight = new LightDarkColor(lightColorSource.Highlight, darkColorSource.Highlight);
+            HighlightText = new LightDarkColor(lightColorSource.HighlightText, darkColorSource.HighlightText);
+            HotTrack = new LightDarkColor(lightColorSource.HotTrack, darkColorSource.HotTrack);
+            InactiveBorder = new LightDarkColor(lightColorSource.InactiveBorder, darkColorSource.InactiveBorder);
+            InactiveCaption = new LightDarkColor(lightColorSource.InactiveCaption, darkColorSource.InactiveCaption);
+            InactiveCaptionText = new LightDarkColor(lightColorSource.InactiveCaptionText, darkColorSource.InactiveCaptionText);
+            Info = new LightDarkColor(lightColorSource.Info, darkColorSource.Info);
+            InfoText = new LightDarkColor(lightColorSource.InfoText, darkColorSource.InfoText);
+            Menu = new LightDarkColor(lightColorSource.Menu, darkColorSource.Menu);
+            MenuBar = new LightDarkColor(lightColorSource.MenuBar, darkColorSource.MenuBar);
+            MenuHighlight = new LightDarkColor(lightColorSource.MenuHighlight, darkColorSource.MenuHighlight);
+            MenuText = new LightDarkColor(lightColorSource.MenuText, darkColorSource.MenuText);
+            ScrollBar = new LightDarkColor(lightColorSource.ScrollBar, darkColorSource.ScrollBar);
+            WindowFrame = new LightDarkColor(lightColorSource.WindowFrame, darkColorSource.WindowFrame);
+            Window = new LightDarkColor(lightColorSource.Window, darkColorSource.Window);
+            WindowText = new LightDarkColor(lightColorSource.WindowText, darkColorSource.WindowText);
+            ControlText = new LightDarkColor(lightColorSource.ControlText, darkColorSource.ControlText);
+        }
 
         /// <summary>
         /// Gets default red colors pair.
@@ -99,7 +357,10 @@ namespace Alternet.Drawing
             set => blueLighter = value;
         }
 
-        internal static LightDarkColor White { get; } = new (Color.White);
+        /// <summary>
+        /// Gets a <see cref="LightDarkColor"/> that is white.
+        /// </summary>
+        public static LightDarkColor White { get; } = new LightDarkColor(Color.White).SetImmutable();
 
         /// <summary>
         /// Contains background colors which look good with light text.

@@ -123,10 +123,10 @@ namespace Alternet.UI
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
-        private static Color? defaultSpacerColor;
-        private static Color? defaultSecondarySpacerColor;
-        private static Color? defaultThumbBorderColor;
-        private static Color? defaultThumbBackColor;
+        private static LightDarkColor? defaultSpacerColor;
+        private static LightDarkColor? defaultSecondarySpacerColor;
+        private static LightDarkColor? defaultThumbBorderColor;
+        private static LightDarkColor? defaultThumbBackColor;
 
         private readonly Spacer leftTopSpacer;
         private readonly Spacer rightBottomSpacer;
@@ -306,7 +306,7 @@ namespace Alternet.UI
         /// Gets default spacer color of the slider.
         /// This value is used when <see cref="UseSpacerColor"/> is True.
         /// </summary>
-        public static Color DefaultSpacerColor
+        public static LightDarkColor DefaultSpacerColor
         {
             get => defaultSpacerColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultSpacerColor = value;
@@ -315,7 +315,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default slider thumb border color.
         /// </summary>
-        public static Color DefaultThumbBorderColor
+        public static LightDarkColor DefaultThumbBorderColor
         {
             get => defaultThumbBorderColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultThumbBorderColor = value;
@@ -324,7 +324,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default slider thumb background color.
         /// </summary>
-        public static Color DefaultThumbBackColor
+        public static LightDarkColor DefaultThumbBackColor
         {
             get => defaultThumbBackColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultThumbBackColor = value;
@@ -334,7 +334,7 @@ namespace Alternet.UI
         /// Gets default secondary spacer color of the slider.
         /// This value is used when <see cref="UseSpacerColor"/> is True.
         /// </summary>
-        public static Color DefaultSecondarySpacerColor
+        public static LightDarkColor DefaultSecondarySpacerColor
         {
             get
             {
@@ -395,7 +395,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color? BorderColor
+        public override LightDarkColor? BorderColor
         {
             get
             {
@@ -1292,7 +1292,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="leftTopSpacerColor">The color of the left/top spacer.
         /// If <c>null</c>, the left/top spacer will use the parent's background color.</param>
-        public virtual void SetSpacerColor(Color? leftTopSpacerColor)
+        public virtual void SetSpacerColor(LightDarkColor? leftTopSpacerColor)
         {
             leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
             leftTopSpacer.BackgroundColor = leftTopSpacerColor;
@@ -1303,7 +1303,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="spacerColor">The color of the right/bottom spacer.
         /// If <c>null</c>, the right/bottom spacer will use the parent's background color.</param>
-        public virtual void SetFarSpacerColor(Color? spacerColor)
+        public virtual void SetFarSpacerColor(LightDarkColor? spacerColor)
         {
             rightBottomSpacer.ParentBackColor = spacerColor is null;
             rightBottomSpacer.BackgroundColor = spacerColor;
@@ -1769,7 +1769,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void DrawSplitterForeground(PaintEventArgs e, Color? color)
+            public override void DrawSplitterForeground(PaintEventArgs e, LightDarkColor? color)
             {
                 if (Shape == ShapeType.Circle)
                     return;
@@ -1777,13 +1777,15 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void DrawSplitterBackground(PaintEventArgs e, Color? color)
+            public override void DrawSplitterBackground(PaintEventArgs e, LightDarkColor? color)
             {
-                color ??= DefaultThumbBackColor;
-                var parentBackBrush = (Parent?.BackColor ?? color).AsBrush;
+                var isDark = IsDarkBackground;
 
-                var leftTopColor = Container?.LeftTopSpacer.BackColor ?? DefaultSpacerColor;
-                var rightBottomColor = Container?.RightBottomSpacer.BackColor ?? DefaultSecondarySpacerColor;
+                color ??= DefaultThumbBackColor;
+                var parentBackBrush = (Parent?.BackColor ?? color.LightOrDark(isDark)).AsBrush;
+
+                var leftTopColor = Container?.LeftTopSpacer.BackColor ?? DefaultSpacerColor.LightOrDark(isDark);
+                var rightBottomColor = Container?.RightBottomSpacer.BackColor ?? DefaultSecondarySpacerColor.LightOrDark(isDark);
 
                 var r = ClientRectangle;
                 var center = r.Center;
@@ -1819,11 +1821,11 @@ namespace Alternet.UI
 
                 if (Shape == ShapeType.Circle)
                 {
-                    dc.FillCircle(color.AsBrush, center, r.CircleRadius);
+                    dc.FillCircle(color.LightOrDark(isDark).AsBrush, center, r.CircleRadius);
                 }
                 else
                 {
-                    dc.FillRectangle(color.AsBrush, r);
+                    dc.FillRectangle(color.LightOrDark(isDark).AsBrush, r);
                 }
             }
 
@@ -1842,7 +1844,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void ResolveSplitterColors(out Color? backColor, out Color? foreColor)
+            public override void ResolveSplitterColors(out LightDarkColor? backColor, out LightDarkColor? foreColor)
             {
                 base.ResolveSplitterColors(out backColor, out foreColor);
                 if (BackgroundColor is not null)

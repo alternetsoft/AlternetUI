@@ -89,9 +89,9 @@ namespace Alternet.UI
         private Coord? scaleFactorOverride;
         private Coord? scaleFactor;
 
-        private Color? textBackColor;
-        private Color? backgroundColor;
-        private Color? foregroundColor;
+        private LightDarkColor? textBackColor;
+        private LightDarkColor? backgroundColor;
+        private LightDarkColor? foregroundColor;
         private FontStyle fontStyle;
         private Font font;
 
@@ -210,7 +210,7 @@ namespace Alternet.UI
         /// The default foreground <see cref="Color" /> of the control.
         /// The default is <see cref="DefaultColors.ControlForeColor" />.
         /// </returns>
-        public static Color DefaultForeColor => DefaultColors.ControlForeColor;
+        public static LightDarkColor DefaultForeColor => DefaultColors.ControlForeColor;
 
         /// <summary>
         /// Gets the default background color of the control.
@@ -218,7 +218,7 @@ namespace Alternet.UI
         /// <returns>
         /// The default background <see cref="Color" /> of the control.
         /// The default is <see cref="DefaultColors.ControlBackColor" />.</returns>
-        public static Color DefaultBackColor => DefaultColors.ControlBackColor;
+        public static LightDarkColor DefaultBackColor => DefaultColors.ControlBackColor;
 
         /// <summary>
         /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
@@ -3157,7 +3157,7 @@ namespace Alternet.UI
         /// Gets or sets the foreground color for the control.
         /// </summary>
         [Browsable(true)]
-        public virtual Color? ForegroundColor
+        public virtual LightDarkColor? ForegroundColor
         {
             get
             {
@@ -3178,7 +3178,7 @@ namespace Alternet.UI
         /// Gets or sets the background color for the control.
         /// </summary>
         [Browsable(true)]
-        public virtual Color? BackgroundColor
+        public virtual LightDarkColor? BackgroundColor
         {
             get
             {
@@ -3208,7 +3208,7 @@ namespace Alternet.UI
                     return;
                 parentBackgroundColor = value;
                 if (value && Parent is not null)
-                    BackgroundColor = Parent.BackColor;
+                    BackgroundColor = Parent.BackgroundColor;
                 ParentBackColorChanged?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -3226,7 +3226,7 @@ namespace Alternet.UI
                     return;
                 parentForegroundColor = value;
                 if (value && Parent is not null)
-                    ForegroundColor = Parent.ForeColor;
+                    ForegroundColor = Parent.ForegroundColor;
             }
         }
 
@@ -3294,61 +3294,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets real background color for the control.
+        /// Gets real foreground color value.
         /// </summary>
-        /// <remarks>
-        /// This property returns color value even if <see cref="BackgroundColor"/>
-        /// is <c>null</c>.
-        /// </remarks>
         [Browsable(false)]
-        public virtual Color RealBackgroundColor
+        public virtual LightDarkColor RealForegroundColor
         {
             get
             {
-                var ovr = ColorMode;
-
-                if (ovr is null)
-                    return DefaultColors.ControlBackColor;
-
-                return DefaultColors.ControlBackColor.LightOrDark(ovr.IsDark());
+                if (foregroundColor is not null)
+                    return foregroundColor;
+                return DefaultForeColor;
             }
         }
 
         /// <summary>
-        /// Gets real foreground color for the control.
+        /// Gets real background color value.
         /// </summary>
-        /// <remarks>
-        /// This property returns color value even if <see cref="ForegroundColor"/>
-        /// is <c>null</c>.
-        /// </remarks>
         [Browsable(false)]
-        public virtual Color RealForegroundColor
+        public virtual LightDarkColor RealBackgroundColor
         {
             get
             {
-                var ovr = ColorMode;
-
-                if (ovr is null)
-                    return DefaultColors.ControlForeColor;
-
-                return DefaultColors.ControlForeColor.LightOrDark(ovr.IsDark());
+                if (backgroundColor is not null)
+                    return backgroundColor;
+                return DefaultBackColor;
             }
         }
 
         /// <summary>
         /// Gets or sets the foreground color for the control.
+        /// This property is for compatibility with legacy code, use <see cref="ForegroundColor"/> instead.
         /// </summary>
         [Browsable(false)]
         public virtual Color ForeColor
         {
             get
             {
-                var result = ForegroundColor;
+                var result = RealForegroundColor;
 
-                if (result is null)
-                    return RealForegroundColor;
-                else
-                    return result;
+                return result.LightOrDark(this);
             }
 
             set
@@ -3356,24 +3340,20 @@ namespace Alternet.UI
                 if (value == Color.Empty)
                     ForegroundColor = null;
                 else
-                    ForegroundColor = value;
+                    ForegroundColor = new(value);
             }
         }
 
         /// <summary>
         /// Gets or sets the background color for the control.
+        /// This property is for compatibility with legacy code, use <see cref="BackgroundColor"/> instead.
         /// </summary>
         [Browsable(false)]
         public virtual Color BackColor
         {
             get
             {
-                var result = BackgroundColor;
-
-                if (result is null)
-                    return RealBackgroundColor;
-                else
-                    return result;
+                return RealBackgroundColor.LightOrDark(this);
             }
 
             set
@@ -3381,7 +3361,7 @@ namespace Alternet.UI
                 if (value == Color.Empty)
                     BackgroundColor = null;
                 else
-                    BackgroundColor = value;
+                    BackgroundColor = new(value);
             }
         }
 
@@ -3820,27 +3800,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns true if control's background color is darker than foreground color.
+        /// Gets whether control has dark background. This property is used to determine whether
+        /// to use light or dark colors for the control.
         /// </summary>
         [Browsable(false)]
         public virtual bool IsDarkBackground
         {
             get
             {
-                if (ColorMode is not null)
-                    return ColorMode.IsDark();
-
-                var backgroundColor = RealBackgroundColor;
-
-                if (backgroundColor.IsDark())
-                    return true;
-
-                var foregroundColor = RealForegroundColor;
-
-                if (foregroundColor.IsEmpty || backgroundColor.IsEmpty)
-                    return SystemSettings.IsUsingDarkBackground;
-
-                return SystemSettings.IsDarkBackground(foregroundColor, backgroundColor);
+                return EffectiveColorMode() == ControlColorMode.Dark;
             }
         }
 
@@ -4113,7 +4081,7 @@ namespace Alternet.UI
         /// </remarks>
         [DefaultValue(null)]
         [Browsable(false)]
-        public virtual Color? TextBackColor
+        public virtual LightDarkColor? TextBackColor
         {
             get
             {

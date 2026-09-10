@@ -199,12 +199,14 @@ namespace Alternet.UI
             var labelForeColor = GetLabelForeColor(state);
             var labelBackColor = GetLabelBackColor(state);
 
+            var isDark = IsDarkBackground;
+
             DrawText(
                 dc,
                 paddedRect,
                 labelFont,
-                labelForeColor,
-                labelBackColor);
+                labelForeColor.LightOrDark(isDark),
+                labelBackColor.LightOrDark(isDark));
 
             DefaultPaintDebug(e);
         }
@@ -300,7 +302,7 @@ namespace Alternet.UI
         private void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle, IsDarkBackground);
         }
 
         private SizeD DrawInternal(

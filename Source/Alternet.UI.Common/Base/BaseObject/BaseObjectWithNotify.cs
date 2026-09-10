@@ -177,5 +177,22 @@ namespace Alternet.UI
             RaisePropertyChanged();
             return true;
         }
+
+        /// <summary>
+        /// Sets field value and raises property changed events and methods.
+        /// This is the same as <see cref="SetProperty{T}(ref T, T)"/> but parameters are not nullable.
+        /// </summary>
+        /// <typeparam name="T">Type of the field value.</typeparam>
+        /// <param name="storage">Field where property is stored.</param>
+        /// <param name="value">New property value.</param>
+        /// <returns>True if the property value was changed; otherwise, false.</returns>
+        protected virtual bool SetSimpleProperty<T>(ref T storage, T value)
+        {
+            if (Immutable || Equals(storage, value))
+                return false;
+            storage = value;
+            RaisePropertyChanged();
+            return true;
+        }
     }
 }

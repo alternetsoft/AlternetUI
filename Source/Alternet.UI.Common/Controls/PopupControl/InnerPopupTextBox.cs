@@ -68,8 +68,8 @@ namespace Alternet.UI
             HideOnEscape = prm.HideOnEscape;
             Content.EmptyTextHint = prm.EmptyTextHint;
             HideOnEnter = prm.HideOnEnter;
-            BackColor = prm.BackColor ?? prm.ItemContainer.BackColor;
-            ForeColor = prm.ForeColor ?? prm.ItemContainer.ForeColor;
+            BackgroundColor = prm.BackColor ?? prm.ItemContainer.RealBackgroundColor;
+            ForegroundColor = prm.ForeColor ?? prm.ItemContainer.RealForegroundColor;
             ParentFont = false;
             Font = prm.Font ?? Control.DefaultFont;
             HasBorder = prm.HasBorder;

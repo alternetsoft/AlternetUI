@@ -390,7 +390,7 @@ namespace Alternet.UI
                 var overlayColor = OverlayColor ?? PlessCaretHandler.DefaultOverlayColor
                     ?? PlessCaretHandler.CaretColor;
                 var overlaySvg = SafeOverlayImage;
-                var overlayImage = overlaySvg.ImageWithColor(BottomOverlayRect.Width, overlayColor);
+                var overlayImage = overlaySvg.ImageWithColor(BottomOverlayRect.Width, overlayColor.LightOrDark(sender.IsDarkBackground));
 
                 if (BottomOverlayVisible)
                 {

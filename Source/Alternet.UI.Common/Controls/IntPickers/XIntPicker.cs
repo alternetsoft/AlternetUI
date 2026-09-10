@@ -789,13 +789,13 @@ namespace Alternet.UI
             {
                 if (SystemSettings.AppearanceIsDark)
                 {
-                    BackgroundColor = DefaultColors.ControlBackColor.Dark;
-                    ForegroundColor = DefaultColors.ControlForeColor.Dark;
+                    BackgroundColor = DefaultColors.ControlBackColor;
+                    ForegroundColor = DefaultColors.ControlForeColor;
                 }
                 else
                 {
-                    BackgroundColor = DefaultColors.ControlBackColor.Light;
-                    ForegroundColor = DefaultColors.ControlForeColor.Light;
+                    BackgroundColor = DefaultColors.ControlBackColor;
+                    ForegroundColor = DefaultColors.ControlForeColor;
                 }
             }
 

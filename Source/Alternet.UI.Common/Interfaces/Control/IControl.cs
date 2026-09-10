@@ -644,7 +644,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color for the control.
         /// </summary>
-        Color? BackgroundColor { get; set; }
+        LightDarkColor? BackgroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets whether <see cref="BackgroundColor"/> is automatically
@@ -671,7 +671,7 @@ namespace Alternet.UI
         /// This property returns color value even if <see cref="BackgroundColor"/>
         /// is <c>null</c>.
         /// </remarks>
-        Color RealBackgroundColor { get; }
+        LightDarkColor RealBackgroundColor { get; }
 
         /// <summary>
         /// Gets real foreground color for the control.
@@ -680,7 +680,7 @@ namespace Alternet.UI
         /// This property returns color value even if <see cref="ForegroundColor"/>
         /// is <c>null</c>.
         /// </remarks>
-        Color RealForegroundColor { get; }
+        LightDarkColor RealForegroundColor { get; }
 
         /// <summary>
         /// Gets or sets the foreground color for the control.
@@ -695,7 +695,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the foreground color for the control.
         /// </summary>
-        Color? ForegroundColor { get; set; }
+        LightDarkColor? ForegroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets group indexes which are assigned to this control.
@@ -1247,28 +1247,28 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New background color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        void SetChildrenBackgroundColor(Color? color, bool recursive = false);
+        void SetChildrenBackgroundColor(LightDarkColor? color, bool recursive = false);
 
         /// <summary>
         /// Sets children background color.
         /// </summary>
         /// <param name="color">New background color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        void SetChildrenBackgroundColor<T>(Color? color, bool recursive = false);
+        void SetChildrenBackgroundColor<T>(LightDarkColor? color, bool recursive = false);
 
         /// <summary>
         /// Sets children foreground color.
         /// </summary>
         /// <param name="color">New foreground color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        void SetChildrenForegroundColor(Color? color, bool recursive = false);
+        void SetChildrenForegroundColor(LightDarkColor? color, bool recursive = false);
 
         /// <summary>
         /// Sets children foreground color.
         /// </summary>
         /// <param name="color">New foreground color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        void SetChildrenForegroundColor<T>(Color? color, bool recursive = false);
+        void SetChildrenForegroundColor<T>(LightDarkColor? color, bool recursive = false);
 
         /// <summary>
         /// Focuses the next control.
@@ -1404,12 +1404,12 @@ namespace Alternet.UI
         /// Gets background color from the default attributes.
         /// </summary>
         /// <returns></returns>
-        Color? GetDefaultAttributesBgColor();
+        LightDarkColor? GetDefaultAttributesBgColor();
 
         /// <summary>
         /// Gets foreground color from the default attributes.
         /// </summary>
         /// <returns></returns>
-        Color? GetDefaultAttributesFgColor();
+        LightDarkColor? GetDefaultAttributesFgColor();
     }
 }

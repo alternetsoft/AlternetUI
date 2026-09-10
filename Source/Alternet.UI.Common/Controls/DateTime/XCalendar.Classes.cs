@@ -27,7 +27,7 @@ namespace Alternet.UI
             public CalendarCell Data { get; internal set; } = CalendarCell.Default;
 
             /// <inheritdoc/>
-            public override Color? ForegroundColor
+            public override LightDarkColor? ForegroundColor
             {
                 get
                 {
@@ -55,7 +55,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override Color? BackgroundColor
+            public override LightDarkColor? BackgroundColor
             {
                 get
                 {
@@ -364,7 +364,7 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return transparent ??= Create(Color.Transparent);
+                    return transparent ??= Create(LightDarkColors.Transparent);
                 }
             }
 
@@ -385,7 +385,7 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="textColor">The text color for the calendar date.</param>
             /// <returns>The created <see cref="IXCalendarDateAttr"/> instance.</returns>
-            protected virtual IXCalendarDateAttr Create(Color textColor)
+            protected virtual IXCalendarDateAttr Create(LightDarkColor textColor)
             {
                 var result = new XCalendarDateAttr();
                 result.TextColor = textColor;

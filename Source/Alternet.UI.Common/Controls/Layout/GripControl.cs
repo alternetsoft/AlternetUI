@@ -512,11 +512,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The paint event arguments.</param>
         /// <param name="color">The color to be used for drawing.</param>
-        public virtual void DrawSplitterBackground(PaintEventArgs e, Color? color)
+        public virtual void DrawSplitterBackground(PaintEventArgs e, LightDarkColor? color)
         {
             if (color is null)
                 return;
-            e.Graphics.FillRectangle(color.AsBrush, e.ClientRectangle);
+            e.Graphics.FillRectangle(color.LightOrDark(this).AsBrush, e.ClientRectangle);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The paint event arguments.</param>
         /// <param name="color">The color to be used for drawing.</param>
-        public virtual void DrawSplitterForeground(PaintEventArgs e, Color? color)
+        public virtual void DrawSplitterForeground(PaintEventArgs e, LightDarkColor? color)
         {
             if (color is null)
                 return;
@@ -545,12 +545,12 @@ namespace Alternet.UI
             if (ImageKind == GripImageKind.HorzSplitter)
             {
                 var vertLine = DrawingUtils.GetCenterLineVert(e.ClientRectangle);
-                e.Graphics.FillRectangle(color.AsBrush, vertLine);
+                e.Graphics.FillRectangle(color.LightOrDark(this).AsBrush, vertLine);
             }
             else
             {
                 var horzLine = DrawingUtils.GetCenterLineHorz(e.ClientRectangle);
-                e.Graphics.FillRectangle(color.AsBrush, horzLine);
+                e.Graphics.FillRectangle(color.LightOrDark(this).AsBrush, horzLine);
             }
         }
 
@@ -586,7 +586,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="backColor">The background color to be set.</param>
         /// <param name="foreColor">The foreground color to be set.</param>
-        public virtual void ResolveSplitterColors(out Color? backColor, out Color? foreColor)
+        public virtual void ResolveSplitterColors(out LightDarkColor? backColor, out LightDarkColor? foreColor)
         {
             if (ResolveSplitterColorsOverride is not null)
             {
@@ -596,23 +596,13 @@ namespace Alternet.UI
 
             var colors = NormalSplitterColors;
 
-            Color defaultColor;
-            if (IsDarkBackground)
-            {
-                colors ??= DefaultSplitterDarkColors;
-                if (ParentBackColor)
-                    defaultColor = RealBackgroundColor;
-                else
-                    defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
-            }
+            LightDarkColor defaultColor;
+
+            colors ??= DefaultSplitterDarkColors;
+            if (ParentBackColor)
+                defaultColor = RealBackgroundColor;
             else
-            {
-                colors ??= DefaultSplitterLightColors;
-                if (ParentBackColor)
-                    defaultColor = RealBackgroundColor;
-                else
-                    defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
-            }
+                defaultColor = KnownOSColorConsts.WindowsLightOrDark.ExplorerSplitter;
 
             backColor = colors?.BackgroundColor ?? defaultColor;
             foreColor = colors?.ForegroundColor;

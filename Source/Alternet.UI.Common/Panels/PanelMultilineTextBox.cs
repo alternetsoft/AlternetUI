@@ -58,7 +58,7 @@ namespace Alternet.UI
             if (UseTextBoxBackgroundColor)
             {
                 ParentBackColor = false;
-                BackColor = textBox.RealBackgroundColor;
+                BackgroundColor = textBox.RealBackgroundColor;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Alternet.UI
             if (UseTextBoxBackgroundColor)
             {
                 ParentBackColor = false;
-                BackColor = textBox.RealBackgroundColor;
+                BackgroundColor = textBox.RealBackgroundColor;
             }
         }
 

@@ -89,8 +89,8 @@ namespace Alternet.UI
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
-        private static Color? defaultSpacerColor;
-        private static Color? defaultSecondarySpacerColor;
+        private static LightDarkColor? defaultSpacerColor;
+        private static LightDarkColor? defaultSecondarySpacerColor;
 
         private readonly SliderScale leftTopScale;
         private readonly SliderScale rightBottomScale;
@@ -108,8 +108,8 @@ namespace Alternet.UI
         private bool isFirstTickVisible = true;
         private bool isLastTickVisible = true;
         private bool autoSize = true;
-        private Color? spacerColor;
-        private Color? secondarySpacerColor;
+        private LightDarkColor? spacerColor;
+        private LightDarkColor? secondarySpacerColor;
         private bool isIndeterminate;
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default spacer color of the control.
         /// </summary>
-        public static Color DefaultSpacerColor
+        public static LightDarkColor DefaultSpacerColor
         {
             get => defaultSpacerColor ?? LightDarkColors.Green;
             set => defaultSpacerColor = value;
@@ -226,7 +226,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default secondary spacer color of the control.
         /// </summary>
-        public static Color DefaultSecondarySpacerColor
+        public static LightDarkColor DefaultSecondarySpacerColor
         {
             get
             {
@@ -292,7 +292,8 @@ namespace Alternet.UI
         /// If not specified, default spacer color is used, which is defined by the
         /// <see cref="DefaultSpacerColor"/> property.
         /// </summary>
-        public virtual Color? SpacerColor
+        [Browsable(false)]
+        public virtual LightDarkColor? SpacerColor
         {
             get
             {
@@ -313,7 +314,8 @@ namespace Alternet.UI
         /// If not specified, default secondary spacer color is used, which is defined by the
         /// <see cref="DefaultSecondarySpacerColor"/> property.
         /// </summary>
-        public virtual Color? SecondarySpacerColor
+        [Browsable(false)]
+        public virtual LightDarkColor? SecondarySpacerColor
         {
             get
             {
@@ -344,7 +346,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color? BorderColor
+        public override LightDarkColor? BorderColor
         {
             get
             {
@@ -941,8 +943,10 @@ namespace Alternet.UI
         {
             base.DefaultPaint(e);
 
-            var sc1 = (spacerColor ?? DefaultSpacerColor).AsBrush;
-            var sc2 = (secondarySpacerColor ?? DefaultSecondarySpacerColor).AsBrush;
+            var isDark = IsDarkBackground;
+
+            var sc1 = (spacerColor ?? DefaultSpacerColor).LightOrDark(isDark).AsBrush;
+            var sc2 = (secondarySpacerColor ?? DefaultSecondarySpacerColor).LightOrDark(isDark).AsBrush;
 
             var r = e.ClientRectangle;
             r = r.DeflatedWithPadding(Padding);

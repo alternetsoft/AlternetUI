@@ -766,7 +766,7 @@ namespace Alternet.UI
                     foreach (var child in Children)
                     {
                         if (child.ParentBackColor)
-                            child.BackgroundColor = BackColor;
+                            child.BackgroundColor = RealBackgroundColor;
                     }
                 }
             });
@@ -791,7 +791,7 @@ namespace Alternet.UI
                     foreach (var child in Children)
                     {
                         if (child.ParentForeColor)
-                            child.ForegroundColor = ForeColor;
+                            child.ForegroundColor = RealForegroundColor;
                     }
                 }
             });
@@ -880,12 +880,12 @@ namespace Alternet.UI
 
                 if (childControl.ParentBackColor)
                 {
-                    childControl.BackColor = RealBackgroundColor;
+                    childControl.BackgroundColor = RealBackgroundColor;
                 }
 
                 if (childControl.ParentForeColor)
                 {
-                    childControl.ForeColor = RealForegroundColor;
+                    childControl.ForegroundColor = RealForegroundColor;
                 }
 
                 if (childControl.ParentColorMode)

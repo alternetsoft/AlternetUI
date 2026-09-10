@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets selected item back color.
         /// </summary>
-        Color? SelectedItemBackColor { get;  set; }
+        LightDarkColor? SelectedItemBackColor { get; set; }
 
         /// <summary>
         /// Gets or sets whether current item border is visible.
@@ -84,7 +84,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets item text color.
         /// </summary>
-        Color? ItemTextColor { get; set; }
+        LightDarkColor? ItemTextColor { get; set; }
 
         /// <summary>
         /// Gets or sets default alignment of the items.
@@ -98,22 +98,22 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets selected item text color for the unfocused container.
         /// </summary>
-        Color? UnfocusedSelectedItemTextColor { get; set; }
+        LightDarkColor? UnfocusedSelectedItemTextColor { get; set; }
 
         /// <summary>
         /// Gets or sets selected item back color for the unfocused container.
         /// </summary>
-        Color? UnfocusedSelectedItemBackColor { get; set; }
+        LightDarkColor? UnfocusedSelectedItemBackColor { get; set; }
 
         /// <summary>
         /// Gets or sets selected item text color.
         /// </summary>
-        Color? SelectedItemTextColor { get; set; }
+        LightDarkColor? SelectedItemTextColor { get; set; }
 
         /// <summary>
         /// Gets or sets disabled item text color.
         /// </summary>
-        Color? DisabledItemTextColor { get; set; }
+        LightDarkColor? DisabledItemTextColor { get; set; }
 
         /// <summary>
         /// Gets or sets whether selection background is visible.

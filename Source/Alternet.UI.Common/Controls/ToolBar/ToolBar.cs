@@ -197,7 +197,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color of the separator item. If Null, default border color is used.
         /// </summary>
-        public static Color? DefaultSeparatorColor { get; set; }
+        public static LightDarkColor? DefaultSeparatorColor { get; set; }
 
         /// <summary>
         /// Gets or sets default width of the separator item.
@@ -3683,7 +3683,7 @@ namespace Alternet.UI
         protected override void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle, IsDarkBackground);
         }
 
         /// <summary>

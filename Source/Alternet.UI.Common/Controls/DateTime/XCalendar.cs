@@ -1055,11 +1055,10 @@ namespace Alternet.UI
         /// Gets the effective color to be used for surrounding days (days not in the current month) in the calendar control,
         /// considering the specified <see cref="SurroundDayColor"/> property and the default value.
         /// </summary>
-        /// <param name="isDark">Indicates whether the color should be adjusted for a dark theme.</param>
         /// <returns>The effective color for surrounding days.</returns>
-        public virtual Color EffectiveSurroundDayColor(bool isDark)
+        public virtual LightDarkColor EffectiveSurroundDayColor()
         {
-            return SurroundDayColor?.LightOrDark(isDark) ?? DefaultSurroundDayColor?.LightOrDark(isDark) ?? Color.Gray;
+            return SurroundDayColor ?? DefaultSurroundDayColor ?? LightDarkColors.GrayText;
         }
 
         /// <summary>
@@ -1480,8 +1479,7 @@ namespace Alternet.UI
             if (dayView.Items.Count == 0)
                 return;
 
-            var isDark = IsDarkBackground;
-            var otherMonthForeColor = EffectiveSurroundDayColor(isDark);
+            var otherMonthForeColor = EffectiveSurroundDayColor();
 
             for (var row = 1; row <= XCalendar.DayRowCount; row++)
             {
@@ -1508,7 +1506,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        cellItem.ForegroundColor = Color.Transparent;
+                        cellItem.ForegroundColor = LightDarkColors.Transparent;
                     }
 
                     cellItem.Border = cell.IsToday ? EffectiveTodayBorder() : null;

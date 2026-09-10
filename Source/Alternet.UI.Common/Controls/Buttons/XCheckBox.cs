@@ -231,7 +231,7 @@ namespace Alternet.UI
             if (itemDrawable.VisualState == VisualControlState.Hovered && UseHoveredForeColor)
             {
                 var color = HoveredForeColor ?? DefaultHoveredForeColor ?? DefaultColors.AccentColor;
-                Item.ForegroundColor = color.LightOrDark(IsDarkBackground);
+                Item.ForegroundColor = color;
             }
             else
                 Item.ForegroundColor = null;

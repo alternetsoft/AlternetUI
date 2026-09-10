@@ -15,52 +15,52 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or set foreground color for the normal state.
         /// </summary>
-        public Color? NormalForeColor;
+        public LightDarkColor? NormalForeColor;
 
         /// <summary>
         /// Gets or set background color for the normal state.
         /// </summary>
-        public Color? NormalBackColor;
+        public LightDarkColor? NormalBackColor;
 
         /// <summary>
         /// Gets or set foreground color for the hovered state.
         /// </summary>
-        public Color? HoveredForeColor;
+        public LightDarkColor? HoveredForeColor;
 
         /// <summary>
         /// Gets or set background color for the hovered state.
         /// </summary>
-        public Color? HoveredBackColor;
+        public LightDarkColor? HoveredBackColor;
 
         /// <summary>
         /// Gets or set foreground color for the pressed state.
         /// </summary>
-        public Color? PressedForeColor;
+        public LightDarkColor? PressedForeColor;
 
         /// <summary>
         /// Gets or set background color for the pressed state.
         /// </summary>
-        public Color? PressedBackColor;
+        public LightDarkColor? PressedBackColor;
 
         /// <summary>
         /// Gets or set foreground color for the disabled state.
         /// </summary>
-        public Color? DisabledForeColor;
+        public LightDarkColor? DisabledForeColor;
 
         /// <summary>
         /// Gets or set background color for the disabled state.
         /// </summary>
-        public Color? DisabledBackColor;
+        public LightDarkColor? DisabledBackColor;
 
         /// <summary>
         /// Gets or set foreground color for the focused state.
         /// </summary>
-        public Color? FocusedForeColor;
+        public LightDarkColor? FocusedForeColor;
 
         /// <summary>
         /// Gets or set background color for the focused state.
         /// </summary>
-        public Color? FocusedBackColor;
+        public LightDarkColor? FocusedBackColor;
 
         /// <summary>
         /// Gets colors for the normal state.

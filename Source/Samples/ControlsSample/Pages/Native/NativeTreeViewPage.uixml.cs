@@ -90,8 +90,8 @@ namespace ControlsSample
             item.IsBold = true;
 
             item = treeView.Items[4];
-            item.ForegroundColor = Color.Gold;
-            item.BackgroundColor = Color.DarkOliveGreen;
+            item.ForegroundColor = new(Color.Gold);
+            item.BackgroundColor = new(Color.DarkOliveGreen);
             item.Text = "Item with custom colors";
         }
 

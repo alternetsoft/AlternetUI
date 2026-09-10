@@ -34,7 +34,7 @@ namespace Alternet.UI
 
             var result = control.GetDefaultTheme()?.DarkOrLight(control.IsDarkBackground);
             var brush = result?.Backgrounds?.GetObjectOrNormal(state);
-            brush ??= control.BackgroundColor?.AsBrush;
+            brush ??= control.BackgroundColor?.LightOrDark(control).AsBrush;
             return brush;
         }
 

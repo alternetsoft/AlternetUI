@@ -29,9 +29,9 @@ namespace Alternet.UI
         private static LightDarkColor? defaultNormalColor;
 
         private string? url;
-        private Color? hoverColor;
-        private Color? visitedColor;
-        private Color? normalColor;
+        private LightDarkColor? hoverColor;
+        private LightDarkColor? visitedColor;
+        private LightDarkColor? normalColor;
         private bool visited;
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Alternet.UI
         /// over the control.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? HoverColor
+        public virtual LightDarkColor? HoverColor
         {
             get
             {
@@ -143,7 +143,7 @@ namespace Alternet.UI
         /// not over the control.
         /// </summary>
         [Browsable(false)]
-        public virtual Color? NormalColor
+        public virtual LightDarkColor? NormalColor
         {
             get
             {
@@ -165,7 +165,7 @@ namespace Alternet.UI
         /// before (i.e. the link has been visited).
         /// </summary>
         [Browsable(false)]
-        public virtual Color? VisitedColor
+        public virtual LightDarkColor? VisitedColor
         {
             get
             {
@@ -260,7 +260,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override Color GetLabelForeColor(VisualControlState state)
+        protected override LightDarkColor GetLabelForeColor(VisualControlState state)
         {
             if (state == VisualControlState.Hovered)
             {

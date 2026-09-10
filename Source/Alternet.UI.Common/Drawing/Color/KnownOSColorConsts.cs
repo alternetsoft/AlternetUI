@@ -64,9 +64,15 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets splitter color in File Explorer.
             /// </summary>
+            public static LightDarkColor ExplorerSplitter
+                = new (WindowsLight.ExplorerSplitter, WindowsDark.ExplorerSplitter);
+
+            /// <summary>
+            /// Gets splitter color in File Explorer.
+            /// </summary>
             /// <param name="isDark">Whether to get color for the dark theme.</param>
-            /// <returns></returns>
-            public static Color ExplorerSplitter(bool isDark)
+            /// <returns>The splitter color for the specified theme.</returns>
+            public static Color GetExplorerSplitterColor(bool isDark)
             {
                 if (isDark)
                     return WindowsDark.ExplorerSplitter;

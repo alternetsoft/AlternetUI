@@ -87,7 +87,7 @@ namespace Alternet.Drawing
         /// Gets or sets the empty text hint color. It is used to display the hint
         /// when the text in the editor is empty.
         /// </summary>
-        public static LightDarkColor EmptyTextHintColor { get; set; } = new(light: (87, 87, 87), dark: new(87, 87, 87));
+        public static LightDarkColor EmptyTextHintColor { get; set; } = new(light: (87, 87, 87), dark: new Color(87, 87, 87));
 
         /// <summary>
         /// Gets or sets the accent color used for UI elements, adapting to light and dark themes.
@@ -100,13 +100,13 @@ namespace Alternet.Drawing
         /// application based on user preferences or system settings.
         /// On MSW accent color can be obtained from system settings using <see cref="MswUtils.AccentColor"/>.
         /// </remarks>
-        public static LightDarkColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new(76, 194, 255));
+        public static LightDarkColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new Color(76, 194, 255));
 
         /// <summary>
         /// Gets or sets the override color of the common window caption.
         /// </summary>
         public static LightDarkColor WindowCommonCaptionColor { get; set; } =
-            new LightDarkColor(light: (243, 243, 243), dark: new(43, 43, 43));
+            new LightDarkColor(light: (243, 243, 243), dark: new Color(43, 43, 43));
 
         /// <summary>
         /// Gets or sets the override color of the common window caption text.
@@ -118,7 +118,7 @@ namespace Alternet.Drawing
         /// Gets or sets the override color of the common window caption border.
         /// </summary>
         public static LightDarkColor WindowCommonBorderColor { get; set; } =
-            new LightDarkColor(light: (204, 206, 219), dark: new(69, 69, 69));
+            new LightDarkColor(light: (204, 206, 219), dark: new Color(69, 69, 69));
 
         /// <summary>
         /// Gets or sets the color of the active window caption.
@@ -243,7 +243,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static LightDarkColor SvgNormalColor
         {
-            get => svgNormalColor ??= new LightDarkColor(light: (33, 33, 33), dark: (230, 230, 230));
+            get => svgNormalColor ??= new LightDarkColor(light: (33, 33, 33), dark: new Color(230, 230, 230));
             set => svgNormalColor = value;
         }
 
@@ -380,8 +380,9 @@ namespace Alternet.Drawing
         /// <returns>The color for the border of the specified user control.</returns>
         public static Color GetControlBorderColor(AbstractControl control)
         {
-            var color = control.Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color;
-            color ??= GetBorderColor(control.IsDarkBackground);
+            var isDark = control.IsDarkBackground;
+            var color = control.Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color?.LightOrDark(isDark);
+            color ??= GetBorderColor(isDark);
             return color;
         }
 
@@ -393,7 +394,7 @@ namespace Alternet.Drawing
         public static Brush GetControlBorderBrush(AbstractControl control)
         {
             var brush = control.Background
-                ?? control.BackgroundColor?.AsBrush
+                ?? control.BackgroundColor?.LightOrDark(control).AsBrush
                 ?? GetControlBorderColor(control).AsBrush;
             return brush;
         }

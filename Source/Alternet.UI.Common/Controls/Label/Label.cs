@@ -341,7 +341,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color? BackgroundColor
+        public override LightDarkColor? BackgroundColor
         {
             get => base.BackgroundColor;
             set
@@ -727,7 +727,7 @@ namespace Alternet.UI
         {
             IsUnderline = true;
             ParentForeColor = false;
-            ForeColor = LinkLabel.DefaultNormalColor ?? LightDarkColors.Blue;
+            ForegroundColor = LinkLabel.DefaultNormalColor ?? LightDarkColors.Blue;
             Cursor = Cursors.Hand;
         }
 
@@ -756,8 +756,8 @@ namespace Alternet.UI
         public virtual RectD DrawDefaultText(
             Graphics dc,
             RectD rect,
-            Color? foreColor = null,
-            Color? backColor = null,
+            LightDarkColor? foreColor = null,
+            LightDarkColor? backColor = null,
             Font? font = null)
         {
             var state = VisualState;
@@ -772,19 +772,22 @@ namespace Alternet.UI
                 return RectD.Empty;
 
             var labelFont = font ?? GetLabelFont(state);
-            var isDark = IsDarkBackground;
 
-            var labelForeColor = (foreColor ?? GetLabelForeColor(state)).LightOrDark(isDark);
-            var labelBackColor = (backColor ?? GetLabelBackColor(state)).LightOrDark(isDark);
+            var labelForeColor = (foreColor ?? GetLabelForeColor(state));
+            var labelBackColor = (backColor ?? GetLabelBackColor(state));
 
             labelText = GetWithoutMnemonicMarkers(labelText, out var mnemonicCharIndex);
             labelText = GetWrappedText(labelText);
 
+            bool isDark = IsDarkBackground;
+
+            var realForeColor = labelForeColor.LightOrDark(isDark);
+
             prm = new(
                 labelText,
                 labelFont,
-                labelForeColor,
-                labelBackColor,
+                foreColor: realForeColor,
+                backColor: labelBackColor.LightOrDark(isDark),
                 labelImage,
                 paddedRect,
                 alignment,
@@ -793,7 +796,7 @@ namespace Alternet.UI
             prm.MinTextWidth = minTextWidth;
             prm.IsVerticalText = isVerticalText;
             prm.VertDirection = vertDirection;
-            prm.Visible = foreColor != Color.Empty;
+            prm.Visible = realForeColor != Color.Empty;
             prm.Flags = drawLabelFlags;
 
             if (WordWrap)
@@ -991,7 +994,7 @@ namespace Alternet.UI
                             var measured = DrawDefaultText(
                                 MeasureCanvas,
                                 (PointD.Empty, size),
-                                foreColor: Color.Empty,
+                                foreColor: LightDarkColors.Empty,
                                 backColor: null,
                                 font: null);
                             return measured.Size;
@@ -1083,7 +1086,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override Color GetLabelForeColor(VisualControlState state)
+        protected override LightDarkColor GetLabelForeColor(VisualControlState state)
         {
             if (Text.Length == 0)
                 return DefaultColors.EmptyTextHintColor;
@@ -1119,7 +1122,7 @@ namespace Alternet.UI
         private new void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle, IsDarkBackground);
         }
     }
     

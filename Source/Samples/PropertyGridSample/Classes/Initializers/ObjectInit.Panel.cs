@@ -27,7 +27,7 @@ namespace PropertyGridSample
             tabControl.Add("Panel 3", () => { return Internal("Panel 3"); });
             tabControl.Add("Panel 4", () => { return Internal("Panel 4"); });
 
-            tabControl.SetTabSvg(0, KnownSvgImages.ImgGear, null, LightDarkColors.Blue);
+            tabControl.SetTabSvg(0, KnownSvgImages.ImgGear, null, LightDarkColors.Blue.LightOrDark(tabControl));
             tabControl.SetTabSvg(1, MessageBoxSvg.Error);
             tabControl.SetTabSvg(2, MessageBoxSvg.Information);
 
@@ -121,7 +121,7 @@ namespace PropertyGridSample
 
         public class SamplePropContainer
         {
-            public Color SampleColor { get; set; } = LightDarkColors.Red;
+            public Color SampleColor { get; set; } = LightDarkColors.Red.LightOrDark();
 
             public DateTime SampleDateTime { get; set; } = DateTime.Now;
 

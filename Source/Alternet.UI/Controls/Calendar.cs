@@ -624,22 +624,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        [Browsable(ColorPropertyBrowsable)]
-        public override Color? BackgroundColor
-        {
-            get => base.BackgroundColor;
-            set => base.BackgroundColor = value;
-        }
-
-        /// <inheritdoc/>
-        [Browsable(ColorPropertyBrowsable)]
-        public override Color? ForegroundColor
-        {
-            get => base.ForegroundColor;
-            set => base.ForegroundColor = value;
-        }
-
-        /// <inheritdoc/>
         [Browsable(true)]
         public override Font Font
         {

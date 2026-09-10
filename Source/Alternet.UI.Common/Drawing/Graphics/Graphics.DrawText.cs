@@ -894,7 +894,7 @@ namespace Alternet.Drawing
 #if DEBUG
             if (drawDebugCorners)
             {
-                BorderSettings.DrawDesignCorners(this, afterAlign, BorderSettings.DebugBorder);
+                BorderSettings.DrawDesignCorners(this, afterAlign, SystemSettings.AppearanceIsDark, BorderSettings.DebugBorder);
             }
 #endif
 
@@ -960,7 +960,7 @@ namespace Alternet.Drawing
 #if DEBUG
                 if (!drawDebugCorners)
                     return;
-                BorderSettings.DrawDesignCorners(this, rect, BorderSettings.DebugBorder);
+                BorderSettings.DrawDesignCorners(this, rect, SystemSettings.AppearanceIsDark, BorderSettings.DebugBorder);
 #endif
             }
 
@@ -1233,6 +1233,7 @@ namespace Alternet.Drawing
                             BorderSettings.DrawDesignCorners(
                                 dc,
                                 rect,
+                                SystemSettings.AppearanceIsDark,
                                 BorderSettings.DebugBorderBlue);
                         }
 #endif
@@ -1467,6 +1468,7 @@ namespace Alternet.Drawing
                             BorderSettings.DrawDesignCorners(
                                 dc,
                                 rect,
+                                SystemSettings.AppearanceIsDark,
                                 BorderSettings.DebugBorderBlue);
                         }
 #endif

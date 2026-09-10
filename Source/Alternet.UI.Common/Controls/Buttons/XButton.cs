@@ -242,7 +242,7 @@ namespace Alternet.UI
         public virtual bool? IsBoldWhenDefault { get; set; }
 
         /// <inheritdoc/>
-        public override Color? BackgroundColor
+        public override LightDarkColor? BackgroundColor
         {
             get => base.BackgroundColor;
             set
@@ -257,7 +257,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color? ForegroundColor
+        public override LightDarkColor? ForegroundColor
         {
             get => base.ForegroundColor;
             set
@@ -356,7 +356,7 @@ namespace Alternet.UI
         {
             if (IsDefault)
             {
-                var result = GetBackgroundColor(state)?.IsDark();
+                var result = GetBackgroundColor(state)?.LightOrDark(this)?.IsDark();
                 result ??= IsDarkBackground;
                 return result.Value;
             }

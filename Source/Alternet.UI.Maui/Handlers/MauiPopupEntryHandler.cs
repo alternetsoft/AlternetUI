@@ -188,7 +188,7 @@ namespace Alternet.Maui
             entry.EscapeClickedAction = OnEntryEscapeClicked;
             entry.TabClickedAction = OnEntryTabClicked;
             entry.UnfocusedAction = OnEntryUnfocused;
-            entry.BackgroundColor = prm.BackColor?.ToMaui();
+            entry.BackgroundColor = prm.BackColor?.LightOrDark(uiControl).ToMaui();
             entry.Text = prm.GetItemText?.Invoke();
             entry.Placeholder = prm.EmptyTextHint;
             entry.SelectAllOnFocus = true;

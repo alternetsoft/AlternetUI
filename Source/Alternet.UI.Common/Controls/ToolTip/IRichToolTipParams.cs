@@ -53,17 +53,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color.
         /// </summary>
-        Color? BackgroundColor { get; set; }
+        LightDarkColor? BackgroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets the foreground color to be used for rendering.
         /// </summary>
-        Color? ForegroundColor { get; set; }
+        LightDarkColor? ForegroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets the foreground color of the title.
         /// </summary>
-        Color? TitleForegroundColor { get; set; }
+        LightDarkColor? TitleForegroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets the font used for rendering the title.
@@ -108,6 +108,6 @@ namespace Alternet.UI
         /// otherwise, <see langword="false"/>.</param>
         /// <param name="cornerRadius">The uniform corner radius to apply to the border.
         /// Must be a non-negative value.</param>
-        void SetBorder(Color color, bool radiusIsPercent = true, Coord cornerRadius = 0);
+        void SetBorder(LightDarkColor color, bool radiusIsPercent = true, Coord cornerRadius = 0);
     }
 }

@@ -539,6 +539,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets effective color mode of the control. If <see cref="ColorMode"/> is not null, it is returned.
+        /// If <see cref="ColorMode"/> is null, effective color mode is determined by the system settings.
+        /// </summary>
+        /// <returns></returns>
+        public virtual ControlColorMode EffectiveColorMode()
+        {
+            if (ColorMode is not null)
+                return ColorMode.Value;
+            return SystemSettings.AppearanceIsDark ? ControlColorMode.Dark : ControlColorMode.Light;
+        }
+
+        /// <summary>
         /// Sets back and fore colors to <see cref="AbstractControl.BackColor"/>
         /// and <see cref="AbstractControl.ForeColor"/>.
         /// </summary>
@@ -2332,7 +2344,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New background color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        public virtual void SetChildrenBackgroundColor(Color? color, bool recursive = false)
+        public virtual void SetChildrenBackgroundColor(LightDarkColor? color, bool recursive = false)
         {
             ForEachChild((control) => control.BackgroundColor = color, recursive);
         }
@@ -2342,7 +2354,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New background color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        public virtual void SetChildrenBackgroundColor<T>(Color? color, bool recursive = false)
+        public virtual void SetChildrenBackgroundColor<T>(LightDarkColor? color, bool recursive = false)
         {
             GetChildren<T>(recursive).BackgroundColor(color);
         }
@@ -2352,7 +2364,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New foreground color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        public virtual void SetChildrenForegroundColor(Color? color, bool recursive = false)
+        public virtual void SetChildrenForegroundColor(LightDarkColor? color, bool recursive = false)
         {
             ForEachChild((control) => control.ForegroundColor = color, recursive);
         }
@@ -2362,7 +2374,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New foreground color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        public virtual void SetChildrenForegroundColor<T>(Color? color, bool recursive = false)
+        public virtual void SetChildrenForegroundColor<T>(LightDarkColor? color, bool recursive = false)
         {
             GetChildren<T>(recursive).ForegroundColor(color);
         }
@@ -2650,7 +2662,7 @@ namespace Alternet.UI
         /// <param name="color">Debug background color.</param>
         /// <param name="debugMsg">Optional debug message to show in log.</param>
         [Conditional("DEBUG")]
-        public virtual void DebugBackgroundColor(Color? color, string? debugMsg = default)
+        public virtual void DebugBackgroundColor(LightDarkColor? color, string? debugMsg = default)
         {
             if (UseDebugBackgroundColor)
             {
@@ -2863,18 +2875,18 @@ namespace Alternet.UI
         /// Gets background color from the default attributes.
         /// </summary>
         /// <returns></returns>
-        public virtual Color? GetDefaultAttributesBgColor()
+        public virtual LightDarkColor? GetDefaultAttributesBgColor()
         {
-            return SystemColors.Control;
+            return DefaultColors.ControlBackColor;
         }
 
         /// <summary>
         /// Gets foreground color from the default attributes.
         /// </summary>
         /// <returns></returns>
-        public virtual Color? GetDefaultAttributesFgColor()
+        public virtual LightDarkColor? GetDefaultAttributesFgColor()
         {
-            return SystemColors.ControlText;
+            return DefaultColors.ControlForeColor;
         }
 
         /// <summary>

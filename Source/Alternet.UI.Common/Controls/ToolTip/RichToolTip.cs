@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// This is used when <see cref="DefaultToolTipBorder"/>
         /// is created.
         /// </summary>
-        public static Color? DefaultToolTipBorderColor;
+        public static LightDarkColor? DefaultToolTipBorderColor;
 
         /// <summary>
         /// Gets or sets default image margin in device-independent units.
@@ -238,7 +238,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? ToolTipBackgroundColor
+        public virtual LightDarkColor? ToolTipBackgroundColor
         {
             get => data.BackgroundColor;
             set
@@ -251,7 +251,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? ToolTipForegroundColor
+        public virtual LightDarkColor? ToolTipForegroundColor
         {
             get => data.ForegroundColor;
             set
@@ -306,7 +306,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color? ToolTipTitleForegroundColor
+        public virtual LightDarkColor? ToolTipTitleForegroundColor
         {
             get => data.TitleForegroundColor;
             set
@@ -539,13 +539,9 @@ namespace Alternet.UI
                 template.Font = data.Font ?? Control.DefaultFont;
                 template.NormalBorder = RealDefaultToolTipBorder;
                 template.HasBorder = data.HasToolTipBorder;
-                template.BackgroundColor
-                = data.BackgroundColor?.LightOrDark(appearanceIsDark)
-                ?? RichToolTip.DefaultToolTipBackgroundColor.LightOrDark(appearanceIsDark);
+                template.BackgroundColor = data.BackgroundColor ?? RichToolTip.DefaultToolTipBackgroundColor;
                 template.RaiseBackgroundColorChanged();
-                template.ForegroundColor
-                = data.ForegroundColor?.LightOrDark(appearanceIsDark)
-                ?? RichToolTip.DefaultToolTipForegroundColor.LightOrDark(appearanceIsDark);
+                template.ForegroundColor = data.ForegroundColor ?? RichToolTip.DefaultToolTipForegroundColor;
                 templateIntf.TitleLabel.ParentForeColor = false;
                 templateIntf.TitleLabel.ParentFont = false;
                 templateIntf.TitleLabel.Text = data.Title;
@@ -554,8 +550,7 @@ namespace Alternet.UI
                     = data.TitleFont ?? template.Font?.Scaled(DefaultTitleFontScaleFactor)
                     ?? Control.DefaultFont.Scaled(DefaultTitleFontScaleFactor);
                 templateIntf.TitleLabel.ForegroundColor
-                    = data.TitleForegroundColor?.LightOrDark(appearanceIsDark)
-                    ?? RichToolTip.DefaultToolTipTitleForegroundColor.LightOrDark(appearanceIsDark);
+                    = data.TitleForegroundColor ?? RichToolTip.DefaultToolTipTitleForegroundColor;
                 templateIntf.MessageLabel.Text = data.Text;
 
                 templateIntf.TitleLabel.Visible = !string.IsNullOrEmpty(data.Title);
@@ -715,7 +710,10 @@ namespace Alternet.UI
         public virtual IRichToolTip SetToolTipBackgroundBrush(Brush? brush)
         {
             ToolTipBackgroundBrush = brush;
-            SetToolTipBackgroundColor(brush?.AsColor);
+            if (brush is null)
+                SetToolTipBackgroundColor(null);
+            else
+                SetToolTipBackgroundColor(new(brush.AsColor));
             return this;
         }
 
@@ -723,7 +721,7 @@ namespace Alternet.UI
         /// Sets tooltip background color.
         /// </summary>
         /// <param name="color">Background color.</param>
-        public virtual IRichToolTip SetToolTipBackgroundColor(Color? color)
+        public virtual IRichToolTip SetToolTipBackgroundColor(LightDarkColor? color)
         {
             ToolTipBackgroundColor = color;
             return this;
@@ -733,7 +731,7 @@ namespace Alternet.UI
         /// Sets foreground color of the tooltip message.
         /// </summary>
         /// <param name="color">Foreground color of the message.</param>
-        public virtual IRichToolTip SetToolTipForegroundColor(Color? color)
+        public virtual IRichToolTip SetToolTipForegroundColor(LightDarkColor? color)
         {
             ToolTipForegroundColor = color;
             return this;
@@ -743,7 +741,7 @@ namespace Alternet.UI
         /// Sets foreground color of the tooltip title.
         /// </summary>
         /// <param name="color">Foreground color of the title.</param>
-        public virtual IRichToolTip SetTitleForegroundColor(Color? color)
+        public virtual IRichToolTip SetTitleForegroundColor(LightDarkColor? color)
         {
             ToolTipTitleForegroundColor = color;
             return this;
@@ -827,7 +825,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IRichToolTip SetToolTipFromTemplate(
             TemplateControl template,
-            Color? backColor = null)
+            LightDarkColor? backColor = null)
         {
             ResetToolTipColors();
             backColor ??= template.BackgroundColor;
@@ -1038,7 +1036,7 @@ namespace Alternet.UI
         /// <param name="location">Location where tooltip will be shown.</param>
         public virtual IRichToolTip ShowToolTipFromTemplate(
             TemplateControl template,
-            Color? backColor = null,
+            LightDarkColor? backColor = null,
             PointD? location = null)
         {
             return SetToolTipFromTemplate(template, backColor).ShowToolTip(location);
@@ -1109,12 +1107,12 @@ namespace Alternet.UI
         {
             if (ShowDebugRectangleAtCenter)
             {
-                e.Graphics.FillRectangleAtCenter(LightDarkColors.Red.AsBrush, ClientRectangle, 3);
+                e.Graphics.FillRectangleAtCenter(LightDarkColors.Red.LightOrDark(this).AsBrush, ClientRectangle, 3);
             }
 
             if (ShowDebugCorners)
             {
-                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle, IsDarkBackground);
             }
         }
 

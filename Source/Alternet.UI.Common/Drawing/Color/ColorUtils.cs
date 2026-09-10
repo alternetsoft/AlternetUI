@@ -130,6 +130,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts <see cref="LightDarkColor"/> to known color if its possible.
+        /// </summary>
+        /// <param name="color">The <see cref="LightDarkColor"/> to convert.</param>
+        /// <returns>The converted <see cref="LightDarkColor"/> if possible; otherwise, <c>null</c>.</returns>
+        public static LightDarkColor? FindKnownColor(LightDarkColor? color)
+        {
+            if (color is null)
+                return null;
+            var light = FindKnownColor(color.Light);
+            var dark = FindKnownColor(color.Dark);
+
+            if(light is null || dark is null)
+                return null;
+
+            return new LightDarkColor(light, dark);
+        }
+
+        /// <summary>
         /// Gets or sets whether colors from the specified category are visible for the end user.
         /// </summary>
         /// <param name="category">Color category.</param>
@@ -207,9 +225,9 @@ namespace Alternet.Drawing
         /// Gets default interior border color of the tab control.
         /// </summary>
         /// <returns></returns>
-        public static Color GetTabControlInteriorBorderColor(bool isDark)
+        public static LightDarkColor GetTabControlInteriorBorderColor()
         {
-            return DefaultColors.GetBorderColor(isDark);
+            return DefaultColors.BorderColor;
         }
 
         /// <summary>

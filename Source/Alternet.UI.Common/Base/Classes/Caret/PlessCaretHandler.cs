@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Gets or sets color which is used to paint caret overlay image. If <c>null</c>,
         /// caret color us used.
         /// </summary>
-        public static Color? DefaultOverlayColor;
+        public static LightDarkColor? DefaultOverlayColor;
 
         private static int blinkTime = 530;
         private static LightDarkColor? color;

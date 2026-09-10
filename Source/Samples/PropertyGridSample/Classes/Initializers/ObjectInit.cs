@@ -29,7 +29,7 @@ namespace PropertyGridSample
             control.ParentBackColor = true;
             control.Paint += (sender, e) =>
             {
-                e.Graphics.FillRectangle(control.RealBackgroundColor.AsBrush, e.ClientRectangle);
+                e.Graphics.FillRectangle(control.RealBackgroundColor.LightOrDark(control).AsBrush, e.ClientRectangle);
                 (sender as UserControl)?.DrawDefaultBackground(e);
             };
         }

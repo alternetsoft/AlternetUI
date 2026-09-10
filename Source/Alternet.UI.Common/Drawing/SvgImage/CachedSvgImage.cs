@@ -76,7 +76,7 @@ namespace Alternet.Drawing
         /// <param name="state">Item state.</param>
         /// <param name="isDark">Light/dark theme flag.</param>
         /// <returns><c>true</c> if an image exists for the specified state and theme; otherwise, <c>false</c>.</returns>
-        public readonly bool HasImage(VisualControlState state, bool? isDark = null)
+        public readonly bool HasImage(VisualControlState state, bool isDark)
         {
             return GetImage(state, isDark) != null;
         }
@@ -87,10 +87,9 @@ namespace Alternet.Drawing
         /// <param name="state">Item state.</param>
         /// <param name="isDark">Light/dark theme flag.</param>
         /// <returns></returns>
-        public readonly TImage? GetImage(VisualControlState state, bool? isDark = null)
+        public readonly TImage? GetImage(VisualControlState state, bool isDark)
         {
-            isDark ??= LightDarkColor.IsUsingDarkColor;
-            var result = imageData[state]?.GetImage(isDark.Value);
+            var result = imageData[state]?.GetImage(isDark);
             return (TImage?)result;
         }
 
@@ -101,11 +100,10 @@ namespace Alternet.Drawing
         /// for which image is set.</param>
         /// <param name="image">New image value.</param>
         /// <param name="isDark">Whether theme is dark.</param>
-        public void SetImage(VisualControlState state, object? image, bool? isDark = null)
+        public void SetImage(VisualControlState state, object? image, bool isDark)
         {
-            isDark ??= LightDarkColor.IsUsingDarkColor;
             imageData[state] ??= new();
-            imageData[state]!.SetImage(isDark.Value, image);
+            imageData[state]!.SetImage(isDark, image);
         }
 
         /// <summary>
@@ -176,7 +174,7 @@ namespace Alternet.Drawing
         /// <remarks>The cloned instance will have the same state and data as the original instance.
         /// Changes made to the cloned instance will not affect the original instance, and vice versa.</remarks>
         /// <returns>A new <see cref="CachedSvgImage{TImage}"/> instance that is a copy of the current instance.</returns>
-        public CachedSvgImage<TImage> Clone()
+        public readonly CachedSvgImage<TImage> Clone()
         {
             var result = new CachedSvgImage<TImage>();
             result.Assign(this);

@@ -855,7 +855,7 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new Color? ForegroundColor
+        internal new LightDarkColor? ForegroundColor
         {
             get => base.ForegroundColor;
             set
@@ -867,11 +867,9 @@ namespace Alternet.UI
         /// Gets default interior border color as light/dark color pair.
         /// </summary>
         /// <returns></returns>
-        public static Color GetDefaultInteriorBorderColor()
+        public static LightDarkColor GetDefaultInteriorBorderColor()
         {
-            return Color.LightDark(
-                light: ColorUtils.GetTabControlInteriorBorderColor(false),
-                dark: ColorUtils.GetTabControlInteriorBorderColor(true));
+            return ColorUtils.GetTabControlInteriorBorderColor();
         }
 
         /// <summary>
@@ -1411,10 +1409,10 @@ namespace Alternet.UI
         /// Gets interior border color.
         /// </summary>
         /// <returns></returns>
-        protected virtual Color GetInteriorBorderColor()
+        protected virtual LightDarkColor GetInteriorBorderColor()
         {
             var color = Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color;
-            color ??= ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
+            color ??= ColorUtils.GetTabControlInteriorBorderColor();
             return color;
         }
 
@@ -1441,7 +1439,7 @@ namespace Alternet.UI
                 Graphics = e.Graphics,
                 Bounds = ClientRectangle,
                 HeaderBounds = r,
-                Brush = GetInteriorBorderColor().AsBrush,
+                Brush = GetInteriorBorderColor().LightOrDark(this).AsBrush,
                 TabAlignment = tabPaintAlignment ?? TabAlignment,
             };
 
@@ -1549,7 +1547,7 @@ namespace Alternet.UI
                 Control = HeaderControl,
                 Graphics = e.Graphics,
                 Bounds = r,
-                Brush = GetInteriorBorderColor().AsBrush,
+                Brush = GetInteriorBorderColor().LightOrDark(this).AsBrush,
                 TabAlignment = tabPaintAlignment ?? TabAlignment,
                 RoundCorners = UseRoundedCorners,
                 DrawTabSeparatorLines = this.DrawTabSeparatorLines,
@@ -1578,7 +1576,7 @@ namespace Alternet.UI
             var border = HeaderControl.GetRightPanelBorder(TabAlignment);
 
             e.Graphics.DrawBorderWithBrush(
-                        GetInteriorBorderColor().AsBrush,
+                        GetInteriorBorderColor().LightOrDark(this).AsBrush,
                         r,
                         border);
         }

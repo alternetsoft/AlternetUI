@@ -8,7 +8,7 @@ namespace ApiDoc
         public BorderWindow()
         {
             InitializeComponent();
-            border.BorderColor = Alternet.Drawing.Color.DarkGray;
+            border.BorderColor = new(Alternet.Drawing.Color.DarkGray);
             border.Background = Alternet.Drawing.Brushes.Khaki;
         }
 
@@ -16,7 +16,7 @@ namespace ApiDoc
         {
             #region BorderCSharpCreation
             var Border = new Alternet.UI.Border();
-            Border.BorderColor = Alternet.Drawing.Color.DarkGray;
+            Border.BorderColor = new(Alternet.Drawing.Color.DarkGray);
             Border.Background = Alternet.Drawing.Brushes.Khaki;
             #endregion
         }

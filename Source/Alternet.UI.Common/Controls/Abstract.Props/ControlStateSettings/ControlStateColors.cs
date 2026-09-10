@@ -23,21 +23,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts the specified <see cref='ControlStateColors'/>
-        /// to a <see cref='ControlStateBrushes'/>.
-        /// </summary>
-        public static implicit operator ControlStateBrushes(ControlStateColors colors)
-        {
-            ControlStateBrushes brushes = new();
-            brushes.Normal = colors?.Normal?.BackgroundColor?.AsBrush;
-            brushes.Disabled = colors?.Disabled?.BackgroundColor?.AsBrush;
-            brushes.Focused = colors?.Focused?.BackgroundColor?.AsBrush;
-            brushes.Hovered = colors?.Hovered?.BackgroundColor?.AsBrush;
-            brushes.Pressed = colors?.Pressed?.BackgroundColor?.AsBrush;
-            return brushes;
-        }
-
-        /// <summary>
         /// Creates clone of this object.
         /// </summary>
         /// <returns></returns>

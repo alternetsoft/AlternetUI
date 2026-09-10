@@ -741,7 +741,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets background color of the active tab.
         /// </summary>
-        public virtual Color? BackgroundColorActiveTab
+        public virtual LightDarkColor? BackgroundColorActiveTab
         {
             get
             {
@@ -773,7 +773,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets background color of the inactive tab.
         /// </summary>
-        public virtual Color? BackgroundColorInactiveTab
+        public virtual LightDarkColor? BackgroundColorInactiveTab
         {
             get
             {
@@ -789,7 +789,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets foreground color of the active tab.
         /// </summary>
-        public virtual Color? ForegroundColorActiveTab
+        public virtual LightDarkColor? ForegroundColorActiveTab
         {
             get
             {
@@ -805,7 +805,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets foreground color of the inactive tab.
         /// </summary>
-        public virtual Color? ForegroundColorInactiveTab
+        public virtual LightDarkColor? ForegroundColorInactiveTab
         {
             get
             {
@@ -1398,10 +1398,10 @@ namespace Alternet.UI
         /// Gets interior border color.
         /// </summary>
         /// <returns></returns>
-        protected virtual Color GetInteriorBorderColor()
+        protected virtual LightDarkColor GetInteriorBorderColor()
         {
             var color = Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color;
-            color ??= ColorUtils.GetTabControlInteriorBorderColor(IsDarkBackground);
+            color ??= ColorUtils.GetTabControlInteriorBorderColor();
             return color;
         }
 
@@ -1452,9 +1452,7 @@ namespace Alternet.UI
             var colors = InactiveTabColors ?? DefaultInactiveTabColors;
             if (colors is not null)
                 return colors;
-            Color color = IsDarkBackground ? SystemColors.GrayText :
-                SystemColors.GrayText;
-            colors = new FontAndColor(color);
+            colors = new FontAndColor(LightDarkColors.GrayText);
             return colors;
         }
 
@@ -1549,7 +1547,7 @@ namespace Alternet.UI
             if (HasInteriorBorder)
             {
                 e.Graphics.DrawBorderWithBrush(
-                            GetInteriorBorderColor().AsBrush,
+                            GetInteriorBorderColor().LightOrDark(this).AsBrush,
                             e.ClientRectangle,
                             GetRightPanelBorder(TabsAlignment));
             }
@@ -1569,7 +1567,7 @@ namespace Alternet.UI
                     Control = this,
                     Graphics = e.Graphics,
                     Bounds = e.ClientRectangle,
-                    Brush = GetInteriorBorderColor().AsBrush,
+                    Brush = GetInteriorBorderColor().LightOrDark(this).AsBrush,
                     TabAlignment = TabsAlignment,
                     RoundCorners = UseRoundedCorners,
                     DrawTabSeparatorLines = drawTabSeparatorLines,
