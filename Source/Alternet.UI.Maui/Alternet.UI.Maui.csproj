@@ -64,10 +64,13 @@
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
     <PackageReference Include="Alternet.UI.Common" Version="$(Version)">
     </PackageReference>
+    <PackageReference Include="Alternet.UI.Controls" Version="$(Version)">
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' == ''">
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+    <ProjectReference Include="..\Alternet.UI.Controls\Alternet.UI.Controls.csproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Common\SignDll.proj" />
