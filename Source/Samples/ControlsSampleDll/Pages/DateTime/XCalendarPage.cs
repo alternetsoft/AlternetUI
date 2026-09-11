@@ -26,7 +26,7 @@ namespace ControlsSample
         {
             patternPickerContainer = new ScrollableRepeatPatternPicker();
             patternPicker = patternPickerContainer.ScrolledControl;
-            patternPicker.CanSelectTime = false;
+            patternPicker.IsTimeVisible = false;
             patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
 
             Padding = 5;

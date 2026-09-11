@@ -369,5 +369,9 @@ namespace Alternet.UI.Localization
         public string GoToDate { get; set; } = "Go to Date";
  
         public string GoToToday { get; set; } = "Go to Today";
+
+        public string AllDay { get; set; } = "All Day";
+
+        public string FullDayDuration { get; set; } = "Full Day Duration";
     }
 }

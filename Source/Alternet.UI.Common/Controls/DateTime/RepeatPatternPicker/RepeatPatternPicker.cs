@@ -33,6 +33,7 @@ namespace Alternet.UI
 
         private readonly DateTimePicker startDatePicker = new();
         private readonly GenericControlAndLabel<DatePicker, Label> endDatePicker = new();
+        private readonly XCheckBox allDayCheckBox = new(CommonStrings.Default.FullDayDuration);
         private readonly BoldLabel startDateLabel;
         private readonly BoldLabel endDateLabel;
         private readonly XRadioButtonAndSuffix endsNeverRadioButton;
@@ -67,6 +68,9 @@ namespace Alternet.UI
             startDatePicker.Kind = DateTimePickerKind.DateTime;
             startDatePicker.DatePicker.ImageVisible = DefaultShowDropDownImage;
             startDatePicker.Parent = this;
+
+            allDayCheckBox.Parent = this;
+            allDayCheckBox.CheckedChanged += OnAllDayCheckedChanged;
 
             // End on date
 
@@ -208,14 +212,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the start date picker allows selection of both date and time.
+        /// Gets or sets a value indicating whether the time selection is visible in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
-        public virtual bool CanSelectTime
+        public virtual bool IsTimeVisible
         {
             get => startDatePicker.Kind == DateTimePickerKind.DateTime;
             set
             {
                 startDatePicker.Kind = value ? DateTimePickerKind.DateTime : DateTimePickerKind.Date;
+                AllDayCheckBox.Visible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the time selection is enabled in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public virtual bool IsTimeEnabled
+        {
+            get => startDatePicker.TimePicker.Enabled;
+            set
+            {
+                startDatePicker.TimePicker.Enabled = value;
+                startDatePicker.TimeIcon.Enabled = value;
             }
         }
 
@@ -249,6 +267,12 @@ namespace Alternet.UI
         /// pattern and its associated rules.
         /// </summary>
         public virtual RepeatPatternRule Value => data;
+
+        /// <summary>
+        /// Gets the "All Day" check box control that allows users to specify whether the event or task is an all-day event.
+        /// </summary>
+        [Browsable(false)]
+        public XCheckBox AllDayCheckBox => allDayCheckBox;
 
         /// <summary>
         /// Gets or sets the date format used for displaying dates in the <see cref="RepeatPatternPicker"/> control.
@@ -364,6 +388,16 @@ namespace Alternet.UI
         /// </summary>
         /// <returns> A new instance of the <see cref="YearlyPatternPicker"/> control. </returns>
         protected virtual YearlyPatternPicker CreateYearlyPatternPicker() => new(data.YearlyRule);
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the "All Day" check box control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnAllDayCheckedChanged(object? sender, EventArgs e)
+        {
+            IsTimeEnabled = !allDayCheckBox.Checked;
+        }
     }
 
     /// <summary>
