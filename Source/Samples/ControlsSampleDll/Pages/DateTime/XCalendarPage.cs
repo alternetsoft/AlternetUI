@@ -217,7 +217,7 @@ namespace ControlsSample
                     {
                         var border = new BorderSettings();
                         var shapeDrawable = new ShapeDrawable();
-                        shapeDrawable.Pen = LightDarkColors.Blue.AsPen;
+                        shapeDrawable.Pen = LightDarkColors.Blue.LightOrDark(this).AsPen;
                         shapeDrawable.ShapeType = DrawingShapeType.Circle;
                         border.ShapeForeground = shapeDrawable;
                         return border;
@@ -273,7 +273,7 @@ namespace ControlsSample
                     }
                 }
 
-                void ToggleColor(Func<Color> getColor)
+                void ToggleColor(Func<LightDarkColor> getColor)
                 {
                     var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
 
@@ -287,7 +287,7 @@ namespace ControlsSample
                     }
                 }
 
-                void ToggleBackColor(Func<Color> getColor)
+                void ToggleBackColor(Func<LightDarkColor> getColor)
                 {
                     var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
 

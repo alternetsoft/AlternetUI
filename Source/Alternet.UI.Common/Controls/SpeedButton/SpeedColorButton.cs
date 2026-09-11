@@ -604,7 +604,7 @@ namespace Alternet.UI
             LabelImage = imageColor.AsImageWithBorder(
                 colorImageSize,
                 ScaleFactor,
-                ColorImageBorder?.LightOrDark(this),
+                (ColorImageBorder ?? ListControlItem.DefaultImageBorderColor).LightOrDark(this),
                 ColorImageShape);
 
             if (refresh)

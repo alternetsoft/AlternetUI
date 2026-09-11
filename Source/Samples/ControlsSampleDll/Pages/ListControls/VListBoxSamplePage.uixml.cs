@@ -71,15 +71,6 @@ namespace ControlsSample
             SetSizeToContent();
             listBox.CheckedChanged += ListBox_CheckedChanged;
 
-            otherThemeCheckBox.CheckedChanged += (s, e) =>
-            {
-                if (otherThemeCheckBox.IsChecked)
-                    LightDarkColor.IsDarkOverride = !IsDarkBackground;
-                else
-                    LightDarkColor.IsDarkOverride = null;
-                listBox.Invalidate();
-            };
-
             var contextMenu = vertPanel2.ContextMenuStrip;
 
             contextMenu.Add("Toggle items fast", () =>

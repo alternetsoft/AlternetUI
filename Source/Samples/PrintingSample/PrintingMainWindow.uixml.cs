@@ -59,7 +59,7 @@ namespace PrintingSample
             DrawingArea.UserPaint = true;
 
             // This is important if OS style is BlackOnWhite.
-            DrawingArea.BackgroundColor = Color.White;
+            DrawingArea.BackgroundColor = ExactColors.White;
             DrawingArea.ParentBackColor = false;
         }
 

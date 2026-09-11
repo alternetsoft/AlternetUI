@@ -958,7 +958,7 @@ namespace Alternet.UI
                 Color highlightColorBg = new(SystemColorsLight.Default.Highlight);
                 Color highlightColorFg = new(SystemColorsLight.Default.HighlightText);
 
-                Color holidayColorBg = BackgroundColor;
+                Color holidayColorBg = BackgroundColor.Light;
                 Color holidayColorFg = LightDarkColors.Red.Light;
 
                 SetHeaderColors(headerColorFg, headerColorBg);
@@ -977,8 +977,8 @@ namespace Alternet.UI
             {
                 ParentForeColor = false;
                 ParentBackColor = false;
-                BackgroundColor = SystemColors.Window;
-                ForegroundColor = SystemColors.WindowText;
+                BackgroundColor = new(SystemColors.Window);
+                ForegroundColor = new(SystemColors.WindowText);
 
                 Color headerColorBg = SystemColors.Window;
                 Color headerColorFg = SystemColors.WindowText;
@@ -986,7 +986,7 @@ namespace Alternet.UI
                 Color highlightColorBg = SystemColors.Highlight;
                 Color highlightColorFg = SystemColors.HighlightText;
 
-                Color holidayColorBg = BackgroundColor;
+                Color holidayColorBg = BackgroundColor.Light;
 
                 Color holidayColorFg = LightDarkColors.Red.LightOrDark(IsDarkBackground);
 
@@ -1009,7 +1009,7 @@ namespace Alternet.UI
                 if (IsDarkBackground)
                 {
                     HolidayColorFg = LightDarkColors.Red.Dark;
-                    HolidayColorBg = RealBackgroundColor;
+                    HolidayColorBg = RealBackgroundColor.LightOrDark(this);
                 }
                 else
                 {
@@ -1054,16 +1054,16 @@ namespace Alternet.UI
             {
                 ParentForeColor = false;
                 ParentBackColor = false;
-                BackgroundColor = (27, 27, 27);
-                ForegroundColor = (227, 227, 227);
+                BackgroundColor = new(27, 27, 27);
+                ForegroundColor = new(227, 227, 227);
 
-                Color headerColorBg = (40, 42, 44);
-                Color headerColorFg = ForegroundColor;
+                Color headerColorBg = new(40, 42, 44);
+                Color headerColorFg = ForegroundColor.Dark;
 
-                Color highlightColorBg = (0, 74, 119);
-                Color highlightColorFg = (194, 231, 255);
+                Color highlightColorBg = new(0, 74, 119);
+                Color highlightColorFg = new(194, 231, 255);
 
-                Color holidayColorBg = BackgroundColor;
+                Color holidayColorBg = BackgroundColor.Dark;
                 Color holidayColorFg = LightDarkColors.Red.Dark;
 
                 SetHeaderColors(headerColorFg, headerColorBg);

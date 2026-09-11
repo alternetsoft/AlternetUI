@@ -145,7 +145,7 @@ namespace MenuSample
 
             this.Closing += MainWindow_Closing;
 
-            contextMenuBorder.BorderColor = Color.Red;
+            contextMenuBorder.BorderColor = ExactColors.Red;
             contextMenuBorder.BorderWidth = new Thickness(2, 2, 2, 2);
 
             contextMenuLabel.Font = AbstractControl.DefaultFont.AsBold;

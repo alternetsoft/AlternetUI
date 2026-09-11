@@ -59,7 +59,7 @@ namespace ControlsSample
             sliderv1.SetFarSpacerColor(LightDarkColors.Green);
             sliderv2.SetFarSpacerColor(LightDarkColors.Red);
 
-            sliderh1.SetBorderColors(Color.Transparent);
+            sliderh1.SetBorderColors(ExactColors.Transparent);
             sliderh1.SetBottomBorderColor(DefaultColors.BorderColor);
             sliderh1.UseControlColors(false);
 

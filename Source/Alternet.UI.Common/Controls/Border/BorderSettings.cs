@@ -172,7 +172,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = transparentBorder ??= Default.WithColor(LightDarkColors.Transparent);
+                var result = transparentBorder ??= Default.WithColor(ExactColors.Transparent);
                 result.SetImmutable();
                 return result;
             }
@@ -188,7 +188,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = emptyBorder ??= Default.WithColor(LightDarkColors.Empty);
+                var result = emptyBorder ??= Default.WithColor(ExactColors.Empty);
                 result.SetImmutable();
                 return result;
             }

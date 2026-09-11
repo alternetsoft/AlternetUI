@@ -87,9 +87,9 @@ namespace LayoutSample
                 var size = image.SizeDip(this);
                 var bounds = ((0, 0), new SizeD(size.Width * zoom, size.Height * zoom));
 
-                e.Graphics.FillRectangle(RealBackgroundColor.AsBrush, e.ClientRectangle);
+                e.Graphics.FillRectangle(RealBackgroundColor.LightOrDark(this).AsBrush, e.ClientRectangle);
                 e.Graphics.DrawImage(image, bounds);
-                e.Graphics.DrawRectangle(LightDarkColors.Red.AsPen, e.ClientRectangle);
+                e.Graphics.DrawRectangle(LightDarkColors.Red.LightOrDark(this).AsPen, e.ClientRectangle);
             }
         }
     }

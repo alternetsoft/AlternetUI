@@ -249,7 +249,7 @@ Environment.NewLine + Environment.NewLine +
             {
                 FontInfo = fontInfo,
                 ShowHelp = false,
-                Color = sampleLabel.ForeColor ?? sampleLabel.RealForegroundColor,
+                Color = sampleLabel.RealForegroundColor.LightOrDark(this),
             };
 
             if (setCustomTitleCheckBox.IsChecked)
@@ -286,7 +286,7 @@ Environment.NewLine + Environment.NewLine +
         {
             var dialog = new ColorDialog
             {
-                Color = sampleLabel.BackgroundColor ?? sampleLabel.RealBackgroundColor,
+                Color = sampleLabel.RealBackgroundColor.LightOrDark(this),
             };
 
             if (setCustomTitleCheckBox.IsChecked)
@@ -302,7 +302,7 @@ Environment.NewLine + Environment.NewLine +
                 {
                     LogResult(
                         "Color Dialog Result: Accepted, Color = " + dialog.Color);
-                    sampleLabel.BackgroundColor = dialog.Color;
+                    sampleLabel.BackgroundColor = new(dialog.Color);
                 }
                 else
                 {

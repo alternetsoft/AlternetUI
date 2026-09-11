@@ -53,7 +53,7 @@ namespace ControlsSample
                 }
 
                 tabControl.SetTabImage(0, image);
-                tabControl.SetTabSvg(2, KnownSvgImages.ImgGear, null, LightDarkColors.Blue);
+                tabControl.SetTabSvg(2, KnownSvgImages.ImgGear, null, LightDarkColors.Blue.LightOrDark(this));
 
                 tabControl.TabSizeChanged += TabControl_TabSizeChanged;
                 tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;

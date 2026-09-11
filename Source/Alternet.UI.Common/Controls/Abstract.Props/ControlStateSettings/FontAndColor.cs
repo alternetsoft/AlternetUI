@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <see cref="Color.Empty"/> colors and null font.
         /// </summary>
         public static readonly IReadOnlyFontAndColor Empty
-            = new FontAndColor(LightDarkColors.Empty, LightDarkColors.Empty);
+            = new FontAndColor(ExactColors.Empty, ExactColors.Empty);
 
         /// <summary>
         /// Gets <see cref="IReadOnlyFontAndColor"/> with all properties set to null.

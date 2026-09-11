@@ -66,9 +66,6 @@
                 IsEnabled="true"/>
       <XCheckBox Name="borderCheckBox" Text="Show Border"
                 IsChecked="true" MarginTop="5"/>
-      <XCheckBox Name="otherSchemeCheckBox" Text="Use other color theme"
-                IsChecked="false" MarginTop="5"
-                IsEnabled="true" IsVisible="false"/>
     </Panel>
 
   </TabControl>

@@ -1506,7 +1506,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        cellItem.ForegroundColor = LightDarkColors.Transparent;
+                        cellItem.ForegroundColor = ExactColors.Transparent;
                     }
 
                     cellItem.Border = cell.IsToday ? EffectiveTodayBorder() : null;

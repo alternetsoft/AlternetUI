@@ -994,7 +994,7 @@ namespace Alternet.UI
                             var measured = DrawDefaultText(
                                 MeasureCanvas,
                                 (PointD.Empty, size),
-                                foreColor: LightDarkColors.Empty,
+                                foreColor: ExactColors.Empty,
                                 backColor: null,
                                 font: null);
                             return measured.Size;

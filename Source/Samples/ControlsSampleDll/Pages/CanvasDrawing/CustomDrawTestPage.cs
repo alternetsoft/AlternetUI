@@ -67,8 +67,8 @@ namespace ControlsSample
                 "bold",
                 " fragment",
                 new FontAndColor(
-                    Color.Red,
-                    Color.LightGoldenrodYellow,
+                    new(Color.Red),
+                    new(Color.LightGoldenrodYellow),
                     Control.DefaultFont.Scaled(1.5f)));
             controlTemplate.HasBorder = true;
             templateImage = TemplateUtils.GetTemplateAsImage(controlTemplate);
@@ -78,11 +78,11 @@ namespace ControlsSample
                 "bold",
                 " fragment ",
                 new FontAndColor(
-                    Color.Brown,
-                    Color.LightGoldenrodYellow,
+                    new(Color.Brown),
+                    new(Color.LightGoldenrodYellow),
                     Control.DefaultFont.Scaled(1.5f)));
             toolTemplate.HasBorder = true;
-            toolTemplate.BorderColor = Color.Red;
+            toolTemplate.BorderColor = new(Color.Red);
 
             toolTemplate.Parent = mainPanel;
             interiorDrawable = CreateInteriorDrawable(false);
@@ -363,7 +363,7 @@ namespace ControlsSample
                         isChecked,
                         controlState);
                     location.Y += size.Height;
-                    canvas.DrawText(title, location, Font.Default, LightDarkColors.Green, Color.Empty);
+                    canvas.DrawText(title, location, Font.Default, LightDarkColors.Green.LightOrDark(this), Color.Empty);
                 }
             });
         }
@@ -412,7 +412,7 @@ namespace ControlsSample
                         title,
                         location,
                         Font.Default,
-                        LightDarkColors.Green,
+                        LightDarkColors.Green.LightOrDark(this),
                         Color.Empty);
                 }
             });
@@ -444,7 +444,7 @@ namespace ControlsSample
                         rect,
                         controlState);
                     location.Y += size.Height;
-                    canvas.DrawText(title, location, Font.Default, LightDarkColors.Green, Color.Empty);
+                    canvas.DrawText(title, location, Font.Default, LightDarkColors.Green.LightOrDark(this), Color.Empty);
                 }
             });
         }

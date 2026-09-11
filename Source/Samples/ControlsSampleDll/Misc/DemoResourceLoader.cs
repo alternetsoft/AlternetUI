@@ -1,5 +1,6 @@
 ﻿using Alternet.Drawing;
 using Alternet.UI;
+
 using System;
 using System.Linq;
 using System.Reflection;
@@ -36,9 +37,9 @@ namespace ControlsSample
             {
                 Color? color = disabled ? SystemColors.GrayText : null;
 
-                if(control is not null)
+                if (control is not null)
                 {
-                    bool isDark = control.RealBackgroundColor.IsDark();
+                    bool isDark = control.RealBackgroundColor.LightOrDark(control).IsDark();
 
                     if (disabled)
                         color = SvgColors.GetSvgColor(KnownSvgColor.Disabled, isDark);
@@ -64,7 +65,7 @@ namespace ControlsSample
                 Hovered = LoadImage("Hovered"),
                 Pressed = LoadImage("Pressed"),
                 Disabled = disabledImage,
-				Focused = LoadImage("Focused"),
+                Focused = LoadImage("Focused"),
             };
         }
 

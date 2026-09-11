@@ -71,7 +71,7 @@ namespace Alternet.UI
         {
             if (BackColor is not null)
                 return BackColor;
-            return LightDarkColors.Transparent;
+            return ExactColors.Transparent;
         }
 
         /// <inheritdoc/>

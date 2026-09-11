@@ -278,7 +278,7 @@ namespace Alternet.UI
         {
             var color = StateObjects?.Colors?.GetObjectOrNull(state)?.BackgroundColor;
 
-            return color ?? TextBackColor ?? LightDarkColors.Empty;
+            return color ?? TextBackColor ?? ExactColors.Empty;
         }
 
         /// <summary>

@@ -1125,6 +1125,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a <see cref="Color"/> structure from a 32-bit ARGB value.
+        /// </summary>
+        /// <param name="argb">A 32-bit ARGB value.</param>
+        /// <returns>A <see cref="Color"/> structure that represents the specified ARGB value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color FromUint(uint argb)
+        {
+            return new(argb, StateFlags.ValueValid);
+        }
+
+        /// <summary>
         /// Creates a <see cref="Color"/> structure from the specified
         /// <see cref="Color"/> structure, but with the new specified alpha value.
         /// Although this method allows a 32-bit value to be passed for the

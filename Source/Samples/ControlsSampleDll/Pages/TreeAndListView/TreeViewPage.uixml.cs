@@ -139,8 +139,8 @@ namespace ControlsSample
             item.IsBold = true;
 
             item = treeView.Items[4];
-            item.ForegroundColor = Color.Gold;
-            item.BackgroundColor = Color.DarkOliveGreen;
+            item.ForegroundColor = ExactColors.Gold;
+            item.BackgroundColor = ExactColors.DarkOliveGreen;
             item.Text = "Item with custom colors";
         }
 

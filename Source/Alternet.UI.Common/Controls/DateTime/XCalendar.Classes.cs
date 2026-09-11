@@ -364,7 +364,7 @@ namespace Alternet.UI
             {
                 get
                 {
-                    return transparent ??= Create(LightDarkColors.Transparent);
+                    return transparent ??= Create(ExactColors.Transparent);
                 }
             }
 

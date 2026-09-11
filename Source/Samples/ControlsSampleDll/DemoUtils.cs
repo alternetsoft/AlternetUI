@@ -93,8 +93,8 @@ Environment.NewLine + Environment.NewLine +
             item.Alignment = (HorizontalAlignment.Center, VerticalAlignment.Bottom);
             item.Image = Image.FromUrlCached(PencilUrl);
             item.DisabledImage = item.Image?.ToGrayScale();
-            item.ForegroundColor = Color.Indigo;
-            item.BackgroundColor = Color.LightSkyBlue;
+            item.ForegroundColor = new(Color.Indigo);
+            item.BackgroundColor = new(Color.LightSkyBlue);
             addAction(item);
 
             item = new();
@@ -198,8 +198,8 @@ Environment.NewLine + Environment.NewLine +
             item.Image = Image.FromUrlCached(CalendarUrl);
             item.CheckState = CheckState.Indeterminate;
             item.DisabledImage = item.Image?.ToGrayScale();
-            item.ForegroundColor = Color.White;
-            item.BackgroundColor = Color.ForestGreen;
+            item.ForegroundColor = new(Color.White);
+            item.BackgroundColor = new(Color.ForestGreen);
             item.Text = "Green <b>item</b> at center";
             item.LabelFlags = DrawLabelFlags.TextHasBold;
         }
@@ -282,8 +282,8 @@ Environment.NewLine + Environment.NewLine +
             item.Alignment = (HorizontalAlignment.Center, VerticalAlignment.Bottom);
             item.Image = Image.FromUrlCached(PencilUrl);
             item.DisabledImage = item.Image?.ToGrayScale();
-            item.ForegroundColor = Color.Indigo;
-            item.BackgroundColor = Color.LightSkyBlue;
+            item.ForegroundColor = new(Color.Indigo);
+            item.BackgroundColor = new(Color.LightSkyBlue);
             addAction(item);
 
             item = new();

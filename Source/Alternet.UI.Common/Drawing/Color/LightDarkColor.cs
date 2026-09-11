@@ -33,6 +33,18 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LightDarkColor"/> class 
+        /// with the same light and dark known colors.
+        /// </summary>
+        /// <param name="knownColor">Known color value.</param>
+        public LightDarkColor(KnownColor knownColor)
+        {
+            var clr = Color.FromKnownColor(knownColor);
+            this.light = clr;
+            this.dark = clr;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LightDarkColor"/> class 
         /// with the same light and dark colors.
         /// </summary>
         /// <param name="r">Red component of the color.</param>
@@ -64,6 +76,18 @@ namespace Alternet.Drawing
         {
             this.light = new Color(light);
             this.dark = new Color(dark);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LightDarkColor"/> class
+        /// with the same light and dark color values.
+        /// </summary>
+        /// <param name="light">Light color.</param>
+        public LightDarkColor(ColorStruct light)
+        {
+            var cl = new Color(light);
+            this.light = cl;
+            this.dark = cl;
         }
 
         /// <summary>
@@ -199,6 +223,19 @@ namespace Alternet.Drawing
             {
                 Light = light;
                 Dark = dark;
+            });
+        }
+
+        /// <summary>
+        /// Sets the light and dark color values of this instance to the specified value, making both colors the same.
+        /// </summary>
+        /// <param name="color">The color value to use for both the light and dark theme variants.</param>
+        public virtual void SetColors(Color color)
+        {
+            DoInsideSuspendedPropertyChanged(() =>
+            {
+                Light = color;
+                Dark = color;
             });
         }
 

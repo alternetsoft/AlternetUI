@@ -13,7 +13,7 @@ namespace Alternet.Drawing
     /// Contains static members related to colors which have different
     /// argb in dark and light themes.
     /// </summary>
-    public static class LightDarkColors
+    public static partial class LightDarkColors
     {
         private static LightDarkColor? yellow;
         private static LightDarkColor? red;
@@ -21,16 +21,6 @@ namespace Alternet.Drawing
         private static LightDarkColor? blue;
         private static LightDarkColor? blueDarker;
         private static LightDarkColor? blueLighter;
-
-        /// <summary>
-        /// Gets a <see cref="LightDarkColor"/> that is transparent.
-        /// </summary>
-        public static readonly LightDarkColor Transparent = new LightDarkColor(Color.Transparent, Color.Transparent).SetImmutable();
-
-        /// <summary>
-        /// Gets a <see cref="LightDarkColor"/> that is empty.
-        /// </summary>
-        public static readonly LightDarkColor Empty = new LightDarkColor(Color.Empty, Color.Empty).SetImmutable();
 
         /// <summary>
         /// Gets a <see cref="LightDarkColor"/> that is gray text.

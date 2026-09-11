@@ -324,12 +324,12 @@ namespace ControlsSample
             App.Log("Button: Click");
         }
 
-        private Color? GetColor(ColorPicker? control)
+        private LightDarkColor? GetColor(ColorPicker? control)
         {
             var result = control?.Value;
             if (result == Color.Empty)
                 result = null;
-            return result;
+            return result is null ? null : new LightDarkColor(result);
         }
 
         private void Button_Changed(object? sender, EventArgs e)
@@ -340,13 +340,13 @@ namespace ControlsSample
         internal bool TextIsDark()
         {
             var textColor = GetColor(comboBoxTextColor) ?? button.RealForegroundColor;
-            return textColor.IsDark();
+            return textColor.LightOrDark().IsDark();
         }
 
         internal bool BackIsDark()
         {
             var backColor = GetColor(comboBoxBackColor) ?? button.RealBackgroundColor;
-            return backColor.IsDark();
+            return backColor.LightOrDark().IsDark();
         }
 
         private void Back_Changed(object? sender, EventArgs e)

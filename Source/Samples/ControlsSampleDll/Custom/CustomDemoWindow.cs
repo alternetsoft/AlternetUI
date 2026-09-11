@@ -132,7 +132,7 @@ namespace Alternet.UI
 
         internal void SetDebugColors()
         {
-            DebugBackgroundColor(Color.Red, nameof(CustomDemoWindow));
+            DebugBackgroundColor(LightDarkColors.Red, nameof(CustomDemoWindow));
             pageContainer?.SetDebugColors();
         }
 

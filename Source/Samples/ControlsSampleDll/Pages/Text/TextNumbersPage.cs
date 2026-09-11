@@ -66,8 +66,8 @@ namespace ControlsSample
             toolTip.ParentForeColor = true;
             ToolTipProvider = toolTip;
 
-            BackgroundColor = Color.Gainsboro;
-            ForegroundColor = Color.Black;
+            BackgroundColor = ExactColors.Gainsboro;
+            ForegroundColor = ExactColors.Black;
 
             shortEdit.InnerPicture.Click += (s, e) =>
             {

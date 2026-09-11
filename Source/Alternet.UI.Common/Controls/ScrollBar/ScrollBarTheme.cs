@@ -661,7 +661,10 @@ namespace Alternet.UI
                 if (border is not null)
                 {
                     result.Border = new();
-                    result.Border.Color = border.AsColor;
+
+                    var borderColor = border.AsColor;
+
+                    result.Border.Color = borderColor is null ? null : new(borderColor);
                     result.Border.Width = 1;
                 }
 

@@ -92,7 +92,7 @@ namespace ControlsSample
             toolTip.VerticalAlignment = VerticalAlignment.Fill;
 
             toolTip.ParentBackColor = false;
-            toolTip.BackgroundColor = SystemColors.Window;
+            toolTip.BackgroundColor = LightDarkColors.Window;
 
             toolTip.Parent = tooltipPreview;
             toolTip.ShowDebugRectangleAtCenter = false;
@@ -210,16 +210,6 @@ namespace ControlsSample
                 }
             };
 
-            otherSchemeCheckBox.IsEnabled = false;
-            otherSchemeCheckBox.CheckedChanged += (s, e) =>
-            {
-                var isDark = otherSchemeCheckBox.IsChecked ? !IsDarkBackground : IsDarkBackground;
-
-                toolTip.BackgroundColor = isDark ? (44, 44, 44) : Color.White;
-                toolTip.HideToolTip();
-                ShowToolTipButton_Click(null, EventArgs.Empty);
-            };
-
             RunWhenIdle(() =>
             {
                 ShowToolTipButton_Click(this, EventArgs.Empty);
@@ -285,7 +275,7 @@ namespace ControlsSample
         {
             if (toolTip is null)
                 return;
-            toolTip.OnlyImage(LargeImageSet).SetToolTipBackgroundColor(Color.ForestGreen).PostShowToolTip();
+            toolTip.OnlyImage(LargeImageSet).SetToolTipBackgroundColor(ExactColors.ForestGreen).PostShowToolTip();
         }
 
         public static void ShowWithBoldText(IRichToolTip? toolTip, AbstractControl? templateParent)
@@ -304,12 +294,12 @@ namespace ControlsSample
                 "bold",
                 " fragment",
                 new FontAndColor(
-                    Color.Red,
-                    Color.LightGoldenrodYellow,
+                    ExactColors.Red,
+                    ExactColors.LightGoldenrodYellow,
                     Control.DefaultFont.Scaled(1.5f)));
 
             controlTemplate.ParentBackColor = false;
-            controlTemplate.BackColor = Color.Transparent;
+            controlTemplate.BackgroundColor = ExactColors.Transparent;
             controlTemplate.Parent = parent;
             controlTemplate.SetSizeToContent();
 
@@ -319,9 +309,9 @@ namespace ControlsSample
         private void ToolTipLabel_Click(object? sender, EventArgs e)
         {
             App.Log("ToolTipLabel_Click");
-            tooltipPreview.BackgroundColor = Color.White;
+            tooltipPreview.BackgroundColor = ExactColors.White;
             toolTipLabel.Text = string.Empty;
-            toolTipLabel.BackgroundColor = Color.White;
+            toolTipLabel.BackgroundColor = ExactColors.White;
         }
 
         private void ResetTitleButton_Click(object? sender, EventArgs e)
@@ -360,13 +350,13 @@ namespace ControlsSample
 
             LogUtils.LogColor(
                 "SystemSettings.Info",
-                new(SystemSettings.GetColor(KnownSystemColor.Info)));
+                new Color(SystemSettings.GetColor(KnownSystemColor.Info)));
 
             LogUtils.LogColor("InfoText", SystemColors.InfoText);
 
             LogUtils.LogColor(
                 "SystemSettings.InfoText",
-                new(SystemSettings.GetColor(KnownSystemColor.InfoText)));
+                new Color(SystemSettings.GetColor(KnownSystemColor.InfoText)));
 
             LogUtils.LogColor("BkColor", RealBackgroundColor);
             LogUtils.LogColor("FgColor", RealForegroundColor);
@@ -376,7 +366,7 @@ namespace ControlsSample
         {
             LoadImages();
             showMethod = ShowImageButton_Click;
-            toolTip.OnlyImage(largeImage).SetToolTipBackgroundColor(Color.ForestGreen).ShowToolTip();
+            toolTip.OnlyImage(largeImage).SetToolTipBackgroundColor(ExactColors.ForestGreen).ShowToolTip();
         }
 
         private static void LoadImages()
@@ -445,17 +435,7 @@ namespace ControlsSample
                     toolTip.ShowToolTip();
                 }
 
-                if (otherSchemeCheckBox.IsChecked)
-                {
-                    LightDarkColor.DoInsideTempIsDarkOverride(!IsDarkBackground, () =>
-                    {
-                        PrivateShow();
-                    });
-                }
-                else
-                {
-                    PrivateShow();
-                }
+                PrivateShow();
             }
 
         }

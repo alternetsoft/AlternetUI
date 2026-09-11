@@ -328,7 +328,16 @@ namespace Alternet.Drawing
                 wrappedText.Text = string.Empty;
                 wrappedText.Text = text.ToString();
                 wrappedText.Font = font;
-                wrappedText.ForegroundColor = brush?.AsColor;
+
+                if (brush is null)
+                {
+                    wrappedText.ForegroundColor = null;
+                }
+                else
+                {
+                    document.DrawTextColor.SetColors(brush.AsColor);
+                    wrappedText.ForegroundColor = document.DrawTextColor;
+                }
             }
             finally
             {

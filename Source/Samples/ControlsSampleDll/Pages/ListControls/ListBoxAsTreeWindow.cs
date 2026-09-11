@@ -202,21 +202,21 @@ namespace ControlsSample
 
             if (CommandLineArgs.ParseAndGetIsDark())
             {
-                treeView.BackColor = DefaultColors.GetWindowBackColor(true);
-                treeView.ForeColor = DefaultColors.GetWindowForeColor(true);
+                treeView.BackgroundColor = DefaultColors.WindowBackColor;
+                treeView.ForegroundColor = DefaultColors.WindowForeColor;
             }
 
             if (item is not null)
             {
                 if (treeView.IsDarkBackground)
                 {
-                    item.ForegroundColor = DefaultColors.GetWindowForeColor(true);
-                    item.BackgroundColor = DefaultColors.GetWindowBackColor(true).Lighter();
+                    item.ForegroundColor = DefaultColors.WindowForeColor;
+                    item.BackgroundColor = DefaultColors.WindowBackColor.LighterPair();
                 }
                 else
                 {
-                    item.ForegroundColor = Color.Black;
-                    item.BackgroundColor = Color.Beige;
+                    item.ForegroundColor = new(Color.Black);
+                    item.BackgroundColor = new(Color.Beige);
                 }
             }
         }

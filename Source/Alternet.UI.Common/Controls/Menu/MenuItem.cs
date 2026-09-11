@@ -41,6 +41,7 @@ namespace Alternet.UI
         private bool enabled = true;
         private ContextMenu? itemsMenu;
         private TreeViewItem? treeViewItem;
+        private ControlColorMode? colorMode;
 
         static MenuItem()
         {
@@ -369,13 +370,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating the color mode of the menu item.
+        /// </summary>
+        public virtual ControlColorMode? ColorMode
+        {
+            get
+            {
+                return colorMode;
+            }
+            set
+            {
+                colorMode = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="ImageSet"/> associated with the menu item.
         /// </summary>
         public virtual ImageSet? Image
         {
             get
             {
-                return svgImage.GetImage(VisualControlState.Normal);
+                return svgImage.GetImage(VisualControlState.Normal, IsDarkBackground);
             }
 
             set
@@ -384,7 +400,7 @@ namespace Alternet.UI
                 {
                     if (Image == value)
                         return;
-                    svgImage.SetImage(VisualControlState.Normal, value);
+                    svgImage.SetImage(VisualControlState.Normal, value, IsDarkBackground);
                     RaiseImageChanged();
                 });
             }
@@ -447,7 +463,7 @@ namespace Alternet.UI
         {
             get
             {
-                return svgImage.GetImage(VisualControlState.Disabled);
+                return svgImage.GetImage(VisualControlState.Disabled, IsDarkBackground);
             }
 
             set
@@ -456,7 +472,7 @@ namespace Alternet.UI
                 {
                     if (DisabledImage == value)
                         return;
-                    svgImage.SetImage(VisualControlState.Disabled, value);
+                    svgImage.SetImage(VisualControlState.Disabled, value, IsDarkBackground);
                     RaiseDisabledImageChanged();
                 });
             }
@@ -970,6 +986,20 @@ namespace Alternet.UI
                 }
 
                 return itemsMenu;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the menu item is displayed on a dark background.
+        /// Use <see cref="ColorMode"/> property to override the default behavior.
+        /// </summary>
+        public virtual bool IsDarkBackground
+        {
+            get
+            {
+                if (ColorMode is not null)
+                    return ColorMode == ControlColorMode.Dark;
+                return SystemSettings.AppearanceIsDark;
             }
         }
 
@@ -1514,7 +1544,7 @@ namespace Alternet.UI
 
             public IEnumerator<TreeViewItem> GetEnumerator()
             {
-                foreach(var item in menu.Items)
+                foreach (var item in menu.Items)
                 {
                     yield return item.AsTreeViewItem();
                 }

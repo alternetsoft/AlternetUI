@@ -129,7 +129,7 @@ namespace InputSample
                 e.Handled = true;
                 messageLabel.ParentBackColor = false;
 
-                var redColor = LightDarkColors.Red.LightOrDark(SystemSettings.AppearanceIsDark);
+                var redColor = LightDarkColors.Red;
 
                 messageLabel.IsTransparent = false;
                 messageLabel.BackgroundColor =

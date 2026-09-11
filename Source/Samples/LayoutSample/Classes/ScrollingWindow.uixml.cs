@@ -92,7 +92,7 @@ namespace LayoutSample
             if (setDebugBorder)
             {
                 stackPanel.HasBorder = true;
-                stackPanel.BorderColor = Color.Red;
+                stackPanel.BorderColor = ExactColors.Red;
             }
         }
 
