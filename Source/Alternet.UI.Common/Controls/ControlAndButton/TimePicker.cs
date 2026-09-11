@@ -86,6 +86,11 @@ namespace Alternet.UI
             secondsButton.IsNormalTransparent = true;
             amPmButton.IsNormalTransparent = true;
 
+            hoursButton.IsDisabledTransparent = true;
+            minutesButton.IsDisabledTransparent = true;
+            secondsButton.IsDisabledTransparent = true;
+            amPmButton.IsDisabledTransparent = true;
+
             UpdateMinElementWidth();
             UpdateButtons();
 
