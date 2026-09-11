@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness DefaultPadding = 5;
 
-        private readonly DatePicker startDatePicker = new();
+        private readonly DateTimePicker startDatePicker = new();
         private readonly GenericControlAndLabel<DatePicker, Label> endDatePicker = new();
         private readonly BoldLabel startDateLabel;
         private readonly BoldLabel endDateLabel;
@@ -63,7 +63,9 @@ namespace Alternet.UI
             // Start on date
 
             startDateLabel = Add<BoldLabel>(CommonStrings.Default.Starts);
-            startDatePicker.ImageVisible = DefaultShowDropDownImage;
+
+            startDatePicker.Kind = DateTimePickerKind.DateTime;
+            startDatePicker.DatePicker.ImageVisible = DefaultShowDropDownImage;
             startDatePicker.Parent = this;
 
             // End on date
@@ -202,6 +204,18 @@ namespace Alternet.UI
                 weeklyPicker.FormatProvider = value;
                 monthlyPicker.FormatProvider = value;
                 yearlyPicker.FormatProvider = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the start date picker allows selection of both date and time.
+        /// </summary>
+        public virtual bool CanSelectTime
+        {
+            get => startDatePicker.Kind == DateTimePickerKind.DateTime;
+            set
+            {
+                startDatePicker.Kind = value ? DateTimePickerKind.DateTime : DateTimePickerKind.Date;
             }
         }
 
