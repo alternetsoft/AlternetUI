@@ -175,7 +175,7 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="AbstractControl.BackgroundColor"/>
         [Browsable(false)]
-        public new LightDarkColor? BackgroundColor
+        public new ThemedColor? BackgroundColor
         {
             get => base.BackgroundColor;
             set => base.BackgroundColor = value;
@@ -183,7 +183,7 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="AbstractControl.ForegroundColor"/>
         [Browsable(false)]
-        public new LightDarkColor? ForegroundColor
+        public new ThemedColor? ForegroundColor
         {
             get => base.ForegroundColor;
             set => base.ForegroundColor = value;

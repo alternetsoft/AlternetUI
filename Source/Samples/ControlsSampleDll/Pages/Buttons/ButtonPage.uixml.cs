@@ -130,7 +130,7 @@ namespace ControlsSample
                 else
                 {
                     var innerBorder = button.Borders?.Normal?.Clone();
-                    innerBorder?.SetColor(LightDarkColors.Red);
+                    innerBorder?.SetColor(ThemedColors.Red);
 
                     if (innerBorder is not null)
                     {
@@ -324,12 +324,12 @@ namespace ControlsSample
             App.Log("Button: Click");
         }
 
-        private LightDarkColor? GetColor(ColorPicker? control)
+        private ThemedColor? GetColor(ColorPicker? control)
         {
             var result = control?.Value;
             if (result == Color.Empty)
                 result = null;
-            return result is null ? null : new LightDarkColor(result);
+            return result is null ? null : new ThemedColor(result);
         }
 
         private void Button_Changed(object? sender, EventArgs e)

@@ -9,13 +9,13 @@ namespace Alternet.UI
     internal class GraphicsDocument : GenericControl
     {
         private GenericWrappedTextControl? wrappedText;
-        private readonly LightDarkColor drawTextColor = new(Color.Black);
+        private readonly ThemedColor drawTextColor = new(Color.Black);
 
         public GraphicsDocument()
         {
         }
 
-        public LightDarkColor DrawTextColor => drawTextColor;
+        public ThemedColor DrawTextColor => drawTextColor;
 
         public virtual GenericWrappedTextControl WrappedText
         {

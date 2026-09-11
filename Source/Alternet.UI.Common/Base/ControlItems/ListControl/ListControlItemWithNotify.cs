@@ -115,7 +115,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor? BackgroundColor
+        public override ThemedColor? BackgroundColor
         {
             get => base.BackgroundColor;
 
@@ -134,7 +134,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor? ForegroundColor
+        public override ThemedColor? ForegroundColor
         {
             get => base.ForegroundColor;
 

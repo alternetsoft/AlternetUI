@@ -63,20 +63,20 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the default placeholder text color for the input field.
         /// </summary>
-        public static Alternet.Drawing.LightDarkColor DefaultPlaceholderColor
+        public static Alternet.Drawing.ThemedColor DefaultPlaceholderColor
             = new(light: Alternet.Drawing.Color.Gray, dark: Alternet.Drawing.Color.Gray);
 
         /// <summary>
         /// Gets or sets the default background color for the dialog in light and dark themes.
         /// </summary>
-        public static Alternet.Drawing.LightDarkColor DefaultBackColor = new(
+        public static Alternet.Drawing.ThemedColor DefaultBackColor = new(
                 light: Alternet.Drawing.Color.White,
                 dark: Alternet.Drawing.Color.FromRgb(30, 30, 30));
 
         /// <summary>
         /// Gets or sets the default text color for the dialog in light and dark themes.
         /// </summary>
-        public static Alternet.Drawing.LightDarkColor DefaultTextColor = new(
+        public static Alternet.Drawing.ThemedColor DefaultTextColor = new(
             light: Alternet.Drawing.Color.Black,
             dark: Alternet.Drawing.Color.FromRgb(220, 220, 220));
 

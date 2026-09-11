@@ -741,7 +741,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets background color of the active tab.
         /// </summary>
-        public virtual LightDarkColor? BackgroundColorActiveTab
+        public virtual ThemedColor? BackgroundColorActiveTab
         {
             get
             {
@@ -773,7 +773,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets background color of the inactive tab.
         /// </summary>
-        public virtual LightDarkColor? BackgroundColorInactiveTab
+        public virtual ThemedColor? BackgroundColorInactiveTab
         {
             get
             {
@@ -789,7 +789,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets foreground color of the active tab.
         /// </summary>
-        public virtual LightDarkColor? ForegroundColorActiveTab
+        public virtual ThemedColor? ForegroundColorActiveTab
         {
             get
             {
@@ -805,7 +805,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets foreground color of the inactive tab.
         /// </summary>
-        public virtual LightDarkColor? ForegroundColorInactiveTab
+        public virtual ThemedColor? ForegroundColorInactiveTab
         {
             get
             {
@@ -1398,7 +1398,7 @@ namespace Alternet.UI
         /// Gets interior border color.
         /// </summary>
         /// <returns></returns>
-        protected virtual LightDarkColor GetInteriorBorderColor()
+        protected virtual ThemedColor GetInteriorBorderColor()
         {
             var color = Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color;
             color ??= ColorUtils.GetTabControlInteriorBorderColor();
@@ -1437,7 +1437,7 @@ namespace Alternet.UI
             var colors = ActiveTabColors ?? DefaultActiveTabColors;
             if (colors is not null)
                 return colors;
-            colors = new FontAndColor(LightDarkColors.ControlText);
+            colors = new FontAndColor(ThemedColors.ControlText);
             return colors;
         }
 
@@ -1450,7 +1450,7 @@ namespace Alternet.UI
             var colors = InactiveTabColors ?? DefaultInactiveTabColors;
             if (colors is not null)
                 return colors;
-            colors = new FontAndColor(LightDarkColors.GrayText);
+            colors = new FontAndColor(ThemedColors.GrayText);
             return colors;
         }
 

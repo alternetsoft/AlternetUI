@@ -30,10 +30,10 @@ namespace ApiDoc
             tooltip.Title = "Another Title";
             tooltip.Text = "Some text";
             tooltip.SetIcon(MessageBoxIcon.Error);
-            tooltip.SetToolTipBackgroundColor(LightDarkColors.Red);
-            tooltip.SetToolTipForegroundColor(LightDarkColors.White);
+            tooltip.SetToolTipBackgroundColor(ThemedColors.Red);
+            tooltip.SetToolTipForegroundColor(ThemedColors.White);
             tooltip.SetTitleFont(Control.DefaultFont.Larger().AsBold);
-            tooltip.SetTitleForegroundColor(LightDarkColors.White);
+            tooltip.SetTitleForegroundColor(ThemedColors.White);
             tooltip.ShowToolTip();
         }
         #endregion

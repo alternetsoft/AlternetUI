@@ -63,12 +63,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color of the column splitters.
         /// </summary>
-        public virtual LightDarkColor? SplitterBackColor { get; set; }
+        public virtual ThemedColor? SplitterBackColor { get; set; }
 
         /// <summary>
         /// Gets or sets the foreground color of the column splitters.
         /// </summary>
-        public virtual LightDarkColor? SplitterForeColor { get; set; }
+        public virtual ThemedColor? SplitterForeColor { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the splitter foreground is visible.
@@ -191,7 +191,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="backColor">The background color for splitters.</param>
         /// <param name="foreColor">The foreground color for splitters.</param>
-        public virtual void ResolveSplitterColors(out LightDarkColor? backColor, out LightDarkColor? foreColor)
+        public virtual void ResolveSplitterColors(out ThemedColor? backColor, out ThemedColor? foreColor)
         {
             backColor = SplitterBackColor ?? RealBackgroundColor;
 

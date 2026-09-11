@@ -2344,7 +2344,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New background color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        public virtual void SetChildrenBackgroundColor(LightDarkColor? color, bool recursive = false)
+        public virtual void SetChildrenBackgroundColor(ThemedColor? color, bool recursive = false)
         {
             ForEachChild((control) => control.BackgroundColor = color, recursive);
         }
@@ -2354,7 +2354,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New background color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        public virtual void SetChildrenBackgroundColor<T>(LightDarkColor? color, bool recursive = false)
+        public virtual void SetChildrenBackgroundColor<T>(ThemedColor? color, bool recursive = false)
         {
             GetChildren<T>(recursive).BackgroundColor(color);
         }
@@ -2364,7 +2364,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New foreground color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        public virtual void SetChildrenForegroundColor(LightDarkColor? color, bool recursive = false)
+        public virtual void SetChildrenForegroundColor(ThemedColor? color, bool recursive = false)
         {
             ForEachChild((control) => control.ForegroundColor = color, recursive);
         }
@@ -2374,7 +2374,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">New foreground color value</param>
         /// <param name="recursive">Whether to apply to all children recursively.</param>
-        public virtual void SetChildrenForegroundColor<T>(LightDarkColor? color, bool recursive = false)
+        public virtual void SetChildrenForegroundColor<T>(ThemedColor? color, bool recursive = false)
         {
             GetChildren<T>(recursive).ForegroundColor(color);
         }
@@ -2662,7 +2662,7 @@ namespace Alternet.UI
         /// <param name="color">Debug background color.</param>
         /// <param name="debugMsg">Optional debug message to show in log.</param>
         [Conditional("DEBUG")]
-        public virtual void DebugBackgroundColor(LightDarkColor? color, string? debugMsg = default)
+        public virtual void DebugBackgroundColor(ThemedColor? color, string? debugMsg = default)
         {
             if (UseDebugBackgroundColor)
             {
@@ -2875,7 +2875,7 @@ namespace Alternet.UI
         /// Gets background color from the default attributes.
         /// </summary>
         /// <returns></returns>
-        public virtual LightDarkColor? GetDefaultAttributesBgColor()
+        public virtual ThemedColor? GetDefaultAttributesBgColor()
         {
             return DefaultColors.ControlBackColor;
         }
@@ -2884,7 +2884,7 @@ namespace Alternet.UI
         /// Gets foreground color from the default attributes.
         /// </summary>
         /// <returns></returns>
-        public virtual LightDarkColor? GetDefaultAttributesFgColor()
+        public virtual ThemedColor? GetDefaultAttributesFgColor()
         {
             return DefaultColors.ControlForeColor;
         }

@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// If this property is null, color image will be painted in the same way like it is done
         /// when control is enabled.
         /// </remarks>
-        public static LightDarkColor? DefaultDisabledImageColor = new(Color.LightGray);
+        public static ThemedColor? DefaultDisabledImageColor = new(Color.LightGray);
 
         /// <summary>
         /// Gets or sets default painter for the <see cref="ColorListBox"/> items.
@@ -47,17 +47,17 @@ namespace Alternet.UI
         /// </summary>
         public static Action<ColorListBox>? InitColors = InitDefaultColors;
 
-        private LightDarkColor? disabledImageColor;
+        private ThemedColor? disabledImageColor;
         private bool useDisabledImageColor = true;
         private bool isColorRightAligned;
         private ItemImageSizeKind colorImageSizeKind = ItemImageSizeKind.Ratio;
         private SizeD? colorImageSize;
         private SizeD colorImageRatio = (3, 2);
         private DrawingShapeType? itemImageShape = DefaultItemImageShape;
-        private LightDarkColor? itemImageBorder;
+        private ThemedColor? itemImageBorder;
         private ShapeDrawable? shapeDrawable;
         private bool drawTextOverColor;
-        private LightDarkColor? textOverItemImageStyle;
+        private ThemedColor? textOverItemImageStyle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorListBox"/> class.
@@ -112,7 +112,7 @@ namespace Alternet.UI
         /// Gets or sets the border color of the item image.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? ItemImageBorder
+        public virtual ThemedColor? ItemImageBorder
         {
             get => itemImageBorder;
             set
@@ -129,7 +129,7 @@ namespace Alternet.UI
         /// Currently, it is possible to assign <see cref="Color"/> value to this property.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? TextOverItemImageStyle
+        public virtual ThemedColor? TextOverItemImageStyle
         {
             get => textOverItemImageStyle;
             set
@@ -272,7 +272,7 @@ namespace Alternet.UI
         /// If this property is null, color image will be painted using
         /// <see cref="DefaultDisabledImageColor"/>.
         /// </remarks>
-        public virtual LightDarkColor? DisabledImageColor
+        public virtual ThemedColor? DisabledImageColor
         {
             get
             {

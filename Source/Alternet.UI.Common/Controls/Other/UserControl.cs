@@ -100,7 +100,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor RealBackgroundColor
+        public override ThemedColor RealBackgroundColor
         {
             get
             {
@@ -111,7 +111,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor RealForegroundColor
+        public override ThemedColor RealForegroundColor
         {
             get
             {

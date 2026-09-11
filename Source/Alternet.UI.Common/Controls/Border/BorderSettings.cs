@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// Gets or sets color of the debug border. Default value is Null.
         /// In this case red color is used.
         /// </summary>
-        public static LightDarkColor? DefaultDebugBorderColor;
+        public static ThemedColor? DefaultDebugBorderColor;
 
         /// <summary>
         /// Gets or sets size of the design corners.
@@ -73,7 +73,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="BorderSettings"/> class with the specified color.
         /// </summary>
         /// <param name="color">The color of the border.</param>
-        public BorderSettings(LightDarkColor color)
+        public BorderSettings(ThemedColor color)
             : this()
         {
             if (color != null)
@@ -85,7 +85,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="width">The thickness of the border to apply. Specifies the width for each side.</param>
         /// <param name="color">The color of the border. If null, the default color is used.</param>
-        public BorderSettings(Thickness width, LightDarkColor? color = null)
+        public BorderSettings(Thickness width, ThemedColor? color = null)
             : this()
         {
             Width = width;
@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <param name="right">The thickness of the right border, in device-independent units.</param>
         /// <param name="bottom">The thickness of the bottom border, in device-independent units.</param>
         /// <param name="color">The color of the border. If null, the default border color is used.</param>
-        public BorderSettings(float left, float top, float right, float bottom, LightDarkColor? color = null)
+        public BorderSettings(float left, float top, float right, float bottom, ThemedColor? color = null)
             : this(new Thickness(left, top, right, bottom), color)
         {
         }
@@ -131,7 +131,7 @@ namespace Alternet.UI
         {
             get
             {
-                return debugBorder ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Red);
+                return debugBorder ??= Default.WithColor(DefaultDebugBorderColor ?? ThemedColors.Red);
             }
 
             set
@@ -221,7 +221,7 @@ namespace Alternet.UI
         {
             get
             {
-                return debugBorderGreen ??= Default.WithColor(LightDarkColors.Green);
+                return debugBorderGreen ??= Default.WithColor(ThemedColors.Green);
             }
 
             set
@@ -237,7 +237,7 @@ namespace Alternet.UI
         {
             get
             {
-                return debugBorderBlue ??= Default.WithColor(LightDarkColors.Blue);
+                return debugBorderBlue ??= Default.WithColor(ThemedColors.Blue);
             }
 
             set
@@ -429,7 +429,7 @@ namespace Alternet.UI
         /// Gets or sets uniform color of the border lines.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? Color
+        public virtual ThemedColor? Color
         {
             get
             {
@@ -554,7 +554,7 @@ namespace Alternet.UI
                 dc.FillRectangle(brush, rect2);
             }
 
-            var defaultColor = LightDarkColors.GrayText;
+            var defaultColor = ThemedColors.GrayText;
 
             if (border.Top.Width > 0)
             {
@@ -711,7 +711,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="ld">LightDarkColor to check.</param>
         /// <returns></returns>
-        public virtual bool ColorIsOk(LightDarkColor? ld)
+        public virtual bool ColorIsOk(ThemedColor? ld)
         {
             return Internal(false) || Internal(true);
 
@@ -727,7 +727,7 @@ namespace Alternet.UI
         /// Same as using <see cref="Color"/> property.
         /// </summary>
         /// <param name="value">New uniform border color.</param>
-        public void SetColor(LightDarkColor? value)
+        public void SetColor(ThemedColor? value)
         {
             Color = value;
         }
@@ -740,10 +740,10 @@ namespace Alternet.UI
         /// <param name="rightColor">Color of the right edge.</param>
         /// <param name="bottomColor">Color of the bottom edge.</param>
         public virtual bool SetColors(
-            LightDarkColor? leftColor,
-            LightDarkColor? topColor,
-            LightDarkColor? rightColor,
-            LightDarkColor? bottomColor)
+            ThemedColor? leftColor,
+            ThemedColor? topColor,
+            ThemedColor? rightColor,
+            ThemedColor? bottomColor)
         {
             if (Immutable)
                 return false;
@@ -785,7 +785,7 @@ namespace Alternet.UI
         /// Border side color is changed only if <see cref="ColorIsOk"/> returns <c>true</c>
         /// for this color.
         /// </remarks>
-        public virtual BorderSettings ToColor(LightDarkColor value)
+        public virtual BorderSettings ToColor(ThemedColor value)
         {
             var result = Clone();
             var leftColor = ColorIsOk(Left.Color) ? value : Left.Color;
@@ -814,7 +814,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual BorderSettings ToGrayScale()
         {
-            var result = ToColor(LightDarkColors.GrayText);
+            var result = ToColor(ThemedColors.GrayText);
             return result;
         }
 
@@ -833,7 +833,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">Border color of the new <see cref="BorderSettings"/>.</param>
         /// <returns></returns>
-        public virtual BorderSettings WithColor(LightDarkColor color)
+        public virtual BorderSettings WithColor(ThemedColor color)
         {
             var result = Clone();
             result.Color = color;

@@ -67,7 +67,7 @@ namespace Alternet.UI
 
                     var pointerLineStartPoint = new PointD(scaleBounds.Left, bounds.Center.Y);
                     var pointerLineEndPoint = new PointD(scaleBounds.Right, bounds.Center.Y);
-                    dc.DrawLine(LightDarkColors.Red.GetColor(this).GetAsPen(3), pointerLineStartPoint, pointerLineEndPoint);
+                    dc.DrawLine(ThemedColors.Red.GetColor(this).GetAsPen(3), pointerLineStartPoint, pointerLineEndPoint);
                 });
 
             dc.DrawRoundedRectangle(DefaultColors.GetControlBorderColor(this).AsPen, bounds, 10);

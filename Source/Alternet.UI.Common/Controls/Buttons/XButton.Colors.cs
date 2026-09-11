@@ -38,26 +38,26 @@ namespace Alternet.UI
         /// </summary>
         internal static readonly ColorStruct DefaultAltHoveredBackColorIsd = new(3, 114, 239);
 
-        private static LightDarkColor? defaultHoveredBackColorIsd;
-        private static LightDarkColor? defaultHoveredBackColor;
-        private static LightDarkColor? defaultNormalBackColorIsd;
-        private static LightDarkColor? defaultNormalBackColor;
-        private static LightDarkColor? defaultPressedBackColor;
+        private static ThemedColor? defaultHoveredBackColorIsd;
+        private static ThemedColor? defaultHoveredBackColor;
+        private static ThemedColor? defaultNormalBackColorIsd;
+        private static ThemedColor? defaultNormalBackColor;
+        private static ThemedColor? defaultPressedBackColor;
 
-        private static LightDarkColor? defaultNormalBorderColor;
-        private static LightDarkColor? defaultNormalBorderColorIsd;
-        private static LightDarkColor? defaultHoveredBorderColorIsd;
-        private static LightDarkColor? defaultHoveredBorderColor;
-        private static LightDarkColor? defaultFocusedBorderColor;
+        private static ThemedColor? defaultNormalBorderColor;
+        private static ThemedColor? defaultNormalBorderColorIsd;
+        private static ThemedColor? defaultHoveredBorderColorIsd;
+        private static ThemedColor? defaultHoveredBorderColor;
+        private static ThemedColor? defaultFocusedBorderColor;
 
-        private static LightDarkColor? defaultForeColorIsd;
-        private static LightDarkColor? defaultForeColor;
+        private static ThemedColor? defaultForeColorIsd;
+        private static ThemedColor? defaultForeColor;
 
         /// <summary>
         /// Gets or sets the default background color used for <see cref="XButton"/> control when
         /// it is in hovered state and its <see cref="IsDefault"/> property is set to true.
         /// </summary>
-        public static LightDarkColor DefaultHoveredBackColorIsd
+        public static ThemedColor DefaultHoveredBackColorIsd
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Alternet.UI
         /// Gets or sets the default background color used for <see cref="XButton"/> control when
         /// its <see cref="IsDefault"/> property is set to true.
         /// </summary>
-        public static LightDarkColor DefaultNormalBackColorIsd
+        public static ThemedColor DefaultNormalBackColorIsd
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Alternet.UI
         /// Gets or sets the default foreground color used for <see cref="XButton"/> control when
         /// it's <see cref="IsDefault"/> property is set to true.
         /// </summary>
-        public static LightDarkColor DefaultForeColorIsd
+        public static ThemedColor DefaultForeColorIsd
         {
             get
             {
@@ -98,12 +98,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default background color used for <see cref="XButton"/> control.
         /// </summary>
-        public static LightDarkColor DefaultNormalBackColor
+        public static ThemedColor DefaultNormalBackColor
         {
             get
             {
         
-                return defaultNormalBackColor ??= LightDarkColor.FromColorStruct(DefaultNormalBackColorLight, DefaultNormalBackColorDark);
+                return defaultNormalBackColor ??= ThemedColor.FromColorStruct(DefaultNormalBackColorLight, DefaultNormalBackColorDark);
             }
 
             set => defaultNormalBackColor = value;
@@ -112,7 +112,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default background color used for the pressed state of buttons.
         /// </summary>
-        public static LightDarkColor DefaultPressedBackColor
+        public static ThemedColor DefaultPressedBackColor
         {
             get
             {
@@ -125,11 +125,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default background color used for <see cref="XButton"/> control when it is in a hovered state.
         /// </summary>
-        public static LightDarkColor DefaultHoveredBackColor
+        public static ThemedColor DefaultHoveredBackColor
         {
             get
             {
-                return defaultHoveredBackColor ??= LightDarkColor.FromColorStruct(DefaultHoveredBackColorLight, DefaultHoveredBackColorDark);
+                return defaultHoveredBackColor ??= ThemedColor.FromColorStruct(DefaultHoveredBackColorLight, DefaultHoveredBackColorDark);
             }
 
             set => defaultHoveredBackColor = value;
@@ -139,7 +139,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default foreground color used for <see cref="XButton"/> control.
         /// </summary>
-        public static LightDarkColor DefaultNormalForeColor
+        public static ThemedColor DefaultNormalForeColor
         {
             get
             {
@@ -152,8 +152,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default border color used for <see cref="XButton"/> elements in a hot (hovered or active) state.
         /// </summary>
-        /// <remarks>The default value is initialized to <see cref="LightDarkColors.Blue"/> if not previously set.</remarks>
-        public static LightDarkColor DefaultHoveredBorderColor
+        /// <remarks>The default value is initialized to <see cref="ThemedColors.Blue"/> if not previously set.</remarks>
+        public static ThemedColor DefaultHoveredBorderColor
         {
             get
             {
@@ -169,7 +169,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default border color used for <see cref="XButton"/> controls in the normal state.
         /// </summary>
-        public static LightDarkColor DefaultBorderColor
+        public static ThemedColor DefaultBorderColor
         {
             get
             {
@@ -185,7 +185,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default border color used for <see cref="XButton"/> controls in the focused state.
         /// </summary>
-        public static LightDarkColor DefaultFocusedBorderColor
+        public static ThemedColor DefaultFocusedBorderColor
         {
             get
             {
@@ -202,7 +202,7 @@ namespace Alternet.UI
         /// Gets or sets the default border color used for <see cref="XButton"/> controls in the application
         /// when <see cref="IsDefault"/> property of the control is set to true.
         /// </summary>
-        public static LightDarkColor DefaultBorderColorIsd
+        public static ThemedColor DefaultBorderColorIsd
         {
             get
             {
@@ -219,7 +219,7 @@ namespace Alternet.UI
         /// Gets or sets the default hovered border color used for <see cref="XButton"/> controls in the application
         /// when <see cref="IsDefault"/> property of the control is set to true.
         /// </summary>
-        public static LightDarkColor DefaultHoveredBorderColorIsd
+        public static ThemedColor DefaultHoveredBorderColorIsd
         {
             get
             {
@@ -281,7 +281,7 @@ namespace Alternet.UI
         /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
         /// <returns>A <see cref="Color"/> representing the effective border color, determined by the current 
         /// settings and the dark mode parameter.</returns>
-        public virtual LightDarkColor GetEffectiveBorderColor(bool? isDark = null)
+        public virtual ThemedColor GetEffectiveBorderColor(bool? isDark = null)
         {
             if (IsDefault)
             {
@@ -298,7 +298,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A <see cref="Color"/> representing the effective hovered border color, determined by the current 
         /// settings and the dark mode parameter.</returns>
-        public virtual LightDarkColor GetEffectiveHoveredBorderColor()
+        public virtual ThemedColor GetEffectiveHoveredBorderColor()
         {
             if (IsDefault)
             {
@@ -315,7 +315,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A <see cref="Color"/> representing the effective foreground color, determined by the current 
         /// settings and the dark mode parameter.</returns>
-        public virtual LightDarkColor GetEffectiveForeColor()
+        public virtual ThemedColor GetEffectiveForeColor()
         {
             if (IsDefault)
             {
@@ -330,9 +330,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the effective background color based on the specified dark mode and other settings.
         /// </summary>
-        /// <returns>A <see cref="LightDarkColor"/> representing the effective background color, determined by the current default
+        /// <returns>A <see cref="ThemedColor"/> representing the effective background color, determined by the current default
         /// settings.</returns>
-        public virtual LightDarkColor GetEffectiveBackColor()
+        public virtual ThemedColor GetEffectiveBackColor()
         {
             if (IsDefault)
             {
@@ -349,10 +349,10 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Use this method to obtain the appropriate pressed background color for a button,
         /// ensuring consistency with the application's light or dark mode.</remarks>
-        /// <returns>A <see cref="LightDarkColor"/> representing the background color
+        /// <returns>A <see cref="ThemedColor"/> representing the background color
         /// to use when the button is pressed, based on the effective
         /// appearance.</returns>
-        public virtual LightDarkColor GetEffectivePressedBackColor()
+        public virtual ThemedColor GetEffectivePressedBackColor()
         {
             return DefaultPressedBackColor;
         }
@@ -360,10 +360,10 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the effective background color for the hovered state based on the specified dark mode and other settings.
         /// </summary>
-        /// <returns>A <see cref="LightDarkColor"/> representing the effective background color for the
+        /// <returns>A <see cref="ThemedColor"/> representing the effective background color for the
         /// hovered state, determined by the current default
         /// settings.</returns>
-        public virtual LightDarkColor GetEffectiveHoveredBackColor()
+        public virtual ThemedColor GetEffectiveHoveredBackColor()
         {
             if (IsDefault)
             {
@@ -400,9 +400,9 @@ namespace Alternet.UI
         /// <param name="state">The visual state of the control for which to retrieve the background color.</param>
         /// <returns>A <see cref="Color"/> representing the background color for the given state,
         /// or <see langword="null"/> if no color is defined.</returns>
-        public virtual LightDarkColor? GetBackgroundColor(VisualControlState state)
+        public virtual ThemedColor? GetBackgroundColor(VisualControlState state)
         {
-            LightDarkColor color;
+            ThemedColor color;
 
             if (state == VisualControlState.Hovered)
             {
@@ -432,7 +432,7 @@ namespace Alternet.UI
                     return result;
             }
 
-            LightDarkColor color = GetBackgroundColor(state) ?? DefaultColors.ControlBackColor;
+            ThemedColor color = GetBackgroundColor(state) ?? DefaultColors.ControlBackColor;
 
             return color.GetColor(this).AsBrush;
         }
@@ -442,9 +442,9 @@ namespace Alternet.UI
         /// </summary>
         internal static void UseAltBackColorIsd()
         {
-            DefaultHoveredBackColorIsd = LightDarkColor.FromColorStruct(DefaultAltHoveredBackColorIsd, DefaultAltHoveredBackColorIsd);
-            DefaultNormalBackColorIsd = LightDarkColor.FromColorStruct(DefaultAltNormalBackColorIsd, DefaultAltNormalBackColorIsd);
-            DefaultForeColorIsd = LightDarkColors.White;
+            DefaultHoveredBackColorIsd = ThemedColor.FromColorStruct(DefaultAltHoveredBackColorIsd, DefaultAltHoveredBackColorIsd);
+            DefaultNormalBackColorIsd = ThemedColor.FromColorStruct(DefaultAltNormalBackColorIsd, DefaultAltNormalBackColorIsd);
+            DefaultForeColorIsd = ThemedColors.White;
             DefaultBorderColorIsd = DefaultNormalBackColorIsd;
             DefaultHoveredBorderColorIsd = DefaultNormalBackColorIsd;
         }

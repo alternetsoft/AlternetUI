@@ -154,7 +154,7 @@ namespace Alternet.Drawing
         /// This property is used only for text rendering and does not affect background color of the block if 
         /// drawing rectangle is specified.
         /// </summary>
-        public virtual LightDarkColor? TextBackColor
+        public virtual ThemedColor? TextBackColor
         {
             get => record.TextBackColor;
             set => SetProperty(ref record.TextBackColor, value);
@@ -408,7 +408,7 @@ namespace Alternet.Drawing
             public Thickness Padding;
 
             /// <see cref="TextFormat.TextBackColor"/>
-            public LightDarkColor? TextBackColor;
+            public ThemedColor? TextBackColor;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Record"/> struct.

@@ -397,7 +397,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Sets an override for the specified SVG color with the provided value.
         /// </summary>
-        /// <remarks>If the <paramref name="value"/> is a <see cref="LightDarkColor"/>,
+        /// <remarks>If the <paramref name="value"/> is a <see cref="ThemedColor"/>,
         /// the method applies
         /// the override for both light and dark themes using the specified color.
         /// Otherwise, the override is applied
@@ -417,7 +417,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="knownColor">Known svg color</param>
         /// <param name="value">Override color value.</param>
-        public virtual void SetColorOverride(KnownSvgColor knownColor, LightDarkColor? value)
+        public virtual void SetColorOverride(KnownSvgColor knownColor, ThemedColor? value)
         {
             SetColorOverride(knownColor, true, value?.Dark);
             SetColorOverride(knownColor, false, value?.Light);

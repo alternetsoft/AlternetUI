@@ -33,7 +33,7 @@ namespace Alternet.UI
         /// This is used when <see cref="DefaultToolTipBorder"/>
         /// is created.
         /// </summary>
-        public static LightDarkColor? DefaultToolTipBorderColor;
+        public static ThemedColor? DefaultToolTipBorderColor;
 
         /// <summary>
         /// Gets or sets default image margin in device-independent units.
@@ -158,19 +158,19 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default background color of the tooltip.
         /// </summary>
-        public static LightDarkColor DefaultToolTipBackgroundColor { get; set; }
+        public static ThemedColor DefaultToolTipBackgroundColor { get; set; }
             = Color.LightDark(light: (249, 249, 249), dark: (44, 44, 44));
 
         /// <summary>
         /// Gets or sets default foreground color of the tooltip.
         /// </summary>
-        public static LightDarkColor DefaultToolTipForegroundColor { get; set; }
+        public static ThemedColor DefaultToolTipForegroundColor { get; set; }
             = Color.LightDark(light: Color.Black, dark: Color.White);
 
         /// <summary>
         /// Gets or sets default foreground color of the tooltip.
         /// </summary>
-        public static LightDarkColor DefaultToolTipTitleForegroundColor { get; set; }
+        public static ThemedColor DefaultToolTipTitleForegroundColor { get; set; }
             = Color.LightDark(light: (0, 51, 153), dark: (156, 220, 254));
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual LightDarkColor? ToolTipBackgroundColor
+        public virtual ThemedColor? ToolTipBackgroundColor
         {
             get => data.BackgroundColor;
             set
@@ -251,7 +251,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual LightDarkColor? ToolTipForegroundColor
+        public virtual ThemedColor? ToolTipForegroundColor
         {
             get => data.ForegroundColor;
             set
@@ -306,7 +306,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual LightDarkColor? ToolTipTitleForegroundColor
+        public virtual ThemedColor? ToolTipTitleForegroundColor
         {
             get => data.TitleForegroundColor;
             set
@@ -721,7 +721,7 @@ namespace Alternet.UI
         /// Sets tooltip background color.
         /// </summary>
         /// <param name="color">Background color.</param>
-        public virtual IRichToolTip SetToolTipBackgroundColor(LightDarkColor? color)
+        public virtual IRichToolTip SetToolTipBackgroundColor(ThemedColor? color)
         {
             ToolTipBackgroundColor = color;
             return this;
@@ -731,7 +731,7 @@ namespace Alternet.UI
         /// Sets foreground color of the tooltip message.
         /// </summary>
         /// <param name="color">Foreground color of the message.</param>
-        public virtual IRichToolTip SetToolTipForegroundColor(LightDarkColor? color)
+        public virtual IRichToolTip SetToolTipForegroundColor(ThemedColor? color)
         {
             ToolTipForegroundColor = color;
             return this;
@@ -741,7 +741,7 @@ namespace Alternet.UI
         /// Sets foreground color of the tooltip title.
         /// </summary>
         /// <param name="color">Foreground color of the title.</param>
-        public virtual IRichToolTip SetTitleForegroundColor(LightDarkColor? color)
+        public virtual IRichToolTip SetTitleForegroundColor(ThemedColor? color)
         {
             ToolTipTitleForegroundColor = color;
             return this;
@@ -825,7 +825,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual IRichToolTip SetToolTipFromTemplate(
             TemplateControl template,
-            LightDarkColor? backColor = null)
+            ThemedColor? backColor = null)
         {
             ResetToolTipColors();
             backColor ??= template.BackgroundColor;
@@ -1036,7 +1036,7 @@ namespace Alternet.UI
         /// <param name="location">Location where tooltip will be shown.</param>
         public virtual IRichToolTip ShowToolTipFromTemplate(
             TemplateControl template,
-            LightDarkColor? backColor = null,
+            ThemedColor? backColor = null,
             PointD? location = null)
         {
             return SetToolTipFromTemplate(template, backColor).ShowToolTip(location);
@@ -1107,7 +1107,7 @@ namespace Alternet.UI
         {
             if (ShowDebugRectangleAtCenter)
             {
-                e.Graphics.FillRectangleAtCenter(LightDarkColors.Red.GetColor(this).AsBrush, ClientRectangle, 3);
+                e.Graphics.FillRectangleAtCenter(ThemedColors.Red.GetColor(this).AsBrush, ClientRectangle, 3);
             }
 
             if (ShowDebugCorners)

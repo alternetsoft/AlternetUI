@@ -540,7 +540,7 @@ namespace Alternet.UI
                 AddToImageList(imageListLight32, roslynLight32, imageName);
             }
 
-            void AddSvgImage(int index, string svgName, LightDarkColor? color)
+            void AddSvgImage(int index, string svgName, ThemedColor? color)
             {
                 var path = Path.Combine(svgPath, svgName);
                 var svgImage = new MonoSvgImage(path);
@@ -610,8 +610,8 @@ namespace Alternet.UI
             AddImage(42, "57-Struct.png"); //StructImage-Blue.txt
 
             AddColorSvgImage(43, "43-ErrorImage-Red.svg"); //ErrorImage-Red.txt
-            AddSvgImage(44, "44-CSharpImage-Green.svg", LightDarkColors.Green); //CSharpImage-Green.svg
-            AddSvgImage(45, "45-VisualBasicImage-Blue.svg", LightDarkColors.Blue); //VisualBasicImage-Blue.svg            
+            AddSvgImage(44, "44-CSharpImage-Green.svg", ThemedColors.Green); //CSharpImage-Green.svg
+            AddSvgImage(45, "45-VisualBasicImage-Blue.svg", ThemedColors.Blue); //VisualBasicImage-Blue.svg            
 
             var stripDark16 = imageListDark16.AsSkiaStrip();
             var stripLight16 = imageListLight16.AsSkiaStrip();

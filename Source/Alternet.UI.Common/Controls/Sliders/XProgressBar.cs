@@ -89,8 +89,8 @@ namespace Alternet.UI
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
-        private static LightDarkColor? defaultSpacerColor;
-        private static LightDarkColor? defaultSecondarySpacerColor;
+        private static ThemedColor? defaultSpacerColor;
+        private static ThemedColor? defaultSecondarySpacerColor;
 
         private readonly SliderScale leftTopScale;
         private readonly SliderScale rightBottomScale;
@@ -108,8 +108,8 @@ namespace Alternet.UI
         private bool isFirstTickVisible = true;
         private bool isLastTickVisible = true;
         private bool autoSize = true;
-        private LightDarkColor? spacerColor;
-        private LightDarkColor? secondarySpacerColor;
+        private ThemedColor? spacerColor;
+        private ThemedColor? secondarySpacerColor;
         private bool isIndeterminate;
 
         /// <summary>
@@ -217,16 +217,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets default spacer color of the control.
         /// </summary>
-        public static LightDarkColor DefaultSpacerColor
+        public static ThemedColor DefaultSpacerColor
         {
-            get => defaultSpacerColor ?? LightDarkColors.Green;
+            get => defaultSpacerColor ?? ThemedColors.Green;
             set => defaultSpacerColor = value;
         }
 
         /// <summary>
         /// Gets default secondary spacer color of the control.
         /// </summary>
-        public static LightDarkColor DefaultSecondarySpacerColor
+        public static ThemedColor DefaultSecondarySpacerColor
         {
             get
             {
@@ -293,7 +293,7 @@ namespace Alternet.UI
         /// <see cref="DefaultSpacerColor"/> property.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? SpacerColor
+        public virtual ThemedColor? SpacerColor
         {
             get
             {
@@ -315,7 +315,7 @@ namespace Alternet.UI
         /// <see cref="DefaultSecondarySpacerColor"/> property.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? SecondarySpacerColor
+        public virtual ThemedColor? SecondarySpacerColor
         {
             get
             {
@@ -346,7 +346,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor? BorderColor
+        public override ThemedColor? BorderColor
         {
             get
             {

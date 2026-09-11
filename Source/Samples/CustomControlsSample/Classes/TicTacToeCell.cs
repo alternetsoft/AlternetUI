@@ -61,14 +61,14 @@ namespace Alternet.UI
 
                 if (mark == TicTacToeControl.PlayerMark.X)
                 {
-                    var xPen = LightDarkColors.Red.GetColor(IsDarkBackground).GetAsPen(2);
+                    var xPen = ThemedColors.Red.GetColor(IsDarkBackground).GetAsPen(2);
 
                     dc.DrawLine(xPen, markBounds.TopLeft, markBounds.BottomRight);
                     dc.DrawLine(xPen, markBounds.BottomLeft, markBounds.TopRight);
                 }
                 else
                 {
-                    var oPen = LightDarkColors.Blue.GetColor(IsDarkBackground).GetAsPen(2);
+                    var oPen = ThemedColors.Blue.GetColor(IsDarkBackground).GetAsPen(2);
 
                     dc.DrawEllipse(oPen, markBounds);
                 }

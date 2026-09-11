@@ -272,7 +272,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New font.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet<T> BackgroundColor(LightDarkColor? value)
+        public virtual ControlSet<T> BackgroundColor(ThemedColor? value)
         {
             foreach (var item in items)
                 item.BackgroundColor = value;
@@ -284,7 +284,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New font.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet<T> ForegroundColor(LightDarkColor? value)
+        public virtual ControlSet<T> ForegroundColor(ThemedColor? value)
         {
             foreach (var item in items)
                 item.ForegroundColor = value;

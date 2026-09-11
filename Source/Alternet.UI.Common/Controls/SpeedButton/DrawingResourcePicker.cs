@@ -47,10 +47,10 @@ namespace Alternet.UI
         private PopupColorListBox? popupWindow;
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
         private ClickActionKind longTapAction = ClickActionKind.None;
-        private LightDarkColor? disabledImageColor;
+        private ThemedColor? disabledImageColor;
         private bool useDisabledImageColor = true;
         private DrawingShapeType? valueImageShape = DefaultValueImageShape;
-        private LightDarkColor? valueImageBorder;
+        private ThemedColor? valueImageBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
@@ -101,7 +101,7 @@ namespace Alternet.UI
         /// Gets or sets the border color of the value image.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? ValueImageBorder
+        public virtual ThemedColor? ValueImageBorder
         {
             get => valueImageBorder;
             set
@@ -253,7 +253,7 @@ namespace Alternet.UI
         /// If this property is null, color image will be painted using
         /// <see cref="ColorListBox.DefaultDisabledImageColor"/>.
         /// </remarks>
-        public virtual LightDarkColor? DisabledImageColor
+        public virtual ThemedColor? DisabledImageColor
         {
             get
             {

@@ -197,7 +197,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color of the separator item. If Null, default border color is used.
         /// </summary>
-        public static LightDarkColor? DefaultSeparatorColor { get; set; }
+        public static ThemedColor? DefaultSeparatorColor { get; set; }
 
         /// <summary>
         /// Gets or sets default width of the separator item.

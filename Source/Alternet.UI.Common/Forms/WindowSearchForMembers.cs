@@ -48,7 +48,7 @@ namespace Alternet.UI
                     this,
                     KnownSvgImages.ImgDebugRun,
                     null,
-                    LightDarkColors.Green.GetColor(this));
+                    ThemedColors.Green.GetColor(this));
 
             textBox.InitSearchEdit();
             textBox.TextBox.EmptyTextHint = "Type here to search for classes and members...";
@@ -136,9 +136,9 @@ namespace Alternet.UI
             images.SetImageName(SymbolKind.Method, $"{prefix}Method1.svg");
             images.SetImageName(SymbolKind.Property, $"{prefix}Property.svg");
 
-            images.SetSvgColor(SymbolKind.Field, LightDarkColors.Green.GetColor(this));
-            images.SetSvgColor(SymbolKind.Event, LightDarkColors.Yellow.GetColor(this));
-            images.SetSvgColor(SymbolKind.Method, LightDarkColors.Blue.GetColor(this));
+            images.SetSvgColor(SymbolKind.Field, ThemedColors.Green.GetColor(this));
+            images.SetSvgColor(SymbolKind.Event, ThemedColors.Yellow.GetColor(this));
+            images.SetSvgColor(SymbolKind.Method, ThemedColors.Blue.GetColor(this));
             images.SetSvgColor(SymbolKind.Property, DefaultColors.SvgNormalColor.GetColor(this));
 
             images.AssignImageNames(true);

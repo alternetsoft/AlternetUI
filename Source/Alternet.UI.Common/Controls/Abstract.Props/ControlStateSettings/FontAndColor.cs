@@ -26,8 +26,8 @@ namespace Alternet.UI
         /// </summary>
         public static readonly IReadOnlyFontAndColor Null = new FontAndColor();
 
-        private LightDarkColor? backgroundColor;
-        private LightDarkColor? foregroundColor;
+        private ThemedColor? backgroundColor;
+        private ThemedColor? foregroundColor;
         private Font? font;
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// <param name="backgroundColor">Default value of the
         /// <see cref="BackgroundColor"/> property.</param>
         /// <param name="font">Default value of the <see cref="Font"/> property.</param>
-        public FontAndColor(LightDarkColor? foregroundColor, LightDarkColor? backgroundColor = null, Font? font = null)
+        public FontAndColor(ThemedColor? foregroundColor, ThemedColor? backgroundColor = null, Font? font = null)
         {
             this.foregroundColor = foregroundColor;
             this.backgroundColor = backgroundColor;
@@ -53,58 +53,58 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Has <see cref="LightDarkColors.Menu"/> for the background color and
-        /// <see cref="LightDarkColors.MenuText"/> for the foreground color.
+        /// Has <see cref="ThemedColors.Menu"/> for the background color and
+        /// <see cref="ThemedColors.MenuText"/> for the foreground color.
         /// </summary>
         public static IReadOnlyFontAndColor SystemColorMenu =>
-            new FontAndColor(LightDarkColors.MenuText, LightDarkColors.Menu);
+            new FontAndColor(ThemedColors.MenuText, ThemedColors.Menu);
 
         /// <summary>
-        /// Has <see cref="LightDarkColors.ActiveCaption"/> for the background color and
-        /// <see cref="LightDarkColors.ActiveCaptionText"/> for the foreground color.
+        /// Has <see cref="ThemedColors.ActiveCaption"/> for the background color and
+        /// <see cref="ThemedColors.ActiveCaptionText"/> for the foreground color.
         /// </summary>
         public static IReadOnlyFontAndColor SystemColorActiveCaption =>
-            new FontAndColor(LightDarkColors.ActiveCaptionText, LightDarkColors.ActiveCaption);
+            new FontAndColor(ThemedColors.ActiveCaptionText, ThemedColors.ActiveCaption);
 
         /// <summary>
-        /// Has <see cref="LightDarkColors.InactiveCaption"/> for the background color and
-        /// <see cref="LightDarkColors.InactiveCaptionText"/> for the foreground color.
+        /// Has <see cref="ThemedColors.InactiveCaption"/> for the background color and
+        /// <see cref="ThemedColors.InactiveCaptionText"/> for the foreground color.
         /// </summary>
         public static IReadOnlyFontAndColor SystemColorInactiveCaption =>
-            new FontAndColor(LightDarkColors.InactiveCaptionText, LightDarkColors.InactiveCaption);
+            new FontAndColor(ThemedColors.InactiveCaptionText, ThemedColors.InactiveCaption);
 
         /// <summary>
-        /// Has <see cref="LightDarkColors.Info"/> for the background color and
-        /// <see cref="LightDarkColors.InfoText"/> for the foreground color.
+        /// Has <see cref="ThemedColors.Info"/> for the background color and
+        /// <see cref="ThemedColors.InfoText"/> for the foreground color.
         /// </summary>
         public static IReadOnlyFontAndColor SystemColorInfo =>
-            new FontAndColor(LightDarkColors.InfoText, LightDarkColors.Info);
+            new FontAndColor(ThemedColors.InfoText, ThemedColors.Info);
 
         /// <summary>
-        /// Has <see cref="LightDarkColors.Window"/> for the background color and
-        /// <see cref="LightDarkColors.WindowText"/> for the foreground color.
+        /// Has <see cref="ThemedColors.Window"/> for the background color and
+        /// <see cref="ThemedColors.WindowText"/> for the foreground color.
         /// </summary>
         public static IReadOnlyFontAndColor SystemColorWindow =>
-            new FontAndColor(LightDarkColors.WindowText, LightDarkColors.Window);
+            new FontAndColor(ThemedColors.WindowText, ThemedColors.Window);
 
         /// <summary>
-        /// Has <see cref="LightDarkColors.Highlight"/> for the background color and
-        /// <see cref="LightDarkColors.HighlightText"/> for the foreground color.
+        /// Has <see cref="ThemedColors.Highlight"/> for the background color and
+        /// <see cref="ThemedColors.HighlightText"/> for the foreground color.
         /// </summary>
         public static IReadOnlyFontAndColor SystemColorHighlight =>
-            new FontAndColor(LightDarkColors.HighlightText, LightDarkColors.Highlight);
+            new FontAndColor(ThemedColors.HighlightText, ThemedColors.Highlight);
 
         /// <summary>
-        /// Has <see cref="LightDarkColors.ButtonFace"/> for the background color and
-        /// <see cref="LightDarkColors.ControlText"/> for the foreground color.
+        /// Has <see cref="ThemedColors.ButtonFace"/> for the background color and
+        /// <see cref="ThemedColors.ControlText"/> for the foreground color.
         /// </summary>
         public static IReadOnlyFontAndColor SystemColorButtonFace =>
-            new FontAndColor(LightDarkColors.ControlText, LightDarkColors.ButtonFace);
+            new FontAndColor(ThemedColors.ControlText, ThemedColors.ButtonFace);
 
         /// <summary>
         /// <inheritdoc cref="IFontAndColor.BackgroundColor"/>
         /// </summary>
-        public virtual LightDarkColor? BackgroundColor
+        public virtual ThemedColor? BackgroundColor
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Alternet.UI
         /// <summary>
         /// <inheritdoc cref="IFontAndColor.ForegroundColor"/>
         /// </summary>
-        public virtual LightDarkColor? ForegroundColor
+        public virtual ThemedColor? ForegroundColor
         {
             get
             {
@@ -160,13 +160,13 @@ namespace Alternet.UI
         /// <param name="action">When color value is really changed, this action is called.</param>
         public static void ChangeColor(
             ref IReadOnlyFontAndColor? colors,
-            LightDarkColor? value,
+            ThemedColor? value,
             bool isBackground,
             Action? action = null)
         {
             if (value is null && colors is null)
                 return;
-            LightDarkColor? oldColor = isBackground ? colors?.BackgroundColor : colors?.ForegroundColor;
+            ThemedColor? oldColor = isBackground ? colors?.BackgroundColor : colors?.ForegroundColor;
             if (oldColor == value)
                 return;
             var result = new FontAndColor(null, null, colors?.Font);
@@ -193,13 +193,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IReadOnlyFontAndColor WithForeColor(LightDarkColor? color)
+        public IReadOnlyFontAndColor WithForeColor(ThemedColor? color)
         {
             return new FontAndColor(color, BackgroundColor, Font);
         }
 
         /// <inheritdoc/>
-        public IReadOnlyFontAndColor WithBackColor(LightDarkColor? color)
+        public IReadOnlyFontAndColor WithBackColor(ThemedColor? color)
         {
             return new FontAndColor(ForegroundColor, color, Font);
         }
@@ -221,10 +221,10 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override LightDarkColor? BackgroundColor => control.GetDefaultAttributesBgColor();
+            public override ThemedColor? BackgroundColor => control.GetDefaultAttributesBgColor();
 
             /// <inheritdoc/>
-            public override LightDarkColor? ForegroundColor => control.GetDefaultAttributesFgColor();
+            public override ThemedColor? ForegroundColor => control.GetDefaultAttributesFgColor();
 
             /// <inheritdoc/>
             public override Font? Font => Control.DefaultFont;

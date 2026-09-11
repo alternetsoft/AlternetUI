@@ -512,7 +512,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The paint event arguments.</param>
         /// <param name="color">The color to be used for drawing.</param>
-        public virtual void DrawSplitterBackground(PaintEventArgs e, LightDarkColor? color)
+        public virtual void DrawSplitterBackground(PaintEventArgs e, ThemedColor? color)
         {
             if (color is null)
                 return;
@@ -537,7 +537,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The paint event arguments.</param>
         /// <param name="color">The color to be used for drawing.</param>
-        public virtual void DrawSplitterForeground(PaintEventArgs e, LightDarkColor? color)
+        public virtual void DrawSplitterForeground(PaintEventArgs e, ThemedColor? color)
         {
             if (color is null)
                 return;
@@ -586,7 +586,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="backColor">The background color to be set.</param>
         /// <param name="foreColor">The foreground color to be set.</param>
-        public virtual void ResolveSplitterColors(out LightDarkColor? backColor, out LightDarkColor? foreColor)
+        public virtual void ResolveSplitterColors(out ThemedColor? backColor, out ThemedColor? foreColor)
         {
             if (ResolveSplitterColorsOverride is not null)
             {
@@ -596,7 +596,7 @@ namespace Alternet.UI
 
             var colors = NormalSplitterColors;
 
-            LightDarkColor defaultColor;
+            ThemedColor defaultColor;
 
             colors ??= DefaultSplitterDarkColors;
             if (ParentBackColor)

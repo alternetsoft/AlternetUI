@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// Gets or sets default color of the accent marker which is optionally painted for the current item in the list control.
         /// If this property is null, default accent color is used.
         /// </summary>
-        public static LightDarkColor DefaultAccentMarkerColor = new(light: Color.White.LighterLighter(), dark: Color.Gray);
+        public static ThemedColor DefaultAccentMarkerColor = new(light: Color.White.LighterLighter(), dark: Color.Gray);
 
         /// <summary>
         /// Gets or sets default margin of the accent marker which is optionally painted for the current item in the list control.
@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color of the image border.
         /// </summary>
-        public static LightDarkColor DefaultImageBorderColor = LightDarkColors.GrayText;
+        public static ThemedColor DefaultImageBorderColor = ThemedColors.GrayText;
 
         /// <summary>
         /// Gets or sets default width of the accent marker.
@@ -46,7 +46,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default disabled text color.
         /// </summary>
-        public static LightDarkColor DefaultDisabledTextColor = LightDarkColors.GrayText;
+        public static ThemedColor DefaultDisabledTextColor = ThemedColors.GrayText;
 
         /// <summary>
         /// Gets or sets default vertical offset of the item's image for the items with images.
@@ -115,8 +115,8 @@ namespace Alternet.UI
         private Coord minHeight;
         private FontStyle? fontStyle;
         private Font? font;
-        private LightDarkColor? foregroundColor;
-        private LightDarkColor? backgroundColor;
+        private ThemedColor? foregroundColor;
+        private ThemedColor? backgroundColor;
         private BorderSettings? border;
         private Thickness foregroundMargin;
         private Thickness checkBoxMargin;
@@ -871,7 +871,7 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual LightDarkColor? ForegroundColor
+        public virtual ThemedColor? ForegroundColor
         {
             get => foregroundColor;
             set => foregroundColor = value;
@@ -884,7 +884,7 @@ namespace Alternet.UI
         /// It is up to control to decide whether and how this property is used.
         /// When this property is changed, you need to repaint the item.
         /// </remarks>
-        public virtual LightDarkColor? BackgroundColor
+        public virtual ThemedColor? BackgroundColor
         {
             get => backgroundColor;
             set => backgroundColor = value;
@@ -1631,7 +1631,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public static LightDarkColor? GetContainerForegroundColor(IListControlItemContainer? container)
+        public static ThemedColor? GetContainerForegroundColor(IListControlItemContainer? container)
         {
             var control = container?.Control;
             if (control is not null)
@@ -1643,7 +1643,7 @@ namespace Alternet.UI
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public static LightDarkColor? GetDisabledTextColor(
+        public static ThemedColor? GetDisabledTextColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
@@ -1654,17 +1654,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets item text color when item is inside the container.
         /// </summary>
-        public static LightDarkColor? GetItemTextColor(
+        public static ThemedColor? GetItemTextColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
             return Internal();
 
-            LightDarkColor? Internal()
+            ThemedColor? Internal()
             {
                 if (IsContainerEnabled(container))
                 {
-                    LightDarkColor? itemColor
+                    ThemedColor? itemColor
                         = item?.ForegroundColor ?? GetContainerForegroundColor(container)
                         ?? container?.Defaults.ItemTextColor
                         ?? VirtualListBox.DefaultItemTextColor;
@@ -1695,13 +1695,13 @@ namespace Alternet.UI
         /// Gets selected item back color.
         /// </summary>
         /// <returns></returns>
-        public static LightDarkColor? GetSelectedItemBackColor(
+        public static ThemedColor? GetSelectedItemBackColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
             return Internal();
 
-            LightDarkColor? Internal()
+            ThemedColor? Internal()
             {
                 var control = container?.Control;
                 if (control is null)
@@ -2446,13 +2446,13 @@ namespace Alternet.UI
         /// Gets selected item text color when item is inside the container.
         /// </summary>
         /// <returns></returns>
-        public static LightDarkColor? GetSelectedTextColor(
+        public static ThemedColor? GetSelectedTextColor(
             ListControlItem? item,
             IListControlItemContainer? container)
         {
             return Internal();
 
-            LightDarkColor? Internal()
+            ThemedColor? Internal()
             {
                 if (container?.Defaults.SelectionVisible ?? true)
                 {
@@ -2581,7 +2581,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets item text color when item is inside the container.
         /// </summary>
-        public virtual LightDarkColor? GetTextColor(IListControlItemContainer? container)
+        public virtual ThemedColor? GetTextColor(IListControlItemContainer? container)
         {
             return GetItemTextColor(this, container);
         }

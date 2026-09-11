@@ -15,12 +15,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets background color.
         /// </summary>
-        new LightDarkColor? BackgroundColor { get; set; }
+        new ThemedColor? BackgroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets foreground color.
         /// </summary>
-        new LightDarkColor? ForegroundColor { get; set; }
+        new ThemedColor? ForegroundColor { get; set; }
 
         /// <summary>
         /// Gets or sets font.

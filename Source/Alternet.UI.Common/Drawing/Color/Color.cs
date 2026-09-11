@@ -1444,29 +1444,29 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a <see cref="LightDarkColor"/> instance with
+        /// Creates a <see cref="ThemedColor"/> instance with
         /// the specified color used for both light and dark themes.
         /// </summary>
         /// <param name="lightDark">The color to be used for both the light and dark themes.</param>
-        /// <returns>A <see cref="LightDarkColor"/> instance where the same
+        /// <returns>A <see cref="ThemedColor"/> instance where the same
         /// color is applied to both themes.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LightDarkColor LightDark(Color lightDark)
+        public static ThemedColor LightDark(Color lightDark)
         {
-            return new LightDarkColor(lightDark, lightDark);
+            return new ThemedColor(lightDark, lightDark);
         }
 
         /// <summary>
-        /// Creates <see cref="LightDarkColor"/> with the specified two colors used
+        /// Creates <see cref="ThemedColor"/> with the specified two colors used
         /// in light and dark themes.
         /// </summary>
         /// <param name="light">Color used when light theme is on.</param>
         /// <param name="dark">Color used when dark theme is on.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static LightDarkColor LightDark(Color light, Color dark)
+        public static ThemedColor LightDark(Color light, Color dark)
         {
-            return new LightDarkColor(light, dark);
+            return new ThemedColor(light, dark);
         }
 
         /// <summary>

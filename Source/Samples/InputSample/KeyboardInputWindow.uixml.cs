@@ -129,11 +129,11 @@ namespace InputSample
                 e.Handled = true;
                 messageLabel.ParentBackColor = false;
 
-                var redColor = LightDarkColors.Red;
+                var redColor = ThemedColors.Red;
 
                 messageLabel.IsTransparent = false;
                 messageLabel.BackgroundColor =
-                    messageLabel.BackgroundColor != redColor ? redColor : LightDarkColors.Blue;
+                    messageLabel.BackgroundColor != redColor ? redColor : ThemedColors.Blue;
             }
 
             if (HandledInForm)

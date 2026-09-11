@@ -32,37 +32,37 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default selected item text color for the unfocused container.
         /// </summary>
-        public static LightDarkColor DefaultUnfocusedSelectedItemTextColor
+        public static ThemedColor DefaultUnfocusedSelectedItemTextColor
             = Color.LightDark(light: Color.Black, dark: Color.White);
 
         /// <summary>
         /// Gets or sets default selected item background color for the unfocused container.
         /// </summary>
-        public static LightDarkColor DefaultUnfocusedSelectedItemBackColor
+        public static ThemedColor DefaultUnfocusedSelectedItemBackColor
             = Color.LightDark(light: (227, 227, 227), dark: (61, 61, 61));
 
         /// <summary>
         /// Gets or sets default selected item text color.
         /// </summary>
-        public static LightDarkColor DefaultSelectedItemTextColor
+        public static ThemedColor DefaultSelectedItemTextColor
             = Color.LightDark(SystemColors.HighlightText);
 
         /// <summary>
         /// Gets or sets default selected item background color.
         /// </summary>
-        public static LightDarkColor DefaultSelectedItemBackColor
+        public static ThemedColor DefaultSelectedItemBackColor
             = Color.LightDark(SystemColors.Highlight);
 
         /// <summary>
         /// Gets or sets default disabled item text color.
         /// </summary>
-        public static LightDarkColor DefaultDisabledItemTextColor
+        public static ThemedColor DefaultDisabledItemTextColor
             = Color.LightDark(SystemColors.GrayText);
 
         /// <summary>
         /// Gets or sets default item text color.
         /// </summary>
-        public static LightDarkColor DefaultItemTextColor
+        public static ThemedColor DefaultItemTextColor
             = Color.LightDark(SystemColors.WindowText);
 
         /// <summary>
@@ -70,17 +70,17 @@ namespace Alternet.UI
         /// This is used when <see cref="DefaultCurrentItemBorder"/>
         /// is created.
         /// </summary>
-        public static LightDarkColor DefaultCurrentItemBorderColor
+        public static ThemedColor DefaultCurrentItemBorderColor
             = Color.LightDark(light: Color.Gray600, dark: Color.White);
 
         private static BorderSettings? defaultCurrentItemBorder;
 
-        private LightDarkColor? selectedItemTextColor;
-        private LightDarkColor? itemTextColor;
-        private LightDarkColor? selectedItemBackColor;
-        private LightDarkColor? disabledItemTextColor;
-        private LightDarkColor? unfocusedSelectedItemBackColor;
-        private LightDarkColor? unfocusedSelectedItemTextColor;
+        private ThemedColor? selectedItemTextColor;
+        private ThemedColor? itemTextColor;
+        private ThemedColor? selectedItemBackColor;
+        private ThemedColor? disabledItemTextColor;
+        private ThemedColor? unfocusedSelectedItemBackColor;
+        private ThemedColor? unfocusedSelectedItemTextColor;
 
         private bool showAccentMarker;
         private Thickness itemMargin = DefaultItemMargin;
@@ -649,7 +649,7 @@ namespace Alternet.UI
         /// Gets or sets disabled item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? DisabledItemTextColor
+        public virtual ThemedColor? DisabledItemTextColor
         {
             get
             {
@@ -708,7 +708,7 @@ namespace Alternet.UI
         /// Gets or sets selected item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? SelectedItemTextColor
+        public virtual ThemedColor? SelectedItemTextColor
         {
             get
             {
@@ -728,7 +728,7 @@ namespace Alternet.UI
         /// Gets or sets selected item back color.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? SelectedItemBackColor
+        public virtual ThemedColor? SelectedItemBackColor
         {
             get
             {
@@ -748,7 +748,7 @@ namespace Alternet.UI
         /// Gets or sets selected item text color for the unfocused control.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? UnfocusedSelectedItemTextColor
+        public virtual ThemedColor? UnfocusedSelectedItemTextColor
         {
             get
             {
@@ -769,7 +769,7 @@ namespace Alternet.UI
         /// Gets or sets selected item back color for the unfocused control.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? UnfocusedSelectedItemBackColor
+        public virtual ThemedColor? UnfocusedSelectedItemBackColor
         {
             get
             {
@@ -790,7 +790,7 @@ namespace Alternet.UI
         /// Gets or sets item text color.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? ItemTextColor
+        public virtual ThemedColor? ItemTextColor
         {
             get
             {
@@ -1279,7 +1279,7 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public LightDarkColor? GetSelectedItemTextColor(int itemIndex)
+        public ThemedColor? GetSelectedItemTextColor(int itemIndex)
         {
             return ListControlItem.GetSelectedTextColor(GetItem(itemIndex), this);
         }
@@ -1289,7 +1289,7 @@ namespace Alternet.UI
         /// or <see cref="DefaultItemTextColor"/>.
         /// </summary>
         /// <returns></returns>
-        public LightDarkColor? GetItemTextColor(int itemIndex)
+        public ThemedColor? GetItemTextColor(int itemIndex)
         {
             return ListControlItem.GetItemTextColor(GetItem(itemIndex), this);
         }
@@ -1299,7 +1299,7 @@ namespace Alternet.UI
         /// (if it is not <c>null</c>) or <see cref="DefaultSelectedItemBackColor"/>.
         /// </summary>
         /// <returns></returns>
-        public LightDarkColor? GetSelectedItemBackColor(int itemIndex)
+        public ThemedColor? GetSelectedItemBackColor(int itemIndex)
         {
             return ListControlItem.GetSelectedItemBackColor(GetItem(itemIndex), this);
         }
@@ -1380,7 +1380,7 @@ namespace Alternet.UI
         /// Gets disabled item text color.
         /// </summary>
         /// <returns></returns>
-        public LightDarkColor? GetDisabledItemTextColor(int itemIndex)
+        public ThemedColor? GetDisabledItemTextColor(int itemIndex)
         {
             return ListControlItem.GetDisabledTextColor(GetItem(itemIndex), this);
         }

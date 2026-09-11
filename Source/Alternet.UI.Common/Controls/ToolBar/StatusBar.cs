@@ -32,14 +32,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default background color of the status bar.
         /// </summary>
-        public static LightDarkColor DefaultBackgroundColor { get; set; }
-            = new LightDarkColor(light: Color.FromArgb(218, 218, 218), dark:Color.FromArgb(28, 28, 28));
+        public static ThemedColor DefaultBackgroundColor { get; set; }
+            = new ThemedColor(light: Color.FromArgb(218, 218, 218), dark:Color.FromArgb(28, 28, 28));
 
         /// <summary>
         /// Gets or sets the default foreground color of the status bar.
         /// </summary>
-        public static LightDarkColor DefaultForegroundColor { get; set; }
-            = new LightDarkColor(light: Color.Black, dark: Color.White);        
+        public static ThemedColor DefaultForegroundColor { get; set; }
+            = new ThemedColor(light: Color.Black, dark: Color.White);        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusBar"/> class.

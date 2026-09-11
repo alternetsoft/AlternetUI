@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default color used for surrounding days (days not in the current month) in the calendar control,
         /// </summary>
-        public static LightDarkColor DefaultSurroundDayColor = new(Color.Gray);
+        public static ThemedColor DefaultSurroundDayColor = new(Color.Gray);
 
         /// <summary>
         /// Gets or sets the default kind of day names to be used in the calendar control,
@@ -96,7 +96,7 @@ namespace Alternet.UI
         private RestrictedDate restrictedDate;
         private DateOnly date;
         private int suspendHeaderEventsCounter;
-        private LightDarkColor? surroundDayColor;
+        private ThemedColor? surroundDayColor;
         private BorderSettings? todayBorder;
         private DayNamesKind? dayNamesKind;
         private DayOfWeek? firstDayOfWeek;
@@ -665,7 +665,7 @@ namespace Alternet.UI
         /// Gets or sets the color used for surrounding days (days not in the current month) in the calendar control,
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? SurroundDayColor
+        public virtual ThemedColor? SurroundDayColor
         {
             get => surroundDayColor;
             set
@@ -1056,9 +1056,9 @@ namespace Alternet.UI
         /// considering the specified <see cref="SurroundDayColor"/> property and the default value.
         /// </summary>
         /// <returns>The effective color for surrounding days.</returns>
-        public virtual LightDarkColor EffectiveSurroundDayColor()
+        public virtual ThemedColor EffectiveSurroundDayColor()
         {
-            return SurroundDayColor ?? DefaultSurroundDayColor ?? LightDarkColors.GrayText;
+            return SurroundDayColor ?? DefaultSurroundDayColor ?? ThemedColors.GrayText;
         }
 
         /// <summary>

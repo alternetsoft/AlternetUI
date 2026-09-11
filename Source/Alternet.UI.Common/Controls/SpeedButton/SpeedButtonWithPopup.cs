@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default color for the error border.
         /// </summary>
-        public static LightDarkColor? DefaultErrorBorderColor = null;
+        public static ThemedColor? DefaultErrorBorderColor = null;
 
         /// <summary>
         /// Defines the minimum time interval, in milliseconds, that must elapse 
@@ -105,7 +105,7 @@ namespace Alternet.UI
         /// Gets or sets the color of the error border displayed around the control.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? ErrorBorderColor { get; set; }
+        public virtual ThemedColor? ErrorBorderColor { get; set; }
 
         /// <summary>
         /// Gets milliseconds since the popup window was last closed.
@@ -194,7 +194,7 @@ namespace Alternet.UI
                     if (errorBorder is null)
                     {
                         var cloned = GetBorderSettings(VisualControlState.Normal)?.Clone() ?? new();
-                        cloned.Color = ErrorBorderColor ?? DefaultErrorBorderColor ?? LightDarkColors.Red;
+                        cloned.Color = ErrorBorderColor ?? DefaultErrorBorderColor ?? ThemedColors.Red;
                         errorBorder = new BaseCollection<BorderSettings>();
                         errorBorder.Add(cloned);
                     }

@@ -89,7 +89,7 @@ namespace LayoutSample
 
                 e.Graphics.FillRectangle(RealBackgroundColor.GetColor(this).AsBrush, e.ClientRectangle);
                 e.Graphics.DrawImage(image, bounds);
-                e.Graphics.DrawRectangle(LightDarkColors.Red.GetColor(this).AsPen, e.ClientRectangle);
+                e.Graphics.DrawRectangle(ThemedColors.Red.GetColor(this).AsPen, e.ClientRectangle);
             }
         }
     }

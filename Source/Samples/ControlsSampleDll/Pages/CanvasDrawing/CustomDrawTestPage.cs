@@ -363,7 +363,7 @@ namespace ControlsSample
                         isChecked,
                         controlState);
                     location.Y += size.Height;
-                    canvas.DrawText(title, location, Font.Default, LightDarkColors.Green.GetColor(this), Color.Empty);
+                    canvas.DrawText(title, location, Font.Default, ThemedColors.Green.GetColor(this), Color.Empty);
                 }
             });
         }
@@ -412,7 +412,7 @@ namespace ControlsSample
                         title,
                         location,
                         Font.Default,
-                        LightDarkColors.Green.GetColor(this),
+                        ThemedColors.Green.GetColor(this),
                         Color.Empty);
                 }
             });
@@ -444,7 +444,7 @@ namespace ControlsSample
                         rect,
                         controlState);
                     location.Y += size.Height;
-                    canvas.DrawText(title, location, Font.Default, LightDarkColors.Green.GetColor(this), Color.Empty);
+                    canvas.DrawText(title, location, Font.Default, ThemedColors.Green.GetColor(this), Color.Empty);
                 }
             });
         }

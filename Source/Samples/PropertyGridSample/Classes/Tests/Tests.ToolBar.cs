@@ -93,7 +93,7 @@ namespace PropertyGridSample
             var control = GetSelectedControl<ToolBar>();
             if (control is null)
                 return;
-            control.ForegroundColor = LightDarkColors.Red;
+            control.ForegroundColor = ThemedColors.Red;
         }
 
         void TestGenericToolBarBackgroundColor()
@@ -102,7 +102,7 @@ namespace PropertyGridSample
             if (control is null)
                 return;
             control.Background = null;
-            control.BackgroundColor = LightDarkColors.Green;
+            control.BackgroundColor = ThemedColors.Green;
         }
 
         void TestGenericToolBarBackground()

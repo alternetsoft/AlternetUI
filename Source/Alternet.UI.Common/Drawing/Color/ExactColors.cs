@@ -7,764 +7,764 @@ using System.Threading.Tasks;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Provides a set of system-defined colors as <see cref="LightDarkColor"/> instances.
+    /// Provides a set of system-defined colors as <see cref="ThemedColor"/> instances.
     /// </summary>
     public partial class ExactColors
     {
         /// <summary>
-        /// Gets a <see cref="LightDarkColor"/> that is transparent.
+        /// Gets a <see cref="ThemedColor"/> that is transparent.
         /// </summary>
-        public static readonly LightDarkColor Transparent = new LightDarkColor(Color.Transparent).SetImmutable();
+        public static readonly ThemedColor Transparent = new ThemedColor(Color.Transparent).SetImmutable();
 
         /// <summary>
-        /// Gets a <see cref="LightDarkColor"/> that is empty.
+        /// Gets a <see cref="ThemedColor"/> that is empty.
         /// </summary>
-        public static readonly LightDarkColor Empty = new LightDarkColor(Color.Empty).SetImmutable();
+        public static readonly ThemedColor Empty = new ThemedColor(Color.Empty).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Yellow = new LightDarkColor(KnownColor.Yellow).SetImmutable();
+        public static readonly ThemedColor Yellow = new ThemedColor(KnownColor.Yellow).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Green = new LightDarkColor(KnownColor.Green).SetImmutable();
+        public static readonly ThemedColor Green = new ThemedColor(KnownColor.Green).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Blue = new LightDarkColor(KnownColor.Blue).SetImmutable();
+        public static readonly ThemedColor Blue = new ThemedColor(KnownColor.Blue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Red = new LightDarkColor(KnownColor.Red).SetImmutable();
+        public static readonly ThemedColor Red = new ThemedColor(KnownColor.Red).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray100 = new LightDarkColor(Color.FromUint(0xFFE1E1E1)).SetImmutable();
+        public static readonly ThemedColor Gray100 = new ThemedColor(Color.FromUint(0xFFE1E1E1)).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray200 = new LightDarkColor(Color.FromUint(0xFFC8C8C8)).SetImmutable();
+        public static readonly ThemedColor Gray200 = new ThemedColor(Color.FromUint(0xFFC8C8C8)).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray300 = new LightDarkColor(Color.FromUint(0xFFACACAC)).SetImmutable();
+        public static readonly ThemedColor Gray300 = new ThemedColor(Color.FromUint(0xFFACACAC)).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray400 = new LightDarkColor(Color.FromUint(0xFF919191)).SetImmutable();
+        public static readonly ThemedColor Gray400 = new ThemedColor(Color.FromUint(0xFF919191)).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray500 = new LightDarkColor(Color.FromUint(0xFF6E6E6E)).SetImmutable();
+        public static readonly ThemedColor Gray500 = new ThemedColor(Color.FromUint(0xFF6E6E6E)).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray600 = new LightDarkColor(Color.FromUint(0xFF404040)).SetImmutable();
+        public static readonly ThemedColor Gray600 = new ThemedColor(Color.FromUint(0xFF404040)).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray900 = new LightDarkColor(Color.FromUint(0xFF212121)).SetImmutable();
+        public static readonly ThemedColor Gray900 = new ThemedColor(Color.FromUint(0xFF212121)).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray950 = new LightDarkColor(Color.FromUint(0xFF141414)).SetImmutable();
+        public static readonly ThemedColor Gray950 = new ThemedColor(Color.FromUint(0xFF141414)).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Black = new LightDarkColor(KnownColor.Black).SetImmutable();
+        public static readonly ThemedColor Black = new ThemedColor(KnownColor.Black).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor AliceBlue = new LightDarkColor(KnownColor.AliceBlue).SetImmutable();
+        public static readonly ThemedColor AliceBlue = new ThemedColor(KnownColor.AliceBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor AntiqueWhite = new LightDarkColor(KnownColor.AntiqueWhite).SetImmutable();
+        public static readonly ThemedColor AntiqueWhite = new ThemedColor(KnownColor.AntiqueWhite).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Aqua = new LightDarkColor(KnownColor.Aqua).SetImmutable();
+        public static readonly ThemedColor Aqua = new ThemedColor(KnownColor.Aqua).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Aquamarine = new LightDarkColor(KnownColor.Aquamarine).SetImmutable();
+        public static readonly ThemedColor Aquamarine = new ThemedColor(KnownColor.Aquamarine).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Azure = new LightDarkColor(KnownColor.Azure).SetImmutable();
+        public static readonly ThemedColor Azure = new ThemedColor(KnownColor.Azure).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Beige = new LightDarkColor(KnownColor.Beige).SetImmutable();
+        public static readonly ThemedColor Beige = new ThemedColor(KnownColor.Beige).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Bisque = new LightDarkColor(KnownColor.Bisque).SetImmutable();
+        public static readonly ThemedColor Bisque = new ThemedColor(KnownColor.Bisque).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor BlanchedAlmond = new LightDarkColor(KnownColor.BlanchedAlmond).SetImmutable();
+        public static readonly ThemedColor BlanchedAlmond = new ThemedColor(KnownColor.BlanchedAlmond).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor BlueViolet = new LightDarkColor(KnownColor.BlueViolet).SetImmutable();
+        public static readonly ThemedColor BlueViolet = new ThemedColor(KnownColor.BlueViolet).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Brown = new LightDarkColor(KnownColor.Brown).SetImmutable();
+        public static readonly ThemedColor Brown = new ThemedColor(KnownColor.Brown).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor BurlyWood = new LightDarkColor(KnownColor.BurlyWood).SetImmutable();
+        public static readonly ThemedColor BurlyWood = new ThemedColor(KnownColor.BurlyWood).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor CadetBlue = new LightDarkColor(KnownColor.CadetBlue).SetImmutable();
+        public static readonly ThemedColor CadetBlue = new ThemedColor(KnownColor.CadetBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Chartreuse = new LightDarkColor(KnownColor.Chartreuse).SetImmutable();
+        public static readonly ThemedColor Chartreuse = new ThemedColor(KnownColor.Chartreuse).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Chocolate = new LightDarkColor(KnownColor.Chocolate).SetImmutable();
+        public static readonly ThemedColor Chocolate = new ThemedColor(KnownColor.Chocolate).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Coral = new LightDarkColor(KnownColor.Coral).SetImmutable();
+        public static readonly ThemedColor Coral = new ThemedColor(KnownColor.Coral).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor CornflowerBlue = new LightDarkColor(KnownColor.CornflowerBlue).SetImmutable();
+        public static readonly ThemedColor CornflowerBlue = new ThemedColor(KnownColor.CornflowerBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Cornsilk = new LightDarkColor(KnownColor.Cornsilk).SetImmutable();
+        public static readonly ThemedColor Cornsilk = new ThemedColor(KnownColor.Cornsilk).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Crimson = new LightDarkColor(KnownColor.Crimson).SetImmutable();
+        public static readonly ThemedColor Crimson = new ThemedColor(KnownColor.Crimson).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Cyan = new LightDarkColor(KnownColor.Cyan).SetImmutable();
+        public static readonly ThemedColor Cyan = new ThemedColor(KnownColor.Cyan).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkBlue = new LightDarkColor(KnownColor.DarkBlue).SetImmutable();
+        public static readonly ThemedColor DarkBlue = new ThemedColor(KnownColor.DarkBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkCyan = new LightDarkColor(KnownColor.DarkCyan).SetImmutable();
+        public static readonly ThemedColor DarkCyan = new ThemedColor(KnownColor.DarkCyan).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkGoldenrod = new LightDarkColor(KnownColor.DarkGoldenrod).SetImmutable();
+        public static readonly ThemedColor DarkGoldenrod = new ThemedColor(KnownColor.DarkGoldenrod).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkGray = new LightDarkColor(KnownColor.DarkGray).SetImmutable();
+        public static readonly ThemedColor DarkGray = new ThemedColor(KnownColor.DarkGray).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkGreen = new LightDarkColor(KnownColor.DarkGreen).SetImmutable();
+        public static readonly ThemedColor DarkGreen = new ThemedColor(KnownColor.DarkGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkKhaki = new LightDarkColor(KnownColor.DarkKhaki).SetImmutable();
+        public static readonly ThemedColor DarkKhaki = new ThemedColor(KnownColor.DarkKhaki).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkMagenta = new LightDarkColor(KnownColor.DarkMagenta).SetImmutable();
+        public static readonly ThemedColor DarkMagenta = new ThemedColor(KnownColor.DarkMagenta).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkOliveGreen = new LightDarkColor(KnownColor.DarkOliveGreen).SetImmutable();
+        public static readonly ThemedColor DarkOliveGreen = new ThemedColor(KnownColor.DarkOliveGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkOrange = new LightDarkColor(KnownColor.DarkOrange).SetImmutable();
+        public static readonly ThemedColor DarkOrange = new ThemedColor(KnownColor.DarkOrange).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkOrchid = new LightDarkColor(KnownColor.DarkOrchid).SetImmutable();
+        public static readonly ThemedColor DarkOrchid = new ThemedColor(KnownColor.DarkOrchid).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkRed = new LightDarkColor(KnownColor.DarkRed).SetImmutable();
+        public static readonly ThemedColor DarkRed = new ThemedColor(KnownColor.DarkRed).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkSalmon = new LightDarkColor(KnownColor.DarkSalmon).SetImmutable();
+        public static readonly ThemedColor DarkSalmon = new ThemedColor(KnownColor.DarkSalmon).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkSeaGreen = new LightDarkColor(KnownColor.DarkSeaGreen).SetImmutable();
+        public static readonly ThemedColor DarkSeaGreen = new ThemedColor(KnownColor.DarkSeaGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkSlateBlue = new LightDarkColor(KnownColor.DarkSlateBlue).SetImmutable();
+        public static readonly ThemedColor DarkSlateBlue = new ThemedColor(KnownColor.DarkSlateBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkSlateGray = new LightDarkColor(KnownColor.DarkSlateGray).SetImmutable();
+        public static readonly ThemedColor DarkSlateGray = new ThemedColor(KnownColor.DarkSlateGray).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkTurquoise = new LightDarkColor(KnownColor.DarkTurquoise).SetImmutable();
+        public static readonly ThemedColor DarkTurquoise = new ThemedColor(KnownColor.DarkTurquoise).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DarkViolet = new LightDarkColor(KnownColor.DarkViolet).SetImmutable();
+        public static readonly ThemedColor DarkViolet = new ThemedColor(KnownColor.DarkViolet).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DeepPink = new LightDarkColor(KnownColor.DeepPink).SetImmutable();
+        public static readonly ThemedColor DeepPink = new ThemedColor(KnownColor.DeepPink).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DeepSkyBlue = new LightDarkColor(KnownColor.DeepSkyBlue).SetImmutable();
+        public static readonly ThemedColor DeepSkyBlue = new ThemedColor(KnownColor.DeepSkyBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DimGray = new LightDarkColor(KnownColor.DimGray).SetImmutable();
+        public static readonly ThemedColor DimGray = new ThemedColor(KnownColor.DimGray).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor DodgerBlue = new LightDarkColor(KnownColor.DodgerBlue).SetImmutable();
+        public static readonly ThemedColor DodgerBlue = new ThemedColor(KnownColor.DodgerBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Firebrick = new LightDarkColor(KnownColor.Firebrick).SetImmutable();
+        public static readonly ThemedColor Firebrick = new ThemedColor(KnownColor.Firebrick).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor FloralWhite = new LightDarkColor(KnownColor.FloralWhite).SetImmutable();
+        public static readonly ThemedColor FloralWhite = new ThemedColor(KnownColor.FloralWhite).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor ForestGreen = new LightDarkColor(KnownColor.ForestGreen).SetImmutable();
+        public static readonly ThemedColor ForestGreen = new ThemedColor(KnownColor.ForestGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Fuchsia = new LightDarkColor(KnownColor.Fuchsia).SetImmutable();
+        public static readonly ThemedColor Fuchsia = new ThemedColor(KnownColor.Fuchsia).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gainsboro = new LightDarkColor(KnownColor.Gainsboro).SetImmutable();
+        public static readonly ThemedColor Gainsboro = new ThemedColor(KnownColor.Gainsboro).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor GhostWhite = new LightDarkColor(KnownColor.GhostWhite).SetImmutable();
+        public static readonly ThemedColor GhostWhite = new ThemedColor(KnownColor.GhostWhite).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gold = new LightDarkColor(KnownColor.Gold).SetImmutable();
+        public static readonly ThemedColor Gold = new ThemedColor(KnownColor.Gold).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Goldenrod = new LightDarkColor(KnownColor.Goldenrod).SetImmutable();
+        public static readonly ThemedColor Goldenrod = new ThemedColor(KnownColor.Goldenrod).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Gray = new LightDarkColor(KnownColor.Gray).SetImmutable();
+        public static readonly ThemedColor Gray = new ThemedColor(KnownColor.Gray).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor GreenYellow = new LightDarkColor(KnownColor.GreenYellow).SetImmutable();
+        public static readonly ThemedColor GreenYellow = new ThemedColor(KnownColor.GreenYellow).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Honeydew = new LightDarkColor(KnownColor.Honeydew).SetImmutable();
+        public static readonly ThemedColor Honeydew = new ThemedColor(KnownColor.Honeydew).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor HotPink = new LightDarkColor(KnownColor.HotPink).SetImmutable();
+        public static readonly ThemedColor HotPink = new ThemedColor(KnownColor.HotPink).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor IndianRed = new LightDarkColor(KnownColor.IndianRed).SetImmutable();
+        public static readonly ThemedColor IndianRed = new ThemedColor(KnownColor.IndianRed).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Indigo = new LightDarkColor(KnownColor.Indigo).SetImmutable();
+        public static readonly ThemedColor Indigo = new ThemedColor(KnownColor.Indigo).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Ivory = new LightDarkColor(KnownColor.Ivory).SetImmutable();
+        public static readonly ThemedColor Ivory = new ThemedColor(KnownColor.Ivory).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Khaki = new LightDarkColor(KnownColor.Khaki).SetImmutable();
+        public static readonly ThemedColor Khaki = new ThemedColor(KnownColor.Khaki).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Lavender = new LightDarkColor(KnownColor.Lavender).SetImmutable();
+        public static readonly ThemedColor Lavender = new ThemedColor(KnownColor.Lavender).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LavenderBlush = new LightDarkColor(KnownColor.LavenderBlush).SetImmutable();
+        public static readonly ThemedColor LavenderBlush = new ThemedColor(KnownColor.LavenderBlush).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LawnGreen = new LightDarkColor(KnownColor.LawnGreen).SetImmutable();
+        public static readonly ThemedColor LawnGreen = new ThemedColor(KnownColor.LawnGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LemonChiffon = new LightDarkColor(KnownColor.LemonChiffon).SetImmutable();
+        public static readonly ThemedColor LemonChiffon = new ThemedColor(KnownColor.LemonChiffon).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightBlue = new LightDarkColor(KnownColor.LightBlue).SetImmutable();
+        public static readonly ThemedColor LightBlue = new ThemedColor(KnownColor.LightBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightCoral = new LightDarkColor(KnownColor.LightCoral).SetImmutable();
+        public static readonly ThemedColor LightCoral = new ThemedColor(KnownColor.LightCoral).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightCyan = new LightDarkColor(KnownColor.LightCyan).SetImmutable();
+        public static readonly ThemedColor LightCyan = new ThemedColor(KnownColor.LightCyan).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightGoldenrodYellow =
-            new LightDarkColor(KnownColor.LightGoldenrodYellow).SetImmutable();
+        public static readonly ThemedColor LightGoldenrodYellow =
+            new ThemedColor(KnownColor.LightGoldenrodYellow).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightGreen = new LightDarkColor(KnownColor.LightGreen).SetImmutable();
+        public static readonly ThemedColor LightGreen = new ThemedColor(KnownColor.LightGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightGray = new LightDarkColor(KnownColor.LightGray).SetImmutable();
+        public static readonly ThemedColor LightGray = new ThemedColor(KnownColor.LightGray).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightPink = new LightDarkColor(KnownColor.LightPink).SetImmutable();
+        public static readonly ThemedColor LightPink = new ThemedColor(KnownColor.LightPink).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightSalmon = new LightDarkColor(KnownColor.LightSalmon).SetImmutable();
+        public static readonly ThemedColor LightSalmon = new ThemedColor(KnownColor.LightSalmon).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightSeaGreen = new LightDarkColor(KnownColor.LightSeaGreen).SetImmutable();
+        public static readonly ThemedColor LightSeaGreen = new ThemedColor(KnownColor.LightSeaGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightSkyBlue = new LightDarkColor(KnownColor.LightSkyBlue).SetImmutable();
+        public static readonly ThemedColor LightSkyBlue = new ThemedColor(KnownColor.LightSkyBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightSlateGray = new LightDarkColor(KnownColor.LightSlateGray).SetImmutable();
+        public static readonly ThemedColor LightSlateGray = new ThemedColor(KnownColor.LightSlateGray).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightSteelBlue = new LightDarkColor(KnownColor.LightSteelBlue).SetImmutable();
+        public static readonly ThemedColor LightSteelBlue = new ThemedColor(KnownColor.LightSteelBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LightYellow = new LightDarkColor(KnownColor.LightYellow).SetImmutable();
+        public static readonly ThemedColor LightYellow = new ThemedColor(KnownColor.LightYellow).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Lime = new LightDarkColor(KnownColor.Lime).SetImmutable();
+        public static readonly ThemedColor Lime = new ThemedColor(KnownColor.Lime).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor LimeGreen = new LightDarkColor(KnownColor.LimeGreen).SetImmutable();
+        public static readonly ThemedColor LimeGreen = new ThemedColor(KnownColor.LimeGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Linen = new LightDarkColor(KnownColor.Linen).SetImmutable();
+        public static readonly ThemedColor Linen = new ThemedColor(KnownColor.Linen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Magenta = new LightDarkColor(KnownColor.Magenta).SetImmutable();
+        public static readonly ThemedColor Magenta = new ThemedColor(KnownColor.Magenta).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Maroon = new LightDarkColor(KnownColor.Maroon).SetImmutable();
+        public static readonly ThemedColor Maroon = new ThemedColor(KnownColor.Maroon).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumAquamarine = new LightDarkColor(KnownColor.MediumAquamarine).SetImmutable();
+        public static readonly ThemedColor MediumAquamarine = new ThemedColor(KnownColor.MediumAquamarine).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumBlue = new LightDarkColor(KnownColor.MediumBlue).SetImmutable();
+        public static readonly ThemedColor MediumBlue = new ThemedColor(KnownColor.MediumBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumOrchid = new LightDarkColor(KnownColor.MediumOrchid).SetImmutable();
+        public static readonly ThemedColor MediumOrchid = new ThemedColor(KnownColor.MediumOrchid).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumPurple = new LightDarkColor(KnownColor.MediumPurple).SetImmutable();
+        public static readonly ThemedColor MediumPurple = new ThemedColor(KnownColor.MediumPurple).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumSeaGreen = new LightDarkColor(KnownColor.MediumSeaGreen).SetImmutable();
+        public static readonly ThemedColor MediumSeaGreen = new ThemedColor(KnownColor.MediumSeaGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumSlateBlue = new LightDarkColor(KnownColor.MediumSlateBlue).SetImmutable();
+        public static readonly ThemedColor MediumSlateBlue = new ThemedColor(KnownColor.MediumSlateBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumSpringGreen = new LightDarkColor(KnownColor.MediumSpringGreen).SetImmutable();
+        public static readonly ThemedColor MediumSpringGreen = new ThemedColor(KnownColor.MediumSpringGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumTurquoise = new LightDarkColor(KnownColor.MediumTurquoise).SetImmutable();
+        public static readonly ThemedColor MediumTurquoise = new ThemedColor(KnownColor.MediumTurquoise).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MediumVioletRed = new LightDarkColor(KnownColor.MediumVioletRed).SetImmutable();
+        public static readonly ThemedColor MediumVioletRed = new ThemedColor(KnownColor.MediumVioletRed).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MidnightBlue = new LightDarkColor(KnownColor.MidnightBlue).SetImmutable();
+        public static readonly ThemedColor MidnightBlue = new ThemedColor(KnownColor.MidnightBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MintCream = new LightDarkColor(KnownColor.MintCream).SetImmutable();
+        public static readonly ThemedColor MintCream = new ThemedColor(KnownColor.MintCream).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor MistyRose = new LightDarkColor(KnownColor.MistyRose).SetImmutable();
+        public static readonly ThemedColor MistyRose = new ThemedColor(KnownColor.MistyRose).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Moccasin = new LightDarkColor(KnownColor.Moccasin).SetImmutable();
+        public static readonly ThemedColor Moccasin = new ThemedColor(KnownColor.Moccasin).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor NavajoWhite = new LightDarkColor(KnownColor.NavajoWhite).SetImmutable();
+        public static readonly ThemedColor NavajoWhite = new ThemedColor(KnownColor.NavajoWhite).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Navy = new LightDarkColor(KnownColor.Navy).SetImmutable();
+        public static readonly ThemedColor Navy = new ThemedColor(KnownColor.Navy).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor OldLace = new LightDarkColor(KnownColor.OldLace).SetImmutable();
+        public static readonly ThemedColor OldLace = new ThemedColor(KnownColor.OldLace).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Olive = new LightDarkColor(KnownColor.Olive).SetImmutable();
+        public static readonly ThemedColor Olive = new ThemedColor(KnownColor.Olive).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor OliveDrab = new LightDarkColor(KnownColor.OliveDrab).SetImmutable();
+        public static readonly ThemedColor OliveDrab = new ThemedColor(KnownColor.OliveDrab).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Orange = new LightDarkColor(KnownColor.Orange).SetImmutable();
+        public static readonly ThemedColor Orange = new ThemedColor(KnownColor.Orange).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor OrangeRed = new LightDarkColor(KnownColor.OrangeRed).SetImmutable();
+        public static readonly ThemedColor OrangeRed = new ThemedColor(KnownColor.OrangeRed).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Orchid = new LightDarkColor(KnownColor.Orchid).SetImmutable();
+        public static readonly ThemedColor Orchid = new ThemedColor(KnownColor.Orchid).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor PaleGoldenrod = new LightDarkColor(KnownColor.PaleGoldenrod).SetImmutable();
+        public static readonly ThemedColor PaleGoldenrod = new ThemedColor(KnownColor.PaleGoldenrod).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor PaleGreen = new LightDarkColor(KnownColor.PaleGreen).SetImmutable();
+        public static readonly ThemedColor PaleGreen = new ThemedColor(KnownColor.PaleGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor PaleTurquoise = new LightDarkColor(KnownColor.PaleTurquoise).SetImmutable();
+        public static readonly ThemedColor PaleTurquoise = new ThemedColor(KnownColor.PaleTurquoise).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor PaleVioletRed = new LightDarkColor(KnownColor.PaleVioletRed).SetImmutable();
+        public static readonly ThemedColor PaleVioletRed = new ThemedColor(KnownColor.PaleVioletRed).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor PapayaWhip = new LightDarkColor(KnownColor.PapayaWhip).SetImmutable();
+        public static readonly ThemedColor PapayaWhip = new ThemedColor(KnownColor.PapayaWhip).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor PeachPuff = new LightDarkColor(KnownColor.PeachPuff).SetImmutable();
+        public static readonly ThemedColor PeachPuff = new ThemedColor(KnownColor.PeachPuff).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Peru = new LightDarkColor(KnownColor.Peru).SetImmutable();
+        public static readonly ThemedColor Peru = new ThemedColor(KnownColor.Peru).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Pink = new LightDarkColor(KnownColor.Pink).SetImmutable();
+        public static readonly ThemedColor Pink = new ThemedColor(KnownColor.Pink).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Plum = new LightDarkColor(KnownColor.Plum).SetImmutable();
+        public static readonly ThemedColor Plum = new ThemedColor(KnownColor.Plum).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor PowderBlue = new LightDarkColor(KnownColor.PowderBlue).SetImmutable();
+        public static readonly ThemedColor PowderBlue = new ThemedColor(KnownColor.PowderBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Purple = new LightDarkColor(KnownColor.Purple).SetImmutable();
+        public static readonly ThemedColor Purple = new ThemedColor(KnownColor.Purple).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor RebeccaPurple = new LightDarkColor(KnownColor.RebeccaPurple).SetImmutable();
+        public static readonly ThemedColor RebeccaPurple = new ThemedColor(KnownColor.RebeccaPurple).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor RosyBrown = new LightDarkColor(KnownColor.RosyBrown).SetImmutable();
+        public static readonly ThemedColor RosyBrown = new ThemedColor(KnownColor.RosyBrown).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor RoyalBlue = new LightDarkColor(KnownColor.RoyalBlue).SetImmutable();
+        public static readonly ThemedColor RoyalBlue = new ThemedColor(KnownColor.RoyalBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SaddleBrown = new LightDarkColor(KnownColor.SaddleBrown).SetImmutable();
+        public static readonly ThemedColor SaddleBrown = new ThemedColor(KnownColor.SaddleBrown).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Salmon = new LightDarkColor(KnownColor.Salmon).SetImmutable();
+        public static readonly ThemedColor Salmon = new ThemedColor(KnownColor.Salmon).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SandyBrown = new LightDarkColor(KnownColor.SandyBrown).SetImmutable();
+        public static readonly ThemedColor SandyBrown = new ThemedColor(KnownColor.SandyBrown).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SeaGreen = new LightDarkColor(KnownColor.SeaGreen).SetImmutable();
+        public static readonly ThemedColor SeaGreen = new ThemedColor(KnownColor.SeaGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SeaShell = new LightDarkColor(KnownColor.SeaShell).SetImmutable();
+        public static readonly ThemedColor SeaShell = new ThemedColor(KnownColor.SeaShell).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Sienna = new LightDarkColor(KnownColor.Sienna).SetImmutable();
+        public static readonly ThemedColor Sienna = new ThemedColor(KnownColor.Sienna).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Silver = new LightDarkColor(KnownColor.Silver).SetImmutable();
+        public static readonly ThemedColor Silver = new ThemedColor(KnownColor.Silver).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SkyBlue = new LightDarkColor(KnownColor.SkyBlue).SetImmutable();
+        public static readonly ThemedColor SkyBlue = new ThemedColor(KnownColor.SkyBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SlateBlue = new LightDarkColor(KnownColor.SlateBlue).SetImmutable();
+        public static readonly ThemedColor SlateBlue = new ThemedColor(KnownColor.SlateBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SlateGray = new LightDarkColor(KnownColor.SlateGray).SetImmutable();
+        public static readonly ThemedColor SlateGray = new ThemedColor(KnownColor.SlateGray).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Snow = new LightDarkColor(KnownColor.Snow).SetImmutable();
+        public static readonly ThemedColor Snow = new ThemedColor(KnownColor.Snow).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SpringGreen = new LightDarkColor(KnownColor.SpringGreen).SetImmutable();
+        public static readonly ThemedColor SpringGreen = new ThemedColor(KnownColor.SpringGreen).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor SteelBlue = new LightDarkColor(KnownColor.SteelBlue).SetImmutable();
+        public static readonly ThemedColor SteelBlue = new ThemedColor(KnownColor.SteelBlue).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Tan = new LightDarkColor(KnownColor.Tan).SetImmutable();
+        public static readonly ThemedColor Tan = new ThemedColor(KnownColor.Tan).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Teal = new LightDarkColor(KnownColor.Teal).SetImmutable();
+        public static readonly ThemedColor Teal = new ThemedColor(KnownColor.Teal).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Thistle = new LightDarkColor(KnownColor.Thistle).SetImmutable();
+        public static readonly ThemedColor Thistle = new ThemedColor(KnownColor.Thistle).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Tomato = new LightDarkColor(KnownColor.Tomato).SetImmutable();
+        public static readonly ThemedColor Tomato = new ThemedColor(KnownColor.Tomato).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Turquoise = new LightDarkColor(KnownColor.Turquoise).SetImmutable();
+        public static readonly ThemedColor Turquoise = new ThemedColor(KnownColor.Turquoise).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Violet = new LightDarkColor(KnownColor.Violet).SetImmutable();
+        public static readonly ThemedColor Violet = new ThemedColor(KnownColor.Violet).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor Wheat = new LightDarkColor(KnownColor.Wheat).SetImmutable();
+        public static readonly ThemedColor Wheat = new ThemedColor(KnownColor.Wheat).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor WhiteSmoke = new LightDarkColor(KnownColor.WhiteSmoke).SetImmutable();
+        public static readonly ThemedColor WhiteSmoke = new ThemedColor(KnownColor.WhiteSmoke).SetImmutable();
 
         /// <summary>
         /// Gets a system-defined color.
         /// </summary>
-        public static readonly LightDarkColor YellowGreen = new LightDarkColor(KnownColor.YellowGreen).SetImmutable();
+        public static readonly ThemedColor YellowGreen = new ThemedColor(KnownColor.YellowGreen).SetImmutable();
 
         /// <summary>
-        /// Gets a <see cref="LightDarkColor"/> that is white.
+        /// Gets a <see cref="ThemedColor"/> that is white.
         /// </summary>
-        public static LightDarkColor White { get; } = new LightDarkColor(Color.White).SetImmutable();
+        public static ThemedColor White { get; } = new ThemedColor(Color.White).SetImmutable();
     }
 }

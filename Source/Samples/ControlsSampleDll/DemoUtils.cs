@@ -115,7 +115,7 @@ Environment.NewLine + Environment.NewLine +
             item.Alignment = HVAlignment.Center;
             item.CheckBoxVisible = false;
             item.Border = new();
-            item.Border.Color = LightDarkColors.Red;
+            item.Border.Color = ThemedColors.Red;
             item.Border.UniformCornerRadius = 25;
             item.Border.UniformRadiusIsPercent = true;
             addAction(item);
@@ -304,7 +304,7 @@ Environment.NewLine + Environment.NewLine +
             item.Alignment = HVAlignment.Center;
             item.CheckBoxVisible = false;
             item.Border = new();
-            item.Border.Color = LightDarkColors.Red;
+            item.Border.Color = ThemedColors.Red;
             item.Border.UniformCornerRadius = 25;
             item.Border.UniformRadiusIsPercent = true;
             addAction(item);

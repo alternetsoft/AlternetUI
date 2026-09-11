@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// </summary>
     /// <param name="backColor">The background color for the splitter.</param>
     /// <param name="foreColor">The foreground color for the splitter.</param>
-    public delegate void ResolveSplitterColorsDelegate(out LightDarkColor? backColor, out LightDarkColor? foreColor);
+    public delegate void ResolveSplitterColorsDelegate(out ThemedColor? backColor, out ThemedColor? foreColor);
 
     /// <summary>
     /// Provides resizing of docked elements. You can dock some control to an edge of a
@@ -494,7 +494,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="backColor">The background color to be set.</param>
         /// <param name="foreColor">The foreground color to be set.</param>
-        public virtual void ResolveSplitterColors(out LightDarkColor? backColor, out LightDarkColor? foreColor)
+        public virtual void ResolveSplitterColors(out ThemedColor? backColor, out ThemedColor? foreColor)
         {
             if (ResolveSplitterColorsOverride is not null)
             {
@@ -504,7 +504,7 @@ namespace Alternet.UI
 
             var colors = NormalColors;
 
-            LightDarkColor defaultColor;
+            ThemedColor defaultColor;
 
             colors ??= DefaultDarkColors;
             if (ParentBackColor)
@@ -521,7 +521,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The paint event arguments.</param>
         /// <param name="color">The color to be used for drawing.</param>
-        public virtual void DrawSplitterForeground(PaintEventArgs e, LightDarkColor? color)
+        public virtual void DrawSplitterForeground(PaintEventArgs e, ThemedColor? color)
         {
             if (color is null)
                 return;
@@ -543,7 +543,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">The paint event arguments.</param>
         /// <param name="color">The color to be used for drawing.</param>
-        public virtual void DrawSplitterBackground(PaintEventArgs e, LightDarkColor? color)
+        public virtual void DrawSplitterBackground(PaintEventArgs e, ThemedColor? color)
         {
             if (color is null)
                 return;

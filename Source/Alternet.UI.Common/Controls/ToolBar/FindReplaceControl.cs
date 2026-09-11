@@ -1433,7 +1433,7 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new LightDarkColor? ForegroundColor
+        internal new ThemedColor? ForegroundColor
         {
             get => base.ForegroundColor;
             set => base.ForegroundColor = value;

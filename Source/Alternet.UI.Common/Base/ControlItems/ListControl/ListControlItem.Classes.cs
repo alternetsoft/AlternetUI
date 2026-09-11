@@ -54,7 +54,7 @@ namespace Alternet.UI
             /// <summary>
             /// The foreground color to be used for drawing the cell's text.
             /// </summary>
-            public LightDarkColor ForeColor;
+            public ThemedColor ForeColor;
 
             /// <summary>
             /// Gets the context of the cell, including its container, row index, and parent row item.

@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// Gets or sets default separator color. Default is Null and
         /// <see cref="DefaultColors.BorderColor"/> is used.
         /// </summary>
-        public static LightDarkColor? DefaultSeparatorColor;
+        public static ThemedColor? DefaultSeparatorColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlSeparatorItem"/> class.
@@ -55,18 +55,18 @@ namespace Alternet.UI
         /// <param name="container">Container of the item. Optional.</param>
         /// <param name="item">Item for which to get the separator color. Optional.</param>
         /// <returns>The color of the separator line.</returns>
-        public static LightDarkColor GetSeparatorColor(
+        public static ThemedColor GetSeparatorColor(
             IListControlItemContainer? container = null,
             ListControlItem? item = null)
         {
             var control = container?.Control;
 
             if (control is null)
-                return LightDarkColors.GrayText;
+                return ThemedColors.GrayText;
 
             var result = item?.GetTextColor(container);
 
-            result ??= DefaultSeparatorColor ?? LightDarkColors.GrayText;
+            result ??= DefaultSeparatorColor ?? ThemedColors.GrayText;
 
             return result;
         }

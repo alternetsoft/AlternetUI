@@ -10,7 +10,7 @@ namespace PaintSample
         public CanvasControl()
         {
             UserPaint = true;
-            BackgroundColor = LightDarkColors.White;
+            BackgroundColor = ThemedColors.White;
         }
 
         public PaintSampleDocument? Document

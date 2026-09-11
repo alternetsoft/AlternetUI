@@ -89,9 +89,9 @@ namespace Alternet.UI
         private Coord? scaleFactorOverride;
         private Coord? scaleFactor;
 
-        private LightDarkColor? textBackColor;
-        private LightDarkColor? backgroundColor;
-        private LightDarkColor? foregroundColor;
+        private ThemedColor? textBackColor;
+        private ThemedColor? backgroundColor;
+        private ThemedColor? foregroundColor;
         private FontStyle fontStyle;
         private Font font;
 
@@ -210,7 +210,7 @@ namespace Alternet.UI
         /// The default foreground <see cref="Color" /> of the control.
         /// The default is <see cref="DefaultColors.ControlForeColor" />.
         /// </returns>
-        public static LightDarkColor DefaultForeColor => DefaultColors.ControlForeColor;
+        public static ThemedColor DefaultForeColor => DefaultColors.ControlForeColor;
 
         /// <summary>
         /// Gets the default background color of the control.
@@ -218,7 +218,7 @@ namespace Alternet.UI
         /// <returns>
         /// The default background <see cref="Color" /> of the control.
         /// The default is <see cref="DefaultColors.ControlBackColor" />.</returns>
-        public static LightDarkColor DefaultBackColor => DefaultColors.ControlBackColor;
+        public static ThemedColor DefaultBackColor => DefaultColors.ControlBackColor;
 
         /// <summary>
         /// Gets a value indicating which of the modifier keys (SHIFT, CTRL, and ALT) is in
@@ -3157,7 +3157,7 @@ namespace Alternet.UI
         /// Gets or sets the foreground color for the control.
         /// </summary>
         [Browsable(true)]
-        public virtual LightDarkColor? ForegroundColor
+        public virtual ThemedColor? ForegroundColor
         {
             get
             {
@@ -3178,7 +3178,7 @@ namespace Alternet.UI
         /// Gets or sets the background color for the control.
         /// </summary>
         [Browsable(true)]
-        public virtual LightDarkColor? BackgroundColor
+        public virtual ThemedColor? BackgroundColor
         {
             get
             {
@@ -3297,7 +3297,7 @@ namespace Alternet.UI
         /// Gets real foreground color value.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor RealForegroundColor
+        public virtual ThemedColor RealForegroundColor
         {
             get
             {
@@ -3311,7 +3311,7 @@ namespace Alternet.UI
         /// Gets real background color value.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor RealBackgroundColor
+        public virtual ThemedColor RealBackgroundColor
         {
             get
             {
@@ -4081,7 +4081,7 @@ namespace Alternet.UI
         /// </remarks>
         [DefaultValue(null)]
         [Browsable(false)]
-        public virtual LightDarkColor? TextBackColor
+        public virtual ThemedColor? TextBackColor
         {
             get
             {

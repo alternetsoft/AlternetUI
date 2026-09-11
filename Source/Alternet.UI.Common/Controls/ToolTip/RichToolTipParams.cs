@@ -59,17 +59,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color.
         /// </summary>
-        public virtual LightDarkColor? BackgroundColor { get => record.BackgroundColor; set => record.BackgroundColor = value; }
+        public virtual ThemedColor? BackgroundColor { get => record.BackgroundColor; set => record.BackgroundColor = value; }
 
         /// <summary>
         /// Gets or sets the foreground color to be used for rendering.
         /// </summary>
-        public virtual LightDarkColor? ForegroundColor { get => record.ForegroundColor; set => record.ForegroundColor = value; }
+        public virtual ThemedColor? ForegroundColor { get => record.ForegroundColor; set => record.ForegroundColor = value; }
 
         /// <summary>
         /// Gets or sets the foreground color of the title.
         /// </summary>
-        public virtual LightDarkColor? TitleForegroundColor
+        public virtual ThemedColor? TitleForegroundColor
         { 
             get => record.TitleForegroundColor;
             set => record.TitleForegroundColor = value;
@@ -125,7 +125,7 @@ namespace Alternet.UI
         /// <param name="cornerRadius">The uniform corner radius to apply to the border.
         /// Must be a non-negative value.</param>
         public virtual void SetBorder(
-            LightDarkColor color,
+            ThemedColor color,
             bool radiusIsPercent = true,
             Coord cornerRadius = 0)
         {
@@ -190,9 +190,9 @@ namespace Alternet.UI
             public Coord? MaxWidth;
             public Coord? ScaleFactor;
             public BorderSettings? Border;
-            public LightDarkColor? BackgroundColor;
-            public LightDarkColor? ForegroundColor;
-            public LightDarkColor? TitleForegroundColor;
+            public ThemedColor? BackgroundColor;
+            public ThemedColor? ForegroundColor;
+            public ThemedColor? TitleForegroundColor;
             public Font? TitleFont;
             public MessageBoxIcon? Icon;
             public Brush? BackgroundBrush;

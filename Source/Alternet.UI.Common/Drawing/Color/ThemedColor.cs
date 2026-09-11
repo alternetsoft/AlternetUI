@@ -15,28 +15,28 @@ namespace Alternet.Drawing
     /// Represents a two-color class that has different values for light and dark themes.
     /// </summary>
     [DebuggerDisplay("{DebugString}")]
-    public partial class LightDarkColor : ImmutableObject, IEquatable<LightDarkColor>
+    public partial class ThemedColor : ImmutableObject, IEquatable<ThemedColor>
     {
         private Color light;
         private Color dark;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class
+        /// Initializes a new instance of the <see cref="ThemedColor"/> class
         /// with the same light and dark colors.
         /// </summary>
         /// <param name="value">Light and dark color value.</param>
-        public LightDarkColor(Color value)
+        public ThemedColor(Color value)
         {
             this.light = value;
             this.dark = value;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class 
+        /// Initializes a new instance of the <see cref="ThemedColor"/> class 
         /// with the same light and dark known colors.
         /// </summary>
         /// <param name="knownColor">Known color value.</param>
-        public LightDarkColor(KnownColor knownColor)
+        public ThemedColor(KnownColor knownColor)
         {
             var clr = Color.FromKnownColor(knownColor);
             this.light = clr;
@@ -44,46 +44,46 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class 
+        /// Initializes a new instance of the <see cref="ThemedColor"/> class 
         /// with the same light and dark colors.
         /// </summary>
         /// <param name="r">Red component of the color.</param>
         /// <param name="g">Green component of the color.</param>
         /// <param name="b">Blue component of the color.</param>
-        public LightDarkColor(byte r, byte g, byte b)
+        public ThemedColor(byte r, byte g, byte b)
             : this(new Color(r, g, b))
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class
+        /// Initializes a new instance of the <see cref="ThemedColor"/> class
         /// with the light and dark colors assigned from <see cref="KnownSvgColor"/>.
         /// </summary>
         /// <param name="knownSvgColor">Known svg color identifier.</param>
-        public LightDarkColor(KnownSvgColor knownSvgColor)
+        public ThemedColor(KnownSvgColor knownSvgColor)
         {
             this.light = SvgColors.GetSvgColor(knownSvgColor, false);
             this.dark = SvgColors.GetSvgColor(knownSvgColor, true);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class 
+        /// Initializes a new instance of the <see cref="ThemedColor"/> class 
         /// with the specified light and dark color values.
         /// </summary>
         /// <param name="light">Light color.</param>
         /// <param name="dark">Dark color.</param>
-        public LightDarkColor(ColorStruct light, ColorStruct dark)
+        public ThemedColor(ColorStruct light, ColorStruct dark)
         {
             this.light = new Color(light);
             this.dark = new Color(dark);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class
+        /// Initializes a new instance of the <see cref="ThemedColor"/> class
         /// with the same light and dark color values.
         /// </summary>
         /// <param name="light">Light color.</param>
-        public LightDarkColor(ColorStruct light)
+        public ThemedColor(ColorStruct light)
         {
             var cl = new Color(light);
             this.light = cl;
@@ -91,12 +91,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LightDarkColor"/> class
+        /// Initializes a new instance of the <see cref="ThemedColor"/> class
         /// with the specified light and dark color values.
         /// </summary>
         /// <param name="light">Light color.</param>
         /// <param name="dark">Dark color.</param>
-        public LightDarkColor(Color light, Color dark)
+        public ThemedColor(Color light, Color dark)
         {
             this.light = light;
             this.dark = dark;
@@ -144,27 +144,27 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Tests whether two specified <see cref="LightDarkColor"/> structures are different.
+        /// Tests whether two specified <see cref="ThemedColor"/> structures are different.
         /// </summary>
-        /// <param name="left">The <see cref="LightDarkColor"/> that is to the left
+        /// <param name="left">The <see cref="ThemedColor"/> that is to the left
         /// of the inequality operator.</param>
-        /// <param name="right">The <see cref="LightDarkColor"/> that is to the right
+        /// <param name="right">The <see cref="ThemedColor"/> that is to the right
         /// of the inequality operator.</param>
-        /// <returns><c>true</c> if the two <see cref="LightDarkColor"/> structures
+        /// <returns><c>true</c> if the two <see cref="ThemedColor"/> structures
         /// are different; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(LightDarkColor? left, LightDarkColor? right) => !(left == right);
+        public static bool operator !=(ThemedColor? left, ThemedColor? right) => !(left == right);
 
         /// <summary>
-        /// Tests whether two specified <see cref="LightDarkColor"/> structures are equivalent.
+        /// Tests whether two specified <see cref="ThemedColor"/> structures are equivalent.
         /// </summary>
-        /// <param name="left">The <see cref="LightDarkColor"/> that is to the left
+        /// <param name="left">The <see cref="ThemedColor"/> that is to the left
         /// of the equality operator.</param>
-        /// <param name="right">The <see cref="LightDarkColor"/> that is to the right
+        /// <param name="right">The <see cref="ThemedColor"/> that is to the right
         /// of the equality operator.</param>
-        /// <returns><c>true</c> if the two <see cref="LightDarkColor"/> structures
+        /// <returns><c>true</c> if the two <see cref="ThemedColor"/> structures
         /// are equal; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(LightDarkColor? left, LightDarkColor? right)
+        public static bool operator ==(ThemedColor? left, ThemedColor? right)
         {
             if (left is null && right is null)
                 return true;
@@ -181,7 +181,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="light">The color value to use for the light theme variant.</param>
         /// <param name="dark">The color value to use for the dark theme variant.</param>
-        public static LightDarkColor FromColorStruct(ColorStruct light, ColorStruct dark)
+        public static ThemedColor FromColorStruct(ColorStruct light, ColorStruct dark)
         {
             return new(new Color(light), new Color(dark));
         }
@@ -192,9 +192,9 @@ namespace Alternet.Drawing
         /// <param name="light">The color value to use for the light theme variant.</param>
         /// <param name="dark">The color value to use for the dark theme variant.</param>
         /// <returns>A new LightDarkColor instance with the specified light and dark color values marked as immutable.</returns>
-        public static LightDarkColor CreateImmutable(ColorStruct light, ColorStruct dark)
+        public static ThemedColor CreateImmutable(ColorStruct light, ColorStruct dark)
         {
-            var result = new LightDarkColor(new Color(light), new Color(dark));
+            var result = new ThemedColor(new Color(light), new Color(dark));
             result.SetImmutable();
             return result;
         }
@@ -205,9 +205,9 @@ namespace Alternet.Drawing
         /// <param name="light">The color value to use for the light theme variant.</param>
         /// <param name="dark">The color value to use for the dark theme variant.</param>
         /// <returns>A new LightDarkColor instance with the specified light and dark color values marked as immutable.</returns>
-        public static LightDarkColor CreateImmutable(Color light, Color dark)
+        public static ThemedColor CreateImmutable(Color light, Color dark)
         {
-            var result = new LightDarkColor(light, dark);
+            var result = new ThemedColor(light, dark);
             result.SetImmutable();
             return result;
         }
@@ -249,19 +249,19 @@ namespace Alternet.Drawing
         /// Determines how the dark color is modified.</param>
         /// <returns>A new LightDarkColor instance containing the adjusted light and dark colors after applying the specified
         /// operations.</returns>
-        public LightDarkColor GetAdjustedColorPair(ColorAdjustmentOperation lightOp, ColorAdjustmentOperation darkOp)
+        public ThemedColor GetAdjustedColorPair(ColorAdjustmentOperation lightOp, ColorAdjustmentOperation darkOp)
         {
-            return new LightDarkColor(Light.GetAdjustedColor(lightOp), Dark.GetAdjustedColor(darkOp));
+            return new ThemedColor(Light.GetAdjustedColor(lightOp), Dark.GetAdjustedColor(darkOp));
         }
 
         /// <summary>
-        /// Gets a <see cref="LightDarkColor"/> with light and dark colors that are lighter
+        /// Gets a <see cref="ThemedColor"/> with light and dark colors that are lighter
         /// than the current colors.
         /// </summary>
-        /// <returns>A new <see cref="LightDarkColor"/> instance with lighter colors.</returns>
-        public LightDarkColor LighterPair()
+        /// <returns>A new <see cref="ThemedColor"/> instance with lighter colors.</returns>
+        public ThemedColor LighterPair()
         {
-            return new LightDarkColor(Light.Lighter(), Dark.Lighter());
+            return new ThemedColor(Light.Lighter(), Dark.Lighter());
         }
 
         /// <summary>
@@ -269,9 +269,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A LightDarkColor object whose Light and Dark properties are the 2x lighter versions of the current Light and
         /// Dark colors.</returns>
-        public LightDarkColor LighterLighterPair()
+        public ThemedColor LighterLighterPair()
         {
-            return new LightDarkColor(Light.LighterLighter(), Dark.LighterLighter());
+            return new ThemedColor(Light.LighterLighter(), Dark.LighterLighter());
         }
 
         /// <summary>
@@ -279,9 +279,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A LightDarkColor object whose Light and Dark properties are the 2x darker versions of the current Light and
         /// Dark colors.</returns>
-        public LightDarkColor DarkerDarkerPair()
+        public ThemedColor DarkerDarkerPair()
         {
-            return new LightDarkColor(Light.DarkerDarker(), Dark.DarkerDarker());
+            return new ThemedColor(Light.DarkerDarker(), Dark.DarkerDarker());
         }
 
         /// <summary>
@@ -289,9 +289,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A LightDarkColor object whose light and dark components
         /// are each darkened compared to the current instance.</returns>
-        public LightDarkColor DarkerPair()
+        public ThemedColor DarkerPair()
         {
-            return new LightDarkColor(Light.Darker(), Dark.Darker());
+            return new ThemedColor(Light.Darker(), Dark.Darker());
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the specified object is equal to the
         /// current object; otherwise, <c>false</c>.</returns>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is LightDarkColor other && Equals(other);
+            obj is ThemedColor other && Equals(other);
 
         /// <summary>
         /// Serves as the default hash function.
@@ -320,7 +320,7 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the current object is equal to other;
         /// otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(LightDarkColor? other)
+        public bool Equals(ThemedColor? other)
         {
             if (other is null)
                 return false;
@@ -378,7 +378,7 @@ namespace Alternet.Drawing
         /// Sets this instance as immutable and returns it. After calling this method, the instance cannot be modified.
         /// </summary>
         /// <returns>The current instance.</returns>
-        public new LightDarkColor SetImmutable()
+        public new ThemedColor SetImmutable()
         {
             base.SetImmutable();
             return this;

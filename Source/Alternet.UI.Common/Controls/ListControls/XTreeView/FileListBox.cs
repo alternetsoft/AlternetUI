@@ -138,22 +138,22 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a function that provides a color override for file icons.
-        /// This function returns a <see cref="LightDarkColor"/> object, which specifies
+        /// This function returns a <see cref="ThemedColor"/> object, which specifies
         /// the color to be used for file icons in light and dark themes.
         /// </summary>
-        public static Func<LightDarkColor?>? FileImageColorOverride = () =>
+        public static Func<ThemedColor?>? FileImageColorOverride = () =>
         {
             return null;
         };
 
         /// <summary>
         /// Gets or sets a function that provides a color override for folder icons.
-        /// This function returns a <see cref="LightDarkColor"/> object, which specifies
+        /// This function returns a <see cref="ThemedColor"/> object, which specifies
         /// the color to be used for file icons in light and dark themes.
         /// </summary>
-        public static Func<LightDarkColor?>? FolderImageColorOverride = () =>
+        public static Func<ThemedColor?>? FolderImageColorOverride = () =>
         {
-            return LightDarkColors.Yellow;
+            return ThemedColors.Yellow;
         };
 
         /// <summary>
@@ -161,9 +161,9 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This property allows customization of the color used for the selected folder image.
         /// If the function returns <see langword="null"/>, the default color will be used.</remarks>
-        public static Func<LightDarkColor?>? SelectedFolderImageColorOverride = () =>
+        public static Func<ThemedColor?>? SelectedFolderImageColorOverride = () =>
         {
-            return LightDarkColors.Yellow;
+            return ThemedColors.Yellow;
         };
 
         private ListControlColumn? columnName;

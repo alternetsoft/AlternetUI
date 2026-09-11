@@ -959,7 +959,7 @@ namespace Alternet.UI
                 Color highlightColorFg = new(SystemColorsLight.Default.HighlightText);
 
                 Color holidayColorBg = BackgroundColor.Light;
-                Color holidayColorFg = LightDarkColors.Red.Light;
+                Color holidayColorFg = ThemedColors.Red.Light;
 
                 SetHeaderColors(headerColorFg, headerColorBg);
                 SetHighlightColors(highlightColorFg, highlightColorBg);
@@ -988,7 +988,7 @@ namespace Alternet.UI
 
                 Color holidayColorBg = BackgroundColor.Light;
 
-                Color holidayColorFg = LightDarkColors.Red.GetColor(IsDarkBackground);
+                Color holidayColorFg = ThemedColors.Red.GetColor(IsDarkBackground);
 
                 SetHeaderColors(headerColorFg, headerColorBg);
                 SetHighlightColors(highlightColorFg, highlightColorBg);
@@ -1008,7 +1008,7 @@ namespace Alternet.UI
             {
                 if (IsDarkBackground)
                 {
-                    HolidayColorFg = LightDarkColors.Red.Dark;
+                    HolidayColorFg = ThemedColors.Red.Dark;
                     HolidayColorBg = RealBackgroundColor.GetColor(this);
                 }
                 else
@@ -1064,7 +1064,7 @@ namespace Alternet.UI
                 Color highlightColorFg = new(194, 231, 255);
 
                 Color holidayColorBg = BackgroundColor.Dark;
-                Color holidayColorFg = LightDarkColors.Red.Dark;
+                Color holidayColorFg = ThemedColors.Red.Dark;
 
                 SetHeaderColors(headerColorFg, headerColorBg);
                 SetHighlightColors(highlightColorFg, highlightColorBg);

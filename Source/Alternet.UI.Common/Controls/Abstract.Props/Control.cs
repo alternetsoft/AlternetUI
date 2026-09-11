@@ -27,8 +27,8 @@ namespace Alternet.UI
         private int handlerTextChanging;
         private IControlHandler? handler;
         private bool userPaint;
-        private LightDarkColor? realBackgroundColor;
-        private LightDarkColor? realForegroundColor;
+        private ThemedColor? realBackgroundColor;
+        private ThemedColor? realForegroundColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -97,7 +97,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor RealBackgroundColor
+        public override ThemedColor RealBackgroundColor
         {
             get
             {
@@ -115,7 +115,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor RealForegroundColor
+        public override ThemedColor RealForegroundColor
         {
             get
             {
@@ -913,7 +913,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void InternalSetColor(bool isBackground, LightDarkColor? color)
+        protected override void InternalSetColor(bool isBackground, ThemedColor? color)
         {
             if (DisposingOrDisposed)
                 return;
@@ -1010,7 +1010,7 @@ namespace Alternet.UI
     {
         public RedControl()
         {
-            BackgroundColor = LightDarkColors.Red;
+            BackgroundColor = ThemedColors.Red;
         }
     }
 #pragma warning restore

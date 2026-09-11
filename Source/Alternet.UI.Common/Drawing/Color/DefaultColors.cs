@@ -41,24 +41,24 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly Color DefaultWindowForeColorDark;
 
-        private static LightDarkColor? borderColor;
+        private static ThemedColor? borderColor;
         
-        private static LightDarkColor windowBackColor;
-        private static LightDarkColor windowForeColor;
+        private static ThemedColor windowBackColor;
+        private static ThemedColor windowForeColor;
         
-        private static LightDarkColor controlBackColor;
-        private static LightDarkColor controlForeColor;
+        private static ThemedColor controlBackColor;
+        private static ThemedColor controlForeColor;
         
-        private static LightDarkColor? svgDisabledColor;
-        private static LightDarkColor? svgNormalColor;
+        private static ThemedColor? svgDisabledColor;
+        private static ThemedColor? svgNormalColor;
         
-        private static LightDarkColor? defaultCheckBoxColor;
-        private static LightDarkColor? windowInactiveCaptionTextColor;
-        private static LightDarkColor? windowInactiveBorderColor;
-        private static LightDarkColor? windowInactiveCaptionColor;
-        private static LightDarkColor? windowActiveCaptionColor;
-        private static LightDarkColor? windowActiveCaptionTextColor;
-        private static LightDarkColor? windowActiveBorderColor;
+        private static ThemedColor? defaultCheckBoxColor;
+        private static ThemedColor? windowInactiveCaptionTextColor;
+        private static ThemedColor? windowInactiveBorderColor;
+        private static ThemedColor? windowInactiveCaptionColor;
+        private static ThemedColor? windowActiveCaptionColor;
+        private static ThemedColor? windowActiveCaptionTextColor;
+        private static ThemedColor? windowActiveBorderColor;
 
 #pragma warning disable
         static DefaultColors()
@@ -87,7 +87,7 @@ namespace Alternet.Drawing
         /// Gets or sets the empty text hint color. It is used to display the hint
         /// when the text in the editor is empty.
         /// </summary>
-        public static LightDarkColor EmptyTextHintColor { get; set; } = new(light: (87, 87, 87), dark: new Color(87, 87, 87));
+        public static ThemedColor EmptyTextHintColor { get; set; } = new(light: (87, 87, 87), dark: new Color(87, 87, 87));
 
         /// <summary>
         /// Gets or sets the accent color used for UI elements, adapting to light and dark themes.
@@ -100,30 +100,30 @@ namespace Alternet.Drawing
         /// application based on user preferences or system settings.
         /// On MSW accent color can be obtained from system settings using <see cref="MswUtils.AccentColor"/>.
         /// </remarks>
-        public static LightDarkColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new Color(76, 194, 255));
+        public static ThemedColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new Color(76, 194, 255));
 
         /// <summary>
         /// Gets or sets the override color of the common window caption.
         /// </summary>
-        public static LightDarkColor WindowCommonCaptionColor { get; set; } =
-            new LightDarkColor(light: (243, 243, 243), dark: new Color(43, 43, 43));
+        public static ThemedColor WindowCommonCaptionColor { get; set; } =
+            new ThemedColor(light: (243, 243, 243), dark: new Color(43, 43, 43));
 
         /// <summary>
         /// Gets or sets the override color of the common window caption text.
         /// </summary>
-        public static LightDarkColor WindowCommonCaptionTextColor { get; set; } =
-            new LightDarkColor(light: (23, 23, 23), dark: Color.White);
+        public static ThemedColor WindowCommonCaptionTextColor { get; set; } =
+            new ThemedColor(light: (23, 23, 23), dark: Color.White);
 
         /// <summary>
         /// Gets or sets the override color of the common window caption border.
         /// </summary>
-        public static LightDarkColor WindowCommonBorderColor { get; set; } =
-            new LightDarkColor(light: (204, 206, 219), dark: new Color(69, 69, 69));
+        public static ThemedColor WindowCommonBorderColor { get; set; } =
+            new ThemedColor(light: (204, 206, 219), dark: new Color(69, 69, 69));
 
         /// <summary>
         /// Gets or sets the color of the active window caption.
         /// </summary>
-        public static LightDarkColor WindowActiveCaptionColor
+        public static ThemedColor WindowActiveCaptionColor
         {
             get => windowActiveCaptionColor ?? WindowCommonCaptionColor;
             set => windowActiveCaptionColor = value;
@@ -132,7 +132,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color of the active window caption text. 
         /// </summary>
-        public static LightDarkColor WindowActiveCaptionTextColor
+        public static ThemedColor WindowActiveCaptionTextColor
         {
             get => windowActiveCaptionTextColor ?? WindowCommonCaptionTextColor;
             set => windowActiveCaptionTextColor = value;
@@ -141,7 +141,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color of the active window caption border.
         /// </summary>
-        public static LightDarkColor WindowActiveBorderColor
+        public static ThemedColor WindowActiveBorderColor
         {
             get => windowActiveBorderColor ?? WindowCommonBorderColor;
             set => windowActiveBorderColor = value;
@@ -150,7 +150,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color of the inactive window caption. 
         /// </summary>
-        public static LightDarkColor WindowInactiveCaptionColor
+        public static ThemedColor WindowInactiveCaptionColor
         {
             get => windowInactiveCaptionColor ?? WindowCommonCaptionColor;
             set => windowInactiveCaptionColor = value;
@@ -159,7 +159,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color of the inactive window caption text. 
         /// </summary>
-        public static LightDarkColor WindowInactiveCaptionTextColor
+        public static ThemedColor WindowInactiveCaptionTextColor
         {
             get => windowInactiveCaptionTextColor ?? WindowCommonCaptionTextColor;
             set => windowInactiveCaptionTextColor = value;
@@ -168,7 +168,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color of the inactive window caption border. 
         /// </summary>
-        public static LightDarkColor WindowInactiveBorderColor
+        public static ThemedColor WindowInactiveBorderColor
         {
             get => windowInactiveBorderColor ?? WindowCommonBorderColor;
             set => windowInactiveBorderColor = value;
@@ -177,7 +177,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the default color of a checkbox in its normal state.
         /// </summary>
-        public static LightDarkColor DefaultCheckBoxColor
+        public static ThemedColor DefaultCheckBoxColor
         {
             get => defaultCheckBoxColor ?? AccentColor;
             set
@@ -189,7 +189,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets default border color of the user control.
         /// </summary>
-        public static LightDarkColor BorderColor
+        public static ThemedColor BorderColor
         {
             get => borderColor ??= Color.LightDark(DefaultBorderColorLight, DefaultBorderColorDark);
 
@@ -202,7 +202,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the default foreground color of the control.
         /// </summary>
-        public static LightDarkColor ControlForeColor
+        public static ThemedColor ControlForeColor
         {
             get => controlForeColor;
 
@@ -215,7 +215,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the default background color of the control.
         /// </summary>
-        public static LightDarkColor ControlBackColor
+        public static ThemedColor ControlBackColor
         {
             get => controlBackColor;
 
@@ -228,7 +228,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the default background color of the window.
         /// </summary>
-        public static LightDarkColor WindowBackColor
+        public static ThemedColor WindowBackColor
         {
             get => windowBackColor;
 
@@ -241,9 +241,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color used for SVG images in both light and dark themes.
         /// </summary>
-        public static LightDarkColor SvgNormalColor
+        public static ThemedColor SvgNormalColor
         {
-            get => svgNormalColor ??= new LightDarkColor(light: (33, 33, 33), dark: new Color(230, 230, 230));
+            get => svgNormalColor ??= new ThemedColor(light: (33, 33, 33), dark: new Color(230, 230, 230));
             set => svgNormalColor = value;
         }
 
@@ -304,9 +304,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the color used for disabled SVG images in both light and dark themes.
         /// </summary>
-        public static LightDarkColor SvgDisabledColor
+        public static ThemedColor SvgDisabledColor
         {
-            get => svgDisabledColor ??= new LightDarkColor(
+            get => svgDisabledColor ??= new ThemedColor(
                 light: SystemColors.GrayText,
                 dark: (86, 86, 86));
             set => svgDisabledColor = value;
@@ -315,7 +315,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the default foreground color of the window.
         /// </summary>
-        public static LightDarkColor WindowForeColor
+        public static ThemedColor WindowForeColor
         {
             get => windowForeColor;
 

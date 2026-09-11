@@ -92,7 +92,7 @@ namespace ControlsSample
             toolTip.VerticalAlignment = VerticalAlignment.Fill;
 
             toolTip.ParentBackColor = false;
-            toolTip.BackgroundColor = LightDarkColors.Window;
+            toolTip.BackgroundColor = ThemedColors.Window;
 
             toolTip.Parent = tooltipPreview;
             toolTip.ShowDebugRectangleAtCenter = false;

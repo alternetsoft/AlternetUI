@@ -123,10 +123,10 @@ namespace Alternet.UI
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
-        private static LightDarkColor? defaultSpacerColor;
-        private static LightDarkColor? defaultSecondarySpacerColor;
-        private static LightDarkColor? defaultThumbBorderColor;
-        private static LightDarkColor? defaultThumbBackColor;
+        private static ThemedColor? defaultSpacerColor;
+        private static ThemedColor? defaultSecondarySpacerColor;
+        private static ThemedColor? defaultThumbBorderColor;
+        private static ThemedColor? defaultThumbBackColor;
 
         private readonly Spacer leftTopSpacer;
         private readonly Spacer rightBottomSpacer;
@@ -306,7 +306,7 @@ namespace Alternet.UI
         /// Gets default spacer color of the slider.
         /// This value is used when <see cref="UseSpacerColor"/> is True.
         /// </summary>
-        public static LightDarkColor DefaultSpacerColor
+        public static ThemedColor DefaultSpacerColor
         {
             get => defaultSpacerColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultSpacerColor = value;
@@ -315,7 +315,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default slider thumb border color.
         /// </summary>
-        public static LightDarkColor DefaultThumbBorderColor
+        public static ThemedColor DefaultThumbBorderColor
         {
             get => defaultThumbBorderColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultThumbBorderColor = value;
@@ -324,7 +324,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default slider thumb background color.
         /// </summary>
-        public static LightDarkColor DefaultThumbBackColor
+        public static ThemedColor DefaultThumbBackColor
         {
             get => defaultThumbBackColor ?? DefaultColors.DefaultCheckBoxColor;
             set => defaultThumbBackColor = value;
@@ -334,7 +334,7 @@ namespace Alternet.UI
         /// Gets default secondary spacer color of the slider.
         /// This value is used when <see cref="UseSpacerColor"/> is True.
         /// </summary>
-        public static LightDarkColor DefaultSecondarySpacerColor
+        public static ThemedColor DefaultSecondarySpacerColor
         {
             get
             {
@@ -395,7 +395,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor? BorderColor
+        public override ThemedColor? BorderColor
         {
             get
             {
@@ -1292,7 +1292,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="leftTopSpacerColor">The color of the left/top spacer.
         /// If <c>null</c>, the left/top spacer will use the parent's background color.</param>
-        public virtual void SetSpacerColor(LightDarkColor? leftTopSpacerColor)
+        public virtual void SetSpacerColor(ThemedColor? leftTopSpacerColor)
         {
             leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
             leftTopSpacer.BackgroundColor = leftTopSpacerColor;
@@ -1303,7 +1303,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="spacerColor">The color of the right/bottom spacer.
         /// If <c>null</c>, the right/bottom spacer will use the parent's background color.</param>
-        public virtual void SetFarSpacerColor(LightDarkColor? spacerColor)
+        public virtual void SetFarSpacerColor(ThemedColor? spacerColor)
         {
             rightBottomSpacer.ParentBackColor = spacerColor is null;
             rightBottomSpacer.BackgroundColor = spacerColor;
@@ -1319,7 +1319,7 @@ namespace Alternet.UI
 
         internal void SetDebugColors()
         {
-            SetSpacerColor(LightDarkColors.Green);
+            SetSpacerColor(ThemedColors.Green);
         }
 
         /// <summary>
@@ -1769,7 +1769,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void DrawSplitterForeground(PaintEventArgs e, LightDarkColor? color)
+            public override void DrawSplitterForeground(PaintEventArgs e, ThemedColor? color)
             {
                 if (Shape == ShapeType.Circle)
                     return;
@@ -1777,7 +1777,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void DrawSplitterBackground(PaintEventArgs e, LightDarkColor? color)
+            public override void DrawSplitterBackground(PaintEventArgs e, ThemedColor? color)
             {
                 var isDark = IsDarkBackground;
 
@@ -1844,7 +1844,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void ResolveSplitterColors(out LightDarkColor? backColor, out LightDarkColor? foreColor)
+            public override void ResolveSplitterColors(out ThemedColor? backColor, out ThemedColor? foreColor)
             {
                 base.ResolveSplitterColors(out backColor, out foreColor);
                 if (BackgroundColor is not null)

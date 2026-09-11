@@ -63,12 +63,12 @@ namespace Alternet.Drawing
         /// <param name="color">The color to be dimmed.</param>
         /// <param name="factor">The factor by which to dim the color.</param>
         /// <returns>The dimmed color.</returns>
-        public static LightDarkColor? GetDimmedLightDarkColor(LightDarkColor? color, float? factor = null)
+        public static ThemedColor? GetDimmedLightDarkColor(ThemedColor? color, float? factor = null)
         {
             if (color is null)
                 return null;
 
-            return new LightDarkColor(
+            return new ThemedColor(
                 light: GetDimmedColor(color.Light, factor),
                 dark: GetDimmedColor(color.Dark, factor));
         }
@@ -130,11 +130,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="LightDarkColor"/> to known color if its possible.
+        /// Converts <see cref="ThemedColor"/> to known color if its possible.
         /// </summary>
-        /// <param name="color">The <see cref="LightDarkColor"/> to convert.</param>
-        /// <returns>The converted <see cref="LightDarkColor"/> if possible; otherwise, <c>null</c>.</returns>
-        public static LightDarkColor? FindKnownColor(LightDarkColor? color)
+        /// <param name="color">The <see cref="ThemedColor"/> to convert.</param>
+        /// <returns>The converted <see cref="ThemedColor"/> if possible; otherwise, <c>null</c>.</returns>
+        public static ThemedColor? FindKnownColor(ThemedColor? color)
         {
             if (color is null)
                 return null;
@@ -144,7 +144,7 @@ namespace Alternet.Drawing
             if(light is null || dark is null)
                 return null;
 
-            return new LightDarkColor(light, dark);
+            return new ThemedColor(light, dark);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Alternet.Drawing
         /// Gets default interior border color of the tab control.
         /// </summary>
         /// <returns></returns>
-        public static LightDarkColor GetTabControlInteriorBorderColor()
+        public static ThemedColor GetTabControlInteriorBorderColor()
         {
             return DefaultColors.BorderColor;
         }

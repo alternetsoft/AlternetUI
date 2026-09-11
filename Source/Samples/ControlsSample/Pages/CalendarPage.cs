@@ -33,10 +33,10 @@ namespace ControlsSample
             patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
 
             blueColor = calendar.CreateDateAttr();
-            blueColor.TextColor = LightDarkColors.Blue.GetColor(this);
+            blueColor.TextColor = ThemedColors.Blue.GetColor(this);
 
             greenColor = calendar.CreateDateAttr();
-            greenColor.TextColor = LightDarkColors.Green.GetColor(this);
+            greenColor.TextColor = ThemedColors.Green.GetColor(this);
 
             Layout = LayoutStyle.Horizontal;
             calendar.Margin = 5;
@@ -191,7 +191,7 @@ namespace ControlsSample
                 weekNumbersCheckBox.IsChecked = calendar.ShowWeekNumbers;
 
                 if (calendar.UseGeneric)
-                    calendar.BackgroundColor = LightDarkColors.Window;
+                    calendar.BackgroundColor = ThemedColors.Window;
             }
 
             calendar.SelectionChanged += Calendar_SelectionChanged;

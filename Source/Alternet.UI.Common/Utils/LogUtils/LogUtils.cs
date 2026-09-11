@@ -822,11 +822,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Logs <see cref="LightDarkColor"/> value.
+        /// Logs <see cref="ThemedColor"/> value.
         /// </summary>
         /// <param name="title">Color label.</param>
         /// <param name="value">Color value.</param>
-        public static void LogColor(string? title, LightDarkColor? value)
+        public static void LogColor(string? title, ThemedColor? value)
         {
             if (value is not null)
                 value = ColorUtils.FindKnownColor(value);

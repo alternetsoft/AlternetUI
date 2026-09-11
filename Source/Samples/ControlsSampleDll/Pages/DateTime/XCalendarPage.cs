@@ -199,13 +199,13 @@ namespace ControlsSample
 
                 p.AddLinkLabel("Clear All Days Borders", () => calendar.ClearDayBorders());
 
-                p.AddLinkLabel("Rectangle Border", () => ToggleBorder(() => new BorderSettings(LightDarkColors.Red)));
+                p.AddLinkLabel("Rectangle Border", () => ToggleBorder(() => new BorderSettings(ThemedColors.Red)));
 
                 p.AddLinkLabel("Round Rectangle Border", () =>
                 {
                     ToggleBorder(() =>
                     {
-                        var border = new BorderSettings(LightDarkColors.Green);
+                        var border = new BorderSettings(ThemedColors.Green);
                         border.RoundCorners();
                         return border;
                     });
@@ -217,7 +217,7 @@ namespace ControlsSample
                     {
                         var border = new BorderSettings();
                         var shapeDrawable = new ShapeDrawable();
-                        shapeDrawable.Pen = LightDarkColors.Blue.GetColor(this).AsPen;
+                        shapeDrawable.Pen = ThemedColors.Blue.GetColor(this).AsPen;
                         shapeDrawable.ShapeType = DrawingShapeType.Circle;
                         border.ShapeForeground = shapeDrawable;
                         return border;
@@ -228,19 +228,19 @@ namespace ControlsSample
                 {
                     ToggleBorder(() =>
                     {
-                        var border = BorderSettings.BottomLineBorder.WithColor(LightDarkColors.Blue);
+                        var border = BorderSettings.BottomLineBorder.WithColor(ThemedColors.Blue);
                         return border;
                     });
                 });
 
                 p.AddLinkLabel("Blue Foreground", () =>
                 {
-                    ToggleColor(() => LightDarkColors.Blue);
+                    ToggleColor(() => ThemedColors.Blue);
                 });
 
                 p.AddLinkLabel("Red Background", () =>
                 {
-                    ToggleBackColor(() => LightDarkColors.Red);
+                    ToggleBackColor(() => ThemedColors.Red);
                 });
 
                 p.AddLinkLabel("Toggle Bold", () =>
@@ -273,7 +273,7 @@ namespace ControlsSample
                     }
                 }
 
-                void ToggleColor(Func<LightDarkColor> getColor)
+                void ToggleColor(Func<ThemedColor> getColor)
                 {
                     var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
 
@@ -287,7 +287,7 @@ namespace ControlsSample
                     }
                 }
 
-                void ToggleBackColor(Func<LightDarkColor> getColor)
+                void ToggleBackColor(Func<ThemedColor> getColor)
                 {
                     var attr = calendar.GetOrCreateAttr(calendar.Value.Day);
 

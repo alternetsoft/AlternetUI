@@ -15,12 +15,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets background color.
         /// </summary>
-        LightDarkColor? BackgroundColor { get; }
+        ThemedColor? BackgroundColor { get; }
 
         /// <summary>
         /// Gets foreground color.
         /// </summary>
-        LightDarkColor? ForegroundColor { get; }
+        ThemedColor? ForegroundColor { get; }
 
         /// <summary>
         /// Gets font.
@@ -37,12 +37,12 @@ namespace Alternet.UI
         /// Gets this object with changed foreground color.
         /// </summary>
         /// <returns></returns>
-        IReadOnlyFontAndColor WithForeColor(LightDarkColor? color);
+        IReadOnlyFontAndColor WithForeColor(ThemedColor? color);
 
         /// <summary>
         /// Gets this object with changed background color.
         /// </summary>
         /// <returns></returns>
-        IReadOnlyFontAndColor WithBackColor(LightDarkColor? color);
+        IReadOnlyFontAndColor WithBackColor(ThemedColor? color);
     }
 }

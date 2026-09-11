@@ -138,8 +138,8 @@ namespace PropertyGridSample
                         {
                                 new ("Complex", FontStyle.Regular, Color.Black, Color.Gray),
                                 new (" ", FontStyle.Regular),
-                                new ("formatted ", FontStyle.Bold, LightDarkColors.Red.GetColor(c)),
-                                new ("label", FontStyle.Underline, LightDarkColors.Green.GetColor(c)),
+                                new ("formatted ", FontStyle.Bold, ThemedColors.Red.GetColor(c)),
+                                new ("label", FontStyle.Underline, ThemedColors.Green.GetColor(c)),
                         };
                     }
                 }
@@ -156,7 +156,7 @@ namespace PropertyGridSample
         {
             AddControlAction<XSlider>("SetSpacerColor", (c) =>
             {
-                c.SetSpacerColor(LightDarkColors.Red);
+                c.SetSpacerColor(ThemedColors.Red);
             });
 
             AddControlAction<XSlider>("SetSliderRange(50,120)", (s) =>

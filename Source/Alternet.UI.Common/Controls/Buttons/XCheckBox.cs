@@ -29,12 +29,12 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Assign this field to customize the appearance of controls when hovered. If not set,
         /// the control may use a framework or theme-defined default color.</remarks>
-        public static LightDarkColor? DefaultHoveredForeColor;
+        public static ThemedColor? DefaultHoveredForeColor;
 
         /// <summary>
         /// Gets or sets the default color used for a hovered check box in both light and dark themes.
         /// </summary>
-        public static LightDarkColor? DefaultHoveredCheckBoxColor = DefaultColors.AccentColor.LighterPair();
+        public static ThemedColor? DefaultHoveredCheckBoxColor = DefaultColors.AccentColor.LighterPair();
 
         /// <summary>
         /// Gets or sets a value indicating whether the hovered color should be used for check boxes
@@ -44,7 +44,7 @@ namespace Alternet.UI
         public static bool UseHoveredCheckBoxColor = true;
 
         private bool useHoveredForeColor = false;
-        private LightDarkColor? hoveredForeColor;
+        private ThemedColor? hoveredForeColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XCheckBox"/> class.
@@ -86,7 +86,7 @@ namespace Alternet.UI
         /// <remarks>If this property is null, the control uses <see cref="DefaultHoveredForeColor"/> when hovered.
         /// This property allows customization of the text or foreground appearance specifically for the hovered visual
         /// state.</remarks>
-        public virtual LightDarkColor? HoveredForeColor
+        public virtual ThemedColor? HoveredForeColor
         {
             get => hoveredForeColor;
             set
@@ -213,7 +213,7 @@ namespace Alternet.UI
 
             if (info.IsCheckBoxEnabled && state == VisualControlState.Hovered && UseHoveredCheckBoxColor)
             {
-                var color = DefaultHoveredCheckBoxColor ?? LightDarkColors.Red;
+                var color = DefaultHoveredCheckBoxColor ?? ThemedColors.Red;
 
                 info.Color = color.GetColor(IsDarkBackground);
             }

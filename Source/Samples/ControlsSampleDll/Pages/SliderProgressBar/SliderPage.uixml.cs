@@ -55,9 +55,9 @@ namespace ControlsSample
 
             progressBarControlSlider.SetSpacerColorToDefault();
 
-            sliderh3.SetFarSpacerColor(LightDarkColors.Green);
-            sliderv1.SetFarSpacerColor(LightDarkColors.Green);
-            sliderv2.SetFarSpacerColor(LightDarkColors.Red);
+            sliderh3.SetFarSpacerColor(ThemedColors.Green);
+            sliderv1.SetFarSpacerColor(ThemedColors.Green);
+            sliderv2.SetFarSpacerColor(ThemedColors.Red);
 
             sliderh1.SetBorderColors(ExactColors.Transparent);
             sliderh1.SetBottomBorderColor(DefaultColors.BorderColor);

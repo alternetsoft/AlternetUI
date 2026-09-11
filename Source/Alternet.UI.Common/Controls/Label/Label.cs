@@ -341,7 +341,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor? BackgroundColor
+        public override ThemedColor? BackgroundColor
         {
             get => base.BackgroundColor;
             set
@@ -727,7 +727,7 @@ namespace Alternet.UI
         {
             IsUnderline = true;
             ParentForeColor = false;
-            ForegroundColor = LinkLabel.DefaultNormalColor ?? LightDarkColors.Blue;
+            ForegroundColor = LinkLabel.DefaultNormalColor ?? ThemedColors.Blue;
             Cursor = Cursors.Hand;
         }
 
@@ -756,8 +756,8 @@ namespace Alternet.UI
         public virtual RectD DrawDefaultText(
             Graphics dc,
             RectD rect,
-            LightDarkColor? foreColor = null,
-            LightDarkColor? backColor = null,
+            ThemedColor? foreColor = null,
+            ThemedColor? backColor = null,
             Font? font = null)
         {
             var state = VisualState;
@@ -1086,7 +1086,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override LightDarkColor GetLabelForeColor(VisualControlState state)
+        protected override ThemedColor GetLabelForeColor(VisualControlState state)
         {
             if (Text.Length == 0)
                 return DefaultColors.EmptyTextHintColor;

@@ -74,7 +74,7 @@ namespace Alternet.UI
         /// Sets color to all initialized borders.
         /// </summary>
         /// <param name="color">New color value.</param>
-        public virtual void SetColor(LightDarkColor? color)
+        public virtual void SetColor(ThemedColor? color)
         {
             Normal?.SetColor(color);
             Hovered?.SetColor(color);

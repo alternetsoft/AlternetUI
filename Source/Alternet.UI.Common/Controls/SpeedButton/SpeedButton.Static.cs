@@ -238,7 +238,7 @@ namespace Alternet.UI
             StickyBorderTheme = CreateBordered(borderColor, corners);
             CheckBorderTheme = CreateBordered(DefaultColors.DefaultCheckBoxColor, corners);
 
-            ControlColorAndStyle CreateBordered(LightDarkColor? color, BorderCornerRadius? cornerRadius = null)
+            ControlColorAndStyle CreateBordered(ThemedColor? color, BorderCornerRadius? cornerRadius = null)
             {
                 var result = DefaultTheme.Clone();
                 result.SetBorderFromBorder(
@@ -278,13 +278,13 @@ namespace Alternet.UI
                 HoveredForeColor = new(0, 0, 0),
                 HoveredBackColor = new(229, 243, 255),
 
-                DisabledForeColor = LightDarkColors.GrayText,
+                DisabledForeColor = ThemedColors.GrayText,
 
                 PressedForeColor = new(0, 0, 0),
                 PressedBackColor = new(204, 228, 247),
             };
 
-            theme.Borders = CreateBorders(color: new LightDarkColor(new Color(204, 232, 255)), cornerRadius);
+            theme.Borders = CreateBorders(color: new ThemedColor(new Color(204, 232, 255)), cornerRadius);
             theme.Colors = colors.AllStates;
             theme.Backgrounds ??= new();
             theme.Backgrounds.Assign(theme.Colors, isDark: false);
@@ -331,7 +331,7 @@ namespace Alternet.UI
                 HoveredForeColor = new(250, 250, 250),
                 HoveredBackColor = new(61, 61, 61),
 
-                DisabledForeColor = LightDarkColors.GrayText,
+                DisabledForeColor = ThemedColors.GrayText,
 
                 PressedForeColor = new(214, 214, 214),
                 PressedBackColor = new(34, 34, 34),
@@ -351,7 +351,7 @@ namespace Alternet.UI
         /// <param name="color">Border color.</param>
         /// <param name="cornerRadius">Corner radius for the border.</param>
         /// <returns></returns>
-        public static ControlStateBorders CreateBorders(LightDarkColor color, BorderCornerRadius? cornerRadius = null)
+        public static ControlStateBorders CreateBorders(ThemedColor color, BorderCornerRadius? cornerRadius = null)
         {
             BorderSettings hoveredBorder = new()
             {

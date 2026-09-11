@@ -14,10 +14,10 @@ namespace Alternet.UI
     /// </summary>
     public partial class XCalendarDateAttr : ImmutableObject, IXCalendarDateAttr
     {
-        private LightDarkColor? textColor;
+        private ThemedColor? textColor;
         private BorderSettings? border;
         private FontStyle? fontStyle;
-        private LightDarkColor? backgroundColor;
+        private ThemedColor? backgroundColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="XCalendarDateAttr"/> class.
@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="XCalendarDateAttr"/> class with the specified text color.
         /// </summary>
         /// <param name="textColor">The text color for the calendar date.</param>
-        public XCalendarDateAttr(LightDarkColor textColor)
+        public XCalendarDateAttr(ThemedColor textColor)
         {
             this.textColor = textColor;
         }
@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the border color assigned for the calendar date.
         /// </summary>
-        public virtual LightDarkColor? BorderColor
+        public virtual ThemedColor? BorderColor
         {
             get
             {
@@ -75,7 +75,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual LightDarkColor? TextColor
+        public virtual ThemedColor? TextColor
         {
             get => textColor;
             set
@@ -103,7 +103,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the background color assigned for the calendar date.
         /// </summary>
-        public virtual LightDarkColor? BackgroundColor
+        public virtual ThemedColor? BackgroundColor
         {
             get => backgroundColor;
             set => SetProperty(ref backgroundColor, value);

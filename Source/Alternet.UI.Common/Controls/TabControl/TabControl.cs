@@ -855,7 +855,7 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new LightDarkColor? ForegroundColor
+        internal new ThemedColor? ForegroundColor
         {
             get => base.ForegroundColor;
             set
@@ -867,7 +867,7 @@ namespace Alternet.UI
         /// Gets default interior border color as light/dark color pair.
         /// </summary>
         /// <returns></returns>
-        public static LightDarkColor GetDefaultInteriorBorderColor()
+        public static ThemedColor GetDefaultInteriorBorderColor()
         {
             return ColorUtils.GetTabControlInteriorBorderColor();
         }
@@ -1409,7 +1409,7 @@ namespace Alternet.UI
         /// Gets interior border color.
         /// </summary>
         /// <returns></returns>
-        protected virtual LightDarkColor GetInteriorBorderColor()
+        protected virtual ThemedColor GetInteriorBorderColor()
         {
             var color = Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color;
             color ??= ColorUtils.GetTabControlInteriorBorderColor();

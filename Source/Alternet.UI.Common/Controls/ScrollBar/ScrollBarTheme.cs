@@ -179,7 +179,7 @@ namespace Alternet.UI
         private static ScrollBarTheme? windowsDark;
         private static ScrollBarTheme? mauiLight;
         private static ScrollBarTheme? mauiDark;
-        private static LightDarkColor? defaultHoveredColor;
+        private static ThemedColor? defaultHoveredColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBarTheme"/> class.
@@ -229,7 +229,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default color used when an element is hovered over.
         /// </summary>
-        public static LightDarkColor? DefaultHoveredColor
+        public static ThemedColor? DefaultHoveredColor
         {
             get => defaultHoveredColor;
             set => defaultHoveredColor = value;

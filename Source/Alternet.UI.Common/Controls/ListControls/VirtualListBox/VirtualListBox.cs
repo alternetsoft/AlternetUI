@@ -35,12 +35,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color of the horizontal line that is drawn between items.
         /// </summary>
-        public static LightDarkColor DefaultHorzGridLinesColor = new(light: (229, 229, 229), dark: new Color(99, 99, 99));
+        public static ThemedColor DefaultHorzGridLinesColor = new(light: (229, 229, 229), dark: new Color(99, 99, 99));
 
         /// <summary>
         /// Gets or sets default color of the vertical line that is drawn between columns.
         /// </summary>
-        public static LightDarkColor DefaultVertGridLinesColor = new(light: (229, 229, 229), dark: new Color(99, 99, 99));
+        public static ThemedColor DefaultVertGridLinesColor = new(light: (229, 229, 229), dark: new Color(99, 99, 99));
 
         /// <summary>
         /// Gets or sets the default provider used to generate tooltips for items.
@@ -63,8 +63,8 @@ namespace Alternet.UI
         private string? emptyText;
         private ObjectUniqueId? itemToolTipId;
         private bool useScrollActivity;
-        private LightDarkColor? horzGridLinesColor;
-        private LightDarkColor? vertGridLinesColor;
+        private ThemedColor? horzGridLinesColor;
+        private ThemedColor? vertGridLinesColor;
         private ListViewGridLinesDisplayMode gridLinesDisplayMode = ListViewGridLinesDisplayMode.None;
         private IListSource<ListControlItem> items = new ListSource<ListControlItem>();
         private bool immutableItems;
@@ -221,18 +221,18 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default border color of the full item tooltip.
         /// </summary>
-        public static LightDarkColor? DefaultFullItemToolTipBorderColor { get; set; }
+        public static ThemedColor? DefaultFullItemToolTipBorderColor { get; set; }
 
         /// <summary>
         /// Gets or sets the default foreground color of the full item tooltip text.
         /// </summary>
-        public static LightDarkColor DefaultFullItemToolTipForeColor { get; set; }
+        public static ThemedColor DefaultFullItemToolTipForeColor { get; set; }
             = new(light: Color.Black, dark: (224, 224, 224));
 
         /// <summary>
         /// Gets or sets the default background color of the full item tooltip.
         /// </summary>
-        public static LightDarkColor DefaultFullItemToolTipBackColor { get; set; }
+        public static ThemedColor DefaultFullItemToolTipBackColor { get; set; }
             = new(light: (240, 240, 240), dark: new Color(51, 51, 51));
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace Alternet.UI
         /// will be used.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? FullItemToolTipForeColor { get; set; }
+        public virtual ThemedColor? FullItemToolTipForeColor { get; set; }
 
         /// <summary>
         /// Gets or sets the background color of the full item tooltip.
@@ -537,7 +537,7 @@ namespace Alternet.UI
         /// will be used.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? FullItemToolTipBackColor { get; set; }
+        public virtual ThemedColor? FullItemToolTipBackColor { get; set; }
 
         /// <summary>
         /// Gets or sets the border color of the full item tooltip.
@@ -545,14 +545,14 @@ namespace Alternet.UI
         /// will be used.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? FullItemToolTipBorderColor { get; set; }
+        public virtual ThemedColor? FullItemToolTipBorderColor { get; set; }
 
         /// <summary>
         /// Gets or sets color of the horizontal line that is drawn between items.
         /// If not specified, the line color is determined by <see cref="DefaultHorzGridLinesColor"/> property.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? HorzGridLinesColor
+        public virtual ThemedColor? HorzGridLinesColor
         {
             get
             {
@@ -574,7 +574,7 @@ namespace Alternet.UI
         /// If not specified, the line color is determined by <see cref="DefaultVertGridLinesColor"/> property.
         /// </summary>
         [Browsable(false)]
-        public virtual LightDarkColor? VertGridLinesColor
+        public virtual ThemedColor? VertGridLinesColor
         {
             get
             {
@@ -672,7 +672,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override LightDarkColor? BackgroundColor
+        public override ThemedColor? BackgroundColor
         {
             get => base.BackgroundColor;
             set
@@ -2222,9 +2222,9 @@ namespace Alternet.UI
         /// <param name="borderColor">When this method returns, contains
         /// the resolved border color for the tooltip.</param>
         protected virtual void ResolveOverlayToolTipColors(
-            out LightDarkColor foreColor,
-            out LightDarkColor backColor,
-            out LightDarkColor borderColor)
+            out ThemedColor foreColor,
+            out ThemedColor backColor,
+            out ThemedColor borderColor)
         {
             backColor = (FullItemToolTipBackColor ?? DefaultFullItemToolTipBackColor);
             foreColor = (FullItemToolTipForeColor ?? DefaultFullItemToolTipForeColor);

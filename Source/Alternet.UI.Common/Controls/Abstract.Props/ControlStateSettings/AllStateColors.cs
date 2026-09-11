@@ -15,52 +15,52 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or set foreground color for the normal state.
         /// </summary>
-        public LightDarkColor? NormalForeColor;
+        public ThemedColor? NormalForeColor;
 
         /// <summary>
         /// Gets or set background color for the normal state.
         /// </summary>
-        public LightDarkColor? NormalBackColor;
+        public ThemedColor? NormalBackColor;
 
         /// <summary>
         /// Gets or set foreground color for the hovered state.
         /// </summary>
-        public LightDarkColor? HoveredForeColor;
+        public ThemedColor? HoveredForeColor;
 
         /// <summary>
         /// Gets or set background color for the hovered state.
         /// </summary>
-        public LightDarkColor? HoveredBackColor;
+        public ThemedColor? HoveredBackColor;
 
         /// <summary>
         /// Gets or set foreground color for the pressed state.
         /// </summary>
-        public LightDarkColor? PressedForeColor;
+        public ThemedColor? PressedForeColor;
 
         /// <summary>
         /// Gets or set background color for the pressed state.
         /// </summary>
-        public LightDarkColor? PressedBackColor;
+        public ThemedColor? PressedBackColor;
 
         /// <summary>
         /// Gets or set foreground color for the disabled state.
         /// </summary>
-        public LightDarkColor? DisabledForeColor;
+        public ThemedColor? DisabledForeColor;
 
         /// <summary>
         /// Gets or set background color for the disabled state.
         /// </summary>
-        public LightDarkColor? DisabledBackColor;
+        public ThemedColor? DisabledBackColor;
 
         /// <summary>
         /// Gets or set foreground color for the focused state.
         /// </summary>
-        public LightDarkColor? FocusedForeColor;
+        public ThemedColor? FocusedForeColor;
 
         /// <summary>
         /// Gets or set background color for the focused state.
         /// </summary>
-        public LightDarkColor? FocusedBackColor;
+        public ThemedColor? FocusedBackColor;
 
         /// <summary>
         /// Gets colors for the normal state.
