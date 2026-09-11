@@ -119,6 +119,42 @@ namespace Alternet.UI
         public static SvgImage? DefaultTimeIcon { get; set; }
 
         /// <summary>
+        /// Gets or sets the format provider used for formatting the date.
+        /// </summary>
+        [Browsable(false)]
+        public override IFormatProvider? FormatProvider
+        {
+            get
+            {
+                return base.FormatProvider;
+            }
+
+            set
+            {
+                base.FormatProvider = value;
+                datePicker.FormatProvider = value;
+                timePicker.FormatProvider = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the format used for formatting the date.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string? Format
+        {
+            get
+            {
+                return datePicker.Format;
+            }
+
+            set
+            {
+                datePicker.Format = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the inner <see cref="DatePicker"/> control used to edit date part of the <see cref="Value"/>.
         /// </summary>
         [Browsable(false)]
@@ -198,56 +234,6 @@ namespace Alternet.UI
             set
             {
                 base.ColorMode = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets selected time as <see cref="TimeOnly"/>.
-        /// </summary>
-        public virtual TimeOnly? AsTimeOnly
-        {
-            get
-            {
-                var value = Value;
-
-                if (value is null)
-                    return null;
-                return TimeOnly.FromDateTime(value.Value);
-            }
-
-            set
-            {
-                if (value is null)
-                    Value = null;
-                else
-                {
-                    Value = DateUtils.ToDateTime(time: value.Value, date: DateOnly.FromDateTime(Value ?? DateTime.Now));
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets selected date as <see cref="DateOnly"/>.
-        /// </summary>
-        public virtual DateOnly? AsDateOnly
-        {
-            get
-            {
-                var value = Value;
-
-                if (value is null)
-                    return null;
-                return DateOnly.FromDateTime(value.Value);
-            }
-
-            set
-            {
-                if (value is null)
-                    Value = null;
-                else
-                {
-                    Value = DateUtils.ToDateTime(time: TimeOnly.FromDateTime(Value ?? DateTime.Now), date: value.Value);
-                }
             }
         }
 
