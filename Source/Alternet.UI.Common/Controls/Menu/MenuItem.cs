@@ -1001,6 +1001,11 @@ namespace Alternet.UI
                     return ColorMode == ControlColorMode.Dark;
                 return SystemSettings.AppearanceIsDark;
             }
+
+            set
+            {
+                ColorMode = value ? ControlColorMode.Dark : ControlColorMode.Light;
+            }
         }
 
         /// <summary>
