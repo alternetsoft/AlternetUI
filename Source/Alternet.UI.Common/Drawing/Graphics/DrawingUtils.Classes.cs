@@ -138,7 +138,7 @@ namespace Alternet.UI
                 if (!HasBorder)
                     return null;
 
-                var borderColor = Border?.Color?.LightOrDark(isDark) ?? ColorUtils.GetDefaultBorderColor(Control);
+                var borderColor = Border?.Color?.GetColor(isDark) ?? ColorUtils.GetDefaultBorderColor(Control);
 
                 if (borderColor.IsEmptyOrTransparent)
                     return null;

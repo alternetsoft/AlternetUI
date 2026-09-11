@@ -205,8 +205,8 @@ namespace Alternet.UI
                 dc,
                 paddedRect,
                 labelFont,
-                labelForeColor.LightOrDark(isDark),
-                labelBackColor.LightOrDark(isDark));
+                labelForeColor.GetColor(isDark),
+                labelBackColor.GetColor(isDark));
 
             DefaultPaintDebug(e);
         }

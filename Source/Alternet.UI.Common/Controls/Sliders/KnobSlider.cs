@@ -211,7 +211,7 @@ namespace Alternet.UI
 
             var pointerEndPoint1 = GetScalePoint(pointerAngle, knobRadius * 0.95f);
             var pointerEndPoint2 = GetScalePoint(pointerAngle, knobRadius * 0.5f);
-            dc.DrawLine(LightDarkColors.Red.LightOrDark(IsDarkBackground).GetAsPen(3), pointerEndPoint1, pointerEndPoint2);
+            dc.DrawLine(LightDarkColors.Red.GetColor(IsDarkBackground).GetAsPen(3), pointerEndPoint1, pointerEndPoint2);
 
             void DrawTicks(Pen pen, float step, float tickLength)
             {

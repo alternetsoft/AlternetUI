@@ -176,7 +176,7 @@ namespace Alternet.UI
                 if (isVertical)
                 {
                     e.Graphics.DrawHorzLine(
-                        RealForegroundColor.LightOrDark(this).AsBrush,
+                        RealForegroundColor.GetColor(this).AsBrush,
                         (otherPosition, thisPosition),
                         tickSize,
                         1);
@@ -184,7 +184,7 @@ namespace Alternet.UI
                 else
                 {
                     e.Graphics.DrawVertLine(
-                        RealForegroundColor.LightOrDark(this).AsBrush,
+                        RealForegroundColor.GetColor(this).AsBrush,
                         (thisPosition, otherPosition),
                         tickSize,
                         1);

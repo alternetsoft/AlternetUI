@@ -498,7 +498,7 @@ namespace Alternet.UI
                     canvas,
                     rect,
                     Color.Empty,
-                    borderColor.LightOrDark(this));
+                    borderColor.GetColor(this));
 
                 canvas.FillRectangle(brush, colorRect);
             }
@@ -508,7 +508,7 @@ namespace Alternet.UI
 
                 shapeDrawable.Bounds = rect;
                 shapeDrawable.Brush = brush;
-                shapeDrawable.Pen = borderColor?.LightOrDark(this).AsPen;
+                shapeDrawable.Pen = borderColor?.GetColor(this).AsPen;
                 shapeDrawable.ShapeType = ItemImageShape.Value;
                 shapeDrawable.Draw(this, canvas);
             }
@@ -767,7 +767,7 @@ namespace Alternet.UI
                 {
                     var disabledColor = sender.DisabledImageColor ?? DefaultDisabledImageColor;
                     if (disabledColor is not null)
-                        itemColor = disabledColor.LightOrDark(sender);
+                        itemColor = disabledColor.GetColor(sender);
                 }
 
                 return itemColor;
@@ -795,7 +795,7 @@ namespace Alternet.UI
                 {
                     var disabledColor = sender.DisabledImageColor ?? DefaultDisabledImageColor;
                     if (disabledColor is not null)
-                        result = disabledColor.LightOrDark(sender).AsBrush;
+                        result = disabledColor.GetColor(sender).AsBrush;
                 }
 
                 return result;
@@ -852,7 +852,7 @@ namespace Alternet.UI
                                     e.Graphics,
                                     item.DisplayText ?? item.Text,
                                     r,
-                                    foreColor.LightOrDark(colorListBox),
+                                    foreColor.GetColor(colorListBox),
                                     Color.Empty,
                                     HorizontalAlignment.Center,
                                     VerticalAlignment.Center);

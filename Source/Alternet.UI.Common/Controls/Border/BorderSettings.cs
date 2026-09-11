@@ -717,7 +717,7 @@ namespace Alternet.UI
 
             bool Internal(bool isDark)
             {
-                var color = ld?.LightOrDark(isDark);
+                var color = ld?.GetColor(isDark);
 
                 return color is not null && color.IsOk && color != Drawing.Color.Transparent && !color.IsEmpty;
             }

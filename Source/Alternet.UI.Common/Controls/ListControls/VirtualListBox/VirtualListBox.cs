@@ -1730,7 +1730,7 @@ namespace Alternet.UI
         public virtual Color GetEffectiveVertGridLinesColor(bool isDark)
         {
             var result = VertGridLinesColor ?? DefaultVertGridLinesColor;
-            return result.LightOrDark(isDark);
+            return result.GetColor(isDark);
         }
 
         /// <summary>
@@ -1742,7 +1742,7 @@ namespace Alternet.UI
         public virtual Color GetEffectiveHorzGridLinesColor(bool isDark)
         {
             var result = HorzGridLinesColor ?? DefaultHorzGridLinesColor;
-            return result.LightOrDark(isDark);
+            return result.GetColor(isDark);
         }
 
         /// <summary>

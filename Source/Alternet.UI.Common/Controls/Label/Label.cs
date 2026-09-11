@@ -781,13 +781,13 @@ namespace Alternet.UI
 
             bool isDark = IsDarkBackground;
 
-            var realForeColor = labelForeColor.LightOrDark(isDark);
+            var realForeColor = labelForeColor.GetColor(isDark);
 
             prm = new(
                 labelText,
                 labelFont,
                 foreColor: realForeColor,
-                backColor: labelBackColor.LightOrDark(isDark),
+                backColor: labelBackColor.GetColor(isDark),
                 labelImage,
                 paddedRect,
                 alignment,

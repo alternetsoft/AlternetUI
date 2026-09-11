@@ -598,13 +598,13 @@ namespace Alternet.UI
             {
                 var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
                 if (disabledColor is not null)
-                    imageColor = disabledColor.LightOrDark(this);
+                    imageColor = disabledColor.GetColor(this);
             }
 
             LabelImage = imageColor.AsImageWithBorder(
                 colorImageSize,
                 ScaleFactor,
-                (ColorImageBorder ?? ListControlItem.DefaultImageBorderColor).LightOrDark(this),
+                (ColorImageBorder ?? ListControlItem.DefaultImageBorderColor).GetColor(this),
                 ColorImageShape);
 
             if (refresh)

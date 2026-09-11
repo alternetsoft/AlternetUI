@@ -331,7 +331,7 @@ namespace Alternet.Drawing
         /// Gets <see cref="Dark"/> or <see cref="Light"/> color depending on system settings.
         /// </summary>
         /// <returns>The color to be used for the current system theme.</returns>
-        public virtual Color LightOrDark()
+        public virtual Color GetColor()
         {
             if (SystemSettings.AppearanceIsDark)
                 return Dark;
@@ -344,13 +344,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">The control for which to get the color.</param>
         /// <returns>The color to be used for the specified control.</returns>
-        public virtual Color LightOrDark(AbstractControl control)
+        public virtual Color GetColor(AbstractControl control)
         {
             var colorMode = control.ColorMode;
 
             if (colorMode is null)
             {
-                return LightOrDark();
+                return GetColor();
             }
 
             if (colorMode.Value == ControlColorMode.Dark)
@@ -366,7 +366,7 @@ namespace Alternet.Drawing
         /// <param name="isDark">Whether to get dark or light color.</param>
         /// <returns>The color to be used for the specified theme.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual Color LightOrDark(bool isDark)
+        public virtual Color GetColor(bool isDark)
         {
             if (isDark)
                 return Dark;

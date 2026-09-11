@@ -543,7 +543,7 @@ namespace Alternet.Maui
         /// <returns>The background color.</returns>
         public virtual Color GetBackColor()
         {
-            var backColor = Alternet.UI.MauiUtils.Convert(DefaultBackColor.LightOrDark(IsDark));
+            var backColor = Alternet.UI.MauiUtils.Convert(DefaultBackColor.GetColor(IsDark));
             return backColor;
         }
 
@@ -553,7 +553,7 @@ namespace Alternet.Maui
         /// <returns>The foreground color.</returns>
         public virtual Color GetTextColor()
         {
-            var textColor = Alternet.UI.MauiUtils.Convert(DefaultTextColor.LightOrDark(IsDark));
+            var textColor = Alternet.UI.MauiUtils.Convert(DefaultTextColor.GetColor(IsDark));
             return textColor;
         }
 
@@ -607,7 +607,7 @@ namespace Alternet.Maui
         public virtual Color GetPlaceholderColor()
         {
             var placeholderColor = Alternet.UI.MauiUtils
-                .Convert(DefaultPlaceholderColor.LightOrDark(IsDark));
+                .Convert(DefaultPlaceholderColor.GetColor(IsDark));
             return placeholderColor;
         }
 

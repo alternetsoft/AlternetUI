@@ -1782,7 +1782,7 @@ namespace Alternet.UI
             {
                 dc.FillBorderRectangle(
                     rect,
-                    item?.BackgroundColor?.LightOrDark(isDark)?.AsBrush,
+                    item?.BackgroundColor?.GetColor(isDark)?.AsBrush,
                     item?.Border,
                     hasBorder: true,
                     control);
@@ -1811,7 +1811,7 @@ namespace Alternet.UI
 
                         dc.FillBorderRectangle(
                             rect,
-                            GetSelectedItemBackColor(item, container)?.LightOrDark(isDark)?.AsBrush,
+                            GetSelectedItemBackColor(item, container)?.GetColor(isDark)?.AsBrush,
                             selectionBorder,
                             hasBorder: false,
                             control);
@@ -2141,7 +2141,7 @@ namespace Alternet.UI
 
                 Color GetAccentMarkerColor()
                 {
-                    return DefaultAccentMarkerColor.LightOrDark(isDark);
+                    return DefaultAccentMarkerColor.GetColor(isDark);
                 }
 
                 var isEnabled = IsContainerEnabled(container);
@@ -2210,7 +2210,7 @@ namespace Alternet.UI
                 Graphics.DrawLabelParams prm = new(
                     s,
                     e.ItemFont,
-                    itemColor.LightOrDark(isDark),
+                    itemColor.GetColor(isDark),
                     backColor: Color.Empty,
                     image,
                     paintRectangle,
@@ -2341,7 +2341,7 @@ namespace Alternet.UI
 
             dc.FillBorderRectangle(
                 rect,
-                BackgroundColor?.LightOrDark(isDark)?.AsBrush,
+                BackgroundColor?.GetColor(isDark)?.AsBrush,
                 Border,
                 hasBorder: true,
                 control);
@@ -2352,7 +2352,7 @@ namespace Alternet.UI
 
                 dc.FillBorderRectangle(
                     rect,
-                    GetSelectedItemBackColor(item, container)?.LightOrDark(isDark)?.AsBrush,
+                    GetSelectedItemBackColor(item, container)?.GetColor(isDark)?.AsBrush,
                     selectionBorder,
                     hasBorder: false,
                     control);
@@ -2389,7 +2389,7 @@ namespace Alternet.UI
             Graphics.DrawLabelParams labelPrm = new(
                 s,
                 font,
-                cellColor.LightOrDark(isDark),
+                cellColor.GetColor(isDark),
                 backColor: Color.Empty,
                 image: cellImage,
                 prm.Rect,
@@ -2642,7 +2642,7 @@ namespace Alternet.UI
         /// <param name="imageToUse">Specifies which image to use.</param>
         public virtual EnumArrayStateImages GetImages(IListControlItemContainer? listBox, bool isDark, int imageToUse = 0)
         {
-            var color = ListControlItem.GetSelectedTextColor(this, listBox)?.LightOrDark(isDark);
+            var color = ListControlItem.GetSelectedTextColor(this, listBox)?.GetColor(isDark);
             return ListControlItem.GetItemImages(this, listBox, color, onlyNormal: false, imageToUse);
         }
 
@@ -3047,7 +3047,7 @@ namespace Alternet.UI
                     ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
                     : VisualControlState.Disabled;
                 if (info.SvgState == VisualControlState.Selected)
-                    info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container)?.LightOrDark(isDark);
+                    info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container)?.GetColor(isDark);
                 info.IsRadioButton = item.IsRadioButton;
                 BeforeDrawCheckBox?.Invoke(this, info);
 

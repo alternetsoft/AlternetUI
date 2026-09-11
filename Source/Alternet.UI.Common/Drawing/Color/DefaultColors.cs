@@ -257,11 +257,11 @@ namespace Alternet.Drawing
         {
             if (isActive)
             {
-                return WindowActiveCaptionColor?.LightOrDark(isDark) ?? SystemColors.ActiveCaption;
+                return WindowActiveCaptionColor?.GetColor(isDark) ?? SystemColors.ActiveCaption;
             }
             else
             {
-                return WindowInactiveCaptionColor?.LightOrDark(isDark) ?? SystemColors.InactiveCaption;
+                return WindowInactiveCaptionColor?.GetColor(isDark) ?? SystemColors.InactiveCaption;
             }
         }
 
@@ -275,11 +275,11 @@ namespace Alternet.Drawing
         {
             if (isActive)
             {
-                return WindowActiveCaptionTextColor?.LightOrDark(isDark) ?? SystemColors.ActiveCaptionText;
+                return WindowActiveCaptionTextColor?.GetColor(isDark) ?? SystemColors.ActiveCaptionText;
             }
             else
             {
-                return WindowInactiveCaptionTextColor?.LightOrDark(isDark) ?? SystemColors.InactiveCaptionText;
+                return WindowInactiveCaptionTextColor?.GetColor(isDark) ?? SystemColors.InactiveCaptionText;
             }
         }
 
@@ -293,11 +293,11 @@ namespace Alternet.Drawing
         {
             if (isActive)
             {
-                return WindowActiveBorderColor?.LightOrDark(isDark) ?? SystemColors.ActiveBorder;
+                return WindowActiveBorderColor?.GetColor(isDark) ?? SystemColors.ActiveBorder;
             }
             else
             {
-                return WindowInactiveBorderColor?.LightOrDark(isDark) ?? SystemColors.InactiveBorder;
+                return WindowInactiveBorderColor?.GetColor(isDark) ?? SystemColors.InactiveBorder;
             }
         }
 
@@ -381,7 +381,7 @@ namespace Alternet.Drawing
         public static Color GetControlBorderColor(AbstractControl control)
         {
             var isDark = control.IsDarkBackground;
-            var color = control.Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color?.LightOrDark(isDark);
+            var color = control.Borders?.GetObjectOrNull(VisualControlState.Normal)?.Color?.GetColor(isDark);
             color ??= GetBorderColor(isDark);
             return color;
         }
@@ -394,7 +394,7 @@ namespace Alternet.Drawing
         public static Brush GetControlBorderBrush(AbstractControl control)
         {
             var brush = control.Background
-                ?? control.BackgroundColor?.LightOrDark(control).AsBrush
+                ?? control.BackgroundColor?.GetColor(control).AsBrush
                 ?? GetControlBorderColor(control).AsBrush;
             return brush;
         }

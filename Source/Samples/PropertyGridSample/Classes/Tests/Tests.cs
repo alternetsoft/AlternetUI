@@ -138,8 +138,8 @@ namespace PropertyGridSample
                         {
                                 new ("Complex", FontStyle.Regular, Color.Black, Color.Gray),
                                 new (" ", FontStyle.Regular),
-                                new ("formatted ", FontStyle.Bold, LightDarkColors.Red.LightOrDark(c)),
-                                new ("label", FontStyle.Underline, LightDarkColors.Green.LightOrDark(c)),
+                                new ("formatted ", FontStyle.Bold, LightDarkColors.Red.GetColor(c)),
+                                new ("label", FontStyle.Underline, LightDarkColors.Green.GetColor(c)),
                         };
                     }
                 }

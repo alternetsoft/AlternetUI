@@ -217,7 +217,7 @@ namespace ControlsSample
                     {
                         var border = new BorderSettings();
                         var shapeDrawable = new ShapeDrawable();
-                        shapeDrawable.Pen = LightDarkColors.Blue.LightOrDark(this).AsPen;
+                        shapeDrawable.Pen = LightDarkColors.Blue.GetColor(this).AsPen;
                         shapeDrawable.ShapeType = DrawingShapeType.Circle;
                         border.ShapeForeground = shapeDrawable;
                         return border;

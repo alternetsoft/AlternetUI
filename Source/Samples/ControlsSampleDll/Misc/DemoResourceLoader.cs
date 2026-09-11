@@ -39,7 +39,7 @@ namespace ControlsSample
 
                 if (control is not null)
                 {
-                    bool isDark = control.RealBackgroundColor.LightOrDark(control).IsDark();
+                    bool isDark = control.RealBackgroundColor.GetColor(control).IsDark();
 
                     if (disabled)
                         color = SvgColors.GetSvgColor(KnownSvgColor.Disabled, isDark);

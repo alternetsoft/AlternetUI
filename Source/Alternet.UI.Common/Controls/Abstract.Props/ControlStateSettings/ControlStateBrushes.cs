@@ -56,12 +56,12 @@ namespace Alternet.UI
             }
             else
             {
-                Normal = source.Normal?.BackgroundColor?.LightOrDark(isDark).AsBrush;
-                Hovered = source.Hovered?.BackgroundColor?.LightOrDark(isDark).AsBrush;
-                Pressed = source.Pressed?.BackgroundColor?.LightOrDark(isDark).AsBrush;
-                Disabled = source.Disabled?.BackgroundColor?.LightOrDark(isDark).AsBrush;
-                Focused = source.Focused?.BackgroundColor?.LightOrDark(isDark).AsBrush;
-                Selected = source.Selected?.BackgroundColor?.LightOrDark(isDark).AsBrush;
+                Normal = source.Normal?.BackgroundColor?.GetColor(isDark).AsBrush;
+                Hovered = source.Hovered?.BackgroundColor?.GetColor(isDark).AsBrush;
+                Pressed = source.Pressed?.BackgroundColor?.GetColor(isDark).AsBrush;
+                Disabled = source.Disabled?.BackgroundColor?.GetColor(isDark).AsBrush;
+                Focused = source.Focused?.BackgroundColor?.GetColor(isDark).AsBrush;
+                Selected = source.Selected?.BackgroundColor?.GetColor(isDark).AsBrush;
             }
         }
     }

@@ -234,7 +234,7 @@ namespace Alternet.UI
             if (item is not null)
                 return item.GetImages(listBox, isDark, imageToUse);
 
-            var color = ListControlItem.GetSelectedTextColor(item, listBox)?.LightOrDark(isDark);
+            var color = ListControlItem.GetSelectedTextColor(item, listBox)?.GetColor(isDark);
             return ListControlItem.GetItemImages(item, listBox, color, onlyNormal: false, imageToUse);
         }
 

@@ -988,7 +988,7 @@ namespace Alternet.UI
 
                 Color holidayColorBg = BackgroundColor.Light;
 
-                Color holidayColorFg = LightDarkColors.Red.LightOrDark(IsDarkBackground);
+                Color holidayColorFg = LightDarkColors.Red.GetColor(IsDarkBackground);
 
                 SetHeaderColors(headerColorFg, headerColorBg);
                 SetHighlightColors(highlightColorFg, highlightColorBg);
@@ -1009,7 +1009,7 @@ namespace Alternet.UI
                 if (IsDarkBackground)
                 {
                     HolidayColorFg = LightDarkColors.Red.Dark;
-                    HolidayColorBg = RealBackgroundColor.LightOrDark(this);
+                    HolidayColorBg = RealBackgroundColor.GetColor(this);
                 }
                 else
                 {

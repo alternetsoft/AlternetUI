@@ -1107,7 +1107,7 @@ namespace Alternet.UI
         {
             if (ShowDebugRectangleAtCenter)
             {
-                e.Graphics.FillRectangleAtCenter(LightDarkColors.Red.LightOrDark(this).AsBrush, ClientRectangle, 3);
+                e.Graphics.FillRectangleAtCenter(LightDarkColors.Red.GetColor(this).AsBrush, ClientRectangle, 3);
             }
 
             if (ShowDebugCorners)

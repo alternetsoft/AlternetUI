@@ -33,10 +33,10 @@ namespace ControlsSample
             patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
 
             blueColor = calendar.CreateDateAttr();
-            blueColor.TextColor = LightDarkColors.Blue.LightOrDark(this);
+            blueColor.TextColor = LightDarkColors.Blue.GetColor(this);
 
             greenColor = calendar.CreateDateAttr();
-            greenColor.TextColor = LightDarkColors.Green.LightOrDark(this);
+            greenColor.TextColor = LightDarkColors.Green.GetColor(this);
 
             Layout = LayoutStyle.Horizontal;
             calendar.Margin = 5;

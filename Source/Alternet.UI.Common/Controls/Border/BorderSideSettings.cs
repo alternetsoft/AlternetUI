@@ -152,7 +152,7 @@ namespace Alternet.UI
                 return brush;
 
             var c = color ?? defaultColor;
-            var result = c.LightOrDark(isDark).AsBrush;
+            var result = c.GetColor(isDark).AsBrush;
             return result;
         }
 
@@ -165,7 +165,7 @@ namespace Alternet.UI
                 return pen;
 
             var c = color ?? defaultColor;
-            var result = c.LightOrDark(isDark).GetAsPen(Math.Max(1, width));
+            var result = c.GetColor(isDark).GetAsPen(Math.Max(1, width));
             return result;
         }
 

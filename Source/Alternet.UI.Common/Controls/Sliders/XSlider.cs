@@ -1782,10 +1782,10 @@ namespace Alternet.UI
                 var isDark = IsDarkBackground;
 
                 color ??= DefaultThumbBackColor;
-                var parentBackBrush = (Parent?.BackColor ?? color.LightOrDark(isDark)).AsBrush;
+                var parentBackBrush = (Parent?.BackColor ?? color.GetColor(isDark)).AsBrush;
 
-                var leftTopColor = Container?.LeftTopSpacer.BackColor ?? DefaultSpacerColor.LightOrDark(isDark);
-                var rightBottomColor = Container?.RightBottomSpacer.BackColor ?? DefaultSecondarySpacerColor.LightOrDark(isDark);
+                var leftTopColor = Container?.LeftTopSpacer.BackColor ?? DefaultSpacerColor.GetColor(isDark);
+                var rightBottomColor = Container?.RightBottomSpacer.BackColor ?? DefaultSecondarySpacerColor.GetColor(isDark);
 
                 var r = ClientRectangle;
                 var center = r.Center;
@@ -1821,11 +1821,11 @@ namespace Alternet.UI
 
                 if (Shape == ShapeType.Circle)
                 {
-                    dc.FillCircle(color.LightOrDark(isDark).AsBrush, center, r.CircleRadius);
+                    dc.FillCircle(color.GetColor(isDark).AsBrush, center, r.CircleRadius);
                 }
                 else
                 {
-                    dc.FillRectangle(color.LightOrDark(isDark).AsBrush, r);
+                    dc.FillRectangle(color.GetColor(isDark).AsBrush, r);
                 }
             }
 

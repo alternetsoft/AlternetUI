@@ -249,7 +249,7 @@ Environment.NewLine + Environment.NewLine +
             {
                 FontInfo = fontInfo,
                 ShowHelp = false,
-                Color = sampleLabel.RealForegroundColor.LightOrDark(this),
+                Color = sampleLabel.RealForegroundColor.GetColor(this),
             };
 
             if (setCustomTitleCheckBox.IsChecked)
@@ -286,7 +286,7 @@ Environment.NewLine + Environment.NewLine +
         {
             var dialog = new ColorDialog
             {
-                Color = sampleLabel.RealBackgroundColor.LightOrDark(this),
+                Color = sampleLabel.RealBackgroundColor.GetColor(this),
             };
 
             if (setCustomTitleCheckBox.IsChecked)

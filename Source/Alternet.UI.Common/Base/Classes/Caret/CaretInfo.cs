@@ -381,7 +381,7 @@ namespace Alternet.UI
             var ldColor = Color ?? PlessCaretHandler.CaretColor;
 
             Color caretColor
-                = ldColor.LightOrDark(sender.IsDarkBackground);
+                = ldColor.GetColor(sender.IsDarkBackground);
 
             dc.FillRectangle(caretColor.AsBrush, sender.PixelToDip(Rect));
 
@@ -390,7 +390,7 @@ namespace Alternet.UI
                 var overlayColor = OverlayColor ?? PlessCaretHandler.DefaultOverlayColor
                     ?? PlessCaretHandler.CaretColor;
                 var overlaySvg = SafeOverlayImage;
-                var overlayImage = overlaySvg.ImageWithColor(BottomOverlayRect.Width, overlayColor.LightOrDark(sender.IsDarkBackground));
+                var overlayImage = overlaySvg.ImageWithColor(BottomOverlayRect.Width, overlayColor.GetColor(sender.IsDarkBackground));
 
                 if (BottomOverlayVisible)
                 {

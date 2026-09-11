@@ -990,7 +990,7 @@ namespace Alternet.UI
                 if (c is null)
                     return null;
 
-                return c.RealBackgroundColor.LightOrDark(c.IsDarkBackground);
+                return c.RealBackgroundColor.GetColor(c.IsDarkBackground);
             }
 
             return null;

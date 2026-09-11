@@ -1014,22 +1014,22 @@ namespace Alternet.UI
 
             if (border.Top.Width > 0 && border.ColorIsOk(topColor))
             {
-                dc.FillRectangle(topColor.LightOrDark(isDark).AsBrush, border.GetTopRectangle(prm.Rect));
+                dc.FillRectangle(topColor.GetColor(isDark).AsBrush, border.GetTopRectangle(prm.Rect));
             }
 
             if (border.Bottom.Width > 0 && border.ColorIsOk(bottomColor))
             {
-                dc.FillRectangle(bottomColor.LightOrDark(isDark).AsBrush, border.GetBottomRectangle(prm.Rect));
+                dc.FillRectangle(bottomColor.GetColor(isDark).AsBrush, border.GetBottomRectangle(prm.Rect));
             }
 
             if (border.Left.Width > 0 && border.ColorIsOk(leftColor))
             {
-                dc.FillRectangle(leftColor.LightOrDark(isDark).AsBrush, border.GetLeftRectangle(prm.Rect));
+                dc.FillRectangle(leftColor.GetColor(isDark).AsBrush, border.GetLeftRectangle(prm.Rect));
             }
 
             if (border.Right.Width > 0 && border.ColorIsOk(rightColor))
             {
-                dc.FillRectangle(rightColor.LightOrDark(isDark).AsBrush, border.GetRightRectangle(prm.Rect));
+                dc.FillRectangle(rightColor.GetColor(isDark).AsBrush, border.GetRightRectangle(prm.Rect));
             }
         }
 

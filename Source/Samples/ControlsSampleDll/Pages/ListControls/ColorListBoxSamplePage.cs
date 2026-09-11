@@ -85,12 +85,12 @@ namespace ControlsSample
             drawingResourcePicker.Parent = settings;
             drawingResourcePicker.MinWidth = 150;
 
-            var brush1 = new HatchBrush(BrushHatchStyle.Horizontal, LightDarkColors.Red.LightOrDark(this));
+            var brush1 = new HatchBrush(BrushHatchStyle.Horizontal, LightDarkColors.Red.GetColor(this));
             DrawingResource brush1resource = new(brush1);
             var brush1Name = $"Horizontal Red";
             brush1resource.Title = brush1Name;
 
-            var brush2 = new HatchBrush(BrushHatchStyle.Vertical, LightDarkColors.Green.LightOrDark(this));
+            var brush2 = new HatchBrush(BrushHatchStyle.Vertical, LightDarkColors.Green.GetColor(this));
             DrawingResource brush2resource = new(brush2);
             var brush2Name = $"Vertical Green";
             brush2resource.Title = brush2Name;

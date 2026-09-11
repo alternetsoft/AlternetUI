@@ -215,7 +215,7 @@ namespace Alternet.UI
             {
                 var color = DefaultHoveredCheckBoxColor ?? LightDarkColors.Red;
 
-                info.Color = color.LightOrDark(IsDarkBackground);
+                info.Color = color.GetColor(IsDarkBackground);
             }
             else
             {

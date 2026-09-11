@@ -344,7 +344,7 @@ namespace Alternet.UI
 
                 if (backColor is not null)
                 {
-                    canvas.Canvas.Clear(backColor.LightOrDark(template));
+                    canvas.Canvas.Clear(backColor.GetColor(template));
                 }
 
                 DrawControlTemplate(template, canvas);

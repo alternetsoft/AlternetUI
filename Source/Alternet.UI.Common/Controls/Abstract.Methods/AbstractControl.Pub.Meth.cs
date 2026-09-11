@@ -528,13 +528,13 @@ namespace Alternet.UI
 
             if (isDark is null)
             {
-                BackColor = DefaultColors.ControlBackColor.LightOrDark();
-                ForeColor = DefaultColors.ControlForeColor.LightOrDark();
+                BackColor = DefaultColors.ControlBackColor.GetColor();
+                ForeColor = DefaultColors.ControlForeColor.GetColor();
             }
             else
             {
-                BackColor = DefaultColors.ControlBackColor.LightOrDark(isDark.Value);
-                ForeColor = DefaultColors.ControlForeColor.LightOrDark(isDark.Value);
+                BackColor = DefaultColors.ControlBackColor.GetColor(isDark.Value);
+                ForeColor = DefaultColors.ControlForeColor.GetColor(isDark.Value);
             }
         }
 
@@ -566,8 +566,8 @@ namespace Alternet.UI
 
                 var isDark = ColorMode.ToBool() ?? SystemSettings.AppearanceIsDark;
 
-                BackColor = DefaultColors.ControlBackColor.LightOrDark(isDark);
-                ForeColor = DefaultColors.ControlForeColor.LightOrDark(isDark);
+                BackColor = DefaultColors.ControlBackColor.GetColor(isDark);
+                ForeColor = DefaultColors.ControlForeColor.GetColor(isDark);
             }
             else
             {

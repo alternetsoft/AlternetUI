@@ -1545,7 +1545,7 @@ namespace Alternet.UI
             if (HasInteriorBorder)
             {
                 e.Graphics.DrawBorderWithBrush(
-                            GetInteriorBorderColor().LightOrDark(this).AsBrush,
+                            GetInteriorBorderColor().GetColor(this).AsBrush,
                             e.ClientRectangle,
                             GetRightPanelBorder(TabsAlignment));
             }
@@ -1565,7 +1565,7 @@ namespace Alternet.UI
                     Control = this,
                     Graphics = e.Graphics,
                     Bounds = e.ClientRectangle,
-                    Brush = GetInteriorBorderColor().LightOrDark(this).AsBrush,
+                    Brush = GetInteriorBorderColor().GetColor(this).AsBrush,
                     TabAlignment = TabsAlignment,
                     RoundCorners = UseRoundedCorners,
                     DrawTabSeparatorLines = drawTabSeparatorLines,

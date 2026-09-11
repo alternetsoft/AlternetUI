@@ -821,7 +821,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color GetDisabledTextColor()
         {
-            return ListControlItem.DefaultDisabledTextColor.LightOrDark(this);
+            return ListControlItem.DefaultDisabledTextColor.GetColor(this);
         }
 
         /// <summary>
@@ -869,7 +869,7 @@ namespace Alternet.UI
 
             var font = RealFont;
             Color color;
-            color = ForegroundColor?.LightOrDark(this) ?? SystemColors.WindowText;
+            color = ForegroundColor?.GetColor(this) ?? SystemColors.WindowText;
 
             if (e.IsPaintingControl)
             {

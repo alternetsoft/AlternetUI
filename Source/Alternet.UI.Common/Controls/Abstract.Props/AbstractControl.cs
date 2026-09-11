@@ -3332,7 +3332,7 @@ namespace Alternet.UI
             {
                 var result = RealForegroundColor;
 
-                return result.LightOrDark(this);
+                return result.GetColor(this);
             }
 
             set
@@ -3353,7 +3353,7 @@ namespace Alternet.UI
         {
             get
             {
-                return RealBackgroundColor.LightOrDark(this);
+                return RealBackgroundColor.GetColor(this);
             }
 
             set

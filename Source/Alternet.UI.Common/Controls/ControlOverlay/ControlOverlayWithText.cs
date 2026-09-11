@@ -83,8 +83,8 @@ namespace Alternet.UI
                 Text,
                 Location,
                 GetFont(control),
-                GetTextColor(control).LightOrDark(isDark),
-                GetBackColor(control).LightOrDark(isDark));
+                GetTextColor(control).GetColor(isDark),
+                GetBackColor(control).GetColor(isDark));
         }
     }
 }

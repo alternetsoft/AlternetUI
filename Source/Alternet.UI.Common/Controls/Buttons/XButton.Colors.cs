@@ -434,7 +434,7 @@ namespace Alternet.UI
 
             LightDarkColor color = GetBackgroundColor(state) ?? DefaultColors.ControlBackColor;
 
-            return color.LightOrDark(this).AsBrush;
+            return color.GetColor(this).AsBrush;
         }
 
         /// <summary>

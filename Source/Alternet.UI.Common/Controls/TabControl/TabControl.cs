@@ -1439,7 +1439,7 @@ namespace Alternet.UI
                 Graphics = e.Graphics,
                 Bounds = ClientRectangle,
                 HeaderBounds = r,
-                Brush = GetInteriorBorderColor().LightOrDark(this).AsBrush,
+                Brush = GetInteriorBorderColor().GetColor(this).AsBrush,
                 TabAlignment = tabPaintAlignment ?? TabAlignment,
             };
 
@@ -1547,7 +1547,7 @@ namespace Alternet.UI
                 Control = HeaderControl,
                 Graphics = e.Graphics,
                 Bounds = r,
-                Brush = GetInteriorBorderColor().LightOrDark(this).AsBrush,
+                Brush = GetInteriorBorderColor().GetColor(this).AsBrush,
                 TabAlignment = tabPaintAlignment ?? TabAlignment,
                 RoundCorners = UseRoundedCorners,
                 DrawTabSeparatorLines = this.DrawTabSeparatorLines,
@@ -1576,7 +1576,7 @@ namespace Alternet.UI
             var border = HeaderControl.GetRightPanelBorder(TabAlignment);
 
             e.Graphics.DrawBorderWithBrush(
-                        GetInteriorBorderColor().LightOrDark(this).AsBrush,
+                        GetInteriorBorderColor().GetColor(this).AsBrush,
                         r,
                         border);
         }

@@ -800,7 +800,7 @@ namespace Alternet.UI
                     Text ?? string.Empty,
                     origin,
                     Font ?? UI.AbstractControl.DefaultFont,
-                    color.LightOrDark(this),
+                    color.GetColor(this),
                     Color.Empty);
             }
             else

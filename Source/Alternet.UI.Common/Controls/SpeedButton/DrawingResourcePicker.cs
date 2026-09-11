@@ -481,7 +481,7 @@ namespace Alternet.UI
             {
                 var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
                 if (disabledColor is not null)
-                    imageResource = new(disabledColor.LightOrDark(this));
+                    imageResource = new(disabledColor.GetColor(this));
             }
 
             imageResource ??= new(Color.Empty);
@@ -503,7 +503,7 @@ namespace Alternet.UI
             LabelImage = brush?.AsImageWithBorder(
                 valueImageSize,
                 ScaleFactor,
-                (ValueImageBorder ?? ListControlItem.DefaultImageBorderColor).LightOrDark(this),
+                (ValueImageBorder ?? ListControlItem.DefaultImageBorderColor).GetColor(this),
                 ValueImageShape);
 
             if (refresh)

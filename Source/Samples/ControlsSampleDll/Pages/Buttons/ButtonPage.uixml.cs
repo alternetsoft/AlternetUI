@@ -340,13 +340,13 @@ namespace ControlsSample
         internal bool TextIsDark()
         {
             var textColor = GetColor(comboBoxTextColor) ?? button.RealForegroundColor;
-            return textColor.LightOrDark().IsDark();
+            return textColor.GetColor().IsDark();
         }
 
         internal bool BackIsDark()
         {
             var backColor = GetColor(comboBoxBackColor) ?? button.RealBackgroundColor;
-            return backColor.LightOrDark().IsDark();
+            return backColor.GetColor().IsDark();
         }
 
         private void Back_Changed(object? sender, EventArgs e)

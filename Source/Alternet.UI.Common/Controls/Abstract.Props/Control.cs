@@ -561,7 +561,7 @@ namespace Alternet.UI
             else
             {
                 if (!DisposingOrDisposed)
-                    Handler.BackgroundColor = RealBackgroundColor.LightOrDark(this);
+                    Handler.BackgroundColor = RealBackgroundColor.GetColor(this);
             }
 
             base.RaiseBackgroundColorChanged();
@@ -763,9 +763,9 @@ namespace Alternet.UI
                 return;
 
             if (BackgroundColor is not null)
-                Handler.BackgroundColor = RealBackgroundColor.LightOrDark(this);
+                Handler.BackgroundColor = RealBackgroundColor.GetColor(this);
             if (ForegroundColor is not null)
-                Handler.ForegroundColor = RealForegroundColor.LightOrDark(this);
+                Handler.ForegroundColor = RealForegroundColor.GetColor(this);
             base.RaiseHandleCreated(e);
         }
 
@@ -925,14 +925,14 @@ namespace Alternet.UI
                 if (color is null)
                     Handler.ResetBackgroundColor();
                 else
-                    Handler.BackgroundColor = color.LightOrDark(this);
+                    Handler.BackgroundColor = color.GetColor(this);
             }
             else
             {
                 if (color is null)
                     Handler.ResetForegroundColor();
                 else
-                    Handler.ForegroundColor = color.LightOrDark(this);
+                    Handler.ForegroundColor = color.GetColor(this);
             }
         }
 

@@ -93,7 +93,7 @@ namespace Alternet.UI
 
             var isDark = ListControlItem.IsContainerDark(container);
             var color = GetSeparatorColor(container, e.Item);
-            e.Graphics.FillRectangle(color.LightOrDark(isDark).AsBrush, lineRect);
+            e.Graphics.FillRectangle(color.GetColor(isDark).AsBrush, lineRect);
         }
     }
 }

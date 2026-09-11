@@ -229,7 +229,7 @@ namespace Alternet.Drawing
                         image = svg.AsDisabledImage(size, control.IsDarkBackground);
                         break;
                     case VisualControlState.Selected:
-                        color = DefaultColors.DefaultCheckBoxColor.LightOrDark(isDark: true);
+                        color = DefaultColors.DefaultCheckBoxColor.GetColor(isDark: true);
                         image = svg.ImageWithColor(size, color);
                         break;
                     default:
@@ -240,7 +240,7 @@ namespace Alternet.Drawing
                         else
                         {
                             color = DefaultColors.DefaultCheckBoxColor
-                                .LightOrDark(control.IsDarkBackground);
+                                .GetColor(control.IsDarkBackground);
                         }
 
                         image = svg.ImageWithColor(size, color);

@@ -156,14 +156,14 @@ namespace Alternet.UI
                 if (isSelectedItem)
                 {
                     drawItemArgs.BackColor
-                        = (ListControlItem.GetSelectedItemBackColor(item, this) ?? RealBackgroundColor).LightOrDark(isDark);
+                        = (ListControlItem.GetSelectedItemBackColor(item, this) ?? RealBackgroundColor).GetColor(isDark);
                     drawItemArgs.ForeColor
-                        = (ListControlItem.GetSelectedTextColor(item, this) ?? RealForegroundColor).LightOrDark(isDark);
+                        = (ListControlItem.GetSelectedTextColor(item, this) ?? RealForegroundColor).GetColor(isDark);
                 }
                 else
                 {
-                    drawItemArgs.BackColor = RealBackgroundColor.LightOrDark(isDark);
-                    drawItemArgs.ForeColor = (ListControlItem.GetItemTextColor(item, this) ?? RealForegroundColor).LightOrDark(isDark);
+                    drawItemArgs.BackColor = RealBackgroundColor.GetColor(isDark);
+                    drawItemArgs.ForeColor = (ListControlItem.GetItemTextColor(item, this) ?? RealForegroundColor).GetColor(isDark);
                 }
 
                 RaiseDrawItem(drawItemArgs);
@@ -442,7 +442,7 @@ namespace Alternet.UI
             {
                 var dc = e.Graphics;
 
-                dc.FillRectangle(RealBackgroundColor.LightOrDark(this).AsBrush, ClientRectangle);
+                dc.FillRectangle(RealBackgroundColor.GetColor(this).AsBrush, ClientRectangle);
 
                 UpdateInteriorProperties();
 

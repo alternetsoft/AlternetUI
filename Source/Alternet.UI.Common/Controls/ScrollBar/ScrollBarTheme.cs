@@ -423,7 +423,7 @@ namespace Alternet.UI
         {
             if (DefaultHoveredColor is not null)
             {
-                return DefaultHoveredColor.LightOrDark(isDark);
+                return DefaultHoveredColor.GetColor(isDark);
             }
 
             float? factor;

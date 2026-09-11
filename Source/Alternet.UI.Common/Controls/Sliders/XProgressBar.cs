@@ -945,8 +945,8 @@ namespace Alternet.UI
 
             var isDark = IsDarkBackground;
 
-            var sc1 = (spacerColor ?? DefaultSpacerColor).LightOrDark(isDark).AsBrush;
-            var sc2 = (secondarySpacerColor ?? DefaultSecondarySpacerColor).LightOrDark(isDark).AsBrush;
+            var sc1 = (spacerColor ?? DefaultSpacerColor).GetColor(isDark).AsBrush;
+            var sc2 = (secondarySpacerColor ?? DefaultSecondarySpacerColor).GetColor(isDark).AsBrush;
 
             var r = e.ClientRectangle;
             r = r.DeflatedWithPadding(Padding);

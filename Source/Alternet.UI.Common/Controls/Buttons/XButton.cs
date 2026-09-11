@@ -356,7 +356,7 @@ namespace Alternet.UI
         {
             if (IsDefault)
             {
-                var result = GetBackgroundColor(state)?.LightOrDark(this)?.IsDark();
+                var result = GetBackgroundColor(state)?.GetColor(this)?.IsDark();
                 result ??= IsDarkBackground;
                 return result.Value;
             }

@@ -529,12 +529,12 @@ namespace Alternet.UI
             if (Horizontal)
             {
                 var vertLine = DrawingUtils.GetCenterLineVert(e.ClientRectangle);
-                e.Graphics.FillRectangle(color.LightOrDark(this).AsBrush, vertLine);
+                e.Graphics.FillRectangle(color.GetColor(this).AsBrush, vertLine);
             }
             else
             {
                 var horzLine = DrawingUtils.GetCenterLineHorz(e.ClientRectangle);
-                e.Graphics.FillRectangle(color.LightOrDark(this).AsBrush, horzLine);
+                e.Graphics.FillRectangle(color.GetColor(this).AsBrush, horzLine);
             }
         }
 
@@ -547,7 +547,7 @@ namespace Alternet.UI
         {
             if (color is null)
                 return;
-            e.Graphics.FillRectangle(color.LightOrDark(this).AsBrush, e.ClientRectangle);
+            e.Graphics.FillRectangle(color.GetColor(this).AsBrush, e.ClientRectangle);
         }
 
         /// <summary>

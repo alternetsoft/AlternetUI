@@ -158,7 +158,7 @@ namespace Alternet.UI
         {
             if (IsStroked)
             {
-                return Stroke ?? DefaultColors.BorderColor.LightOrDark(IsDarkBackground).AsPen;
+                return Stroke ?? DefaultColors.BorderColor.GetColor(IsDarkBackground).AsPen;
             }
 
             return null;
