@@ -49,6 +49,7 @@ namespace Alternet.UI
         private TextAsValueHelper? valueHelper;
         private bool keepSquareShape;
         private bool isNormalTransparent;
+        private bool isDisabledTransparent;
         static SpeedButton()
         {
             ResetThemes();
@@ -371,6 +372,26 @@ namespace Alternet.UI
                 if (isNormalTransparent == value)
                     return;
                 isNormalTransparent = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is transparent when it is in its disabled state.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsDisabledTransparent
+        {
+            get
+            {
+                return isDisabledTransparent;
+            }
+
+            set
+            {
+                if (isDisabledTransparent == value)
+                    return;
+                isDisabledTransparent = value;
                 Invalidate();
             }
         }
@@ -1918,9 +1939,10 @@ namespace Alternet.UI
             var state = VisualState;
 
             var isNormal = state == VisualControlState.Normal;
-            var isNormalOrDisabled = isNormal || state == VisualControlState.Disabled;
+            var isDisabled = state == VisualControlState.Disabled;
+            var isNormalOrDisabled = isNormal || isDisabled;
 
-            var transparent = IsTransparent || (isNormal && IsNormalTransparent);
+            var transparent = IsTransparent || (isNormal && IsNormalTransparent) || (isDisabled && IsDisabledTransparent);
 
             var backgroundFlags = transparent
                 ? DrawDefaultBackgroundFlags.None : DrawDefaultBackgroundFlags.DrawBackground;
