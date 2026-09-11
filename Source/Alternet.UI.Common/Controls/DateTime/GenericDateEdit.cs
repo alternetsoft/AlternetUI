@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -139,7 +141,87 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the currently selected date.
+        /// Gets or sets the currently selected time as a <see cref="TimeOnly"/> value, or null if no value is selected.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TimeOnly? AsTimeOnly
+        {
+            get
+            {
+                if (Value.HasValue)
+                    return Value.Value.ToTimeOnly();
+                return null;
+            }
+            set
+            {
+                if (value.HasValue)
+                    Value = value.Value.ToDateTime(ValueOrNow.ToDateOnly());
+                else
+                    Value = null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the currently selected time as a <see cref="TimeOnly"/> value, or the current time if no value is selected.
+        /// </summary>
+        [Browsable(false)]
+        public TimeOnly AsTimeOnlyOrNow
+        {
+            get
+            {
+                return AsTimeOnly ?? DateTime.Now.ToTimeOnly();
+            }
+        }
+
+        /// <summary>
+        /// Gets the currently selected date as a <see cref="DateOnly"/> value, or the current date if no value is selected.
+        /// </summary>
+        [Browsable(false)]
+        public DateOnly AsDateOnlyOrToday
+        {
+            get
+            {
+                return AsDateOnly ?? DateTime.Now.ToDateOnly();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected date as a <see cref="DateOnly"/> value, or null if no value is selected.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateOnly? AsDateOnly
+        {
+            get
+            {
+                if (Value.HasValue)
+                    return Value.Value.ToDateOnly();
+                return null;
+            }
+            set
+            {
+                if (value.HasValue)
+                    Value = value.Value.ToDateTime(ValueOrNow.ToTimeOnly());
+                else
+                    Value = null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the currently selected date and time, or the current date and time if no value is selected.
+        /// </summary>
+        [Browsable(false)]
+        public DateTime ValueOrNow
+        {
+            get
+            {
+                if (Value.HasValue)
+                    return Value.Value;
+                return DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected date and time.
         /// </summary>
         public abstract DateTime? Value { get; set; }
 
