@@ -35,6 +35,17 @@ namespace Alternet.UI.Extensions
         }
 
         /// <summary>
+        /// Converts a <see cref="TimeOnly"/> and a <see cref="DateOnly"/> to a <see cref="DateTime"/> by combining them.
+        /// </summary>
+        /// <param name="time">The <see cref="TimeOnly"/> to convert.</param>
+        /// <param name="datePart">The <see cref="DateOnly"/> to combine with the time.</param>
+        /// <returns>A <see cref="DateTime"/> representing the specified <see cref="TimeOnly"/> and <see cref="DateOnly"/>.</returns>
+        public static DateTime ToDateTime(this TimeOnly time, DateOnly datePart)
+        {
+            return datePart.ToDateTime(time);
+        }
+
+        /// <summary>
         /// Converts a <see cref="DateTime"/> to a <see cref="DateOnly"/> by extracting the date component.
         /// </summary>
         /// <param name="dateTime">The <see cref="DateTime"/> to convert.</param>

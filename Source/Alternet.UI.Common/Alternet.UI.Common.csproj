@@ -69,13 +69,6 @@
     <EmbeddedResource Include="Resources\Svg\CodeCompletionSymbols\Property.svg" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Strings.resx">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:_GenerateResxSource</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-
   <Import Project="$(MSBuildThisFileDirectory)\SignDll.proj" />
 
 </Project>
