@@ -90,7 +90,10 @@ namespace ControlsSample
             {
                 c.IgnoreTransparency = true;
             });
+            propGrid.AddHorizontalLine();
 
+            propGrid.Add<BoldLabel>("RepeatPatternPicker");
+            propGrid.Add<RepeatPatternPicker>();
             propGrid.AddHorizontalLine();
 
             popupCalendar.AfterHide += PopupListBox_AfterHide;
