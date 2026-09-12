@@ -293,6 +293,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a human-readable string representation of the specified duration, formatted according to the specified format provider.
+        /// </summary>
+        /// <param name="duration">The duration to format.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns>A human-readable string representation of the specified duration.</returns>
+        public static string GetDurationText(TimeSpan duration, IFormatProvider? formatProvider = null)
+        {
+            var timeSeparator = StringUtils.OneSpace;
+            int hours = duration.Hours;
+            int minutes = duration.Minutes;
+            int seconds = duration.Seconds;
+
+            var hoursText = TimePeriodUnit.Hours.ToDisplayString(hours);
+            var minutesText = TimePeriodUnit.Minutes.ToDisplayString(minutes);
+            var secondsText = TimePeriodUnit.Seconds.ToDisplayString(seconds);
+
+            string result = string.Empty;
+
+            if (hours > 0)
+            {
+                result = hoursText;
+            }
+
+            if (minutes > 0)
+            {
+                if (hours > 0)
+                {
+                    result += timeSeparator;
+                }
+                result += minutesText;
+            }
+
+            if (seconds > 0)
+            {
+                if (hours > 0 || minutes > 0)
+                {
+                    result += timeSeparator;
+                }
+                result += secondsText;
+            }
+
+            string formattedDuration = result;
+            return formattedDuration;
+        }
+
+        /// <summary>
         /// Gets the names of the days of the week in the Gregorian calendar, based on the specified kind and format provider. 
         /// The result array contains names for
         /// "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", and "Saturday".
