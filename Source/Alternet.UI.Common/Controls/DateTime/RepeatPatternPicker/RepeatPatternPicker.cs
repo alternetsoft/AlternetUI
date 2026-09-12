@@ -15,6 +15,11 @@ namespace Alternet.UI
     public partial class RepeatPatternPicker : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets the default minimum margin between child controls in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public static Thickness DefaultMinChildMargin = 5;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
         /// </summary>
         public static bool DefaultShowDropDownImage = false;
@@ -32,6 +37,15 @@ namespace Alternet.UI
         public static readonly Thickness DefaultPadding = 5;
 
         private readonly DateTimePicker startDatePicker = new();
+        private readonly TimePicker endTimePicker = new();
+        private readonly PictureBox endDateIcon;
+        private readonly PictureBox endTimeIcon;
+        private readonly Panel tabControlPanel = new();
+        private readonly TransparentPanel startPanel = new();
+        private readonly TransparentPanel endPanel = new ();
+        private readonly TransparentPanel endDatePanel = new ();
+        private readonly TransparentPanel endTimePanel = new ();
+
         private readonly GenericControlAndLabel<DatePicker, Label> endDatePicker = new();
         private readonly XCheckBox allDayCheckBox = new(CommonStrings.Default.FullDayDuration);
         private readonly BoldLabel startDateLabel;
@@ -57,46 +71,78 @@ namespace Alternet.UI
         {
             Layout = LayoutStyle.Vertical;
             Padding = DefaultPadding;
-            MinChildMargin = 5;
+            MinChildMargin = DefaultMinChildMargin;
 
             data = CreateRule();
 
             // Start on date
 
-            startDateLabel = Add<BoldLabel>(CommonStrings.Default.Starts);
+            startPanel.SetIgnoreTransparency().RoundCorners().SetHasBorder(true)
+                .SetLayout(LayoutStyle.Vertical).SetMinChildMargin(DefaultMinChildMargin);
+
+            startDateLabel = startPanel.Add<BoldLabel>(CommonStrings.Default.Starts);
 
             startDatePicker.Kind = DateTimePickerKind.DateTime;
+            startDatePicker.ForceDateIcon = true;
             startDatePicker.DatePicker.ImageVisible = DefaultShowDropDownImage;
-            startDatePicker.Parent = this;
+            startDatePicker.Parent = startPanel;
 
-            allDayCheckBox.Parent = this;
+            allDayCheckBox.Parent = startPanel;
             allDayCheckBox.CheckedChanged += OnAllDayCheckedChanged;
+
+            startPanel.Parent = this;
 
             // End on date
 
-            endDateLabel = Add<BoldLabel>(CommonStrings.Default.Ends);
+            var endDateControlsPanel = new TransparentPanel();
+            endDateControlsPanel.Layout = LayoutStyle.Vertical;
 
             endDatePicker.Label.Text = CommonStrings.Default.OnPrefix;
             endDatePicker.Label.InputTransparent = true;
             endDatePicker.MainControl.ImageVisible = DefaultShowDropDownImage;
             
             endsOnRadioButton = new(endDatePicker);
-            endsOnRadioButton.Parent = this;
+            endsOnRadioButton.Parent = endDateControlsPanel;
             endDatePicker.Click += (s, e) => endsOnRadioButton.IsChecked = true;
 
-            // Ends after cccurrence
+            // Ends after occurrence
 
             occurrencePicker.PrefixText = CommonStrings.Default.After;
 
             endsAfterOccurrenceRadioButton = new(occurrencePicker);
-            endsAfterOccurrenceRadioButton.Parent = this;
+            endsAfterOccurrenceRadioButton.MarginTop = DefaultMinChildMargin.Top;
+            endsAfterOccurrenceRadioButton.Parent = endDateControlsPanel;
             occurrencePicker.Click += (s, e) => endsAfterOccurrenceRadioButton.IsChecked = true;
 
             // Ends never
 
             endsNeverRadioButton = new();
+            endsNeverRadioButton.MarginTop = DefaultMinChildMargin.Top;
             endsNeverRadioButton.SuffixControl.Text = CommonStrings.Default.Never;
-            endsNeverRadioButton.Parent = this;
+            endsNeverRadioButton.Parent = endDateControlsPanel;
+
+            // End panels
+
+            endPanel.SetIgnoreTransparency().RoundCorners().SetHasBorder(true)
+                .SetLayout(LayoutStyle.Vertical).SetMinChildMargin(DefaultMinChildMargin);
+
+            endDateLabel = endPanel.Add<BoldLabel>(CommonStrings.Default.Ends);
+
+            endDateIcon = startDatePicker.CreatePictureBox(DateTimePickerKind.Date);
+            endTimeIcon = startDatePicker.CreatePictureBox(DateTimePickerKind.Time);
+
+            endDatePanel.SetLayout(LayoutStyle.Horizontal);
+            endDateIcon.WithAlignment(VerticalAlignment.Top).WithMarginTop(DefaultMinChildMargin.Top).SetParent(endDatePanel);
+
+            endDateControlsPanel.SetParent(endDatePanel);
+            endDatePanel.Parent = endPanel;
+
+            endTimePanel.SetLayout(LayoutStyle.Horizontal);
+            endTimeIcon.WithAlignment(VerticalAlignment.Center).SetParent(endTimePanel);
+            endTimePicker.Parent = endTimePanel;
+            endTimePanel.Parent = endPanel;
+
+            endPanel.Parent = this;
 
             // Other initializations
 
@@ -125,13 +171,16 @@ namespace Alternet.UI
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternMonthly, monthlyPicker);
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternYearly, yearlyPicker);
 
-            HasBorder = true;
+            HasBorder = false;
 
-            Add<HorizontalLine>();
+            tabControlPanel.RoundCorners().SetHasBorder(true)
+                .SetLayout(LayoutStyle.Vertical).SetMinChildMargin(DefaultMinChildMargin);
 
-            repeatLabel = Add<BoldLabel>(CommonStrings.Default.Repeat);
+            repeatLabel = tabControlPanel.Add<BoldLabel>(CommonStrings.Default.Repeat);
 
-            tabControl.Parent = this;
+            tabControl.Parent = tabControlPanel;
+
+            tabControlPanel.Parent = this;
 
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
             data.PropertyChanged += OnValuePropertyChanged;
@@ -186,10 +235,60 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
+        /// Gets the panel which contains the <see cref="TabControl"/> used for selecting the repeat pattern.
+        /// </summary>
+        [Browsable(false)]
+        public Panel TabControlPanel => tabControlPanel;
+
+        /// <summary>
         /// Gets the inner <see cref="TabControl"/> used for selecting the repeat pattern.
         /// Its pages contain controls for selecting specific repeat pattern rules.
         /// </summary>
+        [Browsable(false)]
         public TabControl InnerTabControl => tabControl;
+
+        /// <summary>
+        /// Gets the end condition panel which contains controls for specifying the end condition of the repeat pattern.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel EndPanel => endPanel;
+
+        /// <summary>
+        /// Gets the start date panel which contains controls for specifying the start date and time of the repeat pattern.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel StartPanel => startPanel;
+
+        /// <summary>
+        /// Gets the end date panel which contains controls for specifying the end date of the repeat pattern.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel EndDatePanel => endDatePanel;
+        
+        /// <summary>
+        /// Gets the end time panel which contains controls for specifying the end time of the repeat pattern.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel EndTimePanel => endTimePanel;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the borders of inner panels are shown
+        /// in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public virtual bool ShowPanelBorders
+        {
+            get
+            {
+                return startPanel.HasBorder;
+            }
+
+            set
+            {
+                startPanel.HasBorder = value;
+                endPanel.HasBorder = value;
+                tabControlPanel.HasBorder = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the format provider used for culture-specific formatting of date and time values.
@@ -221,6 +320,7 @@ namespace Alternet.UI
             {
                 startDatePicker.Kind = value ? DateTimePickerKind.DateTime : DateTimePickerKind.Date;
                 AllDayCheckBox.Visible = value;
+                endTimePanel.Visible = value;
             }
         }
 
@@ -234,38 +334,46 @@ namespace Alternet.UI
             {
                 startDatePicker.TimePicker.Enabled = value;
                 startDatePicker.TimeIcon.Enabled = value;
+                endTimePicker.Enabled = value;
+                endTimeIcon.Enabled = value;
             }
         }
 
         /// <summary>
         /// Gets the <see cref="DailyPatternPicker"/> control for selecting a daily repeat pattern.
         /// </summary>
+        [Browsable(false)]
         public DailyPatternPicker DailyPicker => dailyPicker;
 
         /// <summary>
         /// Gets the <see cref="WeeklyPatternPicker"/> control for selecting a weekly repeat pattern.
         /// </summary>
+        [Browsable(false)]
         public WeeklyPatternPicker WeeklyPicker => weeklyPicker;
 
         /// <summary>
         /// Gets the <see cref="MonthlyPatternPicker"/> control for selecting a monthly repeat pattern.
         /// </summary>
+        [Browsable(false)]
         public MonthlyPatternPicker MonthlyPicker => monthlyPicker;
 
         /// <summary>
         /// Gets the <see cref="YearlyPatternPicker"/> control for selecting a yearly repeat pattern.
         /// </summary>
+        [Browsable(false)]
         public YearlyPatternPicker YearlyPicker => yearlyPicker;
 
         /// <summary>
         /// Gets the control for selecting "no repeat" pattern.
         /// </summary>
+        [Browsable(false)]
         public HiddenBorder NonePicker => nonePicker;
 
         /// <summary>
         /// Gets the <see cref="RepeatPatternRule"/> instance representing the selected repeat
         /// pattern and its associated rules.
         /// </summary>
+        [Browsable(false)]
         public virtual RepeatPatternRule Value => data;
 
         /// <summary>
