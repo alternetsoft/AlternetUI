@@ -25,11 +25,18 @@ namespace Alternet.UI
         public static bool DefaultShowDropDownImage = false;
 
         /// <summary>
+        /// Gets or sets the default time unit text format used for displaying durations
+        /// in the duration label of the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public static DateUtils.TimePeriodUnitTextFormat DefaultTimeUnitTextFormat = DateUtils.TimePeriodUnitTextFormat.Short;
+
+        /// <summary>
         /// Gets or sets the default date format used for displaying dates in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public static string DefaultDateFormat = "D";
 
         private IFormatProvider? formatProvider;
+        private DateUtils.TimePeriodUnitTextFormat timeUnitTextFormat = DefaultTimeUnitTextFormat;
 
         /// <summary>
         /// Gets the default padding for the <see cref="RepeatPatternPicker"/> control.
@@ -37,7 +44,7 @@ namespace Alternet.UI
         public static readonly Thickness DefaultPadding = 5;
 
         private readonly DateTimePicker startPicker = new();
-        private readonly TimePicker endTimePicker = new();
+        private readonly ControlAndSuffix<TimePicker, SpeedTextButton> endTimePicker = new();
         private readonly PictureBox endDateIcon;
         private readonly PictureBox endTimeIcon;
         private readonly Panel tabControlPanel = new();
@@ -139,6 +146,8 @@ namespace Alternet.UI
 
             endTimePanel.SetLayout(LayoutStyle.Horizontal);
             endTimeIcon.WithAlignment(VerticalAlignment.Center).SetParent(endTimePanel);
+            endTimePicker.SuffixControl.MarginLeft = DefaultMinChildMargin.Left;
+            endTimePicker.SuffixControl.VerticalAlignment = VerticalAlignment.Stretch;
             endTimePicker.Parent = endTimePanel;
             endTimePanel.Parent = endPanel;
 
@@ -195,8 +204,21 @@ namespace Alternet.UI
 
             startPicker.ValueChanged += (s, e) =>
             {
-                data.StartDate = startPicker.AsDateOnlyOrToday;
+                data.DoInsideSuspendedPropertyChanged(() =>
+                {
+                    data.StartDate = startPicker.AsDateOnlyOrToday;
+                    data.StartTime = startPicker.TimePicker.AsTimeOnly;
+                });
             };
+
+            endTimePicker.MainControl.ValueChanged += (s, e) =>
+            {
+                var duration = endTimePicker.MainControl.AsTimeOnly - data.StartTime;
+                if (duration < TimeSpan.Zero)
+                    duration = TimeSpan.Zero;
+                data.Duration = duration;
+            };
+
             endDatePicker.MainControl.ValueChanged += (s, e) =>
             {
                 data.EndDate = endDatePicker.MainControl.AsDateOnlyOrToday;
@@ -227,6 +249,10 @@ namespace Alternet.UI
                     data.EndCondition = BaseRepeatPatternRule.EndConditionKind.AfterOccurrence;
                 }
             };
+
+            SecondsVisible = false;
+
+            endTimePicker.SuffixControl.Sticky = true;
         }
 
         /// <summary>
@@ -239,6 +265,35 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public Panel TabControlPanel => tabControlPanel;
+
+        [Browsable(false)]
+        DateUtils.TimePeriodUnitTextFormat TimeUnitTextFormat
+        {
+            get => timeUnitTextFormat;
+            set
+            {
+                if (timeUnitTextFormat == value)
+                    return;
+                timeUnitTextFormat = value;
+                UpdateDurationText();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the seconds selection is visible in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public virtual bool SecondsVisible
+        {
+            get => startPicker.TimePicker.SecondsVisible;
+            set
+            {
+                if (SecondsVisible == value)
+                    return;
+                startPicker.TimePicker.SecondsVisible = value;
+                endTimePicker.MainControl.SecondsVisible = value;
+                UpdateDurationText();
+            }
+        }
 
         /// <summary>
         /// Gets the inner <see cref="TabControl"/> used for selecting the repeat pattern.
@@ -326,7 +381,7 @@ namespace Alternet.UI
         /// Gets the end date picker control used for selecting the end time of the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public TimePicker EndTimePicker => endTimePicker;
+        public TimePicker EndTimePicker => endTimePicker.MainControl;
 
         /// <summary>
         /// Gets the end date icon control used for displaying the end date icon in the <see cref="RepeatPatternPicker"/> control.
@@ -461,6 +516,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates the duration text displayed in the end time picker based on the current duration of the repeat pattern.
+        /// </summary>
+        protected virtual void UpdateDurationText()
+        {
+            DateUtils.DurationTextParams prmDurationText = new()
+            {
+                UnitTextFormat = timeUnitTextFormat,
+            };
+
+            if (!SecondsVisible)
+                prmDurationText.Flags |= DateUtils.DurationTextFlags.HideSeconds;
+
+            prmDurationText.Flags |= DateUtils.DurationTextFlags.ReturnIfZero;
+
+            endTimePicker.SuffixControl.Text = DateUtils.GetDurationText(data.Duration, prmDurationText);
+        }
+
+        /// <summary>
         /// Called to update the control values based on the current state of the <see cref="RepeatPatternRule"/> instance.
         /// </summary>
         protected virtual void ValueToControls()
@@ -469,7 +542,9 @@ namespace Alternet.UI
             startPicker.AsDateOnly = data.StartDate;
             startPicker.AsTimeOnly = data.StartTime;
             endDatePicker.MainControl.AsDateOnly = data.EndDate;
-            endTimePicker.AsTimeOnly = data.EndTime;
+            endTimePicker.MainControl.AsTimeOnly = data.EndTime;
+
+            UpdateDurationText();
 
             endsOnRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.OnDate;
             endsAfterOccurrenceRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.AfterOccurrence;
