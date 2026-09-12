@@ -45,6 +45,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the <see cref="IgnoreTransparency"/> property and returns the current instance of <see cref="TransparentPanel"/>.
+        /// </summary>
+        /// <param name="value">The value to set for the <see cref="IgnoreTransparency"/> property.</param>
+        /// <returns>The current instance of <see cref="TransparentPanel"/>.</returns>
+        public TransparentPanel SetIgnoreTransparency(bool value = true)
+        {
+            IgnoreTransparency = value;
+            return this;
+        }
+
+        /// <summary>
         /// Adds the specified child controls to the container.
         /// </summary>
         /// <param name="children">The child controls to add.</param>
