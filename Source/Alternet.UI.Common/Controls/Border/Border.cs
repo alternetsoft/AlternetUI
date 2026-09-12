@@ -304,10 +304,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
-        public virtual void SetBorderColors(ThemedColor? left, ThemedColor? top, ThemedColor? right, ThemedColor? bottom)
+        public virtual Border SetBorderColors(ThemedColor? left, ThemedColor? top, ThemedColor? right, ThemedColor? bottom)
         {
             if (NormalBorder.SetColors(left, top, right, bottom))
                 Refresh();
+            return this;
         }
 
         /// <summary>
@@ -316,9 +317,10 @@ namespace Alternet.UI
         /// <param name="value">
         /// A <see cref="ThemedColor"/> to apply to all border sides.
         /// </param>
-        public virtual void SetBorderColors(ThemedColor? value)
+        public virtual Border SetBorderColors(ThemedColor? value)
         {
             SetBorderColors(value, value, value, value);
+            return this;
         }
 
         /// <summary>
@@ -330,12 +332,13 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetLeftBorderColor(ThemedColor? value)
+        public virtual Border SetLeftBorderColor(ThemedColor? value)
         {
             if (NormalBorder.Left.Color == value)
-                return;
+                return this;
             NormalBorder.Left.Color = value;
             Refresh();
+            return this;
         }
 
         /// <summary>
@@ -347,12 +350,13 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetRightBorderColor(ThemedColor? value)
+        public virtual Border SetRightBorderColor(ThemedColor? value)
         {
             if (NormalBorder.Right.Color == value)
-                return;
+                return this;
             NormalBorder.Right.Color = value;
             Refresh();
+            return this;
         }
 
         /// <summary>
@@ -364,12 +368,24 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetTopBorderColor(ThemedColor? value)
+        public virtual Border SetTopBorderColor(ThemedColor? value)
         {
             if (NormalBorder.Top.Color == value)
-                return;
+                return this;
             NormalBorder.Top.Color = value;
             Refresh();
+            return this;
+        }
+
+        /// <summary>
+        /// Initializes round corner settings for the border.
+        /// Uses default corner radius if no specific corner radius is provided.
+        /// </summary>
+        public virtual Border RoundCorners(BorderCornerRadius? corners = null)
+        {
+            corners ??= new BorderCornerRadius(GenericBorder.DefaultCornerRadius);
+            this.NormalBorder.SetCornerRadius(corners);
+            return this;
         }
 
         /// <summary>
@@ -381,12 +397,13 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetBottomBorderColor(ThemedColor? value)
+        public virtual Border SetBottomBorderColor(ThemedColor? value)
         {
             if (NormalBorder.Bottom.Color == value)
-                return;
+                return this;
             NormalBorder.Bottom.Color = value;
             Refresh();
+            return this;
         }
 
         /// <summary>
@@ -448,36 +465,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
-        {
-            if (HasBorder)
-            {
-                var width = NormalBorder.Width;
-                return base.GetPreferredSizeInternal(context) + width.Size;
-            }
-            else
-            {
-                return base.GetPreferredSizeInternal(context);
-            }
-        }
-
-        /// <summary>
-        /// Gets default border corner radius for the control. This method
-        /// is called in the constructor to initialize corner radius.
-        /// If this method returns null, no round corners are initialized.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual BorderCornerRadius? GetDefaultCornerRadius()
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
             if (BorderMargin.IsAnyPositive)
             {
-                DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground);
+                DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground | DrawDefaultBackgroundFlags.BackgroundIsRectangle);
                 var saved = e.ClientRectangle;
                 e.ClientRectangle = saved.DeflatedWithPadding(BorderMargin);
                 DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
@@ -485,7 +477,9 @@ namespace Alternet.UI
             }
             else
             {
-                DrawDefaultBackground(e);
+                DrawDefaultBackground(
+                    e,
+                    DrawDefaultBackgroundFlags.DrawBorderAndBackground | DrawDefaultBackgroundFlags.BackgroundIsRectangle);
             }
 
             DefaultPaintDebug(e);
@@ -496,9 +490,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="width">The width assigned to the border side.
         /// If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
-        public virtual void OnlyTopBorder(Coord? width = null)
+        public virtual Border OnlyTopBorder(Coord? width = null)
         {
             SetVisibleBorders(false, true, false, false, width);
+            return this;
         }
 
         /// <summary>
@@ -506,9 +501,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="width">The width assigned to the border side.
         /// If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
-        public virtual void OnlyBottomBorder(Coord? width = null)
+        public virtual Border OnlyBottomBorder(Coord? width = null)
         {
             SetVisibleBorders(false, false, false, true, width);
+            return this;
         }
 
         /// <summary>
@@ -521,7 +517,7 @@ namespace Alternet.UI
         /// <param name="width">The width assigned to the border side
         /// when side is visible. If Null, value from
         /// <see cref="DefaultBorderWidth"/> is used.</param>
-        public virtual void SetVisibleBorders(
+        public virtual Border SetVisibleBorders(
             bool left,
             bool top = false,
             bool right = false,
@@ -550,13 +546,15 @@ namespace Alternet.UI
                     return visible ? width : 0;
                 }
             });
+
+            return this;
         }
 
         /// <summary>
         /// Resets border so it is returned to the initial state as it was specified
         /// in the constructor.
         /// </summary>
-        public virtual void ResetBorders()
+        public virtual Border ResetBorders()
         {
             Borders ??= new();
             var settings = CreateBorderSettings(BorderSettings.Default);
@@ -572,6 +570,8 @@ namespace Alternet.UI
 
             Borders.Normal!.PropertyChangedAction = (e) => Refresh();
             Invalidate();
+
+            return this;
         }
 
         /// <summary>
@@ -581,6 +581,31 @@ namespace Alternet.UI
         protected virtual BorderSettings CreateBorderSettings(BorderSettings defaultSettings)
         {
             return new(defaultSettings);
+        }
+
+        /// <inheritdoc/>
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
+        {
+            if (HasBorder)
+            {
+                var width = NormalBorder.Width;
+                return base.GetPreferredSizeInternal(context) + width.Size;
+            }
+            else
+            {
+                return base.GetPreferredSizeInternal(context);
+            }
+        }
+
+        /// <summary>
+        /// Gets default border corner radius for the control. This method
+        /// is called in the constructor to initialize corner radius.
+        /// If this method returns null, no round corners are initialized.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual BorderCornerRadius? GetDefaultCornerRadius()
+        {
+            return null;
         }
 
         /// <summary>
