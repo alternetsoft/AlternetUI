@@ -844,6 +844,7 @@ namespace Alternet.UI
             var borderPen = prm.GetEffectiveBorderPen(isDark);
             var hasBorder = borderPen is not null;
             var hasBrush = brush is not null;
+            var backgroundIsRectangle = prm.BackgroundIsRectangle;
 
             if (!hasBrush && !hasBorder)
                 return;
@@ -912,11 +913,26 @@ namespace Alternet.UI
                 {
                     if (borderPen is null)
                     {
-                        canvas.FillRoundedRectangle(brush!, inflatedRect, radius.Value);
+                        if (backgroundIsRectangle)
+                        {
+                            canvas.FillRectangle(brush!, rect);
+                        }
+                        else
+                        {
+                            canvas.FillRoundedRectangle(brush!, inflatedRect, radius.Value);
+                        }
                     }
                     else
                     {
-                        canvas.RoundedRectangle(borderPen, brush!, inflatedRect, radius.Value);
+                        if (backgroundIsRectangle)
+                        {
+                            canvas.FillRectangle(brush!, rect);
+                            canvas.DrawRoundedRectangle(borderPen, inflatedRect, radius.Value);
+                        }
+                        else
+                        {
+                            canvas.RoundedRectangle(borderPen, brush!, inflatedRect, radius.Value);
+                        }
                     }
                 }
                 else

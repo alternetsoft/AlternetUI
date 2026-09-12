@@ -70,6 +70,12 @@ namespace Alternet.UI
             public bool OverrideBorderCornerSettings;
 
             /// <summary>
+            /// Gets or sets a value indicating whether the background should be drawn as a rectangle.
+            /// This is useful when the border has a non-rectangular shape and the background should be drawn as a rectangle.
+            /// </summary>
+            public bool BackgroundIsRectangle;
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="DrawBorderParams"/> struct.
             /// </summary>
             public DrawBorderParams(
