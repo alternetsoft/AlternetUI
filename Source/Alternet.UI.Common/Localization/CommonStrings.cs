@@ -166,6 +166,10 @@ namespace Alternet.UI.Localization
 
         public string WindowTitleSelectColor { get; set; } = "Select a Color";
 
+        public string WindowTitleEnterPinCode { get; set; } = "Enter PIN Code";
+
+        public string WindowTitleCalculator { get; set; } = "Calculator";
+
         public string WindowTitleSelectValue { get; set; } = "Select a Value";
 
         public string WindowTitleSelectValues { get; set; } = "Select Values";

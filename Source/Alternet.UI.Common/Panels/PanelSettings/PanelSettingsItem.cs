@@ -269,6 +269,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes the specified action on the editor control if it is of type <see cref="AbstractControl"/>.
+        /// </summary>
+        /// <param name="action">The action to be executed on the editor control.</param>
+        public virtual void WithEditor(Action<AbstractControl>? action = null)
+        {
+            if (Editor is AbstractControl control)
+            {
+                action?.Invoke(control);
+            }
+        }
+
+        /// <summary>
         /// Sets click action for the editor control associated with the item.
         /// </summary>
         /// <param name="clickAction">The action to be invoked when the editor is clicked.</param>

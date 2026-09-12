@@ -8,6 +8,7 @@ namespace ControlsSample
     public partial class NumericInputPage : Panel
     {
         private readonly PopupCalculator popupCalculator = new();
+        private readonly PopupPinCodePicker popupPinCodePicker = new();
 
         static NumericInputPage()
         {
@@ -51,6 +52,20 @@ namespace ControlsSample
             calcSettings.AddInput("Show clear last button", calculator, nameof(calculator.ShowClearLastButton));
 
             pinCodePickerSettings.AddInput("Show display", pinCodePicker, nameof(pinCodePicker.IsDisplayVisible));
+            pinCodePickerSettings.AddInput("Show as password", pinCodePicker, nameof(pinCodePicker.IsPasswordDisplay));
+            pinCodePickerSettings.AddSpacer();
+
+            var showPopupPickerItem = pinCodePickerSettings.AddButton("Show popup");
+
+            showPopupPickerItem.WithEditor((b) =>
+            {
+                b.HorizontalAlignment = HorizontalAlignment.Left;
+
+                b.Click += (s, e) =>
+                {
+                    popupPinCodePicker.ShowPopup(b);
+                };
+            });
         }
 
         private void PopupListBox_AfterHide(object? sender, EventArgs e)
