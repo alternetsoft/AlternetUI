@@ -36,13 +36,15 @@ namespace Alternet.UI
         private readonly TransparentPanel datePanel = new();
         private readonly TransparentPanel timePanel = new();
         private readonly TransparentPanel spacer = new();
-        private readonly PictureBox datePictureBox = new();
-        private readonly PictureBox timePictureBox = new();
+        private readonly PictureBox datePictureBox;
+        private readonly PictureBox timePictureBox;
         private readonly DateTimePickerPopupKind popupKind = DateTimePickerPopupKind.DropDown;
 
         private int suppressCounter;
         private DateTimePickerKind kind = DateTimePickerKind.Date;
         private DateTime? dateTime;
+        private bool forceDateIcon;
+        private bool forceTimeIcon;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
@@ -63,10 +65,9 @@ namespace Alternet.UI
 
             datePanel.Layout = LayoutStyle.Horizontal;
 
+            datePictureBox = CreatePictureBox(DateTimePickerKind.Date);
             datePictureBox.Visible = false;
-            datePictureBox.VerticalAlignment = VerticalAlignment.Center;
             datePictureBox.Parent = datePanel;
-            datePictureBox.Margin = DefaultIconMargin;
 
             datePicker.HorizontalAlignment = HorizontalAlignment.Fill;
             datePicker.Parent = datePanel;
@@ -78,24 +79,21 @@ namespace Alternet.UI
             spacer.Visible = false;
             spacer.Parent = this;
 
+            timePictureBox = CreatePictureBox(DateTimePickerKind.Time);
             timePictureBox.Visible = false;
-            timePictureBox.VerticalAlignment = VerticalAlignment.Center;
             timePictureBox.Parent = timePanel;
-            timePictureBox.Margin = DefaultIconMargin;
 
             timePanel.Layout = LayoutStyle.Horizontal;
             timePanel.Visible = false;
             timePicker.HorizontalAlignment = HorizontalAlignment.Fill;
             timePicker.Parent = timePanel;
+
             timePanel.Parent = this;
 
             datePicker.ValueChanged += OnDatePickerValueChanged;
             timePicker.ValueChanged += OnTimePickerValueChanged;
 
             Value = DateTime.Now;
-
-            datePictureBox.SetSvgImage(DefaultDateIcon ?? KnownSvgImages.ImgCalendar);
-            timePictureBox.SetSvgImage(DefaultTimeIcon ?? KnownSvgImages.ImgClock);
         }
 
         /// <summary>
@@ -195,7 +193,37 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public PictureBox TimeIcon => timePictureBox;
-        
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the date icon is forced to be visible.
+        /// </summary>
+        public virtual bool ForceDateIcon
+        {
+            get => forceDateIcon;
+            set
+            {
+                if (forceDateIcon == value)
+                    return;
+                forceDateIcon = value;
+                UpdateIconVisibility();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the time icon is forced to be visible.
+        /// </summary>
+        public virtual bool ForceTimeIcon
+        {
+            get => forceTimeIcon;
+            set
+            {
+                if (forceTimeIcon == value)
+                    return;
+                forceTimeIcon = value;
+                UpdateIconVisibility();
+            }
+        }
+
         /// <summary>
         /// Gets or sets the value assigned to the <see cref="DateTimePicker"/>
         /// as a selected <see cref="DateTime"/>.
@@ -328,8 +356,7 @@ namespace Alternet.UI
                 DoInsideLayout(() =>
                 {
                     spacer.Visible = IsDateTime;
-                    datePictureBox.Visible = IsDateTime;
-                    timePictureBox.Visible = IsDateTime;
+                    UpdateIconVisibility();
                     datePanel.Visible = IsDateTime || IsDateOnly;
                     timePanel.Visible = IsDateTime || IsTimeOnly;
                 });
@@ -374,6 +401,23 @@ namespace Alternet.UI
             ValueChanged?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Creates the <see cref="PictureBox"/> control for the specified <see cref="DateTimePickerKind"/>.
+        /// </summary>
+        /// <param name="kind">The kind of the date time picker.</param>
+        /// <returns>The created <see cref="PictureBox"/> control.</returns>
+        public virtual PictureBox CreatePictureBox(DateTimePickerKind kind)
+        {
+            var result = new PictureBox();
+            if (kind == DateTimePickerKind.Date)
+                result.SetSvgImage(DefaultDateIcon ?? KnownSvgImages.ImgCalendar);
+            else if (kind == DateTimePickerKind.Time)
+                result.SetSvgImage(DefaultTimeIcon ?? KnownSvgImages.ImgClock);
+            result.VerticalAlignment = VerticalAlignment.Center;
+            result.Margin = DefaultIconMargin;
+            return result;
+        }
+
         /// <inheritdoc/>
         public override bool SetFocus()
         {
@@ -402,6 +446,15 @@ namespace Alternet.UI
             if (suppressCounter > 0)
                 return;
             AsDateOnly = datePicker.AsDateOnly;
+        }
+
+        /// <summary>
+        /// Updates the visibility of the date and time icons based on the current settings of the <see cref="DateTimePicker"/> control.
+        /// </summary>
+        protected virtual void UpdateIconVisibility()
+        {
+            datePictureBox.Visible = IsDateTime || ForceDateIcon;
+            timePictureBox.Visible = IsDateTime || ForceTimeIcon;
         }
 
         /// <inheritdoc/>
