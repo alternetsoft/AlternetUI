@@ -326,20 +326,22 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
-        public virtual void SetBorderColors(ThemedColor? left, ThemedColor? top, ThemedColor? right, ThemedColor? bottom)
+        public virtual GenericBorder SetBorderColors(ThemedColor? left, ThemedColor? top, ThemedColor? right, ThemedColor? bottom)
         {
             if (NormalBorder.SetColors(left, top, right, bottom))
                 Refresh();
+            return this;
         }
 
         /// <summary>
         /// Initializes round corner settings for the border.
         /// Uses <see cref="DefaultCornerRadius"/> if no specific corner radius is provided.
         /// </summary>
-        public virtual void RoundCorners(BorderCornerRadius? corners = null)
+        public virtual GenericBorder RoundCorners(BorderCornerRadius? corners = null)
         {
             corners ??= new BorderCornerRadius(DefaultCornerRadius);
             this.NormalBorder.SetCornerRadius(corners);
+            return this;
         }
 
         /// <summary>
@@ -348,9 +350,10 @@ namespace Alternet.UI
         /// <param name="value">
         /// A <see cref="Color"/> to apply to all border sides.
         /// </param>
-        public virtual void SetBorderColors(ThemedColor? value)
+        public virtual GenericBorder SetBorderColors(ThemedColor? value)
         {
             SetBorderColors(value, value, value, value);
+            return this;
         }
 
         /// <summary>
@@ -362,12 +365,13 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetLeftBorderColor(ThemedColor? value)
+        public virtual GenericBorder SetLeftBorderColor(ThemedColor? value)
         {
             if (NormalBorder.Left.Color == value)
-                return;
+                return this;
             NormalBorder.Left.Color = value;
             Refresh();
+            return this;
         }
 
         /// <summary>
@@ -379,12 +383,13 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetRightBorderColor(ThemedColor? value)
+        public virtual GenericBorder SetRightBorderColor(ThemedColor? value)
         {
             if (NormalBorder.Right.Color == value)
-                return;
+                return this;
             NormalBorder.Right.Color = value;
             Refresh();
+            return this;
         }
 
         /// <summary>
@@ -396,12 +401,13 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetTopBorderColor(ThemedColor? value)
+        public virtual GenericBorder SetTopBorderColor(ThemedColor? value)
         {
             if (NormalBorder.Top.Color == value)
-                return;
+                return this;
             NormalBorder.Top.Color = value;
             Refresh();
+            return this;
         }
 
         /// <summary>
@@ -413,12 +419,13 @@ namespace Alternet.UI
         /// <remarks>
         /// Triggers a visual update if the color is changed.
         /// </remarks>
-        public virtual void SetBottomBorderColor(ThemedColor? value)
+        public virtual GenericBorder SetBottomBorderColor(ThemedColor? value)
         {
             if (NormalBorder.Bottom.Color == value)
-                return;
+                return this;
             NormalBorder.Bottom.Color = value;
             Refresh();
+            return this;
         }
 
         /// <inheritdoc/>
@@ -481,9 +488,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="width">The width assigned to the border side.
         /// If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
-        public virtual void OnlyTopBorder(Coord? width = null)
+        public virtual GenericBorder OnlyTopBorder(Coord? width = null)
         {
             SetVisibleBorders(false, true, false, false, width);
+            return this;
         }
 
         /// <summary>
@@ -491,9 +499,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="width">The width assigned to the border side.
         /// If Null, value from <see cref="DefaultBorderWidth"/> is used.</param>
-        public virtual void OnlyBottomBorder(Coord? width = null)
+        public virtual GenericBorder OnlyBottomBorder(Coord? width = null)
         {
             SetVisibleBorders(false, false, false, true, width);
+            return this;
         }
 
         /// <summary>
@@ -506,7 +515,7 @@ namespace Alternet.UI
         /// <param name="width">The width assigned to the border side
         /// when side is visible. If Null, value from
         /// <see cref="DefaultBorderWidth"/> is used.</param>
-        public virtual void SetVisibleBorders(
+        public virtual GenericBorder SetVisibleBorders(
             bool left,
             bool top = false,
             bool right = false,
@@ -535,13 +544,15 @@ namespace Alternet.UI
                     return visible ? width : 0;
                 }
             });
+
+            return this;
         }
 
         /// <summary>
         /// Resets border so it is returned to the initial state as it was specified
         /// in the constructor.
         /// </summary>
-        public virtual void ResetBorders(bool invalidate = true)
+        public virtual GenericBorder ResetBorders(bool invalidate = true)
         {
             Borders ??= new();
             var settings = CreateBorderSettings(BorderSettings.Default);
@@ -567,6 +578,8 @@ namespace Alternet.UI
 
             if (invalidate)
                 Invalidate();
+
+            return this;
         }
 
         /// <summary>
