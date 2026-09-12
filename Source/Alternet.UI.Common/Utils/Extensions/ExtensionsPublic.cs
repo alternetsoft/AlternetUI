@@ -59,31 +59,6 @@ namespace Alternet.UI.Extensions
         }
 
         /// <summary>
-        /// Returns display string for the <see cref="TimePeriodUnit"/>.
-        /// If time period unit is not recognized, the method returns the unit's name in lowercase.
-        /// If amount is greater than 1, the plural form of the unit is returned.
-        /// </summary>
-        /// <param name="unit">The unit.</param>
-        /// <param name="amount">The amount.</param>
-        /// <returns>A display string representing the specified time period unit for the given amount.</returns>
-        public static string ToDisplayString(this TimePeriodUnit unit, int amount = 1)
-        {
-            var s = CommonStrings.Default;
-
-            return unit switch
-            {
-                TimePeriodUnit.Years => amount == 1 ? s.TimePeriodUnitYear : s.TimePeriodUnitYears,
-                TimePeriodUnit.Months => amount == 1 ? s.TimePeriodUnitMonth : s.TimePeriodUnitMonths,
-                TimePeriodUnit.Weeks => amount == 1 ? s.TimePeriodUnitWeek : s.TimePeriodUnitWeeks,
-                TimePeriodUnit.Days => amount == 1 ? s.TimePeriodUnitDay : s.TimePeriodUnitDays,
-                TimePeriodUnit.Hours => amount == 1 ? s.TimePeriodUnitHour : s.TimePeriodUnitHours,
-                TimePeriodUnit.Minutes => amount == 1 ? s.TimePeriodUnitMinute : s.TimePeriodUnitMinutes,
-                TimePeriodUnit.Seconds => amount == 1 ? s.TimePeriodUnitSecond : s.TimePeriodUnitSeconds,
-                _ => unit.ToString().ToLower()
-            };
-        }
-
-        /// <summary>
         /// Returns the equivalent non-auto-sized dock style for the specified dock value.
         /// </summary>
         /// <remarks>Use this method to normalize dock style values by removing any auto-sizing behavior,

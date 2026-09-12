@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -55,7 +56,7 @@ namespace Alternet.UI
         /// will be used based on the current culture
         /// settings.</remarks>
         public static string? PmDesignatorOverride;
-        
+
         private static DayOfWeek? systemFirstDayOfWeek;
 
         /// <summary>
@@ -239,7 +240,7 @@ namespace Alternet.UI
             out DayOfWeek[] weekdays,
             out string[] titles,
             DayNamesKind kind = DayNamesKind.Full,
-            DayOfWeek? firstDayOfWeek = null, 
+            DayOfWeek? firstDayOfWeek = null,
             IFormatProvider? formatProvider = null)
         {
             List<string> titlesList = new();
@@ -286,35 +287,156 @@ namespace Alternet.UI
 
             weekdays = new DaysOfWeek[wkdays.Length];
 
-            foreach(var day in wkdays)
+            foreach (var day in wkdays)
             {
                 weekdays[(int)day] = (DaysOfWeek)(1 << (int)day);
             }
         }
 
         /// <summary>
-        /// Gets a human-readable string representation of the specified duration, formatted according to the specified format provider.
+        /// Defines the format of the time period unit text.
+        /// </summary>
+        public enum TimePeriodUnitTextFormat
+        {
+            /// <summary>
+            /// Represents the long format of the time period unit text.
+            /// For example, "day" or "days" for the unit of days.
+            /// </summary>
+            Long,
+
+            /// <summary>
+            /// Represents the short format of the time period unit text.
+            /// For example, "d" for the unit of days.
+            /// </summary>
+            Short,
+        }
+
+        /// <summary>
+        /// Returns display string for the <see cref="TimePeriodUnit"/>.
+        /// If time period unit is not recognized, the method returns the unit's name in lowercase.
+        /// If amount is greater than 1, the plural form of the unit is returned.
+        /// </summary>
+        /// <param name="unit">The unit.</param>
+        /// <param name="amount">The amount.</param>
+        /// <param name="format">The format of the time period unit text.</param>
+        /// <returns>A display string representing the specified time period unit for the given amount.</returns>
+        public static string ToDisplayString(
+            this TimePeriodUnit unit,
+            int amount = 1,
+            TimePeriodUnitTextFormat format = TimePeriodUnitTextFormat.Long)
+        {
+            var s = CommonStrings.Default;
+
+            return unit switch
+            {
+                TimePeriodUnit.Years => GetText(
+                    s.TimePeriodUnitYear,
+                    s.TimePeriodUnitYears,
+                    s.TimePeriodUnitYearShort),
+                TimePeriodUnit.Months => GetText(
+                    s.TimePeriodUnitMonth,
+                    s.TimePeriodUnitMonths,
+                    s.TimePeriodUnitMonthShort),
+                TimePeriodUnit.Weeks => GetText(
+                    s.TimePeriodUnitWeek,
+                    s.TimePeriodUnitWeeks,
+                    s.TimePeriodUnitWeekShort),
+                TimePeriodUnit.Days => GetText(
+                    s.TimePeriodUnitDay,
+                    s.TimePeriodUnitDays,
+                    s.TimePeriodUnitDayShort),
+                TimePeriodUnit.Hours => GetText(
+                    s.TimePeriodUnitHour,
+                    s.TimePeriodUnitHours,
+                    s.TimePeriodUnitHourShort),
+                TimePeriodUnit.Minutes => GetText(
+                    s.TimePeriodUnitMinute,
+                    s.TimePeriodUnitMinutes,
+                    s.TimePeriodUnitMinuteShort),
+                TimePeriodUnit.Seconds => GetText(
+                    s.TimePeriodUnitSecond,
+                    s.TimePeriodUnitSeconds,
+                    s.TimePeriodUnitSecondShort),
+                _ => unit.ToString().ToLower()
+            };
+
+            string GetText(string singleLong, string pluralLong, string shortText)
+            {
+                if (format == TimePeriodUnitTextFormat.Short)
+                    return shortText;
+                else
+                    return amount == 1 ? singleLong : pluralLong;
+            }
+        }
+
+        /// <summary>
+        /// Specifies flags that control the formatting of duration text.
+        /// </summary>
+        [Flags]
+        public enum DurationTextFlags
+        {
+            /// <summary>
+            /// Specifies that no special formatting flags are applied when formatting duration text.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Specifies that seconds should be hidden when formatting duration text, even if the duration includes seconds.
+            /// </summary>
+            HideSeconds = 1 << 0,
+
+            /// <summary>
+            /// Specifies that if the duration is zero, the formatted duration text should return "0" instead of an empty string.
+            /// </summary>
+            ReturnIfZero = 1 << 1,
+        }
+
+        /// <summary>
+        /// Represents the parameters used for formatting duration text.
+        /// </summary>
+        public struct DurationTextParams
+        {
+            /// <summary>
+            /// Gets or sets the format provider to use for formatting the duration text.
+            /// </summary>
+            public IFormatProvider? FormatProvider;
+
+            /// <summary>
+            /// Gets or sets the flags that control the formatting of duration text.
+            /// </summary>
+            public DurationTextFlags Flags;
+
+            /// <summary>
+            /// Gets or sets the format of the time period unit text to use when formatting the duration text.
+            /// </summary>
+            public TimePeriodUnitTextFormat UnitTextFormat;
+        }
+
+        /// <summary>
+        /// Gets a human-readable string representation of the specified duration,
+        /// formatted according to the specified format provider.
+        /// Returns an empty string if the duration is zero and the ReturnIfZero flag is not set.
         /// </summary>
         /// <param name="duration">The duration to format.</param>
-        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
-        /// If null, the current culture is used.</param>
+        /// <param name="prm">An optional object that supplies formatting parameters.
+        /// If null, the default parameters are used.</param>
         /// <returns>A human-readable string representation of the specified duration.</returns>
-        public static string GetDurationText(TimeSpan duration, IFormatProvider? formatProvider = null)
+        public static string GetDurationText(TimeSpan duration, DurationTextParams prm)
         {
             var timeSeparator = StringUtils.OneSpace;
             int hours = duration.Hours;
             int minutes = duration.Minutes;
             int seconds = duration.Seconds;
 
-            var hoursText = TimePeriodUnit.Hours.ToDisplayString(hours);
-            var minutesText = TimePeriodUnit.Minutes.ToDisplayString(minutes);
-            var secondsText = TimePeriodUnit.Seconds.ToDisplayString(seconds);
+            var hoursText = TimePeriodUnit.Hours.ToDisplayString(hours, prm.UnitTextFormat);
+            var minutesText = TimePeriodUnit.Minutes.ToDisplayString(minutes, prm.UnitTextFormat);
+            var secondsText = TimePeriodUnit.Seconds.ToDisplayString(seconds, prm.UnitTextFormat);
 
             string result = string.Empty;
 
             if (hours > 0)
             {
-                result = hoursText;
+                result = $"{hours} {hoursText}";
             }
 
             if (minutes > 0)
@@ -323,16 +445,26 @@ namespace Alternet.UI
                 {
                     result += timeSeparator;
                 }
-                result += minutesText;
+                result += $"{minutes} {minutesText}";
             }
 
-            if (seconds > 0)
+            var hideSeconds = prm.Flags.HasFlag(DurationTextFlags.HideSeconds);
+
+            if (seconds > 0 && !hideSeconds)
             {
                 if (hours > 0 || minutes > 0)
                 {
                     result += timeSeparator;
                 }
-                result += secondsText;
+                result += $"{seconds} {secondsText}";
+            }
+
+            if (result.Length == 0 && prm.Flags.HasFlag(DurationTextFlags.ReturnIfZero))
+            {
+                if (hideSeconds)
+                    result = $"{0} {minutesText}";
+                else
+                    result = $"{0} {secondsText}";
             }
 
             string formattedDuration = result;
@@ -593,7 +725,7 @@ namespace Alternet.UI
             var info = GetFormatInfo(formatProvider);
             var calendar = info.Calendar;
 
-            DateTime firstDayOfYear = new (year, 1, 1);
+            DateTime firstDayOfYear = new(year, 1, 1);
 
             DateTime start = firstDayOfYear;
             while (calendar.GetWeekOfYear(start, rule, firstDayOfWeek) != weekNumber)
@@ -927,7 +1059,7 @@ namespace Alternet.UI
             int daysInMonth = GetDaysInMonth(date);
             for (int day = 1; day <= daysInMonth; day++)
             {
-                DateOnly currentDate = new (date.Year, date.Month, day);
+                DateOnly currentDate = new(date.Year, date.Month, day);
                 if (predicate == null || predicate(currentDate))
                 {
                     yield return currentDate;

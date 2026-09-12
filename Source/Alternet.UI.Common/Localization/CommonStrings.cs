@@ -316,6 +316,25 @@ namespace Alternet.UI.Localization
         public string ExtendedDayOfWeekWeekend { get; set; } = "Weekend";
 
         // ========================
+
+        public string TimePeriodUnitYearShort { get; set; } = "y";
+
+        public string TimePeriodUnitMonthShort { get; set; } = "m";
+
+        public string TimePeriodUnitWeekShort { get; set; } = "w";
+
+        public string TimePeriodUnitDayShort { get; set; } = "d";
+
+        public string TimePeriodUnitHourShort { get; set; } = "h";
+
+        public string TimePeriodUnitMinuteShort { get; set; } = "min";
+
+        public string TimePeriodUnitSecondShort { get; set; } = "sec";
+
+        public string TimePeriodUnitMillisecondShort { get; set; } = "ms";
+
+        // ========================
+
         public string ScheduleRepeatPatternNone { get; set; } = "None";
 
         public string ScheduleRepeatPatternDaily { get; set; } = "Daily";
