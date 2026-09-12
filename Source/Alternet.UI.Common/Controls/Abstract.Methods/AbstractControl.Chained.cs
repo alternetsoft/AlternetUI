@@ -9,6 +9,39 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Sets the <see cref="HasBorder"/> property for the control, indicating whether the control should have a border.
+        /// </summary>
+        /// <param name="value">A boolean value indicating whether the control should have a border.</param>
+        /// <returns>The current instance of the AbstractControl, allowing for method chaining.</returns>
+        public AbstractControl SetHasBorder(bool value = true)
+        {
+            HasBorder = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="MinChildMargin"/> property for the control, specifying the minimum margin between child controls.
+        /// </summary>
+        /// <param name="value">The minimum margin to apply between child controls.</param>
+        /// <returns>The current instance of the AbstractControl, allowing for method chaining.</returns>
+        public AbstractControl SetMinChildMargin(Thickness? value)
+        {
+            MinChildMargin = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the layout style for the control, determining how its child controls are arranged.
+        /// </summary>
+        /// <param name="layout">The layout style to apply to the control.</param>
+        /// <returns>The current instance of the AbstractControl, allowing for method chaining.</returns>
+        public AbstractControl SetLayout(LayoutStyle layout)
+        {
+            Layout = layout;
+            return this;
+        }
+
+        /// <summary>
         /// Sets the margin for the control, defining the space around it.
         /// This is the same as setting the <see cref="Margin"/> property but implemented as method.
         /// This method is useful for chaining calls when you want to set the margin
@@ -187,8 +220,8 @@ namespace Alternet.UI
         /// <summary>
         /// Sets <see cref="Font"/> property for the control. Additionally, sets <see cref="ParentFont"/> to false.
         /// </summary>
-        /// <param name="font"></param>
-        /// <returns></returns>
+        /// <param name="font">The font to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
         public AbstractControl WithFont(Font? font = null)
         {
             ParentFont = false;
