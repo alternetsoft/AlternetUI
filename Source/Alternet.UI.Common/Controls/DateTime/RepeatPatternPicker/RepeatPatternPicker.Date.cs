@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <typeparam name="TValue">The type of the repeat pattern rule.</typeparam>
         [ControlCategory(KnownControlCategory.Date)]
         public abstract partial class DateRepeatPatternRulePicker<TValue> : HiddenBorder
-            where TValue : DateRepeatPatternRule
+            where TValue : BaseRepeatPatternRule
         {
             /// <summary>
             /// Gets or sets the default minimum margin for child controls within the repeat pattern rule picker.

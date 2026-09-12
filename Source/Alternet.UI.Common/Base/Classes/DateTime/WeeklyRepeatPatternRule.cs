@@ -15,8 +15,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="WeeklyRepeatPatternRule"/> class with the specified owner.
         /// </summary>
-        /// <param name="owner">The owner <see cref="DateRepeatPatternRule"/> of this rule.</param>
-        public WeeklyRepeatPatternRule(DateRepeatPatternRule owner) : base(owner)
+        /// <param name="owner">The owner <see cref="BaseRepeatPatternRule"/> of this rule.</param>
+        public WeeklyRepeatPatternRule(BaseRepeatPatternRule owner) : base(owner)
         {
         }
 

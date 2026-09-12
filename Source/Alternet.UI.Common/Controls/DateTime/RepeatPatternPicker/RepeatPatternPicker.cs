@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness DefaultPadding = 5;
 
-        private readonly DateTimePicker startDatePicker = new();
+        private readonly DateTimePicker startPicker = new();
         private readonly TimePicker endTimePicker = new();
         private readonly PictureBox endDateIcon;
         private readonly PictureBox endTimeIcon;
@@ -82,10 +82,10 @@ namespace Alternet.UI
 
             startDateLabel = startPanel.Add<BoldLabel>(CommonStrings.Default.Starts);
 
-            startDatePicker.Kind = DateTimePickerKind.DateTime;
-            startDatePicker.ForceDateIcon = true;
-            startDatePicker.DatePicker.ImageVisible = DefaultShowDropDownImage;
-            startDatePicker.Parent = startPanel;
+            startPicker.Kind = DateTimePickerKind.DateTime;
+            startPicker.ForceDateIcon = true;
+            startPicker.DatePicker.ImageVisible = DefaultShowDropDownImage;
+            startPicker.Parent = startPanel;
 
             allDayCheckBox.Parent = startPanel;
             allDayCheckBox.CheckedChanged += OnAllDayCheckedChanged;
@@ -128,8 +128,8 @@ namespace Alternet.UI
 
             endDateLabel = endPanel.Add<BoldLabel>(CommonStrings.Default.Ends);
 
-            endDateIcon = startDatePicker.CreatePictureBox(DateTimePickerKind.Date);
-            endTimeIcon = startDatePicker.CreatePictureBox(DateTimePickerKind.Time);
+            endDateIcon = startPicker.CreatePictureBox(DateTimePickerKind.Date);
+            endTimeIcon = startPicker.CreatePictureBox(DateTimePickerKind.Time);
 
             endDatePanel.SetLayout(LayoutStyle.Horizontal);
             endDateIcon.WithAlignment(VerticalAlignment.Top).WithMarginTop(DefaultMinChildMargin.Top).SetParent(endDatePanel);
@@ -193,9 +193,9 @@ namespace Alternet.UI
 
             // Event handlers for updating the repeat pattern rule based on user interactions with the controls
 
-            startDatePicker.ValueChanged += (s, e) =>
+            startPicker.ValueChanged += (s, e) =>
             {
-                data.StartDate = startDatePicker.AsDateOnlyOrToday;
+                data.StartDate = startPicker.AsDateOnlyOrToday;
             };
             endDatePicker.MainControl.ValueChanged += (s, e) =>
             {
@@ -210,21 +210,21 @@ namespace Alternet.UI
             {
                 if (endsNeverRadioButton.IsChecked)
                 {
-                    data.EndCondition = DateRepeatPatternRule.EndConditionKind.Never;
+                    data.EndCondition = BaseRepeatPatternRule.EndConditionKind.Never;
                 }
             };
             endsOnRadioButton.CheckedChanged += (s, e) =>
             {
                 if (endsOnRadioButton.IsChecked)
                 {
-                    data.EndCondition = DateRepeatPatternRule.EndConditionKind.OnDate;
+                    data.EndCondition = BaseRepeatPatternRule.EndConditionKind.OnDate;
                 }
             };
             endsAfterOccurrenceRadioButton.CheckedChanged += (s, e) =>
             {
                 if (endsAfterOccurrenceRadioButton.IsChecked)
                 {
-                    data.EndCondition = DateRepeatPatternRule.EndConditionKind.AfterOccurrence;
+                    data.EndCondition = BaseRepeatPatternRule.EndConditionKind.AfterOccurrence;
                 }
             };
         }
@@ -264,7 +264,13 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public TransparentPanel EndDatePanel => endDatePanel;
-        
+
+        /// <summary>
+        /// Gets the repeat label which displays the repeat pattern header.
+        /// </summary>
+        [Browsable(false)]
+        public Label RepeatLabel => repeatLabel;
+
         /// <summary>
         /// Gets the end time panel which contains controls for specifying the end time of the repeat pattern.
         /// </summary>
@@ -301,7 +307,7 @@ namespace Alternet.UI
                 if (value == formatProvider) return;
 
                 formatProvider = value;
-                startDatePicker.FormatProvider = value;
+                startPicker.FormatProvider = value;
                 endDatePicker.MainControl.FormatProvider = value;
                 dailyPicker.FormatProvider = value;
                 weeklyPicker.FormatProvider = value;
@@ -311,14 +317,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the start date picker control used for selecting the start date and time of the repeat pattern.
+        /// </summary>
+        [Browsable(false)]
+        public DateTimePicker StartPicker => startPicker;
+
+        /// <summary>
+        /// Gets the end date picker control used for selecting the end time of the repeat pattern.
+        /// </summary>
+        [Browsable(false)]
+        public TimePicker EndTimePicker => endTimePicker;
+
+        /// <summary>
+        /// Gets the end date icon control used for displaying the end date icon in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public PictureBox EndDateIcon => endDateIcon;
+
+        /// <summary>
+        /// Gets the end time icon control used for displaying the end time icon in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public PictureBox EndTimeIcon => endTimeIcon;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the time selection is visible in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public virtual bool IsTimeVisible
         {
-            get => startDatePicker.Kind == DateTimePickerKind.DateTime;
+            get => startPicker.Kind == DateTimePickerKind.DateTime;
             set
             {
-                startDatePicker.Kind = value ? DateTimePickerKind.DateTime : DateTimePickerKind.Date;
+                startPicker.Kind = value ? DateTimePickerKind.DateTime : DateTimePickerKind.Date;
                 AllDayCheckBox.Visible = value;
                 endTimePanel.Visible = value;
             }
@@ -329,11 +359,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsTimeEnabled
         {
-            get => startDatePicker.TimePicker.Enabled;
+            get => startPicker.TimePicker.Enabled;
             set
             {
-                startDatePicker.TimePicker.Enabled = value;
-                startDatePicker.TimeIcon.Enabled = value;
+                startPicker.TimePicker.Enabled = value;
+                startPicker.TimeIcon.Enabled = value;
                 endTimePicker.Enabled = value;
                 endTimeIcon.Enabled = value;
             }
@@ -387,10 +417,10 @@ namespace Alternet.UI
         /// </summary>
         public virtual string? DateFormat
         {
-            get => startDatePicker.Format;
+            get => startPicker.Format;
             set
             {
-                startDatePicker.Format = value;
+                startPicker.Format = value;
                 endDatePicker.MainControl.Format = value;
             }
         }
@@ -436,12 +466,14 @@ namespace Alternet.UI
         protected virtual void ValueToControls()
         {
             tabControl.SelectedIndex = (int)SelectedPattern;
-            startDatePicker.AsDateOnly = data.StartDate;
+            startPicker.AsDateOnly = data.StartDate;
+            startPicker.AsTimeOnly = data.StartTime;
             endDatePicker.MainControl.AsDateOnly = data.EndDate;
+            endTimePicker.AsTimeOnly = data.EndTime;
 
-            endsOnRadioButton.IsChecked = data.EndCondition == DateRepeatPatternRule.EndConditionKind.OnDate;
-            endsAfterOccurrenceRadioButton.IsChecked = data.EndCondition == DateRepeatPatternRule.EndConditionKind.AfterOccurrence;
-            endsNeverRadioButton.IsChecked = data.EndCondition == DateRepeatPatternRule.EndConditionKind.Never;
+            endsOnRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.OnDate;
+            endsAfterOccurrenceRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.AfterOccurrence;
+            endsNeverRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.Never;
 
             occurrencePicker.Value = data.OccurrenceCount;
             UpdateOccurrenceText();

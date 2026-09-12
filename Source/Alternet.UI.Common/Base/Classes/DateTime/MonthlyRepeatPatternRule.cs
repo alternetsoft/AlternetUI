@@ -18,8 +18,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="MonthlyRepeatPatternRule"/> class with the specified owner.
         /// </summary>
-        /// <param name="owner">The owner <see cref="DateRepeatPatternRule"/> of this rule.</param>
-        public MonthlyRepeatPatternRule(DateRepeatPatternRule owner) : base(owner)
+        /// <param name="owner">The owner <see cref="BaseRepeatPatternRule"/> of this rule.</param>
+        public MonthlyRepeatPatternRule(BaseRepeatPatternRule owner) : base(owner)
         {
         }
 
@@ -131,7 +131,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Assigns the values from another <see cref="DateRepeatPatternRule"/> instance to the current instance.
+        /// Assigns the values from another <see cref="BaseRepeatPatternRule"/> instance to the current instance.
         /// </summary>
         /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
         /// If the instance is not of type <see cref="MonthlyRepeatPatternRule"/>, no values are copied.</param>

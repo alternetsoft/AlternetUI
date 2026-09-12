@@ -11,13 +11,13 @@ namespace Alternet.UI
     /// Represents a composite repeat pattern rule that combines daily, weekly, monthly, yearly
     /// and other repeat pattern rules.
     /// </summary>
-    public partial class RepeatPatternRule : DateRepeatPatternRule
+    public partial class RepeatPatternRule : BaseRepeatPatternRule
     {
         private readonly DailyRepeatPatternRule dailyRule;
         private readonly WeeklyRepeatPatternRule weeklyRule;
         private readonly MonthlyRepeatPatternRule monthlyRule;
         private readonly YearlyRepeatPatternRule yearlyRule;
-        private readonly List<DateRepeatPatternRule> rules = new();
+        private readonly List<BaseRepeatPatternRule> rules = new();
         private ScheduleRepeatPattern kind = ScheduleRepeatPattern.None;
 
         /// <summary>
@@ -25,7 +25,9 @@ namespace Alternet.UI
         /// </summary>
         public RepeatPatternRule()
         {
-            StartDate = DateTime.Now.ToDateOnly();
+            var now = DateTime.Now;
+            StartDate = now.ToDateOnly();
+            StartTime = now.ToTimeOnly();
             EndDate = StartDate;
 
             dailyRule = CreateDailyRule();
@@ -79,7 +81,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a read-only list of all the repeat pattern rules contained in this composite rule.
         /// </summary>
-        public IReadOnlyList<DateRepeatPatternRule> Rules => rules;
+        public IReadOnlyList<BaseRepeatPatternRule> Rules => rules;
 
         /// <summary>
         /// Creates a deep copy of the current <see cref="RepeatPatternRule"/> instance.

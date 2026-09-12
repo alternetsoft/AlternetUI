@@ -5,30 +5,48 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a repeat pattern rule that is owned by another <see cref="DateRepeatPatternRule"/>.
+    /// Represents a repeat pattern rule that is owned by another <see cref="BaseRepeatPatternRule"/>.
     /// </summary>
-    public partial class OwnedRepeatPatternRule : DateRepeatPatternRule
+    public partial class OwnedRepeatPatternRule : BaseRepeatPatternRule
     {
-        private readonly DateRepeatPatternRule owner;
+        private readonly BaseRepeatPatternRule owner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OwnedRepeatPatternRule"/> class with the specified owner.
         /// </summary>
-        /// <param name="owner">The owner <see cref="DateRepeatPatternRule"/> of this rule.</param>
-        public OwnedRepeatPatternRule(DateRepeatPatternRule owner)
+        /// <param name="owner">The owner <see cref="BaseRepeatPatternRule"/> of this rule.</param>
+        public OwnedRepeatPatternRule(BaseRepeatPatternRule owner)
         {
             this.owner = owner;
         }
 
         /// <summary>
-        /// Gets the owner <see cref="DateRepeatPatternRule"/> of this rule.
+        /// Gets the owner <see cref="BaseRepeatPatternRule"/> of this rule.
         /// </summary>
-        public DateRepeatPatternRule Owner => owner;
+        public BaseRepeatPatternRule Owner => owner;
 
         /// <inheritdoc/>
         public override DateOnly StartDate
         {
             get => owner.StartDate;
+            set
+            {
+            }
+        }
+
+        /// <inheritdoc/>
+        public override TimeSpan Duration
+        {
+            get => owner.Duration;
+            set
+            {
+            }
+        }
+
+        /// <inheritdoc/>
+        public override TimeOnly StartTime
+        {
+            get => owner.StartTime;
             set
             {
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 
@@ -8,9 +9,11 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a rule for a repeat pattern in scheduling events or tasks.
     /// </summary>
-    public abstract partial class DateRepeatPatternRule : BaseObjectWithNotify, IDateRepeatPatternRule
+    public abstract partial class BaseRepeatPatternRule : BaseObjectWithNotify, IDateRepeatPatternRule
     {
         private DateOnly startDate;
+        private TimeOnly startTime;
+        private TimeSpan duration;
         private DateOnly endDate;
         private int occurrenceCount = 1;
         private EndConditionKind endCondtion = EndConditionKind.OnDate;
@@ -45,6 +48,36 @@ namespace Alternet.UI
             set
             {
                 SetProperty(ref startDate, value, OnStartDateChanged);
+            }
+        }
+
+        /// <summary>
+        /// Gets the end time of the repeat pattern, calculated as the start time plus the duration.
+        /// </summary>
+        [Browsable(false)]
+        public TimeOnly EndTime => StartTime.Add(Duration);
+
+        /// <summary>
+        /// Gets or sets the start time of the repeat pattern.
+        /// </summary>
+        public virtual TimeOnly StartTime
+        {
+            get => startTime;
+            set
+            {
+                SetProperty(ref startTime, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the duration in time.
+        /// </summary>
+        public virtual TimeSpan Duration
+        {
+            get => duration;
+            set
+            {
+                SetProperty(ref duration, value);
             }
         }
 
