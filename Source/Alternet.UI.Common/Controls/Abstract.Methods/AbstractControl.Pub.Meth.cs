@@ -52,6 +52,12 @@ namespace Alternet.UI
             /// Specifies that parent color should be used for background.
             /// </summary>
             UseParentBackColor = 8,
+
+            /// <summary>
+            /// Specifies that background is rectangle. This option is useful when border has non-rectangular shape
+            /// and background should be drawn as rectangle.
+            /// </summary>
+            BackgroundIsRectangle = 16,
         }
 
         /// <summary>
@@ -827,12 +833,14 @@ namespace Alternet.UI
                 border.InnerBorderVisible = true;
             }
 
-            dc.FillBorderRectangle(
+            var prm = new DrawingUtils.DrawBorderParams(
                 rect,
                 brush,
                 border,
                 HasBorder && flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder),
                 this);
+            prm.BackgroundIsRectangle = flags.HasFlag(DrawDefaultBackgroundFlags.BackgroundIsRectangle);
+            DrawingUtils.FillBorderRectangle(dc, ref prm);
 
             if (savedInnerBorders is not null && border is not null)
             {
