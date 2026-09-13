@@ -1,3 +1,49 @@
+# 1.1.10 (2026 September 13)
+
+- Calculator: Reworked button initialization to use a centralized button metadata. SVG icons for buttons, button visibility and kind are now determined from metadata.
+- SpeedButton: UseTextColorForSvg, IsDisabledTransparent.
+- Add popup PIN code picker window (PopupPinCodePicker).
+- DateUtils: Added GetDurationText helper that formats elapsed time as a compact, human-readable string using hours, minutes, and seconds.
+- Add a BackgroundIsRectangle flag to border drawing parameters and use it when rendering rounded borders. This lets callers keep a rectangular background fill while still drawing a non-rectangular border shape.
+- Make DateTimePicker icons configurable.
+- Make some of the GenericBorder and Border methods chainable.
+- AbstractControl: Add fluent helpers for HasBorder, MinChildMargin, and Layout so these properties can be configured through method chaining.
+- TimePicker: Fix paint in disabled state.
+- Allow time selection in repeat start picker.
+- DateTimePicker: FormatProvider, Format.
+- GenericDateEdit: Add DateOnly and TimeOnly accessors.
+- Renamed LightDarkColor to ThemedColor.
+- ListControlItem: Update cell painting so cells always draw their background and border, then overlay selection fill only for selected cells.
+- Extends IXCalendarDateAttr and XCalendarDateAttr with BackgroundColor and HasBackgroundColor so background styling can be explicitly defined.
+- Demo: Add different controls to palette of PropGrid sample.
+- AbstractControl: Add relative font sizing. Introduces a nullable RelativeFontSize property so controls can derive their effective font size from Font while still honoring FontStyle overrides. RealFont now caches the computed value and builds it from the base font, optional relative size, and style, reducing repeated recalculation.
+- Adds two new Font constructors that clone from an existing Font while applying a RelativeFontSize, with optional FontStyle override.
+- AbstractControl: Add ColorMode and ParentColorMode properties to support light/dark color themes. This property is now used by controls to determine their effective background and foreground colors, and it can be set to Light, Dark, or Inherit (to use the parent control's ColorMode).
+- InnerPopupToolBar: Refine popup toolbar show and sizing logic.
+- Menu.AddSeparatorIfNeeded().
+- Add Show(ShowMethod) overload to AbstractControl.
+- ContextMenu: Assign ItemsTitle to InnerPopupToolBar when it is used.
+- Improve error formatting in ThreadExceptionWindow.
+- Improve TextPicker and TextBox popup behavior.
+- Different XCalendar improvements.
+- Improve popup text box behavior.
+- Improve color theme support.
+- Add CellDoubleClick event to VirtualListBox.
+- ListControlItem: support custom FontStyle for cells.
+- BorderSettings now includes new ShapeForeground and ShapeBackground properties for custom border foreground/background shape rendering.
+- BorderSettings: Add RoundCorners(BorderCornerRadius? corners = null) helper.
+- Add AbstractControl.Invalidate overload with InvalidateMethod paremeter (None, Invalidate, Refresh, LayoutAndInvalidate, LayoutAndRefresh).
+- BorderSettings: Add a convenience constructor that accepts a Color and initializes the border color when a non-null value is provided. 
+- Create DateSelectionManager class.
+- PanelSettings: AddVerticalLine, Vertical(Action) for vertical grouping.
+- Adds a new BoldLabel(string text) constructor.
+- Implement ICheckedProperty on different controls.
+- Different improvements related to RepeatPatternRule.
+- ListControlItem: Fix accent marker default colors.
+- Assert correct parent for controls.
+
+---
+
 # 1.1.9 (2026 September 5)
 
 - Add controls: XCalendar, BoldLabel, MonthSpeedButton.
