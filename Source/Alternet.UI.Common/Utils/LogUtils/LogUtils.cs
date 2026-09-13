@@ -1059,15 +1059,20 @@ namespace Alternet.UI
         /// <param name="ex">The exception.</param>
         /// <param name="details">Whether to include stack trace details in the message text.</param>
         /// <param name="additionalInfo">Additional information to include in the message.</param>
+        /// <param name="extraEmptyLines">Whether to include extra empty lines in the message text.</param>
         /// <returns>A string containing the exception message text
         /// and additional information.</returns>
-        public static string GetExceptionMessageText(Exception? ex, object? additionalInfo = null, bool details = false)
+        public static string GetExceptionMessageText(
+            Exception? ex,
+            object? additionalInfo = null,
+            bool details = false,
+            bool extraEmptyLines = true)
         {
             if (ex == null)
                 return string.Empty;
 
             var sb = new StringBuilder();
-            FormatExceptionRecursive(ex, sb, 0, details);
+            FormatExceptionRecursive(ex, sb, 0, details, extraEmptyLines);
 
             if (details)
             {
@@ -1201,10 +1206,15 @@ namespace Alternet.UI
             return false;
         }
 
-        private static void FormatExceptionRecursive(Exception ex, StringBuilder sb, int indent, bool details = true)
+        private static void FormatExceptionRecursive(
+            Exception ex,
+            StringBuilder sb,
+            int indent,
+            bool details = true,
+            bool extraEmptyLines = true)
         {
             if (ex == null) return;
-            string prefix = new (' ', indent * 2);
+            string prefix = new(' ', indent * 2);
 
             sb.AppendLine($"{prefix}Exception: {ex.GetType().FullName}");
 
@@ -1238,27 +1248,32 @@ namespace Alternet.UI
                 {
                     var stackTraceItems = StringUtils.Split(stackTrace.ToString());
 
-                    sb.AppendLine();
+                    if (extraEmptyLines)
+                        sb.AppendLine();
                     sb.AppendLine(LogUtils.SectionSeparator);
                     sb.AppendLine($"{prefix}StackTrace:");
                     sb.AppendLine(LogUtils.SectionSeparator);
-                    sb.AppendLine();
+                    if (extraEmptyLines)
+                        sb.AppendLine();
 
                     foreach (var item in stackTraceItems)
                     {
                         sb.AppendLine($"{prefix}{item}");
-                        sb.AppendLine();
+                        if (extraEmptyLines)
+                            sb.AppendLine();
                     }
                 }
             }
 
             if (ex.InnerException != null)
             {
-                sb.AppendLine();
+                if (extraEmptyLines)
+                    sb.AppendLine();
                 sb.AppendLine(LogUtils.SectionSeparator);
                 sb.AppendLine($"{prefix}Inner Exception:");
                 sb.AppendLine(LogUtils.SectionSeparator);
-                sb.AppendLine();
+                if (extraEmptyLines)
+                    sb.AppendLine();
                 FormatExceptionRecursive(ex.InnerException, sb, indent + 1, details);
             }
         }

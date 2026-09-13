@@ -32,8 +32,8 @@ namespace Alternet.UI
         private bool canContinue = true;
         private bool canQuit = true;
         private bool isDetailed;
-        private TextBox? messageTextBox;
-        
+        private XTreeView? messageView;
+
         private XButton detailsButton;
         private XButton continueButton;
         private XButton copyButton;
@@ -215,7 +215,7 @@ namespace Alternet.UI
 
             set
             {
-                if(isDetailed == value)
+                if (isDetailed == value)
                     return;
                 isDetailed = value;
                 UpdateExceptionText();
@@ -289,7 +289,7 @@ namespace Alternet.UI
                     result.AppendLine();
                 }
 
-                var message = LogUtils.GetExceptionMessageText(item.Exception, item.AdditionalInfo, IsDetailed);
+                var message = LogUtils.GetExceptionMessageText(item.Exception, item.AdditionalInfo, IsDetailed, false);
                 result.AppendLine(message);
 
                 if (!IsDetailed)
@@ -414,10 +414,9 @@ namespace Alternet.UI
                     Parent = messageGrid,
                 };
 
-                messageTextBox = new MultilineTextBox
+                messageView = new XTreeView
                 {
-                    Text = StringUtils.OneSpace,
-                    ReadOnly = true,
+                    SelectionMode = TreeViewSelectionMode.None,
                     HasBorder = false,
                     MinHeight = 150,
                     Parent = border,
@@ -447,7 +446,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="ex">The exception to be displayed.</param>
         /// <param name="additionalInfo">Additional information related to the exception.</param>
-        public virtual void ShowAnotherException(Exception? ex,  object? additionalInfo)
+        public virtual void ShowAnotherException(Exception? ex, object? additionalInfo)
         {
             if (ex is null)
                 return;
@@ -455,7 +454,7 @@ namespace Alternet.UI
                 return;
             Post(() =>
             {
-                if(DisposingOrDisposed)
+                if (DisposingOrDisposed)
                     return;
                 exceptions.Add(new ExceptionInfoItem(ex, additionalInfo));
                 UpdateExceptionText();
@@ -559,7 +558,7 @@ namespace Alternet.UI
         protected virtual void OnCopyButtonClick(object? sender, EventArgs e)
         {
             LastClickedButton = ButtonKind.Copy;
-            Clipboard.SetText(messageTextBox?.Text);
+            Clipboard.SetText(GetMessageText());
         }
 
         /// <summary>
@@ -591,7 +590,15 @@ namespace Alternet.UI
         /// </summary>
         private void UpdateExceptionText()
         {
-            messageTextBox!.Text = GetMessageText();
+            if (messageView is null)
+                return;
+
+            var s = GetMessageText();
+            var strings = StringUtils.Split(s, removeEmptyLines: false);
+
+            TreeViewRootItem root = new();
+            root.AddStrings(strings);
+            messageView.RootItem = root;
         }
 
         /// <summary>
