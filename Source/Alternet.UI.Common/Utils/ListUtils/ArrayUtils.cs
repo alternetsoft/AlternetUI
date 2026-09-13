@@ -168,7 +168,70 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Fills each element of the byte array with it's index.
+        /// Resizes the given array to the specified new size.
+        /// If the new size is larger than the original array, the new elements are initialized to their default values.
+        /// If the new size is smaller, the array is truncated.
+        /// If the new size is zero, an empty array is returned.
+        /// If the new size is equal to the original size, the original array is returned.
+        /// </summary>
+        /// <typeparam name="T">Type of the array elements.</typeparam>
+        /// <param name="source">The array to resize.</param>
+        /// <param name="newSize">The new size of the array.</param>
+        /// <returns>A new array with the specified size containing the elements of the original array,
+        /// or an empty array if the source array is null or empty, or if the new size is less than or equal to zero.</returns>
+        public static T[] Resize<T>(T[] source, int newSize)
+        {
+            if (source == null || source.Length == 0 || newSize <= 0)
+                return Array.Empty<T>();
+
+            if (source.Length == newSize)
+                return source;
+
+            T[] result = new T[newSize];
+            int lengthToCopy = Math.Min(source.Length, newSize);
+            Array.Copy(source, result, lengthToCopy);
+            return result;
+        }
+
+        /// <summary>
+        /// Trims the given array to the specified maximum size.
+        /// </summary>
+        /// <typeparam name="T">Type of the array elements.</typeparam>
+        /// <param name="source">The array to trim.</param>
+        /// <param name="maxSize">The maximum size of the array.</param>
+        /// <returns>A new array with the specified maximum size containing the elements of the original array,
+        /// or an empty array if the source array is null or empty, or if the maximum size is less than or equal to zero.</returns>
+        public static T[] Trim<T>(T[] source, int maxSize)
+        {
+            if (source == null || maxSize <= 0)
+                return Array.Empty<T>();
+
+            if (source.Length <= maxSize)
+                return source;
+
+            T[] result = new T[maxSize];
+            Array.Copy(source, result, maxSize);
+            return result;
+        }
+
+        /// <summary>
+        /// Trims the given array to the specified maximum size if the maximum size is not null.
+        /// </summary>
+        /// <typeparam name="T">Type of the array elements.</typeparam>
+        /// <param name="source">The array to trim.</param>
+        /// <param name="maxSize">The maximum size of the array.</param>
+        /// <returns>A new array with the specified maximum size containing the elements of the original array,
+        /// or the original array if the maximum size is null.</returns>
+        public static T[] TrimOptional<T>(T[] source, int? maxSize)
+        {
+            if (maxSize == null)
+                return source;
+            return Trim(source, maxSize.Value);
+        }
+
+        /// <summary>
+        /// Fills each element of the byte array with its index.
+        /// Only fills up to the maximum value of a byte (255) or the length of the array, whichever is smaller.
         /// </summary>
         /// <param name="a">Array to fill.</param>
         public static void FillWithIndex(ref byte[] a)
