@@ -1321,7 +1321,7 @@ namespace Alternet.Drawing
                 {
                     if (StringUtils.ContainsNewLineChars(s))
                     {
-                        splitText = StringUtils.Split(s, removeEmptyLines: false);
+                        splitText = StringUtils.TrimWithEllipsisOptional(StringUtils.Split(s, removeEmptyLines: false), prm.MaxLines);
 
                         if (splitText.Length <= 1)
                         {
@@ -1734,6 +1734,11 @@ namespace Alternet.Drawing
             /// Gets or sets index of underlined mnemonic character.
             /// </summary>
             public int IndexAccel = -1;
+
+            /// <summary>
+            /// Gets or sets maximum number of lines to draw. If Null, all lines are drawn.
+            /// </summary>
+            public int? MaxLines;
 
             /// <summary>
             /// Gets or sets flags that can be used to customize label painting.
