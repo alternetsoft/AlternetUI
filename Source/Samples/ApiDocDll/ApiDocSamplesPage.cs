@@ -16,20 +16,45 @@ namespace ApiDoc
         {
             var title = type.Name;
 
-            var windowType = this.GetType().Assembly.GetType($"ApiDoc.{title}Window");
+            var asm = typeof(ApiDoc.MultilineTextBoxWindow).Assembly;
 
-            if(windowType is not null)
+            try
             {
-                if (AssemblyUtils.IsControlCategoryInternal(windowType))
-                    return;
-
-                Add(title, () =>
+                var windowType = asm.GetTypes()
+                              .FirstOrDefault(t =>
+                              {
+                                  var result = t.Name.EndsWith($"{title}Window");
+                                  return result;
+                              });
+                if (windowType is not null)
                 {
-                    var result = (Window?)Activator.CreateInstance(windowType);
-                    result ??= new Window();
-                    result.Title = $"{title} Sample";
-                    return result;
-                });
+                    if (AssemblyUtils.IsControlCategoryInternal(windowType))
+                        return;
+
+                    Add(title, () =>
+                    {
+                        Window? result = null;
+
+                        try
+                        {
+                            result = (Window?)Activator.CreateInstance(windowType);
+                        }
+                        catch
+                        {
+                        }
+
+                        result ??= new Window();
+                        result.Title = $"{title} Sample";
+                        return result;
+                    });
+                }
+                else
+                {
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Error creating sample for {title}: {e.Message}");
             }
         }
 
@@ -39,7 +64,7 @@ namespace ApiDoc
 
             var types = AssemblyUtils.AllControlDescendants.Values;
 
-            foreach(var type in types)
+            foreach (var type in types)
             {
                 if (AssemblyUtils.IsControlCategoryHidden(type))
                     continue;
