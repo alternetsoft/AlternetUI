@@ -68,6 +68,7 @@ namespace Alternet.UI
 
         private bool isVerticalText;
         private bool wordWrap;
+        private bool lineWrap;
         private bool imageVisible = true;
         private bool isTransparent = true;
         private string? emptyTextHint;
@@ -312,7 +313,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether text is word wrapped in order to fit label in the parent's
-        /// client area. Default is False.
+        /// client area. Default is False. This is different from <see cref="NewLineWrap"/> property,
+        /// which breaks text at new line characters. <see cref="WordWrap"/> wraps text at word boundaries.
         /// </summary>
         public virtual bool WordWrap
         {
@@ -322,6 +324,23 @@ namespace Alternet.UI
                 if (wordWrap == value)
                     return;
                 wordWrap = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether text is line wrapped in order to fit label in the parent's client area. Default is False.
+        /// This is different from <see cref="WordWrap"/> property, which wraps text at word boundaries.
+        /// <see cref="NewLineWrap"/> breaks text at new line characters.
+        /// </summary>
+        public virtual bool NewLineWrap
+        {
+            get => lineWrap;
+            set
+            {
+                if (lineWrap == value)
+                    return;
+                lineWrap = value;
                 PerformLayoutAndInvalidate();
             }
         }
@@ -777,7 +796,18 @@ namespace Alternet.UI
             var labelBackColor = (backColor ?? GetLabelBackColor(state));
 
             labelText = GetWithoutMnemonicMarkers(labelText, out var mnemonicCharIndex);
-            labelText = GetWrappedText(labelText);
+
+            if (WordWrap)
+            {
+                labelText = DrawingUtils.GetWrappedText(
+                    labelText, 
+                    wordWrap: true,
+                    paddedRect.Width,
+                    minTextWidth,
+                    maxTextWidth,
+                    labelFont,
+                    dc);
+            }
 
             bool isDark = IsDarkBackground;
 
@@ -799,7 +829,7 @@ namespace Alternet.UI
             prm.Visible = realForeColor != Color.Empty;
             prm.Flags = drawLabelFlags;
 
-            if (WordWrap)
+            if (WordWrap || NewLineWrap)
                 prm.Flags |= DrawLabelFlags.TextHasNewLineChars;
 
             prm.ImageVerticalAlignment = imageVerticalAlignment;
@@ -807,27 +837,6 @@ namespace Alternet.UI
 
             var result = DrawDefaultText(dc);
             return result;
-
-            string GetWrappedText(string s)
-            {
-                if (!WordWrap)
-                    return s;
-
-                var mw = paddedRect.Width;
-
-                if (minTextWidth is not null)
-                    mw = Math.Max(minTextWidth.Value, mw);
-
-                if (maxTextWidth is not null)
-                    mw = Math.Min(maxTextWidth.Value, mw);
-
-                var result = DrawingUtils.WrapTextToMultipleLines(
-                    s,
-                    mw,
-                    labelFont,
-                    dc);
-                return result;
-            }
         }
 
         /// <summary>
