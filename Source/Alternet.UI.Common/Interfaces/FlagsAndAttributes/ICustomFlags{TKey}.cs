@@ -43,6 +43,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">Flag identifier.</param>
         /// <param name="value">Add or remove flag.</param>
-        void SetFlag(TKey id, bool value);
+        void SetFlag(TKey id, bool value = true);
     }
 }
