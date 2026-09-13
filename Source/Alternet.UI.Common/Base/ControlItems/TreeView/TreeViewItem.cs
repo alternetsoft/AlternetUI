@@ -887,6 +887,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds an empty item to the tree control item. This item is typically used to create
+        /// a visual gap or placeholder within the tree structure. Empty item is not selectable
+        /// and does not contain any text or child items. It serves as a visual separator or spacer between other tree items,
+        /// allowing for better organization and readability of the tree view.
+        /// </summary>
+        public virtual void AddEmptyItem()
+        {
+            var item = new TreeViewEmptyItem();
+            Add(item);
+        }
+
+        /// <summary>
+        /// Adds a collection of strings as child items to the tree control item.
+        /// </summary>
+        /// <param name="strings">The collection of strings to add as child items.</param>
+        public virtual void AddStrings<T>(IEnumerable<T> strings)
+        {
+            DoInsideUpdate(() =>
+            {
+                foreach (var str in strings)
+                {
+                    var s = str?.ToString();
+
+                    if (s is null || s.Length == 0)
+                    {
+                        AddEmptyItem();
+                    }
+                    else
+                    {
+                        AddWithText(s);
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Adds a separator item to the tree control item.
+        /// This item is typically used to visually separate groups of items within the tree.
+        /// Separator item is drawn as a horizontal line across the width of the tree view, indicating
+        /// a division between sections of items.
+        /// </summary>
+        public virtual void AddSeparatorItem()
+        {
+            var item = new TreeViewSeparatorItem();
+            Add(item);
+        }
+
+        /// <summary>
         /// Inserts the specified <see cref="TreeViewItem"/> at the beginning of the item list.
         /// </summary>
         /// <param name="item">The item to prepend.</param>
