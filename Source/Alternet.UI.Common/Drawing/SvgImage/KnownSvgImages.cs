@@ -114,6 +114,7 @@ namespace Alternet.UI
         private static SvgImage? imgRotate;
         private static SvgImage? imgArrowsSpin;
         private static SvgImage? imgBell;
+        private static SvgImage? imgBackspace;
 
         static KnownSvgImages()
         {
@@ -134,6 +135,15 @@ namespace Alternet.UI
         {
             get => imgCircleCheckmark ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleCheckmark);
             set => imgCircleCheckmark = value;
+        }
+
+        /// <summary>
+        /// Gets or sets svg image which can be used for indicating a backspace action.
+        /// </summary>
+        public static SvgImage ImgBackspace
+        {
+            get => imgBackspace ??= new MonoSvgImage(KnownSvgUrls.UrlImageBackspace);
+            set => imgBackspace = value;
         }
 
         /// <summary>

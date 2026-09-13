@@ -34,6 +34,11 @@ namespace Alternet.UI
             = GetImageUrl("alternet-square-check-filled");
 
         /// <summary>
+        /// Gets or sets url used to load "Backspace" svg image.
+        /// </summary>
+        public static string UrlImageBackspace { get; set; } = GetImageUrl("alternet-backspace");
+
+        /// <summary>
         /// Gets or sets url used to load "Square Minus Filled" svg image.
         /// </summary>
         public static string UrlImageSquareMinusFilled { get; set; }
