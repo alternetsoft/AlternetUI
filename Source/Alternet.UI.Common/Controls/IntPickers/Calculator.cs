@@ -148,12 +148,10 @@ namespace Alternet.UI
 
             for (int i = 0; i < buttonInfos.Length; i++)
             {
-                var bk = buttonInfos[i];
+                var buttonInfo = buttonInfos[i];
 
-                if (bk is null)
+                if (buttonInfo is null)
                     continue;
-
-                var buttonInfo = bk.Value;
 
                 int row = i / 5;
                 int col = i % 5;
@@ -972,7 +970,7 @@ namespace Alternet.UI
         /// <summary>
         /// Defines information about a calculator button, including its kind, visibility, SVG image and other properties.
         /// </summary>
-        public struct ButtonInfo
+        public class ButtonInfo
         {
             /// <summary>
             /// Gets or sets the kind of button represented by this <see cref="ButtonInfo"/> instance.
@@ -1000,107 +998,222 @@ namespace Alternet.UI
             }
         }
 
-        internal static class ButtonInfos
+        /// <summary>
+        /// Defines a collection of predefined button information for the calculator,
+        /// including button kinds, visibility, and associated SVG images.
+        /// </summary>
+        public static class ButtonInfos
         {
-            internal static ButtonInfo Clear = new(ButtonKind.Clear);
+            /// <summary>
+            /// Gets the button information for the "clear" button, which clears the entire input.
+            /// </summary>
+            public static readonly ButtonInfo Clear = new(ButtonKind.Clear);
+
+            /// <summary>
+            /// Gets the button information for the "left parenthesis" button, which inserts a left parenthesis.
+            /// </summary>
+            public static readonly ButtonInfo LeftParenthesis = new(ButtonKind.LeftParenthesis);
+
+            /// <summary>
+            /// Gets the button information for the "right parenthesis" button, which inserts a right parenthesis.
+            /// </summary>
+            public static readonly ButtonInfo RightParenthesis = new(ButtonKind.RightParenthesis);
+
+            /// <summary>
+            /// Gets the button information for the "divide" button, which performs division.
+            /// </summary>
+            public static readonly ButtonInfo Divide = new(ButtonKind.Divide);
             
-            internal static ButtonInfo LeftParenthesis = new(ButtonKind.LeftParenthesis);
+            /// <summary>
+            /// Gets the button information for the "7" button, which inserts the digit 7.
+            /// </summary>
+            public static readonly ButtonInfo Digit7 = new(ButtonKind.Digit7);
 
-            internal static ButtonInfo RightParenthesis = new(ButtonKind.RightParenthesis);
+            /// <summary>
+            /// Gets the button information for the "8" button, which inserts the digit 8.
+            /// </summary>  
+            public static readonly ButtonInfo Digit8 = new(ButtonKind.Digit8);
 
-            internal static ButtonInfo Divide = new(ButtonKind.Divide);
-            
-            internal static ButtonInfo Digit7 = new(ButtonKind.Digit7);
+            /// <summary>
+            /// Gets the button information for the "9" button, which inserts the digit 9.
+            /// </summary>
+            public static readonly ButtonInfo Digit9 = new(ButtonKind.Digit9);
 
-            internal static ButtonInfo Digit8 = new(ButtonKind.Digit8);
+            /// <summary>
+            /// Gets the button information for the "multiply" button, which performs multiplication.
+            /// </summary>
+            public static readonly ButtonInfo Multiply = new(ButtonKind.Multiply);
 
-            internal static ButtonInfo Digit9 = new(ButtonKind.Digit9);
+            /// <summary>
+            /// Gets the button information for the "4" button, which inserts the digit 4.
+            /// </summary>
+            public static readonly ButtonInfo Digit4 = new(ButtonKind.Digit4);
 
-            internal static ButtonInfo Multiply = new(ButtonKind.Multiply);
+            /// <summary>
+            /// Gets the button information for the "5" button, which inserts the digit 5.
+            /// </summary>
+            public static readonly ButtonInfo Digit5 = new(ButtonKind.Digit5);
 
-            internal static ButtonInfo Digit4 = new(ButtonKind.Digit4);
+            /// <summary>
+            /// Gets the button information for the "6" button, which inserts the digit 6.
+            /// </summary>
+            public static readonly ButtonInfo Digit6 = new(ButtonKind.Digit6);
 
-            internal static ButtonInfo Digit5 = new(ButtonKind.Digit5);
+            /// <summary>
+            /// Gets the button information for the "minus" button, which performs subtraction.
+            /// </summary>
+            public static readonly ButtonInfo Minus = new(ButtonKind.Minus);
 
-            internal static ButtonInfo Digit6 = new(ButtonKind.Digit6);
+            /// <summary>
+            /// Gets the button information for the "1" button, which inserts the digit 1.
+            /// </summary>
+            public static readonly ButtonInfo Digit1 = new(ButtonKind.Digit1);
 
-            internal static ButtonInfo Minus = new(ButtonKind.Minus);
+            /// <summary>
+            /// Gets the button information for the "2" button, which inserts the digit 2.
+            /// </summary>
+            public static readonly ButtonInfo Digit2 = new(ButtonKind.Digit2);
 
-            internal static ButtonInfo Digit1 = new(ButtonKind.Digit1);
+            /// <summary>
+            /// Gets the button information for the "3" button, which inserts the digit 3.
+            /// </summary>
+            public static readonly ButtonInfo Digit3 = new(ButtonKind.Digit3);
 
-            internal static ButtonInfo Digit2 = new(ButtonKind.Digit2);
+            /// <summary>
+            /// Gets the button information for the "plus" button, which performs addition.
+            /// </summary>
+            public static readonly ButtonInfo Plus = new(ButtonKind.Plus);
 
-            internal static ButtonInfo Digit3 = new(ButtonKind.Digit3);
-
-            internal static ButtonInfo Plus = new(ButtonKind.Plus);
-
-            internal static ButtonInfo ToggleSign = new(ButtonKind.ToggleSign)
+            /// <summary>
+            /// Gets the button information for the "toggle sign" button, which changes the sign of the current number.
+            /// </summary>
+            public static readonly ButtonInfo ToggleSign = new(ButtonKind.ToggleSign)
             {
                 Visible = DefaultShowToggleSignButton,
             };
 
-            internal static ButtonInfo Digit0 = new(ButtonKind.Digit0);
+            /// <summary>
+            /// Gets the button information for the "0" button, which inserts the digit 0.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit0 = new(ButtonKind.Digit0);
             
-            internal static ButtonInfo DecimalPoint = new(ButtonKind.DecimalPoint);
+            /// <summary>
+            /// Gets the button information for the "decimal point" button, which inserts a decimal point.
+            /// </summary>
+            public static readonly ButtonInfo BtnDecimalPoint = new(ButtonKind.DecimalPoint);
 
-            internal static ButtonInfo EqualsBtn = new(ButtonKind.Equals);
+            /// <summary>
+            /// Gets the button information for the "equals" button, which performs the calculation.
+            /// </summary>
+            public static readonly ButtonInfo BtnEquals = new(ButtonKind.Equals);
 
-            internal static ButtonInfo ButtonInfoClear = new(ButtonKind.Clear);
+            /// <summary>
+            /// Gets the button information for the "clear" button, which clears the current input.
+            /// </summary>
+            public static readonly ButtonInfo BtnClear = new(ButtonKind.Clear);
 
-            internal static ButtonInfo ButtonInfoLeftParenthesis = new(ButtonKind.LeftParenthesis);
+            /// <summary>
+            /// Gets the button information for the "left parenthesis" button, which inserts a left parenthesis.
+            /// </summary>
+            public static readonly ButtonInfo BtnLeftParenthesis = new(ButtonKind.LeftParenthesis);
 
-            internal static ButtonInfo ButtonInfoRightParenthesis = new(ButtonKind.RightParenthesis);
+            /// <summary>
+            /// Gets the button information for the "right parenthesis" button, which inserts a right parenthesis.
+            /// </summary>
+            public static readonly ButtonInfo BtnRightParenthesis = new(ButtonKind.RightParenthesis);
 
-            internal static ButtonInfo ButtonInfoDivide = new(ButtonKind.Divide);
+            /// <summary>
+            /// Gets the button information for the "divide" button, which performs division.
+            /// </summary>
+            public static readonly ButtonInfo BtnDivide = new(ButtonKind.Divide);
             
-            internal static ButtonInfo ButtonInfoDigit7 = new(ButtonKind.Digit7);
+            /// <summary>
+            /// Gets the button information for the "7" button, which inserts the digit 7.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit7 = new(ButtonKind.Digit7);
 
-            internal static ButtonInfo ButtonInfoDigit8 = new(ButtonKind.Digit8);
+            /// <summary>
+            /// Gets the button information for the "8" button, which inserts the digit 8.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit8 = new(ButtonKind.Digit8);
 
-            internal static ButtonInfo ButtonInfoDigit9 = new(ButtonKind.Digit9);
+            /// <summary>
+            /// Gets the button information for the "9" button, which inserts the digit 9.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit9 = new(ButtonKind.Digit9);
 
-            internal static ButtonInfo ButtonInfoMultiply = new(ButtonKind.Multiply);
+            /// <summary>
+            /// Gets the button information for the "multiply" button, which performs multiplication.
+            /// </summary>
+            public static readonly ButtonInfo BtnMultiply = new(ButtonKind.Multiply);
 
-            internal static ButtonInfo ButtonInfoDigit4 = new(ButtonKind.Digit4);
+            /// <summary>
+            /// Gets the button information for the "4" button, which inserts the digit 4.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit4 = new(ButtonKind.Digit4);
 
-            internal static ButtonInfo ButtonInfoDigit5 = new(ButtonKind.Digit5);
+            /// <summary>
+            /// Gets the button information for the "5" button, which inserts the digit 5.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit5 = new(ButtonKind.Digit5);
 
-            internal static ButtonInfo ButtonInfoDigit6 = new(ButtonKind.Digit6);
+            /// <summary>
+            /// Gets the button information for the "6" button, which inserts the digit 6.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit6 = new(ButtonKind.Digit6);
 
-            internal static ButtonInfo ButtonInfoMinus = new(ButtonKind.Minus);
+            /// <summary>
+            /// Gets the button information for the "minus" button, which performs subtraction.
+            /// </summary>
+            public static readonly ButtonInfo BtnMinus = new(ButtonKind.Minus);
 
-            internal static ButtonInfo ButtonInfoDigit1 = new(ButtonKind.Digit1);
+            /// <summary>
+            /// Gets the button information for the "1" button, which inserts the digit 1.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit1 = new(ButtonKind.Digit1);
 
-            internal static ButtonInfo ButtonInfoDigit2 = new(ButtonKind.Digit2);
+            /// <summary>
+            /// Gets the button information for the "2" button, which inserts the digit 2.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit2 = new(ButtonKind.Digit2);
 
-            internal static ButtonInfo ButtonInfoDigit3 = new(ButtonKind.Digit3);
+            /// <summary>
+            /// Gets the button information for the "3" button, which inserts the digit 3.
+            /// </summary>
+            public static readonly ButtonInfo BtnDigit3 = new(ButtonKind.Digit3);
 
-            internal static ButtonInfo ButtonInfoPlus = new(ButtonKind.Plus);
+            /// <summary>
+            /// Gets the button information for the "plus" button, which performs addition.
+            /// </summary>
+            public static readonly ButtonInfo BtnPlus = new(ButtonKind.Plus);
 
-            internal static ButtonInfo ButtonInfoToggleSign = new(ButtonKind.ToggleSign)
+            /// <summary>
+            /// Gets the button information for the "toggle sign" button, which changes the sign of the current number.
+            /// </summary>
+            public static readonly ButtonInfo BtnToggleSign = new(ButtonKind.ToggleSign)
             {
                 Visible = DefaultShowToggleSignButton,
             };
 
-            internal static ButtonInfo ButtonInfoDigit0 = new(ButtonKind.Digit0);
-
-            internal static ButtonInfo ButtonInfoDecimalPoint = new(ButtonKind.DecimalPoint);
-
-            internal static ButtonInfo ButtonInfoEquals = new(ButtonKind.Equals);
-
-            internal static ButtonInfo ButtonInfoEraseLeft = new(ButtonKind.EraseLeft)
+            /// <summary>
+            /// Gets the button information for the "erase left" button, which deletes the character to the left of the cursor.
+            /// </summary>
+            public static readonly ButtonInfo BtnEraseLeft = new(ButtonKind.EraseLeft)
             {
                 Visible = DefaultShowEraseLeftButton,
                 SvgImage = KnownSvgImages.ImgBackspace,
             };
 
-            internal static ButtonInfo?[] Buttons =
+            /// <summary>
+            /// Gets an array of button information representing the layout of buttons in the calculator.
+            /// </summary>
+            public static readonly ButtonInfo?[] Buttons =
             {
-            ButtonInfoClear, ButtonInfoLeftParenthesis, ButtonInfoRightParenthesis, ButtonInfoDivide, null,
-            ButtonInfoDigit7, ButtonInfoDigit8, ButtonInfoDigit9, ButtonInfoMultiply, null,
-            ButtonInfoDigit4, ButtonInfoDigit5, ButtonInfoDigit6, ButtonInfoMinus, null,
-            ButtonInfoDigit1, ButtonInfoDigit2, ButtonInfoDigit3, ButtonInfoPlus, null,
-            ButtonInfoToggleSign, ButtonInfoDigit0, ButtonInfoDecimalPoint, ButtonInfoEquals, ButtonInfoEraseLeft,
+                BtnClear, BtnLeftParenthesis, BtnRightParenthesis, BtnDivide, null,
+                BtnDigit7, BtnDigit8, BtnDigit9, BtnMultiply, null,
+                BtnDigit4, BtnDigit5, BtnDigit6, BtnMinus, null,
+                BtnDigit1, BtnDigit2, BtnDigit3, BtnPlus, null,
+                BtnToggleSign, BtnDigit0, BtnDecimalPoint, BtnEquals, BtnEraseLeft,
             };
         }
     }
