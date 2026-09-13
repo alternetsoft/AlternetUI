@@ -38,7 +38,7 @@
       <HorizontalStackPanel Margin="0,5,0,0">
         <Label Text="Message" Margin="0,0,5,0" VerticalAlignment="Center" IsTextLocalized="true"
                Name="tooltipMessageLabel"/>
-        <MultilineTextBox Text="This is sample text" Name="tooltipMessageTextBox"
+        <TextBox Text="This is sample text" Name="tooltipMessageTextBox" Multiline="true"
                  Margin="0,0,0,0" IsTextLocalized="true"  HorizontalAlignment="Fill"
                           SuggestedHeight = "100"
                  VerticalAlignment="Center"/>

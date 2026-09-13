@@ -788,7 +788,7 @@ namespace Alternet.UI
 
             if (result is null)
             {
-                var typeOfTextBox = useMemo ? typeof(MemoAndButton) : typeof(TextBoxAndButton);
+                var typeOfTextBox = useMemo ? typeof(TextBoxAndButton) : typeof(TextBoxAndButton);
 
                 if (checkBoxInLabel)
                 {
@@ -802,6 +802,7 @@ namespace Alternet.UI
                 else
                 {
                     result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(Label), typeOfTextBox);
+                    result.MainControl.TextBox.Multiline = useMemo;
                 }
 
                 if (minHeight.HasValue)

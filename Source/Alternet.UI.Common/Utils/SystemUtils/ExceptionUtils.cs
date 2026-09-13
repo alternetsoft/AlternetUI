@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// </summary>
     public static class ExceptionUtils
     {
-        private static BaseDictionary<int, ExceptionInfo> exceptions = new();
+        private static readonly BaseDictionary<int, ExceptionInfo> exceptions = new();
 
         /// <summary>
         /// Gets the currently visible thread exception window, if one exists.

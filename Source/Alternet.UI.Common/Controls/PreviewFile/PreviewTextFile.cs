@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements preview control which uses <see cref="MultilineTextBox"/> for the preview
-    /// of the files.
+    /// Implements preview control which uses multiline <see cref="TextBox"/> for the preview of the files.
     /// </summary>
     public partial class PreviewTextFile : HiddenBorder, IFilePreview
     {
@@ -66,10 +65,11 @@ namespace Alternet.UI
             "css",
         };
 
-        private readonly MultilineTextBox textBox = new()
+        private readonly TextBox textBox = new()
         {
             HasBorder = false,
             ReadOnly = true,
+            Multiline = true,
         };
 
         private string? fileName;

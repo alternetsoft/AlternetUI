@@ -112,11 +112,11 @@ namespace Alternet.UI
         public static void ShowCommitsForAlternetUI()
         {
             DialogFactory.AskByteAsync(
-                "Specify number of days to look back",
+                "Number of days to look back",
                 (days) =>
                 {
                     DialogFactory.AskTextAsync(
-                        "Specify Alternet.UI branch name (empty for master)",
+                        "Alternet.UI branch (empty for master)",
                         async (branch) =>
                         {
                             await ShowCommitsForAlternetUI(days, branch);
@@ -149,7 +149,7 @@ namespace Alternet.UI
 
             var s = CommitsToString(commits);
 
-            WindowWithMemoAndButton.ShowDialog(
+            WindowWithMessageAndButton.ShowDialog(
                 $"AlternetUI Commits in the Last {days} Days", s);
         }
 
