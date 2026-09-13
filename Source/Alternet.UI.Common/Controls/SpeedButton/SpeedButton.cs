@@ -50,6 +50,8 @@ namespace Alternet.UI
         private bool keepSquareShape;
         private bool isNormalTransparent;
         private bool isDisabledTransparent;
+        private bool useTextColorForSvg;
+
         static SpeedButton()
         {
             ResetThemes();
@@ -372,7 +374,9 @@ namespace Alternet.UI
                 if (isNormalTransparent == value)
                     return;
                 isNormalTransparent = value;
-                Invalidate();
+
+                if (Enabled)
+                    Invalidate();
             }
         }
 
@@ -392,7 +396,28 @@ namespace Alternet.UI
                 if (isDisabledTransparent == value)
                     return;
                 isDisabledTransparent = value;
-                Invalidate();
+
+                if (!Enabled)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control uses the text color for its SVG image.
+        /// </summary>
+        public virtual bool UseTextColorForSvg
+        {
+            get
+            {
+                return useTextColorForSvg;
+            }
+            set
+            {
+                if (useTextColorForSvg == value)
+                    return;
+                useTextColorForSvg = value;
+                if (SvgImage is not null && ImageVisible)
+                    Invalidate();
             }
         }
 
@@ -433,7 +458,7 @@ namespace Alternet.UI
                 if (drawable.SvgColor == value)
                     return;
                 drawable.SvgColor = value;
-                if (ImageVisible)
+                if (ImageVisible && SvgImage is not null)
                     Invalidate();
             }
         }
@@ -1898,7 +1923,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="state">The visual state for which to retrieve the foreground color.</param>
         /// <returns></returns>
-        public virtual ThemedColor? GetLabelTextColor(VisualControlState state)
+        public virtual ThemedColor? GetLabelTextColor(VisualControlState state = VisualControlState.Normal)
         {
             var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
             if (foreColor is null)
@@ -1954,9 +1979,11 @@ namespace Alternet.UI
 
             DrawDefaultBackground(e, flags);
 
+            var labelTextColor = GetLabelTextColor(state);
+
             if (HasVisibleText)
             {
-                Label.ForegroundColor = GetLabelTextColor(state);
+                Label.ForegroundColor = labelTextColor;
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
             }
 
@@ -1981,8 +2008,20 @@ namespace Alternet.UI
                 drawable.VisualState = Enabled
                     ? VisualControlState.Normal : VisualControlState.Disabled;
 
+                var savedSvgColor = drawable.SvgColor;
+
+                if (UseTextColorForSvg)
+                {
+                    drawable.SvgColor = labelTextColor?.GetColor(this);
+                }
+
                 drawable.Bounds = PictureBoxSpacer.Bounds;
                 drawable.Draw(this, e.Graphics);
+
+                if (UseTextColorForSvg)
+                {
+                    drawable.SvgColor = savedSvgColor;
+                }
             }
 
             DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
