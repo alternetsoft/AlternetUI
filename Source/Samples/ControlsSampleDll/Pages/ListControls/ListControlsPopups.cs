@@ -174,7 +174,7 @@ namespace ControlsSample
         {
             if (popupVListBox.MainControl.Count == 0)
             {
-                DemoUtils.InitListBoxItems(popupVListBox.MainControl);
+                DemoUtils.InitVirtualListBox(popupVListBox.MainControl);
                 popupVListBox.MainControl.SelectFirstItem();
             }
             popupVListBox.ShowPopup(showPopupVListBoxButton);

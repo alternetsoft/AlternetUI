@@ -184,6 +184,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets string with two new line characters. Returns two copies of <see cref="Environment.NewLine"/>.
+        /// </summary>
+        public static string DoubleNewLine => $"{Environment.NewLine}{Environment.NewLine}";
+
+        /// <summary>
         /// Returns <see cref="IComparer{T}"/> which converts objects to strings using
         /// <see cref="object.ToString"/> and uses
         /// <see cref="string.Compare(string?, string?, StringComparison)"/> for comparing.

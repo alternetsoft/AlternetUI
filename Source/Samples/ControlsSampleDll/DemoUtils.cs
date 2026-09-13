@@ -23,15 +23,17 @@ namespace Alternet.UI
         public static string LoremIpsumVerySmall = "I see a sky with clouds.";
 
         public static string LoremIpsum = LoremIpsumSmall +
-Environment.NewLine + Environment.NewLine +
+StringUtils.DoubleNewLine +
 "The map she carried was drawn entirely in nonsense, but somehow it felt correct. " +
 "It pulsed faintly in her hands, humming with ink made from stolen dreams and marmalade." +
-Environment.NewLine + Environment.NewLine +
+StringUtils.DoubleNewLine +
 "“Left is usually right,” said the rabbit-shaped shadow, bowing courteously. " +
 "“Unless, of course, you're upside-down.”" +
-Environment.NewLine + Environment.NewLine +
+StringUtils.DoubleNewLine +
 "And so, with a smile too wide for logic, she stepped forward—into a world where clocks " +
 "melted politely and hats outgrew heads.";
+
+        public static string LoremIpsumWithSingleNewLines => LoremIpsum.Replace(StringUtils.DoubleNewLine, Environment.NewLine);
 
         public const string LoremIpsumSmallSingleLine =
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
@@ -221,7 +223,7 @@ Environment.NewLine + Environment.NewLine +
             control.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
         }
 
-        public static void InitListBoxItems(object control)
+        public static void InitVirtualListBox(object control)
         {
             if (control is not VirtualListBox listBox)
                 return;

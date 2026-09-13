@@ -299,7 +299,6 @@ namespace PropertyGridSample
                 c.EmptyText = "No items in the list";
             });
 
-
             AddControlAction<VirtualListBox>("Show simple tooltip", (c) =>
             {
                 overlayId = c.ShowOverlayToolTipSimple(
@@ -355,6 +354,13 @@ namespace PropertyGridSample
                 ObjectInit.AddManyItems(c);
             });
 
+            AddControlAction<VirtualListBox>("Add item with new line chars", (c) =>
+            {
+                ListControlItem item = new(DemoUtils.LoremIpsumWithSingleNewLines);
+                item.LabelFlags |= DrawLabelFlags.TextHasNewLineChars;
+                c.Add(item);
+            });
+
             AddControlAction<XCheckListBox>("Recreate Native Window", (c) =>
             {
                 c.Handler.RecreateWindow();
@@ -363,16 +369,6 @@ namespace PropertyGridSample
             AddControlAction<XListBox>("Recreate Native Window", (c) =>
             {
                 c.Handler.RecreateWindow();
-            });
-
-            AddControlAction<VirtualListBox>("Set dark theme", (c) =>
-            {
-                c.SetColorThemeToDark();
-            });
-
-            AddControlAction<VirtualListBox>("Reset theme", (c) =>
-            {
-                c.SetColorThemeToDefault();
             });
 
             AddControlAction<ColorListBox>("Set system colors", (c) =>

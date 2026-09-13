@@ -51,7 +51,7 @@ namespace ControlsSample
             findExactCheckBox.BindBoolProp(this, nameof(FindExact));
             findIgnoreCaseCheckBox.BindBoolProp(this, nameof(FindIgnoreCase));
             findText.TextChanged += FindText_TextChanged;
-            DemoUtils.InitListBoxItems(listBox);
+            DemoUtils.InitVirtualListBox(listBox);
 
             splitter.TargetMode = SplitterTargetMode.NextVisibleSibling;
             Children.Prepend(splitter);
