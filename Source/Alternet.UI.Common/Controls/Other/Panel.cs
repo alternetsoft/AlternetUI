@@ -56,4 +56,13 @@ namespace Alternet.UI
             return ControlFactory.Handler.CreatePanelHandler(this);
         }
     }
+
+    /// <summary>
+    /// Represents a <see cref="ScrollViewer{T}"/> descendant that contains a <see cref="Panel"/> instance.
+    /// <see cref="Panel"/> is added as a child and can be accessed using <see cref="ScrollViewer{Panel}.ScrolledControl"/> property.
+    /// Do not add any child controls to this class, use <see cref="ScrollViewer{Panel}.ScrolledControl"/> instead.
+    /// </summary>
+    public partial class ScrollablePanel : ScrollViewer<Panel>
+    {
+    }
 }

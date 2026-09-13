@@ -1686,7 +1686,10 @@ namespace Alternet.UI
     }
 
     /// <summary>
-    /// Represents a scrollable panel settings control that contains a <see cref="PanelSettings"/> instance.
+    /// Represents a <see cref="ScrollViewer{T}"/> descendant that contains a <see cref="PanelSettings"/> instance.
+    /// <see cref="PanelSettings"/> is added as a child and can be accessed
+    /// using <see cref="ScrollViewer{PanelSettings}.ScrolledControl"/> property.
+    /// Do not add any child controls to this class, use <see cref="ScrollViewer{PanelSettings}.ScrolledControl"/> instead.
     /// </summary>
     public partial class ScrollablePanelSettings : ScrollViewer<PanelSettings>
     {
