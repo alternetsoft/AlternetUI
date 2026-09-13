@@ -18,6 +18,11 @@ namespace Alternet.UI
     public partial class Calculator : HiddenGenericBorder
     {
         /// <summary>
+        /// Gets or sets whether the text on the calculator buttons is bold.
+        /// </summary>
+        public static bool DefaultBoldButtonText = false;
+
+        /// <summary>
         /// Gets or sets whether the toggle sign button is visible in the calculator.
         /// </summary>
         public static bool DefaultShowToggleSignButton = false;
@@ -92,10 +97,9 @@ namespace Alternet.UI
         };
 
         private readonly TextPicker displayTextBox;
-        private readonly List<GenericControl> buttons = new();
+        private readonly List<SpeedButton> buttons = new();
         private readonly List<GenericControl> rowPanels = new();
         private readonly ControlSet buttonSet;
-        private readonly GenericControl? clearLastButton;
 
         static Calculator()
         {
@@ -138,42 +142,23 @@ namespace Alternet.UI
                 ReportError(false);
             };
 
-            ButtonKind?[] buttonKinds =
-            {
-            ButtonKind.Clear, ButtonKind.LeftParenthesis, ButtonKind.RightParenthesis, ButtonKind.Divide, null,
-            ButtonKind.Digit7, ButtonKind.Digit8, ButtonKind.Digit9, ButtonKind.Multiply, null,
-            ButtonKind.Digit4, ButtonKind.Digit5, ButtonKind.Digit6, ButtonKind.Minus, null,
-            ButtonKind.Digit1, ButtonKind.Digit2, ButtonKind.Digit3, ButtonKind.Plus, null,
-            ButtonKind.ToggleSign, ButtonKind.Digit0, ButtonKind.DecimalPoint, ButtonKind.Equals, ButtonKind.EraseLeft,
-            };
-
-            bool[] buttonVisibility =
-            {
-            true, true, true, true, false,
-            true, true, true, true, false,
-            true, true, true, true, false,
-            true, true, true, true, false,
-            DefaultShowToggleSignButton, true, true, true, DefaultShowEraseLeftButton,
-            };
+            ButtonInfo?[] buttonInfos = ButtonInfos.Buttons;
 
             TwoDimensionalBuffer<GenericControl> buttons2d = new(width: 5, height: 5);
 
-            for (int i = 0; i < buttonKinds.Length; i++)
+            for (int i = 0; i < buttonInfos.Length; i++)
             {
-                var bk = buttonKinds[i];
+                var bk = buttonInfos[i];
 
                 if (bk is null)
                     continue;
 
-                var kind = bk.Value;
+                var buttonInfo = bk.Value;
 
                 int row = i / 5;
                 int col = i % 5;
 
-                var button = CreateButton();
-                button.CustomAttr["ButtonKind"] = kind;
-                button.Text = GetButtonText(kind);
-                button.Visible = buttonVisibility[i];
+                var button = CreateButton(buttonInfo);
 
                 buttons.Add(button);
 
@@ -193,9 +178,6 @@ namespace Alternet.UI
             }
 
             buttonSet = new(buttons);
-
-            clearLastButton = GetButton(ButtonKind.EraseLeft);
-            UpdateEraseToTheLeftChar();
         }
 
         /// <summary>
@@ -440,6 +422,16 @@ namespace Alternet.UI
         /// </summary>
         public virtual string? Format { get; set; }
 
+        /// <inheritdoc/>
+        public override ControlColorMode? ColorMode
+        {
+            get => base.ColorMode;
+            set
+            {
+                base.ColorMode = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets script global context used in the formula evaluation. Default is Null.
         /// </summary>
@@ -582,7 +574,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="kind">The kind of button to retrieve.</param>
         /// <returns>The button control if found; otherwise, null.</returns>
-        public virtual GenericControl? GetButton(ButtonKind kind)
+        public virtual SpeedButton? GetButton(ButtonKind kind)
         {
             foreach (var button in buttons)
             {
@@ -625,15 +617,33 @@ namespace Alternet.UI
         /// <summary>
         /// Creates button used in the calculator.
         /// </summary>
+        /// <param name="buttonInfo">The information about the button to create.</param>
         /// <returns>The created button control.</returns>
-        public virtual GenericControl CreateButton()
+        public virtual SpeedButton CreateButton(ButtonInfo buttonInfo)
         {
-            var result = new SpeedTextButton();
+            SpeedButton result;
+
+            if (buttonInfo.SvgImage is not null)
+            {
+                result = new SpeedButton();
+                result.SvgImage = buttonInfo.SvgImage;
+                result.UseTextColorForSvg = true;
+            }
+            else
+            {
+                result = new SpeedTextButton();
+                result.Text = GetButtonText(buttonInfo.Kind);
+            }
+
+            result.IsBold = DefaultBoldButtonText;
             result.UseTheme = SpeedButton.KnownTheme.StaticBorder;
             result.Padding = DefaultButtonPadding;
             result.MinimumSize = DefaultMinButtonSize;
             result.IsClickRepeated = DefaultIsClickRepeated;
             result.Margin = DefaultButtonDistance;
+            result.CustomAttr["ButtonKind"] = buttonInfo.Kind;
+            result.Visible = buttonInfo.Visible;
+
             return result;
         }
 
@@ -859,28 +869,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnForeColorChanged(EventArgs e)
+        {
+            base.OnForeColorChanged(e);
+        }
+
+        /// <inheritdoc/>
         protected override void OnFontChanged(EventArgs e)
         {
             base.OnFontChanged(e);
-            UpdateEraseToTheLeftChar();
-        }
-
-        /// <summary>
-        /// Updates the display character for the "erase to the left" button based on the current font.
-        /// If the font supports the specific glyph for the erase character, it will be used;
-        /// otherwise, a default text is displayed.
-        /// </summary>
-        protected virtual void UpdateEraseToTheLeftChar()
-        {
-            var glyphFont = FontFactory.DefaultSymbolFont.WithSize(RealFont.Size);
-
-            var hasGlyph = glyphFont.HasGlyph(CharUtils.EraseToTheLeftDisplayChar);
-
-            if (clearLastButton != null)
-            {
-                clearLastButton.Font = hasGlyph ? glyphFont : RealFont;
-                clearLastButton.Text = hasGlyph ? CharUtils.EraseToTheLeftDisplayChar.ToString() : ButtonTextEraseLeft;
-            }
         }
 
         /// <summary>
@@ -970,6 +967,141 @@ namespace Alternet.UI
                     AddText(".");
                     break;
             }
+        }
+
+        /// <summary>
+        /// Defines information about a calculator button, including its kind, visibility, SVG image and other properties.
+        /// </summary>
+        public struct ButtonInfo
+        {
+            /// <summary>
+            /// Gets or sets the kind of button represented by this <see cref="ButtonInfo"/> instance.
+            /// </summary>
+            public ButtonKind Kind;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the button is visible.
+            /// </summary>
+            public bool Visible;
+
+            /// <summary>
+            /// Gets or sets the SVG image associated with the button.
+            /// </summary>
+            public SvgImage? SvgImage;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ButtonInfo"/> struct with the specified kind.
+            /// </summary>
+            /// <param name="Kind">The kind of button represented by this <see cref="ButtonInfo"/> instance.</param>
+            public ButtonInfo(ButtonKind Kind)
+            {
+                this.Kind = Kind;
+                Visible = true;
+            }
+        }
+
+        internal static class ButtonInfos
+        {
+            internal static ButtonInfo Clear = new(ButtonKind.Clear);
+            
+            internal static ButtonInfo LeftParenthesis = new(ButtonKind.LeftParenthesis);
+
+            internal static ButtonInfo RightParenthesis = new(ButtonKind.RightParenthesis);
+
+            internal static ButtonInfo Divide = new(ButtonKind.Divide);
+            
+            internal static ButtonInfo Digit7 = new(ButtonKind.Digit7);
+
+            internal static ButtonInfo Digit8 = new(ButtonKind.Digit8);
+
+            internal static ButtonInfo Digit9 = new(ButtonKind.Digit9);
+
+            internal static ButtonInfo Multiply = new(ButtonKind.Multiply);
+
+            internal static ButtonInfo Digit4 = new(ButtonKind.Digit4);
+
+            internal static ButtonInfo Digit5 = new(ButtonKind.Digit5);
+
+            internal static ButtonInfo Digit6 = new(ButtonKind.Digit6);
+
+            internal static ButtonInfo Minus = new(ButtonKind.Minus);
+
+            internal static ButtonInfo Digit1 = new(ButtonKind.Digit1);
+
+            internal static ButtonInfo Digit2 = new(ButtonKind.Digit2);
+
+            internal static ButtonInfo Digit3 = new(ButtonKind.Digit3);
+
+            internal static ButtonInfo Plus = new(ButtonKind.Plus);
+
+            internal static ButtonInfo ToggleSign = new(ButtonKind.ToggleSign)
+            {
+                Visible = DefaultShowToggleSignButton,
+            };
+
+            internal static ButtonInfo Digit0 = new(ButtonKind.Digit0);
+            
+            internal static ButtonInfo DecimalPoint = new(ButtonKind.DecimalPoint);
+
+            internal static ButtonInfo EqualsBtn = new(ButtonKind.Equals);
+
+            internal static ButtonInfo ButtonInfoClear = new(ButtonKind.Clear);
+
+            internal static ButtonInfo ButtonInfoLeftParenthesis = new(ButtonKind.LeftParenthesis);
+
+            internal static ButtonInfo ButtonInfoRightParenthesis = new(ButtonKind.RightParenthesis);
+
+            internal static ButtonInfo ButtonInfoDivide = new(ButtonKind.Divide);
+            
+            internal static ButtonInfo ButtonInfoDigit7 = new(ButtonKind.Digit7);
+
+            internal static ButtonInfo ButtonInfoDigit8 = new(ButtonKind.Digit8);
+
+            internal static ButtonInfo ButtonInfoDigit9 = new(ButtonKind.Digit9);
+
+            internal static ButtonInfo ButtonInfoMultiply = new(ButtonKind.Multiply);
+
+            internal static ButtonInfo ButtonInfoDigit4 = new(ButtonKind.Digit4);
+
+            internal static ButtonInfo ButtonInfoDigit5 = new(ButtonKind.Digit5);
+
+            internal static ButtonInfo ButtonInfoDigit6 = new(ButtonKind.Digit6);
+
+            internal static ButtonInfo ButtonInfoMinus = new(ButtonKind.Minus);
+
+            internal static ButtonInfo ButtonInfoDigit1 = new(ButtonKind.Digit1);
+
+            internal static ButtonInfo ButtonInfoDigit2 = new(ButtonKind.Digit2);
+
+            internal static ButtonInfo ButtonInfoDigit3 = new(ButtonKind.Digit3);
+
+            internal static ButtonInfo ButtonInfoPlus = new(ButtonKind.Plus);
+
+            internal static ButtonInfo ButtonInfoToggleSign = new(ButtonKind.ToggleSign)
+            {
+                Visible = DefaultShowToggleSignButton,
+            };
+
+            internal static ButtonInfo ButtonInfoDigit0 = new(ButtonKind.Digit0);
+
+            internal static ButtonInfo ButtonInfoDecimalPoint = new(ButtonKind.DecimalPoint);
+
+            internal static ButtonInfo ButtonInfoEquals = new(ButtonKind.Equals);
+
+            internal static ButtonInfo ButtonInfoEraseLeft = new(ButtonKind.EraseLeft)
+            {
+                Visible = DefaultShowEraseLeftButton,
+                SvgImage = KnownSvgImages.ImgBackspace,
+            };
+
+            internal static ButtonInfo?[] Buttons =
+            {
+            ButtonInfoClear, ButtonInfoLeftParenthesis, ButtonInfoRightParenthesis, ButtonInfoDivide, null,
+            ButtonInfoDigit7, ButtonInfoDigit8, ButtonInfoDigit9, ButtonInfoMultiply, null,
+            ButtonInfoDigit4, ButtonInfoDigit5, ButtonInfoDigit6, ButtonInfoMinus, null,
+            ButtonInfoDigit1, ButtonInfoDigit2, ButtonInfoDigit3, ButtonInfoPlus, null,
+            ButtonInfoToggleSign, ButtonInfoDigit0, ButtonInfoDecimalPoint, ButtonInfoEquals, ButtonInfoEraseLeft,
+            };
         }
     }
 

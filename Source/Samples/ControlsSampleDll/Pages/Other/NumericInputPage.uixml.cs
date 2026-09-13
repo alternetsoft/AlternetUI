@@ -18,15 +18,6 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            calcPanel.Click += (s, e) =>
-            {
-                if (!Keyboard.IsAltShiftPressed)
-                    return;
-
-                calculator.ParentBackColor = false;
-                calcPanel.BackColor = SystemColors.Window;
-            };
-
             intPicker2.SetPlusMinusImages(KnownButton.TextBoxUp, KnownButton.TextBoxDown);
             intPicker3.SetPlusMinusImages(KnownSvgImages.ImgAngleUp, KnownSvgImages.ImgAngleDown);
 
@@ -66,6 +57,8 @@ namespace ControlsSample
                     popupPinCodePicker.ShowPopup(b);
                 };
             });
+
+            ControlUtils.AddContextMenuItemsForThemeSelection(calculator);
         }
 
         private void PopupListBox_AfterHide(object? sender, EventArgs e)

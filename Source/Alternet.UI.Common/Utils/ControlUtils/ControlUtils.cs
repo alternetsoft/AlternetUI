@@ -74,8 +74,9 @@ namespace Alternet.UI
         /// <param name="targetControl">The control whose theme will be changed when a menu item is selected.</param>
         public static void AddContextMenuItemsForThemeSelection(
             AbstractControl menuOwnerControl,
-            AbstractControl targetControl)
+            AbstractControl? targetControl = null)
         {
+            targetControl ??= menuOwnerControl;
             menuOwnerControl.ContextMenuStrip.AddSeparatorIfNeeded();
 
             menuOwnerControl.ContextMenuStrip.Add("Auto Theme", () =>
