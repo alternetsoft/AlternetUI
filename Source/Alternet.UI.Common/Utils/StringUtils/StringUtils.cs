@@ -208,11 +208,11 @@ namespace Alternet.UI
         /// <param name="input">The string to check.</param>
         /// <returns><c>true</c> if the string contains CR or LF
         /// characters; otherwise, <c>false</c>.</returns>
-        public static bool ContainsNewLineChars(string input)
+        public static bool ContainsNewLineChars(ReadOnlySpan<char> input)
         {
-            if (input is null || input.Length == 0)
+            if (input.IsEmpty)
                 return false;
-            return input.AsSpan().IndexOfAny('\r', '\n') >= 0;
+            return input.IndexOfAny('\r', '\n') >= 0;
         }
 
         /// <summary>
@@ -1425,6 +1425,49 @@ namespace Alternet.UI
             if (index < 0)
                 return text;
             return text.Substring(0, index);
+        }
+
+        /// <summary>
+        /// Trims the array to the specified max length.
+        /// If trimming occurs, appends "..." to the last string.
+        /// If the source array is null or empty, or if maxLength is less than or equal to zero, returns an empty array.
+        /// </summary>
+        /// <param name="source">The source array of strings to trim.</param>
+        /// <param name="maxLength">The maximum length of the resulting array.</param>
+        /// <returns>The trimmed array of strings with an ellipsis appended to the last string if trimming occurred.</returns>
+        public static string[] TrimWithEllipsis(string[] source, int maxLength)
+        {
+            if (source == null || source.Length == 0 || maxLength <= 0)
+                return Array.Empty<string>();
+
+            if (source.Length <= maxLength)
+                return source;
+
+            string[] result = new string[maxLength];
+            Array.Copy(source, result, maxLength);
+
+            result[maxLength - 1] = result[maxLength - 1] + "...";
+
+            return result;
+        }
+
+        /// <summary>
+        /// Trims the array to the specified max length if provided.
+        /// </summary>
+        /// <param name="source">The source array of strings to trim.</param>
+        /// <param name="maxLength">The maximum length of the resulting array.</param>
+        /// <returns>The trimmed array of strings with an ellipsis appended to the last string if trimming occurred,
+        /// or the original array if maxLength is not provided.</returns>
+        public static string[] TrimWithEllipsisOptional(string[] source, int? maxLength)
+        {
+            if (maxLength.HasValue)
+            {
+                return TrimWithEllipsis(source, maxLength.Value);
+            }
+            else
+            {
+                return source ?? Array.Empty<string>();
+            }
         }
 
         /// <summary>
