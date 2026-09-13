@@ -1640,13 +1640,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Wraps the specified text to fit within the given width constraints,
+        /// taking into account word wrapping settings and font metrics.
+        /// </summary>
+        /// <param name="s">The text to be wrapped.</param>
+        /// <param name="wordWrap">Indicates whether word wrapping is enabled.</param>
+        /// <param name="paddedRectWidth">The width of the padded rectangle.</param>
+        /// <param name="minTextWidth">The minimum text width.</param>
+        /// <param name="maxTextWidth">The maximum text width.</param>
+        /// <param name="labelFont">The font used for the label.</param>
+        /// <param name="dc">The graphics context used for measuring and drawing text.</param>
+        /// <returns>The wrapped text.</returns>
+        public static string GetWrappedText(
+            string s,
+            bool wordWrap,
+            float paddedRectWidth,
+            float? minTextWidth,
+            float? maxTextWidth,
+            Font labelFont,
+            Graphics dc)
+        {
+            if (!wordWrap)
+                return s;
+
+            var mw = paddedRectWidth;
+
+            if (minTextWidth is not null)
+                mw = Math.Max(minTextWidth.Value, mw);
+
+            if (maxTextWidth is not null)
+                mw = Math.Min(maxTextWidth.Value, mw);
+
+            var result = DrawingUtils.WrapTextToMultipleLines(
+                s,
+                mw,
+                labelFont,
+                dc);
+            return result;
+        }
+
+        /// <summary>
         /// Performs word wrapping of the text.
         /// </summary>
         /// <param name="text">Text to wrap.</param>
         /// <param name="maxWidth">Width of the text in device-independent units.</param>
         /// <param name="font">Text font.</param>
         /// <param name="canvas">Drawing context.</param>
-        /// <returns></returns>
+        /// <returns>The wrapped text.</returns>
         public static string WrapTextToMultipleLines(
             string text,
             Coord maxWidth,
