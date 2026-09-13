@@ -1821,11 +1821,10 @@ namespace Alternet.UI
 
             asm ??= type.Assembly;
 
-            var definedTypes = asm.DefinedTypes;
+            var definedTypes = GetTypesSafe(asm);
 
-            foreach (TypeInfo typeInfo in definedTypes)
+            foreach (var resultType in definedTypes)
             {
-                var resultType = typeInfo.AsType();
                 if (resultType.IsAbstract || !resultType.IsPublic)
                     continue;
                 if (TypeIsDescendant(resultType, type))
@@ -1844,14 +1843,15 @@ namespace Alternet.UI
         public static SortedList<string, Type> GetSortedTypeDescendantsWithFullNames(Type type)
         {
             SortedList<string, Type> result = new();
-            var types = GetTypeDescendants(type);
-            foreach (var item in types)
-            {
-                if (item.FullName is null)
-                    continue;
 
-                result.Add(item.FullName, item);
-            }
+            RunActionForDerivedTypes(type,
+                (t) =>
+                {
+                    if (t.FullName is null)
+                        return;
+
+                    result.Add(t.FullName, t);
+                });
 
             return result;
         }
