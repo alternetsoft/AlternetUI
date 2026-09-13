@@ -343,8 +343,6 @@ namespace Alternet.UI
             r.Width += widthIncrement;
             var rectRow = r;
 
-            MeasureItemEventArgs.EnsureCreated(ref measureItemArgs, dc);
-
             itemsLastPainted.Clear();
 
             bool drawHorzLines = HorzGridLines;
@@ -352,7 +350,11 @@ namespace Alternet.UI
             bool drawVertLines = HasColumns && VertGridLines;
             Color horzLineColor = GetEffectiveHorzGridLinesColor(isDark);
 
-            var rowSizes = MeasureRows(dc, fromIndex, toIndex);
+            ListControlItem.MeasureItemSizeParams prm = new();
+            prm.FormatProvider = FormatProvider;
+            prm.PaintRectangle = r;
+
+            var rowSizes = MeasureRows(dc, fromIndex, toIndex, prm);
 
             for (int line = lineMin; line < lineMax; line++)
             {

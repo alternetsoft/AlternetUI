@@ -383,7 +383,8 @@ namespace PropertyGridSample
 
                         if (control.Parent == null)
                         {
-                            control.VerticalAlignment = VerticalAlignment.Top;
+                            if(!control.FlagsAndAttributes.HasFlag("NoTopAlignment"))
+                                control.VerticalAlignment = VerticalAlignment.Top;
                             control.Parent = ControlParent;
                         }
 

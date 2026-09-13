@@ -120,6 +120,8 @@ namespace Alternet.UI
         private BorderSettings? border;
         private Thickness foregroundMargin;
         private Thickness checkBoxMargin;
+        private Coord? maxTextWidth;
+        private Coord? minTextWidth;
 
         private bool? checkBoxThreeState;
         private bool? checkBoxAllowAllStatesForUser;
@@ -131,6 +133,8 @@ namespace Alternet.UI
         private bool hideFocusRect;
         private bool isRadioButton;
         private bool isCheckRightAligned;
+        private bool wordWrap;
+        private int? maxLines;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -443,6 +447,73 @@ namespace Alternet.UI
             {
                 additionalImages = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum number of lines for the item's text.
+        /// If this property is null, no maximum line limit is applied.
+        /// </summary>
+        public virtual int? MaxLines
+        {
+            get => maxLines;
+            set => maxLines = value;
+        }
+
+        /// <summary>
+        /// Gets or sets whether text is word wrapped in order to fit label in the parent's
+        /// client area. Default is False. This is different from <see cref="NewLineWrap"/> property,
+        /// which breaks text at new line characters. <see cref="WordWrap"/> wraps text at word boundaries.
+        /// In order to specify additional constraints, use <see cref="MaxTextWidth"/> and <see cref="MinTextWidth"/> properties
+        /// to specify maximum and minimum width of the text block.
+        /// </summary>
+        public virtual bool WordWrap
+        {
+            get => wordWrap;
+            set
+            {
+                if (wordWrap == value)
+                    return;
+                wordWrap = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether text is line wrapped in order to fit label in the parent's client area. Default is False.
+        /// This is different from <see cref="WordWrap"/> property, which wraps text at word boundaries.
+        /// <see cref="NewLineWrap"/> breaks text at new line characters.
+        /// </summary>
+        public virtual bool NewLineWrap
+        {
+            get => LabelFlags.HasFlag(DrawLabelFlags.TextHasNewLineChars);
+            set
+            {
+                if (NewLineWrap == value)
+                    return;
+                if (value)
+                    LabelFlags |= DrawLabelFlags.TextHasNewLineChars;
+                else
+                    LabelFlags &= ~DrawLabelFlags.TextHasNewLineChars;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the maximum width of the text block for the item.
+        /// If this property is null, no maximum width is applied. This property is used only if <see cref="WordWrap"/> is true.
+        /// </summary>
+        public virtual Coord? MaxTextWidth
+        {
+            get => maxTextWidth;
+            set => maxTextWidth = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the minimum width of the text block for the item.
+        /// If this property is null, no minimum width is applied.  This property is used only if <see cref="WordWrap"/> is true.
+        /// </summary>
+        public virtual Coord? MinTextWidth
+        {
+            get => minTextWidth;
+            set => minTextWidth = value;
         }
 
         /// <summary>
@@ -1487,8 +1558,8 @@ namespace Alternet.UI
 
             var textVisible = container.Defaults.TextVisible;
 
-            SizeD size;
-            float imageLabelDistance;
+            SizeD size = SizeD.Empty;
+            float imageLabelDistance = 0;
 
             if (textVisible)
             {
@@ -1501,9 +1572,22 @@ namespace Alternet.UI
 
                 var hasNewLineChars = flags.HasFlag(DrawLabelFlags.TextHasNewLineChars);
 
+                if (item?.WordWrap == true && measureParams is not null && measureParams.Value.PaintRectangle.HasValue)
+                {
+                    hasNewLineChars = true;
+                    s = DrawingUtils.GetWrappedText(
+                        s,
+                        wordWrap: true,
+                        measureParams.Value.PaintRectangle.Value.Width,
+                        item.MinTextWidth,
+                        item.MaxTextWidth,
+                        font,
+                        dc);
+                }
+
                 if (hasNewLineChars && StringUtils.ContainsNewLineChars(s))
                 {
-                    var splitText = StringUtils.Split(s, false);
+                    var splitText = StringUtils.TrimWithEllipsisOptional(StringUtils.Split(s, false), item?.MaxLines);
                     size = dc.DrawStrings(
                         RectD.Empty,
                         font,
@@ -1515,11 +1599,6 @@ namespace Alternet.UI
                 {
                     size = dc.GetTextExtent(s, font);
                 }
-            }
-            else
-            {
-                size = SizeD.Empty;
-                imageLabelDistance = 0;
             }
 
             var itemMargin = container.Defaults.ItemMargin;
@@ -2204,7 +2283,19 @@ namespace Alternet.UI
 
                 if (item is not null)
                 {
-                    s = item?.GetWithoutMnemonicMarkers(s, out mnemonicCharIndex) ?? string.Empty;
+                    s = item.GetWithoutMnemonicMarkers(s, out mnemonicCharIndex) ?? string.Empty;
+
+                    if (item.WordWrap)
+                    {
+                        s = DrawingUtils.GetWrappedText(
+                            s,
+                            wordWrap: true,
+                            paintRectangle.Width,
+                            item.MinTextWidth,
+                            item.MaxTextWidth,
+                            e.ItemFont,
+                            e.Graphics);
+                    }
                 }
 
                 Graphics.DrawLabelParams prm = new(
@@ -2228,10 +2319,15 @@ namespace Alternet.UI
 
                 if (item is not null)
                 {
+                    prm.Flags = item.LabelFlags;
+
+                    if (item.WordWrap)
+                        prm.Flags |= DrawLabelFlags.TextHasNewLineChars;
+
+                    prm.MaxLines = item.MaxLines;
                     prm.IndexAccel = mnemonicCharIndex;
                     prm.SuffixElements = item.SuffixElements;
                     prm.PrefixElements = item.PrefixElements;
-                    prm.Flags = item.LabelFlags;
                     prm.TextHorizontalAlignment = item.TextLineAlignment ?? TextHorizontalAlignment.Left;
                     prm.LineDistance = item.TextLineDistance ?? 0;
                     prm.IsVertical = item.IsVerticalOrientation;

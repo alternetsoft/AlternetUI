@@ -94,6 +94,12 @@ namespace Alternet.UI
             public bool RequestCellSize = false;
 
             /// <summary>
+            /// Gets or sets rectangle that defines the area where the item is painted.
+            /// This rectangle can be used to determine the available space for measuring the item size.
+            /// </summary>
+            public RectD? PaintRectangle;
+
+            /// <summary>
             /// Creates a new instance of the <see cref="MeasureItemSizeParams"/> structure.
             /// </summary>
             public MeasureItemSizeParams()

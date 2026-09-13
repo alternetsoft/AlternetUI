@@ -230,9 +230,11 @@ StringUtils.DoubleNewLine +
 
             SetDefaultOwnerDrawItemsForListBox(listBox);
 
+            listBox.FlagsAndAttributes.Flags.SetFlag("NoTopAlignment", true);
+
             listBox.HorizontalScrollbar = true;
             listBox.Count = 200;
-            listBox.SuggestedSize = DefaultListSize;
+            listBox.VerticalAlignment = VerticalAlignment.Fill;
             listBox.CustomItemText += ListBox_CustomItemText;
 
             static void ListBox_CustomItemText(object? sender, GetItemTextEventArgs e)

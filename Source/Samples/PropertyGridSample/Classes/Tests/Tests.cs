@@ -354,10 +354,30 @@ namespace PropertyGridSample
                 ObjectInit.AddManyItems(c);
             });
 
-            AddControlAction<VirtualListBox>("Add item with new line chars", (c) =>
+            AddControlAction<VirtualListBox>("Clear", (c) =>
+            {
+                c.RemoveAll();
+            });
+
+            AddControlAction<VirtualListBox>("Add item with NewLineWrap=true", (c) =>
             {
                 ListControlItem item = new(DemoUtils.LoremIpsumWithSingleNewLines);
-                item.LabelFlags |= DrawLabelFlags.TextHasNewLineChars;
+                item.NewLineWrap = true;
+                c.Add(item);
+            });
+
+            AddControlAction<VirtualListBox>("Add item with WordWrap=true", (c) =>
+            {
+                ListControlItem item = new(DemoUtils.LoremIpsumWithSingleNewLines);
+                item.WordWrap = true;
+                c.Add(item);
+            });
+
+            AddControlAction<VirtualListBox>("Add item WordWrap=true, MaxLines=3", (c) =>
+            {
+                ListControlItem item = new(DemoUtils.LoremIpsumWithSingleNewLines);
+                item.WordWrap = true;
+                item.MaxLines = 3;
                 c.Add(item);
             });
 
