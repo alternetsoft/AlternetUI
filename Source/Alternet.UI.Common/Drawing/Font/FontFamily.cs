@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Alternet.Skia;
@@ -15,22 +16,17 @@ namespace Alternet.Drawing
     /// </summary>
     public partial class FontFamily : BaseObject
     {
-        private static readonly string?[] GenericFamilyNames
-            = new string?[(int)GenericFontFamily.Default + 1];
-
         private static readonly object syncRoot = new();
-        private static FontFamily? genericSerif;
-        private static FontFamily? genericDefault;
-        private static FontFamily? genericSansSerif;
-        private static FontFamily? genericMonospace;
-
         private static BaseDictionary<string, FontFamily>? items;
         private static List<string>? namesAscending;
 
-        private string? name;
+        private readonly string name;
+
         private bool? isOk;
         private SKTypeface? typeface;
         private bool? isFixedPitch;
+        private static FontFamily? genericSansSerif;
+        private static FontFamily? genericSerif;
 
         /// <summary>
         /// Initializes a new <see cref="FontFamily"/> with the specified name.
@@ -39,19 +35,6 @@ namespace Alternet.Drawing
         public FontFamily(string? name)
             : this(name, validate: true)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="FontFamily"/> from the specified
-        /// generic font family.
-        /// </summary>
-        /// <param name="genericFamily">The <see cref="GenericFontFamily"/>
-        /// from which to create the new <see cref="FontFamily"/>.</param>
-        public FontFamily(GenericFontFamily genericFamily)
-        {
-            if (genericFamily == GenericFontFamily.None)
-                genericFamily = GenericFontFamily.Default;
-            GenericFamily = genericFamily;
         }
 
         /// <summary>
@@ -67,7 +50,7 @@ namespace Alternet.Drawing
                 if (string.IsNullOrEmpty(name))
                 {
                     App.LogError("Font name cannot be empty, using default font.");
-                    GenericFamily = GenericFontFamily.Default;
+                    this.name = Font.Default.Name;
                     return;
                 }
 
@@ -75,51 +58,12 @@ namespace Alternet.Drawing
                 {
                     App.LogError(
                         $"'{name}' font family is not installed on this computer, using default font.");
-                    GenericFamily = GenericFontFamily.Default;
+                    this.name = Font.Default.Name;
                     return;
                 }
             }
 
-            this.name = name;
-        }
-
-        /// <summary>
-        /// Gets a generic serif <see cref="FontFamily"/>.
-        /// </summary>
-        /// <value>A <see cref="FontFamily"/> that represents a generic serif font.</value>
-        public static FontFamily GenericSerif
-        {
-            get => genericSerif ??= new FontFamily(GenericFontFamily.Serif);
-        }
-
-        /// <summary>
-        /// Gets a generic default <see cref="FontFamily"/>.
-        /// </summary>
-        /// <value>A <see cref="FontFamily"/> that represents a generic default
-        /// font.</value>
-        public static FontFamily GenericDefault
-        {
-            get => genericDefault ??= new FontFamily(GenericFontFamily.Default);
-        }
-
-        /// <summary>
-        /// Gets a generic sans serif <see cref="FontFamily"/>.
-        /// </summary>
-        /// <value>A <see cref="FontFamily"/> that represents a generic
-        /// sans serif font.</value>
-        public static FontFamily GenericSansSerif
-        {
-            get => genericSansSerif ??= new FontFamily(GenericFontFamily.SansSerif);
-        }
-
-        /// <summary>
-        /// Gets a generic monospace <see cref="FontFamily"/>.
-        /// </summary>
-        /// <value>A <see cref="FontFamily"/> that represents a generic
-        /// monospace font.</value>
-        public static FontFamily GenericMonospace
-        {
-            get => genericMonospace ??= new FontFamily(GenericFontFamily.Monospace);
+            this.name = name ?? Font.Default.Name;
         }
 
         /// <summary>
@@ -175,6 +119,45 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a generic serif <see cref="FontFamily"/>.
+        /// </summary>
+        /// <value>A <see cref="FontFamily"/> that represents a generic serif font.</value>
+        public static FontFamily GenericSerif
+        {
+            get => genericSerif ??= MatchFamily("serif");
+        }
+
+        /// <summary>
+        /// Gets a generic sans serif <see cref="FontFamily"/>.
+        /// </summary>
+        /// <value>A <see cref="FontFamily"/> that represents a generic
+        /// sans serif font.</value>
+        public static FontFamily GenericSansSerif
+        {
+            get => genericSansSerif ??= MatchFamily("sans-serif");
+        }
+
+        /// <summary>
+        /// Gets a generic default <see cref="FontFamily"/>.
+        /// </summary>
+        /// <value>A <see cref="FontFamily"/> that represents a generic default
+        /// font.</value>
+        public static FontFamily GenericDefault
+        {
+            get => Font.Default.FontFamily;
+        }
+
+        /// <summary>
+        /// Gets a generic monospace <see cref="FontFamily"/>.
+        /// </summary>
+        /// <value>A <see cref="FontFamily"/> that represents a generic
+        /// monospace font.</value>
+        public static FontFamily GenericMonospace
+        {
+            get => Font.DefaultMono.FontFamily;
+        }
+
+        /// <summary>
         /// Returns a string array that contains all names of the
         /// <see cref="FontFamily"/>
         /// objects currently available in the system. Names are returned in
@@ -207,7 +190,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return isFixedPitch ??= IsFixedPitchFontFamily(Name);
+                return isFixedPitch ??= SkiaTypeface.IsFixedPitch;
             }
         }
 
@@ -220,6 +203,11 @@ namespace Alternet.Drawing
             {
                 return typeface ??= SKFontManager.Default.MatchFamily(Name);
             }
+
+            internal set
+            {
+                typeface = value;
+            }
         }
 
         /// <summary>
@@ -231,7 +219,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return name ??= GetName(GenericFamily);
+                return name;
             }
         }
 
@@ -261,7 +249,7 @@ namespace Alternet.Drawing
                     {
                         if (items is null)
                         {
-                            FamiliesNames = FontFactory.Handler.GetFontFamiliesNames();
+                            FamiliesNames = App.Handler.GetFontFamiliesNames();
                         }
                     }
                 }
@@ -299,24 +287,74 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="FontFamily"/> for the specified <see cref="GenericFontFamily"/> enumeration.
+        /// Creates a new <see cref="FontFamily"/> from the specified <see cref="SKTypeface"/>.
         /// </summary>
-        public static FontFamily GetFamily(GenericFontFamily? family)
+        /// <param name="typeface">The SKTypeface to create the FontFamily from.</param>
+        /// <returns>A new FontFamily instance.</returns>
+        public static FontFamily FromSkia(SKTypeface typeface)
         {
-            family ??= GenericFontFamily.Default;
-            switch (family.Value)
+            var name = typeface.FamilyName;
+            var result = new FontFamily(name, validate: false)
             {
-                case GenericFontFamily.None:
-                case GenericFontFamily.Default:
-                default:
-                    return GenericDefault;
-                case GenericFontFamily.SansSerif:
-                    return GenericSansSerif;
-                case GenericFontFamily.Serif:
-                    return GenericSerif;
-                case GenericFontFamily.Monospace:
-                    return GenericMonospace;
-            }
+                SkiaTypeface = typeface,
+            };
+
+            Items.Add(name, result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Searches for a <see cref="FontFamily"/> with the specified name or returns the default font family
+        /// if the name is null or invalid.
+        /// </summary>
+        /// <param name="name">The name of the font family.</param>
+        /// <returns>A new FontFamily instance or the default font family.</returns>
+        public static FontFamily FromNameOrDefault(string? name)
+        {
+            if (name is null)
+                return Font.Default.FontFamily;
+            var result = FromName(name);
+            if (result is null)
+                return Font.Default.FontFamily;
+            return result;
+        }
+
+        /// <summary>
+        /// Searches for a <see cref="FontFamily"/> with the specified name or returns null
+        /// if the name is null or invalid.
+        /// </summary>
+        /// <param name="name">The name of the font family.</param>
+        /// <returns>A new FontFamily instance or null.</returns>
+        public static FontFamily? FromName(string? name)
+        {
+            if (name is null)
+                return null;
+            if (Items.TryGetValue(name, out var result))
+                return result;
+            return null;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="FontFamily"/> from the specified file path.
+        /// </summary>
+        /// <param name="filePath">The file path to create the FontFamily from.</param>
+        /// <returns>A new FontFamily instance.</returns>
+        public static FontFamily FromFile(string filePath)
+        {
+            var typeface = SKTypeface.FromFile(filePath);
+            return FromSkia(typeface);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="FontFamily"/> from the specified <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream to create the FontFamily from.</param>
+        /// <returns>A new FontFamily instance.</returns>
+        public static FontFamily FromStream(Stream stream)
+        {
+            var typeface = SKTypeface.FromStream(stream);
+            return FromSkia(typeface);
         }
 
         /// <summary>
@@ -328,37 +366,6 @@ namespace Alternet.Drawing
         {
             var result = fonts.Where(x => SkiaHelper.IsFamilySkia(x));
             return result;
-        }
-
-        /// <summary>
-        /// Gets name of the font family specified with <see cref="GenericFontFamily"/> enum.
-        /// </summary>
-        /// <param name="family">Font family.</param>
-        /// <returns></returns>
-        public static string GetName(GenericFontFamily? family)
-        {
-            if (family is null || family == GenericFontFamily.None)
-                family = GenericFontFamily.Default;
-
-            var savedResult = GenericFamilyNames[(int)family];
-            if (savedResult is not null)
-                return savedResult;
-
-            var result = FontFactory.Handler.GetFontFamilyName(family.Value);
-
-            GenericFamilyNames[(int)family] = result;
-
-            return result;
-        }
-
-        /// <summary>
-        /// Sets name of the font family specified with <see cref="GenericFontFamily"/> enum.
-        /// </summary>
-        /// <param name="genericFamily">Font family.</param>
-        /// <param name="name">New name.</param>
-        public static void SetFontFamilyName(GenericFontFamily genericFamily, string? name)
-        {
-            GenericFamilyNames[(int)genericFamily] = name;
         }
 
         /// <summary>
@@ -377,6 +384,20 @@ namespace Alternet.Drawing
             {
                 throw new NotImplementedException();
             }
+        }
+
+        /// <summary>
+        /// Returns a <see cref="FontFamily"/> instance that matches the specified font family name.
+        /// This method uses SkiaSharp's font matching capabilities to find the best match for the given name.
+        /// If no match is found, it falls back to the default font family.
+        /// </summary>
+        /// <param name="name">The name of the font family to search for.</param>
+        /// <returns>A <see cref="FontFamily"/> instance.</returns>
+        public static FontFamily MatchFamily(string name)
+        {
+            var typeface = SKFontManager.Default.MatchFamily(name);
+            typeface ??= Font.Default.FontFamily.SkiaTypeface;
+            return FromSkia(typeface);
         }
     }
 }
