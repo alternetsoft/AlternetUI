@@ -1968,27 +1968,40 @@ namespace Alternet.UI
                     if (!hideSelection)
                     {
                         var selectionBorder = container?.Defaults.SelectionBorder;
+                        var selectionBrush = GetSelectedItemBackColor(item, container)?.GetColor(isDark)?.AsBrush;
 
-                        if (!selectionUnderImage)
+                        if (e.SelectionRectOverride is not null)
                         {
-                            CalcForegroundMetrics(container, e);
-                            var drawParams = e.LabelMetrics;
-                            var rectangles = drawParams.ResultRects;
-                            if (rectangles is not null && rectangles.Length > 1)
-                            {
-                                var distance = (drawParams.ImageLabelDistance ?? 0) / 2;
-                                var imageRect = rectangles[1];
-                                var delta = imageRect.Left - rect.Left - distance;
-                                rect = rect.DeflatedWithPadding((delta, 0, 0, 0));
-                            }
+                            dc.FillBorderRectangle(
+                                e.SelectionRectOverride.Value,
+                                selectionBrush,
+                                selectionBorder,
+                                hasBorder: false,
+                                control);
                         }
+                        else
+                        {
+                            if (!selectionUnderImage)
+                            {
+                                CalcForegroundMetrics(container, e);
+                                var drawParams = e.LabelMetrics;
+                                var rectangles = drawParams.ResultRects;
+                                if (rectangles is not null && rectangles.Length > 1)
+                                {
+                                    var distance = (drawParams.ImageLabelDistance ?? 0) / 2;
+                                    var imageRect = rectangles[1];
+                                    var delta = imageRect.Left - rect.Left - distance;
+                                    rect = rect.DeflatedWithPadding((delta, 0, 0, 0));
+                                }
+                            }
 
-                        dc.FillBorderRectangle(
-                            rect,
-                            GetSelectedItemBackColor(item, container)?.GetColor(isDark)?.AsBrush,
-                            selectionBorder,
-                            hasBorder: false,
-                            control);
+                            dc.FillBorderRectangle(
+                                rect,
+                                selectionBrush,
+                                selectionBorder,
+                                hasBorder: false,
+                                control);
+                        }
                     }
                 }
 
