@@ -92,6 +92,20 @@ namespace Alternet.UI
                 SetProperty(ref title, value);
             }
         }
+
+        /// <summary>
+        /// Represents a picker for calendar item markers, allowing users to select a marker.
+        /// </summary>
+        public abstract class MarkerPicker : DrawingResourcePicker
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MarkerPicker"/> class.
+            /// </summary>
+            public MarkerPicker()
+                : base()
+            {
+            }
+        }
     }
 
     /// <summary>
@@ -131,6 +145,20 @@ namespace Alternet.UI
             : base(name, title, lightColorGetter, darkColorGetter)
         {
         }
+
+        /// <summary>
+        /// Represents a picker for calendar item categories, allowing users to select a category.
+        /// </summary>
+        public class CategoryPicker : MarkerPicker
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="CategoryPicker"/> class.
+            /// </summary>
+            public CategoryPicker()
+                : base()
+            {
+            }
+        }
     }
 
     /// <summary>
@@ -169,6 +197,20 @@ namespace Alternet.UI
         public CalendarItemStatus(string name, string title, Func<Color> lightColorGetter, Func<Color> darkColorGetter)
             : base(name, title, lightColorGetter, darkColorGetter)
         {
+        }
+
+        /// <summary>
+        /// Represents a picker for calendar item statuses, allowing users to select a status.
+        /// </summary>
+        public class StatusPicker : MarkerPicker
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="StatusPicker"/> class.
+            /// </summary>
+            public StatusPicker()
+                : base()
+            {
+            }
         }
     }
 

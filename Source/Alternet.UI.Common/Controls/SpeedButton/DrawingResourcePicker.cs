@@ -157,7 +157,7 @@ namespace Alternet.UI
                 {
                     popupWindow = new(defaultColors: false);
                     popupWindow.Title = CommonStrings.Default.WindowTitleSelectValue;
-                    popupWindow.AfterHide += PopupWindowAfterHideHandler;
+                    popupWindow.AfterHide += OnPopupWindowAfterHide;
                 }
 
                 return popupWindow;
@@ -342,15 +342,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows color popup or dialog (depends on the value of <see cref="ActionKind"/> property).
+        /// Shows popup or does other action depending on the value of <see cref="ActionKind"/> property.
         /// Called when control is clicked.
         /// </summary>
-        public virtual void ShowColorSelector(ClickActionKind? kind = null)
+        public virtual void ShowPopup(ClickActionKind? kind = null)
         {
             switch (kind ?? ActionKind)
             {
                 case ClickActionKind.ShowPopup:
-                    ShowColorPopup();
+                    ShowPopup();
                     break;
             }
         }
@@ -399,9 +399,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows color popup.
+        /// Shows popup.
         /// </summary>
-        public virtual void ShowColorPopup()
+        public virtual void ShowPopup()
         {
             if (!Enabled)
                 return;
@@ -418,7 +418,7 @@ namespace Alternet.UI
             App.AddIdleTask(() =>
             {
                 if (!IsDisposed)
-                    ShowColorSelector(LongTapAction);
+                    ShowPopup(LongTapAction);
             });
         }
 
@@ -427,7 +427,7 @@ namespace Alternet.UI
         {
             base.OnClick(e);
 
-            ShowColorSelector();
+            ShowPopup();
         }
 
         /// <inheritdoc/>
@@ -443,7 +443,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments</param>
-        protected virtual void PopupWindowAfterHideHandler(object? sender, EventArgs e)
+        protected virtual void OnPopupWindowAfterHide(object? sender, EventArgs e)
         {
             if (PopupWindow.PopupResult == ModalResult.Accepted)
                 Value = PopupWindow.ResultAsDrawingResource;
