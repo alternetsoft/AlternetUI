@@ -396,5 +396,45 @@ namespace Alternet.UI.Localization
         public string AllDay { get; set; } = "All Day";
 
         public string FullDayDuration { get; set; } = "Full Day Duration";
+
+        // ========================
+
+        public string CalendarItemCategoryAnniversary = "Anniversary";
+
+        public string CalendarItemCategoryBirthday = "Birthday";
+
+        public string CalendarItemCategoryBusiness = "Business";
+
+        public string CalendarItemCategoryImportant = "Important";
+
+        public string CalendarItemCategoryMustAttend = "Must Attend";
+
+        public string CalendarItemCategoryNeedPreparation = "Need Preparation";
+
+        public string CalendarItemCategoryNone = "None";
+
+        public string CalendarItemCategoryOther = "Other";
+
+        public string CalendarItemCategoryPersonal = "Personal";
+
+        public string CalendarItemCategoryPhoneCall = "Phone Call";
+
+        public string CalendarItemCategoryTravelRequired = "Travel Required";
+
+        public string CalendarItemCategoryVacation = "Vacation";
+
+        // ========================
+
+        public string CalendarItemStatusAbsent = "Absent";
+
+        public string CalendarItemStatusBusy = "Busy";
+
+        public string CalendarItemStatusFree = "Free";
+
+        public string CalendarItemStatusTentative = "Tentative";
+
+        public string CalendarItemStatusUnknown = "Unknown";
+
+        // ========================
     }
 }
