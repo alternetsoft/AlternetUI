@@ -12,9 +12,46 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
+    /// Defines an interface for a two-value class that has different values for light and dark themes.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface IThemedDrawingObject<T>
+    {
+        /// <summary>
+        /// Gets dark value.
+        /// </summary>
+        T Dark { get; }
+
+        /// <summary>
+        /// Gets light value.
+        /// </summary>
+        T Light { get; }
+
+        /// <summary>
+        /// Gets <see cref="Dark"/> or <see cref="Light"/> value depending on system settings and control color mode.
+        /// </summary>
+        /// <param name="control">The control to use for determining the theme.</param>
+        /// <returns>The value for the appropriate theme.</returns>
+        T GetValue(AbstractControl control);
+
+        /// <summary>
+        /// Gets <see cref="Dark"/> or <see cref="Light"/> value depending on <paramref name="isDark"/> parameter value.
+        /// </summary>
+        /// <param name="isDark">A value indicating whether to get the dark value.</param>
+        /// <returns>The value for the appropriate theme.</returns>
+        T GetValue(bool isDark);
+
+        /// <summary>
+        /// Gets <see cref="Dark"/> or <see cref="Light"/> value depending on system settings.
+        /// </summary>
+        /// <returns>The value for the appropriate theme.</returns>
+        T GetValue();
+    }
+
+    /// <summary>
     /// Represents a two-value class that has different values for light and dark themes.
     /// </summary>
-    public partial class ThemedDrawingObject<T> : ImmutableObject
+    public partial class ThemedDrawingObject<T> : ImmutableObject, IThemedDrawingObject<T>
     {
         private T light;
         private T dark;

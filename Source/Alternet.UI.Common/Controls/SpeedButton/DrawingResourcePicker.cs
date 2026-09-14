@@ -8,10 +8,10 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="SpeedButton"/> for editing of the <see cref="DrawingResource"/> values.
-    /// In the editor, the <see cref="DrawingResource"/> value can be changed by selecting an item from the list box.
-    /// Item image is painted using the <see cref="DrawingResource"/> value.
-    /// <see cref="DrawingResource"/> can be defined by a brush, pen, or color.
+    /// Implements <see cref="SpeedButton"/> for editing of the <see cref="ThemedDrawingResource"/> values.
+    /// In the editor, the <see cref="ThemedDrawingResource"/> value can be changed by selecting an item from the list box.
+    /// Item image is painted using the <see cref="ThemedDrawingResource"/> value.
+    /// <see cref="ThemedDrawingResource"/> can be defined by a brush, pen, or color.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
     public partial class DrawingResourcePicker : SpeedButton
@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool DefaultUseControlColors = true;
 
-        private DrawingResource? data;
+        private IThemedDrawingResource? data;
         private SizeD valueImageSize = SpeedColorButton.DefaultColorImageSizeDips;
         private PopupColorListBox? popupWindow;
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
@@ -53,7 +53,7 @@ namespace Alternet.UI
         private ThemedColor? valueImageBorder;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
+        /// Initializes a new instance of the <see cref="DrawingResourcePicker"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public DrawingResourcePicker(AbstractControl parent)
@@ -63,7 +63,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
+        /// Initializes a new instance of the <see cref="DrawingResourcePicker"/> class.
         /// </summary>
         public DrawingResourcePicker()
         {
@@ -141,11 +141,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the title displayed when <see cref="Color.Empty"/> is selected.
-        /// </summary>
-        public virtual string? EmptyColorTitle { get; set; }
-
-        /// <summary>
         /// Gets attached popup window with <see cref="ColorListBox"/>.
         /// </summary>
         [Browsable(false)]
@@ -165,7 +160,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets what happens when the user clicks this button.
+        /// Gets or sets what happens when the user clicks this control.
         /// </summary>
         public virtual ClickActionKind ActionKind
         {
@@ -184,7 +179,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether to show popup window with <see cref="ColorListBox"/> when
-        /// button is clicked.
+        /// control is clicked.
         /// </summary>
         [Browsable(false)]
         public virtual bool ShowPopupWindow
@@ -203,7 +198,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets size of the color image in device-independent units.
+        /// Gets or sets size of the value image in device-independent units.
         /// </summary>
         public virtual SizeD ValueImageSizeDips
         {
@@ -219,9 +214,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets selected color.
+        /// Gets or sets selected value.
         /// </summary>
-        public virtual DrawingResource? Value
+        public virtual IThemedDrawingResource? Value
         {
             get
             {
@@ -233,7 +228,7 @@ namespace Alternet.UI
                 if (data == value)
                     return;
                 data = value;
-                var s = data?.Title ?? StringUtils.OneSpace;
+                var s = data?.GetValue(this).Title ?? StringUtils.OneSpace;
 
                 if (s.Length == 0)
                     s = StringUtils.OneSpace;
@@ -273,8 +268,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting
-        /// of the color image
-        /// when control is disabled.
+        /// of the color image when control is disabled.
         /// </summary>
         public virtual bool UseDisabledImageColor
         {
@@ -359,18 +353,18 @@ namespace Alternet.UI
         /// Adds drawng resource item to the list of items.
         /// </summary>
         /// <param name="value">Drawing resource value.</param>
-        public virtual ListControlItem Add(DrawingResource value)
+        public virtual ListControlItem Add(IThemedDrawingResource value)
         {
-            var item = ListBox.CreateItem(value);
+            var item = ListBox.CreateItem(value, () => IsDarkBackground);
             ListBox.Add(item);
             return item;
         }
 
         /// <summary>
-        /// Selects specified <see cref="DrawingResource"/> in the list box.
+        /// Selects specified <see cref="IThemedDrawingResource"/> in the list box.
         /// </summary>
         /// <param name="newValue">The new value to select.</param>
-        public virtual void Select(DrawingResource? newValue)
+        public virtual void Select(IThemedDrawingResource? newValue)
         {
             if (newValue is null)
             {
@@ -385,7 +379,7 @@ namespace Alternet.UI
                 if (item is null)
                     continue;
 
-                if (item.Value is DrawingResource itemResource)
+                if (item.Value is IThemedDrawingResource itemResource)
                 {
                     if (itemResource == newValue)
                     {
@@ -446,7 +440,9 @@ namespace Alternet.UI
         protected virtual void OnPopupWindowAfterHide(object? sender, EventArgs e)
         {
             if (PopupWindow.PopupResult == ModalResult.Accepted)
-                Value = PopupWindow.ResultAsDrawingResource;
+            {
+                Value = PopupWindow.ResultAsThemedDrawingResource;
+            }
         }
 
         /// <inheritdoc/>
@@ -475,25 +471,28 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnValueImageChanged(bool refresh = true)
         {
-            DrawingResource? imageResource = data;
+            IThemedDrawingResource? imageResource = data;
 
             if (!Enabled && useDisabledImageColor)
             {
                 var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
                 if (disabledColor is not null)
-                    imageResource = new(disabledColor.GetColor(this));
+                    imageResource = new ThemedDrawingResource(
+                        new DrawingResource(disabledColor.Light), new DrawingResource(disabledColor.Dark));
             }
 
-            imageResource ??= new(Color.Empty);
+            imageResource ??= new ThemedDrawingResource(new DrawingResource(Color.Empty), new DrawingResource(Color.Empty));
 
             Brush? brush;
 
-            if (imageResource.HasBrush)
-                brush = imageResource.Brush;
+            var val = imageResource.GetValue(this);
+
+            if (val.HasBrush)
+                brush = val.Brush;
             else
-                if (imageResource.HasColor)
+                if (val.HasColor)
                 {
-                    brush = imageResource.Color?.AsBrush;
+                    brush = val.Color?.AsBrush;
                 }
                 else
                 {

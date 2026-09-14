@@ -365,8 +365,10 @@ namespace Alternet.UI
         /// <returns></returns>
         public static ListControlItem DefaultCreateItem(Color? value, string? title = null)
         {
-            title ??= value?.ToDisplayString() ?? string.Empty;
-            ListControlItem controlItem = new(title, value);
+            ListControlItem controlItem = new((item) =>
+            {
+                return title ?? (item.Value as Color)?.ToDisplayString() ?? string.Empty;
+            }, value);
             return controlItem;
         }
 
@@ -375,9 +377,32 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Drawing resource value.</param>
         /// <returns></returns>
-        public static ListControlItem DefaultCreateItem(DrawingResource value)
+        public static ListControlItem DefaultCreateItem(IDrawingResource value)
         {
-            ListControlItem controlItem = new(value.Title ?? string.Empty, value);
+            ListControlItem controlItem = new((item) =>
+            {
+                return (item.Value as IDrawingResource)?.Title ?? string.Empty;
+            }, value);
+            return controlItem;
+        }
+
+        /// <summary>
+        /// Default method of the item creation for the specified themed drawing resource and title.
+        /// </summary>
+        /// <param name="value">Themed drawing resource value.</param>
+        /// <param name="isDarkGetter">A function that determines whether the theme is dark.</param>
+        /// <returns>ListControlItem representing the specified themed drawing resource.</returns>
+        public static ListControlItem DefaultCreateItem(IThemedDrawingResource value, Func<bool> isDarkGetter)
+        {
+            ListControlItem controlItem = new(
+            (item) =>
+            {
+                return (item.Value as IThemedDrawingResource)?.GetValue(isDarkGetter()).Title ?? string.Empty;
+            },
+            (item) =>
+            {
+                return value;
+            });
             return controlItem;
         }
 
@@ -386,7 +411,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Brush title.</param>
         /// <param name="value">Brush value.</param>
-        /// <returns></returns>
+        /// <returns>The newly created <see cref="ListControlItem"/> instance.</returns>
         public static ListControlItem DefaultCreateItem(Brush value, string title)
         {
             ListControlItem controlItem = new(title, value);
@@ -434,8 +459,36 @@ namespace Alternet.UI
             if (item is Brush brush)
                 return brush;
 
-            if (item is DrawingResource drawingResource)
+            if (item is IDrawingResource drawingResource)
                 return drawingResource.Brush;
+
+            if (item is IThemedDrawingResource themedDrawingResource)
+                return themedDrawingResource.GetValue(control.AsControl().IsDarkBackground).Brush;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets value of the specified item as a <see cref="ThemedDrawingResource"/> object.
+        /// </summary>
+        /// <param name="control">The control containing the item.</param>
+        /// <param name="itemIndex">The index of the item.</param>
+        /// <returns>The themed drawing resource value of the item, or <see langword="null"/>
+        /// if the item is not a themed drawing resource.</returns>
+        public static IThemedDrawingResource? GetItemValueAsThemedDrawingResource(IListControl control, int itemIndex)
+        {
+            if (control.GetItemAsObject(itemIndex) is not ListControlItem item)
+                return null;
+
+            var value = item.Value;
+
+            if (value is IThemedDrawingResource drawingResource)
+                return drawingResource;
+
+            var dr = GetItemValueAsDrawingResource(control, itemIndex);
+
+            if (dr is not null)
+                return new ThemedDrawingResource(dr);
 
             return null;
         }
@@ -446,16 +499,17 @@ namespace Alternet.UI
         /// <param name="control">The control containing the item.</param>
         /// <param name="itemIndex">The index of the item.</param>
         /// <returns>The drawing resource value of the item, or <see langword="null"/> if the item is not a drawing resource.</returns>
-        public static DrawingResource? GetItemValueAsDrawingResource(IListControl control, int itemIndex)
+        public static IDrawingResource? GetItemValueAsDrawingResource(IListControl control, int itemIndex)
         {
             if (control.GetItemAsObject(itemIndex) is not ListControlItem item)
                 return null;
 
             var value = item.Value;
-            var valueText = item.DisplayText ?? item.Text;
 
-            if (value is DrawingResource drawingResource)
+            if (value is IDrawingResource drawingResource)
                 return drawingResource;
+
+            var valueText = item.DisplayText ?? item.Text;
 
             if (value is Color color)
             {
@@ -609,7 +663,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="title">Brush title.</param>
         /// <param name="value">Brush value.</param>
-        /// <returns></returns>
+        /// <returns>The newly created <see cref="ListControlItem"/> instance.</returns>
         public virtual ListControlItem CreateItem(Brush value, string title)
         {
             return DefaultCreateItem(value, title);
@@ -619,10 +673,21 @@ namespace Alternet.UI
         /// Creates item for the specified drawing resource and title.
         /// </summary>
         /// <param name="value">Drawing resource value.</param>
-        /// <returns></returns>
-        public virtual ListControlItem CreateItem(DrawingResource value)
+        /// <returns>The newly created <see cref="ListControlItem"/> instance.</returns>
+        public virtual ListControlItem CreateItem(IDrawingResource value)
         {
             return DefaultCreateItem(value);
+        }
+
+        /// <summary>
+        /// Creates item for the specified themed drawing resource.
+        /// </summary>
+        /// <param name="value">Themed drawing resource value.</param>
+        /// <param name="isDarkGetter">The function to determine if the theme is dark.</param>
+        /// <returns>The newly created <see cref="ListControlItem"/> instance.</returns>
+        public virtual ListControlItem CreateItem(IThemedDrawingResource value, Func<bool> isDarkGetter)
+        {
+            return DefaultCreateItem(value, isDarkGetter);
         }
 
         /// <summary>

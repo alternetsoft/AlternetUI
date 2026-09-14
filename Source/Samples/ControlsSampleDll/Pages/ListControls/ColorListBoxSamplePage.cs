@@ -95,10 +95,13 @@ namespace ControlsSample
             var brush2Name = $"Vertical Green";
             brush2resource.Title = brush2Name;
 
-            drawingResourcePicker.Add(brush1resource);
-            drawingResourcePicker.Add(brush2resource);
+            ThemedDrawingResource themed1 = new(brush1resource);
+            ThemedDrawingResource themed2 = new(brush2resource);
 
-            drawingResourcePicker.Value = brush1resource;
+            drawingResourcePicker.Add(themed1);
+            drawingResourcePicker.Add(themed2);
+
+            drawingResourcePicker.Value = themed1;
 
             settings.AddInput("Item Image Shape:", listBox, nameof(ColorListBox.ItemImageShape));
             settings.AddInput("Show Checkboxes", listBox, nameof(ColorListBox.CheckBoxVisible));

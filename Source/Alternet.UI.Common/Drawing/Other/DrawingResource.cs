@@ -7,10 +7,51 @@ using SkiaSharp;
 namespace Alternet.Drawing
 {
     /// <summary>
+    /// Defines an interface for a drawing resource that can be defined by a brush, pen, or color.
+    /// </summary>
+    public interface IDrawingResource
+    {
+        /// <summary>
+        /// Gets or sets title of the drawing resource.
+        /// </summary>
+        string? Title { get; set; }
+        
+        /// <summary>
+        /// Gets or sets brush value.
+        /// </summary>
+        Brush? Brush { get; set; }
+        
+        /// <summary>
+        /// Gets or sets pen value.
+        /// </summary>
+        Pen? Pen { get; set; }
+        
+        /// <summary>
+        /// Gets or sets color value.
+        /// </summary>
+        Color? Color { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether this object has a brush.
+        /// </summary>
+        public bool HasBrush => Brush != null;
+
+        /// <summary>
+        /// Gets a value indicating whether this object has a pen.
+        /// </summary>
+        public bool HasPen => Pen != null;
+
+        /// <summary>
+        /// Gets a value indicating whether this object has a color.
+        /// </summary>
+        public bool HasColor => Color != null;
+    }
+
+    /// <summary>
     /// Represents a drawing resource that can be defined
     /// by a brush, pen, or color.
     /// </summary>
-    public class DrawingResource : IEquatable<DrawingResource>
+    public class DrawingResource : IEquatable<DrawingResource>, IDrawingResource
     {
         private Brush? brush;
         private Pen? pen;
