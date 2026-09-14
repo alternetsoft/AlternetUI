@@ -90,6 +90,9 @@ namespace Alternet.UI
         private ItemImageInfo imageInfo = new();
         private BaseCollection<ItemImageInfoRef>? additionalImages;
         private string? text;
+        private TextGetterDelegate? textGetter;
+        private TextGetterDelegate? displayTextGetter;
+        private ValueGetterDelegate? valueGetter;
         private string? displayText;
         private object? value;
         private IndexedValues<ObjectUniqueId, ContainerRelatedData>? containerRelated;
@@ -161,6 +164,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ListControlItem"/> class
+        /// with the getter for the <see cref="Text"/> property and default values for the <see cref="Value"/> properties.
+        /// </summary>
+        /// <param name="textFunc">A function that returns the text for the item.</param>
+        /// <param name="value">A function that returns the value for the item.</param>
+        public ListControlItem(TextGetterDelegate textFunc, ValueGetterDelegate value)
+            : this()
+        {
+            this.textGetter = textFunc;
+            this.valueGetter = value;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListControlItem"/>
+        /// class with the getter for the <see cref="Text"/> property
+        /// and default values for the <see cref="Value"/> properties.
+        /// </summary>
+        /// <param name="textFunc">A function that returns the text for the item.</param>
+        /// <param name="value">The value for the item.</param>
+        public ListControlItem(TextGetterDelegate textFunc, object? value)
+            : this()
+        {
+            this.textGetter = textFunc;
+            Value = value;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class.
         /// </summary>
         public ListControlItem()
@@ -202,6 +232,19 @@ namespace Alternet.UI
         /// the parameters used for drawing the label. This
         /// parameter can be modified to customize the appearance of the text.</param>
         public delegate void BeforeDrawLabelDelegate(ListControlItem item, ref Graphics.DrawLabelParams prm);
+
+        /// <summary>
+        /// Represents the method that is used to get the text for the item.
+        /// </summary>
+        /// <returns></returns>
+        public delegate string? TextGetterDelegate(ListControlItem item);
+
+        /// <summary>
+        /// Represents the method that is used to get the value associated with the item.
+        /// </summary>
+        /// <param name="item">The <see cref="ListControlItem"/> for which to get the value.</param>
+        /// <returns>The value associated with the item.</returns>
+        public delegate object? ValueGetterDelegate(ListControlItem item);
 
         /// <summary>
         /// Gets whether the item has column cells.
@@ -345,8 +388,18 @@ namespace Alternet.UI
         /// </summary>
         public virtual string? DisplayText
         {
-            get => displayText;
-            set => displayText = value;
+            get
+            {
+                if (DisplayTextGetter is not null)
+                    return DisplayTextGetter(this) ?? string.Empty;
+
+                return displayText;
+            }
+
+            set
+            {
+                displayText = value;
+            }
         }
 
         /// <summary>
@@ -372,6 +425,36 @@ namespace Alternet.UI
             {
                 isVisible = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a function that returns the text for the item.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TextGetterDelegate? TextGetter
+        {
+            get => textGetter;
+            set => textGetter = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a function that returns the value for the item.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ValueGetterDelegate? ValueGetter
+        {
+            get => valueGetter;
+            set => valueGetter = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a function that returns the display text for the item.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TextGetterDelegate? DisplayTextGetter
+        {
+            get => displayTextGetter;
+            set => displayTextGetter = value;
         }
 
         /// <summary>
@@ -1083,12 +1166,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets text which is displayed when item is painted.
+        /// Gets or sets text which is stored in the item.
+        /// There are two ways to get text for the item: either use this property or assign <see cref="TextGetter"/> delegate.
+        /// There are also properties which can be used to get display text for the item,
+        /// such as <see cref="DisplayText"/> and <see cref="DisplayTextGetter"/>.
         /// </summary>
         public virtual string Text
         {
             get
             {
+                if (TextGetter is not null)
+                    return TextGetter(this) ?? string.Empty;
+
                 if (string.IsNullOrEmpty(text))
                     return Value?.ToString() ?? string.Empty;
 
@@ -1103,7 +1192,13 @@ namespace Alternet.UI
         /// </summary>
         public virtual object? Value
         {
-            get => value;
+            get
+            {
+                if (ValueGetter is not null)
+                    return ValueGetter(this);
+                return value;
+            }
+
             set => this.value = value;
         }
 
