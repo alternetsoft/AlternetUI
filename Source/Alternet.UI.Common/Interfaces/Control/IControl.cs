@@ -1411,5 +1411,11 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         ThemedColor? GetDefaultAttributesFgColor();
+
+        /// <summary>
+        /// Gets this control as <see cref="AbstractControl"/>.
+        /// </summary>
+        /// <returns></returns>
+        AbstractControl AsControl();
     }
 }

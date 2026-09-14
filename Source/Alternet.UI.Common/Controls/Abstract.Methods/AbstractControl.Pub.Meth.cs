@@ -849,6 +849,8 @@ namespace Alternet.UI
             }
         }
 
+        AbstractControl IControl.AsControl() => this;
+
         /// <summary>
         /// Creates the <see cref="Graphics"/> for the control.
         /// </summary>
