@@ -22,6 +22,11 @@ namespace Alternet.UI
     public partial class ColorListBox : VirtualListBox
     {
         /// <summary>
+        /// Gets or sets default additional offset of the text from the color image in the item.
+        /// </summary>
+        public static float DefaultAdditionalRightTextMargin = 3f;
+
+        /// <summary>
         /// Gets or sets default shape of the item image.
         /// </summary>
         public static DrawingShapeType? DefaultItemImageShape = DrawingShapeType.Circle;
@@ -895,6 +900,16 @@ namespace Alternet.UI
                         r,
                         colorListBox.CoerceColorImageSize,
                         isRight);
+                    e.SelectionRectOverride = itemRect;
+                    colorListBox.DefaultDrawItemBackground(e);
+
+                    if (!isRight)
+                    {
+                        var ofs = DefaultAdditionalRightTextMargin;
+                        itemRect.Left += ofs;
+                        itemRect.Width -= ofs;
+                    }
+
                     e.ClientRectangle = itemRect;
                     colorListBox.DefaultDrawItemForeground(e);
                     colorListBox.PaintItemImage(e.Graphics, colorRect, itemBrush);
@@ -928,6 +943,14 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual bool PaintBackground(object sender, ListBoxItemPaintEventArgs e)
             {
+                if (sender is not ColorListBox colorListBox)
+                {
+                    return false;
+                }
+
+                if (colorListBox.TextVisible)
+                    return true;
+
                 return false;
             }
         }
