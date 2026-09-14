@@ -265,7 +265,7 @@ namespace Alternet.UI
                 NativeStringSpan.Invoke(value.Name, span =>
                 {
                     fontRef = Native.Font.CreateFontRef(
-                        value.GenericFamily,
+                        0,
                         span,
                         value.SizeInPoints,
                         value.Style);

@@ -34,6 +34,11 @@ namespace Alternet.Common.Skia
         public string? Name;
 
         /// <summary>
+        /// Gets or sets the <see cref="SKTypeface"/> instance associated with this font information.
+        /// </summary>
+        public SKTypeface? Typeface;
+
+        /// <summary>
         /// Gets or sets the font width (stretch). Defaults to <see cref="SKFontStyleWidth.Normal"/>.
         /// </summary>
         public SKFontStyleWidth Width = SKFontStyleWidth.Normal;
@@ -61,12 +66,15 @@ namespace Alternet.Common.Skia
         /// size, and default settings.</returns>
         public readonly SKFont CreateFont()
         {
-            SKTypeface typeFace;
+            SKTypeface? typeFace = Typeface;
 
-            if(string.IsNullOrEmpty(Name))
-                typeFace = SKTypeface.Default;
-            else
-                typeFace = SKTypeface.FromFamilyName(Name, Weight, Width, Slant);
+            if (typeFace is null)
+            {
+                if (string.IsNullOrEmpty(Name))
+                    typeFace = SKTypeface.Default;
+                else
+                    typeFace = SKTypeface.FromFamilyName(Name, Weight, Width, Slant);
+            }
 
             SKFont skiaFont = new(typeFace, SizeInDips);
 

@@ -9,26 +9,26 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// <see cref="IFontHandler"/> implementation which is not platform-dependent.
+    /// Defines a font handler for SkiaSharp fonts.
     /// </summary>
-    public struct SkiaFontHandler : IFontHandler
+    public struct SkiaFontHandler
     {
-        private string name = string.Empty;
         private FontStyle style = FontStyle.Regular;
         private Coord sizeInPoints = 12;
         private FontWeight weight = FontWeight.Normal;
         private FontEncoding encoding = FontEncoding.Default;
         private string? serialized;
         private bool? isFixedFont;
+        private FontFamily fontFamily;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SkiaFontHandler"/> class.
+        /// Gets or sets font family.
         /// </summary>
-        /// <param name="name">Font name.</param>
+        /// <param name="family">Font family.</param>
         /// <param name="sizeInPoints">Font size in points.</param>
-        public SkiaFontHandler(string name, Coord sizeInPoints)
+        public SkiaFontHandler(FontFamily family, Coord sizeInPoints)
         {
-            SetName(name);
+            this.fontFamily = family;
             this.SizeInPoints = sizeInPoints;
         }
 
@@ -37,6 +37,8 @@ namespace Alternet.Drawing
         /// </summary>
         public SkiaFontHandler()
         {
+            this.fontFamily = Font.Default.FontFamily;
+            this.SizeInPoints = Font.Default.SizeInPoints;
         }
 
         /// <inheritdoc/>
@@ -61,29 +63,17 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public string GetName()
+        public readonly string GetName()
         {
-            return name;
+            return fontFamily.Name;
         }
         
-        /// <summary>
-        /// Sets font name.
-        /// </summary>
-        /// <param name="value"></param>
-        public void SetName(string value)
-        {
-            if (name == value)
-                return;
-            name = value;
-            Changed();
-        }
-
         /// <summary>
         /// Gets or sets font style.
         /// </summary>
         public FontStyle Style
         {
-            get
+            readonly get
             {
                 return style;
             }
@@ -100,7 +90,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public Coord SizeInPoints
         {
-            get
+            readonly get
             {
                 return sizeInPoints;
             }
@@ -115,7 +105,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public FontEncoding GetEncoding(Font font)
+        public readonly FontEncoding GetEncoding(Font font)
         {
             return encoding;
         }
@@ -131,13 +121,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public int GetNumericWeight(Font font)
+        public readonly int GetNumericWeight(Font font)
         {
             return Font.GetNumericWeightOf(weight);
         }
 
         /// <inheritdoc/>
-        public int GetPixelSize(Font font)
+        public readonly int GetPixelSize(Font font)
         {
             var result = GraphicsUnitConverter.Convert(
                 GraphicsUnit.Point,
@@ -148,25 +138,25 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public bool GetItalic()
+        public readonly bool GetItalic()
         {
             return style.HasFlag(FontStyle.Italic);
         }
 
         /// <inheritdoc/>
-        public bool GetStrikethrough()
+        public readonly bool GetStrikethrough()
         {
             return style.HasFlag(FontStyle.Strikeout);
         }
 
         /// <inheritdoc/>
-        public bool GetUnderlined()
+        public readonly bool GetUnderlined()
         {
             return style.HasFlag(FontStyle.Underline);
         }
 
         /// <inheritdoc/>
-        public FontWeight GetWeight()
+        public readonly FontWeight GetWeight()
         {
             return weight;
         }
@@ -195,7 +185,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public bool IsUsingSizeInPixels(Font font)
+        public readonly bool IsUsingSizeInPixels(Font font)
         {
             return false;
         }
@@ -215,13 +205,10 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public void Update(Font font, IFontHandler.FontParams prm)
+        public void Update(Font font, Font.FontParams prm)
         {
             Font.CoerceFontParams(prm);
-            if (prm.GenericFamily is null)
-                name = prm.FamilyName ?? FontFamily.GetName(GenericFontFamily.Default);
-            else
-                name = FontFamily.GetName(prm.GenericFamily ?? GenericFontFamily.Default);
+            fontFamily = prm.Family ?? Font.Default.FontFamily;
             style = prm.Style;
             sizeInPoints = prm.Size;
             if (style.HasFlag(FontStyle.Bold))
@@ -233,7 +220,7 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public void Dispose()
+        public readonly void Dispose()
         {
         }
     }

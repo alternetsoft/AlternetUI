@@ -12,12 +12,12 @@ using SkiaSharp;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Implements <see cref="IFontFactoryHandler"/> interface provider for SkiaSharp fonts.
+    /// Defines a font factory handler for SkiaSharp fonts.
     /// </summary>
-    public class SkiaFontFactoryHandler : DisposableObject, IFontFactoryHandler
+    public class SkiaFontFactoryHandler : DisposableObject
     {
         /// <summary>
-        /// Gets default <see cref="IFontFactoryHandler"/> provider for SkiaSharp fonts.
+        /// Gets default provider for SkiaSharp fonts.
         /// </summary>
         public static readonly SkiaFontFactoryHandler Default = new();
 
@@ -37,15 +37,6 @@ namespace Alternet.Drawing
         {
             get;
             set;
-        }
-
-        /// <summary>
-        /// Creates <see cref="IFontHandler"/> interface provider for the default font.
-        /// </summary>
-        /// <returns></returns>
-        public virtual IFontHandler CreateDefaultFontHandler()
-        {
-            return new SkiaFontHandler(GetDefaultFontName(), GetDefaultFontSize());
         }
 
         /// <inheritdoc/>
@@ -76,15 +67,6 @@ namespace Alternet.Drawing
         public virtual Font CreateDefaultMonoFont()
         {
             return new Font(SkiaHelper.DefaultMonoFontName, SkiaHelper.DefaultFontSize);
-        }
-
-        /// <summary>
-        /// Creates <see cref="IFontHandler"/> interface provider.
-        /// </summary>
-        /// <returns></returns>
-        public virtual IFontHandler CreateFontHandler()
-        {
-            return new SkiaFontHandler();
         }
 
         /// <summary>

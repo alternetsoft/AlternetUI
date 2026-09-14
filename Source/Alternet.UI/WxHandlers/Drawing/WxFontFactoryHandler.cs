@@ -8,10 +8,10 @@ using Alternet.UI;
 
 namespace Alternet.Drawing
 {
-    internal class WxFontFactoryHandler : DisposableObject, IFontFactoryHandler
+    internal class WxFontFactoryHandler : DisposableObject
     {
-        private IFontHandler? defaultFontHandler;
-        private IFontHandler? defaultMonoFontHandler;
+        private UI.Native.Font? defaultFontHandler;
+        private UI.Native.Font? defaultMonoFontHandler;
 
         public FontEncoding DefaultFontEncoding
         {
@@ -30,13 +30,19 @@ namespace Alternet.Drawing
             return defaultFontHandler.SizeInPoints;
         }
 
+        public float GetDefaultMonoFontSize()
+        {
+            defaultMonoFontHandler ??= CreateDefaultMonoFontHandler();
+            return defaultMonoFontHandler.SizeInPoints;
+        }
+
         public string GetDefaultMonoFontName()
         {
             defaultMonoFontHandler ??= CreateDefaultMonoFontHandler();
-            return defaultMonoFontHandler.GetName();
+            return defaultMonoFontHandler.GetNameAsString();
         }
 
-        public IFontHandler CreateDefaultMonoFontHandler()
+        public UI.Native.Font CreateDefaultMonoFontHandler()
         {
             var result = new UI.Native.Font();
             result.InitializeWithDefaultMonoFont();
@@ -46,35 +52,23 @@ namespace Alternet.Drawing
         public string GetDefaultFontName()
         {
             defaultFontHandler ??= CreateDefaultFontHandler();
-            return defaultFontHandler.GetName();
+            return defaultFontHandler.GetNameAsString();
         }
 
-        public Font CreateDefaultMonoFont()
-        {
-            defaultMonoFontHandler ??= CreateDefaultMonoFontHandler();
-            return new Font(defaultMonoFontHandler.GetName(), defaultMonoFontHandler.SizeInPoints);
-        }
-
-        public Font CreateDefaultFont()
-        {
-            defaultFontHandler ??= CreateDefaultFontHandler();
-            return new Font(defaultFontHandler.GetName(), defaultFontHandler.SizeInPoints);
-        }
-
-        public IFontHandler CreateDefaultFontHandler()
+        public UI.Native.Font CreateDefaultFontHandler()
         {
             var result = new UI.Native.Font();
             result.InitializeWithDefaultFont();
             return result;
         }
 
-        public IFontHandler CreateFontHandler()
+        public UI.Native.Font CreateFontHandler()
         {
             var result = new UI.Native.Font();
             return result;
         }
 
-        public IFontHandler CreateFontHandler(Font font)
+        public UI.Native.Font CreateFontHandler(Font font)
         {
             var result = new UI.Native.Font();
             var fontRef = WxControlHandler.GetFontRef(font);

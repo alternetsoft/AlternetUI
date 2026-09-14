@@ -75,22 +75,6 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <inheritdoc/>
-        public IFontFactoryHandler CreateFontFactoryHandler()
-        {
-            return new WxFontFactoryHandler();
-        }
-
-        public IImageListHandler? CreateImageListHandler()
-        {
-            return new UI.Native.ImageList();
-        }
-
-        public IImageContainer? CreateIconSetHandler()
-        {
-            return new UI.Native.IconSet();
-        }
-
         public IImageHandler CreateImageHandler()
         {
             return new UI.Native.Image();

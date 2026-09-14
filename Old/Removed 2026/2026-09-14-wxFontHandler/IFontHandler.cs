@@ -98,14 +98,9 @@ namespace Alternet.Drawing
         public class FontParams
         {
             /// <summary>
-            /// Gets or sets <see cref="GenericFontFamily"/> of the font.
-            /// </summary>
-            public GenericFontFamily? GenericFamily;
-
-            /// <summary>
             /// Gets or sets font family name.
             /// </summary>
-            public string? FamilyName;
+            public FontFamily? Family;
 
             /// <summary>
             /// Gets or sets font size.
@@ -141,7 +136,7 @@ namespace Alternet.Drawing
             /// <param name="font">Font.</param>
             public FontParams(Font font)
             {
-                FamilyName = font.Name;
+                Family = font.FontFamily;
                 Size = font.SizeInPoints;
                 Style = font.Style;
                 GdiCharSet = font.GdiCharSet;

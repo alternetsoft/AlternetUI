@@ -13,7 +13,6 @@ namespace Alternet.Drawing
     /// </summary>
     public static class FontFactory
     {
-        private static IFontFactoryHandler? handler;
         private static Font? defaultSymbolFont;
 
         /// <summary>
@@ -49,16 +48,6 @@ namespace Alternet.Drawing
         public static bool OnlySkiaFonts
         {
             get => true;
-        }
-
-        /// <summary>
-        /// Gets or sets handler which is used to perform font related operations.
-        /// </summary>
-        public static IFontFactoryHandler Handler
-        {
-            get => handler ??= App.Handler.CreateFontFactoryHandler();
-
-            set => handler = value;
         }
 
         /// <summary>

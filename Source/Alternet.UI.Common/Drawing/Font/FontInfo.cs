@@ -14,7 +14,6 @@ namespace Alternet.Drawing
     /// </summary>
     public struct FontInfo
     {
-        private static FontFamily defaultFontFamily = FontFamily.GenericDefault;
         private object nameOrFamily = DefaultFontFamily;
         private FontScalar sizeInPoints = DefaultSizeInPoints;
 
@@ -78,18 +77,13 @@ namespace Alternet.Drawing
         /// </summary>
         public static FontFamily DefaultFontFamily
         {
-            get => defaultFontFamily;
-            set
-            {
-                value ??= FontFamily.GenericDefault;
-                defaultFontFamily = value;
-            }
+            get => Font.Default.FontFamily;
         }
 
         /// <summary>
         /// Gets or sets default font size for the <see cref="FontInfo"/> instances.
         /// </summary>
-        public static FontScalar DefaultSizeInPoints { get; set; } = Font.Default.SizeInPoints;
+        public static FontScalar DefaultSizeInPoints => Font.Default.SizeInPoints;
 
         /// <summary>
         /// Gets the <see cref="FontFamily"/> name associated with the font.
@@ -102,7 +96,7 @@ namespace Alternet.Drawing
             get
             {
                 if (nameOrFamily is string v)
-                    nameOrFamily = new FontFamily(v);
+                    nameOrFamily = FontFamily.FromNameOrDefault(v);
                 return (FontFamily)nameOrFamily;
             }
 

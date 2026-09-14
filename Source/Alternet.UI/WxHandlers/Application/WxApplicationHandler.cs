@@ -37,8 +37,9 @@ namespace Alternet.UI
         private static Native.Application nativeApplication;
         private static readonly WxKeyboardInputProvider keyboardInputProvider;
         private static readonly WxMouseInputProvider mouseInputProvider;
-
         private static bool assertedWxWidgetsVersion;
+        
+        private readonly WxFontFactoryHandler fontFactoryHandler = new();
 
         static WxApplicationHandler()
         {
@@ -352,6 +353,36 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public IEnumerable<string> GetFontFamiliesNames()
+        {
+            return fontFactoryHandler?.GetFontFamiliesNames() ?? Array.Empty<string>();
+        }
+
+        /// <inheritdoc/>
+        public string GetDefaultFontName()
+        {
+            return fontFactoryHandler?.GetDefaultFontName() ?? string.Empty;
+        }
+
+        /// <inheritdoc/>
+        public string GetDefaultMonoFontName()
+        {
+            return fontFactoryHandler?.GetDefaultMonoFontName() ?? string.Empty;
+        }
+
+        /// <inheritdoc/>
+        public float GetDefaultFontSize()
+        {
+            return fontFactoryHandler.GetDefaultFontSize();
+        }
+
+        /// <inheritdoc/>
+        public float GetDefaultMonoFontSize()
+        {
+            return fontFactoryHandler.GetDefaultMonoFontSize();
+        }
+
+        /// <inheritdoc/>
         public virtual ISystemSettingsHandler CreateSystemSettingsHandler()
         {
             return new WxSystemSettingsHandler();
@@ -572,12 +603,6 @@ namespace Alternet.UI
 
             var nativeMenu = new WxMainMenu(menuBar.UniqueId.ToString(), menuBar);
             WxMenuFactory.NativeMenu?.MacSetCommonMenuBar(nativeMenu.AsPointer);
-        }
-
-        /// <inheritdoc/>
-        public IFontFactoryHandler CreateFontFactoryHandler()
-        {
-            return new WxFontFactoryHandler();
         }
 
         /// <inheritdoc/>

@@ -37,7 +37,7 @@ namespace DrawingSample
         static TextPage()
         {
             var defaultSize = AbstractControl.DefaultFont.SizeInPoints;
-            fontInfoFont = new(FontFamily.GenericMonospace, defaultSize);
+            fontInfoFont = new(Font.DefaultMono, defaultSize);
             fontSize = defaultSize;
         }
 
@@ -337,10 +337,10 @@ namespace DrawingSample
 
         private IEnumerable<Paragraph> CreateParagraphs()
         {
-            Paragraph CreateGenericFontParagraph(GenericFontFamily genericFamily) =>
+            Paragraph CreateGenericFontParagraph(string title, Font baseFont) =>
                 new(this,
-                    new Font(new FontFamily(genericFamily), FontSize, FontStyle),
-                    "Generic " + genericFamily.ToString());
+                    new Font(baseFont.FontFamily, FontSize, FontStyle),
+                    title + " " + baseFont.Name);
 
             Paragraph CreateCustomFontParagraph(FontFamily family) =>
                 new(this,
@@ -348,9 +348,8 @@ namespace DrawingSample
                     "Custom");
 
             yield return CreateCustomFontParagraph(new FontFamily(CustomFontFamilyName));
-            yield return CreateGenericFontParagraph(GenericFontFamily.Serif);
-            yield return CreateGenericFontParagraph(GenericFontFamily.SansSerif);
-            yield return CreateGenericFontParagraph(GenericFontFamily.Monospace);
+            yield return CreateGenericFontParagraph("Default", Font.Default);
+            yield return CreateGenericFontParagraph("Default Mono", Font.DefaultMono);
         }
 
         private class Paragraph : IDisposable

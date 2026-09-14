@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 using Alternet.Skia;
@@ -47,25 +49,52 @@ namespace Alternet.Drawing
         private static string? defaultFontName;
         private static string? defaultMonoFontName;
 
-        private readonly GenericFontFamily genericFamily;
-
-        private SkiaFontHandler handler;
-        private SKFont? skiaFont;
-        private FontStyle? style;
-        private int? hashCode;
-        private bool? gdiVerticalFont;
-        private Font[]? fonts;
-        private Font? baseFont;
-        private FontFamily? fontFamily;
-        private ObjectUniqueId? uniqueId;
-        private int savedFontSettingsIteration;
+        private FontRecord data = new ();
 
         /// <summary>
-        /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
+        /// Initializes a new <see cref="Font"/> using a specified font family,
+        /// size in points and style.
         /// </summary>
+        /// <param name="family">The <see cref="FontFamily"/> of the new
+        /// <see cref="Font"/>.</param>
+        /// <param name="emSize">The em-size, in points, of the new font.</param>
+        /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(FontInfo fontInfo)
-            : this(fontInfo.Name, fontInfo.SizeInPoints, fontInfo.Style)
+        public Font(
+            FontFamily family,
+            FontScalar emSize,
+            FontStyle style = FontStyle.Regular)
+            : this(family, emSize, style, GraphicsUnit.Point)
+        {
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, unit,
+        /// and character set.</summary>
+        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
+        /// new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by
+        /// the <paramref name="unit" /> parameter.</param>
+        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
+        /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character set
+        /// to use for
+        /// this font.  Currently ignored.</param>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Font(
+            string familyName,
+            FontScalar emSize,
+            FontStyle style,
+            GraphicsUnit unit,
+            byte gdiCharSet)
+            : this(FontFamily.FromNameOrDefault(familyName), emSize, style, unit, gdiCharSet)
         {
         }
 
@@ -86,111 +115,17 @@ namespace Alternet.Drawing
             string familyName,
             FontScalar emSize,
             FontStyle style = FontStyle.Regular)
-            : this(null, familyName, emSize, style)
+            : this(familyName, emSize, style, GraphicsUnit.Point)
         {
         }
 
         /// <summary>
-        /// Initializes a new <see cref="Font"/> using a specified font family,
-        /// size in points and style.
+        /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
         /// </summary>
-        /// <param name="family">The <see cref="FontFamily"/> of the new
-        /// <see cref="Font"/>.</param>
-        /// <param name="emSize">The em-size, in points, of the new font.</param>
-        /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
-        /// <remarks>
-        /// If bad parameters are passed to the font constructor, error message is output to log
-        /// and font is created with default parameters. No exceptions are raised.
-        /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(
-            FontFamily family,
-            FontScalar emSize,
-            FontStyle style = FontStyle.Regular)
-            : this(
-                family.GenericFamily,
-                family.Name,
-                emSize,
-                style)
+        public Font(FontInfo fontInfo)
+            : this(fontInfo.Name, fontInfo.SizeInPoints, fontInfo.Style)
         {
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
-        /// and <see cref="FontStyle" /> enumeration.</summary>
-        /// <param name="prototype">The existing <see cref="Font" /> from which to create the
-        /// new <see cref="Font" />.</param>
-        /// <param name="newStyle">The <see cref="FontStyle" /> to apply to the
-        /// new <see cref="Font" />. Multiple values of the <see cref="FontStyle" />
-        /// enumeration can be
-        /// combined with the <see langword="OR" /> operator.</param>
-        /// <remarks>
-        /// If bad parameters are passed to the font constructor, error message is output to log
-        /// and font is created with default parameters. No exceptions are raised.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(Font prototype, FontStyle newStyle)
-            : this(
-                prototype.fontFamily?.GenericFamily,
-                prototype.Name,
-                prototype.Size,
-                newStyle)
-        {
-            baseFont = prototype;
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
-        /// and <paramref name="newSize"/> parameter.</summary>
-        /// <param name="prototype">The existing <see cref="Font" /> from which to create the
-        /// new <see cref="Font" />.</param>
-        /// <param name="newSize">New size of the font in points.</param>
-        /// <remarks>
-        /// If bad parameters are passed to the font constructor, error message is output to log
-        /// and font is created with default parameters. No exceptions are raised.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(Font prototype, FontScalar newSize)
-            : this(
-                prototype.fontFamily?.GenericFamily,
-                prototype.Name,
-                newSize,
-                prototype.Style)
-        {
-            baseFont = prototype;
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
-        /// and <see cref="RelativeFontSize" />.
-        /// </summary>
-        /// <param name="prototype">The existing <see cref="Font" /> from which to create the new <see cref="Font" />.</param>
-        /// <param name="newSize">The new size of the font as a <see cref="RelativeFontSize" />.</param>
-        public Font(Font prototype, RelativeFontSize newSize)
-            : this(
-                prototype.fontFamily?.GenericFamily,
-                prototype.Name,
-                newSize.GetSize(prototype.Size),
-                prototype.Style)
-        {
-            baseFont = prototype;
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />,
-        /// <see cref="RelativeFontSize" /> and <see cref="FontStyle" />.
-        /// </summary>
-        /// <param name="prototype">The existing <see cref="Font" /> from which to create the new <see cref="Font" />.</param>
-        /// <param name="newSize">The new size of the font as a <see cref="RelativeFontSize" />.</param>
-        /// <param name="newStyle">The new style of the font as a <see cref="FontStyle" />.</param>
-        public Font(Font prototype, RelativeFontSize newSize, FontStyle newStyle)
-            : this(
-                prototype.fontFamily?.GenericFamily,
-                prototype.Name,
-                newSize.GetSize(prototype.Size),
-                newStyle)
-        {
-            baseFont = prototype;
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified
@@ -207,7 +142,60 @@ namespace Alternet.Drawing
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(FontFamily family, FontScalar emSize, FontStyle style, GraphicsUnit unit)
-            : this(family?.GenericFamily, family?.Name, emSize, style, unit)
+        {
+            emSize = Alternet.Drawing.Font.CheckSize(emSize);
+
+            if (unit != GraphicsUnit.Point)
+            {
+                data.SizeInPoints = GraphicsUnitConverter.Convert(
+                    unit,
+                    GraphicsUnit.Point,
+                    Display.Primary.DPI.Height,
+                    emSize);
+            }
+            else
+            {
+                data.SizeInPoints = emSize;
+            }
+
+            data.FontFamily = family;
+            data.Style = style;
+            data.Unit = GraphicsUnit.Point;
+
+            if (style.HasFlag(FontStyle.Bold))
+                data.Weight = FontWeight.Bold;
+            else
+                data.Weight = FontWeight.Normal;
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified
+        /// size and unit. Sets the style
+        /// to <see cref="FontStyle.Regular" />.</summary>
+        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units
+        /// specified by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="unit">The unit of the new font.</param>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Font(FontFamily family, float emSize, GraphicsUnit unit)
+            : this(family, emSize, FontStyle.Regular, unit)
+        {
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size.</summary>
+        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size, in points, of the new font.</param>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Font(FontFamily family, FontScalar emSize)
+            : this(family, emSize, FontStyle.Regular)
         {
         }
 
@@ -227,12 +215,12 @@ namespace Alternet.Drawing
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(
-            FontFamily family,
-            FontScalar emSize,
-            FontStyle style,
-            GraphicsUnit unit,
-            byte gdiCharSet)
-            : this(family?.GenericFamily, family?.Name, emSize, style, unit, gdiCharSet)
+             FontFamily family,
+             FontScalar emSize,
+             FontStyle style,
+             GraphicsUnit unit,
+             byte gdiCharSet)
+            : this(family, emSize, style, unit)
         {
         }
 
@@ -261,33 +249,100 @@ namespace Alternet.Drawing
             GraphicsUnit unit,
             byte gdiCharSet,
             bool gdiVerticalFont)
-            : this(family?.GenericFamily, family?.Name, emSize, style, unit, gdiCharSet)
+            : this(family, emSize, style, unit, gdiCharSet)
         {
         }
 
-        /// <summary>Initializes a new <see cref="Font" /> using a specified size, style, unit,
-        /// and character set.</summary>
-        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
+        /// and <see cref="FontStyle" /> enumeration.</summary>
+        /// <param name="prototype">The existing <see cref="Font" /> from which to create the
         /// new <see cref="Font" />.</param>
-        /// <param name="emSize">The em-size of the new font in the units specified by
-        /// the <paramref name="unit" /> parameter.</param>
-        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The unit of the new font.</param>
-        /// <param name="gdiCharSet">A <see cref="byte" /> that specifies a GDI character set
-        /// to use for
-        /// this font.  Currently ignored.</param>
+        /// <param name="newStyle">The <see cref="FontStyle" /> to apply to the
+        /// new <see cref="Font" />. Multiple values of the <see cref="FontStyle" />
+        /// enumeration can be
+        /// combined with the <see langword="OR" /> operator.</param>
         /// <remarks>
         /// If bad parameters are passed to the font constructor, error message is output to log
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(
-            string familyName,
-            FontScalar emSize,
-            FontStyle style,
-            GraphicsUnit unit,
-            byte gdiCharSet)
-            : this(null, familyName, emSize, style, unit, gdiCharSet)
+        public Font(Font prototype, FontStyle newStyle)
+            : this(
+                prototype.FontFamily,
+                prototype.Size,
+                newStyle)
+        {
+            data.BaseFont = prototype;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
+        /// and <paramref name="newSize"/> parameter.</summary>
+        /// <param name="prototype">The existing <see cref="Font" /> from which to create the
+        /// new <see cref="Font" />.</param>
+        /// <param name="newSize">New size of the font in points.</param>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Font(Font prototype, FontScalar newSize)
+            : this(
+                prototype.FontFamily,
+                newSize,
+                prototype.Style)
+        {
+            data.BaseFont = prototype;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
+        /// and <see cref="RelativeFontSize" />.
+        /// </summary>
+        /// <param name="prototype">The existing <see cref="Font" /> from which to create the new <see cref="Font" />.</param>
+        /// <param name="newSize">The new size of the font as a <see cref="RelativeFontSize" />.</param>
+        public Font(Font prototype, RelativeFontSize newSize)
+            : this(
+                prototype.FontFamily,
+                newSize.GetSize(prototype.Size),
+                prototype.Style)
+        {
+            data.BaseFont = prototype;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />,
+        /// <see cref="RelativeFontSize" /> and <see cref="FontStyle" />.
+        /// </summary>
+        /// <param name="prototype">The existing <see cref="Font" /> from which to create the new <see cref="Font" />.</param>
+        /// <param name="newSize">The new size of the font as a <see cref="RelativeFontSize" />.</param>
+        /// <param name="newStyle">The new style of the font as a <see cref="FontStyle" />.</param>
+        public Font(Font prototype, RelativeFontSize newSize, FontStyle newStyle)
+            : this(
+                prototype.FontFamily,
+                newSize.GetSize(prototype.Size),
+                newStyle)
+        {
+            data.BaseFont = prototype;
+        }
+
+        /// <summary>Initializes a new <see cref="Font" /> using a specified size,
+        /// style, and unit.</summary>
+        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
+        /// new <see cref="Font" />.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified
+        /// by the <paramref name="unit" />
+        /// parameter.</param>
+        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
+        /// <param name="unit">The unit of the new font.</param>
+        /// <remarks>
+        /// If bad parameters are passed to the font constructor, error message is output to log
+        /// and font is created with default parameters. No exceptions are raised.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Font(string familyName, FontScalar emSize, FontStyle style, GraphicsUnit unit)
+            : this(familyName, emSize, style, unit, 0)
         {
         }
 
@@ -318,57 +373,7 @@ namespace Alternet.Drawing
             GraphicsUnit unit,
             byte gdiCharSet,
             bool gdiVerticalFont)
-            : this(null, familyName, emSize, style, unit, gdiCharSet)
-        {
-        }
-
-        /// <summary>Initializes a new <see cref="Font" /> using a specified
-        /// size and unit. Sets the style
-        /// to <see cref="FontStyle.Regular" />.</summary>
-        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
-        /// <param name="emSize">The em-size of the new font in the units
-        /// specified by the <paramref name="unit" />
-        /// parameter.</param>
-        /// <param name="unit">The unit of the new font.</param>
-        /// <remarks>
-        /// If bad parameters are passed to the font constructor, error message is output to log
-        /// and font is created with default parameters. No exceptions are raised.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(FontFamily family, float emSize, GraphicsUnit unit)
-            : this(family?.GenericFamily, family?.Name, emSize, FontStyle.Regular, unit)
-        {
-        }
-
-        /// <summary>Initializes a new <see cref="Font" /> using a specified size.</summary>
-        /// <param name="family">The <see cref="FontFamily" /> of the new <see cref="Font" />.</param>
-        /// <param name="emSize">The em-size, in points, of the new font.</param>
-        /// <remarks>
-        /// If bad parameters are passed to the font constructor, error message is output to log
-        /// and font is created with default parameters. No exceptions are raised.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(FontFamily family, FontScalar emSize)
-            : this(family?.GenericFamily, family?.Name, emSize, FontStyle.Regular)
-        {
-        }
-
-        /// <summary>Initializes a new <see cref="Font" /> using a specified size,
-        /// style, and unit.</summary>
-        /// <param name="familyName">A string representation of the <see cref="FontFamily" /> for the
-        /// new <see cref="Font" />.</param>
-        /// <param name="emSize">The em-size of the new font in the units specified
-        /// by the <paramref name="unit" />
-        /// parameter.</param>
-        /// <param name="style">The <see cref="FontStyle" /> of the new font.</param>
-        /// <param name="unit">The unit of the new font.</param>
-        /// <remarks>
-        /// If bad parameters are passed to the font constructor, error message is output to log
-        /// and font is created with default parameters. No exceptions are raised.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(string familyName, FontScalar emSize, FontStyle style, GraphicsUnit unit)
-            : this(null, familyName, emSize, style, unit)
+            : this(familyName, emSize, style, unit, gdiCharSet)
         {
         }
 
@@ -387,7 +392,7 @@ namespace Alternet.Drawing
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(string familyName, FontScalar emSize, GraphicsUnit unit)
-            : this(null, familyName, emSize, FontStyle.Regular, unit)
+            : this(familyName, emSize, FontStyle.Regular, unit)
         {
         }
 
@@ -401,42 +406,13 @@ namespace Alternet.Drawing
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Font(string familyName, FontScalar emSize)
-            : this(null, familyName, emSize, FontStyle.Regular)
+            : this(familyName, emSize, FontStyle.Regular)
         {
         }
 
-        internal Font(
-             GenericFontFamily? genericFamily,
-             string? familyName,
-             FontScalar emSize,
-             FontStyle style,
-             GraphicsUnit unit = GraphicsUnit.Point,
-             byte gdiCharSet = 1)
+        private Font(in FontRecord d)
         {
-            this.genericFamily = genericFamily ?? 0;
-
-            IFontHandler.FontParams prm = new()
-            {
-                GenericFamily = genericFamily,
-                FamilyName = familyName,
-                Size = emSize,
-                Style = style,
-                Unit = GraphicsUnit.Point,
-                GdiCharSet = 1,
-            };
-
-            handler = new SkiaFontHandler();
-            handler.Update(this, prm);
-        }
-
-        /// <summary>
-        /// Initializes a new <see cref="Font" /> using a specified font handler.
-        /// </summary>
-        /// <param name="handler">Font handler.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Font(SkiaFontHandler handler)
-        {
-            this.handler = handler;
+            this.data = d;
         }
 
         /// <summary>
@@ -467,7 +443,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return defaultFontName ??= FontFactory.Handler.GetDefaultFontName();
+                return defaultFontName ??= App.Handler.GetDefaultFontName();
             }
         }
 
@@ -478,7 +454,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return defaultMonoFontName ??= FontFactory.Handler.GetDefaultMonoFontName();
+                return defaultMonoFontName ??= App.Handler.GetDefaultMonoFontName();
             }
         }
 
@@ -513,7 +489,7 @@ namespace Alternet.Drawing
         /// The string representing the name of the font originally specified.
         /// </returns>
         [Browsable(false)]
-        public virtual string? OriginalFontName => baseFont?.Name ?? Name;
+        public virtual string? OriginalFontName => data.BaseFont?.Name ?? Name;
 
         /// <summary>
         /// Gets the pixel size.
@@ -523,15 +499,15 @@ namespace Alternet.Drawing
         {
             get
             {
-                return handler.GetPixelSize(this);
+                var result = GraphicsUnitConverter.Convert(
+                    GraphicsUnit.Point,
+                    GraphicsUnit.Pixel,
+                    Display.Primary.DPI.Height,
+                    data.SizeInPoints);
+
+                return (int)result;
             }
         }
-
-        /// <summary>
-        /// Gets <see cref="GenericFontFamily"/> for this font.
-        /// </summary>
-        [Browsable(false)]
-        public GenericFontFamily GenericFamily => genericFamily;
 
         /// <summary>
         /// Gets the size in dips.
@@ -554,7 +530,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return handler.IsUsingSizeInPixels(this);
+                return data.Unit == GraphicsUnit.Pixel;
             }
         }
 
@@ -593,18 +569,18 @@ namespace Alternet.Drawing
         {
             get
             {
-                if (savedFontSettingsIteration != FontSettingsIteration.Value)
+                if (data.SavedFontSettingsIteration != FontSettingsIteration.Value)
                 {
-                    skiaFont = null;
+                    data.SkiaFont = null;
                 }
 
-                if (skiaFont is null)
+                if (data.SkiaFont is null)
                 {
-                    skiaFont = GraphicsFactory.FontToSkiaFont(this);
-                    savedFontSettingsIteration = FontSettingsIteration.Value;
+                    data.SkiaFont = GraphicsFactory.FontToSkiaFont(this);
+                    data.SavedFontSettingsIteration = FontSettingsIteration.Value;
                 }
 
-                return skiaFont;
+                return data.SkiaFont;
             }
         }
 
@@ -643,7 +619,7 @@ namespace Alternet.Drawing
             {
                 if (Style == FontStyle.Regular)
                     return this;
-                return baseFont ??= Get(Name, SizeInPoints, FontStyle.Regular);
+                return data.BaseFont ??= Get(Name, data.SizeInPoints, FontStyle.Regular);
             }
         }
 
@@ -656,7 +632,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public virtual int NumericWeight
         {
-            get => handler.GetNumericWeight(this);
+            get => Font.GetNumericWeightOf(data.Weight);
         }
 
         /// <summary>
@@ -675,7 +651,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return handler.IsFixedWidth(this);
+                return data.IsFixedFont ??= SkiaFont.Typeface.IsFixedPitch;
             }
         }
 
@@ -684,7 +660,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         [Browsable(false)]
-        public virtual FontWeight Weight => handler.GetWeight();
+        public virtual FontWeight Weight => data.Weight;
 
         /// <summary>
         /// Gets a value indicating whether this font is a default font.
@@ -751,7 +727,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return style ??= GetStyle(handler);
+                return data.Style;
             }
         }
 
@@ -783,7 +759,7 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> is italic;
         /// otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsItalic => handler.GetItalic();
+        public virtual bool IsItalic => data.Style.HasFlag(FontStyle.Italic);
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -792,13 +768,13 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> has a horizontal
         /// line through it; otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsStrikethrough => handler.GetStrikethrough();
+        public virtual bool IsStrikethrough => data.Style.HasFlag(FontStyle.Strikeout);
 
         /// <summary>
         /// Same as <see cref="IsStrikethrough"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsStrikeout => handler.GetStrikethrough();
+        public bool IsStrikeout => data.Style.HasFlag(FontStyle.Strikeout);
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -807,7 +783,7 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> is underlined;
         /// otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsUnderlined => handler.GetUnderlined();
+        public virtual bool IsUnderlined => data.Style.HasFlag(FontStyle.Underline);
 
         /// <summary>
         /// Gets the em-size, in points, of this <see cref="Font"/>.
@@ -817,8 +793,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return handler.SizeInPoints;
+                return data.SizeInPoints;
             }
         }
 
@@ -833,7 +808,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return fontFamily ??= new FontFamily(Name);
+                return data.FontFamily;
             }
         }
 
@@ -845,7 +820,7 @@ namespace Alternet.Drawing
         /// <see langword="true" /> if this <see cref="Font" /> is derived from a vertical font;
         /// otherwise, <see langword="false" />.</returns>
         [Browsable(false)]
-        public virtual bool GdiVerticalFont => gdiVerticalFont ??= IsVerticalName(Name);
+        public virtual bool GdiVerticalFont => data.GdiVerticalFont ??= IsVerticalName(Name);
 
         /// <summary>
         /// Gets the font family name of this <see cref="Font"/>.
@@ -856,27 +831,9 @@ namespace Alternet.Drawing
         {
             get
             {
-                CheckDisposed();
-                return handler.GetName();
+                return FontFamily.Name;
             }
         }
-
-        /// <summary>
-        /// Gets or sets the default font encoding.
-        /// </summary>
-        internal static FontEncoding DefaultEncoding
-        {
-            get => FontFactory.Handler.DefaultFontEncoding;
-            set => FontFactory.Handler.DefaultFontEncoding = value;
-        }
-
-        /// <summary>
-        /// Returns the encoding of this font.
-        /// </summary>
-        /// <remarks>
-        /// Note that under Linux the returned value is always UTF8.
-        /// </remarks>
-        internal FontEncoding Encoding => handler.GetEncoding(this);
 
         /// <summary>
         /// Converts the specified <see cref='Font'/> to a <see cref='SKFont'/>.
@@ -1073,6 +1030,55 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns whether this font has glyphs for all characters in the specified text.
+        /// </summary>
+        /// <param name="text">The text to check for glyphs.</param>
+        /// <returns><c>true</c> if the font has glyphs for all characters in the specified text; otherwise, <c>false</c>.</returns>
+        public virtual bool HasGlyphs(string text)
+        {
+            ushort[] glyphs = SkiaFont.GetGlyphs(text);
+
+            foreach (ushort glyph in glyphs)
+            {
+                if (glyph == 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns the first supported characters.
+        /// </summary>
+        /// <param name="count">The maximum number of characters to return.</param>
+        /// <returns>An enumerable of the first supported characters.</returns>
+        public virtual IEnumerable<char> GetFirstSupportedChars(int count)
+        {
+            return GetFirstSupportedChars(0x0000, 0xFFFF, count);
+        }
+
+        /// <summary>
+        /// Returns the first supported characters in the specified range.
+        /// </summary>
+        /// <param name="start">The starting character code of the range.</param>
+        /// <param name="end">The ending character code of the range.</param>
+        /// <param name="count">The maximum number of characters to return.</param>
+        /// <returns>An enumerable of the first supported characters in the specified range.</returns>
+        public virtual IEnumerable<char> GetFirstSupportedChars(int start, int end, int count)
+        {
+            var tf = SkiaFont.Typeface;
+            var result = new List<char>();
+            for (int code = start; code <= end && result.Count < count; code++)
+            {
+                if (HasGlyph((char)code))
+                    result.Add((char)code);
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Returns a scaled version of this font.
         /// </summary>
         /// <param name="scaleFactor">Font size scaling factor.</param>
@@ -1132,7 +1138,7 @@ namespace Alternet.Drawing
 
             result.Weight = (SKFontStyleWeight)Weight;
             result.Slant = IsItalic ? SKFontStyleSlant.Italic : SKFontStyleSlant.Upright;
-            result.Name = Name;
+            result.Typeface = FontFamily.SkiaTypeface;
 
             if (SkiaFontScaleFactor == 1.0f)
             {
@@ -1204,12 +1210,12 @@ namespace Alternet.Drawing
             {
                 if (style == FontStyle.Regular)
                     return fnt;
-                fnt.fonts ??= new Font[GetFontStyleArraySize()];
-                Font result = fnt.fonts[(int)style];
+                fnt.data.Fonts ??= new Font[GetFontStyleArraySize()];
+                Font result = fnt.data.Fonts[(int)style];
                 if (result is not null)
                     return result;
-                result = Get(Name, SizeInPoints, style);
-                fnt.fonts[(int)style] = result;
+                result = Get(Name, data.SizeInPoints, style);
+                fnt.data.Fonts[(int)style] = result;
                 return result;
             }
         }
@@ -1220,7 +1226,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual string Serialize()
         {
-            return handler.Serialize();
+            return data.Serialized ??= Font.ToUserString(this);
         }
 
         /// <summary>
@@ -1230,8 +1236,8 @@ namespace Alternet.Drawing
         public override int GetHashCode()
         {
             CheckDisposed();
-            hashCode ??= handler.Serialize().GetHashCode();
-            return hashCode.Value;
+            data.HashCode ??= Serialize().GetHashCode();
+            return data.HashCode.Value;
         }
 
         /// <summary>
@@ -1271,7 +1277,7 @@ namespace Alternet.Drawing
         public override string ToString()
         {
             CheckDisposed();
-            return ToUserString(handler);
+            return ToUserString(this);
         }
 
         /// <summary>
@@ -1321,6 +1327,36 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Logs the font information to the application log, including its name, size, and pixel size.
+        /// If the font does not have glyphs for the default characters, it retrieves and logs the first supported
+        /// characters.
+        /// </summary>
+        public virtual void Log(string testString = "This is a test string", int numOtherChars = 200)
+        {
+            var family = FontFamily;
+
+            string txt = family.Name + $", Size:{Size}, Pixels: {SizeInPixels}";
+
+            App.Log(txt);
+
+            var charsString = HasGlyphs(testString) ? testString : string.Empty;
+
+            if (numOtherChars > 0)
+            {
+                var chars = GetFirstSupportedChars(numOtherChars);
+
+                if (charsString.Length > 0)
+                    charsString += " ";
+
+                charsString += new string(chars.ToArray());
+            }
+
+            TreeViewItem item = new(charsString);
+            item.Font = this;
+            App.AddLogItem(item, LogItemKind.Information, wait: false);
+        }
+
+        /// <summary>
         /// Determines whether the current font matches the specified name, style,
         /// and size within a close tolerance.
         /// </summary>
@@ -1336,26 +1372,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets unique id of this object.
-        /// </summary>
-        [Browsable(false)]
-        public ObjectUniqueId UniqueId
-        {
-            get
-            {
-                return uniqueId ??= new();
-            }
-        }
-
-        /// <summary>
         /// Creates an exact copy of this <see cref="Font" />.
         /// </summary>
         public virtual Font Clone()
         {
-            var result = new SkiaFontHandler();
-            IFontHandler.FontParams prm = new(this);
-            result.Update(this, prm);
-            return new Font(result);
+            var result = new Font(data);
+            return result;
         }
 
         /// <summary>
@@ -1384,39 +1406,6 @@ namespace Alternet.Drawing
                     default: return weight;
                 }
             }
-        }
-
-        /// <summary>
-        /// Adjusts the specified font parameters to ensure they conform to expected values.
-        /// </summary>
-        /// <remarks>This method ensures that the font size is converted to points
-        /// if it is specified in a
-        /// different unit, and that a default font family is assigned if both the
-        /// generic family and specific family
-        /// name are null. Additionally, the font size is validated to ensure
-        /// it falls within acceptable bounds.</remarks>
-        /// <param name="prm">The font parameters to coerce. The
-        /// <see cref="IFontHandler.FontParams"/> object must specify the font size,
-        /// unit, and optionally the font family or generic family.</param>
-        public static void CoerceFontParams(IFontHandler.FontParams prm)
-        {
-            if (prm.Unit != GraphicsUnit.Point)
-            {
-                prm.Size = GraphicsUnitConverter.Convert(
-                    prm.Unit,
-                    GraphicsUnit.Point,
-                    Display.Primary.DPI.Height,
-                    prm.Size);
-            }
-
-            if (prm.GenericFamily == null && prm.FamilyName == null)
-            {
-                if (!FontFactory.Handler.AllowNullFontName)
-                    App.LogError("Font name and family are null, using default font.");
-                prm.GenericFamily = Alternet.Drawing.GenericFontFamily.Default;
-            }
-
-            prm.Size = Alternet.Drawing.Font.CheckSize(prm.Size);
         }
 
         /// <summary>
@@ -1562,7 +1551,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="font">The font to convert. Cannot be <see langword="null"/>.</param>
         /// <returns>A string that represents the font in a user-friendly format.</returns>
-        public static string ToUserString(IFontHandler font)
+        public static string ToUserString(Font font)
         {
             List<string> list = ToUserAsList(font);
 
@@ -1602,20 +1591,20 @@ namespace Alternet.Drawing
         /// (e.g., <see cref="FontStyle.Bold"/>, <see cref="FontStyle.Italic"/>, etc.)
         /// that are applicable to the specified font.
         /// Returns <see cref="FontStyle.Regular"/> if no specific styles are applied.</returns>
-        public static FontStyle GetStyle(IFontHandler font)
+        public static FontStyle GetStyle(Font font)
         {
             FontStyle result = FontStyle.Regular;
 
-            if (GetIsBold(font.GetWeight()))
+            if (GetIsBold(font.Weight))
                 result |= FontStyle.Bold;
 
-            if (font.GetItalic())
+            if (font.IsItalic)
                 result |= FontStyle.Italic;
 
-            if (font.GetUnderlined())
+            if (font.IsUnderlined)
                 result |= FontStyle.Underline;
 
-            if (font.GetStrikethrough())
+            if (font.IsStrikethrough)
                 result |= FontStyle.Strikeout;
 
             return result;
@@ -1633,11 +1622,11 @@ namespace Alternet.Drawing
         /// that provides the font's attributes, such as name, weight, and size.</param>
         /// <returns>A list of strings representing the font's user-readable properties.
         /// The list typically includes the font's style, weight, name, and size in points.</returns>
-        public static List<string> ToUserAsList(IFontHandler font)
+        public static List<string> ToUserAsList(Font font)
         {
-            var result = ToUserString(GetStyle(font), font.GetWeight());
+            var result = ToUserString(GetStyle(font), font.Weight);
 
-            string face = font.GetName();
+            string face = font.Name;
             if (!string.IsNullOrEmpty(face))
             {
                 if (face.ContainsSpace() || face.ContainsSemicolon() || face.ContainsComma())
@@ -1697,7 +1686,7 @@ namespace Alternet.Drawing
 
         private static Font CreateDefaultMonoFont()
         {
-            var font = FontFactory.Handler.CreateDefaultMonoFont();
+            var font = new Font(App.Handler.GetDefaultMonoFontName(), App.Handler.GetDefaultMonoFontSize());
             font.DisplayName = () => CommonStrings.Default.DefaultMonoFontDisplayName;
             font.FontOrigin = Drawing.FontOriginKind.DefaultMono;
             return font;
@@ -1705,7 +1694,7 @@ namespace Alternet.Drawing
 
         private static Font CreateDefaultFont()
         {
-            var font = FontFactory.Handler.CreateDefaultFont();
+            var font = new Font(App.Handler.GetDefaultFontName(), App.Handler.GetDefaultFontSize());
             font.DisplayName = () => CommonStrings.Default.DefaultFontDisplayName;
             font.FontOrigin = Drawing.FontOriginKind.Default;
             return font;
@@ -1716,17 +1705,17 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual void ResetSkiaFont()
         {
-            skiaFont = null;
+            data.SkiaFont = null;
 
-            if (fonts is not null)
+            if (data.Fonts is not null)
             {
-                foreach (var f in fonts)
+                foreach (var f in data.Fonts)
                 {
                     f?.ResetSkiaFont();
                 }
             }
 
-            baseFont?.ResetSkiaFont();
+            data.BaseFont?.ResetSkiaFont();
         }
 
         /// <summary>
@@ -1754,6 +1743,28 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+        }
+
+        private struct FontRecord
+        {
+            public SKFont? SkiaFont;
+            public FontStyle Style = FontStyle.Regular;
+            public int? HashCode;
+            public GraphicsUnit Unit = GraphicsUnit.Point;
+            public bool? GdiVerticalFont;
+            public Font[]? Fonts;
+            public Font? BaseFont;
+            public FontFamily FontFamily;
+            public int SavedFontSettingsIteration;
+            public Coord SizeInPoints = 12;
+            public FontWeight Weight = FontWeight.Normal;
+            public FontEncoding Encoding = FontEncoding.Default;
+            public string? Serialized;
+            public bool? IsFixedFont;
+
+            public FontRecord()
+            {
+            }
         }
     }
 }

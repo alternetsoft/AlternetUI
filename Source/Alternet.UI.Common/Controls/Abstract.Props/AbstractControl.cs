@@ -243,7 +243,6 @@ namespace Alternet.UI
             set
             {
                 defaultFont = value;
-                FontFactory.Handler.SetDefaultFont(value);
             }
         }
 

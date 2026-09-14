@@ -22,6 +22,36 @@ namespace Alternet.UI
         bool ExitOnFrameDelete { get; set; }
 
         /// <summary>
+        /// Gets the names of all available font families.
+        /// </summary>
+        /// <returns>An enumerable collection of font family names.</returns>
+        IEnumerable<string> GetFontFamiliesNames();
+
+        /// <summary>
+        /// Gets default font name.
+        /// </summary>
+        /// <returns>The name of the default font.</returns>
+        string GetDefaultFontName();
+        
+        /// <summary>
+        /// Gets default mono font name.
+        /// </summary>
+        /// <returns>The name of the default mono font.</returns>
+        string GetDefaultMonoFontName();
+
+        /// <summary>
+        /// Gets default font size.
+        /// </summary>
+        /// <returns>The size of the default font.</returns>
+        float GetDefaultFontSize();
+
+        /// <summary>
+        /// Gets default mono font size.
+        /// </summary>
+        /// <returns>The size of the default mono font.</returns>
+        float GetDefaultMonoFontSize();
+
+        /// <summary>
         /// Gets whether the application is active, i.e. if one of its windows is currently in
         /// the foreground.
         /// </summary>
@@ -69,12 +99,6 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         IKeyboardHandler CreateKeyboardHandler();
-
-        /// <summary>
-        /// Creates <see cref="IFontFactoryHandler"/> provider.
-        /// </summary>
-        /// <returns></returns>
-        IFontFactoryHandler CreateFontFactoryHandler();
 
         /// <summary>
         /// Gets <see cref="ImageBitsFormat"/> for the specified <see cref="ImageBitsFormatKind"/>.

@@ -12,7 +12,7 @@ namespace PrintingSample
 {
     public partial class PrintingMainWindow : Window
     {
-        private static readonly Font font = new(FontFamily.GenericSerif, 20);
+        private static readonly Font font = new(Font.Default, 20);
         private static readonly Pen thickGrayPen = Color.Gray.GetAsPen(4);
 
         private readonly ToolBar toolBar = new()

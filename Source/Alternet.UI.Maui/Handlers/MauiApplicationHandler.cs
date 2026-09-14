@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 using Alternet.Drawing.Printing;
+using Alternet.Skia;
 using Alternet.UI.Extensions;
 
 using Microsoft.Maui.ApplicationModel;
@@ -355,12 +356,6 @@ namespace Alternet.UI
             Display.Reset();
         }
 
-        /// <inheritdoc/>
-        public virtual IFontFactoryHandler CreateFontFactoryHandler()
-        {
-            return new SkiaFontFactoryHandler();
-        }
-
         ImageBitsFormat IApplicationHandler.GetImageBitsFormat(ImageBitsFormatKind kind)
         {
             throw new NotImplementedException();
@@ -374,6 +369,36 @@ namespace Alternet.UI
         IImageContainer? IApplicationHandler.CreateIconSetHandler()
         {
             return null;
+        }
+
+        /// <inheritdoc/>
+        public virtual IEnumerable<string> GetFontFamiliesNames()
+        {
+            return SkiaHelper.GetFontFamiliesNames();
+        }
+
+        /// <inheritdoc/>
+        public virtual string GetDefaultFontName()
+        {
+            return SkiaHelper.DefaultFontName;
+        }
+
+        /// <inheritdoc/>
+        public virtual string GetDefaultMonoFontName()
+        {
+            return SkiaHelper.DefaultMonoFontName;
+        }
+
+        /// <inheritdoc/>
+        public virtual float GetDefaultFontSize()
+        {
+            return SkiaHelper.DefaultFontSize;
+        }
+
+        /// <inheritdoc/>
+        public virtual float GetDefaultMonoFontSize()
+        {
+            return SkiaHelper.DefaultFontSize;
         }
     }
 }

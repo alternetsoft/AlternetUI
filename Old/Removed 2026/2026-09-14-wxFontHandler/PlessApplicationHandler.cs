@@ -231,12 +231,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IFontFactoryHandler CreateFontFactoryHandler()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
         {
             throw new NotImplementedException();
