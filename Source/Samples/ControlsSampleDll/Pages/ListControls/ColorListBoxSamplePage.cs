@@ -85,21 +85,37 @@ namespace ControlsSample
             drawingResourcePicker.Parent = settings;
             drawingResourcePicker.MinWidth = 150;
 
-            var brush1 = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.GetColor(this));
-            DrawingResource brush1resource = new(brush1);
+            var brush1Light = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.Light, ThemedColors.Yellow.Light);
+            var brush1Dark = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.Dark, ThemedColors.Yellow.Dark);
+            DrawingResource brush1resourceLight = new(brush1Light);
+            DrawingResource brush1resourceDark = new(brush1Dark);
             var brush1Name = $"Horizontal Red";
-            brush1resource.Title = brush1Name;
+            brush1resourceLight.Title = brush1Name;
+            brush1resourceDark.Title = brush1Name;
 
-            var brush2 = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Green.GetColor(this));
-            DrawingResource brush2resource = new(brush2);
-            var brush2Name = $"Vertical Green";
-            brush2resource.Title = brush2Name;
+            var brush2Light = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Blue.Light, ThemedColors.Yellow.Light);
+            var brush2Dark = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Blue.Dark, ThemedColors.Yellow.Dark);
+            DrawingResource brush2resourceLight = new(brush2Light);
+            DrawingResource brush2resourceDark = new(brush2Dark);
+            var brush2Name = $"Vertical Blue";
+            brush2resourceLight.Title = brush2Name;
+            brush2resourceDark.Title = brush2Name;
 
-            ThemedDrawingResource themed1 = new(brush1resource);
-            ThemedDrawingResource themed2 = new(brush2resource);
+            ThemedDrawingResource themed1 = new(brush1resourceLight, brush1resourceDark);
+            ThemedDrawingResource themed2 = new(brush2resourceLight, brush2resourceDark);
 
             drawingResourcePicker.Add(themed1);
             drawingResourcePicker.Add(themed2);
+
+            foreach (var item in KnownCalendarItemMarkers.Categories)
+            {
+                drawingResourcePicker.Add(item);
+            }
+
+            foreach (var item in KnownCalendarItemMarkers.Statuses)
+            {
+                drawingResourcePicker.Add(item);
+            }
 
             drawingResourcePicker.Value = themed1;
 
@@ -199,14 +215,6 @@ namespace ControlsSample
                     listBox.TextOverItemImageStyle = new ThemedColor(Color.Black);
                 else
                     listBox.TextOverItemImageStyle = new ThemedColor(Color.White);
-            });
-
-            settings.AddButton("Add Brush Item", () =>
-            {
-                listBox.AddBrushItem(brush1, brush1Name);
-                listBox.ScrollToLastRow();
-                listBox.Invalidate();
-                colorPicker.ListBox.AddBrushItem(brush1, brush1Name);
             });
 
             settings.AddButton("Toggle Color Image Align", () =>

@@ -28,24 +28,50 @@ namespace Alternet.Drawing
         T Light { get; }
 
         /// <summary>
-        /// Gets <see cref="Dark"/> or <see cref="Light"/> value depending on system settings and control color mode.
-        /// </summary>
-        /// <param name="control">The control to use for determining the theme.</param>
-        /// <returns>The value for the appropriate theme.</returns>
-        T GetValue(AbstractControl control);
-
-        /// <summary>
-        /// Gets <see cref="Dark"/> or <see cref="Light"/> value depending on <paramref name="isDark"/> parameter value.
-        /// </summary>
-        /// <param name="isDark">A value indicating whether to get the dark value.</param>
-        /// <returns>The value for the appropriate theme.</returns>
-        T GetValue(bool isDark);
-
-        /// <summary>
         /// Gets <see cref="Dark"/> or <see cref="Light"/> value depending on system settings.
         /// </summary>
-        /// <returns>The value for the appropriate theme.</returns>
-        T GetValue();
+        /// <returns>The value to be used for the current system theme.</returns>
+        public T GetValue()
+        {
+            if (SystemSettings.AppearanceIsDark)
+                return Dark;
+            else
+                return Light;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Dark"/> or <see cref="Light"/> value depending on system settings and control color mode.
+        /// </summary>
+        /// <param name="control">The control for which to get the value.</param>
+        /// <returns>The value to be used for the specified control.</returns>
+        public T GetValue(AbstractControl control)
+        {
+            var colorMode = control.ColorMode;
+
+            if (colorMode is null)
+            {
+                return GetValue();
+            }
+
+            if (colorMode.Value == ControlColorMode.Dark)
+                return Dark;
+            else
+                return Light;
+        }
+
+        /// <summary>
+        /// Gets <see cref="Dark"/> or <see cref="Light"/> value depending on
+        /// <paramref name="isDark"/> parameter value.
+        /// </summary>
+        /// <param name="isDark">Whether to get dark or light value.</param>
+        /// <returns>The value to be used for the specified theme.</returns>
+        public T GetValue(bool isDark)
+        {
+            if (isDark)
+                return Dark;
+            else
+                return Light;
+        }
     }
 
     /// <summary>

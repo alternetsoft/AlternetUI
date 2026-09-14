@@ -11,10 +11,13 @@ namespace Alternet.UI
     /// Represents a marker for a calendar item, providing properties such as name, title, visibility,
     /// and brush getters for light and dark themes.
     /// </summary>
-    public abstract class CalendarItemMarker : ImmutableObject
+    public abstract class CalendarItemMarker : ImmutableObject, IThemedDrawingResource
     {
-        private readonly Func<Brush>? lightBrushGetter;
-        private readonly Func<Brush>? darkBrushGetter;
+        private readonly Func<Brush>? lightBrushCreate;
+        private readonly Func<Brush>? darkBrushCreate;
+        private DrawingResource? darkDrawingResource;
+        private DrawingResource? lightDrawingResource;
+
         private readonly string? name;
         private string? title;
         private bool isVisible = true;
@@ -32,14 +35,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">The name of the calendar item marker.</param>
         /// <param name="title">The title of the calendar item marker.</param>
-        /// <param name="lightGetter">A function that returns the brush for the light theme.</param>
-        /// <param name="darkGetter">A function that returns the brush for the dark theme.</param>
-        public CalendarItemMarker(string? name, string? title, Func<Brush> lightGetter, Func<Brush> darkGetter)
+        /// <param name="lightBrushCreate">A function that creates the brush for the light theme.</param>
+        /// <param name="darkBrushCreate">A function that creates the brush for the dark theme.</param>
+        public CalendarItemMarker(string? name, string? title, Func<Brush> lightBrushCreate, Func<Brush> darkBrushCreate)
         {
             this.name = name;
             this.title = title;
-            this.lightBrushGetter = lightGetter;
-            this.darkBrushGetter = darkGetter;
+            this.lightBrushCreate = lightBrushCreate;
+            this.darkBrushCreate = darkBrushCreate;
         }
 
         /// <summary>
@@ -48,14 +51,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">The name of the item.</param>
         /// <param name="title">The title of the item.</param>
-        /// <param name="lightColorGetter">A function that returns the color for the light theme.</param>
-        /// <param name="darkColorGetter">A function that returns the color for the dark theme.</param>
-        public CalendarItemMarker(string name, string title, Func<Color> lightColorGetter, Func<Color> darkColorGetter)
+        /// <param name="lightColorCreate">A function that creates the color for the light theme.</param>
+        /// <param name="darkColorCreate">A function that creates the color for the dark theme.</param>
+        public CalendarItemMarker(string name, string title, Func<Color> lightColorCreate, Func<Color> darkColorCreate)
         {
             this.name = name;
             this.title = title;
-            this.lightBrushGetter = () => lightColorGetter().AsBrush;
-            this.darkBrushGetter = () => darkColorGetter().AsBrush;
+            this.lightBrushCreate = () => lightColorCreate().AsBrush;
+            this.darkBrushCreate = () => darkColorCreate().AsBrush;
         }
 
         /// <summary>
@@ -89,7 +92,43 @@ namespace Alternet.UI
             get => title;
             set
             {
-                SetProperty(ref title, value);
+                if (SetProperty(ref title, value))
+                {
+                    if (lightDrawingResource is not null)
+                        lightDrawingResource.Title = Title;
+                    if (darkDrawingResource is not null)
+                        darkDrawingResource.Title = Title;
+                }
+            }
+        }
+
+        IDrawingResource IThemedDrawingObject<IDrawingResource>.Dark
+        {
+            get
+            {
+                if (darkDrawingResource == null)
+                {
+                    var brush = darkBrushCreate?.Invoke();
+                    darkDrawingResource = new(brush);
+                    darkDrawingResource.Title = Title;
+                }
+
+                return darkDrawingResource;
+            }
+        }
+
+        IDrawingResource IThemedDrawingObject<IDrawingResource>.Light
+        {
+            get
+            {
+                if (lightDrawingResource == null)
+                {
+                    var brush = lightBrushCreate?.Invoke();
+                    lightDrawingResource = new(brush);
+                    lightDrawingResource.Title = Title;
+                }
+
+                return lightDrawingResource;
             }
         }
 
@@ -452,7 +491,8 @@ namespace Alternet.UI
             "Unknown",
             CommonStrings.Default.CalendarItemStatusUnknown,
             () => SystemColors.Window,
-            () => SystemColors.Window) { IsVisible = false };
+            () => SystemColors.Window)
+        { IsVisible = false };
 
         /// <summary>
         /// Gets the collection of all calendar item statuses.
@@ -478,55 +518,55 @@ namespace Alternet.UI
 
         internal static class ItemColors
         {
-            public static Color AnniversaryLight { get; set; } = LightDarkBackColors.LightTheme.Red;
+            public static Color AnniversaryLight { get; } = LightDarkBackColors.LightTheme.Red;
 
-            public static Color BirthdayLight { get; set; } = LightDarkBackColors.LightTheme.Orange;
+            public static Color BirthdayLight { get; } = LightDarkBackColors.LightTheme.Orange;
 
-            public static Color BusinessLight { get; set; } = LightDarkBackColors.LightTheme.Yellow;
+            public static Color BusinessLight { get; } = LightDarkBackColors.LightTheme.Yellow;
 
-            public static Color ImportantLight { get; set; } = LightDarkBackColors.LightTheme.Green;
+            public static Color ImportantLight { get; } = LightDarkBackColors.LightTheme.Green;
 
-            public static Color MustAttendLight { get; set; } = LightDarkBackColors.LightTheme.Teal;
+            public static Color MustAttendLight { get; } = LightDarkBackColors.LightTheme.Teal;
 
-            public static Color NeedPreparationLight { get; set; } = LightDarkBackColors.LightTheme.Cyan;
+            public static Color NeedPreparationLight { get; } = LightDarkBackColors.LightTheme.Cyan;
 
-            public static Color NoneLight { get; set; } = LightDarkBackColors.LightTheme.Blue;
+            public static Color NoneLight { get; } = LightDarkBackColors.LightTheme.Blue;
 
-            public static Color OtherLight { get; set; } = LightDarkBackColors.LightTheme.Indigo;
+            public static Color OtherLight { get; } = LightDarkBackColors.LightTheme.Indigo;
 
-            public static Color PersonalLight { get; set; } = LightDarkBackColors.LightTheme.Violet;
+            public static Color PersonalLight { get; } = LightDarkBackColors.LightTheme.Violet;
 
-            public static Color TravelRequiredLight { get; set; } = LightDarkBackColors.LightTheme.Brown;
+            public static Color TravelRequiredLight { get; } = LightDarkBackColors.LightTheme.Brown;
 
-            public static Color PhoneCallLight { get; set; } = LightDarkBackColors.LightTheme.Pink;
+            public static Color PhoneCallLight { get; } = LightDarkBackColors.LightTheme.Pink;
 
-            public static Color VacationLight { get; set; } = LightDarkBackColors.LightTheme.Gray;
+            public static Color VacationLight { get; } = LightDarkBackColors.LightTheme.Gray;
 
             /* Dark colors */
 
-            public static Color AnniversaryDark { get; set; } = LightDarkBackColors.DarkTheme.Red;
+            public static Color AnniversaryDark { get; } = LightDarkBackColors.DarkTheme.Red;
 
-            public static Color BirthdayDark { get; set; } = LightDarkBackColors.DarkTheme.Orange;
+            public static Color BirthdayDark { get; } = LightDarkBackColors.DarkTheme.Orange;
 
-            public static Color BusinessDark { get; set; } = LightDarkBackColors.DarkTheme.Yellow;
+            public static Color BusinessDark { get; } = LightDarkBackColors.DarkTheme.Yellow;
 
-            public static Color ImportantDark { get; set; } = LightDarkBackColors.DarkTheme.Green;
+            public static Color ImportantDark { get; } = LightDarkBackColors.DarkTheme.Green;
 
-            public static Color MustAttendDark { get; set; } = LightDarkBackColors.DarkTheme.Teal;
+            public static Color MustAttendDark { get; } = LightDarkBackColors.DarkTheme.Teal;
 
-            public static Color NeedPreparationDark { get; set; } = LightDarkBackColors.DarkTheme.Cyan;
+            public static Color NeedPreparationDark { get; } = LightDarkBackColors.DarkTheme.Cyan;
 
-            public static Color NoneDark { get; set; } = LightDarkBackColors.DarkTheme.Blue;
+            public static Color NoneDark { get; } = LightDarkBackColors.DarkTheme.Blue;
 
-            public static Color OtherDark { get; set; } = LightDarkBackColors.DarkTheme.Indigo;
+            public static Color OtherDark { get; } = LightDarkBackColors.DarkTheme.Indigo;
 
-            public static Color PersonalDark { get; set; } = LightDarkBackColors.DarkTheme.Violet;
+            public static Color PersonalDark { get; } = LightDarkBackColors.DarkTheme.Violet;
 
-            public static Color PhoneCallDark { get; set; } = LightDarkBackColors.DarkTheme.Pink;
+            public static Color PhoneCallDark { get; } = LightDarkBackColors.DarkTheme.Pink;
 
-            public static Color TravelRequiredDark { get; set; } = LightDarkBackColors.DarkTheme.Brown;
+            public static Color TravelRequiredDark { get; } = LightDarkBackColors.DarkTheme.Brown;
 
-            public static Color VacationDark { get; set; } = LightDarkBackColors.DarkTheme.Gray;
+            public static Color VacationDark { get; } = LightDarkBackColors.DarkTheme.Gray;
         }
     }
 }
