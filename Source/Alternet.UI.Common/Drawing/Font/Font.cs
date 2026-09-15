@@ -49,7 +49,7 @@ namespace Alternet.Drawing
         private static string? defaultFontName;
         private static string? defaultMonoFontName;
 
-        private FontRecord data = new ();
+        private FontRecord data = new();
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a specified font family,
@@ -141,7 +141,40 @@ namespace Alternet.Drawing
         /// and font is created with default parameters. No exceptions are raised.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(FontFamily family, FontScalar emSize, FontStyle style, GraphicsUnit unit)
+        public Font(
+            FontFamily family,
+            FontScalar emSize,
+            FontStyle style,
+            GraphicsUnit unit)
+            : this(
+                  family,
+                  emSize,
+                  unit,
+                  style,
+                  weight: null,
+                  slant: null,
+                  width: null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Font"/> using a specified font family, size, style, weight, slant and width.
+        /// </summary>
+        /// <param name="family">The <see cref="FontFamily"/> of the new <see cref="Font"/>.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit"/> parameter.</param>
+        /// <param name="unit">The unit of the new font.</param>
+        /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
+        /// <param name="weight">The <see cref="FontWeight"/> of the new font.</param>
+        /// <param name="slant">The <see cref="SKFontStyleSlant"/> of the new font.</param>
+        /// <param name="width">The <see cref="SKFontStyleWidth"/> of the new font.</param>
+        public Font(
+            FontFamily family,
+            FontScalar emSize,
+            GraphicsUnit unit,
+            FontStyle style,
+            FontWeight? weight,
+            SKFontStyleSlant? slant,
+            SKFontStyleWidth? width)
         {
             emSize = Alternet.Drawing.Font.CheckSize(emSize);
 
@@ -159,13 +192,46 @@ namespace Alternet.Drawing
             }
 
             data.FontFamily = family;
-            data.Style = style;
             data.Unit = GraphicsUnit.Point;
 
-            if (style.HasFlag(FontStyle.Bold))
-                data.Weight = FontWeight.Bold;
+            data.StyleWidth = width is null ? SKFontStyleWidth.Normal : width.Value;
+            data.IsStrikeout = style.HasFlag(FontStyle.Strikeout);
+            data.IsUnderline = style.HasFlag(FontStyle.Underline);
+
+            if (slant is null)
+            {
+                var isItalic = style.HasFlag(FontStyle.Italic);
+                data.Slant = isItalic ? SKFontStyleSlant.Italic : SKFontStyleSlant.Upright;
+            }
             else
-                data.Weight = FontWeight.Normal;
+            {
+                data.Slant = slant.Value;
+            }
+
+            if (weight is null)
+            {
+                if (style.HasFlag(FontStyle.Bold))
+                    data.Weight = FontWeight.Bold;
+                else
+                    data.Weight = FontWeight.Normal;
+            }
+            else
+            {
+                data.Weight = weight.Value;
+            }
+
+            FontStyle newStyle = 0;
+
+            if (GetIsBold(data.Weight))
+                newStyle |= FontStyle.Bold;
+            if (data.IsStrikeout)
+                newStyle |= FontStyle.Strikeout;
+            if (data.IsUnderline)
+                newStyle |= FontStyle.Underline;
+            if (data.Slant == SKFontStyleSlant.Italic)
+                newStyle |= FontStyle.Italic;
+
+            data.Style = newStyle;
         }
 
         /// <summary>Initializes a new <see cref="Font" /> using a specified
@@ -562,6 +628,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the style width of this <see cref="Font" />.
+        /// </summary>
+        public SKFontStyleWidth StyleWidth => data.StyleWidth;
+
+        /// <summary>
         /// Gets or sets <see cref="SKFont"/> for this font.
         /// </summary>
         [Browsable(false)]
@@ -663,6 +734,12 @@ namespace Alternet.Drawing
         public virtual FontWeight Weight => data.Weight;
 
         /// <summary>
+        /// Gets the font slant.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKFontStyleSlant Slant => data.Slant;
+
+        /// <summary>
         /// Gets a value indicating whether this font is a default font.
         /// </summary>
         [Browsable(false)]
@@ -751,7 +828,7 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> is bold;
         /// otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsBold => GetIsBold(Weight);
+        public bool IsBold => GetIsBold(Weight);
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/> is italic.
@@ -759,7 +836,13 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> is italic;
         /// otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsItalic => data.Style.HasFlag(FontStyle.Italic);
+        public bool IsItalic => data.Slant == SKFontStyleSlant.Italic;
+
+        /// <summary>
+        /// Gets a value that indicates whether this <see cref="Font"/> is oblique.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsOblique => data.Slant == SKFontStyleSlant.Oblique;
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -768,13 +851,13 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> has a horizontal
         /// line through it; otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsStrikethrough => data.Style.HasFlag(FontStyle.Strikeout);
+        public virtual bool IsStrikethrough => data.IsStrikeout;
 
         /// <summary>
         /// Same as <see cref="IsStrikethrough"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsStrikeout => data.Style.HasFlag(FontStyle.Strikeout);
+        public bool IsStrikeout => data.IsStrikeout;
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -783,7 +866,7 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> is underlined;
         /// otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsUnderlined => data.Style.HasFlag(FontStyle.Underline);
+        public virtual bool IsUnderlined => data.IsUnderline;
 
         /// <summary>
         /// Gets the em-size, in points, of this <see cref="Font"/>.
@@ -1137,8 +1220,19 @@ namespace Alternet.Drawing
             SkiaFontInfo result = new();
 
             result.Weight = (SKFontStyleWeight)Weight;
-            result.Slant = IsItalic ? SKFontStyleSlant.Italic : SKFontStyleSlant.Upright;
+            result.Slant = Slant;
             result.Typeface = FontFamily.SkiaTypeface;
+
+            var otherWeight = result.Typeface.FontWeight != (int)result.Weight;
+            var otherSlant = result.Typeface.FontSlant != result.Slant;
+            var otherWidth = result.Typeface.FontWidth != (int)StyleWidth;
+            var other = otherWeight || otherSlant || otherWidth;
+
+            if (other)
+            {
+                var style = new SKFontStyle(result.Weight, StyleWidth, result.Slant);
+                result.Typeface = SKFontManager.Default.MatchFamily(result.Typeface.FamilyName, style);
+            }
 
             if (SkiaFontScaleFactor == 1.0f)
             {
@@ -1235,7 +1329,6 @@ namespace Alternet.Drawing
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
-            CheckDisposed();
             data.HashCode ??= Serialize().GetHashCode();
             return data.HashCode.Value;
         }
@@ -1261,11 +1354,11 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual bool Equals(Font? other)
         {
-            if (object.ReferenceEquals(this, other))
-                return true;
-
             if (other is null)
                 return false;
+
+            if (object.ReferenceEquals(this, other))
+                return true;
 
             return GetHashCode() == other.GetHashCode();
         }
@@ -1502,7 +1595,7 @@ namespace Alternet.Drawing
         /// "italic", and a description of the font weight if applicable.</returns>
         public static List<string> ToUserString(FontStyle style, FontWeight weight)
         {
-            List<string> result = new();
+            List<string> result = new(9);
 
             if (style.HasFlag(FontStyle.Underline))
                 result.Add("underlined");
@@ -1578,39 +1671,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Determines the combined <see cref="FontStyle"/> based on the attributes of the specified font.
-        /// </summary>
-        /// <remarks>The returned <see cref="FontStyle"/> is a bitwise combination of applicable styles.
-        /// For example, if the font is both bold and italic, the result will include both
-        /// <see cref="FontStyle.Bold"/>
-        /// and <see cref="FontStyle.Italic"/>.</remarks>
-        /// <param name="font">An object implementing <see cref="IFontHandler"/> that provides
-        /// font attributes such as weight, italic,
-        /// underline, and strikethrough.</param>
-        /// <returns>A <see cref="FontStyle"/> value representing the combination of font styles
-        /// (e.g., <see cref="FontStyle.Bold"/>, <see cref="FontStyle.Italic"/>, etc.)
-        /// that are applicable to the specified font.
-        /// Returns <see cref="FontStyle.Regular"/> if no specific styles are applied.</returns>
-        public static FontStyle GetStyle(Font font)
-        {
-            FontStyle result = FontStyle.Regular;
-
-            if (GetIsBold(font.Weight))
-                result |= FontStyle.Bold;
-
-            if (font.IsItalic)
-                result |= FontStyle.Italic;
-
-            if (font.IsUnderlined)
-                result |= FontStyle.Underline;
-
-            if (font.IsStrikethrough)
-                result |= FontStyle.Strikeout;
-
-            return result;
-        }
-
-        /// <summary>
         /// Converts the specified font's attributes into a list of strings representing
         /// its user-readable properties.
         /// </summary>
@@ -1624,7 +1684,7 @@ namespace Alternet.Drawing
         /// The list typically includes the font's style, weight, name, and size in points.</returns>
         public static List<string> ToUserAsList(Font font)
         {
-            var result = ToUserString(GetStyle(font), font.Weight);
+            var result = ToUserString(font.Style, font.Weight);
 
             string face = font.Name;
             if (!string.IsNullOrEmpty(face))
@@ -1647,6 +1707,15 @@ namespace Alternet.Drawing
 
             int size = (int)font.SizeInPoints;
             result.Add(size.ToString());
+
+            if (font.IsOblique)
+                result.Add("oblique");
+
+            if (font.Unit != GraphicsUnit.Point)
+                result.Add(font.Unit.ToString().ToLowerInvariant());
+
+            if (font.StyleWidth != SKFontStyleWidth.Normal)
+                result.Add(font.StyleWidth.ToString().ToLowerInvariant());
 
             return result;
         }
@@ -1748,18 +1817,39 @@ namespace Alternet.Drawing
         private struct FontRecord
         {
             public SKFont? SkiaFont;
-            public FontStyle Style = FontStyle.Regular;
+
+            public bool IsUnderline;
+
+            public bool IsStrikeout;
+
+            public SKFontStyleSlant Slant;
+
             public int? HashCode;
+
             public GraphicsUnit Unit = GraphicsUnit.Point;
+
+            public SKFontStyleWidth StyleWidth;
+
             public bool? GdiVerticalFont;
+
             public Font[]? Fonts;
+
             public Font? BaseFont;
+
             public FontFamily FontFamily;
+
             public int SavedFontSettingsIteration;
+
             public Coord SizeInPoints = 12;
+
             public FontWeight Weight = FontWeight.Normal;
+
+            public FontStyle Style;
+
             public FontEncoding Encoding = FontEncoding.Default;
+
             public string? Serialized;
+
             public bool? IsFixedFont;
 
             public FontRecord()
