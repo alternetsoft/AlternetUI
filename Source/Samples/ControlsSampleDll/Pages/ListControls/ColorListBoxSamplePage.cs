@@ -87,22 +87,12 @@ namespace ControlsSample
 
             var brush1Light = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.Light, ThemedColors.Yellow.Light);
             var brush1Dark = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.Dark, ThemedColors.Yellow.Dark);
-            DrawingResource brush1resourceLight = new(brush1Light);
-            DrawingResource brush1resourceDark = new(brush1Dark);
-            var brush1Name = $"Horizontal Red";
-            brush1resourceLight.Title = brush1Name;
-            brush1resourceDark.Title = brush1Name;
 
             var brush2Light = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Blue.Light, ThemedColors.Yellow.Light);
             var brush2Dark = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Blue.Dark, ThemedColors.Yellow.Dark);
-            DrawingResource brush2resourceLight = new(brush2Light);
-            DrawingResource brush2resourceDark = new(brush2Dark);
-            var brush2Name = $"Vertical Blue";
-            brush2resourceLight.Title = brush2Name;
-            brush2resourceDark.Title = brush2Name;
 
-            ThemedDrawingResource themed1 = new(brush1resourceLight, brush1resourceDark);
-            ThemedDrawingResource themed2 = new(brush2resourceLight, brush2resourceDark);
+            ThemedDrawingResource themed1 = new(brush1Light, brush1Dark, "Horizontal Red");
+            ThemedDrawingResource themed2 = new(brush2Light, brush2Dark, "Vertical Blue");
 
             drawingResourcePicker.Add(themed1);
             drawingResourcePicker.Add(themed2);
@@ -129,7 +119,7 @@ namespace ControlsSample
 
             settings.Add<BoldLabel>("Load Sample Colors");
 
-            settings.AddButton("Load Default Colors", () =>
+            settings.AddLinkLabel("Load Default Colors", () =>
             {
                 listBox.ItemImageShape = DrawingShapeType.Circle;
                 listBox.TextVisible = true;
@@ -144,7 +134,7 @@ namespace ControlsSample
                 listBox.EndUpdate();
             });
 
-            settings.AddButton("Load All Dark Backgrounds", () =>
+            settings.AddLinkLabel("Load All Dark Backgrounds", () =>
             {
                 PrepareFoPaletter(isDark: true);
 
@@ -160,7 +150,7 @@ namespace ControlsSample
                 listBox.EndUpdate();
             });
 
-            settings.AddButton("Load All Light Backgrounds", () =>
+            settings.AddLinkLabel("Load All Light Backgrounds", () =>
             {
                 PrepareFoPaletter(isDark: false);
 
@@ -176,12 +166,12 @@ namespace ControlsSample
                 listBox.EndUpdate();
             });
 
-            settings.AddButton("Load 12 Dark Backgrounds", () =>
+            settings.AddLinkLabel("Load 12 Dark Backgrounds", () =>
             {
                 AddTwelve(true);
             });
 
-            settings.AddButton("Load 12 Light Backgrounds", () =>
+            settings.AddLinkLabel("Load 12 Light Backgrounds", () =>
             {
                 AddTwelve(false);
             });
@@ -192,7 +182,7 @@ namespace ControlsSample
 
             settings.Add<BoldLabel>("Actions");
 
-            settings.AddButton("Copy checked items to clipboard", () =>
+            settings.AddLinkLabel("Copy checked items to clipboard", () =>
             {
                 StringBuilder sb = new();
 
@@ -204,12 +194,12 @@ namespace ControlsSample
                 Clipboard.SetText(sb.ToString());
             });
 
-            settings.AddButton("Toggle draw text over color", () =>
+            settings.AddLinkLabel("Toggle draw text over color", () =>
             {
                 listBox.DrawTextOverItemImage = !listBox.DrawTextOverItemImage;
             });
 
-            settings.AddButton("Toggle text over color style", () =>
+            settings.AddLinkLabel("Toggle text over color style", () =>
             {
                 if (listBox.TextOverItemImageStyle?.Equals(Color.White) == true)
                     listBox.TextOverItemImageStyle = new ThemedColor(Color.Black);
@@ -217,7 +207,7 @@ namespace ControlsSample
                     listBox.TextOverItemImageStyle = new ThemedColor(Color.White);
             });
 
-            settings.AddButton("Toggle Color Image Align", () =>
+            settings.AddLinkLabel("Toggle Color Image Align", () =>
             {
                 listBox.IsColorRightAligned = !listBox.IsColorRightAligned;
             });
