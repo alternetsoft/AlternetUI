@@ -130,7 +130,6 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            realFont = null;
             PerformLayoutAndInvalidate(() =>
             {
                 OnFontChanged(e);

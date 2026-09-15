@@ -92,9 +92,6 @@ namespace Alternet.UI
         private ThemedColor? textBackColor;
         private ThemedColor? backgroundColor;
         private ThemedColor? foregroundColor;
-        private FontStyle fontStyle;
-        private Font font;
-
         private SizeD minimumSize;
         private SizeD maximumSize;
         private SizeD? dpi;
@@ -106,7 +103,7 @@ namespace Alternet.UI
         private PointD layoutOffset;
         private SizeD? layoutMaxSize;
 
-        private Font? realFont;
+        private RelativeFontInfo relativeFont;
         private BaseCollection<InputBinding>? inputBindings;
         private Caret? caret;
         private WindowSizeToContentMode minSizeGrowMode = WindowSizeToContentMode.None;
@@ -158,17 +155,15 @@ namespace Alternet.UI
         private HVDropDownAlignment? dropDownMenuPosition;
         private long? lastClickedTimestamp;
         private ControlColorMode? colorMode;
-        private RelativeFontSize? relativeFontSize;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
         /// </summary>
         public AbstractControl()
         {
+            relativeFont = new(DefaultFont, RaiseFontChanged);
             margin = MinMargin;
             padding = MinPadding;
             visible = GetDefaultVisible();
-            font = DefaultFont;
 
             OnCreateControl();
             Designer?.RaiseCreated(this, EventArgs.Empty);
@@ -3263,32 +3258,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (realFont is not null)
-                    return realFont;
-
-                var baseFont = Font ?? AbstractControl.DefaultFont;
-
-                if (RelativeFontSize is null)
-                {
-                    if (fontStyle == 0)
-                        realFont = baseFont;
-                    else
-                        realFont = baseFont.WithStyle(fontStyle);
-                    return realFont;
-                }
-                else
-                {
-                    if (fontStyle == 0)
-                    {
-                        realFont = new(baseFont, RelativeFontSize.Value);
-                    }
-                    else
-                    {
-                        realFont = new(baseFont, RelativeFontSize.Value, fontStyle);
-                    }
-
-                    return realFont;
-                }
+                return relativeFont.ResultFont;
             }
         }
 
@@ -3620,19 +3590,12 @@ namespace Alternet.UI
         {
             get
             {
-                return font;
+                return relativeFont.BaseFont;
             }
 
             set
             {
-                value ??= DefaultFont;
-
-                if (Font.AreEqual(font, value))
-                    return;
-
-                font = value;
-
-                RaiseFontChanged(EventArgs.Empty);
+                relativeFont.BaseFont = value;
             }
         }
 
@@ -3640,11 +3603,11 @@ namespace Alternet.UI
         /// Gets whether control's font is not specified.
         /// </summary>
         [Browsable(false)]
-        public bool HasDefaultFont
+        public virtual bool HasDefaultFont
         {
             get
             {
-                return font is null;
+                return relativeFont.ResultFont == AbstractControl.DefaultFont;
             }
         }
 
@@ -3657,15 +3620,12 @@ namespace Alternet.UI
         {
             get
             {
-                return relativeFontSize;
+                return relativeFont.RelativeSize;
             }
 
             set
             {
-                if (relativeFontSize == value)
-                    return;
-                relativeFontSize = value;
-                RaiseFontChanged(EventArgs.Empty);
+                relativeFont.RelativeSize = value;
             }
         }
 
@@ -3679,15 +3639,12 @@ namespace Alternet.UI
         {
             get
             {
-                return fontStyle;
+                return relativeFont.RelativeStyle;
             }
 
             set
             {
-                if (fontStyle == value)
-                    return;
-
-                RaiseFontChanged(EventArgs.Empty);
+                relativeFont.RelativeStyle = value;
             }
         }
 
@@ -3698,24 +3655,12 @@ namespace Alternet.UI
         {
             get
             {
-                return fontStyle.HasFlag(FontStyle.Bold);
+                return relativeFont.IsRelativeBold;
             }
 
             set
             {
-                var oldValue = IsBold;
-
-                if (value)
-                    fontStyle |= FontStyle.Bold;
-                else
-                    fontStyle &= ~FontStyle.Bold;
-
-                var newValue = IsBold;
-
-                if (newValue == oldValue)
-                    return;
-
-                RaiseFontChanged(EventArgs.Empty);
+                relativeFont.SetRelativeBold(value);
             }
         }
 
@@ -3726,24 +3671,12 @@ namespace Alternet.UI
         {
             get
             {
-                return fontStyle.HasFlag(FontStyle.Underline);
+                return relativeFont.HasRelativeStyle(FontStyle.Underline);
             }
 
             set
             {
-                var oldValue = IsUnderline;
-
-                if (value)
-                    fontStyle |= FontStyle.Underline;
-                else
-                    fontStyle &= ~FontStyle.Underline;
-
-                var newValue = IsUnderline;
-
-                if (newValue == oldValue)
-                    return;
-
-                RaiseFontChanged(EventArgs.Empty);
+                relativeFont.SetRelativeStyle(value, FontStyle.Underline);
             }
         }
 
