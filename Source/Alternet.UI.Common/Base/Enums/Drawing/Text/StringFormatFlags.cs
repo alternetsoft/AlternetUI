@@ -8,6 +8,7 @@ namespace Alternet.Drawing;
 [Flags]
 public enum StringFormatFlags
 {
+/*
     /// <summary>
     /// Specifies that text is displayed from right to left.
     /// For example, this flag is used for displaying Arabic and Hebrew text.
@@ -19,7 +20,7 @@ public enum StringFormatFlags
     /// For example, this flag is used for displaying East Asian text.
     /// </summary>
     DirectionVertical = 0x00000002,
-
+*/
     /// <summary>
     /// Specifies that no part of glyphs overhang the bounding rectangle. By default some glyphs
     /// overhang the rectangle slightly where necessary to appear at the edge visually.
@@ -27,7 +28,7 @@ public enum StringFormatFlags
     /// of adjacent lines of text to appear uneven.
     /// </summary>
     FitBlackBox = 0x00000004,
-
+/*
     /// <summary>
     /// Control characters (for example, the left-to-right mark) to be shown in the output with a special glyphs.
     /// </summary>
@@ -43,7 +44,7 @@ public enum StringFormatFlags
     /// The space at the end of each line is included in a text measurement.
     /// </summary>
     MeasureTrailingSpaces = 0x00000800,
-
+*/
     /// <summary>
     /// The wrapping of text to the next line is disabled. NoWrap is used when a layout point
     /// is used instead of a rectangle. When text is drawn within a rectangle, by default, text is broken at

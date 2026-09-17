@@ -45,7 +45,7 @@ public partial class StringFormat : DisposableObject, ICloneable
     {
         if (format is null)
             return;
-        data.FormatFlags = format.data.FormatFlags;
+        data = format.data;
     }
 
     /// <summary>

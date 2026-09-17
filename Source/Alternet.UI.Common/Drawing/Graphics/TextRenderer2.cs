@@ -191,7 +191,7 @@ namespace Alternet.Drawing
         /// <returns>The size of the text.</returns>
         public static SizeD MeasureText(string text, Font font)
         {
-            return MeasureTextInternal(Measure, text, font, SizeD.Empty, TextFormatFlags.Default, false);
+            return MeasureTextInternal(Measure, text, font, SizeD.Empty, TextFormatFlags.Default);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Alternet.Drawing
         /// <returns>The size of the text.</returns>
         public static SizeD MeasureText(Graphics dc, string text, Font font)
         {
-            return MeasureTextInternal(dc, text, font, SizeD.Empty, TextFormatFlags.Default, false);
+            return MeasureTextInternal(dc, text, font, SizeD.Empty, TextFormatFlags.Default);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Alternet.Drawing
         /// <returns>The size of the text.</returns>
         public static SizeD MeasureText(string text, Font font, SizeD proposedSize)
         {
-            return MeasureTextInternal(Measure, text, font, proposedSize, TextFormatFlags.Default, false);
+            return MeasureTextInternal(Measure, text, font, proposedSize, TextFormatFlags.Default);
         }
         
         /// <summary>
@@ -228,7 +228,7 @@ namespace Alternet.Drawing
         /// <returns>The size of the text.</returns>
         public static SizeD MeasureText(Graphics dc, string text, Font font, SizeD proposedSize)
         {
-            return MeasureTextInternal(dc, text, font, proposedSize, TextFormatFlags.Default, false);
+            return MeasureTextInternal(dc, text, font, proposedSize, TextFormatFlags.Default);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Alternet.Drawing
         /// <returns>The size of the text.</returns>
         public static SizeD MeasureText(string text, Font font, SizeD proposedSize, TextFormatFlags flags)
         {
-            return MeasureTextInternal(Measure, text, font, proposedSize, flags, false);
+            return MeasureTextInternal(Measure, text, font, proposedSize, flags);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Alternet.Drawing
         /// <returns>The size of the text.</returns>
         public static SizeD MeasureText(Graphics dc, string text, Font font, SizeD proposedSize, TextFormatFlags flags)
         {
-            return MeasureTextInternal(dc, text, font, proposedSize, flags, false);
+            return MeasureTextInternal(dc, text, font, proposedSize, flags);
         }
 
         internal static void DrawTextInternal(
@@ -285,8 +285,7 @@ namespace Alternet.Drawing
             string text,
             Font font,
             SizeD proposedSize,
-            TextFormatFlags flags,
-            bool useMeasureString)
+            TextFormatFlags flags)
         {
             StringFormat sf = FlagsToStringFormat(flags);
 
@@ -331,7 +330,7 @@ namespace Alternet.Drawing
             TextFormatFlags flags,
             bool useMeasureString)
         {
-            return MeasureTextInternal(dc, text, font, SizeD.Empty, flags, useMeasureString);
+            return MeasureTextInternal(dc, text, font, SizeD.Empty, flags);
         }
 
         private static StringFormat FlagsToStringFormat(TextFormatFlags flags)
@@ -382,37 +381,6 @@ namespace Alternet.Drawing
                 sf.FormatFlags |= StringFormatFlags.NoClip;
 
             return sf;
-        }
-
-        private static RectD PadRectangle(RectD r, TextFormatFlags flags)
-        {
-            if (!flags.HasFlag(TextFormatFlags.NoPadding) && !flags.HasFlag(TextFormatFlags.Right)
-                && !flags.HasFlag(TextFormatFlags.HorizontalCenter))
-            {
-                r.X += 3;
-                r.Width -= 3;
-            }
-            if (!flags.HasFlag(TextFormatFlags.NoPadding) && flags.HasFlag(TextFormatFlags.Right))
-            {
-                r.Width -= 4;
-            }
-            if (flags.HasFlag(TextFormatFlags.LeftAndRightPadding))
-            {
-                r.X += 2;
-                r.Width -= 2;
-            }
-            if (flags.HasFlag(TextFormatFlags.WordEllipsis)
-                || flags.HasFlag(TextFormatFlags.EndEllipsis)
-                || flags.HasFlag(TextFormatFlags.WordBreak))
-            {
-                r.Width -= 4;
-            }
-            if (flags.HasFlag(TextFormatFlags.VerticalCenter))
-            {
-                r.Y += 1;
-            }
-
-            return r;
         }
 
         private static RectD PadDrawStringRectangle(RectD r, TextFormatFlags flags)

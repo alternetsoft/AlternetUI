@@ -592,6 +592,103 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        ///  Draws the specified text at the specified location with the specified <see cref="Brush"/> and
+        ///  <see cref="Font"/> objects using the formatting attributes of the specified <see cref="StringFormat"/>.
+        /// </summary>
+        /// <param name="s">The text to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
+        /// <param name="x">The x-coordinate of the upper-left corner of the drawn text.</param>
+        /// <param name="y">The y-coordinate of the upper-left corner of the drawn text.</param>
+        /// <param name="format">
+        ///  <see cref="StringFormat"/> that specifies formatting attributes, such as line spacing and alignment,
+        ///  that are applied to the drawn text.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///  <paramref name="brush"/> is <see langword="null"/>. -or- <paramref name="font"/> is <see langword="null"/>.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void DrawString(ReadOnlySpan<char> s, Font font, Brush brush, float x, float y, StringFormat? format) =>
+            DrawString(s, font, brush, new RectD(x, y, 0, 0), format);
+
+        /// <summary>
+        ///  Draws the specified text at the specified location with the specified <see cref="Brush"/> and
+        ///  <see cref="Font"/> objects using the formatting attributes of the specified <see cref="StringFormat"/>.
+        /// </summary>
+        /// <param name="s">The text to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
+        /// <param name="point"><see cref="PointD"/>structure that specifies the upper-left corner of the drawn text.</param>
+        /// <param name="format">
+        ///  <see cref="StringFormat"/> that specifies formatting attributes, such as line spacing and alignment,
+        ///  that are applied to the drawn text.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///  <paramref name="brush"/> is <see langword="null"/>. -or- <paramref name="font"/> is <see langword="null"/>.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void DrawString(ReadOnlySpan<char> s, Font font, Brush brush, PointD point, StringFormat? format) =>
+            DrawString(s, font, brush, new RectD(point.X, point.Y, 0, 0), format);
+
+        /// <summary>
+        ///  Draws the specified text in the specified rectangle with the specified <see cref="Brush"/> and
+        ///  <see cref="Font"/> objects using the formatting attributes of the specified <see cref="StringFormat"/>.
+        /// </summary>
+        /// <param name="s">The text to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of the drawn text.</param>
+        /// <param name="layoutRectangle"><see cref="RectD"/>structure that specifies the location of the drawn text.</param>
+        /// <param name="format">
+        ///  <see cref="StringFormat"/> that specifies formatting attributes, such as line spacing and alignment,
+        ///  that are applied to the drawn text.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///  <paramref name="brush"/> is <see langword="null"/>. -or- <paramref name="font"/> is <see langword="null"/>.
+        /// </exception>
+        /// <remarks>
+        ///  <para>
+        ///   The text represented by the <paramref name="s"/> parameter is drawn inside the rectangle represented by
+        ///   the <paramref name="layoutRectangle"/> parameter. If the text does not fit inside the rectangle, it is
+        ///   truncated at the nearest word, unless otherwise specified with the <paramref name="format"/> parameter.
+        ///  </para>
+        /// </remarks>
+        internal void DrawString(
+            ReadOnlySpan<char> s,
+            Font font,
+            Brush brush,
+            RectD layoutRectangle,
+            StringFormat? format)
+        {
+            throw new NotImplementedException("DrawString with StringFormat is not implemented in this Graphics class.");
+        }
+
+        /// <summary>
+        /// Calculates the size of the specified text string when drawn with the specified font and formatting attributes.
+        /// </summary>
+        /// <param name="text">The text to measure.</param>
+        /// <param name="font">The font to use for measuring the text.</param>
+        /// <param name="layoutArea">The maximum layout area for the text.</param>
+        /// <param name="stringFormat">Formatting information for the text.</param>
+        /// <returns>The size of the text string when drawn with the specified font and formatting attributes.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal SizeD MeasureString(ReadOnlySpan<char> text, Font font, SizeD layoutArea, StringFormat? stringFormat)
+        {
+            throw new NotImplementedException("MeasureString with StringFormat is not implemented in this Graphics class.");
+        }
+
+        /// <summary>
+        /// Calculates the size of the specified text string when drawn with the specified font and formatting attributes.
+        /// </summary>
+        /// <param name="text">The text to measure.</param>
+        /// <param name="font">The font to use for measuring the text.</param>
+        /// <param name="width">The maximum width for the text layout.</param>
+        /// <param name="format">Formatting information for the text.</param>
+        /// <returns>The size of the text string when drawn with the specified font and formatting attributes.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal SizeD MeasureString(ReadOnlySpan<char> text, Font font, int width, StringFormat? format) =>
+            MeasureString(text, font, new SizeD(width, 999999), format);
+
+        /// <summary>
         /// Draws text vertically starting from the top of the specified rectangle using the given font and colors.
         /// Text is centered within the rectangle, and the method handles
         /// rotation and translation to achieve the desired orientation.
@@ -1832,7 +1929,7 @@ namespace Alternet.Drawing
             /// <param name="imageInfo">The image information associated with the additional image.</param>
             public void AddAdditionalImage(Image image, ListControlItem.ItemImageInfoRef imageInfo)
             {
-                DrawLabelImageParams prm = new ();
+                DrawLabelImageParams prm = new();
                 prm.Image = image;
                 prm.IsImageAfterText = imageInfo.IsAfterText;
                 prm.ImageMargin = imageInfo.Margin;
@@ -2128,7 +2225,8 @@ namespace Alternet.Drawing
             /// This is the same as setting the <see cref="IndexAccel"/> property,
             /// but provided as a method for convenience and potential future extensibility.
             /// </summary>
-            /// <param name="value">The index of the underlined mnemonic character to set. Must be a non-negative integer.</param>
+            /// <param name="value">The index of the underlined mnemonic character to set.
+            /// Must be a non-negative integer.</param>
             public void SetIndexAccel(int value)
             {
                 IndexAccel = value;
