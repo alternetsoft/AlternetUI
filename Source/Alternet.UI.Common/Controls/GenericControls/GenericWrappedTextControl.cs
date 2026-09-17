@@ -219,13 +219,20 @@ namespace Alternet.UI
         /// <param name="availableSize">Available size.</param>
         public virtual SizeD MeasureText(Graphics dc, Font font, SizeD availableSize)
         {
-            var wrappedWidth = availableSize.Width;
+            if (textFormat.Wrapping == TextWrapping.None)
+            {
+                wrappedText = [TextForPaint];
+            }
+            else
+            {
+                var wrappedWidth = availableSize.Width;
 
-            wrappedText = DrawingUtils.WrapTextToList(
-                    TextForPaint,
-                    wrappedWidth,
-                    font,
-                    dc);
+                wrappedText = DrawingUtils.WrapTextToList(
+                        TextForPaint,
+                        wrappedWidth,
+                        font,
+                        dc);
+            }
 
             var result = DrawInternal(dc, (PointD.Empty, availableSize), font);
             return result;
