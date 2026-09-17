@@ -337,6 +337,8 @@ namespace Alternet.Drawing
             TextFormat.Record record = new();
             record.VerticalAlignment = ToVerticalAlignment(flags);
             record.HorizontalAlignment = ToHorizontalAlignment(flags);
+            var hasWordBreak = flags.HasFlag(TextFormatFlags.WordBreak);
+            record.Wrapping = hasWordBreak ? TextWrapping.Word : TextWrapping.None;
             return record;
         }
 
@@ -351,7 +353,7 @@ namespace Alternet.Drawing
         /// by <paramref name="bounds" />. If <paramref name="backColor" /> is <see langword="null" />,
         /// the background is not filled.</param>
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
-        public static void DrawText(
+        public static RectD DrawText(
             Graphics dc,
             ReadOnlySpan<char> text,
             Font? font,
@@ -383,7 +385,8 @@ namespace Alternet.Drawing
             record.TextBackColor ??= new(bc);
             record.TextBackColor.SetColors(bc, bc);
 
-            dc.DrawText(text, font, foreColor.AsBrush, bounds, in record);
+            var resultRect = dc.DrawText(text, font, foreColor.AsBrush, bounds, in record);
+            return resultRect;
         }
     }
 }
