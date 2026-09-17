@@ -44,6 +44,14 @@ namespace PropertyGridSample
             label.PerformLayoutAndInvalidate();
         }
 
+        public static void InitTextRendererControl(object control)
+        {
+            if (control is not TextRendererControl textRendererControl)
+                return;
+            textRendererControl.Text = DemoUtils.LoremIpsumSmall;
+            textRendererControl.MinHeight = 300;
+        }
+
         public static void InitGenericLabel(object control)
         {
             if (control is not Label label)

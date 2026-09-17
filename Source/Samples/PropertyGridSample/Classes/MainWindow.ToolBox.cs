@@ -178,6 +178,8 @@ namespace PropertyGridSample
                 ToolBoxAdd<XTreeView>(ObjectInit.InitXTreeView);
                 ToolBoxAdd<YearPicker>();
 
+                ToolBoxAdd<TextRendererControl>(ObjectInit.InitTextRendererControl);
+
                 /*
                 ToolBoxAdd<Alternet.UI.VerticalLine>();
                 ToolBoxAdd<Alternet.UI.ScrollableUserControl>();
