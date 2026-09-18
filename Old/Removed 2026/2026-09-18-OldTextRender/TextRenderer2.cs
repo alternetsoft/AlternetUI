@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -9,9 +11,10 @@ namespace Alternet.Drawing
     /// <summary>
     /// Provides methods for rendering text to a <see cref="Graphics"/> object.
     /// </summary>
-    internal static class TextRenderer2
+    public static class TextRenderer
     {
         private static Graphics? measure;
+        private static ITextRendererHandler? handler;
 
         /// <summary>
         /// Gets measurement graphics object. This object is used to measure text size.
@@ -31,6 +34,66 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the <see cref="ITextRendererHandler" /> that is used to measure and render text.
+        /// </summary>
+        public static ITextRendererHandler? Handler
+        {
+            get => handler;
+            set => handler = value;
+        }
+
+        /// <summary>
+        /// This method is used to update scale factor of the measurement graphics object
+        /// when the application scale factor is changed.
+        /// </summary>
+        /// <param name="scaleFactor">The new scale factor.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetMeasureScaleFactor(float scaleFactor)
+        {
+            Graphics.RequireMeasure(ref measure, new(scaleFactor));
+        }
+
+        /// <summary>
+        /// Converts <see cref="TextFormatFlags"/> to <see cref="TextVerticalAlignment"/>.
+        /// </summary>
+        /// <param name="flags">The <see cref="TextFormatFlags"/> to convert.</param>
+        /// <returns>The corresponding <see cref="TextVerticalAlignment"/>.</returns>
+        public static TextVerticalAlignment ToVerticalAlignment(TextFormatFlags flags)
+        {
+            if ((flags & TextFormatFlags.VerticalCenter) != 0)
+                return TextVerticalAlignment.Center;
+            if ((flags & TextFormatFlags.Bottom) != 0)
+                return TextVerticalAlignment.Bottom;
+            return TextVerticalAlignment.Top;
+        }
+
+        /// <summary>
+        /// Converts <see cref="TextFormatFlags"/> to <see cref="TextHorizontalAlignment"/>.
+        /// </summary>
+        /// <param name="flags">The <see cref="TextFormatFlags"/> to convert.</param>
+        /// <returns>The corresponding <see cref="TextHorizontalAlignment"/>.</returns>
+        public static TextHorizontalAlignment ToHorizontalAlignment(TextFormatFlags flags)
+        {
+            if ((flags & TextFormatFlags.HorizontalCenter) != 0)
+                return TextHorizontalAlignment.Center;
+            if ((flags & TextFormatFlags.Right) != 0)
+                return TextHorizontalAlignment.Right;
+            return TextHorizontalAlignment.Left;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void BeforeDrawText(Graphics graphics, [NotNull] ref Font? font)
+        {
+            font ??= Control.DefaultFont;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void BeforeMeasureText(Graphics graphics, [NotNull] ref Font? font)
+        {
+            font ??= Control.DefaultFont;
+        }
+
+        /// <summary>
         /// Draws the specified text string at the specified location using the specified font and foreground color.
         /// </summary>
         /// <param name="dc">The graphics context to draw on.</param>
@@ -38,9 +101,15 @@ namespace Alternet.Drawing
         /// <param name="font">The font to use for drawing the text.</param>
         /// <param name="pt">The location at which to draw the text.</param>
         /// <param name="foreColor">The color of the text.</param>
-        public static void DrawText(Graphics dc, string text, Font font, PointD pt, Color foreColor)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawText(Graphics dc, string text, Font? font, PointD pt, Color foreColor)
         {
-            DrawTextInternal(dc, text, font, pt, foreColor, Color.Transparent, TextFormatFlags.Default, false);
+            BeforeDrawText(dc, ref font);
+
+            if (handler != null)
+                handler.DrawText(dc, text, font, pt, foreColor);
+            else
+                DrawTextInternal(dc, text, font, pt, foreColor, Color.Transparent, TextFormatFlags.Default, false);
         }
 
         /// <summary>
@@ -51,9 +120,16 @@ namespace Alternet.Drawing
         /// <param name="font">The font to use for drawing the text.</param>
         /// <param name="bounds">The rectangle in which to draw the text.</param>
         /// <param name="foreColor">The color of the text.</param>
-        public static void DrawText(Graphics dc, string text, Font font, RectD bounds, Color foreColor)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawText(Graphics dc, string text, Font? font, RectD bounds, Color foreColor)
         {
-            DrawTextInternal(
+            BeforeDrawText(dc, ref font);
+
+            if (handler != null)
+                handler.DrawText(dc, text, font, bounds, foreColor);
+            else
+            {
+                DrawTextInternal(
                 dc,
                 text,
                 font,
@@ -62,6 +138,7 @@ namespace Alternet.Drawing
                 Color.Transparent,
                 TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
                 false);
+            }
         }
 
         /// <summary>
@@ -74,9 +151,14 @@ namespace Alternet.Drawing
         /// <param name="pt">The location at which to draw the text.</param>
         /// <param name="foreColor">The color of the text.</param>
         /// <param name="backColor">The background color of the text.</param>
-        public static void DrawText(Graphics dc, string text, Font font, PointD pt, Color foreColor, Color backColor)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawText(Graphics dc, string text, Font? font, PointD pt, Color foreColor, Color backColor)
         {
-            DrawTextInternal(dc, text, font, pt, foreColor, backColor, TextFormatFlags.Default, false);
+            BeforeDrawText(dc, ref font);
+            if (handler != null)
+                handler.DrawText(dc, text, font, pt, foreColor, backColor);
+            else
+                DrawTextInternal(dc, text, font, pt, foreColor, backColor, TextFormatFlags.Default, false);
         }
 
         /// <summary>
@@ -88,9 +170,14 @@ namespace Alternet.Drawing
         /// <param name="pt">The location at which to draw the text.</param>
         /// <param name="foreColor">The color of the text.</param>
         /// <param name="flags">The formatting options for the text.</param>
-        public static void DrawText(Graphics dc, string text, Font font, PointD pt, Color foreColor, TextFormatFlags flags)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawText(Graphics dc, string text, Font? font, PointD pt, Color foreColor, TextFormatFlags flags)
         {
-            DrawTextInternal(dc, text, font, pt, foreColor, Color.Transparent, flags, false);
+            BeforeDrawText(dc, ref font);
+            if (handler != null)
+                handler.DrawText(dc, text, font, pt, foreColor, flags);
+            else
+                DrawTextInternal(dc, text, font, pt, foreColor, Color.Transparent, flags, false);
         }
 
         /// <summary>
@@ -103,17 +190,24 @@ namespace Alternet.Drawing
         /// <param name="bounds">The rectangle in which to draw the text.</param>
         /// <param name="foreColor">The color of the text.</param>
         /// <param name="backColor">The background color of the text.</param>
-        public static void DrawText(Graphics dc, string text, Font font, RectD bounds, Color foreColor, Color backColor)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawText(Graphics dc, string text, Font? font, RectD bounds, Color foreColor, Color backColor)
         {
-            DrawTextInternal(
-                dc,
-                text,
-                font,
-                bounds,
-                foreColor,
-                backColor,
-                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
-                false);
+            BeforeDrawText(dc, ref font);
+            if (handler != null)
+                handler.DrawText(dc, text, font, bounds, foreColor, backColor);
+            else
+            {
+                DrawTextInternal(
+                    dc,
+                    text,
+                    font,
+                    bounds,
+                    foreColor,
+                    backColor,
+                    TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter,
+                    false);
+            }
         }
 
         /// <summary>
@@ -126,15 +220,20 @@ namespace Alternet.Drawing
         /// <param name="bounds">The rectangle in which to draw the text.</param>
         /// <param name="foreColor">The color of the text.</param>
         /// <param name="flags">The formatting options for the text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawText(
             Graphics dc,
             string text,
-            Font font,
+            Font? font,
             RectD bounds,
             Color foreColor,
             TextFormatFlags flags)
         {
-            DrawTextInternal(dc, text, font, bounds, foreColor, Color.Transparent, flags, false);
+            BeforeDrawText(dc, ref font);
+            if (handler != null)
+                handler.DrawText(dc, text, font, bounds, foreColor, flags);
+            else
+                DrawTextInternal(dc, text, font, bounds, foreColor, Color.Transparent, flags, false);
         }
 
         /// <summary>
@@ -148,16 +247,21 @@ namespace Alternet.Drawing
         /// <param name="foreColor">The color of the text.</param>
         /// <param name="backColor">The background color of the text.</param>
         /// <param name="flags">The formatting options for the text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawText(
             Graphics dc,
             string text,
-            Font font,
+            Font? font,
             PointD pt,
             Color foreColor,
             Color backColor,
             TextFormatFlags flags)
         {
-            DrawTextInternal(dc, text, font, pt, foreColor, backColor, flags, false);
+            BeforeDrawText(dc, ref font);
+            if (handler != null)
+                handler.DrawText(dc, text, font, pt, foreColor, backColor, flags);
+            else
+                DrawTextInternal(dc, text, font, pt, foreColor, backColor, flags, false);
         }
 
         /// <summary>
@@ -171,16 +275,21 @@ namespace Alternet.Drawing
         /// <param name="foreColor">The color of the text.</param>
         /// <param name="backColor">The background color of the text.</param>
         /// <param name="flags">The formatting options for the text.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawText(
             Graphics dc,
             string text,
-            Font font,
+            Font? font,
             RectD bounds,
             Color foreColor,
             Color backColor,
             TextFormatFlags flags)
         {
-            DrawTextInternal(dc, text, font, bounds, foreColor, backColor, flags, false);
+            BeforeDrawText(dc, ref font);
+            if (handler != null)
+                handler.DrawText(dc, text, font, bounds, foreColor, backColor, flags);
+            else
+                DrawTextInternal(dc, text, font, bounds, foreColor, backColor, flags, false);
         }
 
         /// <summary>
@@ -189,9 +298,14 @@ namespace Alternet.Drawing
         /// <param name="text">The text to measure.</param>
         /// <param name="font">The font to use for measuring the text.</param>
         /// <returns>The size of the text.</returns>
-        public static SizeD MeasureText(string text, Font font)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD MeasureText(string text, Font? font)
         {
-            return MeasureTextInternal(Measure, text, font, SizeD.Empty, TextFormatFlags.Default);
+            BeforeMeasureText(Measure, ref font);
+            if (handler != null)
+                return handler.MeasureText(Measure, text, font);
+            else
+                return MeasureTextInternal(Measure, text, font, SizeD.Empty, TextFormatFlags.Default);
         }
 
         /// <summary>
@@ -201,9 +315,14 @@ namespace Alternet.Drawing
         /// <param name="text">The text to measure.</param>
         /// <param name="font">The font to use for measuring the text.</param>
         /// <returns>The size of the text.</returns>
-        public static SizeD MeasureText(Graphics dc, string text, Font font)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD MeasureText(Graphics dc, string text, Font? font)
         {
-            return MeasureTextInternal(dc, text, font, SizeD.Empty, TextFormatFlags.Default);
+            BeforeMeasureText(dc, ref font);
+            if (handler != null)
+                return handler.MeasureText(dc, text, font);
+            else
+                return MeasureTextInternal(dc, text, font, SizeD.Empty, TextFormatFlags.Default);
         }
 
         /// <summary>
@@ -213,11 +332,16 @@ namespace Alternet.Drawing
         /// <param name="font">The font to use for measuring the text.</param>
         /// <param name="proposedSize">The maximum size of the text.</param>
         /// <returns>The size of the text.</returns>
-        public static SizeD MeasureText(string text, Font font, SizeD proposedSize)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD MeasureText(string text, Font? font, SizeD proposedSize)
         {
-            return MeasureTextInternal(Measure, text, font, proposedSize, TextFormatFlags.Default);
+            BeforeMeasureText(Measure, ref font);
+            if (handler != null)
+                return handler.MeasureText(Measure, text, font, proposedSize);
+            else
+                return MeasureTextInternal(Measure, text, font, proposedSize, TextFormatFlags.Default);
         }
-        
+
         /// <summary>
         /// Measures the size of the specified text string when drawn with the specified font and formatting options.
         /// </summary>
@@ -226,9 +350,14 @@ namespace Alternet.Drawing
         /// <param name="font">The font to use for measuring the text.</param>
         /// <param name="proposedSize">The maximum size of the text.</param>
         /// <returns>The size of the text.</returns>
-        public static SizeD MeasureText(Graphics dc, string text, Font font, SizeD proposedSize)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD MeasureText(Graphics dc, string text, Font? font, SizeD proposedSize)
         {
-            return MeasureTextInternal(dc, text, font, proposedSize, TextFormatFlags.Default);
+            BeforeMeasureText(dc, ref font);
+            if (handler != null)
+                return handler.MeasureText(dc, text, font, proposedSize);
+            else
+                return MeasureTextInternal(dc, text, font, proposedSize, TextFormatFlags.Default);
         }
 
         /// <summary>
@@ -239,9 +368,14 @@ namespace Alternet.Drawing
         /// <param name="proposedSize">The maximum size of the text.</param>
         /// <param name="flags">The formatting options to use for measuring the text.</param>
         /// <returns>The size of the text.</returns>
-        public static SizeD MeasureText(string text, Font font, SizeD proposedSize, TextFormatFlags flags)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD MeasureText(string text, Font? font, SizeD proposedSize, TextFormatFlags flags)
         {
-            return MeasureTextInternal(Measure, text, font, proposedSize, flags);
+            BeforeMeasureText(Measure, ref font);
+            if (handler != null)
+                return handler.MeasureText(Measure, text, font, proposedSize, flags);
+            else
+                return MeasureTextInternal(Measure, text, font, proposedSize, flags);
         }
 
         /// <summary>
@@ -253,9 +387,14 @@ namespace Alternet.Drawing
         /// <param name="proposedSize">The maximum size of the text.</param>
         /// <param name="flags">The formatting options to use for measuring the text.</param>
         /// <returns>The size of the text.</returns>
-        public static SizeD MeasureText(Graphics dc, string text, Font font, SizeD proposedSize, TextFormatFlags flags)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SizeD MeasureText(Graphics dc, string text, Font? font, SizeD proposedSize, TextFormatFlags flags)
         {
-            return MeasureTextInternal(dc, text, font, proposedSize, flags);
+            BeforeMeasureText(dc, ref font);
+            if (handler != null)
+                return handler.MeasureText(dc, text, font, proposedSize, flags);
+            else
+                return MeasureTextInternal(dc, text, font, proposedSize, flags);
         }
 
         internal static void DrawTextInternal(
@@ -273,11 +412,16 @@ namespace Alternet.Drawing
 
             if (text == null || text.Length == 0)
                 return;
-            StringFormat sf = FlagsToStringFormat(flags);
 
             RectD newBounds = PadDrawStringRectangle(bounds, flags);
 
+            TextFormat.Record sf = FlagsToTextFormat(flags);
+            dc.DrawText(text, font, foreColor.AsBrush, newBounds, in sf);
+
+            /*
+            StringFormat sf = FlagsToStringFormat(flags);
             dc.DrawString(text, font, foreColor.AsBrush, newBounds, sf);
+            */
         }
 
         internal static SizeD MeasureTextInternal(
@@ -287,8 +431,6 @@ namespace Alternet.Drawing
             SizeD proposedSize,
             TextFormatFlags flags)
         {
-            StringFormat sf = FlagsToStringFormat(flags);
-
             SizeD retval;
 
             float proposedWidth;
@@ -297,11 +439,17 @@ namespace Alternet.Drawing
             else
             {
                 proposedWidth = proposedSize.Width;
-                if ((flags & TextFormatFlags.NoPadding) == 0)
+                if (!flags.HasFlag(TextFormatFlags.NoPadding))
                     proposedWidth -= 9;
             }
 
+            TextFormat.Record sf = FlagsToTextFormat(flags);
+            retval = dc.MeasureText(text, font, proposedWidth, in sf);
+
+            /*
+            StringFormat sf = FlagsToStringFormat(flags);
             retval = dc.MeasureString(text, font, proposedWidth, sf);
+            */
 
             if (retval.Width > 0 && !flags.HasFlag(TextFormatFlags.NoPadding))
                 retval.Width += 9;
@@ -309,6 +457,7 @@ namespace Alternet.Drawing
             return retval;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void DrawTextInternal(
             Graphics dc,
             string text,
@@ -323,6 +472,7 @@ namespace Alternet.Drawing
             DrawTextInternal(dc, text, font, new RectD(pt, sz), foreColor, backColor, flags, useDrawString);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static SizeD MeasureTextInternal(
             Graphics dc,
             string text,
@@ -333,9 +483,14 @@ namespace Alternet.Drawing
             return MeasureTextInternal(dc, text, font, SizeD.Empty, flags);
         }
 
-        private static StringFormat FlagsToStringFormat(TextFormatFlags flags)
+        /// <summary>
+        /// Converts <see cref="TextFormatFlags"/> to <see cref="StringFormat"/>.
+        /// </summary>
+        /// <param name="flags">The text format flags to convert.</param>
+        /// <returns>A <see cref="StringFormat"/> representing the specified text format flags.</returns>
+        public static StringFormat FlagsToStringFormat(TextFormatFlags flags)
         {
-            StringFormat sf = new ();
+            StringFormat sf = new();
 
             // Translation table: http://msdn.microsoft.com/msdnmag/issues/06/03/TextRendering/default.aspx?fig=true#fig4
 
@@ -383,7 +538,77 @@ namespace Alternet.Drawing
             return sf;
         }
 
-        private static RectD PadDrawStringRectangle(RectD r, TextFormatFlags flags)
+        private static TextFormat.Record FlagsToTextFormat(TextFormatFlags flags)
+        {
+            TextFormat.Record sf = new();
+
+            if (flags.HasFlag(TextFormatFlags.HorizontalCenter))
+                sf.HorizontalAlignment = TextHorizontalAlignment.Center;
+            else if (flags.HasFlag(TextFormatFlags.Right))
+                sf.HorizontalAlignment = TextHorizontalAlignment.Right;
+            else
+                sf.HorizontalAlignment = TextHorizontalAlignment.Left;
+
+            if (flags.HasFlag(TextFormatFlags.Bottom))
+                sf.VerticalAlignment = TextVerticalAlignment.Bottom;
+            else if (flags.HasFlag(TextFormatFlags.VerticalCenter))
+                sf.VerticalAlignment = TextVerticalAlignment.Center;
+            else
+                sf.VerticalAlignment = TextVerticalAlignment.Top;
+
+            /*
+                        if (flags.HasFlag(TextFormatFlags.EndEllipsis))
+                            sf.Trimming = TextTrimming.Char;
+                        else if (flags.HasFlag(TextFormatFlags.PathEllipsis))
+                            sf.Trimming = TextTrimming.EllipsisPath;
+                        else if (flags.HasFlag(TextFormatFlags.WordEllipsis))
+                            sf.Trimming = TextTrimming.EllipsisWord;
+                        else
+                            sf.Trimming = TextTrimming.Char;
+            */
+
+            /*
+                        if (flags.HasFlag(TextFormatFlags.NoPrefix))
+                            sf.HotkeyPrefix = HotkeyPrefix.None;
+                        else if (flags.HasFlag(TextFormatFlags.HidePrefix))
+                            sf.HotkeyPrefix = HotkeyPrefix.Hide;
+                        else
+                            sf.HotkeyPrefix = HotkeyPrefix.Show;
+            */
+
+            /*
+                        if (flags.HasFlag(TextFormatFlags.NoPadding))
+                            sf.FormatFlags |= StringFormatFlags.FitBlackBox;
+            */
+
+            if (flags.HasFlag(TextFormatFlags.WordBreak) || flags.HasFlag(TextFormatFlags.WordEllipsis))
+                sf.Wrapping = TextWrapping.Word;
+            else
+                sf.Wrapping = TextWrapping.None;
+
+            if (flags.HasFlag(TextFormatFlags.SingleLine))
+                sf.Wrapping = TextWrapping.None;
+
+            /*
+                        else
+                        if (flags.HasFlag(TextFormatFlags.TextBoxControl))
+                            sf.FormatFlags |= StringFormatFlags.LineLimit;
+            */
+            /*
+            if (flags.HasFlag(TextFormatFlags.NoClipping))
+                sf.FormatFlags |= StringFormatFlags.NoClip;
+            */
+
+            return sf;
+        }
+
+        /// <summary>
+        /// Pads the specified rectangle based on the text format flags.
+        /// </summary>
+        /// <param name="r">The rectangle to pad.</param>
+        /// <param name="flags">The text format flags.</param>
+        /// <returns>The padded rectangle.</returns>
+        public static RectD PadDrawStringRectangle(RectD r, TextFormatFlags flags)
         {
             if (!flags.HasFlag(TextFormatFlags.NoPadding) && !flags.HasFlag(TextFormatFlags.Right)
                 && !flags.HasFlag(TextFormatFlags.HorizontalCenter))

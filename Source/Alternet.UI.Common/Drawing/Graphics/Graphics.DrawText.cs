@@ -74,6 +74,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns the size of a string when drawn with the specified font.
+        /// </summary>
+        /// <param name="text">The text to measure.</param>
+        /// <param name="font">The font used for measurement.</param>
+        /// <returns>
+        /// A <see cref="SizeD"/> structure representing the width and height of the text.
+        /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SizeD MeasureString(ReadOnlySpan<char> text, Font font) => GetTextExtent(text, font);
+
+        /// <summary>
         /// Returns the size of a pair of identical characters when drawn with the specified font.
         /// </summary>
         /// <param name="ch">The character to measure as a pair.</param>

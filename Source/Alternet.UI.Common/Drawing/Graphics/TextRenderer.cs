@@ -316,15 +316,31 @@ namespace Alternet.Drawing
             if (handler != null)
                 return handler.MeasureText(dc, text, font, proposedSize, flags);
 
+            float proposedWidth;
+            if (proposedSize.Width == 0)
+                proposedWidth = int.MaxValue;
+            else
+            {
+                proposedWidth = proposedSize.Width;
+                if (!flags.HasFlag(TextFormatFlags.NoPadding))
+                    proposedWidth -= 9;
+            }
+
             TextFormat.Record record = AsTextFormat(flags);
 
             var result = dc.DrawText(
                                 text,
                                 font,
                                 brush: null,
-                                new RectD(PointD.Empty, proposedSize),
+                                new RectD(PointD.Empty, new SizeD(proposedWidth, proposedSize.Height)),
                                 record);
-            return result.Size;
+
+            var retval = result.Size;
+
+            if (retval.Width > 0 && !flags.HasFlag(TextFormatFlags.NoPadding))
+                retval.Width += 9;
+
+            return retval;
         }
 
         /// <summary>
@@ -385,8 +401,45 @@ namespace Alternet.Drawing
             record.TextBackColor ??= new(bc);
             record.TextBackColor.SetColors(bc, bc);
 
-            var resultRect = dc.DrawText(text, font, foreColor.AsBrush, bounds, in record);
+            RectD newBounds = PadDrawStringRectangle(bounds, flags);
+
+            var resultRect = dc.DrawText(text, font, foreColor.AsBrush, newBounds, in record);
             return resultRect;
+        }
+
+        /// <summary>
+        /// Pads the specified rectangle based on the text format flags.
+        /// </summary>
+        /// <param name="r">The rectangle to pad.</param>
+        /// <param name="flags">The text format flags.</param>
+        /// <returns>The padded rectangle.</returns>
+        public static RectD PadDrawStringRectangle(RectD r, TextFormatFlags flags)
+        {
+            if (!flags.HasFlag(TextFormatFlags.NoPadding) && !flags.HasFlag(TextFormatFlags.Right)
+                && !flags.HasFlag(TextFormatFlags.HorizontalCenter))
+            {
+                r.X += 1;
+                r.Width -= 1;
+            }
+            if (!flags.HasFlag(TextFormatFlags.NoPadding) && flags.HasFlag(TextFormatFlags.Right))
+            {
+                r.Width -= 4;
+            }
+            if (flags.HasFlag(TextFormatFlags.NoPadding))
+            {
+                r.X -= 2;
+            }
+            if (!flags.HasFlag(TextFormatFlags.NoPadding) && flags.HasFlag(TextFormatFlags.Bottom))
+            {
+                r.Y += 1;
+            }
+            if (flags.HasFlag(TextFormatFlags.LeftAndRightPadding))
+            {
+                r.X += 2;
+                r.Width -= 2;
+            }
+
+            return r;
         }
     }
 }
