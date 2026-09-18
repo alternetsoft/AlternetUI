@@ -558,18 +558,6 @@ namespace Alternet.Drawing
         public virtual string? OriginalFontName => data.BaseFont?.Name ?? Name;
 
         /// <summary>
-        /// Gets the pixel size.
-        /// </summary>
-        [Browsable(false)]
-        public virtual int SizeInPixels
-        {
-            get
-            {
-                return (int)MathF.Ceiling(Height);
-            }
-        }
-
-        /// <summary>
         /// Gets the height of the font.
         /// </summary>
         [Browsable(false)]
@@ -580,18 +568,6 @@ namespace Alternet.Drawing
                 var metrics = SkiaFont.Metrics;
                 float height = Math.Abs(-metrics.Top + metrics.Bottom);
                 return height;
-            }
-        }
-
-        /// <summary>
-        /// Gets the size in dips.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Coord SizeInDips
-        {
-            get
-            {
-                return GraphicsFactory.PixelToDip(SizeInPixels);
             }
         }
 
@@ -617,7 +593,7 @@ namespace Alternet.Drawing
             get
             {
                 if (IsUsingSizeInPixels)
-                    return SizeInPixels;
+                    return Height;
                 else
                     return SizeInPoints;
             }
@@ -1388,18 +1364,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns a human-readable string representation of this <see cref="Font"/>.
+        /// Returns a human-readable string representation of this <see cref="Font"/> for the debug output.
         /// </summary>
         /// <returns>A string that represents this <see cref="Font"/>.</returns>
         public virtual string ToInfoString()
         {
             return string.Format(
                 CultureInfo.CurrentCulture,
-                "[{0}: Name={1}, Size={2}, PixelSize={3}, Style={4}]",
+                "[{0}: Name={1}, Size={2}, Height={3}, Style={4}]",
                 GetType().Name,
                 Name,
                 SizeInPoints,
-                SizeInPixels,
+                Height,
                 Style);
         }
 
