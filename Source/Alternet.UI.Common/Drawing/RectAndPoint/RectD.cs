@@ -1745,6 +1745,38 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns this rectangle with the following changes:
+        /// <see cref="X"/> and <see cref="Y"/> are incremented by 1,
+        /// <see cref="Width"/> and <see cref="Height"/> are decremented by 2.
+        /// </summary>
+        /// <returns>Rectangle object with changed size and location.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD DeflatedWithPadding()
+        {
+            return new(
+                x + 1f,
+                y + 1f,
+                width - 2f,
+                height - 2f);
+        }
+
+        /// <summary>
+        /// Returns this rectangle with the following changes:
+        /// <see cref="X"/> and <see cref="Y"/> are decremented by 1,
+        /// <see cref="Width"/> and <see cref="Height"/> are incremented by 2.
+        /// </summary>
+        /// <returns>Rectangle object with changed size and location.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD InflatedWithPadding()
+        {
+            return new(
+                x - 1f,
+                y - 1f,
+                width + 2f,
+                height + 2f);
+        }
+
+        /// <summary>
         /// Returns this rectangle inflated by the specified padding.
         /// </summary>
         /// <param name="padding">Specifies padding settings.</param>
