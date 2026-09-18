@@ -9,7 +9,7 @@ using System.Text;
 using SkiaSharp;
 
 #pragma warning disable
-#if ALTERNETUI
+#if !ALTERNETSTUDIO
 namespace Alternet.Skia
 #else
 namespace Alternet.Common.Skia

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using SkiaSharp;
 
 #pragma warning disable
-#if ALTERNETUI
+#if !ALTERNETSTUDIO
 using Alternet.Skia;
 
 namespace Alternet.Drawing
@@ -662,7 +662,7 @@ namespace Alternet.Common.Skia
             return true;
         }
 
-#if ALTERNETUI
+#if !ALTERNETSTUDIO
         /// <summary>
         /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a point.
         /// </summary>
@@ -707,7 +707,7 @@ namespace Alternet.Common.Skia
             Matrix3x2 = matrix.Matrix3x2;
         }
 
-#if ALTERNETUI
+#if !ALTERNETSTUDIO
         /// <summary>
         /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a size.
         /// </summary>

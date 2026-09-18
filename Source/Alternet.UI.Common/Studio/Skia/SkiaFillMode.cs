@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 #pragma warning disable
-#if ALTERNETUI
+#if !ALTERNETSTUDIO
 namespace Alternet.Skia
 #else
 namespace Alternet.Common.Skia
