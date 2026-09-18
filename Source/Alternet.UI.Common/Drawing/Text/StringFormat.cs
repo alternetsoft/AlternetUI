@@ -76,18 +76,6 @@ public partial class StringFormat : DisposableObject, ICloneable
     }
 
     /// <summary>
-    /// Sets the measure of characters to the specified range.
-    /// </summary>
-    public virtual void SetMeasurableCharacterRanges(CharacterRange[] ranges)
-    {
-        if (Immutable)
-            return;
-        if (ranges is null)
-            ranges = Array.Empty<CharacterRange>();
-        data.Ranges = ranges;
-    }
-
-    /// <summary>
     /// Specifies text alignment information.
     /// </summary>
     public virtual StringAlignment Alignment
@@ -138,35 +126,25 @@ public partial class StringFormat : DisposableObject, ICloneable
     }
 
     /// <summary>
-    /// Sets tab stops for this <see cref='StringFormat'/> instance.
+    /// Gets the <see cref='StringDigitSubstitute'/> for this <see cref='StringFormat'/> instance.
     /// </summary>
-    /// <param name="firstTabOffset">The number of spaces between the beginning of a text line and the first tab stop.</param>
-    /// <param name="tabStops">An array of distances (in number of spaces) between tab stops.</param>
-    /// <exception cref="ArgumentException"></exception>
-    public virtual void SetTabStops(float firstTabOffset, float[] tabStops)
+    public virtual StringDigitSubstitute DigitSubstitutionMethod
     {
-        if (Immutable)
-            return;
-        if (tabStops is null)
-            tabStops = Array.Empty<float>();
-        if (firstTabOffset < 0)
+        get
         {
-            firstTabOffset = 0;
+            return data.DigitSubstitutionMethod;
         }
-
-        data.TabStops = tabStops;
-        data.FirstTabOffset = firstTabOffset;
     }
 
     /// <summary>
-    /// Gets the tab stops for this <see cref='StringFormat'/> instance.
+    /// Gets the language of <see cref='StringDigitSubstitute'/> for this <see cref='StringFormat'/> instance.
     /// </summary>
-    /// <param name="firstTabOffset">The number of spaces between the beginning of a text line and the first tab stop.</param>
-    /// <returns>An array of distances (in number of spaces) between tab stops.</returns>
-    public virtual float[] GetTabStops(out float firstTabOffset)
+    public virtual int DigitSubstitutionLanguage
     {
-        firstTabOffset = data.FirstTabOffset;
-        return data.TabStops;
+        get
+        {
+            return data.DigitSubstitutionLanguage;
+        }
     }
 
     /// <summary>
@@ -281,28 +259,6 @@ public partial class StringFormat : DisposableObject, ICloneable
     }
 
     /// <summary>
-    /// Gets the <see cref='StringDigitSubstitute'/> for this <see cref='StringFormat'/> instance.
-    /// </summary>
-    public virtual StringDigitSubstitute DigitSubstitutionMethod
-    {
-        get
-        {
-            return data.DigitSubstitutionMethod;
-        }
-    }
-
-    /// <summary>
-    /// Gets the language of <see cref='StringDigitSubstitute'/> for this <see cref='StringFormat'/> instance.
-    /// </summary>
-    public virtual int DigitSubstitutionLanguage
-    {
-        get
-        {
-            return data.DigitSubstitutionLanguage;
-        }
-    }
-
-    /// <summary>
     /// Returns a string that represents the current object.
     /// </summary>
     public override string ToString() => $"[StringFormat, FormatFlags={FormatFlags}]";
@@ -335,6 +291,50 @@ public partial class StringFormat : DisposableObject, ICloneable
         }
 
         Debug.WriteLine(string.Empty);
+    }
+
+    /// <summary>
+    /// Sets the measure of characters to the specified range.
+    /// </summary>
+    public virtual void SetMeasurableCharacterRanges(CharacterRange[] ranges)
+    {
+        if (Immutable)
+            return;
+        if (ranges is null)
+            ranges = Array.Empty<CharacterRange>();
+        data.Ranges = ranges;
+    }
+
+    /// <summary>
+    /// Sets tab stops for this <see cref='StringFormat'/> instance.
+    /// </summary>
+    /// <param name="firstTabOffset">The number of spaces between the beginning of a text line and the first tab stop.</param>
+    /// <param name="tabStops">An array of distances (in number of spaces) between tab stops.</param>
+    /// <exception cref="ArgumentException"></exception>
+    public virtual void SetTabStops(float firstTabOffset, float[] tabStops)
+    {
+        if (Immutable)
+            return;
+        if (tabStops is null)
+            tabStops = Array.Empty<float>();
+        if (firstTabOffset < 0)
+        {
+            firstTabOffset = 0;
+        }
+
+        data.TabStops = tabStops;
+        data.FirstTabOffset = firstTabOffset;
+    }
+
+    /// <summary>
+    /// Gets the tab stops for this <see cref='StringFormat'/> instance.
+    /// </summary>
+    /// <param name="firstTabOffset">The number of spaces between the beginning of a text line and the first tab stop.</param>
+    /// <returns>An array of distances (in number of spaces) between tab stops.</returns>
+    public virtual float[] GetTabStops(out float firstTabOffset)
+    {
+        firstTabOffset = data.FirstTabOffset;
+        return data.TabStops;
     }
 
     /// <summary>

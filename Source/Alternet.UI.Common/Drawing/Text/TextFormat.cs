@@ -373,41 +373,42 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Contains all properties of the <see cref="TextFormat"/>.
+        /// Defines a record that contains text format properties.
+        /// It is used internally in the <see cref="TextFormat"/> class to store its properties.
         /// </summary>
         public struct Record
         {
-            /// <see cref="TextFormat.SuggestedWidth"/>
+            /// <inheritdoc cref="TextFormat.SuggestedWidth"/>
             public Coord? SuggestedWidth;
 
-            /// <see cref="TextFormat.SuggestedHeight"/>
+            /// <inheritdoc cref="TextFormat.SuggestedHeight"/>
             public Coord? SuggestedHeight;
 
-            /// <see cref="TextFormat.MaxWidth"/>
+            /// <inheritdoc cref="TextFormat.MaxWidth"/>
             public Coord? MaxWidth;
 
-            /// <see cref="TextFormat.MaxHeight"/>
+            /// <inheritdoc cref="TextFormat.MaxHeight"/>
             public Coord? MaxHeight;
 
-            /// <see cref="TextFormat.HorizontalAlignment"/>
+            /// <inheritdoc cref="TextFormat.HorizontalAlignment"/>
             public TextHorizontalAlignment HorizontalAlignment = DefaultHorizontalAlignment;
 
-            /// <see cref="TextFormat.VerticalAlignment"/>
+            /// <inheritdoc cref="TextFormat.VerticalAlignment"/>
             public TextVerticalAlignment VerticalAlignment = DefaultVerticalAlignment;
 
-            /// <see cref="TextFormat.Trimming"/>
+            /// <inheritdoc cref="TextFormat.Trimming"/>
             public TextTrimming Trimming = DefaultTrimming;
 
-            /// <see cref="TextFormat.Wrapping"/>
+            /// <inheritdoc cref="TextFormat.Wrapping"/>
             public TextWrapping Wrapping = DefaultWrapping;
 
-            /// <see cref="TextFormat.Distance"/>
+            /// <inheritdoc cref="TextFormat.Distance"/>
             public Coord Distance;
 
-            /// <see cref="TextFormat.Padding"/>
+            /// <inheritdoc cref="TextFormat.Padding"/>
             public Thickness Padding;
 
-            /// <see cref="TextFormat.TextBackColor"/>
+            /// <inheritdoc cref="TextFormat.TextBackColor"/>
             public ThemedColor? TextBackColor;
 
             /// <summary>

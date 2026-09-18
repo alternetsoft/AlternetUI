@@ -283,6 +283,42 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Calculates the size of the text string when drawn with the specified font and formatting attributes.
+        /// </summary>
+        /// <param name="text">The text to measure.</param>
+        /// <param name="font">The font to use for measuring the text.</param>
+        /// <param name="rect">The bounds of the text.</param>
+        /// <param name="format">The formatting attributes to apply to the text.</param>
+        /// <returns>The size of the text.</returns>
+        public virtual SizeD MeasureText(
+            ReadOnlySpan<char> text,
+            Font font,
+            RectD rect,
+            in TextFormat.Record format)
+        {
+            var result = DrawText(text, font, null, rect, in format);
+            return result.Size;
+        }
+
+        /// <summary>
+        /// Calculates the size of the text string when drawn with the specified font and formatting attributes.
+        /// </summary>
+        /// <param name="text">The text to measure.</param>
+        /// <param name="font">The font to use for measuring the text.</param>
+        /// <param name="proposedWidth">The maximum width of the text.</param>
+        /// <param name="format">The formatting attributes to apply to the text.</param>
+        /// <returns>The size of the text.</returns>
+        public virtual SizeD MeasureText(
+            ReadOnlySpan<char> text,
+            Font font,
+            float proposedWidth,
+            in TextFormat.Record format)
+        {
+            var result = DrawText(text, font, null, new RectD(0, 0, proposedWidth, PointD.HalfOfMaxValue.Y), in format);
+            return result.Size;
+        }
+
+        /// <summary>
         /// Draws the text string at the specified location with
         /// <see cref="Brush"/> and <see cref="Font"/> objects.
         /// </summary>
@@ -781,7 +817,8 @@ namespace Alternet.Drawing
                     {
                         var textElement = DrawElementParams.CreateTextElement(ref prm);
 
-                        drawParams.Elements = prm.IsImageAfterText ? [textElement, imageElement] : [imageElement, textElement];
+                        drawParams.Elements = prm.IsImageAfterText
+                            ? [textElement, imageElement] : [imageElement, textElement];
                     }
                     else
                     {
@@ -1000,7 +1037,11 @@ namespace Alternet.Drawing
 #if DEBUG
             if (drawDebugCorners)
             {
-                BorderSettings.DrawDesignCorners(this, afterAlign, SystemSettings.AppearanceIsDark, BorderSettings.DebugBorder);
+                BorderSettings.DrawDesignCorners(
+                    this,
+                    afterAlign,
+                    SystemSettings.AppearanceIsDark,
+                    BorderSettings.DebugBorder);
             }
 #endif
 
