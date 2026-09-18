@@ -115,7 +115,7 @@ namespace Alternet.Drawing
         /// and <see cref="EndEllipsis" /> values cannot be used with <see cref="ExpandTabs" />.
         /// </summary>
         ExpandTabs = 0x40,
-
+/*
         /// <summary>
         /// Includes the font external leading in line height. Typically, external leading
         /// is not included in the height of a line of text.
@@ -142,7 +142,7 @@ namespace Alternet.Drawing
         /// the formatting rectangle to show.
         /// </summary>
         NoClipping = 0x100,
-
+*/
         /// <summary>
         /// Turns off processing of prefix characters. Typically, the ampersand (&amp;)
         /// mnemonic-prefix character is interpreted as a directive to underscore the
@@ -153,7 +153,7 @@ namespace Alternet.Drawing
         /// would result in output of "A&amp;bc&amp;&amp;d".
         /// </summary>
         NoPrefix = 0x800,
-
+/*
         /// <summary>
         /// Applies to Windows 98, Windows Me, Windows 2000, or Windows XP only.
         /// </summary>
@@ -193,5 +193,6 @@ namespace Alternet.Drawing
         /// Adds padding to the bounding rectangle to accommodate overhanging glyphs.
         /// </summary>
         GlyphOverhangPadding = Default,
+*/
     }
 }
