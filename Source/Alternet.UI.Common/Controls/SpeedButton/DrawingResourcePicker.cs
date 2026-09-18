@@ -51,6 +51,7 @@ namespace Alternet.UI
         private bool useDisabledImageColor = true;
         private DrawingShapeType? valueImageShape = DefaultValueImageShape;
         private ThemedColor? valueImageBorder;
+        private bool useFontSizeAsValueImageSize = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawingResourcePicker"/> class.
@@ -289,6 +290,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to use the font size as the value image size.
+        /// </summary>
+        [Browsable(true)]
+        public virtual bool UseFontSizeAsValueImageSize
+        {
+            get => useFontSizeAsValueImageSize;
+            set
+            {
+                if (useFontSizeAsValueImageSize == value)
+                    return;
+                useFontSizeAsValueImageSize = value;
+                OnValueImageChanged(refresh: true);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets <see cref="Value"/> as <see cref="string"/>.
         /// </summary>
         [Browsable(false)]
@@ -459,6 +476,27 @@ namespace Alternet.UI
             base.DefaultPaint(e);
         }
 
+        /// <summary>
+        /// Calculates effective size of the color image.
+        /// </summary>
+        /// <returns></returns>
+        public virtual SizeD EffectiveValueImageSize()
+        {
+            if (UseFontSizeAsValueImageSize)
+            {
+                var height = MeasureCanvas.GetTextExtent("Wg", RealFont).Height - 2;
+                height = Math.Max(height, valueImageSize.Height);
+
+                var width = height;
+                if (ValueImageShape != DrawingShapeType.Circle)
+                    width = (height / 2) * 3;
+
+                return new SizeD(width, height);
+            }
+
+            return valueImageSize;
+        }
+
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
@@ -500,7 +538,7 @@ namespace Alternet.UI
                 }
 
             LabelImage = brush?.AsImageWithBorder(
-                valueImageSize,
+                EffectiveValueImageSize(),
                 ScaleFactor,
                 (ValueImageBorder ?? ListControlItem.DefaultImageBorderColor).GetColor(this),
                 ValueImageShape);

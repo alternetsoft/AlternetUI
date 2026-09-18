@@ -10,18 +10,18 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="SpeedButton"/> for editing of the <see cref="Color"/> values.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Editors)]
+    [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class SpeedColorButton : SpeedButton
     {
         /// <summary>
         /// Gets or sets the default left padding for the text displayed in the control.
         /// </summary>
-        public static float DefaultTextLeftPadding = 5;
+        public static float DefaultTextLeftPadding = 7;
 
         /// <summary>
         /// Gets or sets the default right padding for the text displayed in the control.
         /// </summary>
-        public static float DefaultTextRightPadding = 5;
+        public static float DefaultTextRightPadding = 7;
 
         /// <summary>
         /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
@@ -36,7 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default size of the color image.
         /// </summary>
-        public static SizeD DefaultColorImageSizeDips = (18, 12);
+        public static SizeD DefaultColorImageSizeDips = (30, 20);
 
         private readonly bool useDefaultColors = true;
         private Color? color = Color.Black;
@@ -50,6 +50,7 @@ namespace Alternet.UI
         private bool useDisabledImageColor = true;
         private DrawingShapeType? colorImageShape = DefaultColorImageShape;
         private ThemedColor? colorImageBorder;
+        private bool useFontSizeAsItemImageSize = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
@@ -136,6 +137,22 @@ namespace Alternet.UI
         /// Gets or sets the title displayed when <see cref="Color.Empty"/> is selected.
         /// </summary>
         public virtual string? EmptyColorTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the font size as the item image size.
+        /// </summary>
+        [Browsable(true)]
+        public virtual bool UseFontSizeAsItemImageSize
+        {
+            get => useFontSizeAsItemImageSize;
+            set
+            {
+                if (useFontSizeAsItemImageSize == value)
+                    return;
+                useFontSizeAsItemImageSize = value;
+                OnColorImageChanged(refresh: true);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the border color of the color image.
@@ -588,6 +605,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates effective size of the color image.
+        /// </summary>
+        /// <returns></returns>
+        public virtual SizeD EffectiveItemImageSize()
+        {
+            if (UseFontSizeAsItemImageSize)
+            {
+                var height = MeasureCanvas.GetTextExtent("Wg", RealFont).Height - 2;
+                height = Math.Max(height, colorImageSize.Height);
+
+                var width = height;
+                if (ColorImageShape != DrawingShapeType.Circle)
+                    width = (height / 2) * 3;
+
+                return new SizeD(width, height);
+            }
+
+            return colorImageSize;
+        }
+
+        /// <summary>
         /// Raised when color image is changed.
         /// </summary>
         protected virtual void OnColorImageChanged(bool refresh = true)
@@ -602,7 +640,7 @@ namespace Alternet.UI
             }
 
             LabelImage = imageColor.AsImageWithBorder(
-                colorImageSize,
+                EffectiveItemImageSize(),
                 ScaleFactor,
                 (ColorImageBorder ?? ListControlItem.DefaultImageBorderColor).GetColor(this),
                 ColorImageShape);

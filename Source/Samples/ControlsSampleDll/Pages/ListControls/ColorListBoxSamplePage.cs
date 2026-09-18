@@ -109,7 +109,7 @@ namespace ControlsSample
 
             drawingResourcePicker.Value = themed1;
 
-            settings.AddInput("Item Image Shape:", listBox, nameof(ColorListBox.ItemImageShape));
+            settings.AddInput("Item Image Shape:", this, nameof(ItemImageShape));
             settings.AddInput("Show Checkboxes", listBox, nameof(ColorListBox.CheckBoxVisible));
             settings.AddInput("Show Accent Marker", listBox, nameof(ColorListBox.ShowAccentMarker));
 
@@ -239,6 +239,22 @@ namespace ControlsSample
             }
 
             settingsContainer.Parent = panel;
+        }
+
+        /// <summary>
+        /// Gets or sets the shape of the item image.
+        /// </summary>
+        public virtual DrawingShapeType? ItemImageShape
+        {
+            get => listBox.ItemImageShape;
+            set
+            {
+                if (value == listBox.ItemImageShape)
+                    return;
+                listBox.ItemImageShape = value;
+                colorPicker.ColorImageShape = value;
+                drawingResourcePicker.ValueImageShape = value;
+            }
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
