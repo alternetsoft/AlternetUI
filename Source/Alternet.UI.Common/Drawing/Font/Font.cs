@@ -565,13 +565,21 @@ namespace Alternet.Drawing
         {
             get
             {
-                var result = GraphicsUnitConverter.Convert(
-                    GraphicsUnit.Point,
-                    GraphicsUnit.Pixel,
-                    Display.Primary.DPI.Height,
-                    data.SizeInPoints);
+                return (int)MathF.Ceiling(Height);
+            }
+        }
 
-                return (int)result;
+        /// <summary>
+        /// Gets the height of the font.
+        /// </summary>
+        [Browsable(false)]
+        public virtual float Height
+        {
+            get
+            {
+                var metrics = SkiaFont.Metrics;
+                float height = Math.Abs(-metrics.Top + metrics.Bottom);
+                return height;
             }
         }
 
@@ -1234,13 +1242,19 @@ namespace Alternet.Drawing
                 result.Typeface = SKFontManager.Default.MatchFamily(result.Typeface.FamilyName, style);
             }
 
+            var sizeInDips = GraphicsUnitConverter.Convert(
+                from: GraphicsUnit.Point,
+                to: GraphicsUnit.Dip,
+                dpi: Display.Primary.DPI.Height,
+                data.SizeInPoints);
+
             if (SkiaFontScaleFactor == 1.0f)
             {
-                result.SizeInDips = SizeInDips;
+                result.SizeInDips = sizeInDips;
             }
             else
             {
-                result.SizeInDips = SizeInDips / SkiaFontScaleFactor;
+                result.SizeInDips = sizeInDips / SkiaFontScaleFactor;
             }
 
             return result;
@@ -1428,7 +1442,7 @@ namespace Alternet.Drawing
         {
             var family = FontFamily;
 
-            string txt = family.Name + $", Size:{Size}, Pixels: {SizeInPixels}";
+            string txt = family.Name + $", Size:{Size}";
 
             App.Log(txt);
 
@@ -1806,7 +1820,8 @@ namespace Alternet.Drawing
         /// <returns>The height of the font as a <see cref="FontScalar"/> value.</returns>
         public virtual FontScalar GetHeight(Graphics dc)
         {
-            return dc.MeasureText(StringUtils.SymbolWg, this).Height;
+            var measure = dc.GetTextExtent(StringUtils.SymbolWg, this).Height;
+            return MathF.Max(Height, measure);
         }
 
         /// <inheritdoc/>
