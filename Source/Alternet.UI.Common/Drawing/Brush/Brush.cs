@@ -197,11 +197,11 @@ namespace Alternet.Drawing
 
             RectD rect = (PointD.Empty, size);
 
-            if (shape is null)
+            if (shape is null || shape == DrawingShapeType.Rectangle)
             {
                 RectD colorRect = DrawingUtils.DrawDoubleBorder(
                     graphics,
-                    rect,
+                    rect.DeflatedWithPadding(),
                     innerColor: Color.Empty,
                     outerColor: borderColor);
 
@@ -211,10 +211,10 @@ namespace Alternet.Drawing
             {
                 shapeDrawable ??= new ShapeDrawable();
 
-                shapeDrawable.Bounds = rect;
                 shapeDrawable.Brush = this;
                 shapeDrawable.Pen = borderColor.AsPen;
                 shapeDrawable.ShapeType = shape.Value;
+                shapeDrawable.Bounds = rect.DeflatedWithPadding();
 
                 shapeDrawable.Draw(null!, graphics);
             }
