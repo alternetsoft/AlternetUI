@@ -10,6 +10,231 @@ namespace Alternet.UI
     public partial class ListControlItem
     {
         /// <summary>
+        /// Represents a container for <see cref="ItemImageInfo"/> instance.
+        /// </summary>
+        public class ItemImageInfoRef
+        {
+            private ItemImageInfo image = new();
+
+            /// <summary>
+            /// Gets or sets the index of the image.
+            /// </summary>
+            public virtual int? ImageIndex
+            {
+                get
+                {
+                    return image.ImageIndex;
+                }
+
+                set
+                {
+                    image.ImageIndex = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the image is displayed after the text.
+            /// </summary>  
+            public virtual bool IsAfterText
+            {
+                get
+                {
+                    return image.IsAfterText;
+                }
+                set
+                {
+                    image.IsAfterText = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating the vertical alignment of the image.
+            /// </summary>
+            public virtual VerticalAlignment? VerticalAlignment
+            {
+                get
+                {
+                    return image.VerticalAlignment;
+                }
+
+                set
+                {
+                    image.VerticalAlignment = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating the horizontal alignment of the image.
+            /// </summary>
+            public virtual HorizontalAlignment? HorizontalAlignment
+            {
+                get
+                {
+                    return image.HorizontalAlignment;
+                }
+                set
+                {
+                    image.HorizontalAlignment = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets the margin of the image.
+            /// </summary>
+            public virtual Thickness Margin
+            {
+                get
+                {
+                    return image.Margin;
+                }
+
+                set
+                {
+                    image.Margin = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets the SVG image associated with the item.
+            /// </summary>
+            public virtual SvgImage? SvgImage
+            {
+                get
+                {
+                    return image.CachedSvg.SvgImage;
+                }
+                set
+                {
+                    image.CachedSvg.SvgImage = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets the size of the SVG image associated with the item.
+            /// </summary>
+            public virtual SizeI? SvgSize
+            {
+                get
+                {
+                    return image.CachedSvg.SvgSize;
+                }
+                set
+                {
+                    image.CachedSvg.SvgSize = value;
+                }
+            }
+
+            /// <summary>
+            /// Sets the image associated with the specified visual control state and optional dark mode setting.
+            /// </summary>
+            /// <param name="state">The visual control state.</param>
+            /// <param name="image">The image to associate with the specified state.</param>
+            /// <param name="isDark">Indicates whether dark mode is enabled.</param>
+            public virtual void SetImage(VisualControlState state, Image? image, bool isDark)
+            {
+                this.image.CachedSvg.SetImage(state, image, isDark);
+            }
+
+            /// <summary>
+            /// Resets the cached images, clearing any previously stored image data and forcing svg to image conversion.
+            /// </summary>
+            public virtual void ResetCachedImages()
+            {
+                image.CachedSvg.ResetCachedImages();
+            }
+
+            /// <summary>
+            /// Gets the image associated with the specified visual control state and optional dark mode setting.
+            /// </summary>
+            /// <param name="state">The visual control state.</param>
+            /// <param name="isDark">Indicates whether dark mode is enabled.</param>
+            /// <returns>The image associated with the specified state and dark mode setting.</returns> 
+            public virtual Image? GetImage(VisualControlState state, bool isDark)
+            {
+                return image.CachedSvg.GetImage(state, isDark);
+            }
+        }
+
+        /// <summary>
+        /// Contains information about the image associated with a list control item.
+        /// </summary>
+        public struct ItemImageInfo
+        {
+            /// <summary>
+            /// Gets or sets the cached SVG image associated with the item.
+            /// </summary>
+            public CachedSvgImage<Image> CachedSvg = new();
+
+            /// <summary>
+            /// Gets or sets the margin of the image.
+            /// </summary>  
+            public Thickness Margin;
+
+            /// <summary>
+            /// Gets or sets the index of the image.
+            /// </summary>
+            public int? ImageIndex;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the image is displayed after the text.
+            /// </summary>  
+            public bool IsAfterText;
+
+            /// <summary>
+            /// Gets or sets a value indicating the vertical alignment of the image.
+            /// </summary>
+            public VerticalAlignment? VerticalAlignment;
+
+            /// <summary>
+            /// Gets or sets a value indicating the horizontal alignment of the image.
+            /// </summary>
+            public HorizontalAlignment? HorizontalAlignment;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ItemImageInfo"/> struct.
+            /// </summary>
+            public ItemImageInfo()
+            {
+            }
+
+            /// <summary>
+            /// Creates a copy of the current <see cref="ItemImageInfo"/> instance.
+            /// </summary>
+            /// <returns>A new <see cref="ItemImageInfo"/> instance that is a copy of the current instance.</returns>
+            public ItemImageInfo Clone()
+            {
+                return new ItemImageInfo
+                {
+                    CachedSvg = CachedSvg.Clone(),
+                    ImageIndex = ImageIndex,
+                    IsAfterText = IsAfterText,
+                    VerticalAlignment = VerticalAlignment,
+                    HorizontalAlignment = HorizontalAlignment
+                };
+            }
+
+            /// <summary>
+            /// Resets the cached images, clearing any previously stored image data and forcing svg to image conversion
+            /// to be called on the next access.
+            /// </summary>
+            public void ResetCachedImages()
+            {
+                CachedSvg.ResetCachedImages();
+            }
+        }
+
+        /// <summary>
+        /// Parameters for <see cref="CoerceItemImageSizeDelegate"/> delegate.
+        /// </summary>
+        public readonly struct CoerceItemImageSizeParams
+        {
+            /// <summary>
+            /// Gets the default parameters for coercing item image size.
+            /// </summary>
+            public static readonly CoerceItemImageSizeParams Default = new();
+        }
+
+        /// <summary>
         /// Represents the context of a cell within a list control item, including its container, row index, and parent row item.
         /// </summary>
         public struct ItemCellContext
