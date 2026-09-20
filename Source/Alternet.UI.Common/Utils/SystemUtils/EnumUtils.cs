@@ -13,6 +13,25 @@ namespace Alternet.UI
     public static class EnumUtils
     {
         /// <summary>
+        /// Gets an array of values of the specified enumeration type, optionally removing the zero value.
+        /// </summary>
+        /// <typeparam name="TEnum">The type of the enumeration.</typeparam>
+        /// <param name="removeZero">If <c>true</c>, removes the zero value from the result.</param>
+        /// <returns>An array of enumeration values.</returns>
+        public static TEnum[] GetEnumValues<TEnum>(bool removeZero = true)
+            where TEnum : struct, Enum
+        {
+            var result = Enum.GetValues<TEnum>();
+
+            if (removeZero)
+            {
+                result = result.Where(x => Convert.ToInt64(x) != 0).ToArray();
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Converts the values of a specified enumeration type
         /// into a collection of <see cref="ListControlItem"/>
         /// objects.
@@ -49,7 +68,7 @@ namespace Alternet.UI
             var values = Enum.GetValues(enumType);
             foreach (var v in values)
             {
-                if(isValueIncluded != null && !isValueIncluded(v))
+                if (isValueIncluded != null && !isValueIncluded(v))
                     continue;
 
                 ListControlItem item = new();
@@ -66,7 +85,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static DialogResult Convert(ModalResult value)
+        public static DialogResult ToDialogResult(ModalResult value)
         {
             switch (value)
             {
@@ -185,7 +204,8 @@ namespace Alternet.UI
         /// </summary>
         /// <typeparam name="TEnum">The enumeration type to operate on. Must be a value type that implements Enum.</typeparam>
         /// <param name="value">The enumeration value from which to determine the next or previous value.</param>
-        /// <param name="next">If <see langword="true"/>, returns the next value; if <see langword="false"/>, returns the previous value.</param>
+        /// <param name="next">If <see langword="true"/>, returns the next value;
+        /// if <see langword="false"/>, returns the previous value.</param>
         /// <returns>The next or previous value in the enumeration, depending on the value of <paramref name="next"/>.</returns>
         public static TEnum NextOrPreviousValue<TEnum>(TEnum value, bool next) where TEnum : struct, Enum
         {
