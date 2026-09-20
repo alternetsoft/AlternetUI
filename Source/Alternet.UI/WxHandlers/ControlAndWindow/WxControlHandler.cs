@@ -226,8 +226,8 @@ namespace Alternet.UI
         {
             set
             {
-                /* NativeControl.SetFont((UI.Native.Font?)value?.Handler);*/
-
+                if (UserPaint)
+                    return;
                 NativeControl.SetFontRef(GetFontRef(value));
             }
         }
@@ -267,7 +267,7 @@ namespace Alternet.UI
                     fontRef = Native.Font.CreateFontRef(
                         0,
                         span,
-                        value.SizeInPoints,
+                        value.SizeInPoints * Alternet.Drawing.Font.NativeFontScaleFactor,
                         value.Style);
                 });
 

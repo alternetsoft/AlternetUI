@@ -318,6 +318,8 @@ namespace Alternet.UI.Native
 
                         publicGraphics = graphics;
 
+                        MeasureFontSize(graphics, dc);
+
                         var e = new PaintEventArgs(() => graphics, clipRect: clientRect, clientRect: clientRect);
                         uiControl.RaisePaint(e);
 
@@ -352,6 +354,34 @@ namespace Alternet.UI.Native
         protected void SkiaPaintLinux()
         {
             SkiaPaintCrossPlatform();
+        }
+
+        protected void MeasureFontSize(Alternet.Drawing.Graphics graphics, Native.DrawingContext dc)
+        {
+            if (measuredFontSize)
+                return;
+            measuredFontSize = true;
+
+            var uiControl = UIControl;
+            if (uiControl is null)
+                return;
+
+            var font = UI.Control.DefaultFont;
+            var measureText = "Wg";
+            var skiaMeasure = graphics.MeasureText(measureText, font);
+
+            var nativeMeasure = StringUtils.InvokeWithResult(measureText, span =>
+            {
+                var fontRef = WxControlHandler.GetFontRef(font);
+                return dc.GetTextExtentSimple(span, fontRef);
+            });
+
+            var nativeHeight = uiControl.PixelFToDip(nativeMeasure.Height);
+            var skiaHeight = skiaMeasure.Height;
+            var nativeFontRatio = skiaHeight / nativeHeight;
+
+            Alternet.Drawing.Font.NativeFontScaleFactor = nativeFontRatio;
+            Alternet.Drawing.Font.FontSettingsIteration.Increment();
         }
 
         protected void SkiaPaintCrossPlatform()
@@ -397,31 +427,7 @@ namespace Alternet.UI.Native
 
                 using var graphics = CreateGraphicsFunc();
 
-                void MeasureFontSize()
-                {
-                    var font = UI.Control.DefaultFont;
-                    var measureText = "Wg";
-                    var skiaMeasure = graphics.MeasureText(measureText, font);
-
-                    var nativeMeasure = StringUtils.InvokeWithResult(measureText, span =>
-                    {
-                        var fontRef = WxControlHandler.GetFontRef(font);
-                        return dc.GetTextExtentSimple(span, fontRef);
-                    });
-
-                    var nativeHeight = uiControl.PixelFToDip(nativeMeasure.Height);
-                    var skiaHeight = skiaMeasure.Height;
-                    var nativeFontRatio = skiaHeight / nativeHeight;
-
-                    Alternet.Drawing.Font.SkiaFontScaleFactor = nativeFontRatio;
-                    Alternet.Drawing.Font.FontSettingsIteration.Increment();
-                }
-
-                if (!measuredFontSize)
-                {
-                    measuredFontSize = true;
-                    MeasureFontSize();
-                }
+                MeasureFontSize(graphics, dc);
 
                 var e = new PaintEventArgs(() => graphics, clientRect, clientRect);
                 uiControl.RaisePaint(e);

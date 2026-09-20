@@ -24,11 +24,11 @@ namespace Alternet.Drawing
     public class Font : HostedDisposableObject, IEquatable<Font>
     {
         /// <summary>
-        /// Gets or sets native font scale factor for Skia.
-        /// It is used when conveting <see cref="Font"/> size to <see cref="SKFont"/> size.
-        /// On WxWidgets platform it is initialized when application is started.
+        /// Gets or sets native font scale factor.
+        /// It is used when native font size is calculated from Skia font size.
+        /// On WxWidgets platform it is initialized on some operating systems when application is started.
         /// </summary>
-        public static float SkiaFontScaleFactor = 1.0f;
+        public static float NativeFontScaleFactor = 1.0f;
 
         /// <summary>
         /// Gets font system iteration count. It is used to detect when system font settings are changed.
@@ -45,9 +45,8 @@ namespace Alternet.Drawing
         public static FontScalar SmallerLargerSizeScaleFactor = 1.2f;
 
         private static Font? defaultFont;
-        private static Font? defaultMonoFont;
-        private static string? defaultFontName;
-        private static string? defaultMonoFontName;
+        private static Font? defaultMonoFont;        
+        private bool skiaFontImmutable;
 
         private FontRecord data = new();
 
@@ -158,10 +157,29 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new <see cref="Font"/> using a specified <see cref="SKFont"/> and <see cref="FontFamily"/>.
+        /// </summary>
+        /// <param name="font">The <see cref="SKFont"/> to use for the new <see cref="Font"/>.</param>
+        /// <param name="family">The <see cref="FontFamily"/> to use for the new <see cref="Font"/>.</param>
+        public Font(SKFont font, FontFamily family)
+            : this(
+                family,
+                emSize: font.Size,
+                unit: GraphicsUnit.Point,
+                style: SkiaUtils.GetFontStyle(font),
+                weight: (FontWeight)font.Typeface.FontWeight,
+                slant: font.Typeface.FontSlant,
+                width: (SKFontStyleWidth)font.Typeface.FontWidth)
+        {
+            data.SkiaFont = font;
+        }
+
+        /// <summary>
         /// Initializes a new <see cref="Font"/> using a specified font family, size, style, weight, slant and width.
         /// </summary>
         /// <param name="family">The <see cref="FontFamily"/> of the new <see cref="Font"/>.</param>
-        /// <param name="emSize">The em-size of the new font in the units specified by the <paramref name="unit"/> parameter.</param>
+        /// <param name="emSize">The em-size of the new font in the units specified
+        /// by the <paramref name="unit"/> parameter.</param>
         /// <param name="unit">The unit of the new font.</param>
         /// <param name="style">The <see cref="FontStyle"/> of the new font.</param>
         /// <param name="weight">The <see cref="FontWeight"/> of the new font.</param>
@@ -522,7 +540,10 @@ namespace Alternet.Drawing
         {
             get
             {
-                return defaultFontName ??= App.Handler.GetDefaultFontName();
+                if (IsDefaultFontInitialized)
+                    return Default.Name;
+
+                return SkiaHelper.DefaultFont.Typeface.FamilyName;
             }
         }
 
@@ -533,7 +554,9 @@ namespace Alternet.Drawing
         {
             get
             {
-                return defaultMonoFontName ??= App.Handler.GetDefaultMonoFontName();
+                if (IsDefaultMonoFontInitialized)
+                    return DefaultMono.Name;
+                return SkiaHelper.DefaultMonoFont.Typeface.FamilyName;
             }
         }
 
@@ -637,9 +660,12 @@ namespace Alternet.Drawing
         {
             get
             {
-                if (data.SavedFontSettingsIteration != FontSettingsIteration.Value)
+                if (!skiaFontImmutable)
                 {
-                    data.SkiaFont = null;
+                    if (data.SavedFontSettingsIteration != FontSettingsIteration.Value)
+                    {
+                        data.SkiaFont = null;
+                    }
                 }
 
                 if (data.SkiaFont is null)
@@ -1237,14 +1263,7 @@ namespace Alternet.Drawing
                 dpi: Display.Primary.DPI.Height,
                 data.SizeInPoints);
 
-            if (SkiaFontScaleFactor == 1.0f)
-            {
-                result.SizeInDips = sizeInDips;
-            }
-            else
-            {
-                result.SizeInDips = sizeInDips / SkiaFontScaleFactor;
-            }
+            result.SizeInDips = sizeInDips;
 
             return result;
         }
@@ -1420,6 +1439,14 @@ namespace Alternet.Drawing
         public virtual bool Equals(string name, FontScalar sizeInPoints, FontStyle style)
         {
             return Name == name && SizeInPoints == sizeInPoints && Style == style;
+        }
+
+        /// <summary>
+        /// Marks the internal <see cref="SKFont"/> as immutable, indicating that it should not be modified after creation.
+        /// </summary>
+        public virtual void SetSkiaFontImmutable()
+        {
+            skiaFontImmutable = true;
         }
 
         /// <summary>
@@ -1758,7 +1785,10 @@ namespace Alternet.Drawing
 
         private static Font CreateDefaultMonoFont()
         {
-            var font = new Font(App.Handler.GetDefaultMonoFontName(), App.Handler.GetDefaultMonoFontSize());
+            var skiaFont = SkiaHelper.DefaultMonoFont;
+            var font = new Font(skiaFont, new FontFamily(skiaFont.Typeface));
+
+            font.SetSkiaFontImmutable();
             font.DisplayName = () => CommonStrings.Default.DefaultMonoFontDisplayName;
             font.FontOrigin = Drawing.FontOriginKind.DefaultMono;
             return font;
@@ -1766,7 +1796,10 @@ namespace Alternet.Drawing
 
         private static Font CreateDefaultFont()
         {
-            var font = new Font(App.Handler.GetDefaultFontName(), App.Handler.GetDefaultFontSize());
+            var skiaFont = SkiaHelper.DefaultFont;
+            var font = new Font(skiaFont, new FontFamily(skiaFont.Typeface));
+
+            font.SetSkiaFontImmutable();
             font.DisplayName = () => CommonStrings.Default.DefaultFontDisplayName;
             font.FontOrigin = Drawing.FontOriginKind.Default;
             return font;

@@ -377,10 +377,10 @@ namespace Alternet.UI
                 App.Log("Sample info", LogItemKind.Information);
             });
 
-            Fn("Log SkiaSharp: SKFontManager", LogUtils.LogSkiaFontManager);
-            Fn("Log SkiaSharp: SKFont", LogUtils.LogSkiaFont);
-            Fn("Log SkiaSharp: SKBitmap", LogUtils.LogSkiaBitmap);
-            Fn("Log SkiaSharp: Mono fonts", LogUtils.LogSkiaMonoFonts);
+            Fn("Log font SkiaSharp: SKFontManager", LogUtils.LogSkiaFontManager);
+            Fn("Log font SkiaSharp: SKFont", LogUtils.LogSkiaFont);
+            Fn("Log image SkiaSharp: SKBitmap", LogUtils.LogSkiaBitmap);
+            Fn("Log font SkiaSharp: Mono fonts", LogUtils.LogSkiaMonoFonts);
 
             Fn("Log image bits formats", LogImageBitsFormats);
             Fn("Log Control descendants events", LogControlDescendantsEvents);

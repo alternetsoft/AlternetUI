@@ -387,17 +387,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Filters fonts and returns only compatible with SKiaSharp.
-        /// </summary>
-        /// <param name="fonts">Collection of the fonts.</param>
-        /// <returns>A collection of font names that are compatible with SKiaSharp.</returns>
-        public static IEnumerable<string> RemoveNonSkiaFonts(IEnumerable<string> fonts)
-        {
-            var result = fonts.Where(x => SkiaHelper.IsFamilySkia(x));
-            return result;
-        }
-
-        /// <summary>
         /// Gets whether specified font family has only fixed pitch fonts.
         /// </summary>
         /// <param name="name">Font family name</param>

@@ -203,7 +203,7 @@ namespace Alternet.Drawing
                                   type == RotateFlipType.Rotate90FlipX ||
                                   type == RotateFlipType.Rotate270FlipX;
 
-            SKBitmap target = new (
+            SKBitmap target = new(
                 swapDimensions ? height : width,
                 swapDimensions ? width : height,
                 source.ColorType,
@@ -272,7 +272,7 @@ namespace Alternet.Drawing
 
             return target;
         }
-        
+
         /// <summary>
         /// Coerces the specified image depth to a supported value.
         /// </summary>
@@ -403,6 +403,24 @@ namespace Alternet.Drawing
             depth = CoerceImageDepth(depth);
             SKBitmap bitmap = new(size.Width, size.Height, depth != 32);
             return bitmap;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="FontStyle"/> corresponding to the specified <see cref="SKFont"/>.
+        /// </summary>
+        /// <param name="font">The <see cref="SKFont"/> for which to get the <see cref="FontStyle"/>.</param>
+        /// <returns>The <see cref="FontStyle"/> corresponding to the specified <see cref="SKFont"/>.</returns>
+        public static FontStyle GetFontStyle(SKFont font)
+        {
+            var style = FontStyle.Regular;
+
+            if (font.Typeface.FontSlant == SKFontStyleSlant.Italic)
+                style |= FontStyle.Italic;
+
+            if ((SKFontStyleWeight)font.Typeface.FontWeight > SKFontStyleWeight.Normal)
+                style |= FontStyle.Bold;
+
+            return style;
         }
 
         /// <summary>
@@ -634,13 +652,13 @@ namespace Alternet.Drawing
             Coord scaleFactor,
             bool isTransparent = true)
         {
-            if(cachedCanvas is null)
+            if (cachedCanvas is null)
             {
                 cachedCanvas = CreateNew();
                 return;
             }
 
-            if(cachedCanvas.Equals(size, scaleFactor, isTransparent))
+            if (cachedCanvas.Equals(size, scaleFactor, isTransparent))
                 return;
 
             cachedCanvas.Dispose();
@@ -680,21 +698,7 @@ namespace Alternet.Drawing
 
             if (genericFamily == GenericFontFamily.Monospace)
             {
-                if (!SkiaHelper.IsDefaultMonoFontNameAssigned)
-                {
-                    var result = FontFactory.GetSampleFixedPitchFont();
-                    if (result is not null)
-                    {
-                        SkiaHelper.DefaultMonoFontName = result;
-                        return result;
-                    }
-                    else
-                        return SkiaHelper.DefaultFontName;
-                }
-                else
-                {
-                    return SkiaHelper.DefaultMonoFontName;
-                }
+                return SkiaHelper.DefaultMonoFontName;
             }
 
             var nameAndSize = FontFactory.GetSampleNameAndSize(genericFamily);
@@ -1132,7 +1136,7 @@ namespace Alternet.Drawing
             SKRegion region = new();
             var hasRects = false;
 
-            foreach(var rect in rects)
+            foreach (var rect in rects)
             {
                 region.Op(rect, SKRegionOperation.Union);
                 hasRects = true;

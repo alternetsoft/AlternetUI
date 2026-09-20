@@ -10,6 +10,8 @@ using SkiaSharp;
 
 #pragma warning disable
 #if !ALTERNETSTUDIO
+using Alternet.UI;
+
 namespace Alternet.Skia
 #else
 namespace Alternet.Common.Skia
@@ -25,6 +27,11 @@ namespace Alternet.Common.Skia
     /// is intended to be a central place for reusable SkiaSharp-related functionality.</remarks>
     public static class SkiaHelper
     {
+        /// <summary>
+        /// Gets the operating system on which the application is currently running.
+        /// </summary>
+        public static readonly OperatingSystems BackendOS;
+
         /// <summary>
         /// Gets <see cref="MathF.PI"/> divided by 180f.
         /// </summary>
@@ -71,13 +78,20 @@ namespace Alternet.Common.Skia
         private static float defaultFontSize = 10;
         private static string? defaultMonoFontName;
         private static SKFont? defaultSkiaFont;
+        private static SKFont? defaultMonoSkiaFont;
         private static SKTypeface? defaultTypeFace;
+        private static SKTypeface? defaultMonoTypeFace;
         private static SKColorFilter? grayscaleColorFilter;
         private static SKCanvas? nullCanvas;
         private static string[]? fontFamilies;
 
         static SkiaHelper()
         {
+#if !ALTERNETSTUDIO
+            BackendOS = App.BackendOS;
+#else
+            BackendOS = OperatingSystems.Windows;
+#endif
         }
 
         /// <summary>
@@ -150,6 +164,15 @@ namespace Alternet.Common.Skia
         }
 
         /// <summary>
+        /// Gets or sets default font for use with SkiaSharp.
+        /// </summary>
+        public static SKFont DefaultMonoFont
+        {
+            get => defaultMonoSkiaFont ??= CreateDefaultMonoFont();
+            set => defaultMonoSkiaFont = value ?? CreateDefaultMonoFont();
+        }
+
+        /// <summary>
         /// Gets or sets default font size for use with SkiaSharp.
         /// </summary>
         public static float DefaultFontSize
@@ -218,6 +241,27 @@ namespace Alternet.Common.Skia
         }
 
         /// <summary>
+        /// Gets or sets default <see cref="SKTypeface"/> using to create default SkiaSharp font.
+        /// </summary>
+        public static SKTypeface DefaultMonoTypeFace
+        {
+            get
+            {
+                defaultMonoTypeFace ??= SKTypeface.FromFamilyName(DefaultMonoFontName) ?? SKTypeface.Default;
+
+                return defaultMonoSkiaFont?.Typeface ?? defaultMonoTypeFace;
+            }
+
+            set
+            {
+                if (DefaultMonoTypeFace == value)
+                    return;
+                defaultMonoTypeFace = value;
+                defaultMonoSkiaFont = null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets default font name for use with SkiaSharp.
         /// </summary>
         public static string DefaultFontName
@@ -248,7 +292,22 @@ namespace Alternet.Common.Skia
         public static string DefaultMonoFontName
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => defaultMonoFontName ?? DefaultTypeFace.FamilyName;
+            get
+            {
+                if (!IsDefaultMonoFontNameAssigned)
+                {
+                    var result = GetSampleFixedPitchFont();
+                    if (result is not null)
+                    {
+                        DefaultMonoFontName = result;
+                        return result;
+                    }
+                    else
+                        return DefaultFontName;
+                }
+
+                return defaultMonoFontName ?? DefaultTypeFace.FamilyName;
+            }
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => defaultMonoFontName = value;
@@ -269,6 +328,134 @@ namespace Alternet.Common.Skia
 
                 return fontFamilies;
             }
+        }
+
+        /// <summary>
+        /// Gets collection of the fixed pitch fonts which supposed to be supported
+        /// by the current operating system.
+        /// </summary>
+        /// <returns></returns>
+        public static IEnumerable<string> GetFixedPitchFonts()
+        {
+            IEnumerable<string> result;
+
+            switch (BackendOS)
+            {
+                case OperatingSystems.Linux:
+                    result = GetFixedPitchFontsLinux();
+                    break;
+                case OperatingSystems.Windows:
+                    result = GetFixedPitchFontsWindows();
+                    break;
+                case OperatingSystems.Android:
+                    result = GetFixedPitchFontsAndroid();
+                    break;
+                case OperatingSystems.MacOs:
+                case OperatingSystems.IOS:
+                    result = GetFixedPitchFontsMacOs();
+                    break;
+                default:
+                    result = new string[] { "Courier New" };
+                    break;
+            }
+
+            result = RemoveNonSkiaFonts(result);
+            return result;
+
+            static string[] GetFixedPitchFontsAndroid()
+            {
+                return new string[]
+                {
+                    "monospace",
+                    "serif-monospace",
+                };
+            }
+
+            static string[] GetFixedPitchFontsWindows()
+            {
+                return new string[]
+                {
+                "Cascadia Mono",
+                "Consolas",
+                "Courier New",
+                "Lucida Console",
+                };
+            }
+
+            static string[] GetFixedPitchFontsMacOs()
+            {
+                return new string[]
+                {
+                "Monaco",
+                "Menlo",
+                "Andale Mono",
+                "Courier New",
+                };
+            }
+
+            static string[] GetFixedPitchFontsLinux()
+            {
+                return new string[]
+                {
+                "Ubuntu Mono",
+                "Monospace",
+                "Courier New",
+                "Courier",
+                };
+            }
+        }
+
+        /// <summary>
+        /// Filters fonts and returns only compatible with SKiaSharp.
+        /// </summary>
+        /// <param name="fonts">Collection of the fonts.</param>
+        /// <returns>A collection of font names that are compatible with SKiaSharp.</returns>
+        public static IEnumerable<string> RemoveNonSkiaFonts(IEnumerable<string> fonts)
+        {
+            var result = fonts.Where(x => SkiaHelper.IsFamilySkia(x));
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether or not specified font family is fixed pitch.
+        /// </summary>
+        /// <param name="name">Font family name.</param>
+        /// <returns><see langword="true"/> if the font family is fixed pitch; otherwise, <see langword="false"/>.</returns>
+        public static bool IsFixedPitchFontFamily(string name)
+        {
+            var family = SKFontManager.Default.MatchFamily(name);
+            return family.IsFixedPitch;
+        }
+
+        /// <summary>
+        /// Gets first fixed pitch font in the collection of the fonts.
+        /// </summary>
+        /// <param name="fonts">Collection of the fonts.</param>
+        /// <returns></returns>
+        public static string? GetFixedPitchFont(IEnumerable<string> fonts)
+        {
+            foreach (var font in fonts)
+            {
+                if (IsFixedPitchFontFamily(font))
+                    return font;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets sample fixed pitch font for the current operating system.
+        /// </summary>
+        /// <returns></returns>
+        public static string? GetSampleFixedPitchFont()
+        {
+            IEnumerable<string> fonts = GetFixedPitchFonts();
+            var result = GetFixedPitchFont(fonts);
+
+            if (result is not null)
+                return result;
+
+            return null;
         }
 
         /// <summary>
@@ -313,6 +500,16 @@ namespace Alternet.Common.Skia
         public static SKFont CreateDefaultFont()
         {
             return new SKFont(DefaultTypeFace, (float)DefaultFontSize);
+        }
+
+        /// <summary>
+        /// Creates default font.
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKFont CreateDefaultMonoFont()
+        {
+            return new SKFont(DefaultMonoTypeFace, (float)DefaultFontSize);
         }
 
         /// <summary>

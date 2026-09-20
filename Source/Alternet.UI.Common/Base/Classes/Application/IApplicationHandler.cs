@@ -27,6 +27,7 @@ namespace Alternet.UI
         /// <returns>An enumerable collection of font family names.</returns>
         IEnumerable<string> GetFontFamiliesNames();
 
+/*
         /// <summary>
         /// Gets default font name.
         /// </summary>
@@ -50,7 +51,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>The size of the default mono font.</returns>
         float GetDefaultMonoFontSize();
-
+*/
         /// <summary>
         /// Gets whether the application is active, i.e. if one of its windows is currently in
         /// the foreground.

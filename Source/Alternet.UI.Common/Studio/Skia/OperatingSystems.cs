@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#if !ALTERNETSTUDIO
 namespace Alternet.UI
+#else
+namespace Alternet.Common.Skia
+#endif
 {
     /// <summary>
     /// Enumeration flags with supported operating systems.
