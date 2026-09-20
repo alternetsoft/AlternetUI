@@ -384,6 +384,30 @@ namespace Alternet.UI.Native
             Alternet.Drawing.Font.FontSettingsIteration.Increment();
         }
 
+        public static float GetNativeFontZoom(
+            float fontSize,
+            float WgtHeight,
+            Func<float, float> getNativeWgHeight)
+        {
+            float candidate = fontSize;
+            float nativeHeight = getNativeWgHeight(candidate);
+
+            const float tolerance = 0.5f;
+            int iterations = 0;
+
+            while (Math.Abs(nativeHeight - WgtHeight) > tolerance && iterations < 10)
+            {
+                float factor = WgtHeight / nativeHeight;
+
+                candidate *= factor;
+
+                nativeHeight = getNativeWgHeight(candidate);
+                iterations++;
+            }
+
+            return candidate / fontSize;
+        }
+
         protected void SkiaPaintCrossPlatform()
         {
             ReportUsedGraphics("SkiaPaintCrossPlatform");
