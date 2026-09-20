@@ -482,6 +482,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether the default font is initialized.
+        /// </summary>
+        public static bool IsDefaultFontInitialized => defaultFont is not null;
+
+        /// <summary>
+        /// Gets a value indicating whether the default monospace font is initialized.
+        /// </summary>
+        public static bool IsDefaultMonoFontInitialized => defaultMonoFont is not null;
+
+        /// <summary>
         /// Gets the default font used in the application.
         /// </summary>
         /// <value>
@@ -491,7 +501,10 @@ namespace Alternet.Drawing
         /// </value>
         public static Font Default
         {
-            get => defaultFont ??= CreateDefaultFont();
+            get
+            {
+                return defaultFont ??= CreateDefaultFont();
+            }
 
             set
             {
