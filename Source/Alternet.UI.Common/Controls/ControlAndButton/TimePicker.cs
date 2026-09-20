@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -47,7 +48,7 @@ namespace Alternet.UI
 
         private TimePickerHourFormat? hourFormat;
         private IFormatProvider? formatProvider;
-        private DateTime time;
+        private TimeOnly time;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimePicker"/> class.
@@ -62,7 +63,7 @@ namespace Alternet.UI
             CanSelect = true;
             TabStop = true;
 
-            time = DateTime.Now;
+            time = TimeOnly.FromDateTime(DateTime.Now);
             InnerOuterBorder = InnerOuterSelector.Outer;
 
             hoursButton = MainControl.AddTextBtnCore();
@@ -234,21 +235,8 @@ namespace Alternet.UI
         {
             get
             {
-                return TimeOnly.FromDateTime(Value);
+                return time;
             }
-
-            set
-            {
-                Value = DateUtils.ToDateTime(value, DateOnly.FromDateTime(Value));
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets selected time as <see cref="DateTime"/>.
-        /// </summary>
-        public virtual DateTime Value
-        {
-            get => time;
 
             set
             {
@@ -257,6 +245,20 @@ namespace Alternet.UI
                 time = value;
                 UpdateButtons();
                 RaiseValueChanged(EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected time as <see cref="DateTime"/>.
+        /// </summary>
+        public virtual DateTime Value
+        {
+            get => time.ToDateTime(DateOnly.FromDateTime(DateTime.Now));
+
+            set
+            {
+                var newTime = TimeOnly.FromDateTime(value);
+                AsTimeOnly = newTime;
             }
         }
 
@@ -637,6 +639,17 @@ namespace Alternet.UI
 
             var minWidth = DrawingUtils.GetMaxStringSize(MeasureCanvas, amPmButton.RealFont, am, pm).Width + 10;
             amPmButton.MinWidth = minWidth;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnContextMenuChanged(EventArgs e)
+        {
+            base.OnContextMenuChanged(e);
+
+            foreach (var child in GetChildren(recursive: true))
+            {
+                child.ContextMenuStrip = ContextMenuStrip;
+            }
         }
 
         /// <summary>
