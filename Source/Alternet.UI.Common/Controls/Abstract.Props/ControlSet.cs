@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Alternet.UI
     /// certain features to be available.</remarks>
     /// <typeparam name="T">The type of controls contained in the set.
     /// Must derive from <see cref="AbstractControl"/>.</typeparam>
-    public partial class ControlSet<T> : BaseObject
+    public partial class ControlSet<T> : BaseObject, IEnumerable<T>, IEnumerable
         where T : AbstractControl
     {
         private readonly IReadOnlyList<T> items;
@@ -1065,6 +1066,20 @@ namespace Alternet.UI
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection of controls in the set.
+        /// </summary>
+        /// <returns>An enumerator for the collection of controls.</returns>
+        public IEnumerator<T> GetEnumerator()
+        {
+            return Items.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 
