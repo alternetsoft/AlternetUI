@@ -44,6 +44,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Updates the context menus of the child controls.
+        /// </summary>
+        protected override void OnContextMenuChanged(EventArgs e)
+        {
+            base.OnContextMenuChanged(e);
+            MainControl.ContextMenuStrip = ContextMenuStrip;
+        }
+
         /// <inheritdoc/>
         protected override GenericControl CreateControl(Type? typeOfControl)
         {
