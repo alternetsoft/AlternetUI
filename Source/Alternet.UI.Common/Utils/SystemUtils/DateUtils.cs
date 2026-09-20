@@ -191,6 +191,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns the culture-specific AM or PM designator for the specified time value.
+        /// </summary>
+        /// <remarks>If a user-defined override for the AM or PM designator is set, it is used in
+        /// preference to the culture-specific value. If the resulting designator is null,
+        /// empty, or consists only of
+        /// white space, the method defaults to "AM" or "PM" based on the time of day. The returned designator is
+        /// trimmed of any leading or trailing white space.</remarks>
+        /// <param name="dt">The time value for which to determine the AM or PM designator.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns>A string containing the AM or PM designator appropriate for the specified
+        /// time, using any user-defined overrides if present.</returns>
+        public static string GetAmOrPmDesignator(TimeOnly dt, IFormatProvider? formatProvider = null)
+        {
+            return GetAmOrPmDesignator(dt.ToDateTime(), formatProvider);
+        }
+
+        /// <summary>
         /// Gets the name of the specified month in the Gregorian calendar, based on the specified kind and format provider.
         /// </summary>
         /// <param name="month">The month for which to retrieve the name.</param>
@@ -609,6 +627,27 @@ namespace Alternet.UI
         /// otherwise, false.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsAM(DateTime dt)
+        {
+            if (dt.Hour < 12)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the specified time is in the morning (ante meridiem, AM).
+        /// </summary>
+        /// <remarks>This method checks the hour component of the provided TimeOnly to determine if it
+        /// falls within the AM period, which is from 12:00 midnight to 11:59 AM.</remarks>
+        /// <param name="dt">The time value to evaluate.</param>
+        /// <returns>true if the hour component of the specified time is less than 12;
+        /// otherwise, false.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsAM(TimeOnly dt)
         {
             if (dt.Hour < 12)
             {
