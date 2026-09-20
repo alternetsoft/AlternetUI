@@ -52,6 +52,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool CanUserPaint => true;
+
+        /// <inheritdoc/>
         public override Cursor? Cursor
         {
             get

@@ -74,6 +74,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool CanUserPaint => true;
+
         /// <summary>
         /// Gets or sets whether control wants to get all char/key events for all keys.
         /// </summary>

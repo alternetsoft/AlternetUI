@@ -2661,7 +2661,7 @@ namespace Alternet.UI
         /// Gets whether user paint is supported for this control.
         /// </summary>
         [Browsable(false)]
-        public virtual bool CanUserPaint => true;
+        public virtual bool CanUserPaint => false;
 
         /// <summary>
         /// Gets or sets minimal value of the child's <see cref="Margin"/> property.
