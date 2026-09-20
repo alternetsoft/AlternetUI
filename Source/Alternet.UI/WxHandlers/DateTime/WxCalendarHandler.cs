@@ -335,10 +335,5 @@ namespace Alternet.UI
         {
             return new Native.Calendar();
         }
-
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-        }
     }
 }

@@ -60,10 +60,5 @@ namespace Alternet.UI
         {
             return new Native.CheckBox();
         }
-
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-        }
     }
 }

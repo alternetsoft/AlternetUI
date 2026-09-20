@@ -810,10 +810,9 @@ namespace Alternet.Common.Skia
             SKFont font)
         {
             var measureResult = font.MeasureText(text);
-
-            SKSize result = new(
-                measureResult,
-                MathF.Abs(font.Metrics.Top) + MathF.Abs(font.Metrics.Bottom));
+            var metrics = font.Metrics;
+            float height = Math.Abs(-metrics.Top + metrics.Bottom);
+            SKSize result = new(measureResult, height);
 
             return result;
         }
