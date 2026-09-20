@@ -39,10 +39,24 @@ namespace Alternet.UI.Extensions
         /// </summary>
         /// <param name="time">The <see cref="TimeOnly"/> to convert.</param>
         /// <param name="datePart">The <see cref="DateOnly"/> to combine with the time.</param>
-        /// <returns>A <see cref="DateTime"/> representing the specified <see cref="TimeOnly"/> and <see cref="DateOnly"/>.</returns>
+        /// <returns>A <see cref="DateTime"/> representing the specified <see cref="TimeOnly"/>
+        /// and <see cref="DateOnly"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateTime ToDateTime(this TimeOnly time, DateOnly datePart)
         {
             return datePart.ToDateTime(time);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="TimeOnly"/> to a <see cref="DateTime"/> by combining it with the current date.
+        /// </summary>
+        /// <param name="time">The <see cref="TimeOnly"/> to convert.</param>
+        /// <returns>A <see cref="DateTime"/> representing the specified <see cref="TimeOnly"/>
+        /// combined with the current date.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateTime ToDateTime(this TimeOnly time)
+        {
+            return DateOnly.FromDateTime(DateTime.Now).ToDateTime(time);
         }
 
         /// <summary>
