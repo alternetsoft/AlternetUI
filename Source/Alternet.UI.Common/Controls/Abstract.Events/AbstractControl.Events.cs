@@ -83,6 +83,12 @@ namespace Alternet.UI
         public event EventHandler? LayoutUpdated;
 
         /// <summary>
+        /// Occurs when the context menu for the control is changed.
+        /// </summary>
+        [Category(KnownMemberCategory.Behavior)]
+        public event EventHandler? ContextMenuChanged;
+
+        /// <summary>
         /// Occurs when the context menu for the control is created.
         /// </summary>
         [Category(KnownMemberCategory.Behavior)]

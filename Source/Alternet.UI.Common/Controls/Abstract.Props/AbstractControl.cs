@@ -983,7 +983,7 @@ namespace Alternet.UI
         /// <returns>
         /// The <see cref="ContextMenuStrip" /> for this control.
         /// </returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [Browsable(false)]
         public virtual ContextMenuStrip ContextMenuStrip
         {
@@ -995,6 +995,8 @@ namespace Alternet.UI
                     InitContextMenu();
                     OnContextMenuCreated(EventArgs.Empty);
                     ContextMenuCreated?.Invoke(this, EventArgs.Empty);
+                    OnContextMenuChanged(EventArgs.Empty);
+                    ContextMenuChanged?.Invoke(this, EventArgs.Empty);
                 }
 
                 return contextMenuStrip;
@@ -1002,7 +1004,11 @@ namespace Alternet.UI
 
             set
             {
+                if (contextMenuStrip == value)
+                    return;
                 contextMenuStrip = value;
+                OnContextMenuChanged(EventArgs.Empty);
+                ContextMenuChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

@@ -96,6 +96,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the <see cref="ContextMenuChanged" /> event is raised.
+        /// </summary>
+        /// <remarks>Derived classes can override this method to handle the event without
+        /// attaching a delegate.</remarks>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnContextMenuChanged(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the <see cref="AbstractControl.PreviewKeyDown" /> event is raised.
         /// </summary>
         /// <remarks>Derived classes can override this method to handle the event without
