@@ -18,7 +18,6 @@ namespace Alternet::UI
 				if (_processEnter)
 					window->Unbind(wxEVT_TEXT_ENTER, &TextBox::OnTextEnter, this);
 				window->Unbind(wxEVT_TEXT_URL, &TextBox::OnTextUrl, this);
-				window->Unbind(wxEVT_TEXT_MAXLEN, &TextBox::OnTextMaxLength, this);
 			}
 		}
 	}
@@ -96,10 +95,18 @@ namespace Alternet::UI
 			textCtrl->EnableVisibleFocus(false);
 #endif
 
+#ifdef __WXGTK__
+		if (style & wxBORDER_NONE)
+		{
+			GtkWidget* entry = textCtrl->GetHandle();
+			GtkStyleContext* ctx = gtk_widget_get_style_context(entry);
+			gtk_style_context_add_class(ctx, "borderless");
+		}
+#endif
+
 		if (_processEnter)
 			textCtrl->Bind(wxEVT_TEXT_ENTER, &TextBox::OnTextEnter, this);
 		textCtrl->Bind(wxEVT_TEXT_URL, &TextBox::OnTextUrl, this);
-		textCtrl->Bind(wxEVT_TEXT_MAXLEN, &TextBox::OnTextMaxLength, this);
 
 		_allowDoubleBuffered = false;
 		_flags.Set(ControlFlags::UserPaint, false);

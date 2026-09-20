@@ -1,3 +1,5 @@
-﻿* {
+﻿/* Set WxGlobalSettings.Linux.LoadGtkCss = true before using Application class in order to load this css file */
+
+* {
     background-image: none;
 }
