@@ -21,13 +21,25 @@ namespace Alternet.UI
             Font = SampleFont;
         }
 
+        private static FontStyle sampleFontStyle = FontStyle.Bold | FontStyle.Italic | FontStyle.Underline;
+
+        public static FontStyle SampleFontStyle
+        {
+            get => sampleFontStyle;
+            set
+            {
+                if (sampleFontStyle == value)
+                    return;
+                sampleFontStyle = value;
+                SampleFontStyleChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+
         public static Font SampleFont
         {
             get
             {
-                return sampleFont ??=
-                    AbstractControl.DefaultFont.Scaled(2)
-                    .WithStyle(FontStyle.Underline | FontStyle.Bold | FontStyle.Strikeout);
+                return AbstractControl.DefaultFont.Scaled(2).WithStyle(SampleFontStyle);
             }
 
             set
@@ -35,6 +47,8 @@ namespace Alternet.UI
                 sampleFont = value;
             }
         }
+
+        public static event EventHandler? SampleFontStyleChanged;
 
         public override void DefaultPaint(PaintEventArgs e)
         {

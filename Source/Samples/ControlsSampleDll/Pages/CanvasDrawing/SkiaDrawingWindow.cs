@@ -77,10 +77,24 @@ namespace ControlsSample
 
             rightPanel.Parent = mainPanel.RightPanel;
 
+            var fontListBoxPanel = new Panel();
+
+            var panelSettings = new PanelSettings();
+
+            panelSettings.AddFlagCheckBoxes<FontStyle>(
+                "Font Style",
+                () => SkiaSampleControl.SampleFontStyle,
+                (value) => SkiaSampleControl.SampleFontStyle = value);
+
+            fontListBoxPanel.Layout = LayoutStyle.Vertical;
+            panelSettings.Parent = fontListBoxPanel;
+
+            fontListBox.VerticalAlignment = VerticalAlignment.Fill;
+            fontListBox.Parent = fontListBoxPanel;
             fontListBox.SelectionChanged += FontListBox_SelectionChanged;
 
             rightPanel.Add(GenericStrings.TabTitleActions, actionsListBox);
-            rightPanel.Add(GenericStrings.TabTitleFonts, fontListBox);
+            rightPanel.Add(GenericStrings.TabTitleFonts, fontListBoxPanel);
 
             pictureBox.Parent = mainPanel.FillPanel;
 
@@ -94,8 +108,13 @@ namespace ControlsSample
             actionsListBox.AddAction("Paint on SKCanvas", PaintOnCanvas);
             actionsListBox.AddAction("Draw text on SKSurface (alpha Bitmap)", DrawTextOnSkiaA);
             actionsListBox.AddAction("Draw text on SKSurface (opaque Bitmap)", DrawTextOnSkia);
-            
+
             RefreshPreviewControl();
+
+            SkiaSampleControl.SampleFontStyleChanged += (s, e) =>
+            {
+                FontListBox_SelectionChanged(null, EventArgs.Empty);
+            };
         }
 
         private void RefreshPreviewControl()
@@ -103,12 +122,17 @@ namespace ControlsSample
             DrawTextOnSkiaA();
         }
 
-        private void FontListBox_SelectionChanged(object? sender, EventArgs e)
+        private Font GetSampleFont()
         {
             var s = fontListBox.SelectedItem?.ToString() ?? AbstractControl.DefaultFont.Name;
 
-            SkiaSampleControl.SampleFont = SkiaSampleControl.SampleFont.WithName(s);
-            control.Font = SkiaSampleControl.SampleFont;
+            return SkiaSampleControl.SampleFont.WithName(s);
+        }
+
+        private void FontListBox_SelectionChanged(object? sender, EventArgs e)
+        {
+            control.Font = GetSampleFont();
+            control.Invalidate();
             RefreshPreviewControl();
         }
 
@@ -191,9 +215,9 @@ namespace ControlsSample
                 PointD pt = new(10, 10);
                 PointD pt2 = new(10, 150);
 
-                var font = SkiaSampleControl.SampleFont;
+                var font = GetSampleFont();
 
-                canvas.DrawText((counter++).ToString(), (600,0), font, Color.Black, Color.LightGreen);
+                canvas.DrawText((counter++).ToString(), (600, 0), font, Color.Black, Color.LightGreen);
 
                 canvas.DrawText(SkiaSampleControl.S1, pt, font, Color.Black, Color.LightGreen);
 
@@ -229,7 +253,7 @@ namespace ControlsSample
                 {
                     backColor = value;
                     owner.RefreshPreviewControl();
-                } 
+                }
             }
 
             public Font Font
