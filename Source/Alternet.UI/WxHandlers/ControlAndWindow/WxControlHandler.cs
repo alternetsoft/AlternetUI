@@ -126,6 +126,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnAttach()
         {
+            Font = Control?.Font;
         }
 
         public RectI BoundsI
