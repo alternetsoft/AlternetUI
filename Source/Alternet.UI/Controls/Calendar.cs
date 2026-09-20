@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Represents a calendar control that allows the user to select a date. <see cref="Calendar"/>
     /// uses the WxWidgets library and is limited to Windows, Linux, and macOS platforms. 
     /// Library also includes <see cref="XCalendar"/> — a generic calendar control implemented in C# 
-    /// that works on all platforms.
+    /// that works on all platforms and has advanced customization capabilities.
     /// </summary>
     /// <remarks>
     /// The user can move the current selection using the keyboard and select the date

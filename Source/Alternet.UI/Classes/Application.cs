@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
+
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
@@ -55,13 +56,16 @@ namespace Alternet.UI
                 {
                     if (WxGlobalSettings.Linux.LoadGtkCss)
                     {
-                        WxGlobalSettings.Linux.GtkCss = LoadOptionalGtkCss();
+                        var cssFileContent = LoadOptionalGtkCss();
+
+                        if (cssFileContent is not null)
+                            WxGlobalSettings.Linux.GtkCss = cssFileContent;
                     }
 
                     var s = WxGlobalSettings.Linux.GtkCss;
                     if (s != null)
                     {
-                        StringUtils.InvokeWithNativeText(s, (s)=> Native.Application.SetGtkCss(true, s));
+                        StringUtils.InvokeWithNativeText(s, (s) => Native.Application.SetGtkCss(true, s));
                     }
                 }
             }
@@ -75,7 +79,7 @@ namespace Alternet.UI
 
             PreviewFile.RegisterPreviewControls += (s, e) =>
             {
-                if(s is not PreviewFile pf)
+                if (s is not PreviewFile pf)
                     return;
 
                 pf.RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
