@@ -86,6 +86,17 @@ namespace Alternet.UI
 * {
     background-image: none;
 }
+
+entry.borderless {
+    border: none;
+    box-shadow: none;
+}
+
+entry.borderless:focus {
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
 ";
         }
     }
