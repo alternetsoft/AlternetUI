@@ -1214,8 +1214,8 @@ namespace Alternet.UI
             object? label,
             Func<TEnum> getValue,
             Action<TEnum> setValue,
-            object?[]? itemTitles,
-            TEnum[] itemValues,
+            object?[]? itemTitles = null,
+            TEnum[]? itemValues = null,
             CustomEventArgs? e = null)
             where TEnum : struct, Enum
         {
@@ -1223,6 +1223,8 @@ namespace Alternet.UI
             {
                 AddLabel(label);
             }
+
+            itemValues ??= EnumUtils.GetEnumValues<TEnum>();
 
             List<PanelSettingsItem> result = new();
 
