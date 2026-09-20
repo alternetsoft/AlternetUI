@@ -75,9 +75,15 @@ namespace Alternet.UI
             Native.Application.GlobalObject = nativeApplication;
             nativeApplication.LogMessage += OnNativeApplicationLogMessage;
 
-            var nm = Path.GetFileNameWithoutExtension(
-                Process.GetCurrentProcess()?.MainModule?.FileName!);
-            StringUtils.InvokeWithNativeText(nm, nativeApplication.SetName);
+            try
+            {
+                var nm = Path.GetFileNameWithoutExtension(
+                    Process.GetCurrentProcess()?.MainModule?.FileName!);
+                StringUtils.InvokeWithNativeText(nm, nativeApplication.SetName);
+            }
+            catch
+            {
+            }
 
             keyboardInputProvider = new WxKeyboardInputProvider(
                 nativeApplication.Keyboard);

@@ -438,7 +438,7 @@ namespace Alternet.Drawing
             using var canvas = new SKCanvas(result);
             canvas.Clear(SKColors.White);
 
-            using var typeface = SKTypeface.Default;
+            var typeface = SKTypeface.Default;
             using var font = new SKFont(typeface, 14);
             using var paint = new SKPaint { Color = SKColors.Black, IsAntialias = true };
 

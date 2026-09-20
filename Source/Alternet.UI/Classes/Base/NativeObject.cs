@@ -8,8 +8,7 @@ namespace Alternet.UI.Native
 {
     internal class NativeObject : DisposableObject
     {
-        private static readonly Dictionary<IntPtr, NativeObject>
-            InstancesByNativePointers = new();
+        private static readonly Dictionary<IntPtr, NativeObject> InstancesByNativePointers = new();
 
         protected NativeObject()
         {

@@ -37,6 +37,21 @@ namespace ControlsSample
             {
                 timePicker.SecondsVisible = showSecondsCheckBox.IsChecked;
             };
+
+            timePicker.ContextMenuStrip.Add("Set Now", () =>
+            {
+                timePicker.Value = DateTime.Now;
+            });
+
+            timePicker.ContextMenuStrip.Add("Set 12 PM", () =>
+            {
+                timePicker.Value = DateTime.Today.AddHours(12);
+            });
+
+            timePicker.ContextMenuStrip.Add("Set 12 AM", () =>
+            {
+                timePicker.Value = DateTime.Today;
+            });
         }
 
         private void TimePicker_Changed(object? sender, EventArgs e)
