@@ -27,6 +27,7 @@ namespace Alternet.Drawing
         private bool? isFixedPitch;
         private static FontFamily? genericSansSerif;
         private static FontFamily? genericSerif;
+        private static FontFamily? skiaDefault;
 
         /// <summary>
         /// Initializes a new <see cref="FontFamily"/> with the specified name.
@@ -35,6 +36,17 @@ namespace Alternet.Drawing
         public FontFamily(string? name)
             : this(name, validate: true)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="FontFamily"/> with the specified <see cref="SKTypeface"/>.
+        /// </summary>
+        /// <param name="typeface">The <see cref="SKTypeface"/> for the new <see cref="FontFamily"/>.</param>
+        public FontFamily(SKTypeface typeface)
+        {
+            name = typeface.FamilyName;
+            SkiaTypeface = typeface;
+            Items.Add(name, this);
         }
 
         /// <summary>
@@ -64,6 +76,31 @@ namespace Alternet.Drawing
             }
 
             this.name = name ?? Font.Default.Name;
+        }
+
+        /// <summary>
+        /// Gets the default <see cref="FontFamily"/> used in the application.
+        /// If the default font is not initialized, it returns the <see cref="SkiaDefault"/> font family.
+        /// </summary>
+        public static FontFamily Default
+        {
+            get
+            {
+                if (Font.IsDefaultFontInitialized)
+                    return Font.Default.FontFamily;
+                return SkiaDefault;
+            }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="FontFamily"/> created from <see cref="SkiaHelper.DefaultTypeFace"/>.
+        /// </summary>
+        public static FontFamily SkiaDefault
+        {
+            get
+            {
+                return skiaDefault ??= new FontFamily(SkiaHelper.DefaultTypeFace);
+            }
         }
 
         /// <summary>
@@ -293,15 +330,7 @@ namespace Alternet.Drawing
         /// <returns>A new FontFamily instance.</returns>
         public static FontFamily FromSkia(SKTypeface typeface)
         {
-            var name = typeface.FamilyName;
-            var result = new FontFamily(name, validate: false)
-            {
-                SkiaTypeface = typeface,
-            };
-
-            Items.Add(name, result);
-
-            return result;
+            return new(typeface);
         }
 
         /// <summary>
@@ -312,11 +341,11 @@ namespace Alternet.Drawing
         /// <returns>A new FontFamily instance or the default font family.</returns>
         public static FontFamily FromNameOrDefault(string? name)
         {
-            if (name is null)
-                return Font.Default.FontFamily;
+            if (name is null || name.Length == 0)
+                return Default;
             var result = FromName(name);
             if (result is null)
-                return Font.Default.FontFamily;
+                return Default;
             return result;
         }
 
@@ -361,7 +390,7 @@ namespace Alternet.Drawing
         /// Filters fonts and returns only compatible with SKiaSharp.
         /// </summary>
         /// <param name="fonts">Collection of the fonts.</param>
-        /// <returns></returns>
+        /// <returns>A collection of font names that are compatible with SKiaSharp.</returns>
         public static IEnumerable<string> RemoveNonSkiaFonts(IEnumerable<string> fonts)
         {
             var result = fonts.Where(x => SkiaHelper.IsFamilySkia(x));
@@ -382,7 +411,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException("Non-Skia fonts are not supported.");
             }
         }
 
@@ -396,7 +425,12 @@ namespace Alternet.Drawing
         public static FontFamily MatchFamily(string name)
         {
             var typeface = SKFontManager.Default.MatchFamily(name);
-            typeface ??= Font.Default.FontFamily.SkiaTypeface;
+
+            if (typeface == null)
+            {
+                return Default;
+            }
+
             return FromSkia(typeface);
         }
     }
