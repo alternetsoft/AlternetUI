@@ -1,6 +1,10 @@
 #include "TextBox.h"
 #include "Application.h"
 
+#ifdef __WXGTK__
+#include <gtk/gtk.h>
+#endif
+
 namespace Alternet::UI
 {
 	TextBox::TextBox()
