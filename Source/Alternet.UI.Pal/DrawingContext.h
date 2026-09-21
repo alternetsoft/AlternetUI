@@ -4,8 +4,6 @@
 #include "Object.h"
 #include "Image.h"
 #include "Font.h"
-#include "Brush.h"
-#include "Pen.h"
 
 namespace Alternet::UI
 {
@@ -37,9 +35,6 @@ namespace Alternet::UI
 
         wxDC* _dc = nullptr;
         wxGraphicsContext* _graphicsContext = nullptr;
-
-        wxGraphicsBrush GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset);
-        wxGraphicsPen GetGraphicsPen(Pen* pen);
 
         bool _doNotDeleteDC = false;
     };

@@ -19,32 +19,17 @@ SizeI GetSize();
 SizeI GetPPI();
 void DrawBitmapAtPointI(Image* image, int x, int y, bool useMask);
 void DrawBitmapAtRectI(Image* image, const RectI& rect, bool useMask);
-void DrawText(const NativeStringSpan& text, const PointD& location, Font* font, const Color& foreColor, Brush* backColor, float angle, bool useBrush);
 SizeI GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);
 static void ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc);
 SizeD GetTextExtentSimple(const NativeStringSpan& text, void* font);
+float GetFontRefHeight(void* fontRef);
 float GetTextHeight(const NativeStringSpan& text, void* font);
 static DrawingContext* FromImage(Image* image);
 static DrawingContext* FromScreen();
-void RoundedRectangle(Pen* pen, Brush* brush, const RectD& rectangle, float cornerRadius);
-void Rectangle(Pen* pen, Brush* brush, const RectD& rectangle);
-void Ellipse(Pen* pen, Brush* brush, const RectD& rectangle);
-void Circle(Pen* pen, Brush* brush, const PointD& center, float radius);
-void FillRectangle(Brush* brush, const RectD& rectangle);
-void FillRectangleI(Brush* brush, const RectI& rectangle);
-void DrawRectangle(Pen* pen, const RectD& rectangle);
-void FillEllipse(Brush* brush, const RectD& bounds);
-void DrawEllipse(Pen* pen, const RectD& bounds);
 void DrawImageAtPoint(Image* image, const PointD& origin, bool useMask);
 void DrawImageAtRect(Image* image, const RectD& destinationRect, bool useMask);
 void SetTransformValues(float m11, float m12, float m21, float m22, float dx, float dy);
-void DrawLine(Pen* pen, const PointD& a, const PointD& b);
-void DrawPoint(Pen* pen, float x, float y);
-void DrawCircle(Pen* pen, const PointD& center, float radius);
-void FillCircle(Brush* brush, const PointD& center, float radius);
-void DrawRoundedRectangle(Pen* pen, const RectD& rect, float cornerRadius);
-void FillRoundedRectangle(Brush* brush, const RectD& rect, float cornerRadius);
 
 public:
 DrawingContext() {}

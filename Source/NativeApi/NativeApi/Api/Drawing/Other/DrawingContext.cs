@@ -32,6 +32,7 @@ namespace NativeApi.Api
 
         public void DrawBitmapAtRectI(Image image, RectI rect, bool useMask = false) { }
 
+
         /*
         str The text to draw.
         x The x coordinate position to draw the text at.
@@ -39,11 +40,13 @@ namespace NativeApi.Api
         angle The angle, in radians, relative to the (default) horizontal direction to draw the string.
         backgroundBrush Brush to fill the text with.
         */
+
+        /*
         public unsafe void DrawText(NativeStringSpan text, PointD location, Font font,
             Color foreColor, Brush backColor, Coord angle, bool useBrush)
         {
         }        
-
+        */
         public SizeI GetDpi() => default;
 
         protected DrawingContext() { }
@@ -65,12 +68,15 @@ namespace NativeApi.Api
         //This function only works with single-line strings.
         public unsafe SizeD GetTextExtentSimple(NativeStringSpan text, IntPtr font) => default;
 
+        public unsafe float GetFontRefHeight(IntPtr fontRef) => throw new Exception();
+
         public unsafe float GetTextHeight(NativeStringSpan text, IntPtr font) => default;
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
 
         public static DrawingContext FromScreen() => throw new Exception();
 
+        /*
         public void RoundedRectangle(Pen pen, Brush brush, RectD rectangle,
             Coord cornerRadius) { }
         public void Rectangle(Pen pen, Brush brush, RectD rectangle) { }
@@ -85,7 +91,7 @@ namespace NativeApi.Api
 
         public void FillEllipse(Brush brush, RectD bounds) { }
         public void DrawEllipse(Pen pen, RectD bounds) { }
-
+        */
         public void DrawImageAtPoint(Image image, PointD origin, bool useMask = false)
             => throw new Exception();
 
@@ -99,7 +105,7 @@ namespace NativeApi.Api
             Coord m22,
             Coord dx,
             Coord dy) => throw new Exception();
-
+        /*
         public void DrawLine(Pen pen, PointD a, PointD b) => throw new Exception();
 
         public void DrawPoint(Pen pen, Coord x, Coord y) { }
@@ -113,7 +119,7 @@ namespace NativeApi.Api
 
         public void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
             => throw new Exception();
-
+        */
         public InterpolationMode InterpolationMode { get; set; }
     }
 }

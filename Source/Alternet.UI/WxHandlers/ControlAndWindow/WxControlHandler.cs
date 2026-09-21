@@ -262,20 +262,21 @@ namespace Alternet.UI
             Alternet.Drawing.Font font,
             float? fontSizeOverride = null)
         {
+            var fontRef = WxControlHandler.CreateFontRef(font, scaled: false, fontSizeOverride);
+            try
+            {
+                return dc.GetFontRefHeight(fontRef);
+            }
+            finally
+            {
+                WxControlHandler.DeleteFontRef(fontRef);
+            }
+
+            /*
             var nativeMeasure = StringUtils.InvokeWithResult(text, span =>
             {
-                var fontRef = WxControlHandler.CreateFontRef(font, scaled: false, fontSizeOverride);
-                try
-                {
-                    return dc.GetTextHeight(span, fontRef);
-                }
-                finally
-                {
-                    WxControlHandler.DeleteFontRef(fontRef);
-                }
             });
-
-            return nativeMeasure;
+            */
         }
 
         internal static IntPtr CreateFontRef(Font value, bool scaled, float? fontSizeOverride = null)

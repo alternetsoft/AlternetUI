@@ -4,9 +4,6 @@
 
 #include "DrawingContext.h"
 #include "Image.h"
-#include "Font.h"
-#include "Brush.h"
-#include "Pen.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -117,13 +114,6 @@ ALTERNET_UI_API void DrawingContext_DrawBitmapAtRectI_(DrawingContext* obj, Imag
     });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, NativeStringSpan* text, PointD* location, Font* font, Color* foreColor, Brush* backColor, float angle, c_bool useBrush)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawText(*text, *location, font, *foreColor, backColor, angle, useBrush);
-    });
-}
-
 ALTERNET_UI_API SizeI_C DrawingContext_GetDpi_(DrawingContext* obj)
 {
     return MarshalExceptions<SizeI_C>([&](){
@@ -152,6 +142,13 @@ ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj,
     });
 }
 
+ALTERNET_UI_API float DrawingContext_GetFontRefHeight_(DrawingContext* obj, void* fontRef)
+{
+    return MarshalExceptions<float>([&](){
+        return obj->GetFontRefHeight(fontRef);
+    });
+}
+
 ALTERNET_UI_API float DrawingContext_GetTextHeight_(DrawingContext* obj, NativeStringSpan* text, void* font)
 {
     return MarshalExceptions<float>([&](){
@@ -173,69 +170,6 @@ ALTERNET_UI_API DrawingContext* DrawingContext_FromScreen_()
     });
 }
 
-ALTERNET_UI_API void DrawingContext_RoundedRectangle_(DrawingContext* obj, Pen* pen, Brush* brush, RectD* rectangle, float cornerRadius)
-{
-    MarshalExceptions<void>([&](){
-        obj->RoundedRectangle(pen, brush, *rectangle, cornerRadius);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_Rectangle_(DrawingContext* obj, Pen* pen, Brush* brush, RectD* rectangle)
-{
-    MarshalExceptions<void>([&](){
-        obj->Rectangle(pen, brush, *rectangle);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_Ellipse_(DrawingContext* obj, Pen* pen, Brush* brush, RectD* rectangle)
-{
-    MarshalExceptions<void>([&](){
-        obj->Ellipse(pen, brush, *rectangle);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_Circle_(DrawingContext* obj, Pen* pen, Brush* brush, PointD* center, float radius)
-{
-    MarshalExceptions<void>([&](){
-        obj->Circle(pen, brush, *center, radius);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_FillRectangle_(DrawingContext* obj, Brush* brush, RectD* rectangle)
-{
-    MarshalExceptions<void>([&](){
-        obj->FillRectangle(brush, *rectangle);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_FillRectangleI_(DrawingContext* obj, Brush* brush, RectI* rectangle)
-{
-    MarshalExceptions<void>([&](){
-        obj->FillRectangleI(brush, *rectangle);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawRectangle_(DrawingContext* obj, Pen* pen, RectD* rectangle)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawRectangle(pen, *rectangle);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_FillEllipse_(DrawingContext* obj, Brush* brush, RectD* bounds)
-{
-    MarshalExceptions<void>([&](){
-        obj->FillEllipse(brush, *bounds);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Pen* pen, RectD* bounds)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawEllipse(pen, *bounds);
-    });
-}
-
 ALTERNET_UI_API void DrawingContext_DrawImageAtPoint_(DrawingContext* obj, Image* image, PointD* origin, c_bool useMask)
 {
     MarshalExceptions<void>([&](){
@@ -254,48 +188,6 @@ ALTERNET_UI_API void DrawingContext_SetTransformValues_(DrawingContext* obj, flo
 {
     MarshalExceptions<void>([&](){
         obj->SetTransformValues(m11, m12, m21, m22, dx, dy);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Pen* pen, PointD* a, PointD* b)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawLine(pen, *a, *b);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawPoint_(DrawingContext* obj, Pen* pen, float x, float y)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawPoint(pen, x, y);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawCircle_(DrawingContext* obj, Pen* pen, PointD* center, float radius)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawCircle(pen, *center, radius);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_FillCircle_(DrawingContext* obj, Brush* brush, PointD* center, float radius)
-{
-    MarshalExceptions<void>([&](){
-        obj->FillCircle(brush, *center, radius);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawRoundedRectangle_(DrawingContext* obj, Pen* pen, RectD* rect, float cornerRadius)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawRoundedRectangle(pen, *rect, cornerRadius);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_FillRoundedRectangle_(DrawingContext* obj, Brush* brush, RectD* rect, float cornerRadius)
-{
-    MarshalExceptions<void>([&](){
-        obj->FillRoundedRectangle(brush, *rect, cornerRadius);
     });
 }
 

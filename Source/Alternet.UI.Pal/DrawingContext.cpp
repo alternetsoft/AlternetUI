@@ -1,5 +1,4 @@
 ﻿#include "DrawingContext.h"
-#include "SolidBrush.h"
 #include "GenericImage.h"
 #include <algorithm>
 
@@ -150,40 +149,6 @@ namespace Alternet::UI
 			return Rect();
 	}
 
-	void DrawingContext::DrawCircle(Pen* pen, const Point& center, float radius)
-	{
-		auto diameter = radius * 2;
-		DrawEllipse(pen, Rect(center - Size(radius, radius), Size(diameter, diameter)));
-	}
-
-	void DrawingContext::FillCircle(Brush* brush, const Point& center, float radius)
-	{
-		auto diameter = radius * 2;
-		FillEllipse(brush, Rect(center - Size(radius, radius), Size(diameter, diameter)));
-	}
-
-	void DrawingContext::Circle(Pen* pen, Brush* brush, const Point& center, float radius)
-	{
-		auto diameter = radius * 2;
-		Ellipse(pen, brush, Rect(center - Size(radius, radius), Size(diameter, diameter)));
-	}
-
-	void DrawingContext::RoundedRectangle(Pen* pen, Brush* brush, const Rect& rect, float cornerRadius)
-	{
-		_graphicsContext->SetPen(pen->GetWxPen());
-		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
-		auto r = fromDipF(rect, _dc->GetWindow());
-		_graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
-	}
-
-	void DrawingContext::DrawRoundedRectangle(Pen* pen, const Rect& rect, float cornerRadius)
-	{
-		_graphicsContext->SetPen(pen->GetWxPen());
-		_graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
-		auto r = fromDipF(rect, _dc->GetWindow());
-		_graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
-	}
-
 	void DrawingContext::Save()
 	{
 		_graphicsContext->PushState();
@@ -192,14 +157,6 @@ namespace Alternet::UI
 	void DrawingContext::Restore()
 	{
 		_graphicsContext->PopState();
-	}
-
-	void DrawingContext::FillRoundedRectangle(Brush* brush, const Rect& rect, float cornerRadius)
-	{
-		_graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
-		auto r = fromDipF(rect, _dc->GetWindow());
-		_graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
 	}
 
 	/*static*/ DrawingContext* DrawingContext::FromImage(Image* image)
@@ -309,149 +266,6 @@ namespace Alternet::UI
 		}
 	}
 
-	void DrawingContext::Rectangle(Pen* pen, Brush* brush, const Rect& rectangle)
-	{
-		auto rect = fromDipF(rectangle, _dc->GetWindow());
-
-		_graphicsContext->SetPen(pen->GetWxPen());
-		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
-
-		_graphicsContext->DrawRectangle(rect.X, rect.Y, rect.Width, rect.Height);
-	}
-
-	void DrawingContext::FillRectangle(Brush* brush, const Rect& rectangle)
-	{
-		auto r = fromDip(
-			Rect(
-				rectangle.X,
-				rectangle.Y,
-				rectangle.Width,
-				rectangle.Height),
-			_dc->GetWindow());
-		FillRectangleI(brush, r);
-	}
-
-	void DrawingContext::FillRectangleI(Brush* brush, const RectI& rectangle)
-	{
-		_graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rectangle.X, rectangle.Y)));
-		_graphicsContext->DrawRectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-	}
-
-	void DrawingContext::DrawPoint(Pen* pen, float x, float y)
-	{
-		auto& oldPen = _dc->GetPen();
-		_dc->SetPen(pen->GetWxPen());
-		_dc->DrawPoint(fromDip(Point(x, y), _dc->GetWindow()));
-		_dc->SetPen(oldPen);
-	}
-
-	void DrawingContext::FillEllipse(Brush* brush, const Rect& bounds)
-	{
-		auto rect = fromDipF(bounds, _dc->GetWindow());
-
-		_graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
-
-		_graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
-	}
-
-	void DrawingContext::Ellipse(Pen* pen, Brush* brush, const Rect& bounds)
-	{
-		auto rect = fromDipF(bounds, _dc->GetWindow());
-
-		_graphicsContext->SetPen(pen->GetWxPen());
-		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
-
-		_graphicsContext->DrawEllipse(rect.X, rect.Y, rect.Width, rect.Height);
-	}
-
-	void DrawingContext::DrawRectangle(Pen* pen, const Rect& rectangle)
-	{
-		_graphicsContext->SetPen(pen->GetWxPen());
-		_graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
-
-		auto rect = fromDip(rectangle, _dc->GetWindow());
-
-		_graphicsContext->DrawRectangle(rect.x, rect.y, rect.width, rect.height);
-	}
-
-	void DrawingContext::DrawLine(Pen* pen, const Point& a, const Point& b)
-	{
-		_graphicsContext->SetPen(pen->GetWxPen());
-
-		auto window = _dc->GetWindow();
-		auto p1 = fromDip(a, window);
-		auto p2 = fromDip(b, window);
-		_graphicsContext->StrokeLine(p1.x, p1.y, p2.x, p2.y);
-
-		_graphicsContext->Flush();
-	}
-
-	void DrawingContext::DrawEllipse(Pen* pen, const Rect& bounds)
-	{
-		_graphicsContext->SetPen(pen->GetWxPen());
-		_graphicsContext->SetBrush(*wxTRANSPARENT_BRUSH);
-
-		auto rect = fromDip(
-			Rect(
-				bounds.X,
-				bounds.Y,
-				bounds.Width,
-				bounds.Height),
-			_dc->GetWindow());
-		_graphicsContext->DrawEllipse(rect.x, rect.y, rect.width, rect.height);
-	}
-
-	void DrawingContext::DrawText(const NativeStringSpan& text, const PointD& location,
-		Font* font, const Color& foreColor, Brush* backColor, float angle, bool useBrush)
-	{
-		auto window = DrawingContext::GetWindow(_dc);
-
-		auto point = fromDip(location, window);
-
-		auto x = static_cast<float>(point.x);
-		auto y = static_cast<float>(point.y);
-
-		wxColour wxForeColor = foreColor;
-
-		if (!wxForeColor.IsOk())
-		{
-			return;
-		}
-
-		wxGraphicsFont gFont = _graphicsContext->CreateFont(font->GetWxFont(), wxForeColor);
-		_graphicsContext->SetFont(gFont);
-
-		auto wxText = wxStr(text);
-
-		if (useBrush)
-		{
-			wxGraphicsBrush gBrush = _graphicsContext->CreateBrush(backColor->GetWxBrush());
-			if (angle == 0)
-				_graphicsContext->DrawText(wxText, x, y, gBrush);
-			else
-				_graphicsContext->DrawText(wxText, x, y, angle, gBrush);
-		}
-		else
-		{
-			if (angle == 0)
-				_graphicsContext->DrawText(wxText, x, y);
-			else
-				_graphicsContext->DrawText(wxText, x, y, angle);
-		}
-	}
-
-	wxGraphicsBrush DrawingContext::GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset)
-	{
-		return brush->GetGraphicsBrush(_graphicsContext->GetRenderer(), offset);
-	}
-
-	wxGraphicsPen DrawingContext::GetGraphicsPen(Pen* pen)
-	{
-		return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
-	}
-
 	float DrawingContext::GetTextHeight(const NativeStringSpan& text, void* font)
 	{
 		auto wxf = Font::FromFontRef(font);
@@ -469,6 +283,16 @@ namespace Alternet::UI
 		height = std::ceil(height);
 
 		return height;
+	}
+
+	float DrawingContext::GetFontRefHeight(void* fontRef)
+	{
+		auto wxf = Font::FromFontRef(fontRef);
+		wxFontMetrics metrics = _dc->GetFontMetrics();
+		int totalHeight = metrics.height;
+		int ascent = metrics.ascent;
+		int descent = metrics.descent;
+		return totalHeight;
 	}
 
 	Size DrawingContext::GetTextExtentSimple(const NativeStringSpan& text, void* font)

@@ -51,24 +51,7 @@ namespace Alternet.UI
 
         public void ShowMessageBox(MessageBoxInfo info)
         {
-            var nativeOwner = UI.Native.NativeObject.GetNativeWindow(info.Owner);
-
-            var result = NativeUtils.Invoke(
-                info.Text?.ToString() ?? string.Empty,
-                info.Caption ?? string.Empty,
-                (s1, s2) =>
-                {
-                    return Native.MessageBox.Show(
-                        nativeOwner,
-                        s1,
-                        s2,
-                        info.Buttons,
-                        info.Icon,
-                        info.DefaultButton);
-                });
-
-            info.Result = result;
-            info.OnClose?.Invoke(info);
+            WindowMessageBox.ShowMessageBox(info);
         }
 
         /// <summary>
