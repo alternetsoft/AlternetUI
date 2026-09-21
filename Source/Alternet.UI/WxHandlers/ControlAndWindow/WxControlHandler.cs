@@ -287,7 +287,10 @@ namespace Alternet.UI
             {
                 var size = value.SizeInPoints;
                 if (scaled)
-                    size *= 1.3f;
+                {
+                    size *= Drawing.Font.NativeFontZoom;
+                    size += Drawing.Font.NativeFontIncrement;
+                }
 
                 fontRef = Native.Font.CreateFontRef(
                     0,

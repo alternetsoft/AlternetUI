@@ -362,6 +362,17 @@ namespace Alternet.UI.Native
                 return;
             measuredFontSize = true;
 
+            if (App.IsWindowsOS)
+            {
+                return;
+            }
+
+            if (App.IsMacOS)
+            {
+                Alternet.Drawing.Font.NativeFontZoom = 1.3f;
+                return;
+            }
+
             var uiControl = UIControl;
             if (uiControl is null)
                 return;
@@ -370,7 +381,7 @@ namespace Alternet.UI.Native
             var measureText = "Wg";
             var skiaMeasure = graphics.MeasureText(measureText, font);
 
-            var nativeFontZoom = GetNativeFontZoom(
+            var nativeFontIncrement = GetNativeFontIncrement(
                         font.SizeInPoints,
                         skiaMeasure.Height,
                         candidate =>
@@ -380,11 +391,11 @@ namespace Alternet.UI.Native
                             return nativeHeight;
                         });
 
-            Alternet.Drawing.Font.NativeFontIncrement = nativeFontZoom;
+            Alternet.Drawing.Font.NativeFontIncrement = nativeFontIncrement;
             Alternet.Drawing.Font.FontSettingsIteration.Increment();
         }
 
-        public static float GetNativeFontZoom(
+        public static float GetNativeFontIncrement(
             float fontSize,
             float WgtHeight,
             Func<float, float> getNativeWgHeight)

@@ -31,6 +31,13 @@ namespace Alternet.Drawing
         public static float NativeFontIncrement = 0.0f;
 
         /// <summary>
+        /// Gets or sets native font zoom.
+        /// It is used when native font size is calculated from Skia font size.
+        /// On WxWidgets platform it is initialized on some operating systems when application is started.
+        /// </summary>
+        public static float NativeFontZoom = 1.0f;
+
+        /// <summary>
         /// Gets font system iteration count. It is used to detect when system font settings are changed.
         /// </summary>
         public static OverflowSafeCounter FontSettingsIteration = new();
