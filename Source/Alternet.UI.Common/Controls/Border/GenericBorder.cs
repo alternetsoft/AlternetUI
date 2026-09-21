@@ -19,7 +19,8 @@ namespace Alternet.UI
     {
         /// <summary>
         /// Specifies the default corner radius in device-independent units,
-        /// used for rendering the corners of panel borders.
+        /// used for rendering the corners of panel borders. This is used only when
+        /// round corners are enabled in the control and no specific corner radius is provided.
         /// </summary>
         public static float DefaultCornerRadius = 10;
 
@@ -326,7 +327,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc cref="BorderSettings.SetColors"/>
-        public virtual GenericBorder SetBorderColors(ThemedColor? left, ThemedColor? top, ThemedColor? right, ThemedColor? bottom)
+        public virtual GenericBorder SetBorderColors(
+            ThemedColor? left,
+            ThemedColor? top,
+            ThemedColor? right,
+            ThemedColor? bottom)
         {
             if (NormalBorder.SetColors(left, top, right, bottom))
                 Refresh();
