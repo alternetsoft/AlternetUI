@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="EnumPicker"/> with side buttons.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Other)]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class EnumPickerAndButton : GenericControlAndButton
     {
         /// <summary>
