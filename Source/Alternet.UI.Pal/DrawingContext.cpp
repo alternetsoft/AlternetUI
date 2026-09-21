@@ -459,11 +459,14 @@ namespace Alternet::UI
 		wxDouble height;
 		wxDouble width;
 
-		_graphicsContext->SetFont(wxf, *wxBLACK);
+		_dc->SetFont(wxf);
 
 		auto wText = wxStr(text);
 
-		_graphicsContext->GetTextExtent(wText, &width, &height, nullptr, nullptr);
+		auto size = _dc->GetTextExtent(wText);
+
+		width = size.x;
+		height = size.y;
 
 		height = std::ceil(height);
 
