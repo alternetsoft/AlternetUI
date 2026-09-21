@@ -46,7 +46,7 @@ namespace Alternet.UI
             if (!ShowAsSpeedButton())
             {
                 Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
-                UseTheme = KnownTheme.StaticBorder;
+                UseTheme = DefaultThemes.Picker;
                 UseControlColors(DefaultUseControlColors);
             }
         }

@@ -90,7 +90,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override KnownTheme GetDefaultUseTheme()
         {
-            return KnownTheme.StaticBorder;
+            return DefaultThemes.Picker;
         }
     }
 }

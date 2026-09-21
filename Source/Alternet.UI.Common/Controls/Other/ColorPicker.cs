@@ -34,7 +34,7 @@ namespace Alternet.UI
         public ColorPicker(bool useDefaultColors)
             : base(useDefaultColors)
         {
-            UseTheme = KnownTheme.StaticBorder;
+            UseTheme = DefaultThemes.Picker;
             UseControlColors(DefaultUseControlColors);
         }
 

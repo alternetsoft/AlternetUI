@@ -72,7 +72,7 @@ namespace Alternet.UI
             OnValueImageChanged(false);
             ShowComboBoxImageAtRight(DefaultShowDropDownImage);
             ClickTrigger = ClickTriggerKind.MouseDown;
-            UseTheme = KnownTheme.StaticBorder;
+            UseTheme = DefaultThemes.Picker;
             UseControlColors(DefaultUseControlColors);
             Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
         }

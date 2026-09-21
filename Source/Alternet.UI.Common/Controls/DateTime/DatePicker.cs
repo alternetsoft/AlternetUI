@@ -59,7 +59,7 @@ namespace Alternet.UI
 
         private void Initialize()
         {
-            UseTheme = KnownTheme.StaticBorder;
+            UseTheme = DefaultThemes.Picker;
             UseControlColors(DefaultUseControlColors);
         }
     }
