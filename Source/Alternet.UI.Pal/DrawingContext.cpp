@@ -2,6 +2,10 @@
 #include "GenericImage.h"
 #include <algorithm>
 
+#ifdef __WXOSX__
+#include <CoreText/CoreText.h>
+#endif
+
 namespace Alternet::UI
 {
 	DrawingContext::DrawingContext(wxGraphicsContext* graphicsContext, wxDC* dc)
@@ -285,14 +289,42 @@ namespace Alternet::UI
 		return height;
 	}
 
+#ifdef __WXOSX__
+
+double GetCTFontHeight(const wxFont& font)
+{
+    CFStringRef cfName = CFStringCreateWithCString(NULL,
+        font.GetFaceName().utf8_str(), kCFStringEncodingUTF8);
+    CTFontRef ctFont = CTFontCreateWithName(cfName, font.GetPointSize(), NULL);
+
+    double ascent  = CTFontGetAscent(ctFont);
+    double descent = CTFontGetDescent(ctFont);
+    double leading = CTFontGetLeading(ctFont);
+
+    CFRelease(ctFont);
+    CFRelease(cfName);
+
+    return ascent + descent + leading;
+}
+
+#endif
+
+
 	float DrawingContext::GetFontRefHeight(void* fontRef)
 	{
+#ifdef __WXOSX__
 		auto wxf = Font::FromFontRef(fontRef);
+        auto result = GetCTFontHeight(wxf);
+		return result;
+#else
+		auto wxf = Font::FromFontRef(fontRef);
+		_dc->SetFont(wxf);
+
 		wxFontMetrics metrics = _dc->GetFontMetrics();
 		int totalHeight = metrics.height;
-		int ascent = metrics.ascent;
-		int descent = metrics.descent;
+
 		return totalHeight;
+#endif		
 	}
 
 	Size DrawingContext::GetTextExtentSimple(const NativeStringSpan& text, void* font)

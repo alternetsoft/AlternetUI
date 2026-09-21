@@ -395,7 +395,7 @@ namespace Alternet.UI.Native
             const float tolerance = 0.5f;
             int iterations = 0;
 
-            while (Math.Abs(nativeHeight - WgtHeight) > tolerance && iterations < 10)
+            while (nativeHeight < WgtHeight && iterations < 20)
             {
                 candidate += tolerance;
 
@@ -403,7 +403,7 @@ namespace Alternet.UI.Native
                 iterations++;
             }
 
-            return MathF.Min(candidate - tolerance - fontSize, 0);
+            return MathF.Max(candidate - tolerance - fontSize, 0);
         }
 
         protected void SkiaPaintCrossPlatform()
