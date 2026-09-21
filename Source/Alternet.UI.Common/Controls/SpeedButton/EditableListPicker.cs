@@ -23,6 +23,11 @@ namespace Alternet.UI
     public partial class EditableListPicker : ListPicker
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the popup text box has a border.
+        /// </summary>
+        public static bool DefaultPopupTextBoxHasBorder = true;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EditableListPicker"/> class.
         /// </summary>
         public EditableListPicker()
@@ -65,7 +70,7 @@ namespace Alternet.UI
         /// you can handle the Escape key press event.
         /// </summary>
         public event EventHandler? EscapePressed;
-        
+
         /// <summary>
         /// Occurs when a key is pressed in the inplace editor.
         /// </summary>
@@ -93,7 +98,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating what happens when the popup text box loses focus.
         /// </summary>
-        public ModalResult? PopupLostFocusBehavior { get; set; } = ModalResult.Canceled;
+        public virtual ModalResult? PopupLostFocusBehavior { get; set; } = ModalResult.Canceled;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup text box should be canceled and closed
+        /// when the Escape key is pressed.
+        /// </summary>
+        public virtual bool CancelEditOnEscape { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value specifying the style of the control.
@@ -132,6 +143,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control should update its height
+        /// based on the height of the popup entry.
+        /// </summary>
+        public virtual bool UsePopupEntryHeight { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the text in the control is committed on each key press.
         /// </summary>
         public virtual bool CommitOnKeyPress { get; set; } = true;
@@ -164,7 +181,13 @@ namespace Alternet.UI
         {
             if (ControlFactory.PopupEntryHandler is null)
                 return;
-            Label.MinHeight = ControlFactory.PopupEntryHandler.GetPopupEntryHeight(Label, RealFont, true);
+            Label.MinHeight = ControlFactory.PopupEntryHandler.GetPopupEntryHeight(Label, RealFont, hasBorder: true);
+        }
+
+        /// <inheritdoc/>
+        public override void OnWindowSettingsChanged(WindowSettingsChangedEventArgs e)
+        {
+            base.OnWindowSettingsChanged(e);
         }
 
         /// <inheritdoc/>
@@ -257,15 +280,20 @@ namespace Alternet.UI
         /// <summary>
         /// Starts editing the text in the control using popup text box.
         /// </summary>
-        public virtual void BeginEdit()
+        public virtual void BeginEdit(bool selectAll = true)
         {
             var prm = CreatePopupEditorParams();
 
             if (prm is null)
                 return;
 
-            Post(() => {
-                ControlFactory.PopupEntryHandler?.ShowPopupEntry(prm.Value);
+            var popupParams = prm.Value;
+
+            popupParams.SelectAll = selectAll;
+
+            Post(() =>
+            {
+                ControlFactory.PopupEntryHandler?.ShowPopupEntry(popupParams);
             });
         }
 
@@ -293,7 +321,8 @@ namespace Alternet.UI
                 CommitTextOnKeyPress = CommitOnKeyPress,
                 HideOnEscape = false,
                 HideOnEnter = CommitOnEnter,
-                HasBorder = false,
+                HasBorder = DefaultPopupTextBoxHasBorder,
+                MoveToEndOfText = true,
                 IsPassword = this.IsPassword,
                 EmptyTextHint = this.EmptyTextHint,
                 LostFocusBehavior = this.PopupLostFocusBehavior,
@@ -308,6 +337,9 @@ namespace Alternet.UI
                 EscapePressed = () =>
                 {
                     EscapePressed?.Invoke(this, EventArgs.Empty);
+
+                    if (CancelEditOnEscape)
+                        CancelEdit();
                 },
                 EntryHeightChanged = OnPopupEntryHeightChanged,
                 KeyDown = (s, e) => EditorKeyDown?.Invoke(this, e),
@@ -359,6 +391,8 @@ namespace Alternet.UI
         /// <param name="itemHeight">The new height of the popup entry.</param>
         protected virtual void OnPopupEntryHeightChanged(float itemHeight)
         {
+            if (UsePopupEntryHeight)
+                Label.MinHeight = itemHeight;
         }
 
         /// <inheritdoc/>
