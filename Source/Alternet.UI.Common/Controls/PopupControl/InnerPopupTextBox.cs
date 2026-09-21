@@ -80,12 +80,6 @@ namespace Alternet.UI
             Content.IsPassword = prm.IsPassword;
             Content.ProcessEnter = true;
 
-            if (prm.MoveToEndOfText)
-                Content.MoveToEndOfText();
-
-            if (prm.SelectAll)
-                Content.SelectAll();
-
             void OnContentTextChanged(object? sender, EventArgs e)
             {
                 var newText = Content.Text;
@@ -136,6 +130,8 @@ namespace Alternet.UI
                 prm.Closed?.Invoke();
             };
 
+            OnContentSizeChanged(null, EventArgs.Empty);
+
             var preferredSize = GetPreferredSize();
             var textBoxHeight = preferredSize.Height;
 
@@ -156,9 +152,15 @@ namespace Alternet.UI
             Bounds = popupRect;
 
             Show();
+
             Content.SetFocusIfPossible();
-            Content.MoveToEndOfText();
-            Content.SelectAll();
+
+            if (prm.MoveToEndOfText)
+                Content.MoveToEndOfText();
+
+            if (prm.SelectAll)
+                Content.SelectAll();
+
             return true;
         }
 

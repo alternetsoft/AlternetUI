@@ -32,6 +32,7 @@ namespace Alternet.UI
         /// </summary>
         public EditableListPicker()
         {
+            Label.VerticalAlignment = VerticalAlignment.Stretch;
         }
 
         /// <summary>
@@ -146,6 +147,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the control should update its height
         /// based on the height of the popup entry.
         /// </summary>
+        [Browsable(false)]
         public virtual bool UsePopupEntryHeight { get; set; } = true;
 
         /// <summary>
@@ -203,7 +205,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override KnownTheme GetDefaultUseTheme()
         {
-            return KnownTheme.StaticBorderNoHover;
+            return DefaultThemes.EditablePicker;
         }
 
         /// <inheritdoc/>
@@ -357,6 +359,7 @@ namespace Alternet.UI
             prm.SetTargetControl(this, () =>
             {
                 var result = Label.Bounds;
+
                 result.Left -= 2;
                 result.Width += 4;
                 return result;
@@ -392,7 +395,7 @@ namespace Alternet.UI
         protected virtual void OnPopupEntryHeightChanged(float itemHeight)
         {
             if (UsePopupEntryHeight)
-                Label.MinHeight = itemHeight;
+                MinHeight = itemHeight + Padding.Vertical + Label.Margin.Vertical + Label.Top;
         }
 
         /// <inheritdoc/>
