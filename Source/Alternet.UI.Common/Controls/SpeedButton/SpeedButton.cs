@@ -181,7 +181,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the direction in which vertical text should be drawn.
-        /// If not specified, the default direction is used (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
+        /// If not specified, the default direction is used
+        /// (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
         /// This property is relevant only when <see cref="IsVerticalText"/> is set to <see langword="true"/>.
         /// </summary>
         public virtual VerticalTextDirection? VertDirection
@@ -2043,8 +2044,12 @@ namespace Alternet.UI
                     return CustomTheme ?? DefaultCustomTheme;
                 case KnownTheme.StaticBorder:
                     return StaticBorderTheme;
+                case KnownTheme.StaticPanelBorder:
+                    return StaticPanelBorderTheme;
                 case KnownTheme.StaticBorderNoHover:
                     return StaticBorderThemeNoHover;
+                case KnownTheme.StaticPanelBorderNoHover:
+                    return StaticPanelBorderThemeNoHover;
                 case KnownTheme.StickyBorder:
                     return StickyBorderTheme;
                 case KnownTheme.NoBorder:
@@ -2531,6 +2536,24 @@ namespace Alternet.UI
         protected virtual Label CreateInnerLabel()
         {
             return new Label();
+        }
+
+        /// <summary>
+        /// Contains static properties which specify default themes used by
+        /// <see cref="SpeedButton"/> and its descendants.
+        /// These themes can be modified to change the appearance of all controls that use them.
+        /// </summary>
+        public static class DefaultThemes
+        {
+            /// <summary>
+            /// Gets or sets the default theme used for all picker controls.
+            /// </summary>
+            public static KnownTheme Picker = KnownTheme.StaticPanelBorder;
+
+            /// <summary>
+            /// Gets or sets the default theme used for all editable picker controls.
+            /// </summary>
+            public static KnownTheme EditablePicker = KnownTheme.StaticPanelBorderNoHover;
         }
     }
 }

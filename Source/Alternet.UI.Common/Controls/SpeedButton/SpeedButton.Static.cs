@@ -74,9 +74,23 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StaticPanelBorder"/>.
+        /// </summary>
+        public static ControlColorAndStyle StaticPanelBorderTheme;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StaticBorderNoHover"/>.
         /// </summary>
         public static ControlColorAndStyle StaticBorderThemeNoHover;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StaticPanelBorderNoHover"/>.
+        /// </summary>
+        public static ControlColorAndStyle StaticPanelBorderThemeNoHover;
 
         /// <summary>
         /// Gets or sets default color and style settings
@@ -195,8 +209,10 @@ namespace Alternet.UI
         /// <summary>
         /// Resets color themes of <see cref="SpeedButton"/> to their initial values.
         /// </summary>
+        [MemberNotNull(nameof(StaticPanelBorderTheme))]
         [MemberNotNull(nameof(StaticBorderTheme))]
         [MemberNotNull(nameof(StaticBorderThemeNoHover))]
+        [MemberNotNull(nameof(StaticPanelBorderThemeNoHover))]
         [MemberNotNull(nameof(RoundBorderTheme))]
         [MemberNotNull(nameof(SquareCornersTheme))]
         [MemberNotNull(nameof(StickyBorderTheme))]
@@ -227,6 +243,13 @@ namespace Alternet.UI
             StaticBorderTheme.NormalBorderAsHovered();
             StaticBorderTheme.DisabledBorderAsHovered();
             StaticBorderTheme.SetBorderColor(borderColor);
+
+            StaticPanelBorderTheme = StaticBorderTheme.Clone();
+            StaticPanelBorderTheme.SetCornerRadius();
+
+            StaticPanelBorderThemeNoHover = StaticPanelBorderTheme.Clone();
+            StaticPanelBorderThemeNoHover.HoveredBackgroundAsNormal();
+            StaticPanelBorderThemeNoHover.PressedBackgroundAsNormal();
 
             StaticBorderThemeNoHover = StaticBorderTheme.Clone();
             StaticBorderThemeNoHover.HoveredBackgroundAsNormal();
