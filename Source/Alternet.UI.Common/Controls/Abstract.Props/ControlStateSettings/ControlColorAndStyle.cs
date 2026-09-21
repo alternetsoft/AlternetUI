@@ -94,6 +94,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the corner radius for all initialized borders of the control.
+        /// </summary>
+        /// <param name="corners">The corner radius to apply. If null a default value
+        /// <see cref="GenericBorder.DefaultCornerRadius"/> is used.</param>
+        public virtual void SetCornerRadius(BorderCornerRadius? corners = null)
+        {
+            corners ??= new BorderCornerRadius(GenericBorder.DefaultCornerRadius);
+            Dark?.Borders?.SetCornerRadius(corners.Value);
+            Light?.Borders?.SetCornerRadius(corners.Value);
+        }
+
+        /// <summary>
         /// Sets border color to all initialized borders.
         /// </summary>
         /// <param name="color">New color value</param>
