@@ -25,7 +25,7 @@ namespace Alternet.UI
         {
             if (DebugUtils.IsDebugDefinedAndAttached)
             {
-                hiddedNativeLogMessages = new ();
+                hiddedNativeLogMessages = new();
                 hiddedNativeLogMessages.Add("Using possibly wrong DPI for");
                 hiddedNativeLogMessages.Add("this window is not scrollable");
             }
@@ -244,9 +244,58 @@ namespace Alternet.UI
 
             protected override void DisposeManaged()
             {
-                Native.Font.DeleteFontRef(FontRef);
+                DeleteFontRef(FontRef);
                 base.DisposeManaged();
             }
+        }
+
+        internal static void DeleteFontRef(IntPtr fontRef)
+        {
+            if (fontRef == IntPtr.Zero)
+                return;
+            Native.Font.DeleteFontRef(fontRef);
+        }
+
+        internal static Alternet.Drawing.SizeD GetNativeTextSize(
+            Native.DrawingContext dc,
+            string text,
+            Alternet.Drawing.Font font,
+            float? fontSizeOverride = null)
+        {
+            var nativeMeasure = StringUtils.InvokeWithResult(text, span =>
+            {
+                var fontRef = WxControlHandler.CreateFontRef(font, scaled: false, fontSizeOverride);
+                try
+                {
+                    return dc.GetTextExtentSimple(span, fontRef);
+                }
+                finally
+                {
+                    WxControlHandler.DeleteFontRef(fontRef);
+                }
+            });
+
+            return nativeMeasure;
+        }
+
+        internal static IntPtr CreateFontRef(Font value, bool scaled, float? fontSizeOverride = null)
+        {
+            IntPtr fontRef = IntPtr.Zero;
+
+            NativeStringSpan.Invoke(value.Name, span =>
+            {
+                var size = value.SizeInPoints;
+                if (scaled)
+                    size += Alternet.Drawing.Font.NativeFontIncrement;
+
+                fontRef = Native.Font.CreateFontRef(
+                    0,
+                    span,
+                    fontSizeOverride ?? size,
+                    value.Style);
+            });
+
+            return fontRef;
         }
 
         internal static IntPtr GetFontRef(Font? value)
@@ -261,16 +310,7 @@ namespace Alternet.UI
                 if (host != null)
                     return host.FontRef;
 
-                IntPtr fontRef = IntPtr.Zero;
-
-                NativeStringSpan.Invoke(value.Name, span =>
-                {
-                    fontRef = Native.Font.CreateFontRef(
-                        0,
-                        span,
-                        value.SizeInPoints * Alternet.Drawing.Font.NativeFontScaleFactor,
-                        value.Style);
-                });
+                IntPtr fontRef = CreateFontRef(value, true);
 
                 var container = new FontRefContainer(fontRef);
 
@@ -507,7 +547,7 @@ namespace Alternet.UI
 
         public Coord? GetPixelScaleFactor()
         {
-            if(App.IsWindowsOS && !DisposingOrDisposed)
+            if (App.IsWindowsOS && !DisposingOrDisposed)
                 return Native.Control.DrawingDPIScaleFactor(NativeControl.WxWidget);
             return 1f;
         }
@@ -677,6 +717,8 @@ namespace Alternet.UI
 
         public virtual void OnHandleCreated()
         {
+            if (!UserPaint)
+                Font = Control?.Font;
         }
 
         void IControlHandler.SetAllowDefaultContextMenu(bool value)

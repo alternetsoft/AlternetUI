@@ -94,14 +94,6 @@ namespace Alternet.UI
                 RecreateWindow();
         }
 
-        protected override void OnAttach()
-        {
-            base.OnAttach();
-
-            if (Control is null)
-                return;
-        }
-
         internal override Native.Control CreateNativeControl()
         {
             return new Native.Button();

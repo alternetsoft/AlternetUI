@@ -24,11 +24,11 @@ namespace Alternet.Drawing
     public class Font : HostedDisposableObject, IEquatable<Font>
     {
         /// <summary>
-        /// Gets or sets native font scale factor.
+        /// Gets or sets native font increment.
         /// It is used when native font size is calculated from Skia font size.
         /// On WxWidgets platform it is initialized on some operating systems when application is started.
         /// </summary>
-        public static float NativeFontScaleFactor = 1.0f;
+        public static float NativeFontIncrement = 0.0f;
 
         /// <summary>
         /// Gets font system iteration count. It is used to detect when system font settings are changed.
@@ -1788,7 +1788,6 @@ namespace Alternet.Drawing
             var skiaFont = SkiaHelper.DefaultMonoFont;
             var font = new Font(skiaFont, new FontFamily(skiaFont.Typeface));
 
-            font.SetSkiaFontImmutable();
             font.DisplayName = () => CommonStrings.Default.DefaultMonoFontDisplayName;
             font.FontOrigin = Drawing.FontOriginKind.DefaultMono;
             return font;
@@ -1799,7 +1798,6 @@ namespace Alternet.Drawing
             var skiaFont = SkiaHelper.DefaultFont;
             var font = new Font(skiaFont, new FontFamily(skiaFont.Typeface));
 
-            font.SetSkiaFontImmutable();
             font.DisplayName = () => CommonStrings.Default.DefaultFontDisplayName;
             font.FontOrigin = Drawing.FontOriginKind.Default;
             return font;

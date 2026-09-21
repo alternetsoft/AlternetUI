@@ -370,17 +370,17 @@ namespace Alternet.UI.Native
             var measureText = "Wg";
             var skiaMeasure = graphics.MeasureText(measureText, font);
 
-            var nativeMeasure = StringUtils.InvokeWithResult(measureText, span =>
-            {
-                var fontRef = WxControlHandler.GetFontRef(font);
-                return dc.GetTextExtentSimple(span, fontRef);
-            });
+            var nativeFontZoom = GetNativeFontZoom(
+                        font.SizeInPoints,
+                        skiaMeasure.Height,
+                        candidate =>
+                        {
+                            var nativeMeasure = WxControlHandler.GetNativeTextSize(dc, measureText, font, candidate);
+                            var nativeHeight = uiControl.PixelFToDip(nativeMeasure.Height);
+                            return nativeHeight;
+                        });
 
-            var nativeHeight = uiControl.PixelFToDip(nativeMeasure.Height);
-            var skiaHeight = skiaMeasure.Height;
-            var nativeFontRatio = skiaHeight / nativeHeight;
-
-            Alternet.Drawing.Font.NativeFontScaleFactor = nativeFontRatio;
+            Alternet.Drawing.Font.NativeFontIncrement = nativeFontZoom;
             Alternet.Drawing.Font.FontSettingsIteration.Increment();
         }
 
@@ -397,15 +397,13 @@ namespace Alternet.UI.Native
 
             while (Math.Abs(nativeHeight - WgtHeight) > tolerance && iterations < 10)
             {
-                float factor = WgtHeight / nativeHeight;
-
-                candidate *= factor;
+                candidate += tolerance;
 
                 nativeHeight = getNativeWgHeight(candidate);
                 iterations++;
             }
 
-            return candidate / fontSize;
+            return MathF.Min(candidate - tolerance - fontSize, 0);
         }
 
         protected void SkiaPaintCrossPlatform()
