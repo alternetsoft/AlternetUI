@@ -10,6 +10,14 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Called when the form settings are changed.
+        /// </summary>
+        /// <param name="e">An <see cref="WindowSettingsChangedEventArgs"/> that contains the event data.</param>
+        public virtual void OnWindowSettingsChanged(WindowSettingsChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when this control is inserted into a parent control.
         /// </summary>
         /// <remarks>This method provides an opportunity to perform any initialization or setup required

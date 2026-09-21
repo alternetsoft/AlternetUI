@@ -37,8 +37,8 @@ namespace Alternet.UI
         private WeakReferenceValue<Window> owner;
         private int? oldDisplay;
         private AbstractControl? statusBar;
-        private TextBox? textBox;
-        private TextBox? textBoxWithBorder;
+        private TextBox? hiddenTextBox;
+        private TextBox? hiddenTextBoxWithBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -1544,6 +1544,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hasBorder"></param>
+        public virtual void RequestHiddenTextBox(bool hasBorder)
+        {
+            GetHiddenTextBox(hasBorder);
+        }
+
+        /// <summary>
         /// Gets hidden text box for the window for measurement purposes.
         /// </summary>
         /// <param name="hasBorder">Indicates whether the hidden text box should have a border.</param>
@@ -1552,27 +1561,27 @@ namespace Alternet.UI
         {
             if (hasBorder)
             {
-                if (textBoxWithBorder is null)
+                if (hiddenTextBoxWithBorder is null)
                 {
-                    textBoxWithBorder = new TextBox();
-                    textBoxWithBorder.Visible = false;
-                    textBoxWithBorder.ParentFont = false;
-                    textBoxWithBorder.Parent = this;
+                    hiddenTextBoxWithBorder = new TextBox();
+                    hiddenTextBoxWithBorder.Visible = false;
+                    hiddenTextBoxWithBorder.ParentFont = false;
+                    hiddenTextBoxWithBorder.Parent = this;
                 }
 
-                return textBoxWithBorder;
+                return hiddenTextBoxWithBorder;
             }
             else
             {
-                if (textBox is null)
+                if (hiddenTextBox is null)
                 {
-                    textBox = new TextBox();
-                    textBox.HasBorder = false;
-                    textBox.Visible = false;
-                    textBox.ParentFont = false;
-                    textBox.Parent = this;
+                    hiddenTextBox = new TextBox();
+                    hiddenTextBox.HasBorder = false;
+                    hiddenTextBox.Visible = false;
+                    hiddenTextBox.ParentFont = false;
+                    hiddenTextBox.Parent = this;
                 }
-                return textBox;
+                return hiddenTextBox;
 
             }
         }
@@ -2345,6 +2354,22 @@ namespace Alternet.UI
 
             InflateAndDeflateSize();
             Invalidate();
+        }
+
+        /// <summary>
+        /// Notifies the window and its child controls that the window settings have changed.
+        /// </summary>
+        /// <param name="eventType">The type of window settings change that occurred.</param>
+        protected virtual void RaiseWindowSettingsChanged(WindowSettingsChangedEventType eventType)
+        {
+            if (DisposingOrDisposed)
+                return;
+            var args = new WindowSettingsChangedEventArgs(eventType);
+            OnWindowSettingsChanged(args);
+            ForEachChild((c) =>
+            {
+                c.OnWindowSettingsChanged(args);
+            });
         }
 
         /// <summary>
