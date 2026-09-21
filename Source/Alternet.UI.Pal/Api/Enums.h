@@ -9,905 +9,84 @@ namespace Alternet::UI
         Save = 1,
     };
     
-    enum class StringAlignment
+    enum class AnchorStyles
+    {
+        None = 0,
+        Top = 1,
+        Bottom = 2,
+        TopBottom = 3,
+        Left = 4,
+        LeftTop = 5,
+        Right = 8,
+        LeftRight = 12,
+    };
+    
+    enum class ArrowDirection
+    {
+        Up = 0,
+        Down = 1,
+        Left = 2,
+        Right = 3,
+    };
+    
+    enum class AutoSizeMode
+    {
+        GrowAndShrink = 0,
+        GrowOnly = 1,
+    };
+    
+    enum class BoundsSpecified
+    {
+        None = 0,
+        X = 1,
+        Y = 2,
+        Location = 3,
+        Width = 4,
+        Height = 8,
+        Size = 12,
+        All = 15,
+    };
+    
+    enum class CoordAlignment
     {
         Near = 0,
         Center = 1,
         Far = 2,
-    };
-    
-    enum class TextHorizontalAlignment
-    {
-        Left = 0,
-        Center = 1,
-        Right = 2,
-    };
-    
-    enum class TextTrimming
-    {
-        None = 0,
-        Pixel = 1,
-        Character = 2,
-    };
-    
-    enum class TextVerticalAlignment
-    {
-        Top = 0,
-        Center = 1,
-        Bottom = 2,
-    };
-    
-    enum class TextWrapping
-    {
-        None = 0,
-        Character = 1,
-        Word = 2,
-    };
-    
-    enum class BrushHatchStyle
-    {
-        Horizontal = 0,
-        Vertical = 1,
-        ForwardDiagonal = 2,
-        BackwardDiagonal = 3,
-        Cross = 4,
-        DiagonalCross = 5,
-    };
-    
-    enum class BrushType
-    {
-        None = 0,
-        Solid = 1,
-        Hatch = 2,
-        LinearGradient = 3,
-        RadialGradient = 4,
-        Transparent = 5,
-        Texture = 6,
-    };
-    
-    enum class LinearGradientMode
-    {
-        Horizontal = 0,
-        Vertical = 1,
-        ForwardDiagonal = 2,
-        BackwardDiagonal = 3,
-    };
-    
-    enum class WrapMode
-    {
-        Tile = 0,
-        TileFlipX = 1,
-        TileFlipY = 2,
-        TileFlipXY = 3,
-        Clamp = 4,
-    };
-    
-    enum class KnownColor
-    {
-        ActiveBorder = 1,
-        ActiveCaption = 2,
-        ActiveCaptionText = 3,
-        AppWorkspace = 4,
-        Control = 5,
-        ControlDark = 6,
-        ControlDarkDark = 7,
-        ControlLight = 8,
-        ControlLightLight = 9,
-        ControlText = 10,
-        Desktop = 11,
-        GrayText = 12,
-        Highlight = 13,
-        HighlightText = 14,
-        HotTrack = 15,
-        InactiveBorder = 16,
-        InactiveCaption = 17,
-        InactiveCaptionText = 18,
-        Info = 19,
-        InfoText = 20,
-        Menu = 21,
-        MenuText = 22,
-        ScrollBar = 23,
-        Window = 24,
-        WindowFrame = 25,
-        WindowText = 26,
-        Transparent = 27,
-        AliceBlue = 28,
-        AntiqueWhite = 29,
-        Aqua = 30,
-        Aquamarine = 31,
-        Azure = 32,
-        Beige = 33,
-        Bisque = 34,
-        Black = 35,
-        BlanchedAlmond = 36,
-        Blue = 37,
-        BlueViolet = 38,
-        Brown = 39,
-        BurlyWood = 40,
-        CadetBlue = 41,
-        Chartreuse = 42,
-        Chocolate = 43,
-        Coral = 44,
-        CornflowerBlue = 45,
-        Cornsilk = 46,
-        Crimson = 47,
-        Cyan = 48,
-        DarkBlue = 49,
-        DarkCyan = 50,
-        DarkGoldenrod = 51,
-        DarkGray = 52,
-        DarkGreen = 53,
-        DarkKhaki = 54,
-        DarkMagenta = 55,
-        DarkOliveGreen = 56,
-        DarkOrange = 57,
-        DarkOrchid = 58,
-        DarkRed = 59,
-        DarkSalmon = 60,
-        DarkSeaGreen = 61,
-        DarkSlateBlue = 62,
-        DarkSlateGray = 63,
-        DarkTurquoise = 64,
-        DarkViolet = 65,
-        DeepPink = 66,
-        DeepSkyBlue = 67,
-        DimGray = 68,
-        DodgerBlue = 69,
-        Firebrick = 70,
-        FloralWhite = 71,
-        ForestGreen = 72,
-        Fuchsia = 73,
-        Gainsboro = 74,
-        GhostWhite = 75,
-        Gold = 76,
-        Goldenrod = 77,
-        Gray = 78,
-        Green = 79,
-        GreenYellow = 80,
-        Honeydew = 81,
-        HotPink = 82,
-        IndianRed = 83,
-        Indigo = 84,
-        Ivory = 85,
-        Khaki = 86,
-        Lavender = 87,
-        LavenderBlush = 88,
-        LawnGreen = 89,
-        LemonChiffon = 90,
-        LightBlue = 91,
-        LightCoral = 92,
-        LightCyan = 93,
-        LightGoldenrodYellow = 94,
-        LightGray = 95,
-        LightGreen = 96,
-        LightPink = 97,
-        LightSalmon = 98,
-        LightSeaGreen = 99,
-        LightSkyBlue = 100,
-        LightSlateGray = 101,
-        LightSteelBlue = 102,
-        LightYellow = 103,
-        Lime = 104,
-        LimeGreen = 105,
-        Linen = 106,
-        Magenta = 107,
-        Maroon = 108,
-        MediumAquamarine = 109,
-        MediumBlue = 110,
-        MediumOrchid = 111,
-        MediumPurple = 112,
-        MediumSeaGreen = 113,
-        MediumSlateBlue = 114,
-        MediumSpringGreen = 115,
-        MediumTurquoise = 116,
-        MediumVioletRed = 117,
-        MidnightBlue = 118,
-        MintCream = 119,
-        MistyRose = 120,
-        Moccasin = 121,
-        NavajoWhite = 122,
-        Navy = 123,
-        OldLace = 124,
-        Olive = 125,
-        OliveDrab = 126,
-        Orange = 127,
-        OrangeRed = 128,
-        Orchid = 129,
-        PaleGoldenrod = 130,
-        PaleGreen = 131,
-        PaleTurquoise = 132,
-        PaleVioletRed = 133,
-        PapayaWhip = 134,
-        PeachPuff = 135,
-        Peru = 136,
-        Pink = 137,
-        Plum = 138,
-        PowderBlue = 139,
-        Purple = 140,
-        Red = 141,
-        RosyBrown = 142,
-        RoyalBlue = 143,
-        SaddleBrown = 144,
-        Salmon = 145,
-        SandyBrown = 146,
-        SeaGreen = 147,
-        SeaShell = 148,
-        Sienna = 149,
-        Silver = 150,
-        SkyBlue = 151,
-        SlateBlue = 152,
-        SlateGray = 153,
-        Snow = 154,
-        SpringGreen = 155,
-        SteelBlue = 156,
-        Tan = 157,
-        Teal = 158,
-        Thistle = 159,
-        Tomato = 160,
-        Turquoise = 161,
-        Violet = 162,
-        Wheat = 163,
-        White = 164,
-        WhiteSmoke = 165,
-        Yellow = 166,
-        YellowGreen = 167,
-        ButtonFace = 168,
-        ButtonHighlight = 169,
-        ButtonShadow = 170,
-        GradientActiveCaption = 171,
-        GradientInactiveCaption = 172,
-        MenuBar = 173,
-        MenuHighlight = 174,
-        RebeccaPurple = 175,
-    };
-    
-    enum class KnownColorCategory
-    {
-        Standard = 1,
-        System = 2,
-        Web = 4,
-        Other = 8,
-    };
-    
-    enum class KnownSystemColor
-    {
-        ActiveBorder = 1,
-        ActiveCaption = 2,
-        ActiveCaptionText = 3,
-        AppWorkspace = 4,
-        Control = 5,
-        ControlDark = 6,
-        ControlDarkDark = 7,
-        ControlLight = 8,
-        ControlLightLight = 9,
-        ControlText = 10,
-        Desktop = 11,
-        GrayText = 12,
-        Highlight = 13,
-        HighlightText = 14,
-        HotTrack = 15,
-        InactiveBorder = 16,
-        InactiveCaption = 17,
-        InactiveCaptionText = 18,
-        Info = 19,
-        InfoText = 20,
-        Menu = 21,
-        MenuText = 22,
-        ScrollBar = 23,
-        Window = 24,
-        WindowFrame = 25,
-        WindowText = 26,
-        ButtonFace = 168,
-        ButtonHighlight = 169,
-        ButtonShadow = 170,
-        GradientActiveCaption = 171,
-        GradientInactiveCaption = 172,
-        MenuBar = 173,
-        MenuHighlight = 174,
-    };
-    
-    enum class ColorAdjustmentOperation
-    {
-        None = 0,
-        Lighten = 1,
-        LightenHigh = 2,
-        Darken = 3,
-        DarkenHigh = 4,
-    };
-    
-    enum class FontEncoding
-    {
-        Default = 0,
-        ISO8859_1 = 1,
-        ISO8859_2 = 2,
-        ISO8859_3 = 3,
-        ISO8859_4 = 4,
-        ISO8859_5 = 5,
-        ISO8859_6 = 6,
-        ISO8859_7 = 7,
-        ISO8859_8 = 8,
-        ISO8859_9 = 9,
-        ISO8859_10 = 10,
-        ISO8859_11 = 11,
-        ISO8859_12 = 12,
-        ISO8859_13 = 13,
-        ISO8859_14 = 14,
-        ISO8859_15 = 15,
-        ISO8859_MAX = 16,
-        KOI8 = 17,
-        KOI8_U = 18,
-        ALTERNATIVE = 19,
-        BULGARIAN = 20,
-        CP437 = 21,
-        CP850 = 22,
-        CP852 = 23,
-        CP855 = 24,
-        CP866 = 25,
-        CP874 = 26,
-        SHIFT_JIS = 27,
-        CP932 = 27,
-        GB2312 = 28,
-        CP936 = 28,
-        CP949 = 29,
-        EUC_KR = 29,
-        CP950 = 30,
-        BIG5 = 30,
-        CP1250 = 31,
-        CP1251 = 32,
-        CP1252 = 33,
-        CP1253 = 34,
-        CP1254 = 35,
-        CP1255 = 36,
-        CP1256 = 37,
-        CP1257 = 38,
-        VIETNAMESE = 39,
-        CP1258 = 39,
-        JOHAB = 40,
-        CP1361 = 40,
-        CP12_MAX = 41,
-        UTF7 = 42,
-        UTF8 = 43,
-        EUC_JP = 44,
-        UTF16BE = 45,
-        UTF16LE = 46,
-        UTF32BE = 47,
-        UTF32LE = 48,
-        MACMIN = 49,
-        MACROMAN = 49,
-        MACJAPANESE = 50,
-        MACCHINESETRAD = 51,
-        MACKOREAN = 52,
-        MACARABIC = 53,
-        MACHEBREW = 54,
-        MACGREEK = 55,
-        MACCYRILLIC = 56,
-        MACDEVANAGARI = 57,
-        MACGURMUKHI = 58,
-        MACGUJARATI = 59,
-        MACORIYA = 60,
-        MACBENGALI = 61,
-        MACTAMIL = 62,
-        MACTELUGU = 63,
-        MACKANNADA = 64,
-        MACMALAJALAM = 65,
-        MACSINHALESE = 66,
-        MACBURMESE = 67,
-        MACKHMER = 68,
-        MACTHAI = 69,
-        MACLAOTIAN = 70,
-        MACGEORGIAN = 71,
-        MACARMENIAN = 72,
-        MACCHINESESIMP = 73,
-        MACTIBETAN = 74,
-        MACMONGOLIAN = 75,
-        MACETHIOPIC = 76,
-        MACCENTRALEUR = 77,
-        MACVIATNAMESE = 78,
-        MACARABICEXT = 79,
-        MACSYMBOL = 80,
-        MACDINGBATS = 81,
-        MACTURKISH = 82,
-        MACCROATIAN = 83,
-        MACICELANDIC = 84,
-        MACROMANIAN = 85,
-        MACCELTIC = 86,
-        MACGAELIC = 87,
-        MACKEYBOARD = 88,
-        MACMAX = 88,
-        ISO2022_JP = 89,
-        MAX = 90,
-        System = -1,
-    };
-    
-    enum class FontOriginKind
-    {
-        Default = 0,
-        DefaultMono = 1,
-        File = 2,
-        System = 3,
-        Other = 4,
-    };
-    
-    enum class FontStyle
-    {
-        Regular = 0,
-        Bold = 1,
-        Italic = 2,
-        Underline = 4,
-        Strikeout = 8,
-    };
-    
-    enum class FontWeight
-    {
-        Invalid = 0,
-        Thin = 100,
-        ExtraLight = 200,
-        UltraLight = 200,
-        Light = 300,
-        Normal = 400,
-        Regular = 400,
-        Medium = 500,
-        SemiBold = 600,
-        DemiBold = 600,
-        Bold = 700,
-        ExtraBold = 800,
-        UltraBold = 800,
-        Heavy = 900,
-        Black = 900,
-        ExtraBlack = 950,
-        UltraBlack = 950,
-        ExtraHeavy = 1000,
-        Max = 1000,
-    };
-    
-    enum class GenericFontFamily
-    {
-        None = 0,
-        SansSerif = 1,
-        Serif = 2,
-        Monospace = 3,
-        Default = 4,
-    };
-    
-    enum class ImageBitsFormatKind
-    {
-        Native = 0,
-        Alpha = 1,
-        Generic = 2,
-        Unknown = -1,
-    };
-    
-    enum class ImageGrayScaleMethod
-    {
-        Default = 0,
-        SetColorRGB150 = 1,
-        FillWithDisabledBrush = 2,
-    };
-    
-    enum class ImageLayout
-    {
-        None = 0,
-        Tile = 1,
-        Center = 2,
         Stretch = 3,
-        Zoom = 4,
+        Fill = 4,
     };
     
-    enum class ImageLockMode
-    {
-        ReadOnly = 1,
-        WriteOnly = 2,
-        ReadWrite = 3,
-    };
-    
-    enum class ImageSizeFallback
+    enum class DockStyle
     {
         None = 0,
-        SystemIcon = 1,
-        SmallSystemIcon = 2,
-        NearestLarger = 3,
-        Closest = 4,
-        First = 5,
-        Smallest = 6,
+        Top = 1,
+        Bottom = 2,
+        Left = 3,
+        Right = 4,
+        Fill = 5,
+        RightAutoSize = 6,
+        LeftAutoSize = 7,
+        TopAutoSize = 8,
+        BottomAutoSize = 9,
     };
     
-    enum class InterpolationMode
+    enum class DropDownAlignment
     {
-        None = 0,
-        NearestNeighbor = 0,
-        LowQuality = 1,
-        Low = 1,
-        MediumQuality = 2,
-        HighQuality = 3,
-        High = 3,
+        BeforeStart = 0,
+        AfterStart = 1,
+        BeforeEnd = 2,
+        AfterEnd = 3,
+        Center = 4,
+        Position = 5,
     };
     
-    enum class PixelFormat
-    {
-        DontCare = 0,
-        Undefined = 0,
-        Max = 15,
-        Indexed = 65536,
-        Gdi = 131072,
-        Format16bppRgb555 = 135173,
-        Format16bppRgb565 = 135174,
-        Format24bppRgb = 137224,
-        Format32bppRgb = 139273,
-        Format1bppIndexed = 196865,
-        Format4bppIndexed = 197634,
-        Format8bppIndexed = 198659,
-        Alpha = 262144,
-        Format16bppArgb1555 = 397319,
-        PAlpha = 524288,
-        Format32bppPArgb = 925707,
-        Extended = 1048576,
-        Format16bppGrayScale = 1052676,
-        Format48bppRgb = 1060876,
-        Format64bppPArgb = 1851406,
-        Canonical = 2097152,
-        Format32bppArgb = 2498570,
-        Format64bppArgb = 3424269,
-    };
-    
-    enum class RotateFlipType
-    {
-        RotateNoneFlipNone = 0,
-        Rotate180FlipXY = 0,
-        Rotate90FlipNone = 1,
-        Rotate270FlipXY = 1,
-        Rotate180FlipNone = 2,
-        RotateNoneFlipXY = 2,
-        Rotate270FlipNone = 3,
-        Rotate90FlipXY = 3,
-        RotateNoneFlipX = 4,
-        Rotate180FlipY = 4,
-        Rotate90FlipX = 5,
-        Rotate270FlipY = 5,
-        Rotate180FlipX = 6,
-        RotateNoneFlipY = 6,
-        Rotate270FlipX = 7,
-        Rotate90FlipY = 7,
-    };
-    
-    enum class ClipOperation
-    {
-        Difference = 0,
-        Intersect = 1,
-    };
-    
-    enum class CoordUnit
-    {
-        Pixel = 0,
-        Dip = 1,
-        Percent = 2,
-    };
-    
-    enum class DrawingShapeType
-    {
-        None = 0,
-        Rectangle = 1,
-        Ellipse = 2,
-        RoundedRectangle = 3,
-        Pie = 4,
-        Circle = 5,
-        Arc = 6,
-    };
-    
-    enum class FillMode
-    {
-        Alternate = 0,
-        Winding = 1,
-    };
-    
-    enum class GraphicsBackendType
-    {
-        SkiaSharp = 0,
-        WxWidgets = 1,
-        Null = 2,
-        Other = 3,
-    };
-    
-    enum class GraphicsUnit
-    {
-        World = 0,
-        Display = 1,
-        Pixel = 2,
-        Point = 3,
-        Inch = 4,
-        Document = 5,
-        Millimeter = 6,
-        Dip = 7,
-    };
-    
-    enum class MatrixOrder
-    {
-        Prepend = 0,
-        Append = 1,
-    };
-    
-    enum class RasterOperationMode
-    {
-        Clear = 0,
-        Xor = 1,
-        Invert = 2,
-        OrReverse = 3,
-        AndReverse = 4,
-        Copy = 5,
-        And = 6,
-        AndInvert = 7,
-        NoOp = 8,
-        Nor = 9,
-        Equiv = 10,
-        SrcInvert = 11,
-        OrInvert = 12,
-        Nand = 13,
-        Or = 14,
-        Set = 15,
-    };
-    
-    enum class RegionContain
-    {
-        OutRegion = 0,
-        InRegion = 2,
-    };
-    
-    enum class SmoothingMode
+    enum class ElementContentAlign
     {
         Default = 0,
-        HighSpeed = 1,
-        HighQuality = 2,
-        None = 3,
-        AntiAlias = 4,
-        Invalid = -1,
-    };
-    
-    enum class DashStyle
-    {
-        Solid = 0,
-        Dash = 1,
-        Dot = 2,
-        DashDot = 3,
-        DashDotDot = 4,
-        Custom = 5,
-    };
-    
-    enum class LineCap
-    {
-        Flat = 0,
-        Square = 1,
-        Round = 2,
-    };
-    
-    enum class LineJoin
-    {
-        Miter = 0,
-        Bevel = 1,
-        Round = 2,
-    };
-    
-    enum class SvgImageDataKind
-    {
-        Url = 0,
-        Data = 1,
-        PreloadUrl = 2,
-    };
-    
-    enum class SvgImageNumOfColors
-    {
-        One = 0,
-        Two = 1,
-        Many = 2,
-        Uknown = 3,
-    };
-    
-    enum class DrawLabelFlags
-    {
-        None = 0,
-        TextHasBold = 1,
-        TextHasNewLineChars = 2,
-        MeasureTextAsBold = 4,
-    };
-    
-    enum class HotkeyPrefix
-    {
-        None = 0,
-        Show = 1,
-        Hide = 2,
-    };
-    
-    enum class StringDigitSubstitute
-    {
-        User = 0,
-        None = 1,
-        National = 2,
-        Traditional = 3,
-    };
-    
-    enum class StringFormatFlags
-    {
-        DirectionRightToLeft = 1,
-        DirectionVertical = 2,
-        FitBlackBox = 4,
-        DisplayFormatControl = 32,
-        NoFontFallback = 1024,
-        MeasureTrailingSpaces = 2048,
-        NoWrap = 4096,
-        LineLimit = 8192,
-        NoClip = 16384,
-    };
-    
-    enum class StringTrimming
-    {
-        None = 0,
-        Character = 1,
-        Word = 2,
-        EllipsisCharacter = 3,
-        EllipsisWord = 4,
-        EllipsisPath = 5,
-    };
-    
-    enum class TextFormatFlags
-    {
-        Default = 0,
-        Left = 0,
-        Top = 0,
-        HorizontalCenter = 1,
-        Right = 2,
-        VerticalCenter = 4,
-        Bottom = 8,
-        WordBreak = 16,
-        WordEllipsis = 262144,
-        NoPadding = 268435456,
-    };
-    
-    enum class Duplex
-    {
-        Simplex = 0,
-        Vertical = 1,
-        Horizontal = 2,
-    };
-    
-    enum class PaperKind
-    {
-        Letter = 0,
-        Legal = 1,
-        A4 = 2,
-        C = 3,
-        D = 4,
-        E = 5,
-        LetterSmall = 6,
-        Tabloid = 7,
-        Ledger = 8,
-        Statement = 9,
-        Executive = 10,
-        A3 = 11,
-        A4Small = 12,
-        A5 = 13,
-        B4 = 14,
-        B5 = 15,
-        Folio = 16,
-        Quarto = 17,
-        Sheet10X14 = 18,
-        Sheet11X17 = 19,
-        Note = 20,
-        Envelope9 = 21,
-        Envelope10 = 22,
-        Envelope11 = 23,
-        Envelope12 = 24,
-        Envelope14 = 25,
-        EnvelopeDl = 26,
-        EnvelopeC5 = 27,
-        EnvelopeC3 = 28,
-        EnvelopeC4 = 29,
-        EnvelopeC6 = 30,
-        EnvelopeC65 = 31,
-        EnvelopeB4 = 32,
-        EnvelopeB5 = 33,
-        EnvelopeB6 = 34,
-        EnvelopeItaly = 35,
-        EnvelopeMonarch = 36,
-        EnvelopePersonal = 37,
-        FanfoldUs = 38,
-        FanfoldStandardGerman = 39,
-        FanfoldLegalGerman = 40,
-        IsoB4 = 41,
-        JapanesePostcard = 42,
-        Sheet9X11 = 43,
-        Sheet10X11 = 44,
-        Sheet15X11 = 45,
-        EnvelopeInvite = 46,
-        LetterExtra = 47,
-        LegalExtra = 48,
-        TabloidExtra = 49,
-        A4Extra = 50,
-        LetterTransverse = 51,
-        A4Transverse = 52,
-        LetterExtraTransverse = 53,
-        APlus = 54,
-        BPlus = 55,
-        LetterPlus = 56,
-        A4Plus = 57,
-        A5Transverse = 58,
-        B5Transverse = 59,
-        A3Extra = 60,
-        A5Extra = 61,
-        B5Extra = 62,
-        A2 = 63,
-        A3Transverse = 64,
-        A3ExtraTransverse = 65,
-        DblJapanesePostcard = 66,
-        A6 = 67,
-        JapaneseEnvelopeKaku2 = 68,
-        JapaneseEnvelopeKaku3 = 69,
-        JapaneseEnvelopeChou3 = 70,
-        JapaneseEnvelopeChou4 = 71,
-        LetterRotated = 72,
-        A3Rotated = 73,
-        A4Rotated = 74,
-        A5Rotated = 75,
-        B4JisRotated = 76,
-        B5JisRotated = 77,
-        JapanesePostcardRotated = 78,
-        DblJapanesePostcardRotated = 79,
-        A6Rotated = 80,
-        JapaneseEnvelopeKaku2Rotated = 81,
-        JapaneseEnvelopeKaku3Rotated = 82,
-        JapaneseEnvelopeChou3Rotated = 83,
-        JapaneseEnvelopeChou4Rotated = 84,
-        B6Jis = 85,
-        B6JisRotated = 86,
-        Sheet12X11 = 87,
-        JapaneseEnvelopeYou4 = 88,
-        JapaneseEnvelopeYou4Rotated = 89,
-        Prc16k = 90,
-        Prc32k = 91,
-        Prc32kBig = 92,
-        PrcEnvelope1 = 93,
-        PrcEnvelope2 = 94,
-        PrcEnvelope3 = 95,
-        PrcEnvelope4 = 96,
-        PrcEnvelope5 = 97,
-        PrcEnvelope6 = 98,
-        PrcEnvelope7 = 99,
-        PrcEnvelope8 = 100,
-        PrcEnvelope9 = 101,
-        PrcEnvelope10 = 102,
-        Prc16kRotated = 103,
-        Prc32kRotated = 104,
-        Prc32kBigRotated = 105,
-        PrcEnvelope1Rotated = 106,
-        PrcEnvelope2Rotated = 107,
-        PrcEnvelope3Rotated = 108,
-        PrcEnvelope4Rotated = 109,
-        PrcEnvelope5Rotated = 110,
-        PrcEnvelope6Rotated = 111,
-        PrcEnvelope7Rotated = 112,
-        PrcEnvelope8Rotated = 113,
-        PrcEnvelope9Rotated = 114,
-        PrcEnvelope10Rotated = 115,
-        A0 = 116,
-        A1 = 117,
-    };
-    
-    enum class PrinterResolutionKind
-    {
-        Draft = 0,
-        Low = 1,
-        Medium = 2,
-        High = 3,
-    };
-    
-    enum class PrintRange
-    {
-        AllPages = 0,
-        Selection = 1,
-        SomePages = 2,
-    };
-    
-    enum class CombineMode
-    {
-        Intersect = 1,
-        Exclude = 4,
+        Left = 16,
+        Right = 32,
+        Top = 64,
+        Bottom = 128,
     };
     
     enum class ContentAlignment
@@ -956,74 +135,6 @@ namespace Alternet::UI
         All = 240,
     };
     
-    enum class AnchorStyles
-    {
-        None = 0,
-        Top = 1,
-        Bottom = 2,
-        TopBottom = 3,
-        Left = 4,
-        LeftTop = 5,
-        Right = 8,
-        LeftRight = 12,
-    };
-    
-    enum class ArrowDirection
-    {
-        Up = 0,
-        Down = 1,
-        Left = 2,
-        Right = 3,
-    };
-    
-    enum class AutoSizeMode
-    {
-        GrowAndShrink = 0,
-        GrowOnly = 1,
-    };
-    
-    enum class CoordAlignment
-    {
-        Near = 0,
-        Center = 1,
-        Far = 2,
-        Stretch = 3,
-        Fill = 4,
-    };
-    
-    enum class DockStyle
-    {
-        None = 0,
-        Top = 1,
-        Bottom = 2,
-        Left = 3,
-        Right = 4,
-        Fill = 5,
-        RightAutoSize = 6,
-        LeftAutoSize = 7,
-        TopAutoSize = 8,
-        BottomAutoSize = 9,
-    };
-    
-    enum class DropDownAlignment
-    {
-        BeforeStart = 0,
-        AfterStart = 1,
-        BeforeEnd = 2,
-        AfterEnd = 3,
-        Center = 4,
-        Position = 5,
-    };
-    
-    enum class ElementContentAlign
-    {
-        Default = 0,
-        Left = 16,
-        Right = 32,
-        Top = 64,
-        Bottom = 128,
-    };
-    
     enum class GenericOrientation
     {
         Horizontal = 4,
@@ -1068,6 +179,18 @@ namespace Alternet::UI
         No = 0,
         Yes = 1,
         Inherit = 2,
+    };
+    
+    enum class SetBoundsFlags
+    {
+        UseExisting = 0,
+        AutoWidth = 1,
+        AutoHeight = 2,
+        Auto = 3,
+        AllowMinusOne = 4,
+        NoAdjustments = 8,
+        Force = 16,
+        ForceEvent = 32,
     };
     
     enum class SplitterPanelSplitMethod
@@ -1203,18 +326,6 @@ namespace Alternet::UI
         CustomControl = 7,
     };
     
-    enum class BoundsSpecified
-    {
-        None = 0,
-        X = 1,
-        Y = 2,
-        Location = 3,
-        Width = 4,
-        Height = 8,
-        Size = 12,
-        All = 15,
-    };
-    
     enum class CheckedSpreadMode
     {
         None = 0,
@@ -1235,6 +346,12 @@ namespace Alternet::UI
         System = 1,
         Paint = 2,
         Transparent = 3,
+    };
+    
+    enum class ControlColorMode
+    {
+        Light = 0,
+        Dark = 1,
     };
     
     enum class ControlFlags
@@ -1289,13 +406,6 @@ namespace Alternet::UI
         UseTextForAccessibility = 262144,
     };
     
-    enum class FileListBoxColumn
-    {
-        Name = 0,
-        DateModified = 1,
-        Size = 2,
-    };
-    
     enum class FocusState
     {
         Unfocused = 0,
@@ -1320,6 +430,15 @@ namespace Alternet::UI
         Visible = 2,
         Text = 3,
         Title = 4,
+    };
+    
+    enum class InvalidateMethod
+    {
+        None = 0,
+        Invalidate = 1,
+        Refresh = 2,
+        LayoutAndInvalidate = 3,
+        LayoutAndRefresh = 4,
     };
     
     enum class KnownButton
@@ -1364,6 +483,13 @@ namespace Alternet::UI
         All = 37,
     };
     
+    enum class FileListBoxColumn
+    {
+        Name = 0,
+        DateModified = 1,
+        Size = 2,
+    };
+    
     enum class ListBoxHandlerCreateFlags
     {
         None = 0,
@@ -1390,16 +516,10 @@ namespace Alternet::UI
         Both = 3,
     };
     
-    enum class SetBoundsFlags
+    enum class ShowMethod
     {
-        UseExisting = 0,
-        AutoWidth = 1,
-        AutoHeight = 2,
-        Auto = 3,
-        AllowMinusOne = 4,
-        NoAdjustments = 8,
-        Force = 16,
-        ForceEvent = 32,
+        Default = 0,
+        None = 1,
     };
     
     enum class SliderTickStyle
@@ -1540,7 +660,13 @@ namespace Alternet::UI
         Second = 1,
         Third = 2,
         Fourth = 3,
-        Last = 4,
+        Fifth = 4,
+        Last = 5,
+        Every = 6,
+        Odd = 7,
+        Even = 8,
+        Penultimate = 9,
+        Middle = 10,
     };
     
     enum class ScheduleRepeatPattern
@@ -2287,6 +1413,13 @@ namespace Alternet::UI
         MediaEject = 423,
         MediaRecord = 424,
         Max = 424,
+    };
+    
+    enum class KeyboardEditMode
+    {
+        None = 0,
+        EditOnEnter = 1,
+        EditOnF2 = 2,
     };
     
     enum class Keys
@@ -3186,19 +2319,6 @@ namespace Alternet::UI
         Other = 4,
     };
     
-    enum class OperatingSystems
-    {
-        None = 0,
-        Windows = 1,
-        Linux = 2,
-        WindowsOrLinux = 3,
-        MacOs = 4,
-        Android = 8,
-        IOS = 16,
-        Unknown = 32,
-        Any = 63,
-    };
-    
     enum class SystemSettingsFeature
     {
         CanDrawFrameDecorations = 1,
@@ -3844,27 +2964,922 @@ namespace Alternet::UI
         Maximized = 2,
     };
     
+    enum class StringAlignment
+    {
+        Near = 0,
+        Center = 1,
+        Far = 2,
+    };
+    
+    enum class TextHorizontalAlignment
+    {
+        Left = 0,
+        Center = 1,
+        Right = 2,
+    };
+    
+    enum class TextTrimming
+    {
+        None = 0,
+        Pixel = 1,
+        Character = 2,
+    };
+    
+    enum class TextVerticalAlignment
+    {
+        Top = 0,
+        Center = 1,
+        Bottom = 2,
+    };
+    
+    enum class TextWrapping
+    {
+        None = 0,
+        Character = 1,
+        Word = 2,
+    };
+    
+    enum class BrushHatchStyle
+    {
+        Horizontal = 0,
+        Vertical = 1,
+        ForwardDiagonal = 2,
+        BackwardDiagonal = 3,
+        Cross = 4,
+        DiagonalCross = 5,
+    };
+    
+    enum class BrushType
+    {
+        None = 0,
+        Solid = 1,
+        Hatch = 2,
+        LinearGradient = 3,
+        RadialGradient = 4,
+        Transparent = 5,
+        Texture = 6,
+    };
+    
+    enum class LinearGradientMode
+    {
+        Horizontal = 0,
+        Vertical = 1,
+        ForwardDiagonal = 2,
+        BackwardDiagonal = 3,
+    };
+    
+    enum class WrapMode
+    {
+        Tile = 0,
+        TileFlipX = 1,
+        TileFlipY = 2,
+        TileFlipXY = 3,
+        Clamp = 4,
+    };
+    
+    enum class KnownColor
+    {
+        ActiveBorder = 1,
+        ActiveCaption = 2,
+        ActiveCaptionText = 3,
+        AppWorkspace = 4,
+        Control = 5,
+        ControlDark = 6,
+        ControlDarkDark = 7,
+        ControlLight = 8,
+        ControlLightLight = 9,
+        ControlText = 10,
+        Desktop = 11,
+        GrayText = 12,
+        Highlight = 13,
+        HighlightText = 14,
+        HotTrack = 15,
+        InactiveBorder = 16,
+        InactiveCaption = 17,
+        InactiveCaptionText = 18,
+        Info = 19,
+        InfoText = 20,
+        Menu = 21,
+        MenuText = 22,
+        ScrollBar = 23,
+        Window = 24,
+        WindowFrame = 25,
+        WindowText = 26,
+        Transparent = 27,
+        AliceBlue = 28,
+        AntiqueWhite = 29,
+        Aqua = 30,
+        Aquamarine = 31,
+        Azure = 32,
+        Beige = 33,
+        Bisque = 34,
+        Black = 35,
+        BlanchedAlmond = 36,
+        Blue = 37,
+        BlueViolet = 38,
+        Brown = 39,
+        BurlyWood = 40,
+        CadetBlue = 41,
+        Chartreuse = 42,
+        Chocolate = 43,
+        Coral = 44,
+        CornflowerBlue = 45,
+        Cornsilk = 46,
+        Crimson = 47,
+        Cyan = 48,
+        DarkBlue = 49,
+        DarkCyan = 50,
+        DarkGoldenrod = 51,
+        DarkGray = 52,
+        DarkGreen = 53,
+        DarkKhaki = 54,
+        DarkMagenta = 55,
+        DarkOliveGreen = 56,
+        DarkOrange = 57,
+        DarkOrchid = 58,
+        DarkRed = 59,
+        DarkSalmon = 60,
+        DarkSeaGreen = 61,
+        DarkSlateBlue = 62,
+        DarkSlateGray = 63,
+        DarkTurquoise = 64,
+        DarkViolet = 65,
+        DeepPink = 66,
+        DeepSkyBlue = 67,
+        DimGray = 68,
+        DodgerBlue = 69,
+        Firebrick = 70,
+        FloralWhite = 71,
+        ForestGreen = 72,
+        Fuchsia = 73,
+        Gainsboro = 74,
+        GhostWhite = 75,
+        Gold = 76,
+        Goldenrod = 77,
+        Gray = 78,
+        Green = 79,
+        GreenYellow = 80,
+        Honeydew = 81,
+        HotPink = 82,
+        IndianRed = 83,
+        Indigo = 84,
+        Ivory = 85,
+        Khaki = 86,
+        Lavender = 87,
+        LavenderBlush = 88,
+        LawnGreen = 89,
+        LemonChiffon = 90,
+        LightBlue = 91,
+        LightCoral = 92,
+        LightCyan = 93,
+        LightGoldenrodYellow = 94,
+        LightGray = 95,
+        LightGreen = 96,
+        LightPink = 97,
+        LightSalmon = 98,
+        LightSeaGreen = 99,
+        LightSkyBlue = 100,
+        LightSlateGray = 101,
+        LightSteelBlue = 102,
+        LightYellow = 103,
+        Lime = 104,
+        LimeGreen = 105,
+        Linen = 106,
+        Magenta = 107,
+        Maroon = 108,
+        MediumAquamarine = 109,
+        MediumBlue = 110,
+        MediumOrchid = 111,
+        MediumPurple = 112,
+        MediumSeaGreen = 113,
+        MediumSlateBlue = 114,
+        MediumSpringGreen = 115,
+        MediumTurquoise = 116,
+        MediumVioletRed = 117,
+        MidnightBlue = 118,
+        MintCream = 119,
+        MistyRose = 120,
+        Moccasin = 121,
+        NavajoWhite = 122,
+        Navy = 123,
+        OldLace = 124,
+        Olive = 125,
+        OliveDrab = 126,
+        Orange = 127,
+        OrangeRed = 128,
+        Orchid = 129,
+        PaleGoldenrod = 130,
+        PaleGreen = 131,
+        PaleTurquoise = 132,
+        PaleVioletRed = 133,
+        PapayaWhip = 134,
+        PeachPuff = 135,
+        Peru = 136,
+        Pink = 137,
+        Plum = 138,
+        PowderBlue = 139,
+        Purple = 140,
+        Red = 141,
+        RosyBrown = 142,
+        RoyalBlue = 143,
+        SaddleBrown = 144,
+        Salmon = 145,
+        SandyBrown = 146,
+        SeaGreen = 147,
+        SeaShell = 148,
+        Sienna = 149,
+        Silver = 150,
+        SkyBlue = 151,
+        SlateBlue = 152,
+        SlateGray = 153,
+        Snow = 154,
+        SpringGreen = 155,
+        SteelBlue = 156,
+        Tan = 157,
+        Teal = 158,
+        Thistle = 159,
+        Tomato = 160,
+        Turquoise = 161,
+        Violet = 162,
+        Wheat = 163,
+        White = 164,
+        WhiteSmoke = 165,
+        Yellow = 166,
+        YellowGreen = 167,
+        ButtonFace = 168,
+        ButtonHighlight = 169,
+        ButtonShadow = 170,
+        GradientActiveCaption = 171,
+        GradientInactiveCaption = 172,
+        MenuBar = 173,
+        MenuHighlight = 174,
+        RebeccaPurple = 175,
+    };
+    
+    enum class KnownColorCategory
+    {
+        Standard = 1,
+        System = 2,
+        Web = 4,
+        Other = 8,
+    };
+    
+    enum class KnownSystemColor
+    {
+        ActiveBorder = 1,
+        ActiveCaption = 2,
+        ActiveCaptionText = 3,
+        AppWorkspace = 4,
+        Control = 5,
+        ControlDark = 6,
+        ControlDarkDark = 7,
+        ControlLight = 8,
+        ControlLightLight = 9,
+        ControlText = 10,
+        Desktop = 11,
+        GrayText = 12,
+        Highlight = 13,
+        HighlightText = 14,
+        HotTrack = 15,
+        InactiveBorder = 16,
+        InactiveCaption = 17,
+        InactiveCaptionText = 18,
+        Info = 19,
+        InfoText = 20,
+        Menu = 21,
+        MenuText = 22,
+        ScrollBar = 23,
+        Window = 24,
+        WindowFrame = 25,
+        WindowText = 26,
+        ButtonFace = 168,
+        ButtonHighlight = 169,
+        ButtonShadow = 170,
+        GradientActiveCaption = 171,
+        GradientInactiveCaption = 172,
+        MenuBar = 173,
+        MenuHighlight = 174,
+    };
+    
+    enum class ColorAdjustmentOperation
+    {
+        None = 0,
+        Lighten = 1,
+        LightenHigh = 2,
+        Darken = 3,
+        DarkenHigh = 4,
+    };
+    
+    enum class FontEncoding
+    {
+        Default = 0,
+        ISO8859_1 = 1,
+        ISO8859_2 = 2,
+        ISO8859_3 = 3,
+        ISO8859_4 = 4,
+        ISO8859_5 = 5,
+        ISO8859_6 = 6,
+        ISO8859_7 = 7,
+        ISO8859_8 = 8,
+        ISO8859_9 = 9,
+        ISO8859_10 = 10,
+        ISO8859_11 = 11,
+        ISO8859_12 = 12,
+        ISO8859_13 = 13,
+        ISO8859_14 = 14,
+        ISO8859_15 = 15,
+        ISO8859_MAX = 16,
+        KOI8 = 17,
+        KOI8_U = 18,
+        ALTERNATIVE = 19,
+        BULGARIAN = 20,
+        CP437 = 21,
+        CP850 = 22,
+        CP852 = 23,
+        CP855 = 24,
+        CP866 = 25,
+        CP874 = 26,
+        SHIFT_JIS = 27,
+        CP932 = 27,
+        GB2312 = 28,
+        CP936 = 28,
+        CP949 = 29,
+        EUC_KR = 29,
+        CP950 = 30,
+        BIG5 = 30,
+        CP1250 = 31,
+        CP1251 = 32,
+        CP1252 = 33,
+        CP1253 = 34,
+        CP1254 = 35,
+        CP1255 = 36,
+        CP1256 = 37,
+        CP1257 = 38,
+        VIETNAMESE = 39,
+        CP1258 = 39,
+        JOHAB = 40,
+        CP1361 = 40,
+        CP12_MAX = 41,
+        UTF7 = 42,
+        UTF8 = 43,
+        EUC_JP = 44,
+        UTF16BE = 45,
+        UTF16LE = 46,
+        UTF32BE = 47,
+        UTF32LE = 48,
+        MACMIN = 49,
+        MACROMAN = 49,
+        MACJAPANESE = 50,
+        MACCHINESETRAD = 51,
+        MACKOREAN = 52,
+        MACARABIC = 53,
+        MACHEBREW = 54,
+        MACGREEK = 55,
+        MACCYRILLIC = 56,
+        MACDEVANAGARI = 57,
+        MACGURMUKHI = 58,
+        MACGUJARATI = 59,
+        MACORIYA = 60,
+        MACBENGALI = 61,
+        MACTAMIL = 62,
+        MACTELUGU = 63,
+        MACKANNADA = 64,
+        MACMALAJALAM = 65,
+        MACSINHALESE = 66,
+        MACBURMESE = 67,
+        MACKHMER = 68,
+        MACTHAI = 69,
+        MACLAOTIAN = 70,
+        MACGEORGIAN = 71,
+        MACARMENIAN = 72,
+        MACCHINESESIMP = 73,
+        MACTIBETAN = 74,
+        MACMONGOLIAN = 75,
+        MACETHIOPIC = 76,
+        MACCENTRALEUR = 77,
+        MACVIATNAMESE = 78,
+        MACARABICEXT = 79,
+        MACSYMBOL = 80,
+        MACDINGBATS = 81,
+        MACTURKISH = 82,
+        MACCROATIAN = 83,
+        MACICELANDIC = 84,
+        MACROMANIAN = 85,
+        MACCELTIC = 86,
+        MACGAELIC = 87,
+        MACKEYBOARD = 88,
+        MACMAX = 88,
+        ISO2022_JP = 89,
+        MAX = 90,
+        System = -1,
+    };
+    
+    enum class FontOriginKind
+    {
+        Default = 0,
+        DefaultMono = 1,
+        File = 2,
+        System = 3,
+        Other = 4,
+    };
+    
+    enum class FontStyle
+    {
+        Regular = 0,
+        Bold = 1,
+        Italic = 2,
+        Underline = 4,
+        Strikeout = 8,
+    };
+    
+    enum class FontWeight
+    {
+        Invalid = 0,
+        Thin = 100,
+        ExtraLight = 200,
+        UltraLight = 200,
+        Light = 300,
+        Normal = 400,
+        Regular = 400,
+        Medium = 500,
+        SemiBold = 600,
+        DemiBold = 600,
+        Bold = 700,
+        ExtraBold = 800,
+        UltraBold = 800,
+        Heavy = 900,
+        Black = 900,
+        ExtraBlack = 950,
+        UltraBlack = 950,
+        ExtraHeavy = 1000,
+        Max = 1000,
+    };
+    
+    enum class GenericFontFamily
+    {
+        None = 0,
+        SansSerif = 1,
+        Serif = 2,
+        Monospace = 3,
+        Default = 4,
+    };
+    
+    enum class ImageBitsFormatKind
+    {
+        Native = 0,
+        Alpha = 1,
+        Generic = 2,
+        Unknown = -1,
+    };
+    
+    enum class ImageGrayScaleMethod
+    {
+        Default = 0,
+        SetColorRGB150 = 1,
+        FillWithDisabledBrush = 2,
+    };
+    
+    enum class ImageLayout
+    {
+        None = 0,
+        Tile = 1,
+        Center = 2,
+        Stretch = 3,
+        Zoom = 4,
+    };
+    
+    enum class ImageLockMode
+    {
+        ReadOnly = 1,
+        WriteOnly = 2,
+        ReadWrite = 3,
+    };
+    
+    enum class ImageSizeFallback
+    {
+        None = 0,
+        SystemIcon = 1,
+        SmallSystemIcon = 2,
+        NearestLarger = 3,
+        Closest = 4,
+        First = 5,
+        Smallest = 6,
+    };
+    
+    enum class InterpolationMode
+    {
+        None = 0,
+        NearestNeighbor = 0,
+        LowQuality = 1,
+        Low = 1,
+        MediumQuality = 2,
+        HighQuality = 3,
+        High = 3,
+    };
+    
+    enum class PixelFormat
+    {
+        DontCare = 0,
+        Undefined = 0,
+        Max = 15,
+        Indexed = 65536,
+        Gdi = 131072,
+        Format16bppRgb555 = 135173,
+        Format16bppRgb565 = 135174,
+        Format24bppRgb = 137224,
+        Format32bppRgb = 139273,
+        Format1bppIndexed = 196865,
+        Format4bppIndexed = 197634,
+        Format8bppIndexed = 198659,
+        Alpha = 262144,
+        Format16bppArgb1555 = 397319,
+        PAlpha = 524288,
+        Format32bppPArgb = 925707,
+        Extended = 1048576,
+        Format16bppGrayScale = 1052676,
+        Format48bppRgb = 1060876,
+        Format64bppPArgb = 1851406,
+        Canonical = 2097152,
+        Format32bppArgb = 2498570,
+        Format64bppArgb = 3424269,
+    };
+    
+    enum class RotateFlipType
+    {
+        RotateNoneFlipNone = 0,
+        Rotate180FlipXY = 0,
+        Rotate90FlipNone = 1,
+        Rotate270FlipXY = 1,
+        Rotate180FlipNone = 2,
+        RotateNoneFlipXY = 2,
+        Rotate270FlipNone = 3,
+        Rotate90FlipXY = 3,
+        RotateNoneFlipX = 4,
+        Rotate180FlipY = 4,
+        Rotate90FlipX = 5,
+        Rotate270FlipY = 5,
+        Rotate180FlipX = 6,
+        RotateNoneFlipY = 6,
+        Rotate270FlipX = 7,
+        Rotate90FlipY = 7,
+    };
+    
+    enum class ClipOperation
+    {
+        Difference = 0,
+        Intersect = 1,
+    };
+    
+    enum class CoordUnit
+    {
+        Pixel = 0,
+        Dip = 1,
+        Percent = 2,
+    };
+    
+    enum class DrawingShapeType
+    {
+        None = 0,
+        Rectangle = 1,
+        Ellipse = 2,
+        RoundedRectangle = 3,
+        Pie = 4,
+        Circle = 5,
+        Arc = 6,
+    };
+    
+    enum class FillMode
+    {
+        Alternate = 0,
+        Winding = 1,
+    };
+    
+    enum class GraphicsBackendType
+    {
+        SkiaSharp = 0,
+        WxWidgets = 1,
+        Null = 2,
+        Other = 3,
+    };
+    
+    enum class GraphicsUnit
+    {
+        World = 0,
+        Display = 1,
+        Pixel = 2,
+        Point = 3,
+        Inch = 4,
+        Document = 5,
+        Millimeter = 6,
+        Dip = 7,
+    };
+    
+    enum class MatrixOrder
+    {
+        Prepend = 0,
+        Append = 1,
+    };
+    
+    enum class RasterOperationMode
+    {
+        Clear = 0,
+        Xor = 1,
+        Invert = 2,
+        OrReverse = 3,
+        AndReverse = 4,
+        Copy = 5,
+        And = 6,
+        AndInvert = 7,
+        NoOp = 8,
+        Nor = 9,
+        Equiv = 10,
+        SrcInvert = 11,
+        OrInvert = 12,
+        Nand = 13,
+        Or = 14,
+        Set = 15,
+    };
+    
+    enum class RegionContain
+    {
+        OutRegion = 0,
+        InRegion = 2,
+    };
+    
+    enum class SmoothingMode
+    {
+        Default = 0,
+        HighSpeed = 1,
+        HighQuality = 2,
+        None = 3,
+        AntiAlias = 4,
+        Invalid = -1,
+    };
+    
+    enum class DashStyle
+    {
+        Solid = 0,
+        Dash = 1,
+        Dot = 2,
+        DashDot = 3,
+        DashDotDot = 4,
+        Custom = 5,
+    };
+    
+    enum class LineCap
+    {
+        Flat = 0,
+        Square = 1,
+        Round = 2,
+    };
+    
+    enum class LineJoin
+    {
+        Miter = 0,
+        Bevel = 1,
+        Round = 2,
+    };
+    
+    enum class SvgImageDataKind
+    {
+        Url = 0,
+        Data = 1,
+        PreloadUrl = 2,
+    };
+    
+    enum class SvgImageNumOfColors
+    {
+        One = 0,
+        Two = 1,
+        Many = 2,
+        Uknown = 3,
+    };
+    
+    enum class DrawLabelFlags
+    {
+        None = 0,
+        TextHasBold = 1,
+        TextHasNewLineChars = 2,
+        MeasureTextAsBold = 4,
+    };
+    
+    enum class HotkeyPrefix
+    {
+        None = 0,
+        Show = 1,
+        Hide = 2,
+    };
+    
+    enum class StringDigitSubstitute
+    {
+        User = 0,
+        None = 1,
+        National = 2,
+        Traditional = 3,
+    };
+    
+    enum class StringFormatFlags
+    {
+        FitBlackBox = 4,
+        NoWrap = 4096,
+        LineLimit = 8192,
+        NoClip = 16384,
+    };
+    
+    enum class StringTrimming
+    {
+        None = 0,
+        Character = 1,
+        Word = 2,
+        EllipsisCharacter = 3,
+        EllipsisWord = 4,
+        EllipsisPath = 5,
+    };
+    
+    enum class TextFormatFlags
+    {
+        Default = 0,
+        Left = 0,
+        Top = 0,
+        HorizontalCenter = 1,
+        Right = 2,
+        VerticalCenter = 4,
+        Bottom = 8,
+        WordBreak = 16,
+        ExpandTabs = 64,
+        NoPrefix = 2048,
+        PathEllipsis = 16384,
+        EndEllipsis = 32768,
+        WordEllipsis = 262144,
+        NoPadding = 268435456,
+        LeftAndRightPadding = 536870912,
+    };
+    
+    enum class Duplex
+    {
+        Simplex = 0,
+        Vertical = 1,
+        Horizontal = 2,
+    };
+    
+    enum class PaperKind
+    {
+        Letter = 0,
+        Legal = 1,
+        A4 = 2,
+        C = 3,
+        D = 4,
+        E = 5,
+        LetterSmall = 6,
+        Tabloid = 7,
+        Ledger = 8,
+        Statement = 9,
+        Executive = 10,
+        A3 = 11,
+        A4Small = 12,
+        A5 = 13,
+        B4 = 14,
+        B5 = 15,
+        Folio = 16,
+        Quarto = 17,
+        Sheet10X14 = 18,
+        Sheet11X17 = 19,
+        Note = 20,
+        Envelope9 = 21,
+        Envelope10 = 22,
+        Envelope11 = 23,
+        Envelope12 = 24,
+        Envelope14 = 25,
+        EnvelopeDl = 26,
+        EnvelopeC5 = 27,
+        EnvelopeC3 = 28,
+        EnvelopeC4 = 29,
+        EnvelopeC6 = 30,
+        EnvelopeC65 = 31,
+        EnvelopeB4 = 32,
+        EnvelopeB5 = 33,
+        EnvelopeB6 = 34,
+        EnvelopeItaly = 35,
+        EnvelopeMonarch = 36,
+        EnvelopePersonal = 37,
+        FanfoldUs = 38,
+        FanfoldStandardGerman = 39,
+        FanfoldLegalGerman = 40,
+        IsoB4 = 41,
+        JapanesePostcard = 42,
+        Sheet9X11 = 43,
+        Sheet10X11 = 44,
+        Sheet15X11 = 45,
+        EnvelopeInvite = 46,
+        LetterExtra = 47,
+        LegalExtra = 48,
+        TabloidExtra = 49,
+        A4Extra = 50,
+        LetterTransverse = 51,
+        A4Transverse = 52,
+        LetterExtraTransverse = 53,
+        APlus = 54,
+        BPlus = 55,
+        LetterPlus = 56,
+        A4Plus = 57,
+        A5Transverse = 58,
+        B5Transverse = 59,
+        A3Extra = 60,
+        A5Extra = 61,
+        B5Extra = 62,
+        A2 = 63,
+        A3Transverse = 64,
+        A3ExtraTransverse = 65,
+        DblJapanesePostcard = 66,
+        A6 = 67,
+        JapaneseEnvelopeKaku2 = 68,
+        JapaneseEnvelopeKaku3 = 69,
+        JapaneseEnvelopeChou3 = 70,
+        JapaneseEnvelopeChou4 = 71,
+        LetterRotated = 72,
+        A3Rotated = 73,
+        A4Rotated = 74,
+        A5Rotated = 75,
+        B4JisRotated = 76,
+        B5JisRotated = 77,
+        JapanesePostcardRotated = 78,
+        DblJapanesePostcardRotated = 79,
+        A6Rotated = 80,
+        JapaneseEnvelopeKaku2Rotated = 81,
+        JapaneseEnvelopeKaku3Rotated = 82,
+        JapaneseEnvelopeChou3Rotated = 83,
+        JapaneseEnvelopeChou4Rotated = 84,
+        B6Jis = 85,
+        B6JisRotated = 86,
+        Sheet12X11 = 87,
+        JapaneseEnvelopeYou4 = 88,
+        JapaneseEnvelopeYou4Rotated = 89,
+        Prc16k = 90,
+        Prc32k = 91,
+        Prc32kBig = 92,
+        PrcEnvelope1 = 93,
+        PrcEnvelope2 = 94,
+        PrcEnvelope3 = 95,
+        PrcEnvelope4 = 96,
+        PrcEnvelope5 = 97,
+        PrcEnvelope6 = 98,
+        PrcEnvelope7 = 99,
+        PrcEnvelope8 = 100,
+        PrcEnvelope9 = 101,
+        PrcEnvelope10 = 102,
+        Prc16kRotated = 103,
+        Prc32kRotated = 104,
+        Prc32kBigRotated = 105,
+        PrcEnvelope1Rotated = 106,
+        PrcEnvelope2Rotated = 107,
+        PrcEnvelope3Rotated = 108,
+        PrcEnvelope4Rotated = 109,
+        PrcEnvelope5Rotated = 110,
+        PrcEnvelope6Rotated = 111,
+        PrcEnvelope7Rotated = 112,
+        PrcEnvelope8Rotated = 113,
+        PrcEnvelope9Rotated = 114,
+        PrcEnvelope10Rotated = 115,
+        A0 = 116,
+        A1 = 117,
+    };
+    
+    enum class PrinterResolutionKind
+    {
+        Draft = 0,
+        Low = 1,
+        Medium = 2,
+        High = 3,
+    };
+    
+    enum class PrintRange
+    {
+        AllPages = 0,
+        Selection = 1,
+        SomePages = 2,
+    };
+    
+    enum class CombineMode
+    {
+        Intersect = 1,
+        Exclude = 4,
+    };
+    
 }
-template<> struct enable_bitmask_operators<Alternet::UI::KnownColorCategory> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::FontWeight> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::DrawLabelFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::StringFormatFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::TextFormatFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::AnchorStyles> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::BoundsSpecified> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericAlignment> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericDirection> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::AnchorStyles> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericOrientation> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::LayoutFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::SetBoundsFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::SwipeDirection> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::Border3DSide> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::BoundsSpecified> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlRenderingFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlStyles> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ListBoxHandlerCreateFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ListBoxHandlerFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::SetBoundsFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::VisualControlStates> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DatePickerStyleFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DaysOfWeek> { static const bool enable = true; };
@@ -3896,7 +3911,6 @@ template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridSetValueFla
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridSplitterPosFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridValidationFailure> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::PropertyGridValueFormatFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::OperatingSystems> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::RichTextHandlerFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::RichTextInsertFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::RichTextMoveCaretFlags> { static const bool enable = true; };
@@ -3912,3 +3926,9 @@ template<> struct enable_bitmask_operators<Alternet::UI::TreeViewCreateStyle> { 
 template<> struct enable_bitmask_operators<Alternet::UI::TreeViewHitTestLocations> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ValueValidatorTextStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::WebBrowserSearchFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::KnownColorCategory> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::FontWeight> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::DrawLabelFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::StringFormatFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::TextFormatFlags> { static const bool enable = true; };

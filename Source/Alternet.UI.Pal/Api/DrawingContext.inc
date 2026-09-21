@@ -24,6 +24,7 @@ SizeI GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);
 static void ImageFromGenericImageDC(Image* image, void* source, DrawingContext* dc);
 SizeD GetTextExtentSimple(const NativeStringSpan& text, void* font);
+float GetTextHeight(const NativeStringSpan& text, void* font);
 static DrawingContext* FromImage(Image* image);
 static DrawingContext* FromScreen();
 void RoundedRectangle(Pen* pen, Brush* brush, const RectD& rectangle, float cornerRadius);

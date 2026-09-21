@@ -152,6 +152,13 @@ ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj,
     });
 }
 
+ALTERNET_UI_API float DrawingContext_GetTextHeight_(DrawingContext* obj, NativeStringSpan* text, void* font)
+{
+    return MarshalExceptions<float>([&](){
+        return obj->GetTextHeight(*text, font);
+    });
+}
+
 ALTERNET_UI_API DrawingContext* DrawingContext_FromImage_(Image* image)
 {
     return MarshalExceptions<DrawingContext*>([&](){

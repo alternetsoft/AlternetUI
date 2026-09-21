@@ -375,8 +375,8 @@ namespace Alternet.UI.Native
                         skiaMeasure.Height,
                         candidate =>
                         {
-                            var nativeMeasure = WxControlHandler.GetNativeTextSize(dc, measureText, font, candidate);
-                            var nativeHeight = uiControl.PixelFToDip(nativeMeasure.Height);
+                            var nativeMeasure = WxControlHandler.GetNativeTextHeight(dc, measureText, font, candidate);
+                            var nativeHeight = uiControl.PixelFToDip(nativeMeasure);
                             return nativeHeight;
                         });
 

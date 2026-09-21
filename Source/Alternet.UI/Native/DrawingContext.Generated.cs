@@ -161,6 +161,13 @@ NativeApi.DrawingContext_DrawText_(NativePointer, ref text_Native, ref location_
 return NativeApi.DrawingContext_GetTextExtentSimple_(NativePointer, ref text_Native, font);
         }
         
+        public float GetTextHeight(Alternet.UI.NativeStringSpan text, System.IntPtr font)
+        {
+            CheckDisposed();
+            var text_Native = text.ToNative();
+return NativeApi.DrawingContext_GetTextHeight_(NativePointer, ref text_Native, font);
+        }
+        
         public static DrawingContext FromImage(Image image)
         {
             var _nnn = NativeApi.DrawingContext_FromImage_(image.NativePointer);
@@ -367,6 +374,9 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeD DrawingContext_GetTextExtentSimple_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, System.IntPtr font);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern float DrawingContext_GetTextHeight_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, System.IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_FromImage_(IntPtr image);

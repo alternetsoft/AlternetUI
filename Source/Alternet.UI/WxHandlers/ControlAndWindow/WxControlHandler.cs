@@ -256,7 +256,7 @@ namespace Alternet.UI
             Native.Font.DeleteFontRef(fontRef);
         }
 
-        internal static Alternet.Drawing.SizeD GetNativeTextSize(
+        internal static float GetNativeTextHeight(
             Native.DrawingContext dc,
             string text,
             Alternet.Drawing.Font font,
@@ -267,7 +267,7 @@ namespace Alternet.UI
                 var fontRef = WxControlHandler.CreateFontRef(font, scaled: false, fontSizeOverride);
                 try
                 {
-                    return dc.GetTextExtentSimple(span, fontRef);
+                    return dc.GetTextHeight(span, fontRef);
                 }
                 finally
                 {

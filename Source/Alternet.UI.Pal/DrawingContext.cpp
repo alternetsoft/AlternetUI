@@ -452,6 +452,25 @@ namespace Alternet::UI
 		return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
 	}
 
+	float DrawingContext::GetTextHeight(const NativeStringSpan& text, void* font)
+	{
+		auto wxf = Font::FromFontRef(font);
+
+		wxDouble height;
+
+		_dc->SetFont(wxf);
+
+		auto wText = wxStr(text);
+
+		auto size = _dc->GetTextExtent(wText);
+
+		height = size.y;
+
+		height = std::ceil(height);
+
+		return height;
+	}
+
 	Size DrawingContext::GetTextExtentSimple(const NativeStringSpan& text, void* font)
 	{
 		auto wxf = Font::FromFontRef(font);

@@ -65,6 +65,8 @@ namespace NativeApi.Api
         //This function only works with single-line strings.
         public unsafe SizeD GetTextExtentSimple(NativeStringSpan text, IntPtr font) => default;
 
+        public unsafe float GetTextHeight(NativeStringSpan text, IntPtr font) => default;
+
         public static DrawingContext FromImage(Image image) => throw new Exception();
 
         public static DrawingContext FromScreen() => throw new Exception();
