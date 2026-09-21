@@ -166,6 +166,17 @@ public struct PopupEntryParams
     public bool HasBorder { get; set; } = true;
 
     /// <summary>
+    /// Gets or sets a value indicating whether all text should be selected when the popup is shown.
+    /// </summary>
+    public bool SelectAll { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the text cursor
+    /// should move to the end of the text when the popup is shown.
+    /// </summary>
+    public bool MoveToEndOfText { get; set; } = true;
+
+    /// <summary>
     /// Gets or sets empty text hint which is shown in the editor when text is empty.
     /// </summary>
     public string? EmptyTextHint { get; set; }
