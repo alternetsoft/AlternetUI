@@ -1,3 +1,58 @@
+# 1.1.11 (2026 September 22)
+
+- Update to use wxWidgets 3.3.3 and microsoft.web.webview 2.1.0.4191.47.
+- Add a new WxGlobalSettings.Pal settings group with delegates and properties for overriding PAL library discovery and loading. 
+- FindReplaceControl: Fix scope edit behavior
+- SpeedButtonWithListPopup: Add UsePopupItemAsValue property to control how accepted popup selections update the button value. 
+When enabled, the selected popup item is assigned directly instead of using its Value property.
+- FindReplaceControl: Fix toolbar SVG updates for replace toggle.
+- Added DefaultColors.PickerErrorBorderColor as a shared themed color for picker error borders.
+- Handle Shift+Tab in PopupControl key logic.
+- SpeedButton: Add static panel border themes.
+- Switch picker-style controls to DefaultThemes.Picker. This aligns date, color, enum, list, and drawing resource pickers 
+with the shared picker theme so their styling is consistent and managed through the centralized default.
+- EditableListPicker: Adds new configurability for popup editing behavior: a default border setting for popup text boxes, 
+optional cancel-on-Escape handling, optional use of popup entry height, and a BeginEdit overload with selectAll control. 
+It also updates popup parameters (including cursor positioning at text end) and makes popup lost-focus behavior overridable via 
+a virtual property.
+- Pick better native font size on Linux and macOs.
+- PanelSettings.AddFlagCheckBoxes: Add defaults to params.
+- Assign font to native control when it is attached.
+- Redo default font creation which fixed several issues.
+- TextBox: Turn off focused shadow when no border on Linux.
+- Update WxGlobalSettings default CSS to support entry.borderless.
+- Adds a SKTypeface-based FontFamily constructor and reuses it in FromSkia to simplify creation.
+- FontFamily.Default, Font.Height, ListBoxItemPaintEventArgs.SelectionRectOverride.
+- Refine TimePicker time handling.
+- GenericControlAndButton: Sync child context menu with parent.
+- Add IEnumerable support to ControlSet.
+- AbstractControl: Add ContextMenuChanged event and matching OnContextMenuChanged hook. 
+- ListControlItem: Fix image paint in disabled state.
+- Font: Remove the redundant pixel and DIP size accessors and use Height directly when the font is configured in pixels.
+- ColorPicker and DrawingResourcePicker: make item image larger.
+- RectD: DeflatedWithPadding() and InflatedWithPadding().
+- Font: Fix font size related issues
+- Improve TextRenderer.
+- Refactors Font to model style traits more explicitly by storing slant, width, underline, and strikeout separately in FontRecord, and adds a new constructor overload to set weight/slant/width directly. Skia font resolution now matches family against weight+slant+width when needed, and style-related properties (IsItalic, IsOblique, strikeout/underline checks, Slant, StyleWidth) are aligned with the new data model. User-facing font string output was also extended to include oblique/unit/width details.
+- Refactor AbstractControl font state handling. Replace separate fields with a single RelativeFontInfo instance.
+- Create CalendarItemMarkers, RelativeFont, ThemedDrawingResource, ThemedPen, ThemedDrawingObject, ThemedBrush, ScrollablePanel.
+- Add title support to ThemedDrawingResource.
+- Fix ColorListBox item text and selection draw.
+- DrawingResourcePicker now supports IThemedDrawingResource items.
+- Extend ListControlItem with delegate-based getters for Text, DisplayText, and Value, including new constructors that accept text/value providers. This lets item content be resolved dynamically at access time while preserving the existing stored-property behavior as a fallback.
+- Refactor FontFamily to use Skia resolution.
+- FontFamily: Add new creation helpers (FromSkia, FromFile, FromStream, FromName, FromNameOrDefault.
+- Simplify and speed up Font.
+- Create WindowWithMemoAndButton, WindowWithMessageAndButton.
+- Move native controls to Alternet.UI.dll.
+- ThreadExceptionWindow: Use tree view for exception details.
+- TreeViewItem: Add empty/string/separator tree items.
+- Extend ListControlItem with WordWrap, NewLineWrap, MaxLines, MinTextWidth, and MaxTextWidth, and apply those settings during text measurement and rendering.
+- Add DrawingUtils.GetWrappedText to centralize label text wrapping logic with optional min/max width constraints.
+- Introduce a separate NewLineWrap property on Label so newline handling can be enabled independently from word wrapping.
+
+---
+
 # 1.1.10 (2026 September 13)
 
 - Calculator: Reworked button initialization to use a centralized button metadata. SVG icons for buttons, button visibility and kind are now determined from metadata.
