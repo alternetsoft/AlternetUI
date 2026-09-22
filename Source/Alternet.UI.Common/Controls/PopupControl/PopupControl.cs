@@ -883,7 +883,7 @@ namespace Alternet.UI
                 return;
             }
 
-            if (e.IsSimpleKey(Key.Tab))
+            if (e.IsTabOrShiftTab)
             {
                 TabPressedAction?.Invoke();
                 if (AcceptOnTab)
