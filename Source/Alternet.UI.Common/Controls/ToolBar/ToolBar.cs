@@ -948,6 +948,7 @@ namespace Alternet.UI
             var item = FindTool(id);
             if (item is null)
                 return;
+            item.Image = null;
             item.ImageSet = value;
         }
 
@@ -1019,6 +1020,7 @@ namespace Alternet.UI
             var item = FindTool(id);
             if (item is null)
                 return;
+            item.DisabledImage = null;
             item.DisabledImageSet = value;
         }
 

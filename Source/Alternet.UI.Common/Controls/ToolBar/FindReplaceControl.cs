@@ -1442,12 +1442,7 @@ namespace Alternet.UI
                 if (ReplaceVisible == value)
                     return;
                 ReplaceToolBar.Visible = value;
-                FindToolBar.SetToolDisabledImage(
-                    IdToggleReplaceOptions,
-                    FindToolBar.ToDisabled(KnownSvgImages.GetImgAngleUpDown(value)));
-                FindToolBar.SetToolImage(
-                    IdToggleReplaceOptions,
-                    FindToolBar.ToNormal(KnownSvgImages.GetImgAngleUpDown(value)));
+                FindToolBar.SetToolSvg(IdToggleReplaceOptions, KnownSvgImages.GetImgAngleUpDown(value));
                 Manager?.SetReplaceVisible(value);
             }
         }
