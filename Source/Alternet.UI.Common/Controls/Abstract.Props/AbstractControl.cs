@@ -200,6 +200,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the default foreground color of the control.
+        /// This color is used when the <see cref="ForegroundColor"/> property is not set.
         /// </summary>
         /// <returns>
         /// The default foreground <see cref="Color" /> of the control.
@@ -209,6 +210,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the default background color of the control.
+        /// This color is used when the <see cref="BackgroundColor"/> property is not set.
         /// </summary>
         /// <returns>
         /// The default background <see cref="Color" /> of the control.
@@ -3155,8 +3157,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the foreground color for the control.
+        /// Use <see cref="ForeColor"/> property to get or set the foreground color as <see cref="Color"/>.
+        /// Use <see cref="RealForegroundColor"/> property to get the effective foreground color as <see cref="ThemedColor"/>.
+        /// Use <see cref="ParentForeColor"/> property to automatically update foreground color
+        /// when parent's foreground color is changed."/>
         /// </summary>
-        [Browsable(true)]
+        [Browsable(false)]
         public virtual ThemedColor? ForegroundColor
         {
             get
@@ -3176,8 +3182,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the background color for the control.
+        /// Use <see cref="BackColor"/> property to get or set the background color as <see cref="Color"/>.
+        /// Use <see cref="RealBackgroundColor"/> property to get the effective background color as <see cref="ThemedColor"/>.
+        /// If control is transparent, the background color will be ignored.
+        /// Use <see cref="ParentBackColor"/> property to automatically update background color
+        /// when parent's background color is changed."/>
         /// </summary>
-        [Browsable(true)]
+        [Browsable(false)]
         public virtual ThemedColor? BackgroundColor
         {
             get
@@ -3269,38 +3280,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets real foreground color value.
+        /// Gets real foreground color value. If <see cref="ForegroundColor"/> is <c>null</c>,
+        /// returns <see cref="DefaultForeColor"/>.
+        /// Use <see cref="ParentForeColor"/> property to automatically update foreground color
+        /// when parent's foreground color is changed.
         /// </summary>
         [Browsable(false)]
         public virtual ThemedColor RealForegroundColor
         {
             get
             {
-                if (foregroundColor is not null)
-                    return foregroundColor;
+                if (ForegroundColor is not null)
+                    return ForegroundColor;
                 return DefaultForeColor;
             }
         }
 
         /// <summary>
-        /// Gets real background color value.
+        /// Gets real background color value. If <see cref="BackgroundColor"/> is <c>null</c>,
+        /// returns <see cref="DefaultBackColor"/>.
+        /// If control is transparent, the background color will be ignored.
+        /// Use <see cref="ParentBackColor"/> property to automatically update background color
+        /// when parent's background color is changed.
         /// </summary>
         [Browsable(false)]
         public virtual ThemedColor RealBackgroundColor
         {
             get
             {
-                if (backgroundColor is not null)
-                    return backgroundColor;
+                if (BackgroundColor is not null)
+                    return BackgroundColor;
                 return DefaultBackColor;
             }
         }
 
         /// <summary>
-        /// Gets or sets the foreground color for the control.
-        /// This property is for compatibility with legacy code, use <see cref="ForegroundColor"/> instead.
+        /// Gets or sets the foreground color for the control. This property gets <see cref="RealForegroundColor"/>
+        /// and returns its light or dark color depending on the current theme.
+        /// This property is for compatibility with legacy code, use <see cref="ForegroundColor"/> 
+        /// or <see cref="RealForegroundColor"/> instead.
+        /// Setter of this property changes <see cref="ForegroundColor"/>.
+        /// If <see cref="Color.Empty"/> is assigned, <see cref="ForegroundColor"/> will be set to <c>null</c>.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public virtual Color ForeColor
         {
             get
@@ -3320,10 +3342,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the background color for the control.
-        /// This property is for compatibility with legacy code, use <see cref="BackgroundColor"/> instead.
+        /// Gets or sets the background color for the control. This property gets <see cref="RealBackgroundColor"/>
+        /// and returns its light or dark color depending on the current theme.
+        /// This property is for compatibility with legacy code, use <see cref="BackgroundColor"/> 
+        /// or <see cref="RealBackgroundColor"/> instead.
+        /// If control is transparent, the background color will be ignored.
+        /// Setter of this property changes <see cref="BackgroundColor"/>.
+        /// If <see cref="Color.Empty"/> is assigned, <see cref="BackgroundColor"/> will be set to <c>null</c>.
         /// </summary>
-        [Browsable(false)]
+        [Browsable(true)]
         public virtual Color BackColor
         {
             get
