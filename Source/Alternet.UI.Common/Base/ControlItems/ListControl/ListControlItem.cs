@@ -23,13 +23,15 @@ namespace Alternet.UI
     public partial class ListControlItem : BaseControlItem, IComparable<ListControlItem>
     {
         /// <summary>
-        /// Gets or sets default color of the accent marker which is optionally painted for the current item in the list control.
+        /// Gets or sets default color of the accent marker which is optionally
+        /// painted for the current item in the list control.
         /// If this property is null, default accent color is used.
         /// </summary>
         public static ThemedColor DefaultAccentMarkerColor = new(light: Color.White.LighterLighter(), dark: Color.Gray);
 
         /// <summary>
-        /// Gets or sets default margin of the accent marker which is optionally painted for the current item in the list control.
+        /// Gets or sets default margin of the accent marker which is
+        /// optionally painted for the current item in the list control.
         /// </summary>
         public static Thickness DefaultAccentMargin = (4, 4, 4, 4);
 
