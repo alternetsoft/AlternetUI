@@ -118,6 +118,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool LookupByValue { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the selected item from the popup as the value of the control.
+        /// When set to <see langword="true"/>, the control's value will be updated to the selected item from the popup.
+        /// When set to <see langword="false"/>, the control's value will be updated to the Value property
+        /// of the selected item from the popup.
+        /// </summary>
+        public virtual bool UsePopupItemAsValue { get; set; } = false;
+
         /// <inheritdoc/>
         public override bool HasVisibleText => true;
 
@@ -700,7 +708,10 @@ namespace Alternet.UI
         {
             if (PopupWindow.PopupResult == ModalResult.Accepted)
             {
-                Value = PopupWindow.ResultItem?.Value;
+                if (UsePopupItemAsValue)
+                    Value = PopupWindow.ResultItem;
+                else
+                    Value = PopupWindow.ResultItem?.Value;
             }
 
             var focusedControl = PopupWindow.PopupOwner;
