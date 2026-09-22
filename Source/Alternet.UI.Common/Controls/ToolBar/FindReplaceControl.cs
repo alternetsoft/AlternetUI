@@ -70,6 +70,7 @@ namespace Alternet.UI
             Margin = (2, 0, 2, 0),
             UseContextMenuAsPopup = true,
             VerticalAlignment = VerticalAlignment.Center,
+            UsePopupItemAsValue = true,
         };
 
         private readonly EditableListPicker findEdit = new()
