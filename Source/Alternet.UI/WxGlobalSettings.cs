@@ -16,6 +16,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Contains settings related to the PAL (Platform Abstraction Layer) used by the application.
+        /// </summary>
+        public static class Pal
+        {
+            /// <summary>
+            /// Gets or sets a function that overrides the default behavior for finding
+            /// a PAL (Platform Abstraction Layer) library.
+            /// </summary>
+            public static Func<string, string?>? FindPalOverride;
+
+            /// <summary>
+            /// Gets or sets a function that overrides the default behavior for loading
+            /// a PAL (Platform Abstraction Layer) library.
+            /// </summary>
+            public static NativeLibraryLoadDelegate2? LoadPalOverride;
+
+            /// <summary>
+            /// Gets or sets a function that overrides the default behavior for trying
+            /// to load a PAL (Platform Abstraction Layer) library.
+            /// </summary>
+            public static NativeLibraryTryLoadDelegate? TryLoadPalOverride;
+        }
+
+        /// <summary>
         /// Contains macOs related settings.
         /// </summary>
         public static class MacOs

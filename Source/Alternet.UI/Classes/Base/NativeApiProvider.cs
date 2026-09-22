@@ -108,6 +108,60 @@ namespace Alternet.UI.Native
             }
         }
 
+        internal static string? FindNativeDll(string nativeModuleNameWithExt)
+        {
+            if (WxGlobalSettings.Pal.FindPalOverride is not null)
+                return WxGlobalSettings.Pal.FindPalOverride(nativeModuleNameWithExt);
+            return OSUtils.FindNativeDll(nativeModuleNameWithExt);
+        }
+
+        internal static IntPtr NativeLibraryLoad(
+            string libraryName,
+            Assembly assembly,
+            DllImportSearchPath? searchPath)
+        {
+            if (WxGlobalSettings.Pal.LoadPalOverride is not null)
+                return WxGlobalSettings.Pal.LoadPalOverride(libraryName, assembly, searchPath);
+            return AssemblyUtils.NativeLibraryLoad(libraryName, assembly, searchPath);
+        }
+
+        internal static bool TryLoadLibrary(string libraryPath, out IntPtr handle)
+        {
+            if (WxGlobalSettings.Pal.TryLoadPalOverride is not null)
+                return WxGlobalSettings.Pal.TryLoadPalOverride(libraryPath, out handle);
+
+            bool result;
+
+            if (App.IsLinuxOS && DebugUtils.UseDlOpenOnLinux)
+            {
+                handle = LinuxUtils.NativeMethods.dlopen(
+                        libraryPath,
+                        LinuxUtils.NativeMethods.RTLD_NOW);
+                result = handle != default;
+            }
+            else
+                result = AssemblyUtils.NativeLibraryTryLoad(libraryPath, out handle);
+
+            if (App.IsLinuxOS && DebugResolver)
+            {
+                if (!result)
+                {
+                    try
+                    {
+                        var errorText = LinuxUtils.NativeMethods.GetLastError();
+                        LogUtils.LogNameValueToFile("Error", errorText);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        internal static bool DebugResolver => DebugUtils.DebugLoading && libHandle == default;
+
         internal static IntPtr ImportResolver(
             string libraryName,
             Assembly assembly,
@@ -115,8 +169,6 @@ namespace Alternet.UI.Native
         {
             if (libraryName == NativeModuleName && libHandle != default)
                 return libHandle;
-
-            var debugResolver = DebugUtils.DebugLoading && libHandle == default;
 
             try
             {
@@ -130,7 +182,7 @@ namespace Alternet.UI.Native
 
             IntPtr Fn()
             {
-                if (debugResolver)
+                if (DebugResolver)
                 {
                     LogUtils.LogBeginSectionToFile("ImportResolver");
                     LogUtils.LogNameValueToFile("libraryName", libraryName);
@@ -148,22 +200,22 @@ namespace Alternet.UI.Native
                     {
                         libraryName = NativeModuleNameWithExt;
 
-                        var libraryFileName = OSUtils.FindNativeDll(NativeModuleNameWithExt);
+                        var libraryFileName = FindNativeDll(NativeModuleNameWithExt);
 
-                        if (debugResolver)
+                        if (DebugResolver)
                         {
                             LogUtils.LogNameValueToFile("FindNativeDll", libraryFileName);
                         }
 
                         if (libraryFileName is null)
                         {
-                            libHandle = AssemblyUtils.NativeLibraryLoad(libraryName, assembly, searchPath);
+                            libHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
                         }
                         else
                         {
-                            var loaded = FnTryLoadLibrary(libraryFileName, out libHandle);
+                            var loaded = TryLoadLibrary(libraryFileName, out libHandle);
 
-                            if (debugResolver)
+                            if (DebugResolver)
                             {
                                 LogUtils.LogNameValueToFile(
                                     "NativeLibrary.TryLoad libHandle",
@@ -173,7 +225,7 @@ namespace Alternet.UI.Native
 
                             if (!loaded)
                             {
-                                libHandle = AssemblyUtils.NativeLibraryLoad(libraryName, assembly, searchPath);
+                                libHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
                             }
                         }
                     }
@@ -183,42 +235,11 @@ namespace Alternet.UI.Native
                 else
                     result = AssemblyUtils.NativeLibraryLoad(libraryName);
 
-                if (debugResolver)
+                if (DebugResolver)
                 {
                     LogUtils.LogEndSectionToFile();
                 }
 
-                return result;
-            }
-
-            bool FnTryLoadLibrary(string libraryPath, out IntPtr handle)
-            {
-                bool result;
-
-                if (App.IsLinuxOS && DebugUtils.UseDlOpenOnLinux)
-                {
-                    handle = LinuxUtils.NativeMethods.dlopen(
-                            libraryPath,
-                            LinuxUtils.NativeMethods.RTLD_NOW);
-                    result = handle != default;
-                }
-                else
-                    result = AssemblyUtils.NativeLibraryTryLoad(libraryPath, out handle);
-
-                if (App.IsLinuxOS && debugResolver)
-                {
-                    if (!result)
-                    {
-                        try
-                        {
-                            var errorText = LinuxUtils.NativeMethods.GetLastError();
-                            LogUtils.LogNameValueToFile("Error", errorText);
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
                 return result;
             }
         }
