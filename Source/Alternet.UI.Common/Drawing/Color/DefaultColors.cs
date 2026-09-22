@@ -84,6 +84,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets border color of the picker when an error occurs.
+        /// </summary>
+        public static ThemedColor PickerErrorBorderColor { get; set; }
+            = new(light: new Color(229, 20, 0), dark: new Color(255, 153, 164));
+
+        /// <summary>
         /// Gets or sets the empty text hint color. It is used to display the hint
         /// when the text in the editor is empty.
         /// </summary>

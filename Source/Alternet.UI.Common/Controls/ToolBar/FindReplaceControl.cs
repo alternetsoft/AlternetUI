@@ -33,14 +33,34 @@ namespace Alternet.UI
         /// in the case when search string is not found.
         /// This property contains default value for the light color theme.
         /// </summary>
-        public static Color DefaultNotFoundBorderLight = (229, 20, 0);
+        public static Color DefaultNotFoundBorderLight
+        {
+            get
+            {
+                return DefaultColors.PickerErrorBorderColor.Light;
+            }
+            set
+            {
+                DefaultColors.PickerErrorBorderColor.Light = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets default border color of the find text editor
         /// in the case when search string is not found.
         /// This property contains default value for the dark color theme.
         /// </summary>
-        public static Color DefaultNotFoundBorderDark = (255, 153, 164);
+        public static Color DefaultNotFoundBorderDark
+        {
+            get
+            {
+                return DefaultColors.PickerErrorBorderColor.Dark;
+            }
+            set
+            {
+                DefaultColors.PickerErrorBorderColor.Dark = value;
+            }
+        }
 
         private static Color? defaultFindEditBorderColorLight;
         private static Color? defaultFindEditBorderColorDark;
