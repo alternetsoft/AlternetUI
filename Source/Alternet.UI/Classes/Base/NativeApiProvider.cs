@@ -19,11 +19,16 @@ namespace Alternet.UI.Native
 
         internal const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
 
-        internal static IntPtr libHandle = default;
+        internal static IntPtr LibHandle
+        {
+            get => libHandle == default ? WxGlobalSettings.Pal.PalHandleOverride : libHandle;
+            set => libHandle = value;
+        }
 
         private static bool initialized;
         private static GCHandle unhandledExceptionCallbackHandle;
         private static GCHandle caughtExceptionCallbackHandle;
+        private static nint libHandle = default;
 
         static NativeApiProvider()
         {
@@ -160,15 +165,15 @@ namespace Alternet.UI.Native
             return result;
         }
 
-        internal static bool DebugResolver => DebugUtils.DebugLoading && libHandle == default;
+        internal static bool DebugResolver => DebugUtils.DebugLoading && LibHandle == default;
 
         internal static IntPtr ImportResolver(
             string libraryName,
             Assembly assembly,
             DllImportSearchPath? searchPath)
         {
-            if (libraryName == NativeModuleName && libHandle != default)
-                return libHandle;
+            if (libraryName == NativeModuleName && LibHandle != default)
+                return LibHandle;
 
             try
             {
@@ -196,7 +201,7 @@ namespace Alternet.UI.Native
 
                 if (libraryName == NativeModuleName)
                 {
-                    if (libHandle == default)
+                    if (LibHandle == default)
                     {
                         libraryName = NativeModuleNameWithExt;
 
@@ -209,28 +214,33 @@ namespace Alternet.UI.Native
 
                         if (libraryFileName is null)
                         {
-                            libHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
+                            LibHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
                         }
                         else
                         {
-                            var loaded = TryLoadLibrary(libraryFileName, out libHandle);
+                            var loaded = TryLoadLibrary(libraryFileName, out var loadedHandle);
+
+                            if (loaded)
+                            {
+                                LibHandle = loadedHandle;
+                            }
 
                             if (DebugResolver)
                             {
                                 LogUtils.LogNameValueToFile(
                                     "NativeLibrary.TryLoad libHandle",
-                                    libHandle);
+                                    LibHandle);
                                 LogUtils.LogNameValueToFile("NativeLibrary.TryLoad loaded", loaded);
                             }
 
                             if (!loaded)
                             {
-                                libHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
+                                LibHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
                             }
                         }
                     }
 
-                    result = libHandle;
+                    result = LibHandle;
                 }
                 else
                     result = AssemblyUtils.NativeLibraryLoad(libraryName);

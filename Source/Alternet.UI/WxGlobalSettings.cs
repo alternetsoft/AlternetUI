@@ -17,9 +17,17 @@ namespace Alternet.UI
 
         /// <summary>
         /// Contains settings related to the PAL (Platform Abstraction Layer) used by the application.
+        /// If you need to override the default behavior for finding or loading the PAL library,
+        /// you can use the properties and delegates provided in this class. These properties
+        /// should be set before the <see cref="Application"/> is created to have any effect.
         /// </summary>
         public static class Pal
         {
+            /// <summary>
+            /// Gets or sets a handle to the PAL (Platform Abstraction Layer) library.
+            /// </summary>
+            public static IntPtr PalHandleOverride;
+
             /// <summary>
             /// Gets or sets a function that overrides the default behavior for finding
             /// a PAL (Platform Abstraction Layer) library.
