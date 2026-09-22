@@ -34,7 +34,7 @@ namespace Alternet::UI
     }
 
     Window::Window(int kind):
-        _frameKind(kind),
+        _frameKind(static_cast<WindowKind>(kind)),
         _winFlags(
             WindowFlags::ShowInTaskbar |
             WindowFlags::SystemMenu |
@@ -233,10 +233,6 @@ namespace Alternet::UI
 
     wxWindow* Window::CreateWxWindowCore(wxWindow* parent)
     {
-#define KindWindow 0
-#define KindDialog 1
-#define KindMiniFrame 2
-
         auto style = GetWindowStyle();
 
         wxPoint position = wxDefaultPosition;
@@ -255,7 +251,7 @@ namespace Alternet::UI
 
         switch(_frameKind)
         {
-        case KindWindow:
+        case WindowKind::Window:
         default:
             frame = new Frame(nullptr,
                 wxID_ANY,
@@ -264,16 +260,8 @@ namespace Alternet::UI
                 size,
                 style);
             break;
-        case KindMiniFrame:
+        case WindowKind::MiniFrame:
             frame = new MiniFrame(nullptr,
-                wxID_ANY,
-                "",
-                position,
-                size,
-                style);
-            break;
-        case KindDialog:
-            frame = new Dialog(nullptr,
                 wxID_ANY,
                 "",
                 position,

@@ -2932,6 +2932,8 @@ namespace Alternet::UI
         Window = 0,
         MiniFrame = 2,
         Control = 3,
+        Popup = 4,
+        TransientPopup = 5,
     };
     
     enum class WindowSizeToContentMode

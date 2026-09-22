@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines general window kinds.
+    /// Specifies the kind of window.
     /// </summary>
     public enum WindowKind
     {
@@ -32,5 +32,15 @@ namespace Alternet.UI
         /// Control.
         /// </summary>
         Control = 3,
+
+        /// <summary>
+        /// Popup.
+        /// </summary>
+        Popup = 4,
+
+        /// <summary>
+        /// Transient popup.
+        /// </summary>
+        TransientPopup = 5,
     }
 }

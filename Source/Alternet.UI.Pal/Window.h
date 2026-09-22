@@ -150,7 +150,7 @@ protected:
         virtual void DestroyWxWindow() override;
 
     private:
-        int _frameKind = 0;
+        WindowKind _frameKind = WindowKind::Window;
         bool _painted = false;
 
         ModalResult _modalResult = ModalResult::None;
