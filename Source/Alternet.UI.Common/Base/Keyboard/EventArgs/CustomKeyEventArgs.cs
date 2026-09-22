@@ -186,6 +186,34 @@ namespace Alternet.UI
         public virtual bool IsEnter => IsSimpleKey(Key.Enter);
 
         /// <summary>
+        /// Gets whether 'Tab' key is pressed without modifiers.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsTab
+        {
+            get
+            {
+                return IsSimpleKey(Key.Tab);
+            }
+        }
+
+        /// <summary>
+        /// Gets whether 'Tab' key is pressed with 'Shift' modifier.
+        /// </summary>
+        public bool IsShiftTab
+        {
+            get
+            {
+                return Key == Key.Tab && Shift;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether 'Tab' key is pressed without modifiers or with 'Shift' modifier.
+        /// </summary>
+        public bool IsTabOrShiftTab => ShiftOrNone && (Key == Key.Tab);
+
+        /// <summary>
         /// Gets whether the specified key is pressed and <see cref="ModifierKeys"/> is empty.
         /// </summary>
         /// <param name="key">Key to test.</param>
