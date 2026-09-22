@@ -99,9 +99,6 @@ namespace Alternet.UI
                 NativeUtils.Invoke(format, s => dataObject.SetStreamData(s, new Native.InputStream(streamData)));
                 return;
             }
-
-            App.LogError(
-                new NotSupportedException("This type of data is not supported: " + data.GetType()));
         }
 
         private static void CopyData(
