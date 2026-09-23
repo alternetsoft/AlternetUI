@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the popup text box has a border.
         /// </summary>
-        public static bool DefaultPopupTextBoxHasBorder = true;
+        public static bool DefaultPopupTextBoxHasBorder = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditableListPicker"/> class.
