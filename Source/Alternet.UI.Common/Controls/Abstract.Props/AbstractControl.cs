@@ -155,6 +155,8 @@ namespace Alternet.UI
         private HVDropDownAlignment? dropDownMenuPosition;
         private long? lastClickedTimestamp;
         private ControlColorMode? colorMode;
+        private ImeMode imeMode = ImeMode.Off;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
         /// </summary>
@@ -196,7 +198,7 @@ namespace Alternet.UI
         /// Indicates whether context menu is shown internally without using native context menu.
         /// Default is false.
         /// </summary>
-        public static bool DefaultUseInternalContextMenu { get; set; } = App.IsLinuxOS;
+        public static bool DefaultUseInternalContextMenu { get; set; } = false;
 
         /// <summary>
         /// Gets the default foreground color of the control.
@@ -978,9 +980,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control should use context menu from its parent control.
+        /// Default is false.
+        /// </summary>
+        [Category(KnownMemberCategory.Behavior)]
+        [Browsable(false)]
+        public virtual bool ParentContextMenu { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="ContextMenuStrip" /> associated
         /// with this control. This property is auto-created and is always not null.
-        /// Usage of this property depends on the control.
+        /// Use <see cref="ParentContextMenu"/> to specify whether to use the context menu from the parent control.
         /// </summary>
         /// <returns>
         /// The <see cref="ContextMenuStrip" /> for this control.
@@ -991,6 +1001,11 @@ namespace Alternet.UI
         {
             get
             {
+                if (ParentContextMenu && Parent is not null)
+                {
+                    return Parent.ContextMenuStrip;
+                }
+
                 if (contextMenuStrip == null)
                 {
                     contextMenuStrip = new();
@@ -1015,7 +1030,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether this control has attached context menu.
+        /// Gets whether this control has initialized context menu.
+        /// This property is used to determine whether the context menu has been created and initialized for this control.
+        /// This property queries internal context menu and does not check whether
+        /// the control uses context menu from its parent control.
         /// </summary>
         [Category("Behavior")]
         [Browsable(false)]
@@ -1023,13 +1041,18 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the Input Method Editor (IME) mode of the control.
+        /// It is up to the control to decide how this property is used.
         /// </summary>
         /// <returns>One of the <see cref="ImeMode" /> values.
         /// The default is <see cref="ImeMode.Inherit" />.</returns>
         [Category("Behavior")]
         [Localizable(true)]
         [Browsable(false)]
-        public virtual ImeMode ImeMode { get; set; } = ImeMode.Off;
+        public virtual ImeMode ImeMode
+        {
+            get => imeMode;
+            set => imeMode = value;
+        }
 
         /// <summary>
         /// Gets or sets the text associated with this control.
@@ -1636,7 +1659,8 @@ namespace Alternet.UI
         /// In order to set/get tool-tip as string, use <see cref="ToolTip"/> property.
         /// You can set this property to any object. The control and its parent can decide on how to use it.
         /// Currently library supports using <see cref="string"/> and <see cref="RichToolTipParams"/> as tool-tip objects.
-        /// If other object is assigned, <see cref="object.ToString()"/> method will be used to get string representation of the tool-tip.
+        /// If other object is assigned, <see cref="object.ToString()"/> method
+        /// will be used to get string representation of the tool-tip.
         /// </summary>
         [Browsable(false)]
         public virtual object? ToolTipObject
@@ -1794,18 +1818,6 @@ namespace Alternet.UI
             {
                 Visible = value;
             }
-        }
-
-        /// <summary>
-        /// Gets or sets default timeout interval (in msec) for timer that calls
-        /// <see cref="DelayedTextChanged"/> event. If not specified,
-        /// <see cref="TimerUtils.DefaultDelayedTextChangedTimeout"/> is used.
-        /// </summary>
-        [Browsable(false)]
-        public int? DelayedTextChangedInterval
-        {
-            get => delayedTextChanged.Interval;
-            set => delayedTextChanged.Interval = value;
         }
 
         /// <summary>
