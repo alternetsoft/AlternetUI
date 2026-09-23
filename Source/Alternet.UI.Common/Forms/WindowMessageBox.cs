@@ -15,6 +15,11 @@ namespace Alternet.UI
     public partial class WindowMessageBox : DialogWindow
     {
         /// <summary>
+        /// Gets or sets default vertical alignment for the image in the message box.
+        /// </summary>
+        public static VerticalAlignment DefaultImageVerticalAlignment = VerticalAlignment.Center;
+
+        /// <summary>
         /// Gets or sets default minimum width for the message box.
         /// </summary>
         public static Coord? DefaultMinWidth = 250;
@@ -61,7 +66,7 @@ namespace Alternet.UI
             panel.Layout = LayoutStyle.Vertical;
             Buttons.UseModalResult = true;
 
-            if(DefaultMinWidth is not null)
+            if (DefaultMinWidth is not null)
                 MinWidth = DefaultMinWidth;
 
             Label.MaxTextWidth = DefaultMaxTextWidth;
@@ -212,7 +217,7 @@ namespace Alternet.UI
             {
                 Label.Text = value.Text?.ToString() ?? string.Empty;
                 SetMessageIcon(value.Icon);
-                Label.ImageVerticalAlignment = VerticalAlignment.Top;
+                Label.ImageVerticalAlignment = DefaultImageVerticalAlignment;
                 Title = value.Caption ?? string.Empty;
                 Buttons.SetButtons(value.Buttons);
                 Buttons.ResetButtonsText();
@@ -227,7 +232,7 @@ namespace Alternet.UI
             Buttons.SetDefaultButtonExclusive(value.DefaultButton);
             Buttons.SetCancelButtonExclusive(value.Buttons);
             ActiveControl = Buttons.GetDefaultButton();
-            if(Buttons.VisibleButtonCount != 1)
+            if (Buttons.VisibleButtonCount != 1)
                 Buttons.SetDefaultButtonExclusive(null);
 
             ShowDialogAsync(value.Owner, (result) =>
