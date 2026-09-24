@@ -26,4 +26,11 @@ namespace Alternet.UI
             ImageVisible = false;
         }
     }
+
+    /// <summary>
+    /// Represents a generic control that allows to edit text and has a button.
+    /// </summary>
+    public partial class TextPickerAndButton : GenericControlAndButton<TextPicker>
+    {
+    }
 }
