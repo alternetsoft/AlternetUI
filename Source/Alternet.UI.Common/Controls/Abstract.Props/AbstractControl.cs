@@ -3035,7 +3035,7 @@ namespace Alternet.UI
             get
             {
                 var result = MinimumSize.Width;
-                if (result == -1 || result == 0)
+                if (result <= 0)
                     return null;
                 return result;
             }
@@ -3058,7 +3058,7 @@ namespace Alternet.UI
             get
             {
                 var result = MinimumSize.Height;
-                if (result == -1 || result == 0)
+                if (result <= 0)
                     return null;
                 return result;
             }
