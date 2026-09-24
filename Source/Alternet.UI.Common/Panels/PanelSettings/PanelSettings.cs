@@ -804,6 +804,10 @@ namespace Alternet.UI
                 {
                     result = new ControlAndLabel<TextPickerAndButton, GenericControl>(typeof(Label), typeOfTextBox);
                     result.MainControl.MainControl.Multiline = useMemo;
+                    if (useMemo)
+                        result.MainControl.MainControl.Label.VerticalAlignment = VerticalAlignment.Top;
+                    result.MainControl.MainControl.CommitOnEnter = !useMemo;
+                    result.MainControl.MainControl.UsePopupEntryHeight = !useMemo;
                 }
             }
 

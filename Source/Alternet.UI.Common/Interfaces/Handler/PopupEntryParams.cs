@@ -50,17 +50,17 @@ public struct PopupEntryParams
     /// <summary>
     /// Gets or sets the action to be performed when the Tab key is pressed while the popup is active.
     /// </summary>
-    public Action? TabPressed { get; set; }
+    public Action<KeyEventArgs>? TabPressed { get; set; }
 
     /// <summary>
     /// Gets or sets the action to be performed when the Enter key is pressed while the popup is active.
     /// </summary>
-    public Action? EnterPressed { get; set; }
+    public Action<KeyEventArgs>? EnterPressed { get; set; }
 
     /// <summary>
     /// Gets or sets the action to be performed when the Escape key is pressed while the popup is active.
     /// </summary>
-    public Action? EscapePressed { get; set; }
+    public Action<KeyEventArgs>? EscapePressed { get; set; }
 
     /// <summary>
     /// Gets or sets the action to be performed when a key is pressed while the popup is active.
@@ -164,6 +164,11 @@ public struct PopupEntryParams
     /// Gets or sets a value indicating whether the border should be visible.
     /// </summary>
     public bool HasBorder { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the inner border should be visible.
+    /// </summary>
+    public bool HasInnerBorder { get; set; } = false;
 
     /// <summary>
     /// Gets or sets a value indicating whether all text should be selected when the popup is shown.

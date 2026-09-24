@@ -67,19 +67,30 @@ namespace Alternet.UI
             HideOnClickParent = prm.HideClickOnParent;
             HideOnEscape = prm.HideOnEscape;
             Content.EmptyTextHint = prm.EmptyTextHint;
-            HideOnEnter = prm.HideOnEnter;
+            HideOnEnter = prm.HideOnEnter && !prm.Multiline;
             Content.Multiline = prm.Multiline;
+
+            if (prm.Multiline)
+            {
+                Content.VerticalAlignment = VerticalAlignment.Fill;
+            }
+            else
+            {
+                Content.VerticalAlignment = VerticalAlignment.Center;
+            }
+
             BackgroundColor = prm.BackColor ?? prm.ItemContainer.RealBackgroundColor;
             ForegroundColor = prm.ForeColor ?? prm.ItemContainer.RealForegroundColor;
             ParentFont = false;
             Font = prm.Font ?? Control.DefaultFont;
             HasBorder = prm.HasBorder;
+            Content.HasBorder = prm.HasInnerBorder;
             CancelOnLostFocus = prm.LostFocusBehavior == ModalResult.Canceled;
             AcceptOnLostFocus = prm.LostFocusBehavior == ModalResult.Accepted;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
             Content.IsPassword = prm.IsPassword;
-            Content.ProcessEnter = true;
+            Content.ProcessEnter = !prm.Multiline;
 
             void OnContentTextChanged(object? sender, EventArgs e)
             {
@@ -103,9 +114,14 @@ namespace Alternet.UI
 
             TabPressedAction = prm.TabPressed;
             
-            EnterPressedAction = () =>
+            EnterPressedAction = (e) =>
             {
-                prm.EnterPressed?.Invoke();
+                prm.EnterPressed?.Invoke(e);
+
+                if (!prm.Multiline)
+                {
+                    e.Suppressed();
+                }
             };
 
             EscapePressedAction = prm.EscapePressed;

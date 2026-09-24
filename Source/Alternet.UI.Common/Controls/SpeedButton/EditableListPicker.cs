@@ -25,8 +25,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the popup text box has a border.
         /// </summary>
-        public static bool DefaultPopupTextBoxHasBorder = false;
-        
+        public static bool DefaultPopupTextBoxHasBorder = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup text box has an inner border.
+        /// </summary>
+        public static bool DefaultPopupTextBoxHasInnerBorder = false;
+
         private bool multiline;
         private float? popupEntryHeight;
 
@@ -61,19 +66,19 @@ namespace Alternet.UI
         /// Occurs when the Tab key is pressed. In the event handler
         /// you can handle the Tab key press event.
         /// </summary>
-        public event EventHandler? TabPressed;
+        public event EventHandler<KeyEventArgs>? TabPressed;
 
         /// <summary>
         /// Occurs when the Enter key is pressed. In the event handler
         /// you can handle the Enter key press event.
         /// </summary>
-        public event EventHandler? EnterPressed;
+        public event EventHandler<KeyEventArgs>? EnterPressed;
 
         /// <summary>
         /// Occurs when the Escape key is pressed. In the event handler
         /// you can handle the Escape key press event.
         /// </summary>
-        public event EventHandler? EscapePressed;
+        public event EventHandler<KeyEventArgs>? EscapePressed;
 
         /// <summary>
         /// Occurs when a key is pressed in the inplace editor.
@@ -358,24 +363,25 @@ namespace Alternet.UI
                 HideClickOnParent = false,
                 CommitTextOnKeyPress = CommitOnKeyPress,
                 HideOnEscape = false,
-                HideOnEnter = CommitOnEnter,
+                HideOnEnter = CommitOnEnter && !Multiline,
                 HasBorder = DefaultPopupTextBoxHasBorder,
+                HasInnerBorder = DefaultPopupTextBoxHasInnerBorder,
                 MoveToEndOfText = true,
                 IsPassword = this.IsPassword,
                 EmptyTextHint = this.EmptyTextHint,
                 Multiline = this.Multiline,
                 LostFocusBehavior = this.PopupLostFocusBehavior,
-                TabPressed = () =>
+                TabPressed = (e) =>
                 {
-                    TabPressed?.Invoke(this, EventArgs.Empty);
+                    TabPressed?.Invoke(this, e);
                 },
-                EnterPressed = () =>
+                EnterPressed = (e) =>
                 {
-                    EnterPressed?.Invoke(this, EventArgs.Empty);
+                    EnterPressed?.Invoke(this, e);
                 },
-                EscapePressed = () =>
+                EscapePressed = (e) =>
                 {
-                    EscapePressed?.Invoke(this, EventArgs.Empty);
+                    EscapePressed?.Invoke(this, e);
 
                     if (CancelEditOnEscape)
                         CancelEdit();
