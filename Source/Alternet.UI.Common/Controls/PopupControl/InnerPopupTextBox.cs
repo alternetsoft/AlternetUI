@@ -68,6 +68,7 @@ namespace Alternet.UI
             HideOnEscape = prm.HideOnEscape;
             Content.EmptyTextHint = prm.EmptyTextHint;
             HideOnEnter = prm.HideOnEnter;
+            Content.Multiline = prm.Multiline;
             BackgroundColor = prm.BackColor ?? prm.ItemContainer.RealBackgroundColor;
             ForegroundColor = prm.ForeColor ?? prm.ItemContainer.RealForegroundColor;
             ParentFont = false;

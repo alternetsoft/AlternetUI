@@ -182,6 +182,11 @@ public struct PopupEntryParams
     public string? EmptyTextHint { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the text in the control can be multiline.
+    /// </summary>
+    public bool Multiline { get; set; }
+
+    /// <summary>
     /// Sets target control and item container for the popup.
     /// This is a convenience method to set both properties at once.
     /// Item container is determined by the target control's first parent which is a platform control.

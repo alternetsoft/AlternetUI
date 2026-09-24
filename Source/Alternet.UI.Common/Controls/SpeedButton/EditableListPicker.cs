@@ -26,6 +26,9 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the popup text box has a border.
         /// </summary>
         public static bool DefaultPopupTextBoxHasBorder = false;
+        
+        private bool multiline;
+        private float? popupEntryHeight;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditableListPicker"/> class.
@@ -108,6 +111,21 @@ namespace Alternet.UI
         public virtual bool CancelEditOnEscape { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the text in the control can be multiline.
+        /// </summary>
+        public virtual bool Multiline
+        {
+            get => multiline;
+            set
+            {
+                if (multiline == value)
+                    return;
+                multiline = value;
+                Label.WordWrap = multiline;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value specifying the style of the control.
         /// </summary>
         /// <returns>
@@ -141,6 +159,24 @@ namespace Alternet.UI
                         break;
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public override SizeD MinimumSize
+        {
+            get
+            {
+                if (UsePopupEntryHeight && popupEntryHeight is not null)
+                {
+                    var baseResult = base.MinimumSize;
+                    var height = MathF.Max(baseResult.Height, popupEntryHeight.Value);
+                    return new SizeD(baseResult.Width, height);
+                }
+
+                return base.MinimumSize;
+            }
+
+            set => base.MinimumSize = value;
         }
 
         /// <summary>
@@ -327,6 +363,7 @@ namespace Alternet.UI
                 MoveToEndOfText = true,
                 IsPassword = this.IsPassword,
                 EmptyTextHint = this.EmptyTextHint,
+                Multiline = this.Multiline,
                 LostFocusBehavior = this.PopupLostFocusBehavior,
                 TabPressed = () =>
                 {
@@ -395,7 +432,16 @@ namespace Alternet.UI
         protected virtual void OnPopupEntryHeightChanged(float itemHeight)
         {
             if (UsePopupEntryHeight)
-                MinHeight = itemHeight + Padding.Vertical + Label.Margin.Vertical + Label.Top;
+            {
+                var oldMinHeight = MinHeight;
+                popupEntryHeight = itemHeight + Padding.Vertical + Label.Margin.Vertical + Label.Top;
+                if (oldMinHeight != MinHeight)
+                {
+                    PerformLayout();
+                }
+            }
+            else
+                popupEntryHeight = null;
         }
 
         /// <inheritdoc/>
