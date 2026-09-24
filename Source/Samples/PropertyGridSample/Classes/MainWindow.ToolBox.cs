@@ -85,6 +85,7 @@ namespace PropertyGridSample
                 bool logNotAddedControls = false;
 
                 ToolBoxAdd<Border>(ObjectInit.InitBorder);
+                ToolBoxAdd<GenericBorder>(ObjectInit.InitGenericBorder);
                 ToolBoxAdd<Calculator>();
                 ToolBoxAdd<CardPanel>(ObjectInit.InitCardPanel);
                 ToolBoxAdd<CardPanelHeader>(ObjectInit.InitCardPanelHeader);

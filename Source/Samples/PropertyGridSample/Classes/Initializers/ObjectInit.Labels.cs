@@ -23,7 +23,7 @@ namespace PropertyGridSample
             label.DisabledImage = DefaultImage.ToGrayScale();
             label.SuggestedSize = (300, 300);
 
-            SetBackgrounds(label);
+            SetBackgroundsNew(label);
 
             label.Borders ??= new();
             var border = BorderSettings.Default.Clone();

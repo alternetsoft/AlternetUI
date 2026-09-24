@@ -14,7 +14,6 @@ namespace PropertyGridSample
             if (control is not PictureBox pictureBox)
                 return;
             pictureBox.ImageStretch = false;
-            SetBackgrounds(pictureBox);
             pictureBox.ParentBackColor = true;
 
             pictureBox.Borders ??= new();

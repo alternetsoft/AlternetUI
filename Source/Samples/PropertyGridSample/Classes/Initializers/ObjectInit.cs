@@ -54,7 +54,31 @@ namespace PropertyGridSample
             border.ParentBackColor = false;
             border.ParentForeColor = false;
             border.SuggestedSize = DemoUtils.DefaultListSize;
-            SetBackgrounds(border);
+
+            border.Layout = LayoutStyle.Vertical;
+            XButton button = new();
+            button.Text = "Click me";
+            button.Parent = border;
+            button.Click += Button_Click;
+
+            border.VisualStateChanged += Border_VisualStateChanged;
+
+            static void Button_Click(object? sender, EventArgs e)
+            {
+                App.Log("Button in Border clicked.");
+            }
+
+            static void Border_VisualStateChanged(object? sender, EventArgs e)
+            {
+                App.LogNameValueReplace("Border.VisualState", (sender as Border)?.VisualState);
+            }
+        }
+
+        public static void InitGenericBorder(GenericBorder border)
+        {
+            border.ParentBackColor = false;
+            border.ParentForeColor = false;
+            border.SuggestedSize = DemoUtils.DefaultListSize;
 
             border.Layout = LayoutStyle.Vertical;
             XButton button = new();
@@ -255,7 +279,7 @@ namespace PropertyGridSample
 
         public static ImageSet DefaultImageSet { get; } = ImageSet.FromUrl(ResPrefixImage);
 
-        public static void SetBackgrounds(AbstractControl control)
+        public static void SetBackgroundsNew(AbstractControl control)
         {
             if(control.IsDarkBackground)
             {
