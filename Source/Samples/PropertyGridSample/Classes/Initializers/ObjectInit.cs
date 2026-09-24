@@ -71,7 +71,7 @@ namespace PropertyGridSample
 
             static void Border_VisualStateChanged(object? sender, EventArgs e)
             {
-                App.LogNameValue("Border.VisualState", (sender as Border)?.VisualState);
+                App.LogNameValueReplace("Border.VisualState", (sender as Border)?.VisualState);
             }
         }
 
@@ -177,6 +177,7 @@ namespace PropertyGridSample
         public static void InitResizableWindowBorder(ResizableWindowBorder control)
         {
             control.IgnoreLayout = true;
+            control.HasBorder = true;
             control.Size = 300;
             control.Location = (10, 10);
             control.Title = "This is title";
