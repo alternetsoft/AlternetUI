@@ -106,10 +106,10 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets <see cref="SKPicture"/> representation of the SVG image.
+        /// Gets the <see cref="Svg.Skia.SKSvg"/> instance which is used as the SVG provider.
         /// </summary>
         [Browsable(false)]
-        public virtual SKPicture AsPicture
+        public virtual Svg.Skia.SKSvg SvgProvider
         {
             get
             {
@@ -122,7 +122,19 @@ namespace Alternet.Drawing
                     svgProvider.FromSvg(data);
                 }
 
-                return svgProvider.Picture ?? SkiaUtils.EmptyPicture;
+                return svgProvider;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPicture"/> representation of the SVG image.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKPicture AsPicture
+        {
+            get
+            {
+                return SvgProvider.Picture ?? SkiaUtils.EmptyPicture;
             }
         }
 
