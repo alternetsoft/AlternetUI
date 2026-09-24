@@ -223,6 +223,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether both top and bottom panels are visible.
         /// </summary>
+        [Browsable(false)]
         public bool TopBottomVisible
         {
             get
@@ -240,6 +241,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether both left and right panels are visible.
         /// </summary>
+        [Browsable(false)]
         public bool LeftRightVisible
         {
             get
