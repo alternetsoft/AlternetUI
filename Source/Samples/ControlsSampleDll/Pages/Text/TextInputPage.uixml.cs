@@ -127,7 +127,7 @@ namespace ControlsSample
                 var minLengthEdit = panelSettings.GetItemControlEditor(itemMinLengthEdit);
                 var minLengthEditLabel = panelSettings.GetItemControlLabel(itemMinLengthEdit);
 
-                if (minLengthEdit is TextBoxAndButton textBoxAndButton)
+                if (minLengthEdit is TextPickerAndButton textBoxAndButton)
                 {
                     textBoxAndButton.Buttons.IsVisible = true;
                     textBoxAndButton.SetSingleButton(KnownButton.Cancel);

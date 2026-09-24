@@ -781,18 +781,19 @@ namespace Alternet.UI
             var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
             var useMemo = args is not null && args.CustomFlags["IsMultiline"];
             var minHeight = args?.CustomAttr["MinHeight"] as int?;
+            var maxWidth = args?.CustomAttr["MaxWidth"] as int?;
 
-            ControlAndLabel<TextBoxAndButton, GenericControl>? result;
+            ControlAndLabel<TextPickerAndButton, GenericControl>? result;
 
-            result = control as ControlAndLabel<TextBoxAndButton, GenericControl>;
+            result = control as ControlAndLabel<TextPickerAndButton, GenericControl>;
 
             if (result is null)
             {
-                var typeOfTextBox = useMemo ? typeof(TextBoxAndButton) : typeof(TextBoxAndButton);
+                var typeOfTextBox = useMemo ? typeof(TextPickerAndButton) : typeof(TextPickerAndButton);
 
                 if (checkBoxInLabel)
                 {
-                    result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(XCheckBox), typeOfTextBox);
+                    result = new ControlAndLabel<TextPickerAndButton, GenericControl>(typeof(XCheckBox), typeOfTextBox);
 
                     if (result.Label is XCheckBox checkBox)
                     {
@@ -801,15 +802,19 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(Label), typeOfTextBox);
-                    result.MainControl.TextBox.Multiline = useMemo;
+                    result = new ControlAndLabel<TextPickerAndButton, GenericControl>(typeof(Label), typeOfTextBox);
+                    result.MainControl.MainControl.Multiline = useMemo;
                 }
+            }
 
-                if (minHeight.HasValue)
-                {
-                    result.MainControl.MainControl.MinHeight = minHeight.Value;
-                }
-                ;
+            if (minHeight.HasValue)
+            {
+                result.MainControl.MainControl.MinHeight = minHeight.Value;
+            }
+
+            if (maxWidth.HasValue)
+            {
+                result.MainControl.MainControl.MaxWidth = maxWidth.Value;
             }
 
             UpdateCommonProps(sender, item, result);
@@ -821,11 +826,11 @@ namespace Alternet.UI
             textBox.HasBtnComboBox = false;
             textBox.Buttons.Visible = false;
 
-            textBox.TextBox.ValueHelper.SetValidator(item.ValueType, false);
-            textBox.TextBox.ValueHelper.AutoShowError = true;
-            textBox.TextBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
-            textBox.TextBox.ValueHelper.TextAsValue = item.Value;
-            textBox.TextBox.ValueHelper.IsRequired = GetFlagIsRequired(item.CreateArg);
+            textBox.MainControl.ValueHelper.SetValidator(item.ValueType, false);
+            textBox.MainControl.ValueHelper.AutoShowError = true;
+            textBox.MainControl.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
+            textBox.MainControl.ValueHelper.TextAsValue = item.Value;
+            textBox.MainControl.ValueHelper.IsRequired = GetFlagIsRequired(item.CreateArg);
 
             textBox.DelayedTextChanged -= TextChanged;
             textBox.DelayedTextChanged += TextChanged;
@@ -848,14 +853,14 @@ namespace Alternet.UI
 
                             if (converterInstance is TypeConverter typeConverter)
                             {
-                                var convertedValue = typeConverter.ConvertFromString(textBox.TextBox.Text);
+                                var convertedValue = typeConverter.ConvertFromString(textBox.MainControl.Text);
                                 item.Value = convertedValue;
                                 return;
                             }
                         }
                     }
 
-                    item.Value = textBox.TextBox.ValueHelper.TextAsValue;
+                    item.Value = textBox.MainControl.ValueHelper.TextAsValue;
                 }
                 catch (Exception ex)
                 {

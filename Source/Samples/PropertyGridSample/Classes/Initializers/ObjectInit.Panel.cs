@@ -65,6 +65,8 @@ namespace PropertyGridSample
             panel.HasBorder = false;
             panel.Dock = DockStyle.Fill;
 
+            panel.MaxWidth = 300;
+
             panel.AddInput("This is CheckBox:", samplePropContainer, nameof(SamplePropContainer.SampleBool));
 
             panel.AddInput("This is TextBox:", samplePropContainer, nameof(SamplePropContainer.SampleString));
@@ -106,7 +108,7 @@ namespace PropertyGridSample
 
             panel.AddHorizontalLine();
 
-            var memoArgs = new CustomEventArgs("IsMultiline").Attr("MinHeight", 120);
+            var memoArgs = new CustomEventArgs("IsMultiline").Attr("MinHeight", 250);
 
             panel.AddInput("This is Memo:", samplePropContainer, nameof(SamplePropContainer.SampleMemo), memoArgs);
 
