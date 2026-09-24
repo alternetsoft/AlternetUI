@@ -8,12 +8,13 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Displays a message window, also known as a dialog box, which presents a message to the user.
-    /// It is a modal window, blocking other actions in the application until the user closes it.
     /// A <see cref="MessageBox"/> can contain text, buttons, and symbols that inform and instruct
     /// the user.
+    /// To display a message box, call one of the 'Show' static methods.
+    /// MessageBox shows a dialog which does not block the UI thread. In order to perform an action after the message
+    /// box is closed, you can pass a delegate to the 'onClose' parameter of the 'Show' method.
     /// </summary>
     /// <remarks>
-    /// To display a message box, call one of the 'Show' static methods.
     /// The title, message, buttons, and icons
     /// displayed in the message box are determined by parameters that you pass to these methods.
     /// </remarks>
