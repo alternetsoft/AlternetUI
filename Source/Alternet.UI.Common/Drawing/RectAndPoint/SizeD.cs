@@ -56,6 +56,13 @@ namespace Alternet.Drawing
             = new(Coord.PositiveInfinity, Coord.PositiveInfinity);
 
         /// <summary>
+        /// Represents a size whose width and height are set to half of the maximum value allowed in the coordinate system.
+        /// </summary>
+        /// <remarks>This field is useful for scenarios that require a midpoint value, such as graphical
+        /// calculations or determining boundaries within the coordinate space.</remarks>
+        public static readonly SizeD HalfOfMaxValue = new(Coord.MaxValue / 2);
+
+        /// <summary>
         /// Gets <see cref="SizeD"/> with width and height equal to
         /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>).
         /// </summary>
