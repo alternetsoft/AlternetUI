@@ -978,40 +978,40 @@ namespace Alternet.UI
         /// If no font is provided, the default font for the normal visual state is used.</remarks>
         /// <param name="font">The font to use for measuring the text. If null,
         /// the default label font for the normal visual state is used.</param>
+        /// <param name="availableSize">The available size for the formatted text. If null,
+        /// a default size of half the maximum value is used.</param>
         /// <returns>A <see cref="SizeD"/> representing the width and height
         /// of the formatted text.</returns>
-        public virtual SizeD GetFormattedTextSize(Font? font = null)
+        public virtual SizeD GetFormattedTextSize(Font? font = null, SizeD? availableSize = null)
         {
-            var text = GetFormattedText();
-            var size = MeasureCanvas.MeasureText(
-                text,
-                font ?? GetLabelFont(VisualControlState.Normal));
-            return size;
-        }
+            var size = availableSize ?? SizeD.HalfOfMaxValue;
 
-        /// <inheritdoc/>
-        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
-        {
-            if (context.AvailableSize.AnyIsEmptyOrNegative)
+            if (size.AnyIsEmptyOrNegative)
                 return SizeD.Empty;
 
             var result = GetDefaultPreferredSize(
-                        context.AvailableSize,
+                        size,
                         withPadding: true,
                         (size) =>
                         {
                             var measured = DrawDefaultText(
                                 MeasureCanvas,
-                                (PointD.Empty, size),
+                                rect: (PointD.Empty, size),
                                 foreColor: ExactColors.Empty,
                                 backColor: null,
-                                font: null);
+                                font: font ?? GetLabelFont(VisualControlState.Normal));
                             return measured.Size;
                         });
 
             result = result.Ceiling();
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
+        {
+            return GetFormattedTextSize(null, context.AvailableSize);
         }
 
         /// <summary>
@@ -1079,7 +1079,6 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            Invalidate();
         }
 
         /// <inheritdoc/>
@@ -1138,7 +1137,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a label with bold text style.
     /// </summary>
-    public class BoldLabel : Label
+    public partial class BoldLabel : Label
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BoldLabel"/> class with bold text style.
