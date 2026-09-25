@@ -149,22 +149,25 @@ namespace Alternet.UI
 
             OnContentSizeChanged(null, EventArgs.Empty);
 
-            var preferredSize = GetPreferredSize();
-            var textBoxHeight = preferredSize.Height;
-
-            popupRect.Height = MathF.Max(textBoxHeight, prm.ItemRect.Height);
-
-            if (popupRect.Height != prm.ItemRect.Height)
+            if (!prm.Multiline)
             {
-                popupRect.Top += (textBoxHeight - prm.ItemRect.Height) / 2;
+                var preferredSize = GetPreferredSize();
+                var textBoxHeight = preferredSize.Height;
+
+                popupRect.Height = MathF.Max(textBoxHeight, prm.ItemRect.Height);
+
+                if (popupRect.Height != prm.ItemRect.Height)
+                {
+                    popupRect.Top += (textBoxHeight - prm.ItemRect.Height) / 2;
+                }
+
+                var containerRect = prm.ItemContainer.ClientRectangle;
+
+                if (popupRect.Bottom > containerRect.Bottom)
+                    popupRect.Bottom = containerRect.Bottom;
+                if (popupRect.Top < containerRect.Top)
+                    popupRect.Top = containerRect.Top;
             }
-
-            var containerRect = prm.ItemContainer.ClientRectangle;
-
-            if (popupRect.Bottom > containerRect.Bottom)
-                popupRect.Bottom = containerRect.Bottom;
-            if (popupRect.Top < containerRect.Top)
-                popupRect.Top = containerRect.Top;
 
             Bounds = popupRect;
 

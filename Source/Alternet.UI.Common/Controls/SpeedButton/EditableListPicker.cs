@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the popup text box has a border.
         /// </summary>
-        public static bool DefaultPopupTextBoxHasBorder = true;
+        public static bool DefaultPopupTextBoxHasBorder = false;
 
         /// <summary>
         /// Gets or sets a value indicating whether the popup text box has an inner border.
@@ -127,6 +127,18 @@ namespace Alternet.UI
                     return;
                 multiline = value;
                 Label.WordWrap = multiline;
+                Label.PreferredSizeMode = multiline ? PreferredSizeMode.Available : PreferredSizeMode.Content;
+                CommitOnEnter = !multiline;
+                UsePopupEntryHeight = !multiline;
+
+                if (multiline)
+                {
+                    Label.TextAlignmentVertical = VerticalAlignment.Top;
+                }
+                else
+                {
+                    Label.TextAlignmentVertical = VerticalAlignment.Center;
+                }
             }
         }
 
