@@ -125,7 +125,7 @@ namespace Alternet.UI
             {
                 var result = GetScrollBarInfo(false);
 
-                if(!IsScrolledHorizontally)
+                if (!IsScrolledHorizontally)
                     result.Visibility = HiddenOrVisible.Hidden;
 
                 return result;
@@ -148,7 +148,7 @@ namespace Alternet.UI
             {
                 var result = GetScrollBarInfo(true);
 
-                if(!IsScrolledVertically)
+                if (!IsScrolledVertically)
                     result.Visibility = HiddenOrVisible.Hidden;
 
                 return result;
@@ -567,7 +567,13 @@ namespace Alternet.UI
         /// <returns>True if the mouse wheel event should be ignored; otherwise, false.</returns>
         protected virtual bool IgnoreChildMouseWheel(AbstractControl? child)
         {
-            return false;
+            if (child is null)
+                return false;
+
+            if (child.RequiresMouseWheel())
+                return true;
+
+                return false;
         }
 
         /// <inheritdoc/>

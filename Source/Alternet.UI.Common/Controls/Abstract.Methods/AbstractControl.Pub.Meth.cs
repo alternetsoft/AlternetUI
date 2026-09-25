@@ -310,6 +310,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether the control currently requires mouse wheel events.
+        /// This method is called by the scrollable container controls to determine
+        /// if the control should receive mouse wheel events or they can be passed to the parent control.
+        /// </summary>
+        /// <returns>True if the control requires mouse wheel events; otherwise, false.</returns>
+        public virtual bool RequiresMouseWheel()
+        {
+            return Focused;
+        }
+
+        /// <summary>
         /// Sets the index of the child control in the <see cref="Children"/>.
         /// </summary>
         /// <param name="child">The item to search for.</param>
