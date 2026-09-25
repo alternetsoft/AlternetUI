@@ -1,0 +1,71 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Debug" />
+    <BuildType Name="DLL Debug" />
+    <BuildType Name="DLL Release" />
+    <BuildType Name="Release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM64" />
+    <Platform Name="Win32" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Components/">
+    <Project Path="Alternet.UI.Common/Alternet.UI.Common.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Debug|x86" Project="x86" />
+    </Project>
+    <Project Path="Alternet.UI.Controls/Alternet.UI.Controls.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Debug|x86" Project="x86" />
+    </Project>
+    <Project Path="Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" Id="79f2529c-c711-457a-9087-325c333cde60">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+    </Project>
+    <Project Path="Alternet.UI.Winforms/Alternet.UI.Winforms.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+    </Project>
+    <Project Path="Alternet.UI/Alternet.UI.csproj">
+      <BuildDependency Project="Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" />
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Debug|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="Samples/ApiDocDll/ApiDocDll.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+    </Project>
+    <Project Path="Samples/ControlsSample/ControlsSample.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="Debug|x86" Project="x86" />
+    </Project>
+    <Project Path="Samples/ControlsSampleDll/ControlsSampleDll.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+      <Platform Solution="*|Win32" Project="x86" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Samples/WinformsSample/WinformsSample.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.targets" />
+    <File Path="NuGet.config" />
+    <File Path="stylecop.json" />
+  </Folder>
+</Solution>

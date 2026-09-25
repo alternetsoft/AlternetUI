@@ -4,7 +4,6 @@
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
-  <Import Project="..\Version\TargetFrameworks.props" />
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net8.0'">
     <Optimize>false</Optimize>
@@ -17,6 +16,8 @@
     <Nullable>enable</Nullable>
     <LangVersion>12.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFrameworks>net8.0-windows;net9.0-windows;net10.0-windows</TargetFrameworks>
+    <UseWindowsForms>true</UseWindowsForms>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
