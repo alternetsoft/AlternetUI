@@ -547,7 +547,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets vertical alignment of the text.
+        /// Gets or sets horizontal alignment of the text.
         /// </summary>
         public HorizontalAlignment TextAlignmentHorizontal
         {

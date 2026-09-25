@@ -265,7 +265,8 @@ namespace Alternet.UI
         /// ensuring that the visible portion of the content is correctly displayed based
         /// on the current scroll position and layout.
         /// </summary>
-        /// <param name="refresh">Indicates whether to refresh the interior after updating the viewport rectangle.</param>
+        /// <param name="refresh">Indicates whether to refresh
+        /// the interior after updating the viewport rectangle.</param>
         protected virtual void UpdateContentViewportRect(bool refresh = true)
         {
             var viewportRect = GetPreferredContentViewportRect();
@@ -275,7 +276,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Represents a container control that is used to hold the child controls within
-        /// the scrollable area of the <see cref="ScrollViewer"/>.
+        /// the scrollable area of the <see cref="ScrollViewer"/>. This control is created 
+        /// internally by the <see cref="ScrollViewer"/> and is not intended to be used directly.
         /// </summary>
         public class ScrollContainer : UserControl
         {
@@ -335,9 +337,11 @@ namespace Alternet.UI
     }
 
     /// <summary>
-    /// Represents a scrollable area that can contain other visible elements, with a specific type of control hosted within it.
+    /// Represents a scrollable area that can contain other visible elements,
+    /// with a specific type of control hosted within it.
     /// </summary>
-    /// <typeparam name="TControl">The type of the control to be hosted within the scrollable area.</typeparam>
+    /// <typeparam name="TControl">The type of the control
+    /// to be hosted within the scrollable area.</typeparam>
     public partial class ScrollViewer<TControl> : ScrollViewer
         where TControl : AbstractControl, new()
     {
