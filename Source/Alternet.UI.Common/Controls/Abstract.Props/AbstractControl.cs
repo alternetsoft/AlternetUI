@@ -156,6 +156,7 @@ namespace Alternet.UI
         private long? lastClickedTimestamp;
         private ControlColorMode? colorMode;
         private ImeMode imeMode = ImeMode.Off;
+        private PreferredSizeMode preferredSizeMode = PreferredSizeMode.Content;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -3046,6 +3047,28 @@ namespace Alternet.UI
                     MinimumSize = new(-1, MinimumSize.Height);
                 else
                     MinimumSize = new(value.Value, MinimumSize.Height);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the preferred size mode for the control.
+        /// This property is used to determine how the control should be sized when its preferred size is calculated
+        /// (when <see cref="GetPreferredSize(PreferredSizeContext)"/> is called).
+        /// If the preferred size mode is set to <see cref="PreferredSizeMode.Content"/> (default value),
+        /// the control will be sized based on its content. If the preferred size mode is set to
+        /// <see cref="PreferredSizeMode.Available"/> the control will be sized based on the available space
+        /// or a fixed size, respectively. In all cases, the control will be sized taking
+        /// into account the suggested width and height.
+        /// </summary>
+        public virtual PreferredSizeMode PreferredSizeMode
+        {
+            get => preferredSizeMode;
+            set
+            {
+                if (preferredSizeMode == value)
+                    return;
+                preferredSizeMode = value;
+                PerformLayout();
             }
         }
 
