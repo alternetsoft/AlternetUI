@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public static partial class MathUtils
@@ -403,6 +405,22 @@ namespace Alternet.UI
         public static bool IsInfinityOrNanOrMax(float value)
         {
             return value == float.MaxValue || IsNaN(value) || float.IsInfinity(value);
+        }
+
+        /// <summary>
+        /// Determines whether the specified floating-point value is a valid size specification.
+        /// </summary>
+        /// <param name="value">The floating-point value to evaluate.</param>
+        /// <returns><see langword="true"/> if the specified value is a valid size specification;
+        /// otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool SizeSpecified(float value)
+        {
+            if (IsInfinityOrNanOrMax(value))
+                return false;
+            if(value >= SizeD.HalfOfMaxValue.Width)
+                return false;
+            return true;
         }
 
         /// <summary>
