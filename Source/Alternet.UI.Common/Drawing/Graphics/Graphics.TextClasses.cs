@@ -75,6 +75,12 @@ namespace Alternet.Drawing
             public HVAlignment Alignment = HVAlignment.TopLeft;
 
             /// <summary>
+            /// Gets or sets whether to shrink size of the element rectangle
+            /// to fit in the container rectangle when align is performed.
+            /// </summary>
+            public bool ShrinkSizeWhenAligned = false;
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="DrawElementsParams"/> struct.
             /// </summary>
             public DrawElementsParams()
@@ -713,6 +719,12 @@ namespace Alternet.Drawing
             /// Internal use only.
             /// </summary>
             public ObjectUniqueId? DebugId;
+
+            /// <summary>
+            /// Gets or sets whether to shrink size of the element rectangle
+            /// to fit in the container rectangle when align is performed.
+            /// </summary>
+            public bool ShrinkSizeWhenAligned = false;
 
             /// <summary>
             /// Gets or sets a value which specifies whether image to text are aligned vertically or horizontally.

@@ -883,6 +883,7 @@ namespace Alternet.Drawing
             drawParams.Visible = prm.Visible;
             drawParams.DrawDebugCorners = prm.DrawDebugCorners;
             drawParams.DebugId = prm.DebugId;
+            drawParams.ShrinkSizeWhenAligned = prm.ShrinkSizeWhenAligned;
 
             var result = DrawElements(ref drawParams);
 
@@ -1042,7 +1043,7 @@ namespace Alternet.Drawing
                     prm.Rect,
                     prm.Alignment.Horizontal,
                     prm.Alignment.Vertical,
-                    shrinkSize: false);
+                    shrinkSize: prm.ShrinkSizeWhenAligned);
             }
 
 #if DEBUG
