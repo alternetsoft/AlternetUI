@@ -781,6 +781,7 @@ namespace Alternet.UI
             var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
             var useMemo = args is not null && args.CustomFlags["IsMultiline"];
             var minHeight = args?.CustomAttr["MinHeight"] as int?;
+            var maxHeight = args?.CustomAttr["MaxHeight"] as int?;
             var maxWidth = args?.CustomAttr["MaxWidth"] as int?;
 
             ControlAndLabel<TextPickerAndButton, GenericControl>? result;
@@ -804,16 +805,17 @@ namespace Alternet.UI
                 {
                     result = new ControlAndLabel<TextPickerAndButton, GenericControl>(typeof(Label), typeOfTextBox);
                     result.MainControl.MainControl.Multiline = useMemo;
-                    if (useMemo)
-                        result.MainControl.MainControl.Label.VerticalAlignment = VerticalAlignment.Top;
-                    result.MainControl.MainControl.CommitOnEnter = !useMemo;
-                    result.MainControl.MainControl.UsePopupEntryHeight = !useMemo;
                 }
             }
 
             if (minHeight.HasValue)
             {
                 result.MainControl.MainControl.MinHeight = minHeight.Value;
+            }
+
+            if (maxHeight.HasValue)
+            {
+                result.MainControl.MainControl.MaxHeight = maxHeight.Value;
             }
 
             if (maxWidth.HasValue)

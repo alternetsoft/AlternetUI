@@ -108,7 +108,7 @@ namespace PropertyGridSample
 
             panel.AddHorizontalLine();
 
-            var memoArgs = new CustomEventArgs("IsMultiline").Attr("MinHeight", 250);
+            var memoArgs = new CustomEventArgs("IsMultiline").Attr("MinHeight", 250).Attr("MaxHeight", 250);
 
             panel.AddInput("This is Memo:", samplePropContainer, nameof(SamplePropContainer.SampleMemo), memoArgs);
 
