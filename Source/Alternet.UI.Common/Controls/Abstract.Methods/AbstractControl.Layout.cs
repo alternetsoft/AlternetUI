@@ -141,7 +141,60 @@ namespace Alternet.UI
             var hasGlobal = StaticControlEvents.HasRequestPreferredSizeHandlers;
             var hasLocal = RequestPreferredSize != null;
 
-            var defaultPreferredSize = GetPreferredSizeInternal(context);
+            SizeD defaultPreferredSize;
+
+            switch (PreferredSizeMode)
+            {
+                case PreferredSizeMode.Content:
+                default:
+                    defaultPreferredSize = GetPreferredSizeInternal(context);
+                    break;
+                case PreferredSizeMode.Available:
+                    defaultPreferredSize = GetPreferredSizeAvailable();
+                    break;
+            }
+
+            SizeD GetPreferredSizeAvailable()
+            {
+                float width = SuggestedWidth;
+                float height = SuggestedHeight;
+
+                bool needContentWidth = false;
+                bool needContentHeight = false;
+
+                if (!MathUtils.SizeSpecified(width))
+                {
+                    width = context.AvailableSize.Width;
+
+                    if (!MathUtils.SizeSpecified(width))
+                    {
+                        needContentWidth = true;
+                    }
+                }
+
+                if (!MathUtils.SizeSpecified(height))
+                {
+                    height = context.AvailableSize.Height;
+
+                    if (!MathUtils.SizeSpecified(height))
+                    {
+                        needContentHeight = true;
+                    }
+                }
+
+                var needContentSize = needContentWidth || needContentHeight;
+
+                if (needContentSize)
+                {
+                    var contentSize = GetPreferredSizeInternal(context);
+                    if (needContentWidth)
+                        width = contentSize.Width;
+                    if (needContentHeight)
+                        height = contentSize.Height;
+                }
+
+                return new SizeD(width, height);
+            }
 
             if (hasGlobal || hasLocal)
             {
