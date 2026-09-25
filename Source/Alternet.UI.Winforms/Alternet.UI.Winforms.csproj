@@ -20,8 +20,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <PackageId>Alternet.UI.Controls</PackageId>
-    <Description>AlterNET UI Controls: XControls for multi-platform use.</Description>
+    <PackageId>Alternet.UI.Winforms</PackageId>
+    <Description>AlterNET UI Winforms: Platform support for Winforms.</Description>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
@@ -43,10 +43,13 @@
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
     <PackageReference Include="Alternet.UI.Common" Version="$(Version)">
     </PackageReference>
+    <PackageReference Include="Alternet.UI.Controls" Version="$(Version)">
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' == ''">
     <ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+    <ProjectReference Include="..\Alternet.UI.Controls\Alternet.UI.Controls.csproj" />
   </ItemGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Common\SignDll.proj" />
