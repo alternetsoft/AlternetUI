@@ -21,26 +21,6 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly Color DefaultBorderColorLight;
 
-        /// <summary>
-        /// Gets the default background color for controls when dark theme is used.
-        /// </summary>
-        public static readonly Color DefaultControlBackColorDark;
-
-        /// <summary>
-        /// Gets the default foreground color for controls when dark theme is used.
-        /// </summary>
-        public static readonly Color DefaultControlForeColorDark;
-
-        /// <summary>
-        /// Gets the default background color for windows when dark theme is used.
-        /// </summary>
-        public static readonly Color DefaultWindowBackColorDark;
-
-        /// <summary>
-        /// Gets the default foreground color for windows when dark theme is used.
-        /// </summary>
-        public static readonly Color DefaultWindowForeColorDark;
-
         private static ThemedColor? borderColor;
         
         private static ThemedColor windowBackColor;
@@ -74,11 +54,6 @@ namespace Alternet.Drawing
             }
 
             DefaultBorderColorLight = Color.FromRgb(204, 206, 219);
-
-            DefaultControlBackColorDark = SystemColors.Control;
-            DefaultControlForeColorDark = SystemColors.ControlText;
-            DefaultWindowBackColorDark = SystemColors.Window;
-            DefaultWindowForeColorDark = SystemColors.WindowText;
 
             Initialize();
         }
@@ -312,9 +287,11 @@ namespace Alternet.Drawing
         /// </summary>
         public static ThemedColor SvgDisabledColor
         {
-            get => svgDisabledColor ??= new ThemedColor(
-                light: SystemColors.GrayText,
-                dark: (86, 86, 86));
+            get
+            {
+                return svgDisabledColor ??= new ThemedColor(light: new Color(109, 109, 109), dark: new Color(86, 86, 86));
+            }
+
             set => svgDisabledColor = value;
         }
 
@@ -416,36 +393,11 @@ namespace Alternet.Drawing
         /// experience.</remarks>
         public static void Initialize()
         {
-            Color darkBackColor;
-            Color darkForeColor;
+            windowBackColor = new(light: new(240, 240, 240), dark: new Color(51, 51, 51));
+            windowForeColor = new(light: Color.Black, dark: Color.White);
 
-            if (SystemColors.Control.IsDark())
-            {
-                darkBackColor = DefaultControlBackColorDark;
-                darkForeColor = DefaultControlForeColorDark;
-            }
-            else
-            {
-                darkBackColor = (30, 30, 30);
-                darkForeColor = (164, 164, 164);
-            }
-
-            windowBackColor = new(light: new(240, 240, 240), dark: darkBackColor);
-            windowForeColor = new(light: Color.Black, dark: darkForeColor);
-
-            if (SystemColors.Window.IsDark())
-            {
-                darkBackColor = DefaultWindowBackColorDark;
-                darkForeColor = DefaultWindowForeColorDark;
-            }
-            else
-            {
-                darkBackColor = (30, 30, 30);
-                darkForeColor = (164, 164, 164);
-            }
-
-            controlBackColor = new(light: Color.White, dark: darkBackColor);
-            controlForeColor = new(light: Color.Black, dark: darkForeColor);
+            controlBackColor = new(light: Color.White, dark: new Color(25, 25, 25));
+            controlForeColor = new(light: Color.Black, dark: Color.White);
         }
 
         /// <summary>
