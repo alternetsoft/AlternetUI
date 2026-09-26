@@ -351,7 +351,6 @@ namespace Alternet.UI
                 validColors = false;
                 SystemColors.ResetCachedResources();
                 PlessSystemColors.Reset();
-                DefaultColors.Initialize();
                 SystemColorsChanged?.Invoke();
 
                 StaticControlEvents.RaiseNotification(
