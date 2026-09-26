@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Contains declarations of the known svg colors.
     /// </summary>
-    public class SvgColors
+    public abstract class SvgColors
     {
         /// <summary>
         /// Gets known svg colors for the dark scheme.
@@ -25,32 +25,27 @@ namespace Alternet.UI
         /// <summary>
         /// Normal svg color.
         /// </summary>
-        public virtual Color Normal { get; set; } = SystemColors.WindowText;
+        public abstract Color Normal { get; set; }
 
         /// <summary>
         /// Disabled svg color.
         /// </summary>
-        public virtual Color Disabled { get; set; } = SystemColors.GrayText;
+        public abstract Color Disabled { get; set; }
 
         /// <summary>
         /// Error svg color.
         /// </summary>
-        public virtual Color Error { get; set; } = SystemColors.WindowText;
+        public abstract Color Error { get; set; }
 
         /// <summary>
         /// Information svg color.
         /// </summary>
-        public virtual Color Information { get; set; } = SystemColors.WindowText;
+        public abstract Color Information { get; set; }
 
         /// <summary>
         /// Warning svg color.
         /// </summary>
-        public virtual Color Warning { get; set; } = SystemColors.WindowText;
-
-        /// <summary>
-        /// Highlight text svg color.
-        /// </summary>
-        public virtual Color HighlightText { get; set; } = SystemColors.HighlightText;
+        public abstract Color Warning { get; set; }
 
         /// <summary>
         /// Gets known svg color for the specified <see cref="KnownSvgColor"/>.
