@@ -10,7 +10,7 @@ namespace Alternet.Drawing
     /// Represents a null or empty image source.
     /// Implements <see cref="IImageSource"/> with default or null values.
     /// </summary>
-    public class NullImageSource : DisposableObject, IImageSource
+    public class NullImageSource : HostedDisposableObject, IImageSource
     {
         bool IImageSource.IsEmpty => GetImageSourceIsEmpty();
 
