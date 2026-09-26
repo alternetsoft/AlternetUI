@@ -4,6 +4,8 @@ using System.Text;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public partial class SvgImage
@@ -21,6 +23,56 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates new <see cref="SKBitmap"/> and loads there this svg image.
+        /// </summary>
+        /// <param name="size">Svg image size in pixels.</param>
+        /// <param name="color">Color of the mono svg image. Optional.</param>
+        /// <returns>The created SKBitmap.</returns>
+        public virtual SKBitmap CreateSkiaBitmap(SizeI size, Color? color = null)
+        {
+            var skiaBitmap = SkiaUtils.BitmapFromPicture(AsPicture, size.Width, size.Height, color);
+            return skiaBitmap;
+        }
+
+        /// <summary>
+        /// Creates new <see cref="SKBitmap"/> and loads there
+        /// this svg image with the specified size and known svg color.
+        /// </summary>
+        /// <param name="size">Svg image size in pixels.</param>
+        /// <param name="knownColor">Known svg color.</param>
+        /// <param name="isDark">Whether color theme is dark.</param>
+        /// <returns>The created SKBitmap.</returns>
+        public virtual SKBitmap CreateSkiaBitmap(SizeI size, KnownSvgColor knownColor, bool isDark)
+        {
+            var color = GetSvgColor(knownColor, isDark);
+            return CreateSkiaBitmap(size, color);
+        }
+
+        /// <summary>
+        /// Creates new <see cref="SKBitmap"/> and loads there this svg image in the disabled state.
+        /// When svg is loaded and it is mono, it is filled with the color corresponding to the disabled state.
+        /// </summary>
+        /// <param name="size">Svg image size in pixels.</param>
+        /// <param name="isDark">Whether color theme is dark.</param>
+        /// <returns>The created SKBitmap.</returns>
+        public virtual SKBitmap CreateSkiaDisabledBitmap(SizeI size, bool isDark)
+        {
+            return CreateSkiaBitmap(size, KnownSvgColor.Disabled, isDark);
+        }
+
+        /// <summary>
+        /// Creates new <see cref="SKBitmap"/> and loads there this svg image in the normal state.
+        /// When svg is loaded and it is mono, it is filled with the color corresponding to the normal state.
+        /// </summary>
+        /// <param name="size">Svg image size in pixels.</param>
+        /// <param name="isDark">Whether color theme is dark.</param>
+        /// <returns>The created SKBitmap.</returns>
+        public virtual SKBitmap CreateSkiaNormalBitmap(SizeI size, bool isDark)
+        {
+            return CreateSkiaBitmap(size, KnownSvgColor.Normal, isDark);
+        }
+
+        /// <summary>
         /// Creates new <see cref="ImageSet"/> and loads there this svg image
         /// with the specified size and color.
         /// </summary>
@@ -29,7 +81,7 @@ namespace Alternet.Drawing
         /// <returns>Image set containing the loaded SVG image. Returned image set is immutable.</returns>
         public virtual ImageSet CreateImageSet(SizeI size, Color? color = null)
         {
-            var skiaBitmap = SkiaUtils.BitmapFromPicture(AsPicture, size.Width, size.Height, color);
+            var skiaBitmap = CreateSkiaBitmap(size, color);
             var bitmap = (Image)skiaBitmap;
             ImageSet result = new(bitmap);
             result.SetImmutable();
