@@ -13,6 +13,33 @@ using SkiaSharp;
 namespace Alternet.Drawing
 {
     /// <summary>
+    /// Represents a delegate that defines a method for retrieving a bitmap representation of an SVG image.
+    /// </summary>
+    /// <typeparam name="TResult">The type of the result returned by the delegate.</typeparam>
+    /// <param name="svg">The SVG image.</param>
+    /// <param name="width">The width of the bitmap.</param>
+    /// <param name="height">The height of the bitmap.</param>
+    /// <param name="isDark">Indicates whether the bitmap is for a dark theme.</param>
+    /// <returns>The bitmap representation of the SVG image.</returns>
+    public delegate TResult SvgToBitmapDelegate<TResult>(SvgImage svg, int width, int height, bool isDark);
+
+    /// <summary>
+    /// Represents a delegate that defines a method for retrieving a bitmap representation
+    /// of an SVG image with an optional color override.
+    /// </summary>
+    /// <typeparam name="TResult">The type of the result returned by the delegate.</typeparam>
+    /// <param name="svg">The SVG image.</param>
+    /// <param name="width">The width of the bitmap.</param>
+    /// <param name="height">The height of the bitmap.</param>
+    /// <param name="color">The optional color override.</param>
+    /// <returns>The bitmap representation of the SVG image.</returns>
+    public delegate TResult SvgToBitmapWithColorDelegate<TResult>(
+                SvgImage svg,
+                int width,
+                int height,
+                Color? color = null);
+
+    /// <summary>
     /// Implements methods and properties to work with toolbar svg images.
     /// These are rectangular images with small size. This class allows
     /// to speed up loading and getting of different states (and sizes) of the

@@ -53,7 +53,7 @@ namespace Alternet.Drawing
                 if (svgSize == value)
                     return;
 
-                if(value == null)
+                if (value == null)
                 {
                     svgSize = null;
                     return;

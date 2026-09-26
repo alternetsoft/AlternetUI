@@ -7,7 +7,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides a set of spinner images. These images can be rotated and used as different frames of the spinner gif animations.
+    /// Provides a set of spinner images. These images can be rotated
+    /// and used as different frames of the spinner gif animations.
     /// </summary>
     public static class SpinnerSvgImages
     {
