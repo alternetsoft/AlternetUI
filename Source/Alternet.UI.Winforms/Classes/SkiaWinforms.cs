@@ -215,6 +215,24 @@ namespace Alternet.Winforms
         }
 
         /// <summary>
+        /// Creates an instance of Alternet.Drawing.SvgImageBitmaps.
+        /// </summary>
+        /// <returns>The created instance of Alternet.Drawing.SvgImageBitmaps.</returns>
+        public static Alternet.Drawing.SvgImageBitmaps<Bitmap> CreateSvgBitmaps()
+        {
+            return new (SvgImageBitmapsProvider.Instance);
+        }
+
+        /// <summary>
+        /// Creates an instance of Alternet.Drawing.SvgImageBitmaps.
+        /// </summary>
+        /// <returns>The created instance of Alternet.Drawing.SvgImageBitmaps.</returns>
+        public static Alternet.Drawing.SvgImageBitmaps<Bitmap> CreateSvgBitmaps(Alternet.Drawing.SvgImage svg)
+        {
+            return new(SvgImageBitmapsProvider.Instance, svg);
+        }
+
+        /// <summary>
         /// Converts an Alternet.Drawing.SvgImage to a System.Drawing.Bitmap 
         /// with the specified dimensions and dark mode option.
         /// When svg is loaded and it is mono, it is filled with the color corresponding to the disabled state.

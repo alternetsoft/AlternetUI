@@ -11,13 +11,13 @@ public partial class Form1 : Form
         PictureBox pictureBox = new();
         PictureBox pictureBox2 = new();
 
-        var svg = Alternet.UI.KnownSvgImages.ImgAngleUp;
-        var bitmap = svg.ToNormalBitmap(32, 32, isDark: false);
+        var svg1 = SkiaWinforms.CreateSvgBitmaps(Alternet.UI.KnownSvgImages.ImgAngleUp);
+        var bitmap1 = svg1.ToNormalBitmap(32, 32, isDark: false);
 
-        var svg2 = Alternet.UI.KnownSvgImages.ImgAngleLeft;
+        var svg2 = SkiaWinforms.CreateSvgBitmaps(Alternet.UI.KnownSvgImages.ImgAngleLeft);
         var bitmap2 = svg2.ToDisabledBitmap(32, 32, isDark: false);
 
-        pictureBox.Image = bitmap;
+        pictureBox.Image = bitmap1;
         pictureBox.Size = new Size(32, 32);
         this.Controls.Add(pictureBox);
 
