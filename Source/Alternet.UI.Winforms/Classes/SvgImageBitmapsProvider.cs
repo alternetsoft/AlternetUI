@@ -18,6 +18,12 @@ namespace Alternet.Winforms
         public static SvgImageBitmapsProvider Instance { get; } = new SvgImageBitmapsProvider();
 
         /// <inheritdoc/>
+        public Drawing.SizeI GetBitmapSize(Bitmap bitmap)
+        {
+            return new Drawing.SizeI(bitmap.Width, bitmap.Height);
+        }
+
+        /// <inheritdoc/>
         public Bitmap ToBitmap(Drawing.SvgImage svg, int width, int height, Drawing.Color? color = null)
         {
             if (color is null)

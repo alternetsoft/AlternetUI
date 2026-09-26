@@ -13,6 +13,13 @@ namespace Alternet.Drawing
     public interface ISvgImageBitmapsProvider<TBitmap>
     {
         /// <summary>
+        /// Gets the size of the specified bitmap.
+        /// </summary>
+        /// <param name="bitmap">The bitmap.</param>
+        /// <returns>The size of the bitmap.</returns>
+        SizeI GetBitmapSize(TBitmap bitmap);
+
+        /// <summary>
         /// Creates a bitmap representation of the specified SVG image
         /// with the given width, height, and optional color.
         /// </summary>
@@ -114,6 +121,88 @@ namespace Alternet.Drawing
             var result = bitmaps.GetOrAdd(key, CreateWithColor!);
 
             return result;
+        }
+
+        /// <summary>
+        /// Resets the cached bitmap representations of the SVG image.
+        /// </summary>
+        public readonly void ResetBitmaps()
+        {
+            bitmaps?.Clear();
+            disabledBitmaps?.Clear();
+            normalBitmaps?.Clear();
+        }
+
+        /// <summary>
+        /// Resets the cached bitmap representations of the SVG image with color.
+        /// </summary>
+        public readonly void ResetColoredBitmaps()
+        {
+            bitmaps?.Clear();
+        }
+        
+        /// <summary>
+        /// Resets the cached disabled bitmap representations of the SVG image.
+        /// </summary>  
+        public readonly void ResetDisabledBitmaps()
+        {
+            disabledBitmaps?.Clear();
+        }
+
+        /// <summary>
+        /// Resets the cached normal bitmap representations of the SVG image.
+        /// </summary>
+        public readonly void ResetNormalBitmaps()
+        {
+            normalBitmaps?.Clear();
+        }
+
+        /// <summary>
+        /// Adds a bitmap representation of the SVG image with the specified color.
+        /// This method can be used if you need to provide a custom bitmap for a specific svg size and color.
+        /// Usually, you don't need to call this method,
+        /// as the bitmap can be generated from the svg image automatically.
+        /// </summary>
+        /// <param name="bitmap">The bitmap to add.</param>
+        /// <param name="color">The optional color to apply to the bitmap.</param>
+        public void AddBitmap(TBitmap bitmap, Color? color = null)
+        {
+            bitmaps ??= new();
+            var size = provider.GetBitmapSize(bitmap);
+            var key = new SizeAndColor(size, color);
+            bitmaps.Add(key, bitmap);
+        }
+
+        /// <summary>
+        /// Adds a normal bitmap representation of the SVG image with the specified dark mode option.
+        /// This method can be used if you need to provide a custom bitmap for a specific svg size and dark mode option.
+        /// Usually, you don't need to call this method,
+        /// as the normal bitmap can be generated from the svg image automatically.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the bitmap is for dark mode.</param>
+        /// <param name="bitmap">The bitmap to add.</param>
+        public void AddNormalBitmap(TBitmap bitmap, bool isDark)
+        {
+            normalBitmaps ??= new();
+            var size = provider.GetBitmapSize(bitmap);
+            var key = new SizeAndBool(size, isDark);
+            normalBitmaps.Add(key, bitmap);
+        }
+
+        /// <summary>
+        /// Adds a disabled bitmap representation of the SVG image with the specified dark mode option.
+        /// This method can be used if you need to provide a custom bitmap for a specific svg size and dark mode option.
+        /// Usually, you don't need to call this method,
+        /// as the disabled bitmap can be generated from the svg image automatically.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the bitmap is for dark mode.</param>
+        /// <param name="bitmap">The bitmap to add.</param>
+        public void AddDisabledBitmap(TBitmap bitmap, bool isDark)
+        {
+            disabledBitmaps ??= new();
+            var size = provider.GetBitmapSize(bitmap);
+            var key = new SizeAndBool(size, isDark);
+            disabledBitmaps.Add(key, bitmap);
         }
 
         /// <summary>
