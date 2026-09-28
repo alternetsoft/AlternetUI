@@ -22,6 +22,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControlAndButton{T}"/> class
+        /// with the specified type of control.
+        /// </summary>
+        /// <param name="typeOfControl">The type of the control.</param>
+        public GenericControlAndButton(Type? typeOfControl)
+            : base(typeOfControl)
+        {
+        }
+
+        /// <summary>
         /// Gets main child control.
         /// </summary>
         [Browsable(false)]

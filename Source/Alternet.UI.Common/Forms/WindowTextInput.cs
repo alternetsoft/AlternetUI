@@ -35,7 +35,7 @@ namespace Alternet.UI
             Margin = DefaultMargin,
         };
 
-        private readonly TextBoxAndButton edit = new()
+        private readonly TextPickerAndButton edit = new()
         {
             Margin = DefaultMargin,
             MinWidth = 200,
@@ -87,7 +87,7 @@ namespace Alternet.UI
         /// Gets value editor.
         /// </summary>
         [Browsable(false)]
-        public TextBoxAndButton Edit => edit;
+        public TextPickerAndButton Edit => edit;
 
         /// <summary>
         /// Gets a value indicating whether the message is null or an empty string.
@@ -186,8 +186,6 @@ namespace Alternet.UI
             textDialog ??= new();
             textDialog.InitAsText(prm);
             prm.OnSetup?.Invoke(textDialog);
-            textDialog.Edit.MainControl.MoveToEndOfText();
-            textDialog.Edit.MainControl.SelectAll();
             textDialog.ShowDialogAsync(prm.Parent as Window, (result) =>
             {
                 var s = textDialog.Edit.Text;
@@ -209,8 +207,6 @@ namespace Alternet.UI
             longDialog ??= new();
             longDialog.InitAsLong(prm);
             prm.OnSetup?.Invoke(longDialog);
-            longDialog.Edit.MainControl.MoveToEndOfText();
-            longDialog.Edit.MainControl.SelectAll();
             longDialog.ShowDialogAsync(prm.Parent as Window, (result) =>
             {
                 long? s;
@@ -292,7 +288,7 @@ namespace Alternet.UI
             var maxLength = prm.MaxLength;
             if (maxLength > 0)
             {
-                Edit.MainControl.MaxLength = maxLength;
+                Edit.MainControl.ValueHelper.MaxLength = maxLength;
             }
         }
     }

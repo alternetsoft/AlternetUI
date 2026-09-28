@@ -337,7 +337,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the value assigned to control.
         /// </summary>
-        /// <value>The numeric value of the <see cref="IntPicker"/>
+        /// <value>The numeric value of the <see cref="XIntPicker"/>
         /// control.</value>
         /// <remarks>When the <see cref="Value"/> property is set, the new
         /// value is validated

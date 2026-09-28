@@ -844,9 +844,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates main child control.
         /// </summary>
-        /// <remarks>
-        /// For example, main control for the <see cref="TextBoxAndButton"/> is <see cref="TextBox"/>.
-        /// </remarks>
+        /// <param name="typeOfControl">The type of the control.</param>
         protected abstract GenericControl CreateControl(Type? typeOfControl);
 
         /// <summary>

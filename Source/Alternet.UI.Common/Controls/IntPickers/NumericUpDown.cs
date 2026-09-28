@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// that can be incremented or decremented
     /// by clicking the up or down buttons of the control.
     /// To specify the allowable range of values for the control, set the
-    /// <see cref="IntPicker.Minimum"/> and <see cref="IntPicker.Maximum"/> properties.
+    /// <see cref="XIntPicker.Minimum"/> and <see cref="XIntPicker.Maximum"/> properties.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Common)]
     public partial class NumericUpDown : XIntPicker

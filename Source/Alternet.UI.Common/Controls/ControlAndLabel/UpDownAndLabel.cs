@@ -10,7 +10,7 @@ using Alternet.Base.Collections;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements <see cref="UI.IntPicker"/> with attached label.
+    /// Represents a control that contains a label and an <see cref="XIntPicker"/> control.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
     public partial class UpDownAndLabel : GenericControlAndLabel<XIntPicker, Label>
@@ -43,8 +43,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when <see cref="IntPicker.ValueChanged"/> event of the
-        /// attached combo box control is changed.
+        /// Occurs when value in the main inner control is changed.
         /// </summary>
         public event EventHandler? ValueChanged
         {
@@ -84,7 +83,7 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc cref="TextBoxAndButton.IsEditable"/>
+        /// <inheritdoc cref="XIntPicker.IsEditable"/>
         public virtual bool IsEditable
         {
             get => MainControl.IsEditable;

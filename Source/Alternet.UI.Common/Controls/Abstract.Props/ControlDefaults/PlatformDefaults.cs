@@ -18,12 +18,9 @@ namespace Alternet.UI
         public virtual ModifierKeys TextBoxUrlClickModifiers { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to adjust height of <see cref="TextBox"/> controls
+        /// Gets or sets whether to adjust height of text picker controls
         /// to height of the combo box control.
         /// </summary>
-        /// <remarks>
-        /// Used in <see cref="TextBoxUtils.AdjustTextBoxesHeight"/>.
-        /// </remarks>
         public virtual bool AdjustTextBoxesHeight { get; set; } = false;
 
         /// <summary>

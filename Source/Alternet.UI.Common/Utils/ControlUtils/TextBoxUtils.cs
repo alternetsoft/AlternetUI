@@ -113,6 +113,7 @@ namespace Alternet.UI
             DialogFactory.GetNumberFromUserAsync(prm);
         }
 
+/*
         /// <summary>
         /// Increases height of all <see cref="TextBox"/> controls in the specified
         /// container to height of the <see cref="XComboBox"/> control, if it
@@ -159,7 +160,9 @@ namespace Alternet.UI
                 }
             }
         }
+*/
 
+/*
         internal static void AdjustTextBoxesHeightInternal(
             AbstractControl container,
             AbstractControl comboBox,
@@ -206,5 +209,6 @@ namespace Alternet.UI
                     control.SuggestedHeight = maxHeight;
             });
         }
+*/
     }
 }

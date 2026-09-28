@@ -21,7 +21,7 @@ namespace Alternet.UI
         private readonly int counter;
         private readonly GenericControl? statusPanel;
 
-        private readonly TextBoxAndButton textBox = new()
+        private readonly TextPickerAndButton textBox = new()
         {
         };
 
@@ -51,7 +51,7 @@ namespace Alternet.UI
                     ThemedColors.Green.GetColor(this));
 
             textBox.InitSearchEdit();
-            textBox.TextBox.EmptyTextHint = "Type here to search for classes and members...";
+            textBox.MainControl.EmptyTextHint = "Type here to search for classes and members...";
 
             counter = ++globalCounter;
 
