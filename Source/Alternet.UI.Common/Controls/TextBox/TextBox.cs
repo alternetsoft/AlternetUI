@@ -16,7 +16,7 @@ namespace Alternet.UI
     [DefaultBindingProperty("Text")]
     [ControlCategory(KnownControlCategory.Common)]
     public partial class TextBox : Control,
-        IReadOnlyStrings, IValidatorReporter, INotifyDataErrorInfo
+        IReadOnlyStrings, IValidatorReporter, INotifyDataErrorInfo, IPopupEntry
     {
         private bool multiline = false;
         private bool hasBorder = true;
@@ -879,6 +879,39 @@ namespace Alternet.UI
         {
             get => base.Layout;
             set => base.Layout = value;
+        }
+
+        int? IPopupEntry.SelectionStart
+        {
+            get => SelectionStart;
+            set
+            {
+                if (value is null)
+                    SelectionStart = 0;
+                else
+                    SelectionStart = value.Value;
+            }
+        }
+
+        int? IPopupEntry.SelectionLength
+        {
+            get => SelectionLength;
+            set
+            {
+                if (value is null)
+                    SelectionLength = 0;
+                else
+                    SelectionLength = value.Value;
+            }
+        }
+
+        PointI? IPopupEntry.CaretPosition
+        {
+            get => CurrentPosition;
+            set
+            {
+                CurrentPosition = value;
+            }
         }
 
         /// <summary>

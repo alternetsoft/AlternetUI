@@ -75,18 +75,24 @@ namespace Alternet.Maui
         }
 
         /// <inheritdoc/>
-        public virtual bool HasActivePopupEntry(ObjectUniqueId id)
+        public virtual IPopupEntry? GetPopupEntry(ObjectUniqueId id)
         {
             for (int i = activeEntries.Count - 1; i >= 0; i--)
             {
                 var entry = activeEntries[i].Value;
                 if (entry is not null && entry.Params.TargetControl?.UniqueId == id)
                 {
-                    return true;
+                    return entry;
                 }
             }
 
-            return false;
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public virtual bool HasActivePopupEntry(ObjectUniqueId id)
+        {
+            return GetPopupEntry(id) != null;
         }
 
         /// <inheritdoc/>
@@ -214,7 +220,7 @@ namespace Alternet.Maui
 
             void OnEntryEscapeClicked()
             {
-                prm.EscapePressed?.Invoke();
+                prm.EscapePressed?.Invoke(KeyEventArgs.CreateWithKey(Key.Escape));
                 if (!prm.HideOnEscape)
                     return;
                 CloseEntry(ModalResult.Canceled);
@@ -222,7 +228,7 @@ namespace Alternet.Maui
 
             void OnEntryTabClicked()
             {
-                prm.TabPressed?.Invoke();
+                prm.TabPressed?.Invoke(KeyEventArgs.CreateWithKey(Key.Tab));
             }
 
             void CloseEntry(ModalResult result)
@@ -240,7 +246,7 @@ namespace Alternet.Maui
 
             void OnEntryCompleted()
             {
-                prm.EnterPressed?.Invoke();
+                prm.EnterPressed?.Invoke(KeyEventArgs.CreateWithKey(Key.Enter));
                 if (!prm.HideOnEnter)
                     return;
                 prm.SetItemText?.Invoke(entry.Text);
@@ -273,12 +279,13 @@ namespace Alternet.Maui
             }
         }
 
-        private partial class BasePopupEntry : BaseEntry
+        private partial class BasePopupEntry : BaseEntry, IPopupEntry
         {
             private PopupEntryParams prm;
 
             public BasePopupEntry()
             {
+                this.prm = new ();
             }
 
             public BasePopupEntry(PopupEntryParams prm)
@@ -290,6 +297,24 @@ namespace Alternet.Maui
             {
                 get => prm;
                 set => prm = value;
+            }
+
+            int? IPopupEntry.SelectionStart
+            {
+                get;
+                set;
+            }
+            
+            int? IPopupEntry.SelectionLength
+            {
+                get;
+                set;
+            }
+            
+            PointI? IPopupEntry.CaretPosition
+            {
+                get;
+                set;
             }
         }
     }

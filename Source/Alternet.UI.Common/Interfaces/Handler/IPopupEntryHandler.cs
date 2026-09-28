@@ -7,6 +7,27 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Defines the interface for a popup entry control.
+    /// </summary>
+    public interface IPopupEntry
+    {
+        /// <summary>
+        /// Gets or sets the starting position of the text selection within the popup entry.
+        /// </summary>
+        int? SelectionStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the length of the text selection within the popup entry.
+        /// </summary>
+        int? SelectionLength { get; set; }
+
+        /// <summary>
+        /// Gets or sets the position of the caret (text cursor) within the popup entry.
+        /// </summary>
+        PointI? CaretPosition { get; set; }
+    }
+
+    /// <summary>
     /// Defines the interface for handling popup entry.
     /// It provides methods for showing and closing popup entry,
     /// as well as checking if a popup entry is currently active.
@@ -53,5 +74,13 @@ namespace Alternet.UI
         /// <param name="prm">The parameters for the popup entry.</param>
         /// <returns><c>true</c> if the popup entry was shown; otherwise, <c>false</c>.</returns>
         bool ShowPopupEntry(PopupEntryParams prm);
+
+        /// <summary>
+        /// Gets the popup entry which is currently used for editing
+        /// by the control with the specified unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the control which called the popup entry.</param>
+        /// <returns>The popup entry used for the control, or <c>null</c> if no popup entry is found.</returns>
+        IPopupEntry? GetPopupEntry(ObjectUniqueId id);
     }
 }

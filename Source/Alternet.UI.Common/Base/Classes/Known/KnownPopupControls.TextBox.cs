@@ -138,6 +138,11 @@ namespace Alternet.UI
             return result;
         }
 
+        IPopupEntry? IPopupEntryHandler.GetPopupEntry(ObjectUniqueId id)
+        {
+            return GetActivePopupTextBox(id)?.Content;
+        }
+
         float IPopupEntryHandler.GetPopupEntryHeight(AbstractControl? control, Font font, bool hasBorder)
         {
             return GetPopupEntryHeight(control, font, hasBorder);
