@@ -204,6 +204,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Calculates the actual size based on the specified base size and the relative size settings.
+        /// </summary>
+        /// <param name="size">The base size to apply the relative adjustments to.</param>
+        /// <returns>The calculated size after applying the relative adjustments.</returns>
+        public SizeD GetSizeD(SizeD size)
+        {
+            return new SizeD(GetSize(size.Width), GetSize(size.Height));
+        }
+
+        /// <summary>
+        /// Calculates the actual size based on the specified base size and the relative size settings.
+        /// </summary>
+        /// <param name="size">The base size to apply the relative adjustments to.</param>
+        /// <returns>The calculated size after applying the relative adjustments.</returns>
+        public SizeI GetSizeI(SizeI size)
+        {
+            return new SizeI((int)GetSize(size.Width), (int)GetSize(size.Height));
+        }
+
+        /// <summary>
         /// Determines whether the specified <see cref="RelativeSize"/> is equal to the current instance.
         /// </summary>
         /// <param name="other">The <see cref="RelativeSize"/> to compare with the current instance.</param>
