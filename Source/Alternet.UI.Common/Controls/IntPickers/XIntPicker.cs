@@ -159,6 +159,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets whether control is editable. If false, user cannot change value by typing in the text picker.
+        /// </summary>
+        public virtual bool IsEditable
+        {
+            get => textPicker.IsEditable;
+            set => textPicker.IsEditable = value;
+        }
+
+        /// <summary>
         /// Gets 'Minus' button if it is available.
         /// </summary>
         [Browsable(false)]
