@@ -26,10 +26,6 @@ namespace Alternet.UI
     /// Derived classes can customize the appearance and behavior of the inner picture by overriding
     /// related properties and methods.
     /// </para>
-    /// <para>
-    /// This is the parent class for <see cref="ControlAndButton"/> and
-    /// <see cref="ControlAndLabel{TControl,TLabel}"/> controls. 
-    /// </para>
     /// </remarks>
     [ControlCategory(KnownControlCategory.Hidden)]
     public abstract partial class ControlAndPicture : HiddenBorder

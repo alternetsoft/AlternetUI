@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements <see cref="ulong"/> editor with validation.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
-    public partial class ValueEditorUInt64 : ValueEditorCustom
+    public partial class ValueEditorUInt64 : ValueEditorGeneric
     {
         /// <summary>
         /// Gets or sets whether to use char validator to limit unwanted chars in the input.

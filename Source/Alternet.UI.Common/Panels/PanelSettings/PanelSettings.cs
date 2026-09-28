@@ -784,9 +784,9 @@ namespace Alternet.UI
             var maxHeight = args?.CustomAttr["MaxHeight"] as int?;
             var maxWidth = args?.CustomAttr["MaxWidth"] as int?;
 
-            ControlAndLabel<TextPickerAndButton, GenericControl>? result;
+            GenericControlAndLabel<TextPickerAndButton, GenericControl>? result;
 
-            result = control as ControlAndLabel<TextPickerAndButton, GenericControl>;
+            result = control as GenericControlAndLabel<TextPickerAndButton, GenericControl>;
 
             if (result is null)
             {
@@ -794,7 +794,7 @@ namespace Alternet.UI
 
                 if (checkBoxInLabel)
                 {
-                    result = new ControlAndLabel<TextPickerAndButton, GenericControl>(typeof(XCheckBox), typeOfTextBox);
+                    result = new GenericControlAndLabel<TextPickerAndButton, GenericControl>(typeof(XCheckBox), typeOfTextBox);
 
                     if (result.Label is XCheckBox checkBox)
                     {
@@ -803,7 +803,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    result = new ControlAndLabel<TextPickerAndButton, GenericControl>(typeof(Label), typeOfTextBox);
+                    result = new GenericControlAndLabel<TextPickerAndButton, GenericControl>(typeof(Label), typeOfTextBox);
                     result.MainControl.MainControl.Multiline = useMemo;
                 }
             }
@@ -1580,24 +1580,24 @@ namespace Alternet.UI
             return typedControl;
         }
 
-        private static ControlAndLabel<TControl, GenericControl> CreateOrUpdateControlAndLabel<TControl>(
+        private static GenericControlAndLabel<TControl, GenericControl> CreateOrUpdateControlAndLabel<TControl>(
             PanelSettings sender,
             PanelSettingsItem item,
             object? control)
-            where TControl : AbstractControl, new()
+            where TControl : GenericControl, new()
         {
             var args = item.CreateArg;
             var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
 
-            ControlAndLabel<TControl, GenericControl>? result;
+            GenericControlAndLabel<TControl, GenericControl>? result;
 
-            result = control as ControlAndLabel<TControl, GenericControl>;
+            result = control as GenericControlAndLabel<TControl, GenericControl>;
 
             if (result is null)
             {
                 if (checkBoxInLabel)
                 {
-                    result = new ControlAndLabel<TControl, GenericControl>(typeof(XCheckBox));
+                    result = new GenericControlAndLabel<TControl, GenericControl>(typeof(XCheckBox));
 
                     if (result.Label is XCheckBox checkBox)
                     {
@@ -1606,7 +1606,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    result = new ControlAndLabel<TControl, GenericControl>(typeof(Label));
+                    result = new GenericControlAndLabel<TControl, GenericControl>(typeof(Label));
                 }
             }
 

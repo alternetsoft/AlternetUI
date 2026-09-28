@@ -179,6 +179,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is read-only.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool ReadOnly
+        {
+            get => !IsEditable;
+            set => IsEditable = !value;
+        }
+
         /// <inheritdoc/>
         public override SizeD MinimumSize
         {

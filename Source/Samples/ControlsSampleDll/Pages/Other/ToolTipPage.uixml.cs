@@ -324,7 +324,7 @@ namespace ControlsSample
             ToggleText(tooltipMessageTextBox, "This is sample text");
         }
 
-        private void ToggleText(TextBox textBox, string text)
+        private void ToggleText(AbstractControl textBox, string text)
         {
             toolTip.DoInsideUpdate(() =>
             {

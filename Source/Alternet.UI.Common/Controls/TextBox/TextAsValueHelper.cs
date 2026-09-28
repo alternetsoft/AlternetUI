@@ -26,6 +26,8 @@ namespace Alternet.UI
         private const TextBoxOptions DefaultOptions = TextBoxOptions.IntRangeInError;
         private const bool DefaultAllowEmptyText = true;
 
+        private readonly AbstractControl owner;
+
         private IFormatProvider? formatProvider;
 
         [DefaultValue(DefaultAllowEmptyText)]
@@ -98,8 +100,6 @@ namespace Alternet.UI
 
         [AutoReset]
         private TextBoxInitializeEventArgs? inputTypeArgs;
-
-        private AbstractControl owner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextAsValueHelper"/> class.

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements hexadecimal <see cref="uint"/> editor with validation.
     /// </summary>
-    public partial class HexEditorUInt32 : ValueEditorCustom
+    public partial class HexEditorUInt32 : ValueEditorGeneric
     {
         /// <summary>
         /// Gets or sets whether to use char validator to limit unwanted chars in the input.

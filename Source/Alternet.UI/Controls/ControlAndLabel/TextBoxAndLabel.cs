@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Implements <see cref="TextBox"/> with attached label.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
-    public partial class TextBoxAndLabel : ControlAndLabel<TextBox, Label>
+    public partial class TextBoxAndLabel : ControlAndLabel<TextBox, Label>, IValueHelperProperty
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextBoxAndLabel"/> class.
@@ -59,6 +59,9 @@ namespace Alternet.UI
                 MainControl.ValueHelper.AutoShowError = value;
             }
         }
+
+        /// <inheritdoc/>
+        public TextAsValueHelper ValueHelper => TextBox.ValueHelper;
 
         /// <summary>
         /// Gets or sets init arguments which are used when <see cref="InputType"/>

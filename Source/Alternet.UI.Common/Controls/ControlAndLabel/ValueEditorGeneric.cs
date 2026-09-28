@@ -13,7 +13,7 @@ namespace Alternet.UI
     public partial class ValueEditorGeneric : TextPickerAndLabel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorCustom"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorGeneric"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public ValueEditorGeneric(AbstractControl parent)
@@ -23,7 +23,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorCustom"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorGeneric"/> class.
         /// </summary>
         /// <param name="title">Label text.</param>
         /// <param name="text">Default value of the Text property.</param>
@@ -33,7 +33,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ValueEditorCustom"/> class.
+        /// Initializes a new instance of the <see cref="ValueEditorGeneric"/> class.
         /// </summary>
         public ValueEditorGeneric()
             : base()

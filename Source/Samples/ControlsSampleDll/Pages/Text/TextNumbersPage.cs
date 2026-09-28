@@ -33,24 +33,28 @@ namespace ControlsSample
         [IsTextLocalized(true)]
         private readonly Label label = new("Try to enter invalid numbers");
 
+        private readonly ValueEditorByte zeroTo99Edit = new("0..99", 15);
         private readonly ValueEditorByte twoDigitsEdit = new("Two digits", 15);
 
         public TextNumbersPage()
         {
             Padding = 10;
 
-            static void BindTextChanged(ValueEditorCustom control)
+            static void BindTextChanged(ValueEditorGeneric control)
             {
                 control.TextChanged += TextInputPage.ReportValueChanged;
             }
 
-            twoDigitsEdit.TextBox.MaxLength = 2;
+            zeroTo99Edit.TextBox.ValueHelper.MinValue = 10;
+            zeroTo99Edit.TextBox.ValueHelper.MaxValue = 99;
+
+            twoDigitsEdit.TextBox.ValueHelper.MaxLength = 2;
             twoDigitsEdit.TextBox.ErrorsChanged += TextInputPage.TextBox_ErrorsChanged;
 
-            Group(shortEdit, byteEdit, doubleEdit, unsignedDoubleEdit, uint32HexEdit, twoDigitsEdit)
+            Group(shortEdit, byteEdit, doubleEdit, unsignedDoubleEdit, uint32HexEdit, twoDigitsEdit, zeroTo99Edit)
                 .Margin(0, 5, 5, 5).Parent(this).InnerSuggestedWidth(200)
                 .ParentForeColor(true).ParentBackColor(true)
-                .Action<ValueEditorCustom>(BindTextChanged).LabelSuggestedWidthToMax();
+                .Action<ValueEditorGeneric>(BindTextChanged).LabelSuggestedWidthToMax();
 
             var horzLine = new HorizontalLine();
             horzLine.Parent = this;
@@ -65,9 +69,6 @@ namespace ControlsSample
             toolTip.ParentBackColor = true;
             toolTip.ParentForeColor = true;
             ToolTipProvider = toolTip;
-
-            BackgroundColor = ExactColors.Gainsboro;
-            ForegroundColor = ExactColors.Black;
 
             shortEdit.InnerPicture.Click += (s, e) =>
             {

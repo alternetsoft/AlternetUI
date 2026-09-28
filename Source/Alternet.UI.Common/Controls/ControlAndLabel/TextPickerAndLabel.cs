@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Implements <see cref="TextPicker"/> with attached label.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
-    public partial class TextPickerAndLabel : GenericControlAndLabel<TextPicker, Label>
+    public partial class TextPickerAndLabel : GenericControlAndLabel<TextPicker, Label>, IValueHelperProperty
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TextPickerAndLabel"/> class.
@@ -153,6 +153,9 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual bool IsNullOrWhiteSpace => string.IsNullOrWhiteSpace(Text);
+
+        /// <inheritdoc/>
+        public TextAsValueHelper ValueHelper => TextBox.ValueHelper;
 
         /// <summary>
         /// Initializes main child control.

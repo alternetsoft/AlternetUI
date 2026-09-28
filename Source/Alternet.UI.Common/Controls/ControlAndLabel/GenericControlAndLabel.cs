@@ -243,8 +243,8 @@ namespace Alternet.UI
         /// Creates main child control.
         /// </summary>
         /// <remarks>
-        /// For example, main control for the <see cref="TextBoxAndLabel"/>
-        /// is <see cref="TextBox"/>.
+        /// For example, main control for the <see cref="TextPickerAndLabel"/>
+        /// is <see cref="TextPicker"/>.
         /// </remarks>
         protected virtual TControl CreateControl(Type? typeOfControl)
         {

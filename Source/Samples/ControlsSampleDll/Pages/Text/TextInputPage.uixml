@@ -6,7 +6,7 @@
          Padding="10">
 
   <HorizontalStackPanel HorizontalAlignment="Stretch">
-    <TextBox Margin="5" Name="textBox" SuggestedWidth="350"/>
+    <TextPicker Margin="5" Name="textBox" SuggestedWidth="350"/>
     <ErrorPictureBox Name="textImage"/>
   </HorizontalStackPanel>
 

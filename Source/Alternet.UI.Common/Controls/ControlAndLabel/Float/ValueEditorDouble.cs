@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements <see cref="double"/> editor with validation.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
-    public partial class ValueEditorDouble : ValueEditorCustom
+    public partial class ValueEditorDouble : ValueEditorGeneric
     {
         /// <summary>
         /// Gets or sets whether to use char validator to limit unwanted chars in the input.

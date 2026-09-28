@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Implements unsigned <see cref="float"/> editor with validation.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
-    public partial class ValueEditorUSingle : ValueEditorCustom
+    public partial class ValueEditorUSingle : ValueEditorGeneric
     {
         /// <summary>
         /// Gets or sets whether to use char validator to limit unwanted chars in the input.

@@ -19,8 +19,6 @@ namespace ControlsSample
         public static string TextBoxEmptyTextHint = "Sample Hint";
         public static string TextBoxSampleText = "Sample Text";
 
-        private readonly Timer timer = new(100);
-
         static TextInputPage()
         {
         }
@@ -34,8 +32,10 @@ namespace ControlsSample
             textBox.EmptyTextHint = TextBoxEmptyTextHint;
             textBox.Text = TextBoxSampleText;
             textBox.ValueHelper.ValidatorReporter = textImage;
+/*
             textBox.TextMaxLength += TextBox_TextMaxLength;
             textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
+*/
             textBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
 
             textBox.TextChanged += (s, e) =>
@@ -47,15 +47,6 @@ namespace ControlsSample
             textBox.KeyPress += TextBox_KeyPress;
 
             ErrorsChanged += TextBox_ErrorsChanged;
-
-            // ==== Other
-
-            timer.TickAction = () =>
-            {
-                ReportSelection();
-            };
-
-            timer.StartRepeated();
 
             textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
             textBox.KeyDown += TextBox_KeyDown;
@@ -91,10 +82,13 @@ namespace ControlsSample
                             (value) => textBox.ReadOnly = value,
                             e: null);
 
-                panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
-                panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
+                panelSettings.AddInput("Password", textBox, nameof(TextPicker.IsPassword));
+                panelSettings.AddInput("Has Border", textBox, nameof(TextPicker.HasBorder));
                 panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
-                panelSettings.AddInput("Process Enter", textBox, nameof(TextBox.ProcessEnter));
+
+                /*
+                panelSettings.AddInput("Process Enter", textBox, nameof(TextPicker.ProcessEnter));
+                */
 
                 ControlUtils.AddContextMenuItemsForThemeSelection(panelSettings, scrollViewer);
 
@@ -171,8 +165,11 @@ namespace ControlsSample
                 panelSettings.AddHorizontalLine();
 
                 panelSettings.AddInput("Log Text", this, nameof(LogText));
+
+                /*
                 panelSettings.AddInput("Log Position", this, nameof(LogPosition));
                 panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
+                */
 
                 App.DebugLogIf("Done adding TextBox settings inputs...", false);
             });
@@ -180,7 +177,6 @@ namespace ControlsSample
 
         protected override void DisposeManaged()
         {
-            timer.Stop();
             base.DisposeManaged();
         }
 
@@ -251,6 +247,7 @@ namespace ControlsSample
 
         internal bool UsePopup { get; set; } = false;
 
+        /*
         private string? reportedSelection;
 
         private void ReportSelection()
@@ -272,6 +269,7 @@ namespace ControlsSample
                 }
             }
         }
+        */
 
         private void TextInputPage_Idle(object? sender, EventArgs e)
         {
@@ -285,32 +283,32 @@ namespace ControlsSample
 
         public static bool AllowSpaceChar { get; set; } = true;
 
-        private void TextBox_CurrentPositionChanged(object? sender, EventArgs e)
-        {
-            if (!TextInputPage.LogPosition)
-                return;
+        /*
+                private void TextBox_CurrentPositionChanged(object? sender, EventArgs e)
+                {
+                    if (!TextInputPage.LogPosition)
+                        return;
 
-            var currentPos = textBox.CurrentPosition;
-            if (currentPos is null)
-                return;
-            var name = textBox.Name ?? textBox.GetType().Name;
-            var prefix = $"{name}.CurrentPos:";
-            App.LogReplace($"{prefix} {currentPos.Value + 1}", prefix);
-        }
+                    var currentPos = textBox.CurrentPosition;
+                    if (currentPos is null)
+                        return;
+                    var name = textBox.Name ?? textBox.GetType().Name;
+                    var prefix = $"{name}.CurrentPos:";
+                    App.LogReplace($"{prefix} {currentPos.Value + 1}", prefix);
+                }
 
-        private void TextBox_TextMaxLength(object? sender, EventArgs e)
-        {
-            App.Log("TextBox: Text max length reached");
-        }
+                private void TextBox_TextMaxLength(object? sender, EventArgs e)
+                {
+                    App.Log("TextBox: Text max length reached");
+                }
+        */
 
         internal static void GetTextChangedInfo(
             object? sender,
             out string? varName,
             out string? varValue)
         {
-            var textBox = (sender as ValueEditorCustom)?.TextBox;
-            textBox ??= sender as TextBox;
-            if (textBox is null)
+            if (sender is not IValueHelperProperty textBox || sender is not AbstractControl control)
             {
                 varName = null;
                 varValue = null;
@@ -318,7 +316,7 @@ namespace ControlsSample
             }
 
             var name = (sender as AbstractControl)?.Name;
-            var value = textBox.Text;
+            var value = control.Text;
             string prefix;
             if (name is null)
                 prefix = "TextBox";

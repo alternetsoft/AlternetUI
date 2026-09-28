@@ -16,7 +16,7 @@ namespace Alternet.UI
     [DefaultBindingProperty("Text")]
     [ControlCategory(KnownControlCategory.Common)]
     public partial class TextBox : Control,
-        IReadOnlyStrings, IValidatorReporter, INotifyDataErrorInfo, IPopupEntry
+        IReadOnlyStrings, IValidatorReporter, INotifyDataErrorInfo, IPopupEntry, IValueHelperProperty
     {
         private bool multiline = false;
         private bool hasBorder = true;
