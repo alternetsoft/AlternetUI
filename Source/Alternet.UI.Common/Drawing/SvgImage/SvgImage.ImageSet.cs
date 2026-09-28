@@ -89,6 +89,34 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates new <see cref="Bitmap"/> and loads there this svg image.
+        /// </summary>
+        /// <param name="size">Svg image size in pixels.</param>
+        /// <param name="color">Color of the mono svg image. Optional.</param>
+        /// <returns>The created <see cref="Bitmap"/>.</returns>
+        public virtual Bitmap CreateImage(SizeI size, Color? color = null)
+        {
+            var skiaBitmap = CreateSkiaBitmap(size, color);
+            var bitmap = (Bitmap)skiaBitmap;
+            bitmap.SetImmutable();
+            return bitmap;
+        }
+
+        /// <summary>
+        /// Creates new <see cref="Bitmap"/> and loads there this svg image
+        /// with the specified size and known svg color.
+        /// </summary>
+        /// <param name="size">Svg image size in pixels.</param>
+        /// <param name="knownColor">Known svg color.</param>
+        /// <param name="isDark">Whether color theme is dark.</param>
+        /// <returns>The created <see cref="Bitmap"/>.</returns>
+        public virtual Bitmap CreateImage(SizeI size, KnownSvgColor knownColor, bool isDark)
+        {
+            var color = GetSvgColor(knownColor, isDark);
+            return CreateImage(size, color);
+        }
+
+        /// <summary>
         /// Gets image with the specified size and known svg color.
         /// </summary>
         /// <param name="size">Image size in pixels.</param>
