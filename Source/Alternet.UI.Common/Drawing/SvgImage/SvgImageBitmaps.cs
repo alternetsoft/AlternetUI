@@ -64,6 +64,9 @@ namespace Alternet.Drawing
         private BaseDictionary<SizeAndColor, TBitmap>? bitmaps;
 
         private SvgImage? svgImage;
+        private SizeI? svgSize;
+        private ThemedColor? svgColorNormal;
+        private ThemedColor? svgColorDisabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SvgImageBitmaps{TBitmap}"/> class.
@@ -101,6 +104,72 @@ namespace Alternet.Drawing
                 if (svgImage == value)
                     return;
                 svgImage = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the size of the SVG image. This property is used to determine
+        /// the base size of the bitmap representations of the SVG image when scale factor is 1.0f.
+        /// If this property is not set, it is considered to be 16x16 pixels by default.
+        /// Changing this property will reset the cached bitmap representations.
+        /// </summary>
+        public SizeI? SvgSize
+        {
+            readonly get
+            {
+                return svgSize;
+            }
+
+            set
+            {
+                if (svgSize == value)
+                    return;
+                svgSize = value;
+                ResetBitmaps();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the color of the normal SVG image. This property is used to determine
+        /// the color of the bitmap representations of the SVG image when it is in the normal state.
+        /// If this property is not set, the default color for the normal state will be used.
+        /// Changing this property will reset the cached bitmap representations.
+        /// </summary>
+        public ThemedColor? SvgColorNormal
+        {
+            readonly get
+            {
+                return svgColorNormal;
+            }
+
+            set
+            {
+                if (svgColorNormal == value)
+                    return;
+                svgColorNormal = value;
+                ResetNormalBitmaps();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the color of the disabled SVG image. This property is used to determine
+        /// the color of the bitmap representations of the SVG image when it is in the disabled state.
+        /// If this property is not set, the default color for the disabled state will be used.
+        /// Changing this property will reset the cached bitmap representations.
+        /// </summary>
+        public ThemedColor? SvgColorDisabled
+        {
+            readonly get
+            {
+                return svgColorDisabled;
+            }
+
+            set
+            {
+                if (svgColorDisabled == value)
+                    return;
+                svgColorDisabled = value;
+                ResetDisabledBitmaps();
             }
         }
 
@@ -224,7 +293,39 @@ namespace Alternet.Drawing
 
             return result;
         }
-        
+
+        /// <summary>
+        /// Creates a disabled bitmap representation of the SVG image
+        /// with the specified scale factor and dark mode option.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply.</param>
+        /// <param name="isDark">Indicates whether the bitmap is for dark mode.</param>
+        /// <returns>The created disabled bitmap, or null if the SVG image is not set.</returns>
+        public TBitmap? ToDisabledBitmap(float scaleFactor, bool isDark)
+        {
+            if (svgImage is null)
+                return default;
+
+            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize);
+            return ToDisabledBitmap(size.Width, size.Height, isDark);
+        }
+
+        /// <summary>
+        /// Creates a disabled bitmap representation of the SVG image
+        /// with the specified scale factor and dark mode option.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply.</param>
+        /// <param name="isDark">Indicates whether the bitmap is for dark mode.</param>
+        /// <returns>The created normal bitmap, or null if the SVG image is not set.</returns>
+        public TBitmap? ToNormalBitmap(float scaleFactor, bool isDark)
+        {
+            if (svgImage is null)
+                return default;
+
+            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize);
+            return ToNormalBitmap(size.Width, size.Height, isDark);
+        }
+
         /// <summary>
         /// Creates a normal bitmap representation of the SVG image
         /// with the specified width, height, and dark mode option.
@@ -256,6 +357,13 @@ namespace Alternet.Drawing
         {
             if (svgImage is null)
                 return default;
+
+            if(svgColorDisabled is not null)
+            {
+                var color = svgColorDisabled.GetColor(key.IsDark);
+                return provider.ToBitmap(svgImage, key.Size.Width, key.Size.Height, color);
+            }
+
             return provider.ToDisabledBitmap(svgImage, key.Size.Width, key.Size.Height, key.IsDark);
         }
 
@@ -263,6 +371,13 @@ namespace Alternet.Drawing
         {
             if (svgImage is null)
                 return default;
+
+            if (svgColorNormal is not null)
+            {
+                var color = svgColorNormal.GetColor(key.IsDark);
+                return provider.ToBitmap(svgImage, key.Size.Width, key.Size.Height, color);
+            }
+
             return provider.ToNormalBitmap(svgImage, key.Size.Width, key.Size.Height, key.IsDark);
         }
 
@@ -298,6 +413,41 @@ namespace Alternet.Drawing
             {
                 return (Size, Color).GetHashCode();
             }
+        }
+    }
+
+    /// <summary>
+    /// Provides a set of methods to convert <see cref="Alternet.Drawing.SvgImage"/> to <see cref="Image"/>.
+    /// </summary>
+    public class SvgImageBitmapsProvider : ISvgImageBitmapsProvider<Image>
+    {
+        /// <summary>
+        /// Gets the instance of <see cref="SvgImageBitmapsProvider"/>.
+        /// </summary>
+        public static SvgImageBitmapsProvider Instance { get; } = new SvgImageBitmapsProvider();
+
+        /// <inheritdoc/>
+        public SizeI GetBitmapSize(Image bitmap)
+        {
+            return new SizeI(bitmap.Width, bitmap.Height);
+        }
+
+        /// <inheritdoc/>
+        public Image ToBitmap(SvgImage svg, int width, int height, Color? color = null)
+        {
+            return svg.CreateImage(new SizeI(width, height), color);
+        }
+
+        /// <inheritdoc/>
+        public Image ToDisabledBitmap(SvgImage svg, int width, int height, bool isDark)
+        {
+            return svg.CreateImage(new SizeI(width, height), KnownSvgColor.Disabled, isDark);
+        }
+
+        /// <inheritdoc/>
+        public Image ToNormalBitmap(SvgImage svg, int width, int height, bool isDark)
+        {
+            return svg.CreateImage(new SizeI(width, height), KnownSvgColor.Normal, isDark);
         }
     }
 }

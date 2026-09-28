@@ -215,21 +215,21 @@ namespace Alternet.Winforms
         }
 
         /// <summary>
-        /// Creates an instance of Alternet.Drawing.SvgImageBitmaps.
+        /// Creates an instance of <see cref="SvgImageBitmaps"/>.
         /// </summary>
-        /// <returns>The created instance of Alternet.Drawing.SvgImageBitmaps.</returns>
-        public static Alternet.Drawing.SvgImageBitmaps<Bitmap> CreateSvgBitmaps()
+        /// <returns>The created instance of <see cref="SvgImageBitmaps"/>.</returns>
+        public static SvgImageBitmaps CreateSvgBitmaps()
         {
-            return new (SvgImageBitmapsProvider.Instance);
+            return new();
         }
 
         /// <summary>
-        /// Creates an instance of Alternet.Drawing.SvgImageBitmaps.
+        /// Creates an instance of <see cref="SvgImageBitmaps"/>.
         /// </summary>
-        /// <returns>The created instance of Alternet.Drawing.SvgImageBitmaps.</returns>
-        public static Alternet.Drawing.SvgImageBitmaps<Bitmap> CreateSvgBitmaps(Alternet.Drawing.SvgImage svg)
+        /// <returns>The created instance of <see cref="SvgImageBitmaps"/>.</returns>
+        public static SvgImageBitmaps CreateSvgBitmaps(Alternet.Drawing.SvgImage svg)
         {
-            return new(SvgImageBitmapsProvider.Instance, svg);
+            return new(svg);
         }
 
         /// <summary>

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace Alternet.Winforms
 {
     /// <summary>
-    /// Provides a set of methods to convert <see cref="Alternet.Drawing.SvgImage"/> to <see cref="Bitmap"/>.
+    /// Provides a set of methods to convert <see cref="Alternet.Drawing.SvgImage"/> to <see cref="Image"/>.
     /// </summary>
-    public class SvgImageBitmapsProvider : Alternet.Drawing.ISvgImageBitmapsProvider<Bitmap>
+    public class SvgImageBitmapsProvider : Alternet.Drawing.ISvgImageBitmapsProvider<Image>
     {
         /// <summary>
         /// Gets the instance of <see cref="SvgImageBitmapsProvider"/>.
@@ -18,13 +18,13 @@ namespace Alternet.Winforms
         public static SvgImageBitmapsProvider Instance { get; } = new SvgImageBitmapsProvider();
 
         /// <inheritdoc/>
-        public Drawing.SizeI GetBitmapSize(Bitmap bitmap)
+        public Drawing.SizeI GetBitmapSize(Image bitmap)
         {
             return new Drawing.SizeI(bitmap.Width, bitmap.Height);
         }
 
         /// <inheritdoc/>
-        public Bitmap ToBitmap(Drawing.SvgImage svg, int width, int height, Drawing.Color? color = null)
+        public Image ToBitmap(Drawing.SvgImage svg, int width, int height, Drawing.Color? color = null)
         {
             if (color is null)
                 return SkiaWinforms.ToBitmap(svg, width, height);
@@ -33,13 +33,13 @@ namespace Alternet.Winforms
         }
 
         /// <inheritdoc/>
-        public Bitmap ToDisabledBitmap(Drawing.SvgImage svg, int width, int height, bool isDark)
+        public Image ToDisabledBitmap(Drawing.SvgImage svg, int width, int height, bool isDark)
         {
             return SkiaWinforms.ToDisabledBitmap(svg, width, height, isDark);
         }
 
         /// <inheritdoc/>
-        public Bitmap ToNormalBitmap(Drawing.SvgImage svg, int width, int height, bool isDark)
+        public Image ToNormalBitmap(Drawing.SvgImage svg, int width, int height, bool isDark)
         {
             return SkiaWinforms.ToNormalBitmap(svg, width, height, isDark);
         }
