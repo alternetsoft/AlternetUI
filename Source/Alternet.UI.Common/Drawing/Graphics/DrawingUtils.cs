@@ -338,6 +338,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the effective size of an SVG image based on the provided scale factor, base SVG size, and relative size.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply.</param>
+        /// <param name="baseSize">The optional base size of the SVG image.</param>
+        /// <param name="relativeSize">The optional relative size to apply.</param>
+        /// <returns>The effective size of the SVG image.</returns>
+        public static SizeI EffectiveSvgSize(float scaleFactor, SizeI? baseSize, RelativeSize? relativeSize)
+        {
+            var baseSizeValue = baseSize ?? new SizeI(16, 16);
+
+            if (relativeSize is not null)
+            {
+                var result = relativeSize.Value.GetSizeI(baseSizeValue);
+                return result;
+            }
+
+            return baseSizeValue;
+        }
+
+        /// <summary>
         /// Coerces the image scale factor based on the specified threshold. If the scale factor is less
         /// than or equal to the threshold, it returns 1.0f. If the scale factor is greater than the threshold
         /// but less than 2.0, it returns 2.0f. Otherwise, it returns the original scale factor.
