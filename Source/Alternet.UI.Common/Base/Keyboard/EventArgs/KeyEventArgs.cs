@@ -49,6 +49,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates an instance of the <see cref="KeyEventArgs"/> class with the specified key.
+        /// </summary>
+        /// <param name="key">The key to create the event args for.</param>
+        /// <returns>A new instance of <see cref="KeyEventArgs"/> with the specified key.</returns>
+        public static KeyEventArgs CreateWithKey(Key key)
+        {
+            return new KeyEventArgs(AssemblyUtils.Default, key, KeyStates.Down, Keyboard.Modifiers, 0);
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the key event should be passed on to
         /// the underlying control.
         /// </summary>
