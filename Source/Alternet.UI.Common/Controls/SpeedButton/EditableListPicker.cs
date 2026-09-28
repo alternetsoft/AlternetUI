@@ -34,6 +34,7 @@ namespace Alternet.UI
 
         private bool multiline;
         private float? popupEntryHeight;
+        private FlagsAndAttributesStruct popupAttr = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EditableListPicker"/> class.
@@ -337,18 +338,26 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BeginEdit(bool selectAll = true)
         {
+            BeginEdit(selectAll, null);
+        }
+
+        /// <summary>
+        /// Starts editing the text in the control using popup text box.
+        /// </summary>
+        public virtual void BeginEdit(bool selectAll, Action<PopupEntryParams>? updateParams)
+        {
             var prm = CreatePopupEditorParams();
 
             if (prm is null)
                 return;
 
-            var popupParams = prm.Value;
+            prm.SelectAll = selectAll;
 
-            popupParams.SelectAll = selectAll;
+            updateParams?.Invoke(prm);
 
             Post(() =>
             {
-                ControlFactory.PopupEntryHandler?.ShowPopupEntry(popupParams);
+                ControlFactory.PopupEntryHandler?.ShowPopupEntry(prm);
             });
         }
 
@@ -376,6 +385,7 @@ namespace Alternet.UI
                 CommitTextOnKeyPress = CommitOnKeyPress,
                 HideOnEscape = false,
                 HideOnEnter = CommitOnEnter && !Multiline,
+                CustomAttributes = popupAttr.FlagsAndAttributes,
                 HasBorder = DefaultPopupTextBoxHasBorder,
                 HasInnerBorder = DefaultPopupTextBoxHasInnerBorder,
                 MoveToEndOfText = true,
@@ -467,6 +477,57 @@ namespace Alternet.UI
         {
             CancelEdit();
             base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Gets the active popup entry control used for editing the text in this control.
+        /// </summary>
+        /// <returns>The active popup entry control or <c>null</c> if none is active.</returns>
+        protected IPopupEntry? GetActivePopupEntry()
+        {
+            return ControlFactory.PopupEntryHandler?.GetPopupEntry(UniqueId);
+        }
+
+        /// <summary>
+        /// Reopens the popup entry for editing. This method cancels the current edit and starts a new edit session.
+        /// </summary>
+        protected virtual void ReopenPopupEntry()
+        {
+            var entry = GetActivePopupEntry();
+
+            if (entry is not null)
+            {
+                var selectionStart = entry.SelectionStart;
+                var selectionLength = entry.SelectionLength;
+                var caretPosition = entry.CaretPosition;
+
+                CancelEdit();
+                BeginEdit(selectAll: false, updateParams: OnUpdateParams);
+
+                void OnUpdateParams(PopupEntryParams prm)
+                {
+                    prm.SelectionStart = selectionStart;
+                    prm.SelectionLength = selectionLength;
+                    prm.CaretPosition = caretPosition;
+                }
+            }
+            else
+            {
+                BeginEdit(selectAll: false);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            if (IsEditing)
+            {
+                Post(() =>
+                {
+                    ReopenPopupEntry();
+                });
+            }
         }
 
         /// <inheritdoc/>
