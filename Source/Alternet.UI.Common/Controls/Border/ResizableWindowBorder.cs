@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default relative font size for the title label.
         /// </summary>
-        public static RelativeFontSize DefaultTitleLabelRelativeFontSize = Drawing.RelativeFontSize.FromDelta(2);
+        public static RelativeSize DefaultTitleLabelRelativeFontSize = Drawing.RelativeSize.FromDelta(2);
 
         /// <summary>
         /// Gets or sets the default icon margin.

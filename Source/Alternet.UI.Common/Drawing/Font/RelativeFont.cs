@@ -37,7 +37,7 @@ namespace Alternet.Drawing
         private Font baseFont;
         private Font? resultFont;
         private FontStyle relativeStyle;
-        private RelativeFontSize? relativeSize;
+        private RelativeSize? relativeSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelativeFontInfo"/> struct with default values.
@@ -169,7 +169,7 @@ namespace Alternet.Drawing
         /// the resulting font will have the same size as the base font. If a relative size is specified,
         /// it will be applied to the base font to create the resulting font.
         /// </summary>
-        public RelativeFontSize? RelativeSize
+        public RelativeSize? RelativeSize
         {
             readonly get => relativeSize;
             set

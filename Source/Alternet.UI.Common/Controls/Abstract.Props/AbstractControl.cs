@@ -3684,7 +3684,7 @@ namespace Alternet.UI
         /// based on the <see cref="Font"/> property.
         /// </summary>
         [Browsable(false)]
-        public virtual RelativeFontSize? RelativeFontSize
+        public virtual RelativeSize? RelativeFontSize
         {
             get
             {

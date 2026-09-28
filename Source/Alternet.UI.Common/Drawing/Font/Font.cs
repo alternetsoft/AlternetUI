@@ -389,11 +389,11 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />
-        /// and <see cref="RelativeFontSize" />.
+        /// and <see cref="RelativeSize" />.
         /// </summary>
         /// <param name="prototype">The existing <see cref="Font" /> from which to create the new <see cref="Font" />.</param>
-        /// <param name="newSize">The new size of the font as a <see cref="RelativeFontSize" />.</param>
-        public Font(Font prototype, RelativeFontSize newSize)
+        /// <param name="newSize">The new size of the font as a <see cref="RelativeSize" />.</param>
+        public Font(Font prototype, RelativeSize newSize)
             : this(
                 prototype.FontFamily,
                 newSize.GetSize(prototype.Size),
@@ -404,12 +404,12 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new <see cref="Font" /> that uses the specified existing <see cref="Font" />,
-        /// <see cref="RelativeFontSize" /> and <see cref="FontStyle" />.
+        /// <see cref="RelativeSize" /> and <see cref="FontStyle" />.
         /// </summary>
         /// <param name="prototype">The existing <see cref="Font" /> from which to create the new <see cref="Font" />.</param>
-        /// <param name="newSize">The new size of the font as a <see cref="RelativeFontSize" />.</param>
+        /// <param name="newSize">The new size of the font as a <see cref="RelativeSize" />.</param>
         /// <param name="newStyle">The new style of the font as a <see cref="FontStyle" />.</param>
-        public Font(Font prototype, RelativeFontSize newSize, FontStyle newStyle)
+        public Font(Font prototype, RelativeSize newSize, FontStyle newStyle)
             : this(
                 prototype.FontFamily,
                 newSize.GetSize(prototype.Size),
