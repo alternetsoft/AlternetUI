@@ -19,6 +19,20 @@ namespace Alternet.UI
     public static partial class DrawingUtils
     {
         /// <summary>
+        /// Gets or sets the threshold for determining whether an image should be scaled.
+        /// When scale factor is greater than this threshold, the image will be scaled. The default value is 1.5f.
+        /// This property is used to determine whether to scale images when the scale factor is greater than 1.0f.
+        /// It is used in <see cref="CoerceImageScaleFactor"/>.
+        /// </summary>
+        public static float ImageScaleTreshold { get; set; } = 1.5f;
+
+        /// <summary>
+        /// Gets or sets a function that can override the default behavior of coercing the image scale factor.
+        /// It is used in <see cref="CoerceImageScaleFactor"/>.
+        /// </summary>
+        public static Func<float, float>? CoerceImageScaleFactorOverride { get; set; }
+
+        /// <summary>
         /// Constant used to indicate the alpha value conventionally defined as the complete
         /// transparency.
         /// </summary>
@@ -307,6 +321,44 @@ namespace Alternet.UI
         {
             Brush? result = brush ?? (Color.IsVisible(color) ? color?.AsBrush : null);
             return result;
+        }
+
+        /// <summary>
+        /// Calculates the effective size of an SVG image based on the provided scale factor and base SVG size.
+        /// If <paramref name="baseSize"/> is not provided, a default size of 16x16 is used.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply.</param>
+        /// <param name="baseSize">The optional base size of the SVG image.</param>
+        /// <returns>The effective size of the SVG image.</returns>
+        public static SizeI EffectiveSvgSize(float scaleFactor, SizeI? baseSize = null)
+        {
+            var baseSizeValue = baseSize ?? new SizeI(16, 16);
+            var coercedScaleFactor = DrawingUtils.CoerceImageScaleFactor(scaleFactor);
+            return new SizeI((int)(baseSizeValue.Width * coercedScaleFactor), (int)(baseSizeValue.Height * coercedScaleFactor));
+        }
+
+        /// <summary>
+        /// Coerces the image scale factor based on the specified threshold. If the scale factor is less
+        /// than or equal to the threshold, it returns 1.0f. If the scale factor is greater than the threshold
+        /// but less than 2.0, it returns 2.0f. Otherwise, it returns the original scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to coerce.</param>
+        /// <returns>The coerced scale factor.</returns>
+        /// <remarks>
+        /// Use <see cref="CoerceImageScaleFactorOverride"/> to override the default behavior of this method.
+        /// </remarks>
+        public static float CoerceImageScaleFactor(float scaleFactor)
+        {
+            if (CoerceImageScaleFactorOverride is not null)
+                return CoerceImageScaleFactorOverride(scaleFactor);
+
+            if (scaleFactor <= ImageScaleTreshold)
+                return 1.0f;
+
+            if (scaleFactor < 2.0)
+                return 2.0f;
+
+            return scaleFactor;
         }
 
         /// <summary>
