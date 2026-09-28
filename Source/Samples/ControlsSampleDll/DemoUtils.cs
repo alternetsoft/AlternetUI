@@ -248,7 +248,7 @@ StringUtils.DoubleNewLine +
         }
 
         public static void AddDefaultOwnerDrawItemsForListBox(
-            Control control,
+            AbstractControl control,
             Action<ListControlItem> addAction,
             bool addLong = true)
         {

@@ -214,21 +214,23 @@ namespace ControlsSample
         {
             if (!CheckComboBoxIsEditable())
                 return;
-
+            /*
             comboBox.TextBox.SelectionStart = 2;
             comboBox.TextBox.SelectionLength = 3;
+            */
         }
 
         private void GetTextSelectionButton_Click(object? sender, System.EventArgs e)
         {
             if (!CheckComboBoxIsEditable())
                 return;
-
+            /*
             var start = comboBox.TextSelectionStart;
             var length = comboBox.TextSelectionLength;
             var selectedText = comboBox.Text.Substring(start, length);
             var message = $"[{start}..{start + length}], selected text: '{selectedText}'";
             App.Log("ComboBox Text Selection: " + message);
+            */
         }
 
         private void SetItem_Click(object? sender, System.EventArgs e)

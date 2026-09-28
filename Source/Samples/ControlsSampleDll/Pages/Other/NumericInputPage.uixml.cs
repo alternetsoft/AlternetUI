@@ -69,7 +69,7 @@ namespace ControlsSample
 
         private void IntPicker_ValueChanged(object? sender, EventArgs e)
         {
-            App.LogNameValueReplace("IntPicker.ValueChanged", (sender as IntPicker)?.Value);
+            App.LogNameValueReplace("IntPicker.ValueChanged", (sender as XIntPicker)?.Value);
         }
 
         private void NumericUpDown_ValueChanged(object? sender, EventArgs e)
@@ -85,7 +85,7 @@ namespace ControlsSample
         {
             numericUpDownsPanel.ForEachChild<NumericUpDown>(
                 (x) => { x.IncrementValue(value); });
-            numericUpDownsPanel.ForEachChild<IntPicker>(
+            numericUpDownsPanel.ForEachChild<XIntPicker>(
                 (x) => { x.IncrementValue(value); });
         }
 

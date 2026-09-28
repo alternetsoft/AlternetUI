@@ -39,10 +39,10 @@
                   Name="setSelectedItemToNullButton" Margin="0,3,0,0"
                   Click="SetSelectedItemToNullButton_Click"/>
           <XButton Text="Select Text [2..5]" IsTextLocalized="true"
-                  Name="selectTextRangeButton" Margin="0,3,0,0"
+                  Name="selectTextRangeButton" Margin="0,3,0,0" Enabled="false"
                   Click="SelectTextRangeButton_Click"/>
           <XButton Text="Get Text Selection" Name="getTextSelectionButton" IsTextLocalized="true"
-                  Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
+                  Margin="0,3,0,0" Click="GetTextSelectionButton_Click" Enabled="false"/>
           <XButton Text="Items[2] = 'hello'" Name="buttonItemsEqHello" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="SetItem_Click"/>
           <XButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true" IsEnabled="false"
