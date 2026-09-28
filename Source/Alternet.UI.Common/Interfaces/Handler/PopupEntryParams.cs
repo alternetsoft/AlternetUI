@@ -9,17 +9,37 @@ namespace Alternet.UI;
 /// <summary>
 /// Defines the parameters for the popup entry.
 /// </summary>
-public struct PopupEntryParams
+public class PopupEntryParams
 {
     private RectD itemRect;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PopupEntryParams"/> struct.
+    /// Initializes a new instance of the <see cref="PopupEntryParams"/> class.
     /// </summary>
     public PopupEntryParams()
     {
     }
-    
+
+    /// <summary>
+    /// Gets or sets the custom attributes for the popup entry.
+    /// </summary>
+    public IFlagsAndAttributes? CustomAttributes { get; set; }
+
+    /// <summary>
+    /// Gets or sets the selection start position in the text.
+    /// </summary>
+    public int? SelectionStart;
+
+    /// <summary>
+    /// Gets or sets the selection length in the text.
+    /// </summary>
+    public int? SelectionLength;
+
+    /// <summary>
+    /// Gets or sets the caret position in the text.
+    /// </summary>
+    public PointI? CaretPosition;
+
     /// <summary>
     /// Gets or sets the popup result to be used when the popup loses focus.
     /// </summary>  
@@ -88,7 +108,7 @@ public struct PopupEntryParams
     /// </summary>
     public RectD ItemRect
     {
-        readonly get
+        get
         {
             return GetItemRect?.Invoke() ?? itemRect;
         }

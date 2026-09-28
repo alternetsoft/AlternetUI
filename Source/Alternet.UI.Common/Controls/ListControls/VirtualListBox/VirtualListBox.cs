@@ -1800,7 +1800,7 @@ namespace Alternet.UI
             var prm = CreateItemEditorParams(itemIndex);
             if (prm is null)
                 return false;
-            var result = ControlFactory.PopupEntryHandler?.ShowPopupEntry(prm.Value) ?? false;
+            var result = ControlFactory.PopupEntryHandler?.ShowPopupEntry(prm) ?? false;
             return result;
         }
 

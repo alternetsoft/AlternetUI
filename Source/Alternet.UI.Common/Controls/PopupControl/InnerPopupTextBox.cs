@@ -89,6 +89,7 @@ namespace Alternet.UI
             AcceptOnLostFocus = prm.LostFocusBehavior == ModalResult.Accepted;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
+
             Content.IsPassword = prm.IsPassword;
             Content.ProcessEnter = !prm.Multiline;
 
@@ -180,6 +181,17 @@ namespace Alternet.UI
 
             if (prm.SelectAll)
                 Content.SelectAll();
+
+            if (prm.CaretPosition is not null)
+            {
+                Content.CurrentPosition = prm.CaretPosition;
+            }
+
+            if (prm.SelectionStart is not null && prm.SelectionLength is not null)
+            {
+                Content.SelectionStart = prm.SelectionStart.Value;
+                Content.SelectionLength = prm.SelectionLength.Value;
+            }
 
             return true;
         }
