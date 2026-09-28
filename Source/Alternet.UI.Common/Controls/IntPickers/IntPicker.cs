@@ -6,8 +6,9 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// This class represents a label with plus and minus buttons
-    /// which allow users to increment and decrement an integer value.
+    /// Implements integer value editor with validation and up/down buttons.
+    /// There is a new version of this control called <see cref="XIntPicker"/>
+    /// that is recommended for use in new applications.
     /// </summary>
     public partial class IntPicker : TextBoxAndButton
     {
