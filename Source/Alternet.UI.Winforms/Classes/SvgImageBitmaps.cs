@@ -13,7 +13,7 @@ namespace Alternet.Winforms
     /// </summary>
     public class SvgImageBitmaps
     {
-        private Alternet.Drawing.SvgImageBitmaps<Image> bitmaps = new (SvgImageBitmapsProvider.Instance);
+        private Alternet.Drawing.SvgImageBitmapsData<Image> bitmaps = new (SvgImageBitmapsProvider.Instance);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SvgImageBitmaps"/> class.
@@ -38,6 +38,19 @@ namespace Alternet.Winforms
         {
             get => bitmaps.SvgImage;
             set => bitmaps.SvgImage = value;
+        }
+
+        /// <inheritdoc cref="Drawing.SvgImageBitmapsData{TBitmap}.SvgSizeRelative"/>
+        public Drawing.RelativeSize? SvgSizeRelative
+        {
+            get
+            {
+                return bitmaps.SvgSizeRelative;
+            }
+            set
+            {
+                bitmaps.SvgSizeRelative = value;
+            }
         }
 
         /// <summary>
@@ -142,6 +155,28 @@ namespace Alternet.Winforms
         {
             float scaleFactor = WinformsUtils.GetScaleFactor(control);
             return bitmaps.ToNormalBitmap(scaleFactor, isDark);
+        }
+
+        /// <summary>
+        /// Gets the effective size of the SVG image based on the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply.</param>
+        /// <returns>The effective size of the SVG image.</returns>
+        public Size EffectiveSvgSize(float scaleFactor = 1.0f)
+        {
+            return bitmaps.EffectiveSvgSize(scaleFactor);
+        }
+
+        /// <summary>
+        /// Gets the effective size of the SVG image based on the specified control.
+        /// Control is used to get the scale factor for the effective size.
+        /// </summary>
+        /// <param name="control">The WinForms control.</param>
+        /// <returns>The effective size of the SVG image.</returns>
+        public Size EffectiveSvgSize(Control control)
+        {
+            float scaleFactor = WinformsUtils.GetScaleFactor(control);
+            return bitmaps.EffectiveSvgSize(scaleFactor);
         }
 
         /// <summary>

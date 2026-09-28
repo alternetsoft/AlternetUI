@@ -56,7 +56,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Represents a collection of bitmap representations of an SVG image.
     /// </summary>
-    public struct SvgImageBitmaps<TBitmap>
+    public struct SvgImageBitmapsData<TBitmap>
     {
         private readonly ISvgImageBitmapsProvider<TBitmap> provider;
         private BaseDictionary<SizeAndBool, TBitmap>? normalBitmaps;
@@ -70,21 +70,21 @@ namespace Alternet.Drawing
         private ThemedColor? svgColorDisabled;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SvgImageBitmaps{TBitmap}"/> class.
+        /// Initializes a new instance of the <see cref="SvgImageBitmapsData{TBitmap}"/> class.
         /// </summary>
         /// <param name="provider">The provider for creating bitmap representations of the SVG image.</param>
-        public SvgImageBitmaps(ISvgImageBitmapsProvider<TBitmap> provider)
+        public SvgImageBitmapsData(ISvgImageBitmapsProvider<TBitmap> provider)
         {
             this.provider = provider;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SvgImageBitmaps{TBitmap}"/>
+        /// Initializes a new instance of the <see cref="SvgImageBitmapsData{TBitmap}"/>
         /// class with the specified SVG image.
         /// </summary>
         /// <param name="provider">The provider for creating bitmap representations of the SVG image.</param>
         /// <param name="svgImage">The SVG image.</param>
-        public SvgImageBitmaps(ISvgImageBitmapsProvider<TBitmap> provider, SvgImage svgImage)
+        public SvgImageBitmapsData(ISvgImageBitmapsProvider<TBitmap> provider, SvgImage svgImage)
             : this(provider)
         {
             this.svgImage = svgImage;
@@ -332,8 +332,19 @@ namespace Alternet.Drawing
             if (svgImage is null)
                 return default;
 
-            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize, svgSizeRelative);
+            var size = EffectiveSvgSize(scaleFactor);
             return ToDisabledBitmap(size.Width, size.Height, isDark);
+        }
+
+        /// <summary>
+        /// Gets the effective size of the SVG image based on the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply.</param>
+        /// <returns>The effective size of the SVG image.</returns>
+        public readonly SizeI EffectiveSvgSize(float scaleFactor = 1.0f)
+        {
+            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize, svgSizeRelative);
+            return size;
         }
 
         /// <summary>
@@ -348,7 +359,7 @@ namespace Alternet.Drawing
             if (svgImage is null)
                 return default;
 
-            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize, svgSizeRelative);
+            var size = EffectiveSvgSize(scaleFactor);
             return ToNormalBitmap(size.Width, size.Height, isDark);
         }
 
@@ -447,7 +458,7 @@ namespace Alternet.Drawing
     /// </summary>
     public class SvgImageBitmaps
     {
-        private Alternet.Drawing.SvgImageBitmaps<Image> bitmaps = new(SvgImageBitmapsProvider.Instance);
+        private Alternet.Drawing.SvgImageBitmapsData<Image> bitmaps = new(SvgImageBitmapsProvider.Instance);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SvgImageBitmaps"/> class.
@@ -490,6 +501,19 @@ namespace Alternet.Drawing
             set
             {
                 bitmaps.SvgSize = value;
+            }
+        }
+
+        /// <inheritdoc cref="SvgImageBitmapsData{TBitmap}.SvgSizeRelative"/>
+        public RelativeSize? SvgSizeRelative
+        {
+            get
+            {
+                return bitmaps.SvgSizeRelative;
+            }
+            set
+            {
+                bitmaps.SvgSizeRelative = value;
             }
         }
 
@@ -672,6 +696,28 @@ namespace Alternet.Drawing
         public void AddDisabledBitmap(Image bitmap, bool isDark)
         {
             bitmaps.AddDisabledBitmap(bitmap, isDark);
+        }
+
+        /// <summary>
+        /// Gets the effective size of the SVG image based on the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply.</param>
+        /// <returns>The effective size of the SVG image.</returns>
+        public SizeI EffectiveSvgSize(float scaleFactor = 1.0f)
+        {
+            return bitmaps.EffectiveSvgSize(scaleFactor);
+        }
+
+        /// <summary>
+        /// Gets the effective size of the SVG image based on the specified control.
+        /// Control is used to get the scale factor for the effective size.
+        /// </summary>
+        /// <param name="control">The WinForms control.</param>
+        /// <returns>The effective size of the SVG image.</returns>
+        public SizeI EffectiveSvgSize(Control control)
+        {
+            float scaleFactor = control.ScaleFactor;
+            return bitmaps.EffectiveSvgSize(scaleFactor);
         }
 
         /// <summary>
