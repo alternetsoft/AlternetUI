@@ -65,6 +65,7 @@ namespace Alternet.Drawing
 
         private SvgImage? svgImage;
         private SizeI? svgSize;
+        private RelativeSize? svgSizeRelative;
         private ThemedColor? svgColorNormal;
         private ThemedColor? svgColorDisabled;
 
@@ -125,6 +126,31 @@ namespace Alternet.Drawing
                 if (svgSize == value)
                     return;
                 svgSize = value;
+                ResetBitmaps();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the relative size of the SVG image. This property is used to determine
+        /// the size of the bitmap representations of the SVG image relative to the base size.
+        /// If this property is not set, the default size will be used.
+        /// Changing this property will reset the cached bitmap representations.
+        /// </summary>
+        /// <remarks>
+        /// It is suggested to use this property instead of <see cref="SvgSize"/>
+        /// if you want to automatically scale the SVG image size based on the display DPI or other factors.
+        /// </remarks>
+        public RelativeSize? SvgSizeRelative
+        {
+            readonly get
+            {
+                return svgSizeRelative;
+            }
+            set
+            {
+                if (svgSizeRelative == value)
+                    return;
+                svgSizeRelative = value;
                 ResetBitmaps();
             }
         }
@@ -306,7 +332,7 @@ namespace Alternet.Drawing
             if (svgImage is null)
                 return default;
 
-            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize);
+            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize, svgSizeRelative);
             return ToDisabledBitmap(size.Width, size.Height, isDark);
         }
 
@@ -322,7 +348,7 @@ namespace Alternet.Drawing
             if (svgImage is null)
                 return default;
 
-            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize);
+            var size = DrawingUtils.EffectiveSvgSize(scaleFactor, svgSize, svgSizeRelative);
             return ToNormalBitmap(size.Width, size.Height, isDark);
         }
 
