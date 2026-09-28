@@ -10,7 +10,7 @@ namespace Alternet.Drawing
 {
     /// <summary>
     /// Encapsulates a bitmap, which consists of the pixel data for a graphics image and
-    /// its attributes.
+    /// its attributes. Bitmap size is measured in pixels. A bitmap can be created from a file, a stream, or another image.
     /// A <see cref="Bitmap"/> is an object used to work with images defined by pixel data.
     /// </summary>
     public partial class Bitmap : Image
@@ -110,7 +110,7 @@ namespace Alternet.Drawing
             using var stream = ResourceLoader.StreamFromUrl(url!, baseUri);
             if (stream is null)
             {
-                App.LogError($"Image not loaded from: {url}");
+                LogError();
                 return;
             }
 
@@ -118,11 +118,16 @@ namespace Alternet.Drawing
 
             if (!result)
             {
-                App.LogError($"Image not loaded from: {url}");
+                LogError();
                 return;
             }
 
             this.url = url;
+
+            void LogError()
+            {
+                App.LogError($"Image not loaded from: {url}");
+            }
         }
 
         /// <summary>
@@ -216,13 +221,32 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts the specified <see cref='SKBitmap'/> to a <see cref='Image'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Bitmap(SKBitmap bitmap)
+        {
+            return FromSkia(bitmap);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref='SKBitmap'/> to a <see cref='Image'/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator SKBitmap(Bitmap bitmap)
+        {
+            return ToSkia(bitmap);
+        }
+
+        /// <summary>
         /// Returns a version of the image recolored for dark mode if required.
         /// Returns original image if dark mode is not required.
         /// </summary>
         /// <param name="isDark">A value indicating whether dark mode is enabled.
         /// If <see langword="true"/>, the image will be recolored for
         /// dark mode; otherwise, the original image is returned.</param>
-        /// <returns>An image recolored for dark mode if <paramref name="isDark"/> is <see langword="true"/>; otherwise, the
+        /// <returns>An image recolored for dark mode if <paramref name="isDark"/>
+        /// is <see langword="true"/>; otherwise, the
         /// original image.</returns>
         public Bitmap RecolorForDarkModeIfRequired(bool isDark)
         {
