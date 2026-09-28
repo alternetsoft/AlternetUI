@@ -446,6 +446,11 @@ namespace Alternet.UI
         public static string UrlImageArrowUp { get; set; } = GetImageUrl("alternet-arrow-up");
 
         /// <summary>
+        /// Gets or sets url used to load "Address Card" svg image.
+        /// </summary>
+        public static string UrlImageAddressCard { get; set; } = GetImageUrl("alternet-address-card");
+
+        /// <summary>
         /// Gets or sets url used to load "Gear" svg image.
         /// </summary>
         public static string UrlImageGear { get; set; } = GetImageUrl("alternet-gear");

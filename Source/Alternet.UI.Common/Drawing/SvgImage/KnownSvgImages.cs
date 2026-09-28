@@ -115,6 +115,7 @@ namespace Alternet.UI
         private static SvgImage? imgArrowsSpin;
         private static SvgImage? imgBell;
         private static SvgImage? imgBackspace;
+        private static SvgImage? imgAddressCard;
 
         static KnownSvgImages()
         {
@@ -222,6 +223,15 @@ namespace Alternet.UI
         {
             get => imgClock ??= new MonoSvgImage(KnownSvgUrls.UrlImageClock);
             set => imgClock = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image with an address card, typically used to represent contact information or business cards.
+        /// </summary>
+        public static SvgImage ImgAddressCard
+        {
+            get => imgAddressCard ??= new MonoSvgImage(KnownSvgUrls.UrlImageAddressCard);
+            set => imgAddressCard = value;
         }
 
         /// <summary>
