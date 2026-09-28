@@ -160,6 +160,11 @@ namespace PropertyGridSample
             control.Title = "label";
         }
 
+        public static void InitUpDownAndLabel(Alternet.UI.UpDownAndLabel control)
+        {
+            control.Title = "label";
+        }
+
         public static void InitValueEditorByte(Alternet.UI.ValueEditorByte control)
         {
             control.Title = "label";

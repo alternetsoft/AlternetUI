@@ -149,6 +149,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<ToolBar>(ObjectInit.InitGenericToolBar);
                 ToolBoxAdd<ToolBarSet>(ObjectInit.InitGenericToolBarSet);
                 ToolBoxAdd<UserControl>(ObjectInit.InitUserControl);
+                ToolBoxAdd<UpDownAndLabel>(ObjectInit.InitUpDownAndLabel);
                 ToolBoxAdd<ValueEditorByte>(ObjectInit.InitValueEditorByte);
                 ToolBoxAdd<ValueEditorDouble>(ObjectInit.InitValueEditorDouble);
                 ToolBoxAdd<ValueEditorEMail>(ObjectInit.InitValueEditorEMail);
