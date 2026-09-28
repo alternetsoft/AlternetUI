@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Implements <see cref="string"/> editor with validation.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
-    public partial class ValueEditorString : ValueEditorCustom
+    public partial class ValueEditorString : ValueEditorGeneric
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValueEditorString"/> class.
