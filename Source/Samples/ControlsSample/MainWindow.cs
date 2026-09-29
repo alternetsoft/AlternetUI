@@ -34,8 +34,6 @@ namespace ControlsSample
 
             UixmlLoader.Initialize();
 
-            DefaultUseParentFont = true;
-
             AddGlobalWindowNotification(new GlobalFormActivity());
 
             StaticControlEvents.MainWindowDpiChanged += (s, e) =>

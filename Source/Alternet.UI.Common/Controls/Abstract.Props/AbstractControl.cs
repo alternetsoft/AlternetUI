@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default value for <see cref="ParentFont"/> property.
         /// </summary>
-        public static bool DefaultUseParentFont = false;
+        public static bool DefaultUseParentFont = true;
 
         /// <summary>
         /// Gets or sets min element size in device-independent units.

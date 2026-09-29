@@ -1589,7 +1589,6 @@ namespace Alternet.Drawing
             switch (weight)
             {
                 default:
-                    throw new ArgumentException("Unknown font weight", nameof(weight));
                 case FontWeight.Normal:
                     return string.Empty;
                 case FontWeight.Thin:
@@ -1854,6 +1853,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            base.DisposeManaged();
         }
 
         private struct FontRecord
