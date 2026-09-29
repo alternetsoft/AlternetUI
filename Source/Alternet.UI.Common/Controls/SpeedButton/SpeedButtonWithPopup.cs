@@ -75,6 +75,18 @@ namespace Alternet.UI
         public event EventHandler<BaseCancelEventArgs>? BeforeShowPopup;
 
         /// <summary>
+        /// Occurs when the drop-down portion of the control is no longer visible.
+        /// </summary>
+        [Category(KnownMemberCategory.Behavior)]
+        public event EventHandler? DropDownClosed;
+
+        /// <summary>
+        /// Occurs when the drop-down portion of the control is shown.
+        /// </summary>
+        [Category(KnownMemberCategory.Behavior)]
+        public event EventHandler? DropDown;
+
+        /// <summary>
         /// Occurs when selected value is changed.
         /// </summary>
         public event EventHandler? SelectedValueChanged
@@ -106,6 +118,30 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual ThemedColor? ErrorBorderColor { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the popup window is currently visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool DroppedDown
+        {
+            get
+            {
+                return IsPopupWindowCreated && PopupWindow.IsVisible;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (DroppedDown == value)
+                    return;
+                if (value)
+                    ShowPopup();
+                else
+                    PopupWindow.HidePopup(ModalResult.Canceled);
+            }
+        }
 
         /// <summary>
         /// Gets milliseconds since the popup window was last closed.
@@ -252,6 +288,7 @@ namespace Alternet.UI
                     {
                         popupLastClosedAt = DateTime.Now;
                         OnPopupWindowClosed(s, e);
+                        RaiseDropDownClosed();
                     };
                 }
 
@@ -324,6 +361,8 @@ namespace Alternet.UI
             
             if (e.Cancel)
                 return;
+
+            RaiseDropDown();
             
             PopupWindow.ShowPopup(PopupOwner ?? this, PopupWindowPosition);
         }
@@ -367,7 +406,8 @@ namespace Alternet.UI
         /// <summary>
         /// Resumes the raising of the <see cref="ValueChanged"/> event after it has been suppressed.
         /// </summary>
-        /// <param name="raiseEvent">Indicates whether to raise the <see cref="ValueChanged"/> event immediately after resuming.</param>
+        /// <param name="raiseEvent">Indicates whether to raise the <see cref="ValueChanged"/>
+        /// event immediately after resuming.</param>
         public virtual void ResumeValueChanged(bool raiseEvent = true)
         {
             valueChangedSuppressCounter--;
@@ -430,6 +470,47 @@ namespace Alternet.UI
         public virtual void UpdateBaseText()
         {
             base.Text = Text ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DropDown"/> event and calls <see cref="OnDropDown"/> method.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseDropDown()
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnDropDown(EventArgs.Empty);
+            DropDown?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DropDownClosed"/> event and
+        /// calls <see cref="OnDropDownClosed"/> method.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseDropDownClosed()
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnDropDownClosed(EventArgs.Empty);
+            DropDownClosed?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when the <see cref="DropDown"/> event is fired.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDropDown(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="DropDownClosed"/> event is fired.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDropDownClosed(EventArgs e)
+        {
         }
 
         /// <inheritdoc/>
