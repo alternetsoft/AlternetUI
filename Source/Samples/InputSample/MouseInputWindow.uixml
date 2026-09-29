@@ -39,9 +39,9 @@
           <HorizontalStackPanel InputTransparent="true">
             <Label Text="Mouse Buttons:" Margin="5" IsTextLocalized="true"/>
             
-            <TextBoxAndButton
+            <TextBox
               Name="buttonInfo" Margin="5" Enabled="false" SuggestedWidth="350"
-              InnerOuterBorder="Outer" ButtonsVisible="false"/>
+              />
 
           </HorizontalStackPanel>
 
