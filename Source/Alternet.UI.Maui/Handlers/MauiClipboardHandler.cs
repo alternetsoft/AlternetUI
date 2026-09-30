@@ -128,6 +128,11 @@ namespace Alternet.UI
             return result;
         }
 
+        public IDataObject? GetData(string format)
+        {
+            return lastData;
+        }
+
         public void SetData(IDataObject? value)
         {
             SetDataAsync(value);
