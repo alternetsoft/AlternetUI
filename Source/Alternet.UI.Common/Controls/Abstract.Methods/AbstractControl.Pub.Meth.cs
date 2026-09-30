@@ -711,7 +711,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ShowContextMenu(HVDropDownAlignment? contextMenuPosition = null)
         {
-            if (HasContextMenu || ContextMenuShowing is not null)
+            if (HasContextMenu || ContextMenuShowing is not null || ParentContextMenu)
             {
                 App.AddIdleTask(() =>
                 {
@@ -723,8 +723,10 @@ namespace Alternet.UI
                     if (contextMenuPosition.HasValue)
                         ContextMenuPosition = contextMenuPosition.Value;
 
-                    // We need here to use field as we no need to auto-create the context menu.
-                    ShowPopupMenu(contextMenuStrip);
+                    if (ParentContextMenu)
+                        ShowPopupMenu(ContextMenuStrip);
+                    else
+                        ShowPopupMenu(contextMenuStrip);
 
                     if (contextMenuPosition.HasValue)
                         ContextMenuPosition = savedPosition;
@@ -1241,7 +1243,7 @@ namespace Alternet.UI
 
                 if (attrValue is not null)
                 {
-                    if(attrValue.Equals(value))
+                    if (attrValue.Equals(value))
                         return item;
                 }
             }

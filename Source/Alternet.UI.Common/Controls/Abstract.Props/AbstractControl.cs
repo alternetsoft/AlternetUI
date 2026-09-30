@@ -1041,7 +1041,13 @@ namespace Alternet.UI
         /// </summary>
         [Category("Behavior")]
         [Browsable(false)]
-        public virtual bool HasContextMenu => contextMenuStrip is not null;
+        public virtual bool HasContextMenu
+        {
+            get
+            {
+                return contextMenuStrip is not null;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the Input Method Editor (IME) mode of the control.
