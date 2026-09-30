@@ -50,9 +50,9 @@ namespace Alternet.UI
 
                 if (toolTip.ToolTipVisible)
                 {
-                    if (!ContextMenu.ShowToolTipsDuringContextMenu)
+                    if (!UI.ContextMenu.ShowToolTipsDuringContextMenu)
                     {
-                        if (ContextMenu.HasOpenedContextMenus)
+                        if (UI.ContextMenu.HasOpenedContextMenus)
                             return;
                     }
 

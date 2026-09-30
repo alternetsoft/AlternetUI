@@ -990,6 +990,23 @@ namespace Alternet.UI
         public virtual bool ParentContextMenu { get; set; }
 
         /// <summary>
+        /// Alias for <see cref="ContextMenuStrip"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public ContextMenuStrip ContextMenu
+        {
+            get
+            {
+                return ContextMenuStrip;
+            }
+
+            set
+            {
+                ContextMenuStrip = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the <see cref="ContextMenuStrip" /> associated
         /// with this control. This property is auto-created and is always not null.
         /// Use <see cref="ParentContextMenu"/> to specify whether to use the context menu from the parent control

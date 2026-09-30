@@ -661,16 +661,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Alias for <see cref="ContextMenuStrip"/> property.
-        /// </summary>
-        [Browsable(false)]
-        public ContextMenuStrip ContextMenu
-        {
-            get => ContextMenuStrip;
-            set => ContextMenuStrip = value;
-        }
-
         /// <inheritdoc/>
         public override ThemedColor? BackgroundColor
         {

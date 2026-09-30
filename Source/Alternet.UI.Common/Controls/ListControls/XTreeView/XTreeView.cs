@@ -639,24 +639,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Alias for <see cref="ContextMenuStrip"/> property.
-        /// </summary>
-        [Browsable(false)]
-        public ContextMenuStrip ContextMenu
-        {
-            get
-            {
-                return ContextMenuStrip;
-            }
-
-            set
-            {
-                ContextMenuStrip = value;
-                ListBox.ContextMenuStrip = value;
-            }
-        }
-
         /// <inheritdoc/>
         [Browsable(false)]
         public override ContextMenuStrip ContextMenuStrip
