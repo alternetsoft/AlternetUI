@@ -2,6 +2,7 @@
 
 public:
 UnmanagedDataObject* GetDataObject();
+UnmanagedDataObject* GetDataObjectWithFormat(const NativeStringSpan& format);
 void SetDataObject(UnmanagedDataObject* value);
 bool Flush();
 bool IsIntFormatSupported(int format);

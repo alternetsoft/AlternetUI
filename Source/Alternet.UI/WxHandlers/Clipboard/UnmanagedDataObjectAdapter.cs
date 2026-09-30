@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 using Alternet.Drawing;
@@ -18,38 +19,51 @@ namespace Alternet.UI
 
         public object? GetData(string format)
         {
-            if (format == DataFormats.Text)
+            try
             {
-                return NativeStringSpan.InvokeWithResult(format, dataObject.GetStringData);
-            }
-
-            if (format == DataFormats.Files)
-            {
-                return NativeStringSpan.InvokeWithResult(format, span =>
+                if (format == DataFormats.Text)
                 {
-                    return dataObject.GetFileNamesData(span).ToString().Split('|');
-                });
-            }
+                    return NativeStringSpan.InvokeWithResult(format, dataObject.GetStringData);
+                }
 
-            if (format == DataFormats.Bitmap)
-            {
-                return NativeStringSpan.InvokeWithResult(format, span =>
+                if (format == DataFormats.Files)
                 {
-                    return new Bitmap(new UnmanagedStreamAdapter(dataObject.GetStreamData(span)));
-                });
-            }
+                    return NativeStringSpan.InvokeWithResult(format, span =>
+                    {
+                        return dataObject.GetFileNamesData(span).ToString().Split('|');
+                    });
+                }
 
-            if (format == DataFormats.Serializable)
-            {
-                var nativeStream = NativeUtils.Invoke(DataFormats.AlternetUISerializable, dataObject.GetStreamData);
-                if (nativeStream is null)
+                if (format == DataFormats.Bitmap)
+                {
+                    return NativeStringSpan.InvokeWithResult(format, span =>
+                    {
+                        return new Bitmap(new UnmanagedStreamAdapter(dataObject.GetStreamData(span)));
+                    });
+                }
+
+                if (format == DataFormats.Serializable)
+                {
+                    var nativeStream = NativeUtils.Invoke(DataFormats.AlternetUISerializable, dataObject.GetStreamData);
+                    if (nativeStream is null)
+                        return null;
+                    var stream = new UnmanagedStreamAdapter(nativeStream);
+                    var data = DataObject.DeserializeDataObject(stream);
+                    return data;
+                }
+
+                var nativeStream2 = NativeUtils.Invoke(format, dataObject.GetStreamData);
+                if (nativeStream2 is null)
                     return null;
-                var stream = new UnmanagedStreamAdapter(nativeStream);
-                var data = DataObject.DeserializeDataObject(stream);
-                return data;
+                var stream2 = new UnmanagedStreamAdapter(nativeStream2);
+                var data2 = DataObject.DeserializeDataObject(stream2);
+                return data2;
             }
-
-            return null;
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error retrieving data from clipboard for format '{format}': {ex.Message}");
+                return null;
+            }
         }
 
         public object? DoCommand(string cmdName, params object?[] args)

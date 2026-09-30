@@ -32,6 +32,16 @@ namespace Alternet.UI.Native
             return _mmm;
         }
         
+        public UnmanagedDataObject GetDataObjectWithFormat(Alternet.UI.NativeStringSpan format)
+        {
+            CheckDisposed();
+            var format_Native = format.ToNative();
+var _nnn = NativeApi.Clipboard_GetDataObjectWithFormat_(NativePointer, ref format_Native);
+            var _mmm = NativeObject.GetFromNativePointer<UnmanagedDataObject>(_nnn, p => new UnmanagedDataObject(p))!;
+            ReleaseNativeObjectPointer(_nnn);
+            return _mmm;
+        }
+        
         public void SetDataObject(UnmanagedDataObject value)
         {
             CheckDisposed();
@@ -68,6 +78,9 @@ return NativeApi.Clipboard_IsStrFormatSupported_(NativePointer, ref format_Nativ
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Clipboard_GetDataObject_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern IntPtr Clipboard_GetDataObjectWithFormat_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Clipboard_SetDataObject_(IntPtr obj, IntPtr value);

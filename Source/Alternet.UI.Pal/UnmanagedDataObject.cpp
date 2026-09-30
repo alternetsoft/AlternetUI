@@ -198,7 +198,10 @@ namespace Alternet::UI
 		auto wxFormat = wxStr(format);
 
         if (!GetDataPresent(format))
-            throwEx(FormatNotPresentErrorMessage);
+        {
+            _container = "";
+            return wxStr(_container);
+        }
 
         auto text = TryGetText(_dataObject);
         if (text.has_value())
@@ -207,7 +210,8 @@ namespace Alternet::UI
             return wxStr(_container);
         }
 
-        throwExNoInfo;
+        _container = "";
+        return wxStr(_container);
     }
 
     NativeStringSpan UnmanagedDataObject::GetFileNamesData(const NativeStringSpan& format)
@@ -215,7 +219,10 @@ namespace Alternet::UI
 		auto wxFormat = wxStr(format);
 
         if (!GetDataPresent(format))
-            throwEx(FormatNotPresentErrorMessage);
+        {
+            _container = "";
+            return wxStr(_container);
+        }
 
         auto fileNames = TryGetFilesString(_dataObject);
         if (fileNames.has_value())
@@ -224,7 +231,8 @@ namespace Alternet::UI
             return wxStr(_containerStatic);
         }
 
-        throwExNoInfo;
+        _container = "";
+        return wxStr(_container);
     }
 
     UnmanagedStream* UnmanagedDataObject::GetStreamData(const NativeStringSpan& format)
@@ -232,7 +240,9 @@ namespace Alternet::UI
         if (!GetDataPresent(format))
             return nullptr;
 
-        if (wxStr(format) == DataFormats::Bitmap)
+        auto wxFmt = wxStr(format);
+
+        if (wxFmt == DataFormats::Bitmap)
         {
             auto bitmap = TryGetBitmap(_dataObject);
             if (bitmap.has_value())
@@ -245,7 +255,7 @@ namespace Alternet::UI
             }
         }
 
-        if (wxStr(format) == DataFormats::Persistent)
+        if (wxFmt == DataFormats::Persistent)
         {
             auto fmt = wxDataFormat(DataFormats::Persistent);
             if (_dataObject->IsSupportedFormat(fmt))
@@ -262,7 +272,19 @@ namespace Alternet::UI
                 return nullptr;
         }
 
-        return nullptr;
+        auto fmt = wxDataFormat(wxFmt);
+        if (_dataObject->IsSupportedFormat(fmt))
+        {
+            auto dobject = static_cast<wxCustomDataObject*>(_dataObject->GetObject(fmt));
+            auto stream = new wxMemoryOutputStream();
+            auto size = dobject->GetDataSize();
+            auto ptr = dobject->GetData();
+            stream->Write(ptr, size);
+            stream->SeekO(0);
+            return new UnmanagedStream(stream);
+        }
+        else
+            return nullptr;
     }
 
     void UnmanagedDataObject::SetStringData(const NativeStringSpan& format, const NativeStringSpan& value)

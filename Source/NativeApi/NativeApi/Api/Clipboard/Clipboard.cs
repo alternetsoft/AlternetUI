@@ -6,6 +6,8 @@ namespace NativeApi.Api
     {
         public UnmanagedDataObject GetDataObject() => throw new Exception();
 
+        public UnmanagedDataObject GetDataObjectWithFormat(NativeStringSpan format) => throw new Exception();
+
         public void SetDataObject(UnmanagedDataObject value) => throw new Exception();
 
         public bool Flush() => default;

@@ -23,6 +23,13 @@ ALTERNET_UI_API UnmanagedDataObject* Clipboard_GetDataObject_(Clipboard* obj)
     });
 }
 
+ALTERNET_UI_API UnmanagedDataObject* Clipboard_GetDataObjectWithFormat_(Clipboard* obj, NativeStringSpan* format)
+{
+    return MarshalExceptions<UnmanagedDataObject*>([&](){
+        return obj->GetDataObjectWithFormat(*format);
+    });
+}
+
 ALTERNET_UI_API void Clipboard_SetDataObject_(Clipboard* obj, UnmanagedDataObject* value)
 {
     MarshalExceptions<void>([&](){

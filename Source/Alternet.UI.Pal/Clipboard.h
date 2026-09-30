@@ -18,6 +18,7 @@ namespace Alternet::UI
         optional<wxBitmap> TryGetBitmap();
 
         wxDataObjectComposite* GetCompositeDataObjectFromClipboard();
+        wxDataObjectComposite* GetDataObjectWithFormat(wxString format);
 
         const char16_t* ClipboardOpenErrorMessage = u"Error while opening the clipboard.";
     };

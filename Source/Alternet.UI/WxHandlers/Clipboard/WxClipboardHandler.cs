@@ -39,6 +39,17 @@ namespace Alternet.UI
             return new UnmanagedDataObjectAdapter(unmanagedDataObject);
         }
 
+        public IDataObject? GetData(string format)
+        {
+            var unmanagedDataObject = NativeStringSpan.InvokeWithResult(format, span =>
+                WxApplicationHandler.NativeClipboard.GetDataObjectWithFormat(span));
+                
+            if (unmanagedDataObject == null)
+                return null;
+
+            return new UnmanagedDataObjectAdapter(unmanagedDataObject);
+        }
+
         public void SetData(IDataObject? value)
         {
             value ??= DataObject.Empty;

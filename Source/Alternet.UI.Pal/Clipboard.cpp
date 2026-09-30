@@ -36,7 +36,25 @@ namespace Alternet::UI
             return false;
         return wxTheClipboard->Flush();
     }
-    
+ 
+    UnmanagedDataObject* Clipboard::GetDataObjectWithFormat(const NativeStringSpan& format)
+    {
+        wxClipboardLocker clipboardLocker;
+        if (!clipboardLocker)
+            return nullptr;
+
+        auto myFormat = wxStr(format);
+
+        auto compositeDataObject = GetDataObjectWithFormat(myFormat);
+        if (compositeDataObject->GetFormatCount() == 0)
+        {
+            delete compositeDataObject;
+            return nullptr;
+        }
+
+        return new UnmanagedDataObject(compositeDataObject);
+    }
+
     UnmanagedDataObject* Clipboard::GetDataObject()
     {
         wxClipboardLocker clipboardLocker;
@@ -107,6 +125,31 @@ namespace Alternet::UI
     optional<wxBitmap> Clipboard::TryGetBitmap()
     {
         return optional<wxBitmap>();
+    }
+
+    wxDataObjectComposite* Clipboard::GetDataObjectWithFormat(wxString format)
+    {
+        if (wxTheClipboard->IsSupported(format))
+        {
+            auto result = new wxDataObjectComposite();
+
+            auto textData = new wxTextDataObject();
+            if (wxTheClipboard->GetData(*textData))
+                result->Add(textData);
+            else
+                delete textData;
+
+            wxDataFormat dataFormat = wxDataFormat(format);
+            auto customData = new wxCustomDataObject(dataFormat);
+            if (wxTheClipboard->GetData(*customData))
+                result->Add(customData);
+            else
+                delete customData;
+
+            return result;
+        }
+
+        return nullptr;
     }
 
     wxDataObjectComposite* Clipboard::GetCompositeDataObjectFromClipboard()

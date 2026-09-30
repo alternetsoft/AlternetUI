@@ -17,8 +17,11 @@ namespace Alternet.UI
         /// <inheritdoc cref="Clipboard.OnlyText"/>
         bool OnlyText { get; }
 
-        /// <inheritdoc cref="Clipboard.GetDataObject"/>
+        /// <inheritdoc cref="Clipboard.GetDataObject()"/>
         IDataObject? GetData();
+
+        /// <inheritdoc cref="Clipboard.GetDataObject(string)"/>
+        IDataObject? GetData(string format);
 
         /// <inheritdoc cref="Clipboard.GetDataObjectAsync()"/>
         Task<IDataObject?> GetDataAsync();

@@ -1,5 +1,6 @@
 using Alternet.Drawing;
 using Alternet.UI;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,42 @@ namespace DragAndDropSample
             InitializeComponent();
 
             var sizePixels = PixelFromDip(new SizeD(64, 64));
-            testBitmap = (Image)Color.Yellow.AsImage(sizePixels);
+            testBitmap = Color.Yellow.AsImage(sizePixels);
 
             SetSizeToContent();
 
             eventsListBox.BindApplicationLog();
             eventsListBox.ContextMenu.Required();
+
+            clipboardPanel.ContextMenu.Add("Copy Custom Format", () =>
+            {
+                var format = "CustomFormat";
+                var dataObject = new DataObject();
+                dataObject.SetData(format, "Test data string.");
+                dataObject.SetText("Test data string.");
+                Clipboard.SetDataObject(dataObject);
+            });
+
+            clipboardPanel.ContextMenu.Add("Paste Custom Format", () =>
+            {
+                if (Clipboard.ContainsData("CustomFormat"))
+                {
+                    App.Log($"Clipboard contains CustomFormat");
+                }
+                else
+                {
+                    App.Log($"Clipboard does not contain CustomFormat");
+                }
+
+                if (Clipboard.GetData("CustomFormat") is string value)
+                {
+                    App.Log($"Paste from clipboard: {value}");
+                }
+                else
+                {
+                    App.Log("Paste from clipboard: None");
+                }
+            });
         }
 
         private DragDropEffects GetDropEffect(DragDropEffects defaultEffect)
@@ -94,7 +125,7 @@ namespace DragAndDropSample
         {
             var value = Clipboard.GetDataObject();
 
-            if(value is null)
+            if (value is null)
             {
                 App.Log("Paste from clipboard: None");
                 return;

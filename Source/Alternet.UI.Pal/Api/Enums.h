@@ -174,6 +174,12 @@ namespace Alternet::UI
         Horizontal = 4,
     };
     
+    enum class PreferredSizeMode
+    {
+        Content = 0,
+        Available = 1,
+    };
+    
     enum class RightToLeft
     {
         No = 0,

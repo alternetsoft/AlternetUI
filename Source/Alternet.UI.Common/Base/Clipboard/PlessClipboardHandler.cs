@@ -44,6 +44,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual IDataObject? GetData(string format)
+        {
+            return data;
+        }
+
+        /// <inheritdoc/>
         public virtual Task<IDataObject?> GetDataAsync()
         {
             var result = GetData();

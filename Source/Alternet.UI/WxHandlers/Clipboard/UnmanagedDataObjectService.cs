@@ -47,7 +47,7 @@ namespace Alternet.UI
                 return;
             }
 
-            if (format == DataFormats.Text || data is string)
+            if (format == DataFormats.Text || format == DataFormats.UnicodeText)
             {
                 var transformedData = (string)ClipboardUtils.SetDataTransform(format, data);
 
@@ -99,6 +99,13 @@ namespace Alternet.UI
                 NativeUtils.Invoke(format, s => dataObject.SetStreamData(s, new Native.InputStream(streamData)));
                 return;
             }
+
+            using var stream2 = new MemoryStream();
+            DataObject.SerializeDataObject(stream2, data);
+            stream2.Position = 0;
+            NativeUtils.Invoke(
+                format,
+                s => dataObject.SetStreamData(s, new Native.InputStream(stream2)));
         }
 
         private static void CopyData(

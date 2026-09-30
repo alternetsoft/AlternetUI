@@ -82,6 +82,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the data that is currently on the system clipboard in the specified format,
+        /// or <see langword="null"/> if there is no data on the clipboard in that format.
+        /// </summary>
+        /// <param name="format">The format of the data to retrieve.</param>
+        /// <returns>The data object in the specified format, or <see langword="null"/> if not available.</returns>
+        public static IDataObject? GetDataObject(string format)
+        {
+            return Handler.GetData(format);
+        }
+
+        /// <summary>
         /// Retrieves the data that is currently on the system clipboard,
         /// or <see langword="null"/> if there is no data on the clipboard.
         /// Operation is performed asynchroniously.
@@ -158,11 +169,6 @@ namespace Alternet.UI
         /// that is in the specified format.
         /// </summary>
         /// <param name="format">The format of the data to look for.</param>
-        /// <remarks>
-        /// This method is different from <see cref="ContainsData(string)"/> as
-        /// it doesn't get data from the clipboard, it only checks for the format.
-        /// This method works faster than <see cref="ContainsData(string)"/>.
-        /// </remarks>
         public static bool HasFormat(string format)
         {
             var result = Handler.HasFormat(format);
@@ -188,7 +194,7 @@ namespace Alternet.UI
         /// See <see cref="DataFormats"/> for predefined formats.</param>
         public static bool ContainsData(string format)
         {
-            return GetDataObject()?.GetDataPresent(format) ?? false;
+            return Handler.HasFormat(format);
         }
 
         /// <summary>
@@ -203,7 +209,9 @@ namespace Alternet.UI
         /// </returns>
         public static object? GetData(string format)
         {
-            return GetDataObject()?.GetData(format);
+            var dataObj = Handler.GetData(format);
+
+            return dataObj?.GetData(format);
         }
 
         /// <summary>

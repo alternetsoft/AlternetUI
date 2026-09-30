@@ -13,7 +13,7 @@
 
       <StackPanel Orientation="Horizontal">
 
-        <StackPanel Orientation="Vertical" Margin="5" MinChildMargin="5">
+        <StackPanel Orientation="Vertical" Margin="5" MinChildMargin="5" Name="clipboardPanel">
           <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" InputTransparent="true"/>
           <Label Text="Clipboard"  IsBold="true" HorizontalAlignment="Center" Margin="5"/>
           <XButton Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" Margin="5"/>
