@@ -981,7 +981,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the control should use context menu from its parent control.
+        /// Gets or sets a value indicating whether the control should use context menu from its parent control
+        /// if context menu for this control is not specified.
         /// Default is false.
         /// </summary>
         [Category(KnownMemberCategory.Behavior)]
@@ -991,7 +992,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="ContextMenuStrip" /> associated
         /// with this control. This property is auto-created and is always not null.
-        /// Use <see cref="ParentContextMenu"/> to specify whether to use the context menu from the parent control.
+        /// Use <see cref="ParentContextMenu"/> to specify whether to use the context menu from the parent control
+        /// if context menu for this control is not specified.
         /// </summary>
         /// <returns>
         /// The <see cref="ContextMenuStrip" /> for this control.
@@ -1004,7 +1006,8 @@ namespace Alternet.UI
             {
                 if (ParentContextMenu && Parent is not null)
                 {
-                    return Parent.ContextMenuStrip;
+                    if (contextMenuStrip is null || contextMenuStrip.Items.Count == 0)
+                        return Parent.ContextMenuStrip;
                 }
 
                 if (contextMenuStrip == null)

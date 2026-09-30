@@ -23,5 +23,19 @@ namespace Alternet.UI
         public ContextMenuStrip(IContainer container) : base(container)
         {
         }
+
+        /// <summary>
+        /// Added for the compatibility with the legacy code. In the current implementation, this method does nothing.
+        /// </summary>
+        public void SuspendLayout()
+        {
+        }
+
+        /// <summary>
+        /// Added for the compatibility with the legacy code. In the current implementation, this method does nothing.
+        /// </summary>
+        public void ResumeLayout(bool performLayout = true)
+        {
+        }
     }
 }
