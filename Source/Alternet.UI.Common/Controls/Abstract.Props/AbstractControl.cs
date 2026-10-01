@@ -3674,6 +3674,9 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the font of the text displayed by the control.
+        /// Use <see cref="ParentFont"/> property to automatically update font when parent's font is changed.
+        /// <see cref="RelativeFontSize"/> property is used to specify relative font size.
+        /// <see cref="FontStyleOverride"/>, <see cref="IsBold"/> properties are used to specify font style overrides.
         /// </summary>
         /// <value>
         /// The <see cref="Font"/> to apply to the text displayed by the control.
