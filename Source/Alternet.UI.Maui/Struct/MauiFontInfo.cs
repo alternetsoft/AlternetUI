@@ -12,6 +12,12 @@ namespace Alternet.Maui
     public struct MauiFontInfo
     {
         /// <summary>
+        /// Gets or sets the default font size scale factor used to convert font sizes from
+        /// Alternet.Drawing.Font to MauiFontInfo.
+        /// </summary>
+        public static float DefaultFontSizeScaleFactor = 1.333f;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MauiFontInfo"/> struct with the specified font.
         /// </summary>
         public static Func<Alternet.Drawing.Font, MauiFontInfo>? FontToMaui;
@@ -73,7 +79,7 @@ namespace Alternet.Maui
                 fa |= FontAttributes.Italic;
 
             FontAttributes = fa;
-            FontSize = font.Size * 1.333;
+            FontSize = font.Size * DefaultFontSizeScaleFactor;
             FontFamily = font.Name;
         }
 
