@@ -85,6 +85,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the color for the specified state of the control.
+        /// </summary>
+        /// <param name="state">The visual control state.</param>
+        /// <param name="color">The color to set.</param>
+        public virtual void SetColor(VisualControlState state, ThemedColor? color)
+        {
+            GetObjectOrNull(state)?.SetColor(color);
+        }
+
+        /// <summary>
         /// Sets color to all initialized borders.
         /// </summary>
         /// <param name="color">New color value.</param>
