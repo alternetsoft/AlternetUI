@@ -156,7 +156,7 @@ namespace Alternet.UI
             findEdit.MinHeightFromPopupEntry();
             replaceEdit.MinHeightFromPopupEntry();
 
-            var hookSizeChanged = false;
+            var hookSizeChanged = true;
 
             if (hookSizeChanged)
             {
@@ -165,6 +165,7 @@ namespace Alternet.UI
                     Post(() =>
                     {
                         FindToolBar.MinHeight = Math.Max(findEdit.Height, FindToolBar.MinHeight ?? 0);
+                        RaiseSizeChanged(EventArgs.Empty);
                     });
 
                     App.DebugLogIf("FindToolBar size changed: " + FindToolBar.Size, false);
@@ -180,6 +181,7 @@ namespace Alternet.UI
                     Post(() =>
                     {
                         ReplaceToolBar.MinHeight = Math.Max(replaceEdit.Height, ReplaceToolBar.MinHeight ?? 0);
+                        RaiseSizeChanged(EventArgs.Empty);
                     });
                 };
             }
