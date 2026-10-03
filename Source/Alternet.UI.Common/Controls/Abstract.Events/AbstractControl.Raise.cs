@@ -371,7 +371,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
-            if (FocusedControl != this && FocusedControl is GenericControl)
+            if (FocusedControl != this && FocusedControl is GenericControl && !IsGraphicControl)
             {
                 var prevFocused = FocusedControl;
                 prevFocused.RaiseLostFocus(new LostFocusEventArgs(this));
@@ -475,6 +475,12 @@ namespace Alternet.UI
                 return;
             if (FocusedControl == this)
                 FocusedControl = null;
+            if (FocusedControl is GenericControl && FocusedControl != this)
+            {
+                var prevFocused = FocusedControl;
+                FocusedControl = null;
+                prevFocused.RaiseLostFocus(new LostFocusEventArgs(this));
+            }
 
             OnLostFocus(e);
             RaiseChildLostFocus(this, e);
