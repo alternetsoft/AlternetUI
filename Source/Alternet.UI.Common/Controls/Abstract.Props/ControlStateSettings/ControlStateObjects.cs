@@ -271,9 +271,11 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Use this method to efficiently update multiple visual control states in a single
         /// operation. The normal state is not affected by this method.</remarks>
-        /// <param name="value">A function that takes a VisualControlState and returns a value of type T? to assign to the corresponding
+        /// <param name="value">A function that takes a VisualControlState
+        /// and returns a value of type T? to assign to the corresponding
         /// state.</param>
-        /// <param name="states">A bitwise combination of VisualControlStates indicating which states should be updated.</param>
+        /// <param name="states">A bitwise combination of VisualControlStates
+        /// indicating which states should be updated.</param>
         public virtual void SetAllExceptNormal(Func<VisualControlState, T?> value, VisualControlStates states)
         {
             if (states.HasFlag(VisualControlStates.Hovered))
@@ -294,7 +296,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Use this method to update multiple control states at once, ensuring consistency
         /// across all states except for Normal, which remains unchanged.</remarks>
-        /// <param name="value">The value to assign to the Hovered, Pressed, Disabled, and Focused states. If null, these states are reset
+        /// <param name="value">The value to assign to the Hovered, Pressed, Disabled, and Focused states.
+        /// If null, these states are reset
         /// to their default values.</param>
         public virtual void SetAllExceptNormal(T? value)
         {
@@ -310,7 +313,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Use this method to update multiple control states in a consistent manner, excluding
         /// the Normal state. This is useful when you want to apply the same logic to several states at once.</remarks>
-        /// <param name="func">A function that returns a nullable value of type T. This function is called separately for each state to
+        /// <param name="func">A function that returns a nullable value of type T.
+        /// This function is called separately for each state to
         /// determine the value to assign.</param>
         public virtual void SetAllExceptNormal(Func<T?> func)
         {

@@ -152,21 +152,23 @@ namespace Alternet.UI
         /// <summary>
         /// Sets border in the normal state equal to border in the hovered state.
         /// </summary>
-        public virtual void NormalBorderAsHovered()
+        /// <param name="clone">Indicates whether to clone the borders or just assign reference.</param>
+        public virtual void NormalBorderAsHovered(bool clone = false)
         {
             if (Borders is null)
                 return;
-            Borders.Normal = Borders.Hovered;
+            Borders.Normal = clone ? Borders.Hovered?.Clone() : Borders.Hovered;
         }
 
         /// <summary>
         /// Sets border in the focused state equal to border in the hovered state.
         /// </summary>
-        public virtual void FocusedBorderAsHovered()
+        /// <param name="clone">Indicates whether to clone the borders or just assign reference.</param>
+        public virtual void FocusedBorderAsHovered(bool clone = false)
         {
             if (Borders is null)
                 return;
-            Borders.Focused = Borders.Hovered;
+            Borders.Focused = clone ? Borders.Hovered?.Clone() : Borders.Hovered;
         }
 
         /// <summary>
