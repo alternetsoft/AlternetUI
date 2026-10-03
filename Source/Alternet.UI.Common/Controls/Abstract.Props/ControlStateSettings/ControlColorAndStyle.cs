@@ -167,12 +167,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets border in the focused state equal to border in the hovered state.
+        /// </summary>
+        public virtual void FocusedBorderAsHovered()
+        {
+            Dark?.FocusedBorderAsHovered();
+            Light?.FocusedBorderAsHovered();
+        }
+
+        /// <summary>
         /// Sets background in the pressed state equal to background in the normal state.
         /// </summary>
         public virtual void PressedBackgroundAsNormal()
         {
             Dark?.PressedBackgroundAsNormal();
             Light?.PressedBackgroundAsNormal();
+        }
+
+        /// <summary>
+        /// Sets background in the hovered state equal to background in the normal state.
+        /// </summary>
+        public virtual void FocusedBackgroundAsNormal()
+        {
+            Dark?.FocusedBackgroundAsNormal();
+            Light?.FocusedBackgroundAsNormal();
         }
 
         /// <summary>
