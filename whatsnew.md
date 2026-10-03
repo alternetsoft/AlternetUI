@@ -1,3 +1,33 @@
+# 1.1.12 (2026 October 3)
+
+- Add MauiFontInfo.DefaultFontSizeScaleFactor to make Maui font size scale configurable.
+- Add a ContextMenu alias for the existing ContextMenuStrip property on AbstractControl.
+- Clipboard: Add a format-specific GetDataObject overload and update clipboard format checks to use Handler.HasFormat directly.
+- SpeedButtonWithPopup: Add DroppedDown property, DropDown and DropDownClosed events.
+- Inherit XComboBox from EditableListPicker.
+- Use XIntPicker in UpDownAndLabel.
+- XIntPicker.IsEditable, KeyEventArgs.CreateWithKey, TextPicker.Multiline.
+- Switch ValueEditorString to inherit from ValueEditorGeneric instead of ValueEditorCustom.
+- EditableListPicker: Reopen popup editor on resize. Add BeginEdit overload.
+- Introduces an IPopupEntry interface to expose selection and caret state for popup text editing.
+- Change PopupEntryParams from a struct to a class, and add support for custom attributes, selection, and caret position.
+- Create SvgImageBitmaps, SvgImageBitmaps, ValueEditorGeneric, TextPickerAndLabel, SvgImageBitmapsProvider, TextPickerAndButton.
+- Replace the font-specific RelativeFontSize type with a shared RelativeSize abstraction and update font-related APIs to use it.
+- SvgImage: Add CreateImage bitmap overloads.
+- Adds explicit conversion operators between Bitmap and SKBitmap for easier interop with Skia APIs.
+- Introduce a SkiaWinforms utility class with extension methods for converting between System.Drawing and SkiaSharp types.
+- Add SKBitmap creation helpers for SvgImage.
+- Add PreferredSizeMode to controls. The property supports controlling how preferred size is computed based on content or available space.
+- Support muliline popup text box.
+- Added a virtual RequiresMouseWheel() method to AbstractControl so scrollable containers can detect whether a control needs mouse wheel.
+- Use TextPicker in PanelSettings.
+- Refine Label text sizing behavior.
+- Expose SKSvg provider on SvgImage.
+- AbstractControl.ParentContextMenu.
+- XButton: Fix horizontal alignment.
+
+---
+
 # 1.1.11 (2026 September 22)
 
 - Update to use wxWidgets 3.3.3 and microsoft.web.webview 2.1.0.4191.47.
