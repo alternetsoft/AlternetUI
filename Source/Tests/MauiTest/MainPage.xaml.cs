@@ -64,8 +64,6 @@ public partial class MainPage : ContentPage
 
         skiaContainer.HandlerChanged += SkiaContainer_HandlerChanged;
 
-        Alternet.UI.StaticControlEvents.FocusedChanged += Control_FocusedControlChanged;
-
         colorPicker.SelectedColor = Alternet.Drawing.Color.LightBlue;
         colorPicker.SelectedIndexChanged += (s, e) =>
         {
@@ -82,12 +80,6 @@ public partial class MainPage : ContentPage
         pictureBoxView.Control.HasBorder = true;
         PropertyGridSample.ObjectInit.SetBackgrounds(pictureBoxView.Control);
         */
-    }
-
-    private void Control_FocusedControlChanged(object? sender, EventArgs e)
-    {
-        var name = Alternet.UI.AbstractControl.FocusedControl?.Name ?? "null";
-        Log($"FocusedControlChanged: {name}");
     }
 
     private void SkiaContainer_HandlerChanged(object? sender, EventArgs e)
