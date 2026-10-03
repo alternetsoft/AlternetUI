@@ -97,6 +97,7 @@ namespace Alternet.UI
 
             void FocusMe()
             {
+                SetFocus();
             }
 
             MainControl.MouseLeftButtonDown += (s, e) =>
@@ -443,6 +444,20 @@ namespace Alternet.UI
             Value = v;
         }
 
+        /// <inheritdoc/>
+        protected override void OnChildMouseDown(object? sender, MouseEventArgs e)
+        {
+            SetFocus();
+            base.OnChildMouseDown(sender, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        {
+            SetFocus();
+            base.OnMouseLeftButtonDown(e);
+        }
+
         /// <summary>
         /// Increments the minutes part of the time value by the specified amount.
         /// </summary>
@@ -546,12 +561,6 @@ namespace Alternet.UI
         protected virtual string GetMinutesAsString()
         {
             return time.ToString("mm");
-        }
-
-        /// <inheritdoc/>
-        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
-        {
-            base.OnMouseLeftButtonDown(e);
         }
 
         /// <summary>
