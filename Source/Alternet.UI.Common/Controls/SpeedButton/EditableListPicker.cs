@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI
 {
@@ -102,6 +103,32 @@ namespace Alternet.UI
             get
             {
                 return ControlFactory.PopupEntryHandler?.HasActivePopupEntry(UniqueId) ?? false;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets text alignment for the <see cref="TextBox"/> control.
+        /// </summary>
+        /// <remarks>
+        /// Default value is <see cref="TextHorizontalAlignment.Left"/>.
+        /// </remarks>
+        [DefaultValue(TextHorizontalAlignment.Left)]
+        [Browsable(false)]
+        public virtual TextHorizontalAlignment TextAlign
+        {
+            get
+            {
+                return Label.TextAlignmentHorizontal.AsTextHorizontalAlignment();
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (TextAlign == value)
+                    return;
+                Label.TextAlignmentHorizontal = value.AsHorizontalAlignment();
+                Invalidate();
             }
         }
 

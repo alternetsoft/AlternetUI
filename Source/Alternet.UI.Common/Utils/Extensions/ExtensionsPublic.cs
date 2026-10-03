@@ -136,6 +136,25 @@ namespace Alternet.UI.Extensions
         }
 
         /// <summary>
+        /// Converts <see cref="HorizontalAlignment"/> to <see cref="TextHorizontalAlignment"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
+        public static TextHorizontalAlignment AsTextHorizontalAlignment(this HorizontalAlignment value)
+        {
+            switch (value)
+            {
+                default:
+                case HorizontalAlignment.Left:
+                    return TextHorizontalAlignment.Left;
+                case HorizontalAlignment.Right:
+                    return TextHorizontalAlignment.Right;
+                case HorizontalAlignment.Center:
+                    return TextHorizontalAlignment.Center;
+            }
+        }
+
+        /// <summary>
         /// Converts <see cref="TextHorizontalAlignment"/> to <see cref="GenericAlignment"/>.
         /// </summary>
         /// <param name="value">Value to convert.</param>
@@ -151,6 +170,25 @@ namespace Alternet.UI.Extensions
                     return GenericAlignment.CenterHorizontal;
                 case TextHorizontalAlignment.Right:
                     return GenericAlignment.Right;
+            }
+        }
+
+        /// <summary>
+        /// Converts <see cref="TextHorizontalAlignment"/> to <see cref="HorizontalAlignment"/>.
+        /// </summary>
+        /// <param name="value">Value to convert.</param>
+        /// <returns></returns>
+        public static HorizontalAlignment AsHorizontalAlignment(this TextHorizontalAlignment value)
+        {
+            switch (value)
+            {
+                default:
+                case TextHorizontalAlignment.Left:
+                    return HorizontalAlignment.Left;
+                case TextHorizontalAlignment.Center:
+                    return HorizontalAlignment.Center;
+                case TextHorizontalAlignment.Right:
+                    return HorizontalAlignment.Right;
             }
         }
 

@@ -104,7 +104,7 @@ namespace ControlsSample
 
                 panelSettings.AddHorizontalLine();
 
-                panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
+                panelSettings.AddInput("Text Align", textBox, nameof(TextPicker.TextAlign));
 
                 CustomEventArgs lengthArgs = new("IsRequired", "CheckBoxInLabel");
 
