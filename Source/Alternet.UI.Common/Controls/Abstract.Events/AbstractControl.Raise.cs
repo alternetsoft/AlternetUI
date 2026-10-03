@@ -370,6 +370,14 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+
+            if (FocusedControl != this && FocusedControl is GenericControl)
+            {
+                var prevFocused = FocusedControl;
+                prevFocused.RaiseLostFocus(new LostFocusEventArgs(this));
+                FocusedControl?.RaiseGotFocus(new GotFocusEventArgs(prevFocused));
+            }
+
             UpdateMouseEventTarget(this);
 
             RaiseNotifications((n) => n.BeforeMouseDown(this, e));

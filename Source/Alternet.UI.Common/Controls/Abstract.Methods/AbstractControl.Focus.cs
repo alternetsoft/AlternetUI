@@ -37,7 +37,12 @@ namespace Alternet.UI
 
                 if (focused is not null)
                 {
-                    if (focused.Focused)
+                    if (focused is Control control)
+                    {
+                        if (control.SafeHandler?.IsFocused == true)
+                            return focused;
+                    }
+                    else
                     {
                         return focused;
                     }
@@ -53,6 +58,36 @@ namespace Alternet.UI
                     return;
                 RaiseFocusedControlChanged(value);
             }
+        }
+
+        /// <summary>
+        /// Sets input focus to the control.
+        /// </summary>
+        /// <returns><see langword="true"/> if the input focus request was
+        /// successful; otherwise, <see langword="false"/>.</returns>
+        /// <remarks>The <see cref="SetFocus"/> method returns true if the
+        /// control successfully received input focus.</remarks>
+        public virtual bool SetFocus()
+        {
+            if (!CanFocus)
+                return false;
+
+            var platformParent = PlatformBackedParent;
+            if (platformParent is not null)
+            {
+                if (platformParent?.SetFocus() == true)
+                {
+                    Post(() =>
+                    {
+                        var prevFocused = FocusedControl;
+                        RaiseGotFocus(new GotFocusEventArgs(prevFocused));
+                    });
+                }
+                else
+                    return false;
+            }
+
+            return FocusedControl == this;
         }
 
         /// <summary>
@@ -114,9 +149,7 @@ namespace Alternet.UI
         {
             get
             {
-                var fs = focusedControl.Value ?? App.Handler.GetFocusedControl();
-
-                return fs == this;
+                return FocusedControl == this;
             }
         }
 
@@ -203,18 +236,6 @@ namespace Alternet.UI
         /// <summary>
         /// Sets input focus to the control.
         /// </summary>
-        /// <returns><see langword="true"/> if the input focus request was
-        /// successful; otherwise, <see langword="false"/>.</returns>
-        /// <remarks>The <see cref="SetFocus"/> method returns true if the
-        /// control successfully received input focus.</remarks>
-        public virtual bool SetFocus()
-        {
-            return false;
-        }
-
-        /// <summary>
-        /// Sets input focus to the control.
-        /// </summary>
         /// <returns>
         ///   <see langword="true" /> if the input focus request was successful;
         ///   otherwise, <see langword="false" />.
@@ -239,7 +260,7 @@ namespace Alternet.UI
             if (!HasChildren)
                 return false;
 
-            var items = GetFocusableChildren(true, true);
+            var items = GetFocusableChildren(recursive: true, sortByTabIndex: true);
 
             if (items.Length == 0)
                 return false;
@@ -423,15 +444,6 @@ namespace Alternet.UI
             }
 
             AbstractControl[] items;
-
-            /*
-            if (recursive)
-            {
-                items = GetItems(this);
-                if(FocusFirstOrLast(forward, items))
-                    return;
-            }
-            */
 
             items = GetItems(Root);
 
