@@ -160,6 +160,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets border in the focused state equal to border in the hovered state.
+        /// </summary>
+        public virtual void FocusedBorderAsHovered()
+        {
+            if (Borders is null)
+                return;
+            Borders.Focused = Borders.Hovered;
+        }
+
+        /// <summary>
         /// Sets background in the destination state equal to background in the source state.
         /// This method assigns all background related properties (brushes, images, and SVG images)
         /// in the destination state to match those in the source state.
@@ -189,6 +199,16 @@ namespace Alternet.UI
             {
                 BackgroundSvgImages.SetObject(BackgroundSvgImages.GetObjectOrNull(sourceState), destState);
             }
+        }
+
+        /// <summary>
+        /// Sets background in the focused state equal to background in the normal state.
+        /// This method assigns all background related properties (brushes, images, and SVG images)
+        /// in the focused state to match those in the normal state.
+        /// </summary>
+        public virtual void FocusedBackgroundAsNormal()
+        {
+            AssignBackground(sourceState: VisualControlState.Normal, destState: VisualControlState.Focused);
         }
 
         /// <summary>
