@@ -241,9 +241,12 @@ namespace Alternet.UI
 
             StaticBorderTheme = DefaultTheme.Clone();
             StaticBorderTheme.NormalBorderAsHovered();
-            StaticBorderTheme.FocusedBorderAsHovered();
+            StaticBorderTheme.FocusedBorderAsHovered(clone: true);
             StaticBorderTheme.DisabledBorderAsHovered();
             StaticBorderTheme.SetBorderColor(borderColor);
+
+            if (DefaultColors.UseFocusedBorderColor)
+                StaticBorderTheme.SetBorderColor(VisualControlState.Focused, DefaultColors.FocusedBorderColor);
 
             StaticPanelBorderTheme = StaticBorderTheme.Clone();
             StaticPanelBorderTheme.SetCornerRadius();
