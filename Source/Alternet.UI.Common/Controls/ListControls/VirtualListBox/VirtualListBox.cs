@@ -305,6 +305,12 @@ namespace Alternet.UI
         /// </summary>
         public bool ImmutableItems => immutableItems;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="OnKeyDown"/> event should be ignored.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IgnoreKeyDown { get; set; }
+
         /// <inheritdoc/>
         public override IListSource<ListControlItem> Items
         {
@@ -2693,7 +2699,7 @@ namespace Alternet.UI
 
             base.OnKeyDown(e);
 
-            if (e.IsHandledOrSuppressed || Count == 0)
+            if (e.IsHandledOrSuppressed || Count == 0 || IgnoreKeyDown)
                 return;
 
             ItemClickFlags flags = ItemClickFlags.Keyboard;
