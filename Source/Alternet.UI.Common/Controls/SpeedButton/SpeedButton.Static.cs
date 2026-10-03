@@ -241,6 +241,7 @@ namespace Alternet.UI
 
             StaticBorderTheme = DefaultTheme.Clone();
             StaticBorderTheme.NormalBorderAsHovered();
+            StaticBorderTheme.FocusedBorderAsHovered();
             StaticBorderTheme.DisabledBorderAsHovered();
             StaticBorderTheme.SetBorderColor(borderColor);
 
@@ -249,10 +250,12 @@ namespace Alternet.UI
 
             StaticPanelBorderThemeNoHover = StaticPanelBorderTheme.Clone();
             StaticPanelBorderThemeNoHover.HoveredBackgroundAsNormal();
+            StaticPanelBorderThemeNoHover.FocusedBackgroundAsNormal();
             StaticPanelBorderThemeNoHover.PressedBackgroundAsNormal();
 
             StaticBorderThemeNoHover = StaticBorderTheme.Clone();
             StaticBorderThemeNoHover.HoveredBackgroundAsNormal();
+            StaticBorderThemeNoHover.FocusedBackgroundAsNormal();
             StaticBorderThemeNoHover.PressedBackgroundAsNormal();
 
             RoundBorderTheme = StaticBorderTheme.Clone();
