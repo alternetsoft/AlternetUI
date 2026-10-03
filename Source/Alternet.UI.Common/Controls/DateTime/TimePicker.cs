@@ -143,8 +143,7 @@ namespace Alternet.UI
             ButtonPlus?.SetEnabled(false);
             ButtonMinus?.SetEnabled(false);
 
-            var corners = new BorderCornerRadius(SpeedButton.DefaultRoundBorderRadius, SpeedButton.DefaultRoundBorderRadiusIsPercent);
-            RoundCorners(corners);
+            RoundCorners();
         }
 
         /// <summary>
@@ -320,6 +319,9 @@ namespace Alternet.UI
         public override void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
             base.OnButtonClick(e);
+
+            SetFocus();
+
             if (e.ButtonId == IdButtonPlus)
             {
                 e.Handled = true;
