@@ -175,6 +175,20 @@ namespace Alternet.UI
         public event MouseEventHandler? MouseDown;
 
         /// <summary>
+        /// Occurs when the mouse pointer is over the child control and a
+        /// mouse button is pressed.
+        /// </summary>
+        [Category(KnownMemberCategory.Mouse)]
+        public event MouseEventHandler? ChildMouseDown;
+
+        /// <summary>
+        /// Occurs when the mouse pointer is over the child control and a
+        /// mouse button is released.
+        /// </summary>
+        [Category(KnownMemberCategory.Mouse)]
+        public event MouseEventHandler? ChildMouseUp;
+
+        /// <summary>
         /// Occurs when the mouse pointer is over the control and a mouse button
         /// is released.</summary>
         [Category(KnownMemberCategory.Mouse)]
