@@ -167,6 +167,8 @@ namespace Alternet.UI
                 {
                     Label.TextAlignmentVertical = VerticalAlignment.Center;
                 }
+
+                Invalidate();
             }
         }
 
@@ -419,6 +421,7 @@ namespace Alternet.UI
                 Font = Label.RealFont,
                 ForeColor = foreColor,
                 HideClickOnParent = false,
+                TextAlign = this.TextAlign,
                 CommitTextOnKeyPress = CommitOnKeyPress,
                 HideOnEscape = false,
                 HideOnEnter = CommitOnEnter && !Multiline,

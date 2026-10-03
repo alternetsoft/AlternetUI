@@ -88,6 +88,7 @@ namespace Alternet.UI
             CancelOnLostFocus = prm.LostFocusBehavior == ModalResult.Canceled;
             AcceptOnLostFocus = prm.LostFocusBehavior == ModalResult.Accepted;
             Parent = prm.ItemContainer;
+            Content.TextAlign = prm.TextAlign;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
 
             Content.IsPassword = prm.IsPassword;

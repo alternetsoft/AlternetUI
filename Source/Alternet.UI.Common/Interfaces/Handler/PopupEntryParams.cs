@@ -134,6 +134,11 @@ public class PopupEntryParams
     public bool IsPassword { get; set; }
 
     /// <summary>
+    /// Gets or sets the text alignment for the popup entry.
+    /// </summary>
+    public TextHorizontalAlignment TextAlign { get; set; }
+
+    /// <summary>
     /// Gets or sets whether popup is closed when Enter key is pressed.
     /// If set to true, the popup is closed when Enter key is pressed.
     /// </summary>
