@@ -39,6 +39,7 @@ namespace Alternet.Drawing
         private static ThemedColor? windowActiveCaptionColor;
         private static ThemedColor? windowActiveCaptionTextColor;
         private static ThemedColor? windowActiveBorderColor;
+        private static ThemedColor? focusedBorderColor;
 
 #pragma warning disable
         static DefaultColors()
@@ -82,6 +83,20 @@ namespace Alternet.Drawing
         /// On MSW accent color can be obtained from system settings using <see cref="MswUtils.AccentColor"/>.
         /// </remarks>
         public static ThemedColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new Color(76, 194, 255));
+
+        /// <summary>
+        /// Gets or sets the color used for the border of focused controls, adapting to light and dark themes.
+        /// </summary>
+        public static ThemedColor FocusedBorderColor
+        {
+            get => focusedBorderColor ?? AccentColor;
+            set => focusedBorderColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the focused border color for controls when they are focused.
+        /// </summary>
+        public static bool UseFocusedBorderColor { get; } = false;
 
         /// <summary>
         /// Gets or sets the override color of the common window caption.
