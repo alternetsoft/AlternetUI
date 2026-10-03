@@ -176,6 +176,7 @@ namespace Alternet.UI
             dayView.HorzGridLines = false;
             dayView.VerticalAlignment = VerticalAlignment.Fill;
 
+            dayView.IgnoreKeyDown = true;
             dayView.KeyDown += OnListBoxKeyDown;
 
             CreateDayItems();
@@ -1551,7 +1552,6 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="KeyEventArgs"/> that contains the event data.</param>
         protected virtual void OnListBoxKeyDown(object? sender, KeyEventArgs e)
         {
-            e.Suppressed();
         }
 
         /// <inheritdoc/>
