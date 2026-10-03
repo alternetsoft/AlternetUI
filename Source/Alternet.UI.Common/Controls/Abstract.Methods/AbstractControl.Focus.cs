@@ -35,7 +35,7 @@ namespace Alternet.UI
             {
                 var focused = focusedControl.Value;
 
-                if(focused is not null)
+                if (focused is not null)
                 {
                     if (focused.Focused)
                     {
@@ -114,7 +114,9 @@ namespace Alternet.UI
         {
             get
             {
-                return FocusedControl == this;
+                var fs = focusedControl.Value ?? App.Handler.GetFocusedControl();
+
+                return fs == this;
             }
         }
 
@@ -234,16 +236,16 @@ namespace Alternet.UI
             if (CanFocus)
                 return SetFocus();
 
-            if(!HasChildren)
+            if (!HasChildren)
                 return false;
 
             var items = GetFocusableChildren(true, true);
 
-            if(items.Length == 0)
+            if (items.Length == 0)
                 return false;
             foreach (var item in items)
             {
-                if(item.SetFocusIfPossible())
+                if (item.SetFocusIfPossible())
                 {
                     return true;
                 }
@@ -289,7 +291,7 @@ namespace Alternet.UI
         public virtual AbstractControl[] GetFocusableChildren(bool recursive, bool sortByTabIndex)
         {
             var result = GetFocusableChildren(recursive).ToArray();
-            if(sortByTabIndex)
+            if (sortByTabIndex)
                 Array.Sort(result, Comparison);
             return result;
 
@@ -383,7 +385,7 @@ namespace Alternet.UI
         /// <see langword="false"/>.</param>
         public virtual void FocusNextControl(bool forward = true, bool recursive = true)
         {
-            if(GlobalFocusNextControl is not null)
+            if (GlobalFocusNextControl is not null)
             {
                 GlobalFocusNextEventArgs e = new(forward, recursive);
                 GlobalFocusNextControl(this, e);
