@@ -106,6 +106,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets border color for the specified state of the control.
+        /// </summary>
+        /// <param name="state">The visual control state.</param>
+        /// <param name="color">New color value</param>
+        public virtual void SetBorderColor(VisualControlState state, ThemedColor? color)
+        {
+            Dark?.Borders?.SetColor(state, color);
+            Light?.Borders?.SetColor(state, color);
+        }
+
+        /// <summary>
         /// Sets border color to all initialized borders.
         /// </summary>
         /// <param name="color">New color value</param>
@@ -169,10 +180,11 @@ namespace Alternet.UI
         /// <summary>
         /// Sets border in the focused state equal to border in the hovered state.
         /// </summary>
-        public virtual void FocusedBorderAsHovered()
+        /// <param name="clone">Indicates whether to clone the borders or just assign reference.</param>
+        public virtual void FocusedBorderAsHovered(bool clone = false)
         {
-            Dark?.FocusedBorderAsHovered();
-            Light?.FocusedBorderAsHovered();
+            Dark?.FocusedBorderAsHovered(clone);
+            Light?.FocusedBorderAsHovered(clone);
         }
 
         /// <summary>
