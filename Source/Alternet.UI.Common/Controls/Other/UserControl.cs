@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
@@ -235,7 +236,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if(!HasOverlays())
+            if (!HasOverlays())
                 return;
             switch (e.Key)
             {
