@@ -18,6 +18,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the mouse button is pressed on the child control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnChildMouseDown(object? sender, MouseEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the mouse button is released on the child control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnChildMouseUp(object? sender, MouseEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called before the <see cref="KeyDown" /> event of the child control is raised.
         /// </summary>
         /// <param name="sender">The source of the event.</param>

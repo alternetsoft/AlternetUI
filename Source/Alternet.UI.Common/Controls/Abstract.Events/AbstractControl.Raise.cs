@@ -321,6 +321,12 @@ namespace Alternet.UI
                 RaiseMouseRightButtonUp(e);
             }
 
+            if (Parent is not null)
+            {
+                Parent.OnChildMouseUp(this, e);
+                Parent.ChildMouseUp?.Invoke(this, e);
+            }
+
             ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e));
         }
 
@@ -401,6 +407,12 @@ namespace Alternet.UI
             }
 
             ForEachVisibleChild(e, (control, e) => control.OnAfterParentMouseDown(this, e));
+
+            if (Parent is not null)
+            {
+                Parent.OnChildMouseDown(this, e);
+                Parent.ChildMouseDown?.Invoke(this, e);
+            }
 
             RaiseVisualStateChanged(e);
         }
