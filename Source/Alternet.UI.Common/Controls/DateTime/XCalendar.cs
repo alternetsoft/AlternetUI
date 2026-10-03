@@ -84,7 +84,7 @@ namespace Alternet.UI
         /// </summary>
         public static BorderSettings? DefaultTodayBorder;
 
-        private readonly ContextMenu actionsMenu = new ();
+        private readonly ContextMenu actionsMenu = new();
         private readonly CalendarCell[] cells = new CalendarCell[DayCellCount];
         private readonly CalendarListBox dayView;
         private readonly CalendarHeader header;
@@ -1552,6 +1552,33 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="KeyEventArgs"/> that contains the event data.</param>
         protected virtual void OnDayViewKeyDown(object? sender, KeyEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
+
+            base.OnKeyDown(e);
+
+            if (e.IsHandledOrSuppressed)
+                return;
+
+            switch (e.Key)
+            {
+                case Key.Up:
+                    Value = Value.AddDays(-7);
+                    e.Suppressed();
+                    return;
+                case Key.Down:
+                    Value = Value.AddDays(7);
+                    e.Suppressed();
+                    return;
+                case Key.Left:
+                    Value = Value.AddDays(-1);
+                    e.Suppressed();
+                    return;
+                case Key.Right:
+                    Value = Value.AddDays(1);
+                    e.Suppressed();
+                    return;
+            }
         }
 
         /// <inheritdoc/>
