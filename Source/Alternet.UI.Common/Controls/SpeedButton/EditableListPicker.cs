@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// a text box popup provided by the application handler.
     /// This text box is shown as a popup window when the user starts to edit the text.
     /// <see cref="EditableListPicker"/> is a generic control and is not attached to any native control of the
-    /// operating system. It is implemented using other controls, so it can be used in any environment where 
+    /// operating system. It can be used in any environment where 
     /// a native combo box is not available or suitable.
     /// </summary>
     public partial class EditableListPicker : ListPicker, IReadOnlyStrings
