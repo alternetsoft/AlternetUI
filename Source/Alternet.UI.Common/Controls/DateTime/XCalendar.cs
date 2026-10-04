@@ -1562,6 +1562,54 @@ namespace Alternet.UI
 
             switch (e.Key)
             {
+                case Key.Home:
+                    if (e.Control)
+                    {
+                        Value = new DateOnly(Value.Year, 1, 1);
+                    }
+                    else
+                    {
+                        Value = DateUtils.GetFirstDateOfMonth(Value);
+                    }
+
+                    e.Suppressed();
+                    return;
+                case Key.End:
+                    if (e.Control)
+                    {
+                        Value = new DateOnly(Value.Year, 12, 31);
+                    }
+                    else
+                    {
+                        Value = DateUtils.GetLastDateOfMonth(Value);
+                    }
+
+                    e.Suppressed();
+                    return;
+                case Key.PageUp:
+                    if(e.Control)
+                    {
+                        Value = Value.AddYears(-1);
+                    }
+                    else
+                    {
+                        Value = Value.AddMonths(-1);
+                    }
+
+                    e.Suppressed();
+                    return;
+                case Key.PageDown:
+                    if(e.Control)
+                    {
+                        Value = Value.AddYears(1);
+                    }
+                    else
+                    {
+                        Value = Value.AddMonths(1);
+                    }
+
+                    e.Suppressed();
+                    return;
                 case Key.Up:
                     Value = Value.AddDays(-7);
                     e.Suppressed();
