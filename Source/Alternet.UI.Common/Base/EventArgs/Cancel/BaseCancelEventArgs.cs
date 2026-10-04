@@ -30,4 +30,39 @@ namespace Alternet.UI
         {
         }
     }
+
+    /// <summary>
+    /// Extends <see cref="BaseCancelEventArgs"/> with parameter of <typeparamref name="T"/> type.
+    /// </summary>
+    /// <typeparam name="T">Type of the <see cref="Value"/> property.</typeparam>
+    public class BaseCancelEventArgs<T> : BaseCancelEventArgs
+    {
+        private T val;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseCancelEventArgs{T}"/> class.
+        /// </summary>
+        public BaseCancelEventArgs()
+            : this(default!)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseCancelEventArgs{T}"/> class.
+        /// </summary>
+        /// <param name="value">The value to assign to the parameter.</param>
+        public BaseCancelEventArgs(T value)
+        {
+            this.val = value;
+        }
+
+        /// <summary>
+        /// Gets parameter value.
+        /// </summary>
+        public virtual T Value
+        {
+            get => val;
+            set => this.val = value;
+        }
+    }
 }
