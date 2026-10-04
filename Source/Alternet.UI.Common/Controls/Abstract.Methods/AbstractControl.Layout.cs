@@ -150,11 +150,17 @@ namespace Alternet.UI
                     defaultPreferredSize = GetPreferredSizeInternal(context);
                     break;
                 case PreferredSizeMode.Available:
-                    defaultPreferredSize = GetPreferredSizeAvailable();
+                    defaultPreferredSize = GetPreferredSizeAvailable(availableWidth: true, availableHeight: true);
+                    break;
+                case PreferredSizeMode.AvailableWidth:
+                    defaultPreferredSize = GetPreferredSizeAvailable(availableWidth: true, availableHeight: false);
+                    break;
+                case PreferredSizeMode.AvailableHeight:
+                    defaultPreferredSize = GetPreferredSizeAvailable(availableWidth: false, availableHeight: true);
                     break;
             }
 
-            SizeD GetPreferredSizeAvailable()
+            SizeD GetPreferredSizeAvailable(bool availableWidth, bool availableHeight)
             {
                 float width = SuggestedWidth;
                 float height = SuggestedHeight;
@@ -164,9 +170,16 @@ namespace Alternet.UI
 
                 if (!MathUtils.SizeSpecified(width))
                 {
-                    width = context.AvailableSize.Width;
+                    if (availableWidth)
+                    {
+                        width = context.AvailableSize.Width;
 
-                    if (!MathUtils.SizeSpecified(width))
+                        if (!MathUtils.SizeSpecified(width))
+                        {
+                            needContentWidth = true;
+                        }
+                    }
+                    else
                     {
                         needContentWidth = true;
                     }
@@ -174,9 +187,16 @@ namespace Alternet.UI
 
                 if (!MathUtils.SizeSpecified(height))
                 {
-                    height = context.AvailableSize.Height;
+                    if (availableHeight)
+                    {
+                        height = context.AvailableSize.Height;
 
-                    if (!MathUtils.SizeSpecified(height))
+                        if (!MathUtils.SizeSpecified(height))
+                        {
+                            needContentHeight = true;
+                        }
+                    }
+                    else
                     {
                         needContentHeight = true;
                     }
