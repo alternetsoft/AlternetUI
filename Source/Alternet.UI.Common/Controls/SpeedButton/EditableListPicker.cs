@@ -21,7 +21,7 @@ namespace Alternet.UI
     /// operating system. It is implemented using other controls, so it can be used in any environment where 
     /// a native combo box is not available or suitable.
     /// </summary>
-    public partial class EditableListPicker : ListPicker
+    public partial class EditableListPicker : ListPicker, IReadOnlyStrings
     {
         /// <summary>
         /// Gets or sets a value indicating whether the popup text box has a border.
