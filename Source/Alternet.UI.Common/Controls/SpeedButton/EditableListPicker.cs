@@ -46,6 +46,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs before the text is edited. In the event handler
+        /// you can cancel the editing operation or modify popup text editor parameters.
+        /// </summary>
+        public event EventHandler<BaseCancelEventArgs<PopupEntryParams>>? BeforeEdit;
+
+        /// <summary>
         /// Occurs when the text is edited. In the event handler
         /// you need to apply the new text to the item. The event is raised when the user presses Enter or
         /// when the editing is finished programmatically.
@@ -254,6 +260,21 @@ namespace Alternet.UI
         public virtual bool CommitOnEnter { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the popup text box should be hidden when the Escape key is pressed.
+        /// Default value is <c>false</c>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HideEditorOnEscape { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup text box
+        /// should be hidden when the parent control is clicked.
+        /// Default value is <c>false</c>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HideEditorOnParentClick { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets empty text hint displayed in the control when the text is empty.
         /// </summary>
         public virtual string? EmptyTextHint
@@ -396,6 +417,14 @@ namespace Alternet.UI
 
             Post(() =>
             {
+                if (BeforeEdit is not null)
+                {
+                    var e = new BaseCancelEventArgs<PopupEntryParams>(prm);
+                    BeforeEdit(this, e);
+                    if (e.Cancel)
+                        return;
+                }
+
                 ControlFactory.PopupEntryHandler?.ShowPopupEntry(prm);
             });
         }
@@ -420,10 +449,10 @@ namespace Alternet.UI
                 BackColor = backColor,
                 Font = Label.RealFont,
                 ForeColor = foreColor,
-                HideClickOnParent = false,
+                HideClickOnParent = HideEditorOnParentClick,
                 TextAlign = this.TextAlign,
                 CommitTextOnKeyPress = CommitOnKeyPress,
-                HideOnEscape = false,
+                HideOnEscape = HideEditorOnEscape,
                 HideOnEnter = CommitOnEnter && !Multiline,
                 CustomAttributes = popupAttr.FlagsAndAttributes,
                 HasBorder = DefaultPopupTextBoxHasBorder,
