@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -15,7 +16,8 @@ namespace Alternet.UI
     /// Speed buttons are often used in toolbars or as part of a user interface.
     /// </summary>
     [ControlCategory(KnownControlCategory.MenusAndToolbars)]
-    public partial class SpeedButton : GenericControl, ICommandSource, IValueHelperProperty
+    public partial class SpeedButton : GenericControl, ICommandSource, IValueHelperProperty,
+        IValidatorReporter, INotifyDataErrorInfo
     {
         private readonly GenericControl pictureSpacer;
         private readonly GenericControl spacer;
@@ -1310,6 +1312,15 @@ namespace Alternet.UI
         [Browsable(false)]
         public Label Label => label;
 
+        /// <inheritdoc/>
+        public override bool HasErrors
+        {
+            get
+            {
+                return ValueHelper.HasErrors;
+            }
+        }
+
         /// <summary>
         /// Gets value helper for <c>Text</c> property. This helper allows to use text as value.
         /// </summary>
@@ -1586,6 +1597,12 @@ namespace Alternet.UI
                 Label.ImageVerticalAlignment = align?.Vertical ?? VerticalAlignment.Center;
                 Label.SetSvgImage(svg, btn, size);
             });
+        }
+
+        /// <inheritdoc/>
+        public override IEnumerable GetErrors(string? propertyName)
+        {
+            return ValueHelper.GetErrors();
         }
 
         /// <summary>
@@ -1960,6 +1977,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public void SetErrorStatus(object? sender, bool showError, string? errorText)
+        {
+            ValueHelper.SetErrorStatus(sender, showError, errorText);
+        }
+
+        /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
             var state = VisualState;
@@ -2178,6 +2201,18 @@ namespace Alternet.UI
             element.Alignment = element.Alignment.WithHorizontal(HorizontalAlignment.Right);
 
             return [spacerElement, element];
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTextChanged(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            base.OnTextChanged(e);
+            if (HasVisibleText)
+                PerformLayoutAndInvalidate();
+            if (ValueHelper.Options.HasFlag(TextBoxOptions.DefaultValidation))
+                ValueHelper.RunDefaultValidation();
         }
 
         /// <inheritdoc/>
@@ -2518,15 +2553,6 @@ namespace Alternet.UI
         protected virtual GenericControl CreateInnerSpacer()
         {
             return new TransparentPanel();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnTextChanged(EventArgs e)
-        {
-            base.OnTextChanged(e);
-
-            if (HasVisibleText)
-                PerformLayoutAndInvalidate();
         }
 
         /// <summary>

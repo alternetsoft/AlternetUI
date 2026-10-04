@@ -33,7 +33,7 @@ namespace ControlsSample
         [IsTextLocalized(true)]
         private readonly Label label = new("Try to enter invalid numbers");
 
-        private readonly ValueEditorByte zeroTo99Edit = new("0..99", 15);
+        private readonly ValueEditorByte zeroTo99Edit = new("10..99", 15);
         private readonly ValueEditorByte twoDigitsEdit = new("Two digits", 15);
 
         public TextNumbersPage()
