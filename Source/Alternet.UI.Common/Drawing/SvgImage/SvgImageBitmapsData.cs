@@ -576,6 +576,7 @@ namespace Alternet.Drawing
             return bitmaps.ToDisabledBitmap(scaleFactor, isDark);
         }
 
+
         /// <summary>
         /// Creates a disabled bitmap representation of the SVG image with the specified control and dark mode option.
         /// Control is used to get the scale factor for the bitmap.
@@ -583,7 +584,7 @@ namespace Alternet.Drawing
         /// <param name="control">The WinForms control.</param>
         /// <param name="isDark">Indicates whether the bitmap is for dark mode.</param>
         /// <returns>The created disabled bitmap, or null if the SVG image is not set.</returns>
-        public Image? ToDisabledBitmap(Control control, bool isDark)
+        public Image? ToDisabledBitmap(AbstractControl control, bool isDark)
         {
             float scaleFactor = control.ScaleFactor;
             return bitmaps.ToDisabledBitmap(scaleFactor, isDark);
@@ -596,7 +597,7 @@ namespace Alternet.Drawing
         /// <param name="control">The WinForms control.</param>
         /// <param name="isDark">Indicates whether the bitmap is for dark mode.</param>
         /// <returns>The created normal bitmap, or null if the SVG image is not set.</returns>
-        public Image? ToNormalBitmap(Control control, bool isDark)
+        public Image? ToNormalBitmap(AbstractControl control, bool isDark)
         {
             float scaleFactor = control.ScaleFactor;
             return bitmaps.ToNormalBitmap(scaleFactor, isDark);
