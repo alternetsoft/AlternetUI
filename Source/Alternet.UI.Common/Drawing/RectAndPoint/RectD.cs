@@ -1291,6 +1291,36 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Rounds rectangle edges outward using floor/ceiling. This preserves full coverage of the original
+        /// rectangle when converting or aligning fractional bounds to whole-number coordinates.
+        /// </summary>
+        /// <returns> A <see cref="RectI"/> that is the rounded version of this rectangle.</returns>
+        public readonly RectI RoundOutI()
+        {
+            int left = (int)Math.Floor(Left);
+            int top = (int)Math.Floor(Top);
+            int right = (int)Math.Ceiling(Right);
+            int bottom = (int)Math.Ceiling(Bottom);
+
+            return RectI.FromLTRB(left, top, right, bottom);
+        }
+
+        /// <summary>
+        /// Rounds rectangle edges outward using floor/ceiling. This preserves full coverage of the original
+        /// rectangle when converting or aligning fractional bounds to whole-number coordinates.
+        /// </summary>
+        /// <returns> A rounded version of this rectangle.</returns>
+        public readonly RectD RoundOut()
+        {
+            float left = MathF.Floor(Left);
+            float top = MathF.Floor(Top);
+            float right = MathF.Ceiling(Right);
+            float bottom = MathF.Ceiling(Bottom);
+
+            return RectD.FromLTRB(left, top, right, bottom);
+        }
+
+        /// <summary>
         /// Gets <see cref="Right"/> or <see cref="Bottom"/> depending
         /// on <paramref name="vert"/>
         /// parameter value.
