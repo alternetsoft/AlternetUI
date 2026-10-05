@@ -525,6 +525,7 @@ namespace Alternet.Drawing
         /// The alpha parameter in the result is a number between 0.0 (fully transparent)
         /// and 1.0 (not transparent at all).
         /// </remarks>
+        [Browsable(false)]
         public string ARGBWeb
         {
             get
@@ -546,6 +547,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets <c>true</c> if this color is black.
         /// </summary>
+        [Browsable(false)]
         public bool IsBlack => EqualARGB(Color.Black);
 
         /// <summary>
@@ -557,6 +559,7 @@ namespace Alternet.Drawing
         /// the <see cref="FromName"/> method or the
         /// <see cref="FromKnownColor(KnownColor)"/> method; otherwise, <c>false</c>.
         /// </value>
+        [Browsable(false)]
         public bool IsNamedColor
         {
             get
@@ -578,6 +581,7 @@ namespace Alternet.Drawing
         /// or the <see cref="FromKnownColor(KnownColor)"/> method;
         /// otherwise, <c>false</c>.
         /// </value>
+        [Browsable(false)]
         public bool IsSystemColor
         {
             get
@@ -590,7 +594,7 @@ namespace Alternet.Drawing
         /// Creates <see cref="SolidBrush"/> instance for this color.
         /// </summary>
         [Browsable(false)]
-        public SolidBrush AsBrush
+        public virtual SolidBrush AsBrush
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -604,7 +608,7 @@ namespace Alternet.Drawing
         /// Gets a <see cref="Pen"/> instance representing the current state of the object.
         /// </summary>
         [Browsable(false)]
-        public Pen AsPen
+        public virtual Pen AsPen
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -619,7 +623,7 @@ namespace Alternet.Drawing
         /// <see cref="SKPaintStyle.Fill"/> style.
         /// </summary>
         [Browsable(false)]
-        public SKPaint AsStrokeAndFillPaint
+        public virtual SKPaint AsStrokeAndFillPaint
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -634,7 +638,7 @@ namespace Alternet.Drawing
         /// <see cref="SKPaintStyle.Stroke"/> style.
         /// </summary>
         [Browsable(false)]
-        public SKPaint AsStrokePaint
+        public virtual SKPaint AsStrokePaint
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -649,7 +653,7 @@ namespace Alternet.Drawing
         /// <see cref="SKPaintStyle.Fill"/> style.
         /// </summary>
         [Browsable(false)]
-        public SKPaint AsFillPaint
+        public virtual SKPaint AsFillPaint
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -669,7 +673,8 @@ namespace Alternet.Drawing
         /// or the name of the known color. For custom colors, the RGB value
         /// is returned.
         /// </remarks>
-        public string Name
+        [Browsable(false)]
+        public virtual string Name
         {
             get
             {
@@ -707,6 +712,7 @@ namespace Alternet.Drawing
         /// <see cref="ColorUtils.GetColorInfo(KnownColor)"/> and uses
         /// <see cref="IKnownColorInfo.LabelLocalized"/> property.
         /// </remarks>
+        [Browsable(false)]
         public virtual string NameLocalized
         {
             get
@@ -739,7 +745,7 @@ namespace Alternet.Drawing
         /// Gets color name and ARGB.
         /// </summary>
         [Browsable(false)]
-        public string NameAndARGBValue
+        public virtual string NameAndARGBValue
         {
             get
             {
@@ -772,6 +778,18 @@ namespace Alternet.Drawing
             {
                 RequireArgb();
                 return color;
+            }
+        }
+
+        /// <summary>
+        /// Gets this color as disabled color. Disabled color is calculated by reducing brightness of the color.
+        /// </summary>
+        public virtual Color AsDisabled
+        {
+            get
+            {
+                RequireArgb();
+                return resources.DisabledColor ??= CreateDisabled(this);
             }
         }
 
@@ -896,7 +914,8 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Implicit operator conversion from <see cref="byte"/> value to <see cref="Color"/>.
-        /// Alpha is set to 255 (fully opaque), and the red, green, and blue components are set to the specified value.
+        /// Alpha is set to 255 (fully opaque), and the red, green,
+        /// and blue components are set to the specified value.
         /// </summary>
         /// <param name="value">New color value specified as a <see cref="byte"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1012,6 +1031,7 @@ namespace Alternet.Drawing
         /// <param name="color">The color to check.</param>
         /// <returns><c>true</c> if the color is visible (not null, initialized and not fully transparent);
         /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsVisible(Color? color)
         {
             if (color is null)
@@ -1136,6 +1156,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a disabled version of the specified <see cref="Color"/> structure.
+        /// </summary>
+        /// <param name="c">The <see cref="Color"/> structure to disable.</param>
+        /// <returns>A <see cref="Color"/> structure that represents
+        /// the disabled version of the specified color.</returns>
+        public static Color CreateDisabled(Color c)
+        {
+            int gray = Math.Min(255, (int)((0.3 * c.R) + (0.59 * c.G) + (0.11 * c.B)));
+            return Color.FromArgb(c.A, gray, gray, gray);
+        }
+
+        /// <summary>
         /// Creates a <see cref="Color"/> structure from the specified
         /// <see cref="Color"/> structure, but with the new specified alpha value.
         /// Although this method allows a 32-bit value to be passed for the
@@ -1228,7 +1260,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static Color Parse(string? s)
         {
-            if(StringToColor is not null)
+            if (StringToColor is not null)
             {
                 var e = new ValueConvertEventArgs<string?, Color?>(s);
                 StringToColor(null, e);
@@ -1566,10 +1598,10 @@ namespace Alternet.Drawing
                 max = b;
             }
             else
-            if (b < min)
-            {
-                min = b;
-            }
+                if (b < min)
+                {
+                    min = b;
+                }
         }
 
         /// <summary>
@@ -1789,6 +1821,18 @@ namespace Alternet.Drawing
             }
 
             return this;
+        }
+
+        /// <summary>
+        /// Returns this color if <paramref name="enabled"/> is true; otherwise, returns a disabled version of this color.
+        /// </summary>
+        /// <param name="enabled">A boolean value indicating whether the color is enabled.</param>
+        /// <returns>The original color if enabled; otherwise, a disabled version of the color.</returns>
+        public Color EnabledOrDisabled(bool enabled)
+        {
+            if (enabled)
+                return this;
+            return AsDisabled;
         }
 
         /// <summary>
@@ -2178,7 +2222,7 @@ namespace Alternet.Drawing
             name = other.name;
             knownColor = other.knownColor;
             state = other.state;
-            resources = new ();
+            resources = new();
         }
 
         /// <inheritdoc/>
@@ -2439,6 +2483,8 @@ namespace Alternet.Drawing
             public SKPaint? StrokeAndFillPaint;
 
             public Pen?[]? PenCache;
+
+            public Color? DisabledColor;
         }
 
         /// <summary>
