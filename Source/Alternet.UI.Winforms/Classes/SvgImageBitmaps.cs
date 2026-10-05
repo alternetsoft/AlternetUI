@@ -32,7 +32,8 @@ namespace Alternet.Winforms
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Alternet.Drawing.SvgImage"/> associated with this <see cref="SvgImageBitmaps"/>.
+        /// Gets or sets the <see cref="Alternet.Drawing.SvgImage"/>
+        /// associated with this <see cref="SvgImageBitmaps"/>.
         /// </summary>
         public Drawing.SvgImage? SvgImage
         {
@@ -142,6 +143,17 @@ namespace Alternet.Winforms
         {
             float scaleFactor = WinformsUtils.GetScaleFactor(control);
             return bitmaps.ToDisabledBitmap(scaleFactor, isDark);
+        }
+
+        /// <summary>
+        /// Gets a bitmap representation of the SVG image with the specified scale factor and optional color.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply to the SVG image.</param>
+        /// <param name="color">The optional color to apply to the bitmap.</param>
+        /// <returns>The bitmap representation of the SVG, or null if the SVG image is not set.</returns>
+        public Image? ToBitmap(float scaleFactor, Color? color = null)
+        {
+            return bitmaps.ToBitmap(scaleFactor, color);
         }
 
         /// <summary>

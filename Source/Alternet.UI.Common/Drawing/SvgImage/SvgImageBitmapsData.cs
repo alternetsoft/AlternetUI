@@ -219,6 +219,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a bitmap representation of the SVG image with the specified scale factor and optional color.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply to the SVG image.</param>
+        /// <param name="color">The optional color to apply to the bitmap.</param>
+        /// <returns>The bitmap representation of the SVG, or null if the SVG image is not set.</returns>
+        public TBitmap? ToBitmap(float scaleFactor, Color? color = null)
+        {
+            if (svgImage is null)
+                return default;
+
+            var size = EffectiveSvgSize(scaleFactor);
+            return ToBitmap(size.Width, size.Height, color);
+        }
+
+        /// <summary>
         /// Resets the cached bitmap representations of the SVG image.
         /// </summary>
         public readonly void ResetBitmaps()
@@ -722,26 +737,37 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a disabled bitmap representation of the SVG image
+        /// Gets a disabled bitmap representation of the SVG image
         /// with the specified width, height, and dark mode option.
         /// </summary>
         /// <param name="width">The width of the bitmap.</param>
         /// <param name="height">The height of the bitmap.</param>
         /// <param name="isDark">Indicates whether the bitmap is for dark mode.</param>
-        /// <returns>The created disabled bitmap, or null if the SVG image is not set.</returns>
+        /// <returns>The bitmap representation of the SVG, or null if the SVG image is not set.</returns>
         public Image? ToDisabledBitmap(int width, int height, bool isDark)
         {
             return bitmaps.ToDisabledBitmap(width, height, isDark);
         }
 
         /// <summary>
-        /// Creates a normal bitmap representation of the SVG image
+        /// Gets a bitmap representation of the SVG image with the specified scale factor and optional color.
+        /// </summary>
+        /// <param name="scaleFactor">The scale factor to apply to the SVG image.</param>
+        /// <param name="color">The optional color to apply to the bitmap.</param>
+        /// <returns>The bitmap representation of the SVG, or null if the SVG image is not set.</returns>
+        public Image? ToBitmap(float scaleFactor, Color? color = null)
+        {
+            return bitmaps.ToBitmap(scaleFactor, color);
+        }
+
+        /// <summary>
+        /// Gets a normal bitmap representation of the SVG image
         /// with the specified width, height, and dark mode option.
         /// </summary>
         /// <param name="width">The width of the bitmap.</param>
         /// <param name="height">The height of the bitmap.</param>
         /// <param name="isDark">Indicates whether the bitmap is for dark mode.</param>
-        /// <returns>The created normal bitmap, or null if the SVG image is not set.</returns>
+        /// <returns>The bitmap representation of the SVG, or null if the SVG image is not set.</returns>
         public Image? ToNormalBitmap(int width, int height, bool isDark)
         {
             return bitmaps.ToNormalBitmap(width, height, isDark);
