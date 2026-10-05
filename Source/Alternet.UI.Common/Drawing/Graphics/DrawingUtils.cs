@@ -354,7 +354,7 @@ namespace Alternet.UI
             if (relativeSize is not null)
             {
                 var result = relativeSize.Value.GetSizeI(baseSizeValue);
-                return result;
+                return EffectiveSvgSize(scaleFactor, result);
             }
 
             return EffectiveSvgSize(scaleFactor, baseSizeValue);
