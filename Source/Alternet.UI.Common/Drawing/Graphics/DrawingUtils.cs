@@ -334,11 +334,14 @@ namespace Alternet.UI
         {
             var baseSizeValue = baseSize ?? new SizeI(16, 16);
             var coercedScaleFactor = DrawingUtils.CoerceImageScaleFactor(scaleFactor);
-            return new SizeI((int)(baseSizeValue.Width * coercedScaleFactor), (int)(baseSizeValue.Height * coercedScaleFactor));
+            return new SizeI(
+                (int)(baseSizeValue.Width * coercedScaleFactor),
+                (int)(baseSizeValue.Height * coercedScaleFactor));
         }
 
         /// <summary>
-        /// Calculates the effective size of an SVG image based on the provided scale factor, base SVG size, and relative size.
+        /// Calculates the effective size of an SVG image based
+        /// on the provided scale factor, base SVG size, and relative size.
         /// </summary>
         /// <param name="scaleFactor">The scale factor to apply.</param>
         /// <param name="baseSize">The optional base size of the SVG image.</param>
@@ -354,7 +357,7 @@ namespace Alternet.UI
                 return result;
             }
 
-            return baseSizeValue;
+            return EffectiveSvgSize(scaleFactor, baseSizeValue);
         }
 
         /// <summary>
