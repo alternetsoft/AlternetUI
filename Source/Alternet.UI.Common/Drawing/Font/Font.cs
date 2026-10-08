@@ -1792,7 +1792,7 @@ namespace Alternet.Drawing
         private static Font CreateDefaultMonoFont()
         {
             var skiaFont = SkiaHelper.DefaultMonoFont;
-            var font = new Font(skiaFont, new FontFamily(skiaFont.Typeface));
+            var font = new Font(FontFamily.DefaultMono, skiaFont.Size);
 
             font.DisplayName = () => CommonStrings.Default.DefaultMonoFontDisplayName;
             font.FontOrigin = Drawing.FontOriginKind.DefaultMono;
@@ -1802,7 +1802,7 @@ namespace Alternet.Drawing
         private static Font CreateDefaultFont()
         {
             var skiaFont = SkiaHelper.DefaultFont;
-            var font = new Font(skiaFont, new FontFamily(skiaFont.Typeface));
+            var font = new Font(FontFamily.Default, skiaFont.Size);
 
             font.DisplayName = () => CommonStrings.Default.DefaultFontDisplayName;
             font.FontOrigin = Drawing.FontOriginKind.Default;
