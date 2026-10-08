@@ -248,6 +248,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets initialized string with space characters that represent a tab.
+        /// The default value is four space characters. This field is used in <see cref="ExpandTabs"/> method.
+        /// </summary>
+        public static string TabInSpacesStr = new (' ', 4);
+
+        /// <summary>
+        /// Expands tab characters in the specified string to spaces,
+        /// using the number of spaces defined in <see cref="TabInSpacesStr"/>.
+        /// </summary>
+        /// <param name="text">The string in which to expand tab characters.</param>
+        /// <returns>The string with tab characters replaced by spaces. If no tab characters are present,
+        /// the original string is returned.</returns>
+        public static string ExpandTabs(string text)
+        {
+            ArgumentNullException.ThrowIfNull(text);
+
+            return text.IndexOf(CharUtils.Tab) >= 0
+                ? text.Replace(OneTab, TabInSpacesStr)
+                : text;
+        }
+
+        /// <summary>
         /// Gets whether the specified character is English char or dot.
         /// </summary>
         /// <param name="c"></param>
