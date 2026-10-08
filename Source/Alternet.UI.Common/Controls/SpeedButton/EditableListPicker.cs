@@ -275,6 +275,12 @@ namespace Alternet.UI
         public virtual bool HideEditorOnParentClick { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the popup text box should process the Tab key.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool WantTabInEditor { get; set; }
+
+        /// <summary>
         /// Gets or sets empty text hint displayed in the control when the text is empty.
         /// </summary>
         public virtual string? EmptyTextHint
@@ -450,6 +456,7 @@ namespace Alternet.UI
                 Font = Label.RealFont,
                 ForeColor = foreColor,
                 HideClickOnParent = HideEditorOnParentClick,
+                WantTab = WantTabInEditor,
                 TextAlign = this.TextAlign,
                 CommitTextOnKeyPress = CommitOnKeyPress,
                 HideOnEscape = HideEditorOnEscape,
