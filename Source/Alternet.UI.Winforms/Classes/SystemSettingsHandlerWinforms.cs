@@ -10,94 +10,61 @@ using Alternet.UI;
 
 namespace Alternet.Winforms
 {
-    internal class SystemSettingsHandlerWinforms : Alternet.UI.DisposableObject, Alternet.UI.ISystemSettingsHandler
+    internal class SystemSettingsHandlerWinforms : PlessSystemSettingsHandler, ISystemSettingsHandler
     {
-        public virtual string AppName { get; set; } = string.Empty;
-        
-        public virtual string AppDisplayName { get; set; } = string.Empty;
-        
-        public virtual string AppClassName { get; set; } = string.Empty;
-        
-        public virtual string VendorName { get; set; } = string.Empty;
-        
-        public virtual string VendorDisplayName { get; set; } = string.Empty;
-        
-        public virtual bool UseBestVisual { get; set; } = true;
+        /// <inheritdoc/>
+        public override int GetMetric(SystemSettingsMetric index)
+        {
+            var result = base.GetMetric(index);
+            if (IsMetricScaled(index))
+            {
+                var scaleFactor = WinformsUtils.GetScaleFactor(WinformsUtils.MainForm);
 
-        public virtual IDisplayFactoryHandler CreateDisplayFactoryHandler()
+                if (scaleFactor > 1)
+                    result = (int)(result * scaleFactor);
+            }
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public override bool IsUsingDarkBackground()
+        {
+            return GetAppearanceIsDark();
+        }
+
+        /// <inheritdoc/>
+        public override bool GetAppearanceIsDark()
+        {
+#if NET10_0_OR_GREATER
+            return System.Windows.Forms.Application.IsDarkModeEnabled;
+#else
+            return false;
+#endif
+        }
+
+        /// <inheritdoc/>
+        public override ColorStruct? GetColor(Alternet.Drawing.KnownSystemColor index)
+        {
+            var drawingColor = WinformsUtils.GetColor(index);
+            if (drawingColor.HasValue)
+            {
+                return WinformsUtils.CreateColorStruct(drawingColor.Value);
+            }
+
+            return null;
+        }
+
+        /// <inheritdoc/>
+        public override IDisplayFactoryHandler CreateDisplayFactoryHandler()
         {
             throw new NotImplementedException();
         }
 
-        public virtual bool GetAppearanceIsDark()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual ColorStruct? GetColor(KnownSystemColor index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual bool IsUsingDarkBackground()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual LangDirection GetLangDirection()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual int GetMetric(SystemSettingsMetric index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual int GetMetric(SystemSettingsMetric index, AbstractControl? control)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual UIPlatformKind GetPlatformKind()
+        /// <inheritdoc/>
+        public override UIPlatformKind GetPlatformKind()
         {
             return UIPlatformKind.WinForms;
-        }
-
-        public virtual string? GetUIVersion()
-        {
-            Assembly thisAssembly = typeof(App).Assembly;
-            AssemblyName thisAssemblyName = thisAssembly.GetName();
-            Version? ver = thisAssemblyName?.Version;
-            return ver?.ToString();
-        }
-
-        public virtual string GetLibraryVersionString()
-        {
-            return GetUIVersion() ?? string.Empty;
-        }
-
-        public virtual string GetAppearanceName()
-        {
-            return "Default";
-        }
-
-        public virtual bool HasFeature(SystemSettingsFeature index)
-        {
-            return false;
-        }
-
-        public virtual bool SetNativeTheme(string theme)
-        {
-            return false;
-        }
-
-        public virtual void SetSystemOption(string name, int value)
-        {
-        }
-
-        public virtual void SetUseBestVisual(bool flag, bool forceTrueColour = false)
-        {
         }
     }
 }

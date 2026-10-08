@@ -23,6 +23,10 @@
       <Platform Solution="Debug|x64" Project="x64" />
       <Platform Solution="Debug|x86" Project="x86" />
     </Project>
+    <Project Path="Alternet.UI.Maui/Alternet.UI.Maui.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+    </Project>
     <Project Path="Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" Id="79f2529c-c711-457a-9087-325c333cde60">
       <BuildType Solution="DLL Debug|*" Project="Debug" />
       <BuildType Solution="DLL Release|*" Project="Release" />

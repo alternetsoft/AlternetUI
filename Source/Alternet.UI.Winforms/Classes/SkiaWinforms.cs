@@ -14,6 +14,11 @@ namespace Alternet.Winforms
     /// </summary>
     public static class SkiaWinforms
     {
+        static SkiaWinforms()
+        {
+            WinformsUtils.InitHandlers();
+        }
+
         /// <summary>
         /// Converts a System.Drawing.PointF to an SKPoint.
         /// </summary>
