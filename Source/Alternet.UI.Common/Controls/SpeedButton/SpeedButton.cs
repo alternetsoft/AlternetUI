@@ -1133,26 +1133,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        [DefaultValue("")]
-        public override string Text
-        {
-            get
-            {
-                return base.Text;
-            }
-
-            set
-            {
-                if (base.Text == value)
-                    return;
-                base.Text = value;
-                Label.Text = value;
-                if (TextVisible)
-                    PerformLayoutAndInvalidate();
-            }
-        }
-
         /// <summary>
         /// Gets or sets the disabled image that is displayed by the control.
         /// </summary>
@@ -2203,12 +2183,23 @@ namespace Alternet.UI
             return [spacerElement, element];
         }
 
+        /// <summary>
+        /// Coerces the label text to ensure it meets specific criteria or formatting requirements.
+        /// </summary>
+        /// <param name="text">The text to be coerced.</param>
+        /// <returns>The coerced text.</returns>
+        protected virtual string CoerceLabelText(string text)
+        {
+            return StringUtils.ExpandTabs(text);
+        }
+
         /// <inheritdoc/>
         protected override void OnTextChanged(EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
             base.OnTextChanged(e);
+            Label.Text = CoerceLabelText(base.Text);
             if (HasVisibleText)
                 PerformLayoutAndInvalidate();
             if (ValueHelper.Options.HasFlag(TextBoxOptions.DefaultValidation))
