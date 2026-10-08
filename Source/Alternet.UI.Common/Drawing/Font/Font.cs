@@ -1465,7 +1465,7 @@ namespace Alternet.Drawing
         {
             var family = FontFamily;
 
-            string txt = family.Name + $", Size:{Size}";
+            string txt = family.Name + $", Size:{Size}, Style: {Style}";
 
             App.Log(txt);
 
