@@ -1461,7 +1461,7 @@ namespace Alternet.Drawing
         /// If the font does not have glyphs for the default characters, it retrieves and logs the first supported
         /// characters.
         /// </summary>
-        public virtual void Log(string testString = "This is a test string", int numOtherChars = 200)
+        public virtual void LogGlyphs(string testString = "This is a test string", int numOtherChars = 200)
         {
             var family = FontFamily;
 

@@ -40,7 +40,7 @@ namespace PropertyGridSample
                         {
                             var family = FontFamily.FromFile(fileOpenDialog.FileName);
                             var font = new Font(family, 12);
-                            font.Log();
+                            font.LogGlyphs();
                         }
                     }
                 }
