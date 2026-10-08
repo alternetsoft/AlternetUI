@@ -63,6 +63,11 @@ public class PopupEntryParams
     public bool CommitTextOnKeyPress { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the Tab key should be processed by the popup entry.
+    /// </summary>
+    public bool WantTab { get; set; }
+
+    /// <summary>
     /// Gets or sets the action to be performed when the text in the popup changes.
     /// </summary>
     public Action<string?>? TextChanged { get; set; }
