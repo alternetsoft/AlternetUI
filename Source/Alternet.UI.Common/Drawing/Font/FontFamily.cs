@@ -28,6 +28,7 @@ namespace Alternet.Drawing
         private static FontFamily? genericSansSerif;
         private static FontFamily? genericSerif;
         private static FontFamily? skiaDefault;
+        private static FontFamily? skiaDefaultMono;
 
         /// <summary>
         /// Initializes a new <see cref="FontFamily"/> with the specified name.
@@ -93,6 +94,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets the default monospaced <see cref="FontFamily"/> used in the application.
+        /// If the default font is not initialized, it returns the <see cref="SkiaDefaultMono"/> font family.
+        /// </summary>
+        public static FontFamily DefaultMono
+        {
+            get
+            {
+                if (Font.IsDefaultMonoFontInitialized)
+                    return Font.DefaultMono.FontFamily;
+                return SkiaDefaultMono;
+            }
+        }
+
+        /// <summary>
         /// Gets the <see cref="FontFamily"/> created from <see cref="SkiaHelper.DefaultTypeFace"/>.
         /// </summary>
         public static FontFamily SkiaDefault
@@ -100,6 +115,17 @@ namespace Alternet.Drawing
             get
             {
                 return skiaDefault ??= new FontFamily(SkiaHelper.DefaultTypeFace);
+            }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="FontFamily"/> created from <see cref="SkiaHelper.DefaultMonoTypeFace"/>.
+        /// </summary>
+        public static FontFamily SkiaDefaultMono
+        {
+            get
+            {
+                return skiaDefaultMono ??= new FontFamily(SkiaHelper.DefaultMonoTypeFace);
             }
         }
 
