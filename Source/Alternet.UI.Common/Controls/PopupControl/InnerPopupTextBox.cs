@@ -28,7 +28,7 @@ namespace Alternet.UI
             Content.HasBorder = false;
             Content.AllowFormKeyPreview = false;
             Content.ProcessEnter = true;
-            Content.WantTab = true;
+            Content.WantTab = false;
 
             Content.VerticalAlignment = VerticalAlignment.Center;
             Content.LostFocus += OnContentLostFocus;
@@ -90,6 +90,7 @@ namespace Alternet.UI
             Parent = prm.ItemContainer;
             Content.TextAlign = prm.TextAlign;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
+            Content.WantTab = prm.WantTab;
 
             Content.IsPassword = prm.IsPassword;
             Content.ProcessEnter = !prm.Multiline;
