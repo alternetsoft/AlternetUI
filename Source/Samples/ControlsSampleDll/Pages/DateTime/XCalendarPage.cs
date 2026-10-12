@@ -92,24 +92,16 @@ namespace ControlsSample
             calendar.MaxDate = DateTime.Now.AddDays(60).ToDateOnly();
             calendar.UseMaxDate = false;
 
-            calendar.ContextMenu.Add("Save pattern to xml", () =>
+            calendar.ContextMenu.Add("Log pattern as xml", () =>
+            {
+            }).Enabled = false;
+
+            calendar.ContextMenu.Add("Log pattern as json", () =>
             {
                 IPropertyBag propertyBag = new PropertyBag();
                 patternPicker.Value.SaveTo(propertyBag);
-                propertyBag.Log();
+                propertyBag.Log(LogWriter.Application);
             });
-
-            calendar.ContextMenu.Add("Save pattern to json", () =>
-            {
-            }).Enabled = false;
-
-            calendar.ContextMenu.Add("Load pattern from xml", () =>
-            {
-            }).Enabled = false;
-
-            calendar.ContextMenu.Add("Load pattern from json", () =>
-            {
-            }).Enabled = false;
 
             DoInsideLayout(Fn);
 
