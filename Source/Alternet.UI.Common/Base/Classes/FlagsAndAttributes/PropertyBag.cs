@@ -138,5 +138,11 @@ namespace Alternet.UI
             value = default;
             return false;
         }
+
+        /// <inheritdoc/>
+        public IEnumerable<string> GetPropertyNames()
+        {
+            return properties.Keys;
+        }
     }
 }
