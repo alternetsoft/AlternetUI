@@ -15,9 +15,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public bool TryGetStringProperty(string name, out string? value)
         {
-            if (properties.TryGetValue(name, out var objValue) && objValue is string strValue)
+            if (properties.TryGetValue(name, out var objValue))
             {
-                value = strValue;
+                value = objValue?.ToString();
                 return true;
             }
 
@@ -116,9 +116,23 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public bool TryGetIntProperty(string name, out int value)
         {
-            if (properties.TryGetValue(name, out var objValue) && objValue is int intValue)
+            if (!properties.TryGetValue(name, out var objValue))
+            {
+                value = default;
+                return false;
+            }
+
+            if (objValue is int intValue)
             {
                 value = intValue;
+                return true;
+            }
+
+            var s = objValue?.ToString();
+
+            if (int.TryParse(s, out int parsedValue))
+            {
+                value = parsedValue;
                 return true;
             }
 
@@ -129,9 +143,23 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public bool TryGetBoolProperty(string name, out bool value)
         {
-            if (properties.TryGetValue(name, out var objValue) && objValue is bool boolValue)
+            if (!properties.TryGetValue(name, out var objValue))
+            {
+                value = default;
+                return false;
+            }
+
+            if (objValue is bool boolValue)
             {
                 value = boolValue;
+                return true;
+            }
+
+            var s = objValue?.ToString()?.ToLower();
+
+            if (bool.TryParse(s, out bool parsedValue))
+            {
+                value = parsedValue;
                 return true;
             }
 
