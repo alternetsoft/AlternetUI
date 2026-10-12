@@ -92,6 +92,24 @@ namespace ControlsSample
             calendar.MaxDate = DateTime.Now.AddDays(60).ToDateOnly();
             calendar.UseMaxDate = false;
 
+            calendar.ContextMenu.Add("Save pattern to xml", () =>
+            {
+                var propertyBag = new PropertyBag();
+                patternPicker.Value.SaveTo(propertyBag);
+            });
+
+            calendar.ContextMenu.Add("Save pattern to json", () =>
+            {
+            }).Enabled = false;
+
+            calendar.ContextMenu.Add("Load pattern from xml", () =>
+            {
+            }).Enabled = false;
+
+            calendar.ContextMenu.Add("Load pattern from json", () =>
+            {
+            }).Enabled = false;
+
             DoInsideLayout(Fn);
 
             void Fn()
