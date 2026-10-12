@@ -292,6 +292,7 @@ namespace Alternet.UI
                 CanSelect = false;
                 ParentBackColor = true;
                 ParentForeColor = true;
+                ParentContextMenu = true;
             }
 
             /// <inheritdoc/>
