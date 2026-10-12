@@ -15,13 +15,15 @@ namespace Alternet.UI
         public class CalendarHeader : TransparentPanel
         {
             /// <summary>
-            /// Gets or sets a value indicating whether the year dropdown in the calendar header should be displayed by default
+            /// Gets or sets a value indicating whether the year dropdown in the calendar header
+            /// should be displayed by default
             /// when the year picker is clicked, allowing users to select a specific year.
             /// </summary>
             public bool DefaultShowYearDropDown = true;
 
             /// <summary>
-            /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed by default
+            /// Gets or sets a value indicating whether the month dropdown in the calendar header
+            /// should be displayed by default
             /// when the month picker is clicked, allowing users to select a specific month.
             /// </summary>
             public bool DefaultShowMonthDropDown = true;
@@ -162,12 +164,25 @@ namespace Alternet.UI
                 PopupDateTextPicker.MainControl.TextEditing += (s, e) =>
                 {
                     newPopupDateTextPickerText = e.Value;
-                    popupDateTextPicker.Text = newPopupDateTextPickerText; 
+                    popupDateTextPicker.Text = newPopupDateTextPickerText;
                 };
 
                 PopupDateTextPicker.MainControl.TextEdited += (s, e) =>
                 {
                 };
+
+                monthPicker.ParentContextMenu = true;
+                yearPicker.ParentContextMenu = true;
+                actionsButton.ParentContextMenu = true;
+                prevButton.ParentContextMenu = true;
+                nextButton.ParentContextMenu = true;
+                popupYearPicker.ParentContextMenu = true;
+                popupYearPickerPanel.ParentContextMenu = true;
+                popupMonthPicker.ParentContextMenu = true;
+                firstRowPanel.ParentContextMenu = true;
+                popupDateTextPicker.ParentContextMenu = true;
+                popupDateTextOkButton.ParentContextMenu = true;
+                popupDateTextCancelButton.ParentContextMenu = true;
             }
 
             /// <summary>
