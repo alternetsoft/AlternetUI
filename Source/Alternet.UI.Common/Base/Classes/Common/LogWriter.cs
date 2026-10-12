@@ -838,6 +838,12 @@ namespace Alternet.UI
                 stringBuilder.AppendLine(FormatMessage(message));
                 return this;
             }
+
+            /// <inheritdoc/>
+            public override string ToString()
+            {
+                return StringBuilder.ToString();
+            }
         }
 
         /// <summary>
