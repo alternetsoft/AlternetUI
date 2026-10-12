@@ -17,6 +17,7 @@ namespace ControlsSample
         private readonly ScrollableRepeatPatternPicker patternPickerContainer;
         private readonly RepeatPatternPicker patternPicker;
         private bool highlightDates;
+        private string? json;
 
         static XCalendarPage()
         {
@@ -92,15 +93,27 @@ namespace ControlsSample
             calendar.MaxDate = DateTime.Now.AddDays(60).ToDateOnly();
             calendar.UseMaxDate = false;
 
-            calendar.ContextMenu.Add("Log pattern as xml", () =>
+            calendar.ContextMenu.Add("Save pattern as xml", () =>
             {
             }).Enabled = false;
 
-            calendar.ContextMenu.Add("Log pattern as json", () =>
+            calendar.ContextMenu.Add("Save pattern as json", () =>
             {
-                IPropertyBag propertyBag = new PropertyBag();
-                patternPicker.Value.SaveTo(propertyBag);
-                propertyBag.Log(LogWriter.Application);
+                json = patternPicker.Value.AsJsonString;
+                App.Log(json);
+            });
+
+            calendar.ContextMenu.Add("Load pattern from json", () =>
+            {
+                if (json != null)
+                {
+                    App.Log("Loading pattern from json");
+                    patternPicker.Value.AsJsonString = json;
+                }
+                else
+                {
+                    App.Log("No pattern saved in json");
+                }
             });
 
             DoInsideLayout(Fn);

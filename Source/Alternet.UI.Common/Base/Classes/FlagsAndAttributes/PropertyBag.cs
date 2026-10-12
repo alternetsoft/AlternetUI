@@ -19,7 +19,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool TryGetStringProperty(string name, out string? value)
+        public virtual bool TryGetStringProperty(string name, out string? value)
         {
             if (properties.TryGetValue(name, out var objValue))
             {
@@ -32,7 +32,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public string? GetStringProperty(string name)
+        public virtual string? GetStringProperty(string name)
         {
             if (TryGetStringProperty(name, out string? value))
                 return value;
@@ -40,19 +40,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void SetStringProperty(string name, string value)
+        public virtual void SetStringProperty(string name, string value)
         {
             properties.Add(name, value);
         }
 
         /// <inheritdoc/>
-        public void SetIntProperty(string name, int value)
+        public virtual void SetIntProperty(string name, int value)
         {
             properties.Add(name, value);
         }
 
         /// <inheritdoc/>
-        public IPropertyBag.PropertyType GetValueType(object? value)
+        public virtual IPropertyBag.PropertyType GetValueType(object? value)
         {
             if (value is int)
                 return IPropertyBag.PropertyType.Int;
@@ -77,7 +77,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IPropertyBag.PropertyType GetPropertyType(string name)
+        public virtual IPropertyBag.PropertyType GetPropertyType(string name)
         {
             if (properties.TryGetValue(name, out var objValue))
             {
@@ -88,13 +88,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void SetBoolProperty(string name, bool value)
+        public virtual void SetBoolProperty(string name, bool value)
         {
             properties.Add(name, value);
         }
 
         /// <inheritdoc/>
-        public bool TryGetEnumProperty<TEnum>(string name, out TEnum value)
+        public virtual bool TryGetEnumProperty<TEnum>(string name, out TEnum value)
             where TEnum : struct, Enum
         {
             if (TryGetStringProperty(name, out string? stringValue) &&
@@ -109,7 +109,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool TryGetProperty<TProperty>(string name, out TProperty value)
+        public virtual bool TryGetProperty<TProperty>(string name, out TProperty value)
         {
             if (properties.TryGetValue(name, out var objValue) && objValue is TProperty typedValue)
             {
@@ -122,7 +122,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool TryGetIntProperty(string name, out int value)
+        public virtual void Clear()
+        {
+            properties.Clear();
+        }
+
+        /// <inheritdoc/>
+        public virtual bool TryGetIntProperty(string name, out int value)
         {
             if (!properties.TryGetValue(name, out var objValue))
             {
@@ -149,7 +155,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool TryGetBoolProperty(string name, out bool value)
+        public virtual bool TryGetBoolProperty(string name, out bool value)
         {
             if (!properties.TryGetValue(name, out var objValue))
             {
@@ -176,7 +182,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IEnumerable<string> GetPropertyNames()
+        public virtual IEnumerable<string> GetPropertyNames()
         {
             return properties.Keys;
         }

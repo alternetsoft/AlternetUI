@@ -79,7 +79,40 @@ namespace Alternet.UI
                 ToJsonString(writer);
                 return writer.ToString();
             }
+
+            set
+            {
+                Clear();
+
+                JsonUtils.EnumerateProperties(value, (property, name, propertyValue) =>
+                {
+                    if (propertyValue is null)
+                        return;
+                    if (propertyValue is bool boolValue)
+                    {
+                        SetBoolProperty(name, boolValue);
+                        return;
+                    }
+                    if (propertyValue is int intValue)
+                    {
+                        SetIntProperty(name, intValue);
+                        return;
+                    }
+
+                    var s = propertyValue.ToString();
+
+                    if (s is null)
+                        return;
+
+                    SetStringProperty(name, s);
+                });
+            }
         }
+
+        /// <summary>
+        /// Clears all properties from the property bag.
+        /// </summary>
+        void Clear();
 
         /// <summary>
         /// Tries to get the value of a property by name.
@@ -143,7 +176,7 @@ namespace Alternet.UI
         /// <param name="name">The name of the property.</param>
         /// <returns>The value of the property.</returns>
         string? GetStringProperty(string name);
-        
+
         /// <summary>
         /// Sets the value of a string property by name.
         /// </summary>
@@ -191,7 +224,7 @@ namespace Alternet.UI
             writer.Indent();
 
             var propNames = GetPropertyNames().ToArray();
- 
+
             for (int i = 0; i < propNames.Length; i++)
             {
                 var propertyName = propNames[i];

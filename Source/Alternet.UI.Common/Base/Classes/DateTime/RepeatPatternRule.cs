@@ -59,6 +59,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a JSON string representation of the current state of this <see cref="RepeatPatternRule"/> instance.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string AsJsonString
+        {
+            get
+            {
+                IPropertyBag propertyBag = new PropertyBag();
+                SaveTo(propertyBag);
+                return propertyBag.AsJsonString;
+            }
+
+            set
+            {
+                IPropertyBag propertyBag = new PropertyBag();
+                propertyBag.AsJsonString = value;
+                LoadFrom(propertyBag);
+            }
+        }
+
+        /// <summary>
         /// Gets the <see cref="DailyRepeatPatternRule"/> instance for daily recurrence settings.
         /// </summary>
         public DailyRepeatPatternRule DailyRule => dailyRule;
