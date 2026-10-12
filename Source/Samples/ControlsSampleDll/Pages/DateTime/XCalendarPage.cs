@@ -94,8 +94,9 @@ namespace ControlsSample
 
             calendar.ContextMenu.Add("Save pattern to xml", () =>
             {
-                var propertyBag = new PropertyBag();
+                IPropertyBag propertyBag = new PropertyBag();
                 patternPicker.Value.SaveTo(propertyBag);
+                propertyBag.Log();
             });
 
             calendar.ContextMenu.Add("Save pattern to json", () =>
