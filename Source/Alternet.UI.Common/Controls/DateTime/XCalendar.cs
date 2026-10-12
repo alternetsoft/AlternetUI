@@ -137,6 +137,10 @@ namespace Alternet.UI
             header = new();
             container = new();
 
+            dayView.ParentContextMenu = true;
+            header.ParentContextMenu = true;
+            container.ParentContextMenu = true;
+
             container.Layout = LayoutStyle.Vertical;
 
             CreateColumns();
