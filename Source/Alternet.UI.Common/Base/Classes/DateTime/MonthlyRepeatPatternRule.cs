@@ -115,60 +115,46 @@ namespace Alternet.UI
         /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public virtual bool LoadFrom(IPropertyBag? propertyBag)
+        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
         {
             if (propertyBag == null)
                 return false;
 
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
             return DoInsideSuspendedPropertyChanged(() =>
             {
-                if (propertyBag.TryGetIntProperty(nameof(DayOfMonth), out var dayOfMonth))
+                if (propertyBag.TryGetIntProperty(prefix + nameof(DayOfMonth), out var dayOfMonth))
                 {
                     DayOfMonth = dayOfMonth;
                 }
-                else
-                {
-                    return false;
-                }
 
-                if (propertyBag.TryGetIntProperty(nameof(IntervalMonths), out var intervalMonths))
+                if (propertyBag.TryGetIntProperty(prefix + nameof(IntervalMonths), out var intervalMonths))
                 {
                     IntervalMonths = intervalMonths;
                 }
-                else
-                {
-                    return false;
-                }
 
-                if (propertyBag.TryGetStringProperty(nameof(Kind), out var kindString) &&
+                if (propertyBag.TryGetStringProperty(prefix + nameof(Kind), out var kindString) &&
                     Enum.TryParse(kindString, out RepeatKind kind))
                 {
                     Kind = kind;
                 }
-                else
-                {
-                    return false;
-                }
 
-                if (propertyBag.TryGetStringProperty(nameof(DayOfWeek), out var dayOfWeekString) &&
+                if (propertyBag.TryGetStringProperty(prefix + nameof(DayOfWeek), out var dayOfWeekString) &&
                     Enum.TryParse(dayOfWeekString, out ExtendedDayOfWeek dayOfWeek))
                 {
                     DayOfWeek = dayOfWeek;
                 }
-                else
-                {
-                    return false;
-                }
 
-                if (propertyBag.TryGetStringProperty(nameof(DayOfWeekIndex), out var dayOfWeekIndexString) &&
+                if (propertyBag.TryGetStringProperty(prefix + nameof(DayOfWeekIndex), out var dayOfWeekIndexString) &&
                     Enum.TryParse(dayOfWeekIndexString, out RelativeWeekday dayOfWeekIndex))
                 {
                     DayOfWeekIndex = dayOfWeekIndex;
-                }
-                else
-                {
-                    return false;
                 }
 
                 return true;
@@ -180,13 +166,19 @@ namespace Alternet.UI
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
-        public virtual void SaveTo(IPropertyBag propertyBag)
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
-            propertyBag.SetIntProperty(nameof(DayOfMonth), DayOfMonth);
-            propertyBag.SetIntProperty(nameof(IntervalMonths), IntervalMonths);
-            propertyBag.SetStringProperty(nameof(Kind), Kind.ToString());
-            propertyBag.SetStringProperty(nameof(DayOfWeek), DayOfWeek.ToString());
-            propertyBag.SetStringProperty(nameof(DayOfWeekIndex), DayOfWeekIndex.ToString());
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            propertyBag.SetIntProperty(prefix + nameof(DayOfMonth), DayOfMonth);
+            propertyBag.SetIntProperty(prefix + nameof(IntervalMonths), IntervalMonths);
+            propertyBag.SetStringProperty(prefix + nameof(Kind), Kind.ToString());
+            propertyBag.SetStringProperty(prefix + nameof(DayOfWeek), DayOfWeek.ToString());
+            propertyBag.SetStringProperty(prefix + nameof(DayOfWeekIndex), DayOfWeekIndex.ToString());
         }
 
         /// <summary>

@@ -50,31 +50,29 @@ namespace Alternet.UI
         /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public virtual bool LoadFrom(IPropertyBag? propertyBag)
+        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
         {
             if (propertyBag == null)
                 return false;
 
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
             return DoInsideSuspendedPropertyChanged(() =>
             {
-                if (propertyBag.TryGetIntProperty(nameof(IntervalWeeks), out var intervalWeeks))
+                if (propertyBag.TryGetIntProperty(prefix + nameof(IntervalWeeks), out var intervalWeeks))
                 {
                     IntervalWeeks = intervalWeeks;
                 }
-                else
-                {
-                    return false;
-                }
 
-                if (propertyBag.TryGetStringProperty(nameof(WeekDays), out var weekDaysString) &&
+                if (propertyBag.TryGetStringProperty(prefix + nameof(WeekDays), out var weekDaysString) &&
                     Enum.TryParse(weekDaysString, out DaysOfWeek weekDays))
                 {
                     WeekDays = weekDays;
-                }
-                else
-                {
-                    return false;
                 }
 
                 return true;
@@ -86,10 +84,16 @@ namespace Alternet.UI
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
-        public virtual void SaveTo(IPropertyBag propertyBag)
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
-            propertyBag.SetIntProperty(nameof(IntervalWeeks), IntervalWeeks);
-            propertyBag.SetStringProperty(nameof(WeekDays), WeekDays.ToString());
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            propertyBag.SetIntProperty(prefix + nameof(IntervalWeeks), IntervalWeeks);
+            propertyBag.SetStringProperty(prefix + nameof(WeekDays), WeekDays.ToString());
         }
 
         /// <summary>

@@ -12,6 +12,47 @@ namespace Alternet.UI
     public interface IPropertyBag
     {
         /// <summary>
+        /// Defines the types of properties that can be stored in the property bag.
+        /// </summary>
+        public enum PropertyType
+        {
+            /// <summary>
+            /// Indicates that the property value is null or not set.
+            /// </summary>
+            Null,
+
+            /// <summary>
+            /// Indicates that the property value is a string.
+            /// </summary>
+            String,
+
+            /// <summary>
+            /// Indicates that the property value is an integer.
+            /// </summary>
+            Int,
+
+            /// <summary>
+            /// Indicates that the property value is a boolean.
+            /// </summary>
+            Bool,
+
+            /// <summary>
+            /// Indicates that the property value is an enumeration type.
+            /// </summary>
+            Enum,
+
+            /// <summary>
+            /// Indicates that the property value is a set of flags (bitwise combination of enum values).
+            /// </summary>
+            Flags,
+
+            /// <summary>
+            /// Indicates that the property value is of a type not explicitly defined in this enumeration.
+            /// </summary>
+            Other,
+        }
+
+        /// <summary>
         /// Defines flags for controlling the behavior of the <see cref="ToJsonString"/> method.
         /// </summary>
         public enum JsonStringFlags
@@ -65,6 +106,20 @@ namespace Alternet.UI
         IEnumerable<string> GetPropertyNames();
 
         /// <summary>
+        /// Gets the type of a value.
+        /// </summary>
+        /// <param name="value">The value to get the type of.</param>
+        /// <returns>The type of the value.</returns>
+        IPropertyBag.PropertyType GetValueType(object? value);
+
+        /// <summary>
+        /// Gets the type of a property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <returns>The type of the property.</returns>
+        PropertyType GetPropertyType(string name);
+
+        /// <summary>
         /// Tries to get the value of a bool property by name.
         /// </summary>
         /// <param name="name">The name of the property.</param>
@@ -81,23 +136,6 @@ namespace Alternet.UI
         /// the value of the property if found; otherwise, the default value for the type.</param>
         /// <returns><c>true</c> if the property was found; otherwise, <c>false</c>.</returns>
         bool TryGetProperty<TProperty>(string name, out TProperty value);
-
-        /// <summary>
-        /// Tries to get the value of a complex property by name.
-        /// </summary>
-        /// <param name="name">The name of the property.</param>
-        /// <param name="value">When this method returns, contains
-        /// the value of the property if found; otherwise, the default value for the type.</param>
-        /// <returns><c>true</c> if the property was found; otherwise, <c>false</c>.</returns>
-        bool TryGetComplexProperty(string name, out IPropertyBag? value);
-
-        /// <summary>
-        /// Determines whether a property with the specified name is a simple property (string)
-        /// or a complex property (IStringPropertyBag).
-        /// </summary>
-        /// <param name="name">The name of the property.</param>
-        /// <returns><c>true</c> if the property is a simple property; otherwise, <c>false</c>.</returns>
-        bool IsComplexProperty(string name);
 
         /// <summary>
         /// Gets the value of a property by name.
@@ -128,20 +166,6 @@ namespace Alternet.UI
         void SetBoolProperty(string name, bool value);
 
         /// <summary>
-        /// Sets the value of a complex property by name.
-        /// </summary>
-        /// <param name="name">The name of the property.</param>
-        /// <param name="value">The value to set.</param>
-        void SetComplexProperty(string name, IPropertyBag value);
-
-        /// <summary>
-        /// Creates a new complex property with the specified name and returns it.
-        /// </summary>
-        /// <param name="name">The name of the complex property to create.</param>
-        /// <returns>The newly created complex property.</returns>
-        IPropertyBag CreateComplexProperty(string name);
-
-        /// <summary>
         /// Tries to get the value of an enum property by name.
         /// </summary>
         /// <typeparam name="TEnum">The type of the enum.</typeparam>
@@ -167,39 +191,46 @@ namespace Alternet.UI
             writer.Indent();
 
             var propNames = GetPropertyNames().ToArray();
-
+ 
             for (int i = 0; i < propNames.Length; i++)
             {
                 var propertyName = propNames[i];
                 var isLastProperty = (i == propNames.Length - 1);
-                if (IsComplexProperty(propertyName))
+                var valueType = GetPropertyType(propertyName);
+
+                void EmitQuotedValue(string? value)
                 {
-                    if (TryGetComplexProperty(propertyName, out var complexProperty))
-                    {
-                        writer.WriteLine($"\"{propertyName}\" : ");
-                        writer.Indent();
-
-                        var subFlags = flags;
-
-                        if(isLastProperty)
-                        {
-                            subFlags &= ~JsonStringFlags.AddComma;
-                        }
-                        else
-                        {
-                            subFlags |= JsonStringFlags.AddComma;
-                        }
-
-                        complexProperty?.ToJsonString(writer, subFlags);
-                        writer.Unindent();
-                    }
+                    writer.WriteLine($"\"{propertyName}\" : \"{value}\"{(isLastProperty ? "" : ",")}");
                 }
-                else
+
+                void EmitValue(string? value)
                 {
-                    if (TryGetStringProperty(propertyName, out var stringValue))
-                    {
-                        writer.WriteLine($"\"{propertyName}\" : \"{stringValue}\"{(isLastProperty ? "" : ",")}");
-                    }
+                    writer.WriteLine($"\"{propertyName}\" : {value}{(isLastProperty ? "" : ",")}");
+                }
+
+                switch (valueType)
+                {
+                    default:
+                    case PropertyType.String:
+                    case PropertyType.Flags:
+                    case PropertyType.Enum:
+                        if (TryGetStringProperty(propertyName, out var stringValue))
+                        {
+                            EmitQuotedValue(stringValue);
+                        }
+                        break;
+                    case PropertyType.Int:
+                        if (TryGetIntProperty(propertyName, out var intValue))
+                        {
+                            EmitValue(intValue.ToString());
+                        }
+                        break;
+                    case PropertyType.Bool:
+                        if (TryGetBoolProperty(propertyName, out var boolValue))
+                        {
+                            EmitValue(boolValue.ToString().ToLower());
+                        }
+                        break;
                 }
             }
 

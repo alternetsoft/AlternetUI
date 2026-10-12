@@ -155,48 +155,13 @@ namespace Alternet.UI
                 switch (Kind)
                 {
                     case ScheduleRepeatPattern.Daily:
-                        if (propertyBag.TryGetComplexProperty(nameof(DailyRule), out var dailyRuleBag))
-                        {
-                            DailyRule.LoadFrom(dailyRuleBag);
-                        }
-                        else
-                        {
-                            return false;
-                        }
-                        break;
+                        return DailyRule.LoadFrom(propertyBag, nameof(DailyRule));
                     case ScheduleRepeatPattern.Weekly:
-                        if (propertyBag.TryGetComplexProperty(nameof(WeeklyRule), out var weeklyRuleBag))
-                        {
-                            WeeklyRule.LoadFrom(weeklyRuleBag);
-                        }
-                        else
-                        {
-                            return false;
-                        }
-
-                        break;
+                        return WeeklyRule.LoadFrom(propertyBag, nameof(WeeklyRule));
                     case ScheduleRepeatPattern.Monthly:
-                        if (propertyBag.TryGetComplexProperty(nameof(MonthlyRule), out var monthlyRuleBag))
-                        {
-                            MonthlyRule.LoadFrom(monthlyRuleBag);
-                        }
-                        else
-                        {
-                            return false;
-                        }
-
-                        break;
+                        return MonthlyRule.LoadFrom(propertyBag, nameof(MonthlyRule));
                     case ScheduleRepeatPattern.Yearly:
-                        if (propertyBag.TryGetComplexProperty(nameof(YearlyRule), out var yearlyRuleBag))
-                        {
-                            YearlyRule.LoadFrom(yearlyRuleBag);
-                        }
-                        else
-                        {
-                            return false;
-                        }
-
-                        break;
+                        return YearlyRule.LoadFrom(propertyBag, nameof(YearlyRule));
                 }
 
                 return true;
@@ -217,20 +182,16 @@ namespace Alternet.UI
             switch (Kind)
             {
                 case ScheduleRepeatPattern.Daily:
-                    var dailyRuleBag = propertyBag.CreateComplexProperty(nameof(DailyRule));
-                    DailyRule.SaveTo(dailyRuleBag);
+                    DailyRule.SaveTo(propertyBag, nameof(DailyRule));
                     break;
                 case ScheduleRepeatPattern.Weekly:
-                    var weeklyRuleBag = propertyBag.CreateComplexProperty(nameof(WeeklyRule));
-                    WeeklyRule.SaveTo(weeklyRuleBag);
+                    WeeklyRule.SaveTo(propertyBag, nameof(WeeklyRule));
                     break;
                 case ScheduleRepeatPattern.Monthly:
-                    var monthlyRuleBag = propertyBag.CreateComplexProperty(nameof(MonthlyRule));
-                    MonthlyRule.SaveTo(monthlyRuleBag);
+                    MonthlyRule.SaveTo(propertyBag, nameof(MonthlyRule));
                     break;
                 case ScheduleRepeatPattern.Yearly:
-                    var yearlyRuleBag = propertyBag.CreateComplexProperty(nameof(YearlyRule));
-                    YearlyRule.SaveTo(yearlyRuleBag);
+                    YearlyRule.SaveTo(propertyBag, nameof(YearlyRule));
                     break;
             }
         }

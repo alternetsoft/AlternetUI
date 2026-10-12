@@ -11,6 +11,12 @@ namespace Alternet.UI
     public class PropertyBag : IPropertyBag
     {
         private readonly BaseDictionary<string, object> properties = new ();
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PropertyBag"/> class.
+        /// </summary>
+        public PropertyBag()
+        {
+        }
 
         /// <inheritdoc/>
         public bool TryGetStringProperty(string name, out string? value)
@@ -40,49 +46,51 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void SetComplexProperty(string name, IPropertyBag value)
-        {
-            properties.Add(name, value);
-        }
-
-        /// <inheritdoc/>
-        public bool TryGetComplexProperty(string name, out IPropertyBag? value)
-        {
-            if (properties.TryGetValue(name, out var objValue) && objValue is IPropertyBag bagValue)
-            {
-                value = bagValue;
-                return true;
-            }
-
-            value = null;
-            return false;
-        }
-
-        /// <inheritdoc/>
-        public bool IsComplexProperty(string name)
-        {
-            var result = properties.TryGetValue(name, out var objValue);
-            return result && objValue is IPropertyBag;
-        }
-
-        /// <inheritdoc/>
         public void SetIntProperty(string name, int value)
         {
             properties.Add(name, value);
         }
 
         /// <inheritdoc/>
-        public void SetBoolProperty(string name, bool value)
+        public IPropertyBag.PropertyType GetValueType(object? value)
         {
-            properties.Add(name, value);
+            if (value is int)
+                return IPropertyBag.PropertyType.Int;
+            if (value is bool)
+                return IPropertyBag.PropertyType.Bool;
+            if (value is string)
+                return IPropertyBag.PropertyType.String;
+            if (value is null)
+                return IPropertyBag.PropertyType.Null;
+
+            var isEnum = AssemblyUtils.IsEnumType(value.GetType());
+
+            if (isEnum)
+            {
+                var isFlags = AssemblyUtils.EnumIsFlags(value.GetType());
+                if (isFlags)
+                    return IPropertyBag.PropertyType.Flags;
+                return IPropertyBag.PropertyType.Enum;
+            }
+
+            return IPropertyBag.PropertyType.Other;
         }
 
         /// <inheritdoc/>
-        public IPropertyBag CreateComplexProperty(string name)
+        public IPropertyBag.PropertyType GetPropertyType(string name)
         {
-            var complexProperty = new PropertyBag();
-            properties.Add(name, complexProperty);
-            return complexProperty;
+            if (properties.TryGetValue(name, out var objValue))
+            {
+                return GetValueType(objValue);
+            }
+
+            return IPropertyBag.PropertyType.Other;
+        }
+
+        /// <inheritdoc/>
+        public void SetBoolProperty(string name, bool value)
+        {
+            properties.Add(name, value);
         }
 
         /// <inheritdoc/>
