@@ -84,6 +84,155 @@ namespace Alternet.UI
         public IReadOnlyList<BaseRepeatPatternRule> Rules => rules;
 
         /// <summary>
+        /// Converts the specified <see cref="DateTime"/> to its string representation.
+        /// </summary>
+        /// <param name="date">The date and time to convert.</param>
+        /// <returns>A string representation of the specified <see cref="DateTime"/>.</returns>
+        public virtual string DateTimeToString(DateTime date)
+        {
+            return DateTimeSerialization.Instance.DateTimeToString(date);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a date and time to a <see cref="DateTime"/>.
+        /// </summary>
+        /// <param name="s">The string representation of the date and time to convert.</param>
+        /// <param name="result">When this method returns, contains the converted <see cref="DateTime"/>
+        /// if the conversion succeeded, or <see cref="DateTime.MinValue"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public virtual bool TryDateTimeFromString(string? s, out DateTime result)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                result = DateTime.MinValue;
+                return false;
+            }
+
+            return DateTimeSerialization.Instance.TryDateTimeFromString(s, out result);
+        }
+
+        /// <summary>
+        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
+        public virtual bool LoadFrom(IPropertyBag? propertyBag)
+        {
+            if (propertyBag == null)
+                return false;
+
+            if (propertyBag.TryGetEnumProperty(nameof(Kind), out ScheduleRepeatPattern parsedKind))
+            {
+                Kind = parsedKind;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (propertyBag.TryGetStringProperty(nameof(Start), out var startString) &&
+                TryDateTimeFromString(startString, out var startDateTime))
+            {
+                Start = startDateTime;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (propertyBag.TryGetStringProperty(nameof(End), out var endString) &&
+                TryDateTimeFromString(endString, out var endDateTime))
+            {
+                End = endDateTime;
+            }
+            else
+            {
+                return false;
+            }
+
+            switch (Kind)
+            {
+                case ScheduleRepeatPattern.Daily:
+                    if (propertyBag.TryGetComplexProperty(nameof(DailyRule), out var dailyRuleBag))
+                    {
+                        DailyRule.LoadFrom(dailyRuleBag);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    break;
+                case ScheduleRepeatPattern.Weekly:
+                    if (propertyBag.TryGetComplexProperty(nameof(WeeklyRule), out var weeklyRuleBag))
+                    {
+                        WeeklyRule.LoadFrom(weeklyRuleBag);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                    break;
+                case ScheduleRepeatPattern.Monthly:
+                    if (propertyBag.TryGetComplexProperty(nameof(MonthlyRule), out var monthlyRuleBag))
+                    {
+                        MonthlyRule.LoadFrom(monthlyRuleBag);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                    break;
+                case ScheduleRepeatPattern.Yearly:
+                    if (propertyBag.TryGetComplexProperty(nameof(YearlyRule), out var yearlyRuleBag))
+                    {
+                        YearlyRule.LoadFrom(yearlyRuleBag);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                    break;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Saves the current state of this instance
+        /// to the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag)
+        {
+            propertyBag.SetStringProperty(nameof(Kind), Kind.ToString());
+            propertyBag.SetStringProperty(nameof(Start), DateTimeToString(Start));
+            propertyBag.SetStringProperty(nameof(End), DateTimeToString(End));
+
+            switch (Kind)
+            {
+                case ScheduleRepeatPattern.Daily:
+                    var dailyRuleBag = propertyBag.CreateComplexProperty(nameof(DailyRule));
+                    DailyRule.SaveTo(dailyRuleBag);
+                    break;
+                case ScheduleRepeatPattern.Weekly:
+                    var weeklyRuleBag = propertyBag.CreateComplexProperty(nameof(WeeklyRule));
+                    WeeklyRule.SaveTo(weeklyRuleBag);
+                    break;
+                case ScheduleRepeatPattern.Monthly:
+                    var monthlyRuleBag = propertyBag.CreateComplexProperty(nameof(MonthlyRule));
+                    MonthlyRule.SaveTo(monthlyRuleBag);
+                    break;
+                case ScheduleRepeatPattern.Yearly:
+                    var yearlyRuleBag = propertyBag.CreateComplexProperty(nameof(YearlyRule));
+                    YearlyRule.SaveTo(yearlyRuleBag);
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Creates a deep copy of the current <see cref="RepeatPatternRule"/> instance.
         /// </summary>
         /// <returns>A new <see cref="RepeatPatternRule"/> instance that is a deep copy of the current instance.</returns>

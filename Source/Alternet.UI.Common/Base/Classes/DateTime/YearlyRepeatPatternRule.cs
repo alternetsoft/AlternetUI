@@ -123,10 +123,94 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether the specified object is equal to the current instance of <see cref="YearlyRepeatPatternRule"/>.
+        /// Saves the current state of this instance
+        /// to the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag)
+        {
+            propertyBag.SetStringProperty(nameof(Kind), Kind.ToString());
+            propertyBag.SetStringProperty(nameof(Month), Month.ToString());
+            propertyBag.SetIntProperty(nameof(IntervalYears), IntervalYears);
+            propertyBag.SetIntProperty(nameof(DayOfMonth), DayOfMonth);
+            propertyBag.SetStringProperty(nameof(DayOfWeekIndex), DayOfWeekIndex.ToString());
+            propertyBag.SetStringProperty(nameof(DayOfWeek), DayOfWeek.ToString());
+        }
+
+        /// <summary>
+        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
+        public virtual bool LoadFrom(IPropertyBag? propertyBag)
+        {
+            if (propertyBag == null)
+                return false;
+
+            if (propertyBag.TryGetEnumProperty(nameof(Kind), out RepeatKind parsedKind))
+            {
+                Kind = parsedKind;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (propertyBag.TryGetEnumProperty(nameof(Month), out CalendarMonth parsedMonth))
+            {
+                Month = parsedMonth;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (propertyBag.TryGetIntProperty(nameof(IntervalYears), out int parsedIntervalYears))
+            {
+                IntervalYears = parsedIntervalYears;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (propertyBag.TryGetIntProperty(nameof(DayOfMonth), out int parsedDayOfMonth))
+            {
+                DayOfMonth = parsedDayOfMonth;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (propertyBag.TryGetEnumProperty(nameof(DayOfWeekIndex), out RelativeWeekday parsedDayOfWeekIndex))
+            {
+                DayOfWeekIndex = parsedDayOfWeekIndex;
+            }
+            else
+            {
+                return false;
+            }
+
+            if (propertyBag.TryGetEnumProperty(nameof(DayOfWeek), out ExtendedDayOfWeek parsedDayOfWeek))
+            {
+                DayOfWeek = parsedDayOfWeek;
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current
+        /// instance of <see cref="YearlyRepeatPatternRule"/>.
         /// </summary>
         /// <param name="obj">The object to compare with the current instance.</param>
-        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified object is equal to the current instance;
+        /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
             if (obj is not YearlyRepeatPatternRule other)

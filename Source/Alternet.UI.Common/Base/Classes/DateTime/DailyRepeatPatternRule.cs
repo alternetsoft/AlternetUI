@@ -84,6 +84,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
+        public virtual bool LoadFrom(IPropertyBag? propertyBag)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Saves the current state of this instance
+        /// to the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag)
+        {
+            propertyBag.SetIntProperty(nameof(IntervalDays), IntervalDays);
+            propertyBag.SetStringProperty(nameof(Kind), Kind.ToString());
+        }
+
+        /// <summary>
         /// Determines whether the specified object is equal to the current instance of <see cref="DailyRepeatPatternRule"/>.
         /// </summary>
         /// <param name="obj">The object to compare with the current instance.</param>

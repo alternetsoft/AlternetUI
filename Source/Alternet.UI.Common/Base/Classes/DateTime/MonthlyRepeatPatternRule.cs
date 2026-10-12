@@ -112,10 +112,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether the specified object is equal to the current instance of <see cref="MonthlyRepeatPatternRule"/>.
+        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
+        public virtual bool LoadFrom(IPropertyBag? propertyBag)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Saves the current state of this instance
+        /// to the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag)
+        {
+            propertyBag.SetIntProperty(nameof(DayOfMonth), DayOfMonth);
+            propertyBag.SetIntProperty(nameof(IntervalMonths), IntervalMonths);
+            propertyBag.SetStringProperty(nameof(Kind), Kind.ToString());
+            propertyBag.SetStringProperty(nameof(DayOfWeek), DayOfWeek.ToString());
+            propertyBag.SetStringProperty(nameof(DayOfWeekIndex), DayOfWeekIndex.ToString());
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current
+        /// instance of <see cref="MonthlyRepeatPatternRule"/>.
         /// </summary>
         /// <param name="obj">The object to compare with the current instance.</param>
-        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified object is equal to the current instance;
+        /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
             if (obj is not MonthlyRepeatPatternRule other)

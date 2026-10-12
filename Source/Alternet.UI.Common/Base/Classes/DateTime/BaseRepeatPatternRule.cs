@@ -40,6 +40,56 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the end date and time of the repeat pattern,
+        /// combining the <see cref="EndDate"/> and <see cref="EndTime"/> properties.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime End
+        {
+            get
+            {
+                return EndDate.ToDateTime(EndTime);
+            }
+
+            set
+            {
+                if (value == End)
+                    return;
+
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    EndDate = DateOnly.FromDateTime(value);
+                    EndTime = TimeOnly.FromDateTime(value);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the start date and time of the repeat pattern,
+        /// combining the <see cref="StartDate"/> and <see cref="StartTime"/> properties.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime Start
+        {
+            get
+            {
+                return StartDate.ToDateTime(StartTime);
+            }
+
+            set
+            {
+                if (value == Start)
+                    return;
+
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    StartDate = DateOnly.FromDateTime(value);
+                    StartTime = TimeOnly.FromDateTime(value);
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the start date of the repeat pattern range. 
         /// </summary>
         public virtual DateOnly StartDate
@@ -55,7 +105,18 @@ namespace Alternet.UI
         /// Gets the end time of the repeat pattern, calculated as the start time plus the duration.
         /// </summary>
         [Browsable(false)]
-        public TimeOnly EndTime => StartTime.Add(Duration);
+        public TimeOnly EndTime
+        {
+            get
+            {
+                return StartTime.Add(Duration);
+            }
+
+            set
+            {
+                Duration = value - StartTime;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the start time of the repeat pattern.
@@ -77,6 +138,8 @@ namespace Alternet.UI
             get => duration;
             set
             {
+                if (value < TimeSpan.Zero)
+                    value = TimeSpan.Zero;
                 SetProperty(ref duration, value);
             }
         }
