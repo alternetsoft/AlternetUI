@@ -61,7 +61,8 @@ namespace Alternet.UI
         Penultimate,
 
         /// <summary>
-        /// Represents the middle occurrence of the specified weekday in a month (e.g., 2nd or 3rd depending on month length).
+        /// Represents the middle occurrence of the specified weekday in a month
+        /// (e.g., 2nd or 3rd depending on month length).
         /// </summary>
         Middle,
     }
