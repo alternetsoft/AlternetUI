@@ -118,7 +118,61 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
         public virtual bool LoadFrom(IPropertyBag? propertyBag)
         {
-            return false;
+            if (propertyBag == null)
+                return false;
+
+            return DoInsideSuspendedPropertyChanged(() =>
+            {
+                if (propertyBag.TryGetIntProperty(nameof(DayOfMonth), out var dayOfMonth))
+                {
+                    DayOfMonth = dayOfMonth;
+                }
+                else
+                {
+                    return false;
+                }
+
+                if (propertyBag.TryGetIntProperty(nameof(IntervalMonths), out var intervalMonths))
+                {
+                    IntervalMonths = intervalMonths;
+                }
+                else
+                {
+                    return false;
+                }
+
+                if (propertyBag.TryGetStringProperty(nameof(Kind), out var kindString) &&
+                    Enum.TryParse(kindString, out RepeatKind kind))
+                {
+                    Kind = kind;
+                }
+                else
+                {
+                    return false;
+                }
+
+                if (propertyBag.TryGetStringProperty(nameof(DayOfWeek), out var dayOfWeekString) &&
+                    Enum.TryParse(dayOfWeekString, out ExtendedDayOfWeek dayOfWeek))
+                {
+                    DayOfWeek = dayOfWeek;
+                }
+                else
+                {
+                    return false;
+                }
+
+                if (propertyBag.TryGetStringProperty(nameof(DayOfWeekIndex), out var dayOfWeekIndexString) &&
+                    Enum.TryParse(dayOfWeekIndexString, out RelativeWeekday dayOfWeekIndex))
+                {
+                    DayOfWeekIndex = dayOfWeekIndex;
+                }
+                else
+                {
+                    return false;
+                }
+
+                return true;
+            });
         }
 
         /// <summary>

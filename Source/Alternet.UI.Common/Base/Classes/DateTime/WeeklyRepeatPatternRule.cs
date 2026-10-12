@@ -53,7 +53,32 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
         public virtual bool LoadFrom(IPropertyBag? propertyBag)
         {
-            return false;
+            if (propertyBag == null)
+                return false;
+
+            return DoInsideSuspendedPropertyChanged(() =>
+            {
+                if (propertyBag.TryGetIntProperty(nameof(IntervalWeeks), out var intervalWeeks))
+                {
+                    IntervalWeeks = intervalWeeks;
+                }
+                else
+                {
+                    return false;
+                }
+
+                if (propertyBag.TryGetStringProperty(nameof(WeekDays), out var weekDaysString) &&
+                    Enum.TryParse(weekDaysString, out DaysOfWeek weekDays))
+                {
+                    WeekDays = weekDays;
+                }
+                else
+                {
+                    return false;
+                }
+
+                return true;
+            });
         }
 
         /// <summary>

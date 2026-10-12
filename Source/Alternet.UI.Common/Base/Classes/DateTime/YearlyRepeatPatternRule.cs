@@ -147,61 +147,64 @@ namespace Alternet.UI
             if (propertyBag == null)
                 return false;
 
-            if (propertyBag.TryGetEnumProperty(nameof(Kind), out RepeatKind parsedKind))
+            return DoInsideSuspendedPropertyChanged(() =>
             {
-                Kind = parsedKind;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetEnumProperty(nameof(Kind), out RepeatKind parsedKind))
+                {
+                    Kind = parsedKind;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (propertyBag.TryGetEnumProperty(nameof(Month), out CalendarMonth parsedMonth))
-            {
-                Month = parsedMonth;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetEnumProperty(nameof(Month), out CalendarMonth parsedMonth))
+                {
+                    Month = parsedMonth;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (propertyBag.TryGetIntProperty(nameof(IntervalYears), out int parsedIntervalYears))
-            {
-                IntervalYears = parsedIntervalYears;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetIntProperty(nameof(IntervalYears), out int parsedIntervalYears))
+                {
+                    IntervalYears = parsedIntervalYears;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (propertyBag.TryGetIntProperty(nameof(DayOfMonth), out int parsedDayOfMonth))
-            {
-                DayOfMonth = parsedDayOfMonth;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetIntProperty(nameof(DayOfMonth), out int parsedDayOfMonth))
+                {
+                    DayOfMonth = parsedDayOfMonth;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (propertyBag.TryGetEnumProperty(nameof(DayOfWeekIndex), out RelativeWeekday parsedDayOfWeekIndex))
-            {
-                DayOfWeekIndex = parsedDayOfWeekIndex;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetEnumProperty(nameof(DayOfWeekIndex), out RelativeWeekday parsedDayOfWeekIndex))
+                {
+                    DayOfWeekIndex = parsedDayOfWeekIndex;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (propertyBag.TryGetEnumProperty(nameof(DayOfWeek), out ExtendedDayOfWeek parsedDayOfWeek))
-            {
-                DayOfWeek = parsedDayOfWeek;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetEnumProperty(nameof(DayOfWeek), out ExtendedDayOfWeek parsedDayOfWeek))
+                {
+                    DayOfWeek = parsedDayOfWeek;
+                }
+                else
+                {
+                    return false;
+                }
 
-            return true;
+                return true;
+            });
         }
 
         /// <summary>

@@ -121,83 +121,86 @@ namespace Alternet.UI
             if (propertyBag == null)
                 return false;
 
-            if (propertyBag.TryGetEnumProperty(nameof(Kind), out ScheduleRepeatPattern parsedKind))
+            return DoInsideSuspendedPropertyChanged(() =>
             {
-                Kind = parsedKind;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetEnumProperty(nameof(Kind), out ScheduleRepeatPattern parsedKind))
+                {
+                    Kind = parsedKind;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (propertyBag.TryGetStringProperty(nameof(Start), out var startString) &&
-                TryDateTimeFromString(startString, out var startDateTime))
-            {
-                Start = startDateTime;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetStringProperty(nameof(Start), out var startString) &&
+                    TryDateTimeFromString(startString, out var startDateTime))
+                {
+                    Start = startDateTime;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (propertyBag.TryGetStringProperty(nameof(End), out var endString) &&
-                TryDateTimeFromString(endString, out var endDateTime))
-            {
-                End = endDateTime;
-            }
-            else
-            {
-                return false;
-            }
+                if (propertyBag.TryGetStringProperty(nameof(End), out var endString) &&
+                    TryDateTimeFromString(endString, out var endDateTime))
+                {
+                    End = endDateTime;
+                }
+                else
+                {
+                    return false;
+                }
 
-            switch (Kind)
-            {
-                case ScheduleRepeatPattern.Daily:
-                    if (propertyBag.TryGetComplexProperty(nameof(DailyRule), out var dailyRuleBag))
-                    {
-                        DailyRule.LoadFrom(dailyRuleBag);
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                    break;
-                case ScheduleRepeatPattern.Weekly:
-                    if (propertyBag.TryGetComplexProperty(nameof(WeeklyRule), out var weeklyRuleBag))
-                    {
-                        WeeklyRule.LoadFrom(weeklyRuleBag);
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                switch (Kind)
+                {
+                    case ScheduleRepeatPattern.Daily:
+                        if (propertyBag.TryGetComplexProperty(nameof(DailyRule), out var dailyRuleBag))
+                        {
+                            DailyRule.LoadFrom(dailyRuleBag);
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                        break;
+                    case ScheduleRepeatPattern.Weekly:
+                        if (propertyBag.TryGetComplexProperty(nameof(WeeklyRule), out var weeklyRuleBag))
+                        {
+                            WeeklyRule.LoadFrom(weeklyRuleBag);
+                        }
+                        else
+                        {
+                            return false;
+                        }
 
-                    break;
-                case ScheduleRepeatPattern.Monthly:
-                    if (propertyBag.TryGetComplexProperty(nameof(MonthlyRule), out var monthlyRuleBag))
-                    {
-                        MonthlyRule.LoadFrom(monthlyRuleBag);
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                        break;
+                    case ScheduleRepeatPattern.Monthly:
+                        if (propertyBag.TryGetComplexProperty(nameof(MonthlyRule), out var monthlyRuleBag))
+                        {
+                            MonthlyRule.LoadFrom(monthlyRuleBag);
+                        }
+                        else
+                        {
+                            return false;
+                        }
 
-                    break;
-                case ScheduleRepeatPattern.Yearly:
-                    if (propertyBag.TryGetComplexProperty(nameof(YearlyRule), out var yearlyRuleBag))
-                    {
-                        YearlyRule.LoadFrom(yearlyRuleBag);
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                        break;
+                    case ScheduleRepeatPattern.Yearly:
+                        if (propertyBag.TryGetComplexProperty(nameof(YearlyRule), out var yearlyRuleBag))
+                        {
+                            YearlyRule.LoadFrom(yearlyRuleBag);
+                        }
+                        else
+                        {
+                            return false;
+                        }
 
-                    break;
-            }
+                        break;
+                }
 
-            return true;
+                return true;
+            });
         }
 
         /// <summary>
