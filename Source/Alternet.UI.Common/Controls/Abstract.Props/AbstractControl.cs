@@ -41,6 +41,12 @@ namespace Alternet.UI
         public static bool DefaultUseParentFont = true;
 
         /// <summary>
+        /// Gets or sets default value for <see cref="ParentContextMenu"/> property.
+        /// Default is false.
+        /// </summary>
+        public static bool DefaultParentContextMenu = false;
+
+        /// <summary>
         /// Gets or sets min element size in device-independent units.
         /// </summary>
         public static Coord MinElementSize = 32;
@@ -157,6 +163,7 @@ namespace Alternet.UI
         private ControlColorMode? colorMode;
         private ImeMode imeMode = ImeMode.Off;
         private PreferredSizeMode preferredSizeMode = PreferredSizeMode.Content;
+        private bool parentContextMenu = DefaultParentContextMenu;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -987,7 +994,11 @@ namespace Alternet.UI
         /// </summary>
         [Category(KnownMemberCategory.Behavior)]
         [Browsable(false)]
-        public virtual bool ParentContextMenu { get; set; }
+        public virtual bool ParentContextMenu
+        {
+            get => parentContextMenu;
+            set => parentContextMenu = value;
+        }
 
         /// <summary>
         /// Alias for <see cref="ContextMenuStrip"/> property.
