@@ -68,6 +68,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified function inside block with suspended <see cref="PropertyChanged"/> event
+        /// and returns the result of the function.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result returned by the function.</typeparam>
+        /// <param name="func">The function to execute.</param>
+        /// <param name="callChangedOnResume">Whether to call <see cref="PropertyChanged"/> event
+        /// after the function is executed and events are resumed. Optional. Default is True.</param>
+        /// <returns>The result of the function.</returns>
+        public TResult DoInsideSuspendedPropertyChanged<TResult>(Func<TResult> func, bool callChangedOnResume = true)
+        {
+            SuspendPropertyChanged();
+            try
+            {
+                return func();
+            }
+            finally
+            {
+                ResumePropertyChanged(callChangedOnResume);
+            }
+        }
+
+        /// <summary>
         /// Calls the specified action inside block with suspended
         /// <see cref="PropertyChanged"/> event.
         /// </summary>
