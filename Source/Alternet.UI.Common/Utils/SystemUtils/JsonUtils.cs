@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using System.Text.Json;
@@ -12,6 +13,22 @@ namespace Alternet.UI;
 public static class JsonUtils
 {
     /// <summary>
+    /// Defines flags for controlling the behavior of the <see cref="ToJsonString"/> method.
+    /// </summary>
+    public enum ToJsonStringFlags
+    {
+        /// <summary>
+        /// Indicates that no special formatting should be applied to the JSON string.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Indicates that a comma should be added after the JSON string representation of the property bag.
+        /// </summary>
+        AddComma = 1,
+    }
+
+    /// <summary>
     /// Represents a delegate that is invoked for each property of a JSON object during enumeration.
     /// </summary>
     /// <param name="property">The JSON property.</param>
@@ -21,6 +38,97 @@ public static class JsonUtils
         JsonProperty property,
         string name,
         object? value);
+
+    /// <summary>
+    /// Escapes a string for safe inclusion in JSON by encoding special characters.
+    /// </summary>
+    /// <param name="value">The string to escape.</param>
+    /// <returns>The escaped string.</returns>
+    public static string EscapeString(string value)
+    {
+        var result = JsonEncodedText.Encode(value).ToString();
+        return result;
+    }
+
+    /// <summary>
+    /// Determines whether the specified value requires quotes when represented in JSON.
+    /// </summary>
+    /// <param name="value">The value to check.</param>
+    /// <returns><c>true</c> if the value requires quotes; otherwise, <c>false</c>.</returns>
+    public static bool ValueNeedQuotes(object? value)
+    {
+        return value switch
+        {
+            null => false,
+
+            string => true,
+            char => true,
+
+            bool => false,
+
+            sbyte or byte or
+            short or ushort or
+            int or uint or
+            long or ulong or
+            float or double or decimal => false,
+
+            _ => true
+        };
+    }
+
+    /// <summary>
+    /// Converts a collection of name-value pairs into a JSON string representation
+    /// and writes it to the specified <see cref="ILogWriter"/>.
+    /// </summary>
+    /// <param name="nameValuePairs">The collection of name-value pairs to convert to JSON.</param>
+    /// <param name="writer">The <see cref="ILogWriter"/> to write the JSON string to.</param>
+    /// <param name="flags">Flags that control the behavior of the JSON string conversion.</param>
+    public static void ToJsonString(
+        IEnumerable<KeyValuePair<string, object?>> nameValuePairs,
+        ILogWriter? writer = null,
+        ToJsonStringFlags flags = ToJsonStringFlags.None)
+    {
+        if (writer is null)
+            return;
+
+        writer.WriteLine("{");
+        writer.Indent();
+
+        var pairs = nameValuePairs.ToArray();
+
+        for (int i = 0; i < pairs.Length; i++)
+        {
+            var propertyName = pairs[i].Key;
+            var escapedPropertyName = JsonUtils.EscapeString(propertyName);
+            var isLastProperty = (i == pairs.Length - 1);
+
+            void EmitQuotedValue(string? value)
+            {
+                var escapedValue = JsonUtils.EscapeString(value ?? string.Empty);
+                writer.WriteLine($"\"{escapedPropertyName}\" : \"{escapedValue}\"{(isLastProperty ? "" : ",")}");
+            }
+
+            void EmitValue(string? value)
+            {
+                writer.WriteLine($"\"{escapedPropertyName}\" : {value}{(isLastProperty ? "" : ",")}");
+            }
+
+            var value = pairs[i].Value;
+            var needQuotes = ValueNeedQuotes(value);
+
+            if (needQuotes)
+            {
+                EmitQuotedValue(value?.ToString());
+            }
+            else
+            {
+                EmitValue(value?.ToString());
+            }
+        }
+
+        writer.Unindent();
+        writer.WriteLine(flags.HasFlag(ToJsonStringFlags.AddComma) ? "}," : "}");
+    }
 
     /// <summary>
     /// Enumerates the properties of a JSON object and invokes the specified action for each property.
