@@ -256,6 +256,15 @@ namespace Alternet.UI
             if (other == null)
             {
                 SuspendPropertyChanged();
+
+                var now = DateTime.Now;
+                StartDate = now.ToDateOnly();
+                StartTime = now.ToTimeOnly();
+                Duration = TimeSpan.Zero;
+                OccurrenceCount = 1;
+                EndCondition = EndConditionKind.OnDate;
+                EndDate = StartDate;
+
                 DailyRule.Assign(null);
                 WeeklyRule.Assign(null);
                 MonthlyRule.Assign(null);
@@ -270,10 +279,19 @@ namespace Alternet.UI
                     return;
 
                 SuspendPropertyChanged();
-                DailyRule.Assign(otherRule.dailyRule);
-                WeeklyRule.Assign(otherRule.weeklyRule);
-                MonthlyRule.Assign(otherRule.monthlyRule);
-                YearlyRule.Assign(otherRule.yearlyRule);
+
+                StartDate = otherRule.StartDate;
+                StartTime = otherRule.StartTime;
+                Duration = otherRule.Duration;
+                EndDate = otherRule.EndDate;
+                OccurrenceCount = otherRule.OccurrenceCount;
+                EndCondition = otherRule.EndCondition;
+
+                DailyRule.Assign(otherRule.DailyRule);
+                WeeklyRule.Assign(otherRule.WeeklyRule);
+                MonthlyRule.Assign(otherRule.MonthlyRule);
+                YearlyRule.Assign(otherRule.YearlyRule);
+
                 Kind = otherRule.Kind;
                 ResumePropertyChanged();
             }
