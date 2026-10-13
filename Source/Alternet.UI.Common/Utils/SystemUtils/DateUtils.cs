@@ -305,10 +305,40 @@ namespace Alternet.UI
 
             weekdays = new DaysOfWeek[wkdays.Length];
 
-            foreach (var day in wkdays)
+            for (int i = 0; i < wkdays.Length; i++)
             {
-                weekdays[(int)day] = (DaysOfWeek)(1 << (int)day);
+                weekdays[i] = ToDaysOfWeek(wkdays[i]);
             }
+        }
+
+        /// <summary>
+        /// Converts a <see cref="DayOfWeek"/> value to its corresponding <see cref="DaysOfWeek"/> value.
+        /// </summary>
+        /// <param name="dayOfWeek">The <see cref="DayOfWeek"/> value to convert.</param>
+        /// <returns>The corresponding <see cref="DaysOfWeek"/> value.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the <paramref name="dayOfWeek"/>
+        /// value is not valid.</exception>
+        public static DaysOfWeek ToDaysOfWeek(DayOfWeek dayOfWeek)
+        {
+            switch(dayOfWeek)
+            {
+                case DayOfWeek.Sunday:
+                    return DaysOfWeek.Sunday;
+                case DayOfWeek.Monday:
+                    return DaysOfWeek.Monday;
+                case DayOfWeek.Tuesday:
+                    return DaysOfWeek.Tuesday;
+                case DayOfWeek.Wednesday:
+                    return DaysOfWeek.Wednesday;
+                case DayOfWeek.Thursday:
+                    return DaysOfWeek.Thursday;
+                case DayOfWeek.Friday:
+                    return DaysOfWeek.Friday;
+                case DayOfWeek.Saturday:
+                    return DaysOfWeek.Saturday;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(dayOfWeek), dayOfWeek, "Invalid DayOfWeek value.");
+            };
         }
 
         /// <summary>
@@ -599,7 +629,8 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool HasDay(this DaysOfWeek days, DayOfWeek day)
         {
-            return (days & (DaysOfWeek)(1 << (int)day)) != 0;
+            var dayOfWeek = ToDaysOfWeek(day);
+            return (days.HasFlag(dayOfWeek));
         }
 
         /// <summary>
