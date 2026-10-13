@@ -54,8 +54,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual IPropertyBag.PropertyType GetValueType(object? value)
         {
-            if (value is int)
-                return IPropertyBag.PropertyType.Int;
+            if (value is int or byte or short or long or sbyte or ushort or uint or ulong)
+                return IPropertyBag.PropertyType.Integer;
             if (value is bool)
                 return IPropertyBag.PropertyType.Bool;
             if (value is string)

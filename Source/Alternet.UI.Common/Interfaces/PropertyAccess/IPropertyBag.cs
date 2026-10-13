@@ -27,9 +27,10 @@ namespace Alternet.UI
             String,
 
             /// <summary>
-            /// Indicates that the property value is an integer.
+            /// Indicates that the property value is an integer number
+            /// (including byte, short, long, sbyte, ushort, uint, and ulong).
             /// </summary>
-            Int,
+            Integer,
 
             /// <summary>
             /// Indicates that the property value is a boolean.
@@ -50,22 +51,6 @@ namespace Alternet.UI
             /// Indicates that the property value is of a type not explicitly defined in this enumeration.
             /// </summary>
             Other,
-        }
-
-        /// <summary>
-        /// Defines flags for controlling the behavior of the <see cref="ToJsonString"/> method.
-        /// </summary>
-        public enum JsonStringFlags
-        {
-            /// <summary>
-            /// Indicates that no special formatting should be applied to the JSON string.
-            /// </summary>
-            None = 0,
-
-            /// <summary>
-            /// Indicates that a comma should be added after the JSON string representation of the property bag.
-            /// </summary>
-            AddComma = 1,
         }
 
         /// <summary>
@@ -210,36 +195,17 @@ namespace Alternet.UI
             where TEnum : struct, Enum;
 
         /// <summary>
-        /// Converts the property bag to a JSON string representation
-        /// and writes it to the specified <see cref="ILogWriter"/>.
+        /// Gets all properties as a collection of name-value pairs.
         /// </summary>
-        /// <param name="writer">The log writer to write the JSON string to.</param>
-        /// <param name="flags">Flags to control the JSON string formatting.</param>
-        public void ToJsonString(ILogWriter? writer = null, JsonStringFlags flags = JsonStringFlags.None)
+        /// <returns>An enumerable collection of name-value pairs representing the properties.</returns>
+        public IEnumerable<KeyValuePair<string, object?>> GetAllProperties()
         {
-            if (writer is null)
-                return;
-
-            writer.WriteLine("{");
-            writer.Indent();
-
             var propNames = GetPropertyNames().ToArray();
 
             for (int i = 0; i < propNames.Length; i++)
             {
                 var propertyName = propNames[i];
-                var isLastProperty = (i == propNames.Length - 1);
                 var valueType = GetPropertyType(propertyName);
-
-                void EmitQuotedValue(string? value)
-                {
-                    writer.WriteLine($"\"{propertyName}\" : \"{value}\"{(isLastProperty ? "" : ",")}");
-                }
-
-                void EmitValue(string? value)
-                {
-                    writer.WriteLine($"\"{propertyName}\" : {value}{(isLastProperty ? "" : ",")}");
-                }
 
                 switch (valueType)
                 {
@@ -249,26 +215,37 @@ namespace Alternet.UI
                     case PropertyType.Enum:
                         if (TryGetStringProperty(propertyName, out var stringValue))
                         {
-                            EmitQuotedValue(stringValue);
+                            yield return new KeyValuePair<string, object?>(propertyName, stringValue);
                         }
                         break;
-                    case PropertyType.Int:
+                    case PropertyType.Integer:
                         if (TryGetIntProperty(propertyName, out var intValue))
                         {
-                            EmitValue(intValue.ToString());
+                            yield return new KeyValuePair<string, object?>(propertyName, intValue);
                         }
                         break;
                     case PropertyType.Bool:
                         if (TryGetBoolProperty(propertyName, out var boolValue))
                         {
-                            EmitValue(boolValue.ToString().ToLower());
+                            yield return new KeyValuePair<string, object?>(propertyName, boolValue);
                         }
                         break;
                 }
             }
+        }
 
-            writer.Unindent();
-            writer.WriteLine(flags.HasFlag(JsonStringFlags.AddComma) ? "}," : "}");
+        /// <summary>
+        /// Converts the property bag to a JSON string representation
+        /// and writes it to the specified <see cref="ILogWriter"/>.
+        /// </summary>
+        /// <param name="writer">The log writer to write the JSON string to.</param>
+        /// <param name="flags">Flags to control the JSON string formatting.</param>
+        public void ToJsonString(
+            ILogWriter? writer = null,
+            JsonUtils.ToJsonStringFlags flags = JsonUtils.ToJsonStringFlags.None)
+        {
+            var properties = GetAllProperties();
+            JsonUtils.ToJsonString(properties, writer, flags);
         }
 
         /// <summary>
