@@ -264,6 +264,7 @@ namespace Alternet.UI
                 OccurrenceCount = 1;
                 EndCondition = EndConditionKind.OnDate;
                 EndDate = StartDate;
+                Kind = ScheduleRepeatPattern.None;
 
                 DailyRule.Assign(null);
                 WeeklyRule.Assign(null);
