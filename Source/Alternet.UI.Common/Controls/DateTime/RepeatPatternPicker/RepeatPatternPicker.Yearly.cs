@@ -32,38 +32,14 @@ namespace Alternet.UI
                 intervalYearPicker.PrefixLabel.MarginLeft = XCheckBox.DefaultCheckBoxMargin.Left + 3;
                 intervalYearPicker.PrefixText = CommonStrings.Default.DateRepeatPatternPrefixLabelEvery;
                 intervalYearPicker.Minimum = 1;
-                intervalYearPicker.Value = Value.IntervalYears;
-                intervalYearPicker.ValueChanged += OnIntervalYearPickerValueChanged;
-                UpdateSuffixLabelText();
 
                 monthAndDayPicker = new();
                 monthAndDayPicker.MonthPicker.ImageVisible = DefaultShowDropDownImage;
                 monthAndDayPicker.Label.Text = CommonStrings.Default.OnPrefix;
                 monthAndDayPicker.Label.Visible = true;
-                monthAndDayPicker.MonthPicker.Value = Value.Month;
-                monthAndDayPicker.DayPicker.Value = Value.DayOfMonth;
-
-                monthAndDayPicker.MonthPicker.ValueChanged += (s, e) =>
-                {
-                    Value.Month = monthAndDayPicker.MonthPicker.Value;
-                };
-
-                monthAndDayPicker.DayPicker.ValueChanged += (s, e) =>
-                {
-                    Value.DayOfMonth = monthAndDayPicker.DayPicker.Value;
-                };
 
                 relativeWeekdayOfMonthPicker = new();
                 relativeWeekdayOfMonthPicker.ImageVisible = DefaultShowDropDownImage;
-                relativeWeekdayOfMonthPicker.Value = new RelativeWeekdayOfMonth(Value.DayOfWeekIndex, Value.DayOfWeek, Value.Month);
-
-                relativeWeekdayOfMonthPicker.ValueChanged += (s, e) =>
-                {
-                    var v = relativeWeekdayOfMonthPicker.Value;
-                    Value.DayOfWeekIndex = v.RelativeWeekday;
-                    Value.DayOfWeek = v.DayOfWeek;
-                    Value.Month = v.Month;
-                };
 
                 dayOfMonthRadioButton = new(monthAndDayPicker);
                 relativeWeekdayRadioButton = new(relativeWeekdayOfMonthPicker);
@@ -83,13 +59,16 @@ namespace Alternet.UI
                     relativeWeekdayRadioButton.IsChecked = true;
                 };
 
-                dayOfMonthRadioButton.IsChecked = Value.Kind == YearlyRepeatPatternRule.RepeatKind.DayOfMonth;
-                relativeWeekdayRadioButton.IsChecked = Value.Kind == YearlyRepeatPatternRule.RepeatKind.RelativeWeekday;
-
                 XRadioButton[] radioGroup = { dayOfMonthRadioButton.MainControl, relativeWeekdayRadioButton.MainControl };
 
                 dayOfMonthRadioButton.MainControl.RadioSiblings = radioGroup;
                 relativeWeekdayRadioButton.MainControl.RadioSiblings = radioGroup;
+
+                intervalYearPicker.Parent = this;
+                dayOfMonthRadioButton.Parent = this;
+                relativeWeekdayRadioButton.Parent = this;
+
+                ValueToControls();
 
                 dayOfMonthRadioButton.MainControl.CheckedChanged += (s, e) =>
                 {
@@ -103,9 +82,25 @@ namespace Alternet.UI
                         Value.Kind = YearlyRepeatPatternRule.RepeatKind.RelativeWeekday;
                 };
 
-                intervalYearPicker.Parent = this;
-                dayOfMonthRadioButton.Parent = this;
-                relativeWeekdayRadioButton.Parent = this;
+                relativeWeekdayOfMonthPicker.ValueChanged += (s, e) =>
+                {
+                    var v = relativeWeekdayOfMonthPicker.Value;
+                    Value.DayOfWeekIndex = v.RelativeWeekday;
+                    Value.DayOfWeek = v.DayOfWeek;
+                    Value.Month = v.Month;
+                };
+
+                intervalYearPicker.ValueChanged += OnIntervalYearPickerValueChanged;
+
+                monthAndDayPicker.MonthPicker.ValueChanged += (s, e) =>
+                {
+                    Value.Month = monthAndDayPicker.MonthPicker.Value;
+                };
+
+                monthAndDayPicker.DayPicker.ValueChanged += (s, e) =>
+                {
+                    Value.DayOfMonth = monthAndDayPicker.DayPicker.Value;
+                };
             }
 
             /// <summary>
@@ -138,6 +133,24 @@ namespace Alternet.UI
             /// </summary>
             [Browsable(false)]
             public MonthAndDayPicker MonthAndDayPicker => monthAndDayPicker;
+
+            /// <summary>
+            /// Called to update the controls based on the current value of the yearly repeat pattern rule.
+            /// </summary>
+            public virtual void ValueToControls()
+            {
+                intervalYearPicker.Value = Value.IntervalYears;
+                UpdateSuffixLabelText();
+
+                monthAndDayPicker.MonthPicker.Value = Value.Month;
+                monthAndDayPicker.DayPicker.Value = Value.DayOfMonth;
+
+                relativeWeekdayOfMonthPicker.Value
+                    = new RelativeWeekdayOfMonth(Value.DayOfWeekIndex, Value.DayOfWeek, Value.Month);
+
+                dayOfMonthRadioButton.IsChecked = Value.Kind == YearlyRepeatPatternRule.RepeatKind.DayOfMonth;
+                relativeWeekdayRadioButton.IsChecked = Value.Kind == YearlyRepeatPatternRule.RepeatKind.RelativeWeekday;
+            }
 
             /// <summary>
             /// Called when the value of the interval year picker changes.

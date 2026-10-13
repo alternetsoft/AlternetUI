@@ -32,24 +32,13 @@ namespace Alternet.UI
                 intervalMonthPicker.PrefixLabel.MarginLeft = XCheckBox.DefaultCheckBoxMargin.Left + 3;
                 intervalMonthPicker.PrefixText = CommonStrings.Default.DateRepeatPatternPrefixLabelEvery;
                 intervalMonthPicker.Minimum = 1;
-                intervalMonthPicker.Value = Value.IntervalMonths;
-                intervalMonthPicker.ValueChanged += OnIntervalMonthPickerValueChanged;
-                UpdateSuffixLabelText();
 
                 relativeWeekdayOfMonthPicker = new();
                 relativeWeekdayOfMonthPicker.ImageVisible = DefaultShowDropDownImage;
                 relativeWeekdayOfMonthPicker.IsMonthVisible = false;
-                relativeWeekdayOfMonthPicker.Value
-                    = new RelativeWeekdayOfMonth(Value.DayOfWeekIndex, Value.DayOfWeek, CalendarMonth.January);
 
                 dayOfMonthPicker.PrefixText = CommonStrings.Default.OnDayPrefix;
                 dayOfMonthPicker.SuffixLabel.IsVisible = false;
-                dayOfMonthPicker.Value = Value.DayOfMonth;
-
-                dayOfMonthPicker.ValueChanged += (s, e) =>
-                {
-                    Value.DayOfMonth = dayOfMonthPicker.Value;
-                };
 
                 dayOfMonthRadioButton = new(dayOfMonthPicker);
                 relativeWeekdayRadioButton = new(relativeWeekdayOfMonthPicker);
@@ -60,13 +49,6 @@ namespace Alternet.UI
                 {
                     dayOfMonthRadioButton.IsChecked = true;
                 };
-
-                relativeWeekdayOfMonthPicker.ValueChanged += (s, e) =>
-                {
-                    var v = relativeWeekdayOfMonthPicker.Value;
-                    Value.DayOfWeekIndex = v.RelativeWeekday;
-                    Value.DayOfWeek = v.DayOfWeek;
-                };  
 
                 relativeWeekdayOfMonthPicker.FirstPanel.Click += (s, e) =>
                 {
@@ -83,8 +65,11 @@ namespace Alternet.UI
                 dayOfMonthRadioButton.MainControl.RadioSiblings = radioGroup;
                 relativeWeekdayRadioButton.MainControl.RadioSiblings = radioGroup;
 
-                dayOfMonthRadioButton.IsChecked = Value.Kind == MonthlyRepeatPatternRule.RepeatKind.DayOfMonth;
-                relativeWeekdayRadioButton.IsChecked = Value.Kind == MonthlyRepeatPatternRule.RepeatKind.RelativeWeekday;
+                intervalMonthPicker.Parent = this;
+                dayOfMonthRadioButton.Parent = this;
+                relativeWeekdayRadioButton.Parent = this;
+
+                ValueToControls();
 
                 dayOfMonthRadioButton.MainControl.CheckedChanged += (s, e) =>
                 {
@@ -98,9 +83,19 @@ namespace Alternet.UI
                         Value.Kind = MonthlyRepeatPatternRule.RepeatKind.RelativeWeekday;
                 };
 
-                intervalMonthPicker.Parent = this;
-                dayOfMonthRadioButton.Parent = this;
-                relativeWeekdayRadioButton.Parent = this;
+                dayOfMonthPicker.ValueChanged += (s, e) =>
+                {
+                    Value.DayOfMonth = dayOfMonthPicker.Value;
+                };
+
+                intervalMonthPicker.ValueChanged += OnIntervalMonthPickerValueChanged;
+
+                relativeWeekdayOfMonthPicker.ValueChanged += (s, e) =>
+                {
+                    var v = relativeWeekdayOfMonthPicker.Value;
+                    Value.DayOfWeekIndex = v.RelativeWeekday;
+                    Value.DayOfWeek = v.DayOfWeek;
+                };
             }
 
             /// <summary>
@@ -137,6 +132,22 @@ namespace Alternet.UI
             /// </summary>
             [Browsable(false)]
             public XIntPickerWithLabels DayOfMonthPicker => dayOfMonthPicker;
+
+            /// <summary>
+            /// Called to update the controls based on the current value of the monthly repeat pattern rule.
+            /// </summary>
+            public virtual void ValueToControls()
+            {
+                intervalMonthPicker.Value = Value.IntervalMonths;
+                UpdateSuffixLabelText();
+
+                relativeWeekdayOfMonthPicker.Value
+                    = new RelativeWeekdayOfMonth(Value.DayOfWeekIndex, Value.DayOfWeek, CalendarMonth.January);
+                dayOfMonthPicker.Value = Value.DayOfMonth;
+
+                dayOfMonthRadioButton.IsChecked = Value.Kind == MonthlyRepeatPatternRule.RepeatKind.DayOfMonth;
+                relativeWeekdayRadioButton.IsChecked = Value.Kind == MonthlyRepeatPatternRule.RepeatKind.RelativeWeekday;
+            }
 
             /// <summary>
             /// Called when the value of the interval month picker changes.

@@ -101,6 +101,8 @@ namespace Alternet.UI
 
             return DoInsideSuspendedPropertyChanged(() =>
             {
+                Reset();
+
                 if (propertyBag.TryGetIntProperty(prefix + nameof(IntervalDays), out var intervalDays))
                 {
                     IntervalDays = intervalDays;
@@ -191,6 +193,14 @@ namespace Alternet.UI
             if (Kind == RepeatKind.IntervalDays)
                 return date.AddDays(IntervalDays);
             return date.AddDays(1);
+        }
+
+        /// <summary>
+        /// Resets the current instance to its default state which was set when the instance was created.
+        /// </summary>
+        public virtual void Reset()
+        {
+            Assign(null);
         }
 
         /// <summary>

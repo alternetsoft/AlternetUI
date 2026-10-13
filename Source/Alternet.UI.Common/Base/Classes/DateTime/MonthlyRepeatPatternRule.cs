@@ -129,6 +129,8 @@ namespace Alternet.UI
 
             return DoInsideSuspendedPropertyChanged(() =>
             {
+                Reset();
+
                 if (propertyBag.TryGetIntProperty(prefix + nameof(DayOfMonth), out var dayOfMonth))
                 {
                     DayOfMonth = dayOfMonth;
@@ -159,6 +161,14 @@ namespace Alternet.UI
 
                 return true;
             });
+        }
+
+        /// <summary>
+        /// Resets the current instance to its default state which was set when the instance was created.
+        /// </summary>
+        public virtual void Reset()
+        {
+            Assign(null);
         }
 
         /// <summary>

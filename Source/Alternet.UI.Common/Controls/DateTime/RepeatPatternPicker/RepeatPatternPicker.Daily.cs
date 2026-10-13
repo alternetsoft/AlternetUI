@@ -48,10 +48,6 @@ namespace Alternet.UI
                 intervalDayPicker.PrefixText = CommonStrings.Default.DateRepeatPatternPrefixLabelEvery;
                 intervalDayPicker.Minimum = 1;
                 intervalDayPicker.VerticalAlignment = VerticalAlignment.Center;
-                intervalDayPicker.Value = Value.IntervalDays;
-                intervalDayPicker.ValueChanged += OnIntervalDayPickerValueChanged;
-
-                UpdateSuffixLabelText();
 
                 intervalRadioButton = new(intervalDayPicker);
                 intervalRadioButton.MainControl.Tag = DailyRepeatPatternRule.RepeatKind.IntervalDays;
@@ -82,11 +78,13 @@ namespace Alternet.UI
                     weekendsRadioButton.MainControl,
                     intervalRadioButton.MainControl);
 
+                ValueToControls();
+
+                intervalDayPicker.ValueChanged += OnIntervalDayPickerValueChanged;
+
                 radioButtons.ForEach(c =>
                 {
                     var kind = c.Tag as DailyRepeatPatternRule.RepeatKind?;
-
-                    c.IsChecked = Value.Kind == kind;
 
                     c.RadioSiblings = radioButtons.Items;
 
@@ -96,7 +94,6 @@ namespace Alternet.UI
                             Value.Kind = kind ?? DailyRepeatPatternRule.RepeatKind.EveryDay;
                     };
                 });
-
             }
 
             /// <summary>
@@ -140,6 +137,21 @@ namespace Alternet.UI
             /// </summary>
             [Browsable(false)]
             public XRadioButtonAndSuffix WeekendsRadioButton => weekendsRadioButton;
+
+            /// <summary>
+            /// Called to update the controls based on the current value of the daily repeat pattern rule.
+            /// </summary>
+            public virtual void ValueToControls()
+            {
+                intervalDayPicker.Value = Value.IntervalDays;
+                UpdateSuffixLabelText();
+
+                radioButtons.ForEach(c =>
+                {
+                    var kind = c.Tag as DailyRepeatPatternRule.RepeatKind?;
+                    c.IsChecked = Value.Kind == kind;
+                });
+            }
 
             /// <summary>
             /// Called when the value of the interval day picker changes.

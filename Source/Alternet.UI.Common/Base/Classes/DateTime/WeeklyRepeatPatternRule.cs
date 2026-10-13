@@ -47,6 +47,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the current instance to its default state which was set when the instance was created.
+        /// </summary>
+        public virtual void Reset()
+        {
+            Assign(null);
+        }
+
+        /// <summary>
         /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag from which to load the state.</param>
@@ -64,6 +72,8 @@ namespace Alternet.UI
 
             return DoInsideSuspendedPropertyChanged(() =>
             {
+                Reset();
+
                 if (propertyBag.TryGetIntProperty(prefix + nameof(IntervalWeeks), out var intervalWeeks))
                 {
                     IntervalWeeks = intervalWeeks;

@@ -93,6 +93,11 @@ namespace ControlsSample
             calendar.MaxDate = DateTime.Now.AddDays(60).ToDateOnly();
             calendar.UseMaxDate = false;
 
+            calendar.ContextMenu.Add("Reset repeat pattern rule", () =>
+            {
+                patternPicker.Value.Reset();
+            });
+
             calendar.ContextMenu.Add("Save pattern as xml", () =>
             {
             }).Enabled = false;

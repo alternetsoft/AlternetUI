@@ -30,9 +30,6 @@ namespace Alternet.UI
                 intervalWeekPicker.PrefixLabel.MarginLeft = XCheckBox.DefaultCheckBoxMargin.Left + 3;
                 intervalWeekPicker.PrefixText = CommonStrings.Default.DateRepeatPatternPrefixLabelEvery;
                 intervalWeekPicker.Minimum = 1;
-                intervalWeekPicker.Value = Value.IntervalWeeks;
-                intervalWeekPicker.ValueChanged += OnIntervalWeekPickerValueChanged;
-                UpdateSuffixLabelText();
 
                 var firstDayOfWeek = DateUtils.SystemFirstDayOfWeek;
 
@@ -72,6 +69,10 @@ namespace Alternet.UI
 
                 intervalWeekPicker.Parent = this;
                 panel.Parent = this;
+
+                ValueToControls();
+
+                intervalWeekPicker.ValueChanged += OnIntervalWeekPickerValueChanged;
             }
 
             /// <summary>
@@ -96,6 +97,15 @@ namespace Alternet.UI
             /// </summary>
             [Browsable(false)]
             public Label IntervalWeekPrefixLabel => intervalWeekPicker.PrefixLabel;
+
+            /// <summary>
+            /// Called to update the controls based on the current value of the weekly repeat pattern rule.
+            /// </summary>
+            public virtual void ValueToControls()
+            {
+                intervalWeekPicker.Value = Value.IntervalWeeks;
+                UpdateSuffixLabelText();
+            }
 
             /// <summary>
             /// Called when the value of the interval week picker changes.

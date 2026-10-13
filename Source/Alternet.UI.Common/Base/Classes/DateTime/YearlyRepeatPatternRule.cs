@@ -123,6 +123,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the current instance to its default state which was set when the instance was created.
+        /// </summary>
+        public virtual void Reset()
+        {
+            Assign(null);
+        }
+
+        /// <summary>
         /// Saves the current state of this instance
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
@@ -161,6 +169,8 @@ namespace Alternet.UI
 
             return DoInsideSuspendedPropertyChanged(() =>
             {
+                Reset();
+
                 if (propertyBag.TryGetEnumProperty(prefix + nameof(Kind), out RepeatKind parsedKind))
                 {
                     Kind = parsedKind;

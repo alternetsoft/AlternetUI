@@ -144,13 +144,11 @@ namespace Alternet.UI
 
             return DoInsideSuspendedPropertyChanged(() =>
             {
+                Reset();
+
                 if (propertyBag.TryGetEnumProperty(nameof(Kind), out ScheduleRepeatPattern parsedKind))
                 {
                     Kind = parsedKind;
-                }
-                else
-                {
-                    return false;
                 }
 
                 if (propertyBag.TryGetStringProperty(nameof(Start), out var startString) &&
@@ -158,19 +156,11 @@ namespace Alternet.UI
                 {
                     Start = startDateTime;
                 }
-                else
-                {
-                    return false;
-                }
 
                 if (propertyBag.TryGetStringProperty(nameof(End), out var endString) &&
                     TryDateTimeFromString(endString, out var endDateTime))
                 {
                     End = endDateTime;
-                }
-                else
-                {
-                    return false;
                 }
 
                 switch (Kind)
@@ -220,7 +210,8 @@ namespace Alternet.UI
         /// <summary>
         /// Creates a deep copy of the current <see cref="RepeatPatternRule"/> instance.
         /// </summary>
-        /// <returns>A new <see cref="RepeatPatternRule"/> instance that is a deep copy of the current instance.</returns>
+        /// <returns>A new <see cref="RepeatPatternRule"/> instance that is a deep 
+        /// copy of the current instance.</returns>
         public virtual RepeatPatternRule Clone()
         {
             var clone = new RepeatPatternRule();
@@ -232,7 +223,8 @@ namespace Alternet.UI
         /// Determines whether the specified object is equal to the current instance of <see cref="RepeatPatternRule"/>.
         /// </summary>
         /// <param name="obj">The object to compare with the current instance.</param>
-        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified object is equal to the current instance;
+        /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
             if (obj is not RepeatPatternRule other)
@@ -245,6 +237,14 @@ namespace Alternet.UI
                    WeeklyRule.Equals(other.WeeklyRule) &&
                    MonthlyRule.Equals(other.MonthlyRule) &&
                    YearlyRule.Equals(other.YearlyRule);
+        }
+
+        /// <summary>
+        /// Resets the current instance to its default state which was set when the instance was created.
+        /// </summary>
+        public virtual void Reset()
+        {
+            Assign(null);
         }
 
         /// <summary>
