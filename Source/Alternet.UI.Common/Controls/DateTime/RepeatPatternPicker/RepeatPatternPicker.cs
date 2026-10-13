@@ -515,6 +515,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ValueToControls()
         {
+            var tabIndex = (int)SelectedPattern;
+            tabControl.SelectedIndex = tabIndex;
+
             tabControl.SelectedIndex = (int)SelectedPattern;
             startPicker.AsDateOnly = data.StartDate;
             startPicker.AsTimeOnly = data.StartTime;
