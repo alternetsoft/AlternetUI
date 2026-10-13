@@ -123,7 +123,10 @@ namespace Alternet.UI
             /// <param name="firstDayOfWeek">The first day of the week.</param>
             /// <param name="weekdays">The array of <see cref="DaysOfWeek"/> values.</param>
             /// <param name="titles">The list of day names.</param>
-            protected virtual void GetDaysOfWeekWithTitles(DayOfWeek firstDayOfWeek, out DaysOfWeek[] weekdays, out string[] titles)
+            protected virtual void GetDaysOfWeekWithTitles(
+                DayOfWeek firstDayOfWeek,
+                out DaysOfWeek[] weekdays,
+                out string[] titles)
             {
                 DateUtils.GetDaysOfWeekWithTitles(
                     out weekdays,

@@ -69,10 +69,10 @@ namespace Alternet.UI
                     IntervalWeeks = intervalWeeks;
                 }
 
-                if (propertyBag.TryGetStringProperty(prefix + nameof(WeekDays), out var weekDaysString) &&
-                    Enum.TryParse(weekDaysString, out DaysOfWeek weekDays))
+                if (propertyBag.TryGetStringProperty(prefix + nameof(WeekDays), out var weekDaysString))
                 {
-                    WeekDays = weekDays;
+                    if (Enum.TryParse<DaysOfWeek>(weekDaysString, out var weekDays))
+                        WeekDays = weekDays;
                 }
 
                 return true;

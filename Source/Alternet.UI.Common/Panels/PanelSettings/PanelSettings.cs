@@ -1235,7 +1235,7 @@ namespace Alternet.UI
                 AddLabel(label);
             }
 
-            itemValues ??= EnumUtils.GetEnumValues<TEnum>();
+            itemValues ??= EnumUtils.GetEnumValues<TEnum>(removeZero: true);
 
             List<PanelSettingsItem> result = new();
 

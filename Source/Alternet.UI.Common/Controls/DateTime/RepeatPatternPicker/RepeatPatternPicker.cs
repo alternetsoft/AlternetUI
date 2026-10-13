@@ -547,7 +547,8 @@ namespace Alternet.UI
             UpdateDurationText();
 
             endsOnRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.OnDate;
-            endsAfterOccurrenceRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.AfterOccurrence;
+            endsAfterOccurrenceRadioButton.IsChecked
+                = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.AfterOccurrence;
             endsNeverRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.Never;
 
             occurrencePicker.Value = data.OccurrenceCount;
