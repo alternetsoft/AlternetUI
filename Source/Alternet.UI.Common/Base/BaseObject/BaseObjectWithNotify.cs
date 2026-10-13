@@ -115,7 +115,7 @@ namespace Alternet.UI
         /// and calls <see cref="RaisePropertyChangedEx(PropertyChangedEventArgs)"/>.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        public virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
+        public virtual void RaisePropertyChanged(string? propertyName = null)
         {
             if (suspendCounter > 0)
                 return;
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// Called when object property is changed.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        protected virtual void OnPropertyChanged(string? propertyName = null)
         {
         }
 
@@ -156,7 +156,7 @@ namespace Alternet.UI
         protected virtual bool SetProperty<T>(
             ref T? storage,
             T? value,
-            [CallerMemberName] string? propertyName = null,
+            string? propertyName = null,
             Action? changedAction = null)
         {
             if (Immutable || Equals(storage, value))
