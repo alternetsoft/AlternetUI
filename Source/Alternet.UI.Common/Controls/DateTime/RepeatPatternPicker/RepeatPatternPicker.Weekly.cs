@@ -19,6 +19,8 @@ namespace Alternet.UI
         {
             private readonly XIntPickerWithLabels intervalWeekPicker = new();
             private readonly PanelSettings panel = new();
+            private IReadOnlyList<PanelSettingsItem> checkItems = [];
+            private ControlSet checkBoxes = [];
 
             /// <summary>
             /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class.
@@ -35,8 +37,6 @@ namespace Alternet.UI
 
                 GetDaysOfWeekWithTitles(firstDayOfWeek, out var weekdays, out var titles);
 
-                IReadOnlyList<PanelSettingsItem> checkItems = [];
-
                 panel.Horizontal((h) =>
                 {
                     panel.Vertical((v) =>
@@ -52,7 +52,7 @@ namespace Alternet.UI
 
                     panel.Vertical((v) =>
                     {
-                        var checkBoxes = Group(PanelSettingsItem.GetEditors(checkItems));
+                        checkBoxes = Group(PanelSettingsItem.GetEditors(checkItems));
 
                         panel.AddLinkLabel(CommonStrings.Default.ButtonClearAll, () => checkBoxes.Checked(false));
                         panel.AddLinkLabel(CommonStrings.Default.ButtonSelectAll, () => checkBoxes.Checked(true));
@@ -105,6 +105,14 @@ namespace Alternet.UI
             {
                 intervalWeekPicker.Value = Value.IntervalWeeks;
                 UpdateSuffixLabelText();
+
+                foreach (var checkBox in checkBoxes)
+                {
+                    if (checkBox is XCheckBox ch && ch.Tag is DaysOfWeek dof)
+                    {
+                        ch.IsChecked = Value.WeekDays.HasFlag(dof);
+                    }
+                }
             }
 
             /// <summary>
