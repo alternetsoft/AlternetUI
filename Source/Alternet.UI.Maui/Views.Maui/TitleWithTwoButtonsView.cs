@@ -54,6 +54,10 @@ namespace Alternet.Maui
 
         private readonly Grid grid = new();
 
+        static TitleWithTwoButtonsView()
+        {
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TitleWithTwoButtonsView"/> class.
         /// </summary>
