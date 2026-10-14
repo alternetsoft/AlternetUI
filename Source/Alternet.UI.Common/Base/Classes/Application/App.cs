@@ -498,6 +498,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Return true if the current system theme is explicitly recognized as
+        /// being a dark theme or if the default window background is dark.
+        /// This is an alias to <see cref="Alternet.UI.SystemSettings.AppearanceIsDark"/>.
+        /// </summary>
+        /// <remarks>
+        /// This property should be used to check whether custom colors more appropriate
+        /// for the default (light) or dark appearance should be used.
+        /// </remarks>
+        public static bool IsDark => Alternet.UI.SystemSettings.AppearanceIsDark;
+
+        /// <summary>
         /// Gets the <see cref="App"/> object for the currently
         /// running application.
         /// </summary>
