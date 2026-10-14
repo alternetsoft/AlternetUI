@@ -1,3 +1,26 @@
+# 1.1.13 (2026 October 14)
+
+- Improve RepeatPatternRule and RepeatPatternRule.
+- Add IPropertyBag, PropertyBag, JsonUtils, DateTimeSerialization, SystemSettingsHandlerWinforms.
+- Fix DayOfWeek to DaysOfWeek conversion.
+- Enable inherited context menus in ScrollViewer, Calendarheader.
+- Redo default font creation.
+- PopupEntryParams.WantTab, EditableListPicker.WantTabInEditor, RectD.RoundOutI, RectD.RoundOut.
+- Support Tab character painting in Label and SpeedButton text.
+- Color: Add CreateDisabled, AsDisabled, and EnabledOrDisabled to produce and cache grayscale disabled colors.
+- SpeedButton now implements IValidatorReporter and INotifyDataErrorInfo, exposing HasErrors, GetErrors, and SetErrorStatus via ValueHelper. OnTextChanged was updated to trigger default validation when configured.
+- EditableListPicker: Add BeforeEdit event so callers can cancel popup editing or customize PopupEntryParams before the editor opens.
+- Add axis-specific preferred size modes. Introduce AvailableWidth and AvailableHeight to PreferredSizeMode so controls can derive preferred size from only one parent dimension while measuring content on the other axis.
+- Add keyboard navigation to XCalendar.
+- VirtualListBox.IgnoreKeyDown, EditableListPicker.TextAlign.
+- Implement focused state for generic controls.
+- SvgImageBitmaps: Fix svg to bitmap conversion when scale factor is applied.
+- AbstractControl: ChildMouseDown, ChildMouseUp, OnChildMouseDown, OnChildMouseUp.
+- Fix AbstractControl.Focus.
+- Fix FindReplaceControl.
+
+---
+
 # 1.1.12 (2026 October 3)
 
 - Add MauiFontInfo.DefaultFontSizeScaleFactor to make Maui font size scale configurable.
