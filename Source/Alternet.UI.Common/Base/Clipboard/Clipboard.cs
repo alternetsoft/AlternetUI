@@ -68,7 +68,11 @@ namespace Alternet.UI
         public static bool ContainsText(TextDataFormat format)
         {
             if (format == TextDataFormat.Text || format == TextDataFormat.UnicodeText)
-                return ContainsData(DataFormats.Text);
+            {
+                var result = ContainsData(DataFormats.Text);
+                return result;
+            }
+
             return false;
         }
 
