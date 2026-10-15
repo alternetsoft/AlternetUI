@@ -399,41 +399,53 @@ namespace Alternet.UI.Localization
 
         // ========================
 
-        public string CalendarItemCategoryAnniversary = "Anniversary";
+        public string CalendarItemCategoryAnniversary { get; set; } = "Anniversary";
 
-        public string CalendarItemCategoryBirthday = "Birthday";
+        public string CalendarItemCategoryBirthday { get; set; } = "Birthday";
 
-        public string CalendarItemCategoryBusiness = "Business";
+        public string CalendarItemCategoryBusiness { get; set; } = "Business";
 
-        public string CalendarItemCategoryImportant = "Important";
+        public string CalendarItemCategoryImportant { get; set; } = "Important";
 
-        public string CalendarItemCategoryMustAttend = "Must Attend";
+        public string CalendarItemCategoryMustAttend { get; set; } = "Must Attend";
 
-        public string CalendarItemCategoryNeedPreparation = "Need Preparation";
+        public string CalendarItemCategoryNeedPreparation { get; set; } = "Need Preparation";
 
-        public string CalendarItemCategoryNone = "None";
+        public string CalendarItemCategoryNone { get; set; } = "None";
 
-        public string CalendarItemCategoryOther = "Other";
+        public string CalendarItemCategoryOther { get; set; } = "Other";
 
-        public string CalendarItemCategoryPersonal = "Personal";
+        public string CalendarItemCategoryPersonal { get; set; } = "Personal";
 
-        public string CalendarItemCategoryPhoneCall = "Phone Call";
+        public string CalendarItemCategoryPhoneCall { get; set; } = "Phone Call";
 
-        public string CalendarItemCategoryTravelRequired = "Travel Required";
+        public string CalendarItemCategoryTravelRequired { get; set; } = "Travel Required";
 
-        public string CalendarItemCategoryVacation = "Vacation";
+        public string CalendarItemCategoryVacation { get; set; } = "Vacation";
 
         // ========================
 
-        public string CalendarItemStatusAbsent = "Absent";
+        public string CalendarItemStatusAbsent { get; set; } = "Absent";
 
-        public string CalendarItemStatusBusy = "Busy";
+        public string CalendarItemStatusBusy { get; set; } = "Busy";
 
-        public string CalendarItemStatusFree = "Free";
+        public string CalendarItemStatusFree { get; set; } = "Free";
 
-        public string CalendarItemStatusTentative = "Tentative";
+        public string CalendarItemStatusTentative { get; set; } = "Tentative";
 
-        public string CalendarItemStatusUnknown = "Unknown";
+        public string CalendarItemStatusUnknown { get; set; } = "Unknown";
+
+        // ========================
+
+        public string CalendarItemLabelTitle { get; set; } = "Title";
+
+        public string CalendarItemLabelDescription { get; set; } = "Description";
+
+        public string CalendarItemLabelLocation { get; set; } = "Location";
+
+        public string CalendarItemLabelCategory { get; set; } = "Category";
+
+        public string CalendarItemLabelStatus { get; set; } = "Show as";
 
         // ========================
     }

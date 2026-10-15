@@ -173,6 +173,7 @@ namespace Alternet.UI
         /// It is mapped from <see cref="ListControlItem.Value"/> elements
         /// of the <see cref="ListItems"/> collection.
         /// </summary>
+        [Browsable(false)]
         public virtual ListBoxItems SimpleItems
         {
             get
@@ -186,6 +187,7 @@ namespace Alternet.UI
         /// It is mapped from <see cref="ListControlItem.Value"/> elements
         /// of the <see cref="ListItems"/> collection.
         /// </summary>
+        [Browsable(false)]
         public virtual ListBoxItems Items
         {
             get
@@ -197,6 +199,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of items used in the list box control within the popup window.
         /// </summary>
+        [Browsable(false)]
         public virtual IListSource<ListControlItem> ListItems
         {
             get
@@ -257,7 +260,8 @@ namespace Alternet.UI
         /// Changes the case of all items in the list according to the specified rule and culture.
         /// </summary>
         /// <param name="rule">The rule to apply for changing the case.</param>
-        /// <param name="culture">The culture to use when changing the case. If null, the current culture is used.</param>
+        /// <param name="culture">The culture to use when changing the case.
+        /// If null, the current culture is used.</param>
         public virtual void ChangeItemsCase(TextCaseRule rule, CultureInfo? culture = null)
         {
             if (ListItems.Count == 0)
