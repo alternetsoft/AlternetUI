@@ -20,6 +20,7 @@ namespace Alternet.UI
     /// from the list or enter a new value. The list box is shown as a popup window when
     /// the user clicks on the drop down button which is hidden by default.
     /// </remarks>
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class TextPicker : EditableListPicker
     {
         /// <summary>

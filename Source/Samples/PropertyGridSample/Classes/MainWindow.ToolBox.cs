@@ -114,6 +114,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<ListPicker>(ObjectInit.InitListPicker);
                 ToolBoxAdd<MonthPicker>();
                 ToolBoxAdd<MultilineTextBox>(ObjectInit.InitMultilineTextBox);
+                ToolBoxAdd<MultilineTextPicker>(ObjectInit.InitMultilineTextPicker);
                 ToolBoxAdd<NumericUpDown>(ObjectInit.InitNumericUpDown);
                 ToolBoxAdd<Panel>(ObjectInit.InitPanel);
                 ToolBoxAdd<PanelOkCancelButtons>(ObjectInit.InitPanelOkCancelButtons);

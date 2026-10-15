@@ -90,6 +90,14 @@ namespace PropertyGridSample
             };
         }
 
+        public static void InitMultilineTextPicker(object control)
+        {
+            if (control is not MultilineTextPicker textBox)
+                return;
+            textBox.SuggestedSize = DemoUtils.DefaultListSize;
+            textBox.Text = DemoUtils.LoremIpsum;
+        }
+
         public static void InitMultilineTextBox(object control)
         {
             if (control is not MultilineTextBox textBox)
