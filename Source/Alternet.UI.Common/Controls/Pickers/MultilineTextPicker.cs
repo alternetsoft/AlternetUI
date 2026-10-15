@@ -16,6 +16,7 @@ namespace Alternet.UI
         public MultilineTextPicker()
         {
             MinimumSize = (120, 96);
+            SuggestedHeight = 96;
             Multiline = true;
             WantTabInEditor = true;
         }
