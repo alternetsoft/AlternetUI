@@ -47,16 +47,14 @@ namespace Alternet.UI
         private readonly ControlAndSuffix<TimePicker, SpeedTextButton> endTimePicker = new();
         private readonly PictureBox endDateIcon;
         private readonly PictureBox endTimeIcon;
-        private readonly Panel tabControlPanel = new();
-        private readonly TransparentPanel startPanel = new();
-        private readonly TransparentPanel endPanel = new ();
+        private readonly RoundBorderWithTitle tabControlPanel = new(CommonStrings.Default.Repeat);      
+        private readonly GenericRoundBorderWithTitle startPanel = new(CommonStrings.Default.Starts);
+        private readonly GenericRoundBorderWithTitle endPanel = new (CommonStrings.Default.Ends);
         private readonly TransparentPanel endDatePanel = new ();
         private readonly TransparentPanel endTimePanel = new ();
 
         private readonly GenericControlAndLabel<DatePicker, Label> endDatePicker = new();
         private readonly XCheckBox allDayCheckBox = new(CommonStrings.Default.FullDayDuration);
-        private readonly BoldLabel startDateLabel;
-        private readonly BoldLabel endDateLabel;
         private readonly XRadioButtonAndSuffix endsNeverRadioButton;
         private readonly XRadioButtonAndSuffix endsOnRadioButton;
         private readonly XRadioButtonAndSuffix endsAfterOccurrenceRadioButton;
@@ -69,7 +67,6 @@ namespace Alternet.UI
         private readonly YearlyPatternPicker yearlyPicker;
         private readonly HiddenBorder nonePicker = new();
         private readonly RepeatPatternRule data;
-        private readonly Label repeatLabel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternPicker"/> class.
@@ -83,11 +80,6 @@ namespace Alternet.UI
             data = CreateRule();
 
             // Start on date
-
-            startPanel.SetIgnoreTransparency().RoundCorners().SetHasBorder(true)
-                .SetLayout(LayoutStyle.Vertical).SetMinChildMargin(DefaultMinChildMargin);
-
-            startDateLabel = startPanel.Add<BoldLabel>(CommonStrings.Default.Starts);
 
             startPicker.Kind = DateTimePickerKind.DateTime;
             startPicker.ForceDateIcon = true;
@@ -129,11 +121,6 @@ namespace Alternet.UI
             endsNeverRadioButton.Parent = endDateControlsPanel;
 
             // End panels
-
-            endPanel.SetIgnoreTransparency().RoundCorners().SetHasBorder(true)
-                .SetLayout(LayoutStyle.Vertical).SetMinChildMargin(DefaultMinChildMargin);
-
-            endDateLabel = endPanel.Add<BoldLabel>(CommonStrings.Default.Ends);
 
             endDateIcon = startPicker.CreatePictureBox(DateTimePickerKind.Date);
             endTimeIcon = startPicker.CreatePictureBox(DateTimePickerKind.Time);
@@ -181,11 +168,6 @@ namespace Alternet.UI
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternYearly, yearlyPicker);
 
             HasBorder = false;
-
-            tabControlPanel.RoundCorners().SetHasBorder(true)
-                .SetLayout(LayoutStyle.Vertical).SetMinChildMargin(DefaultMinChildMargin);
-
-            repeatLabel = tabControlPanel.Add<BoldLabel>(CommonStrings.Default.Repeat);
 
             tabControl.Parent = tabControlPanel;
 
@@ -319,12 +301,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public TransparentPanel EndDatePanel => endDatePanel;
-
-        /// <summary>
-        /// Gets the repeat label which displays the repeat pattern header.
-        /// </summary>
-        [Browsable(false)]
-        public Label RepeatLabel => repeatLabel;
 
         /// <summary>
         /// Gets the end time panel which contains controls for specifying the end time of the repeat pattern.

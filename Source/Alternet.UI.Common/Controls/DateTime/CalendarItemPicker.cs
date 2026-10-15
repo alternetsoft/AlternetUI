@@ -24,10 +24,8 @@ namespace Alternet.UI
         /// </summary>
         public static Thickness DefaultMinChildMargin = 5;
 
-        private readonly TransparentPanel detailsPanel = new();
-        private readonly Label detailsPanelLabel = new();
-        private readonly TransparentPanel moreOptionsPanel = new();
-        private readonly Label moreOptionsPanelLabel = new();
+        private readonly GenericRoundBorderWithTitle detailsPanel = new(CommonStrings.Default.CalendarItemLabelDetails);
+        private readonly GenericRoundBorderWithTitle moreOptionsPanel = new(CommonStrings.Default.CalendarItemLabelMoreOptions);
 
         private readonly Label titleLabel = new();
         private readonly TextPicker titlePicker = new ();
@@ -56,6 +54,9 @@ namespace Alternet.UI
             Layout = LayoutStyle.Vertical;
             Padding = DefaultPadding;
 
+            detailsPanel.Margin = DefaultMinChildMargin;
+            moreOptionsPanel.Margin = DefaultMinChildMargin;
+
             titleLabel.Text = CommonStrings.Default.CalendarItemLabelTitle;
             descriptionLabel.Text = CommonStrings.Default.CalendarItemLabelDescription;
             locationLabel.Text = CommonStrings.Default.CalendarItemLabelLocation;
@@ -73,18 +74,6 @@ namespace Alternet.UI
             }
 
             ValueToControls();
-
-            void InitPanel(TransparentPanel panel)
-            {
-                panel.SetIgnoreTransparency().RoundCorners().SetHasBorder(true)
-                .SetLayout(LayoutStyle.Vertical).SetMinChildMargin(DefaultMinChildMargin).SetMargin(DefaultMinChildMargin);
-            }
-
-            InitPanel(detailsPanel);
-            InitPanel(moreOptionsPanel);
-
-            detailsPanelLabel = detailsPanel.Add<BoldLabel>(CommonStrings.Default.CalendarItemLabelDetails);
-            moreOptionsPanelLabel = moreOptionsPanel.Add<BoldLabel>(CommonStrings.Default.CalendarItemLabelMoreOptions);
 
             titleLabel.Parent = detailsPanel;
             titlePicker.Parent = detailsPanel;
@@ -147,18 +136,18 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
-        /// Gets the <see cref="TransparentPanel"/> that contains the controls for editing
+        /// Gets the <see cref="GenericRoundBorderWithTitle"/> that contains the controls for editing
         /// the details of the <see cref="CalendarItem"/>.
         /// </summary>
         [Browsable(false)]
-        public TransparentPanel DetailsPanel => detailsPanel;
+        public GenericRoundBorderWithTitle DetailsPanel => detailsPanel;
 
         /// <summary>
-        /// Gets the <see cref="Label"/> that displays the label which is shown in the header of
-        /// details panel of the <see cref="CalendarItemPicker"/>.
+        /// Gets the <see cref="GenericRoundBorderWithTitle"/> that contains the controls for editing
+        /// the more options of the <see cref="CalendarItem"/>.
         /// </summary>
         [Browsable(false)]
-        public Label DetailsPanelLabel => detailsPanelLabel;
+        public GenericRoundBorderWithTitle MoreOptionsPanel => moreOptionsPanel;
 
         /// <summary>
         /// Gets the <see cref="RepeatPatternPicker"/> that is used to edit the recurrence rule.
