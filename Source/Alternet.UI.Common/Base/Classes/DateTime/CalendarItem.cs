@@ -47,6 +47,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a JSON string representation of the current state of this instance.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string AsJsonString
+        {
+            get
+            {
+                IPropertyBag propertyBag = new PropertyBag();
+                SaveTo(propertyBag);
+                return propertyBag.AsJsonString;
+            }
+
+            set
+            {
+                IPropertyBag propertyBag = new PropertyBag();
+                propertyBag.AsJsonString = value;
+                LoadFrom(propertyBag);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the title of the calendar item.
         /// </summary>
         public virtual string? Title
@@ -167,6 +188,19 @@ namespace Alternet.UI
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
         public virtual void SaveTo(IPropertyBag propertyBag)
         {
+            propertyBag.SetStringProperty(nameof(Title), Title ?? string.Empty);
+            propertyBag.SetStringProperty(nameof(Description), Description ?? string.Empty);
+            propertyBag.SetStringProperty(nameof(Location), Location?.ToString() ?? string.Empty);
+            propertyBag.SetStringProperty(nameof(Status), Status.Name ?? string.Empty);
+            propertyBag.SetStringProperty(nameof(Category), Category.Name ?? string.Empty);
+            propertyBag.SetBoolProperty(nameof(Visible), Visible);
+            propertyBag.SetStringProperty(nameof(UserName), UserName ?? string.Empty);
+
+            Rule.SaveTo(propertyBag, "Rule");
+            /*
+            UserData
+            Rule
+            */
         }
 
         /// <summary>
