@@ -186,5 +186,11 @@ namespace Alternet.UI
         {
             return properties.Keys;
         }
+
+        /// <inheritdoc/>
+        public virtual bool Remove(string name)
+        {
+            return properties.Remove(name);
+        }
     }
 }

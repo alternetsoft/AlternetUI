@@ -170,6 +170,13 @@ namespace Alternet.UI
         void SetStringProperty(string name, string value);
 
         /// <summary>
+        /// Removes a property by name from the property bag.
+        /// </summary>
+        /// <param name="name">The name of the property to remove.</param>
+        /// <returns><c>true</c> if the property was successfully removed; otherwise, <c>false</c>.</returns>
+        bool Remove(string name);
+
+        /// <summary>
         /// Sets the value of an int property by name.
         /// </summary>
         /// <param name="name">The name of the property.</param>
