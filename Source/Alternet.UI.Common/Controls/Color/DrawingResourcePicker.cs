@@ -9,7 +9,8 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Implements <see cref="SpeedButton"/> for editing of the <see cref="ThemedDrawingResource"/> values.
-    /// In the editor, the <see cref="ThemedDrawingResource"/> value can be changed by selecting an item from the list box.
+    /// In the editor, the <see cref="ThemedDrawingResource"/>
+    /// value can be changed by selecting an item from the list box.
     /// Item image is painted using the <see cref="ThemedDrawingResource"/> value.
     /// <see cref="ThemedDrawingResource"/> can be defined by a brush, pen, or color.
     /// </summary>
@@ -69,12 +70,13 @@ namespace Alternet.UI
         public DrawingResourcePicker()
         {
             TextVisible = true;
-            OnValueImageChanged(false);
             ShowComboBoxImageAtRight(DefaultShowDropDownImage);
             ClickTrigger = ClickTriggerKind.MouseDown;
             UseTheme = DefaultThemes.Picker;
             UseControlColors(DefaultUseControlColors);
             Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
+            OnValueImageChanged(false);
+            base.Text = StringUtils.OneSpace;
         }
 
         /// <summary>
@@ -212,6 +214,13 @@ namespace Alternet.UI
                 valueImageSize = value;
                 OnValueImageChanged();
             }
+        }
+
+        /// <inheritdoc/>
+        protected override string CoerceLabelText(string text)
+        {
+            var result = base.CoerceLabelText(text);
+            return result;
         }
 
         /// <summary>
@@ -528,23 +537,44 @@ namespace Alternet.UI
             if (val.HasBrush)
                 brush = val.Brush;
             else
-                if (val.HasColor)
+                if (val.HasColor && Color.IsVisible(val.Color))
                 {
                     brush = val.Color?.AsBrush;
                 }
                 else
                 {
-                    brush = Color.Empty.AsBrush;
+                    brush = null;
                 }
 
-            LabelImage = brush?.AsImageWithBorder(
-                EffectiveValueImageSize(),
-                ScaleFactor,
-                (ValueImageBorder ?? ListControlItem.DefaultImageBorderColor).GetColor(this),
-                ValueImageShape);
+            SetLabelImage(brush);
 
             if (refresh)
                 Refresh();
+        }
+
+        /// <summary>
+        /// Sets the image of the label based on the provided brush.
+        /// </summary>
+        /// <param name="brush">The brush to use for the label image.</param>
+        protected virtual void SetLabelImage(Brush? brush)
+        {
+            Color? borderColor;
+
+            if (brush is null)
+            {
+                borderColor = Color.Empty;
+                brush = Color.Empty.AsBrush;
+            }
+            else
+            {
+                borderColor = (ValueImageBorder ?? ListControlItem.DefaultImageBorderColor).GetColor(this);
+            }
+
+            LabelImage = brush.AsImageWithBorder(
+                EffectiveValueImageSize(),
+                ScaleFactor,
+                borderColor,
+                ValueImageShape);
         }
     }
 }
