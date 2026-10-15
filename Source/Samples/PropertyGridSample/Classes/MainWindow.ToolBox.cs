@@ -87,7 +87,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<Border>(ObjectInit.InitBorder);
                 ToolBoxAdd<GenericBorder>(ObjectInit.InitGenericBorder);
                 ToolBoxAdd<Calculator>();
-                ToolBoxAdd<CalendarItemPicker>(ObjectInit.InitCalendarItemPicker);
                 ToolBoxAdd<CardPanel>(ObjectInit.InitCardPanel);
                 ToolBoxAdd<CardPanelHeader>(ObjectInit.InitCardPanelHeader);
                 ToolBoxAdd<ColorListBox>();
@@ -129,6 +128,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<ResizableWindowBorder>(ObjectInit.InitResizableWindowBorder);
                 ToolBoxAdd<RichToolTip>(ObjectInit.InitRichToolTip);
                 ToolBoxAdd<ScrollablePanelSettings>(ObjectInit.InitScrollablePanelSettings);
+                ToolBoxAdd<ScrollableCalendarItemPicker>(ObjectInit.InitScrollableCalendarItemPicker);
                 ToolBoxAdd<ScrollViewer>(ObjectInit.InitScrollViewer);
                 ToolBoxAdd<ShapeControl>(ObjectInit.InitShapeControl);
                 ToolBoxAdd<SideBarPanel>(ObjectInit.InitSideBarPanel);

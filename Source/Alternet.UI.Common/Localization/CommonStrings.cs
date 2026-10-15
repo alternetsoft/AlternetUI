@@ -437,6 +437,10 @@ namespace Alternet.UI.Localization
 
         // ========================
 
+        public string CalendarItemLabelDetails { get; set; } = "Details";
+
+        public string CalendarItemLabelMoreOptions { get; set; } = "More Options";
+
         public string CalendarItemLabelTitle { get; set; } = "Title";
 
         public string CalendarItemLabelDescription { get; set; } = "Description";

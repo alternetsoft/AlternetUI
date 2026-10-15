@@ -385,6 +385,12 @@ namespace PropertyGridSample
 
         public static string? json;
 
+        public static void InitScrollableCalendarItemPicker(ScrollableCalendarItemPicker control)
+        {
+            control.SuggestedHeight = 400;
+            InitCalendarItemPicker(control.ScrolledControl);
+        }
+
         public static void InitCalendarItemPicker(CalendarItemPicker control)
         {
             control.ContextMenu.Add("Save to json", () =>

@@ -662,8 +662,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the <see cref="RepeatPatternRule"/> instance representing the selected repeat pattern and its associated rules.
+        /// Gets the <see cref="RepeatPatternRule"/> instance representing
+        /// the selected repeat pattern and its associated rules.
         /// </summary>
-        public RepeatPatternRule Value => ScrolledControl.Value;
+        public RepeatPatternRule Value
+        {
+            get
+            {
+                return ScrolledControl.Value;
+            }
+
+            set
+            {
+                ScrolledControl.Value = value;
+            }
+        }
     }
 }

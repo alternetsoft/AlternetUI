@@ -12,8 +12,23 @@ namespace Alternet.UI
     /// properties in a user-friendly manner.
     /// </summary>
     [ControlCategory(KnownControlCategory.Other)]
-    public partial class CalendarItemPicker : TransparentPanel
+    public partial class CalendarItemPicker : HiddenBorder
     {
+        /// <summary>
+        /// Gets the default padding for the <see cref="CalendarItemPicker"/> control.
+        /// </summary>
+        public static readonly Thickness DefaultPadding = 5;
+
+        /// <summary>
+        /// Gets or sets the default margin between child controls in the <see cref="CalendarItemPicker"/>.
+        /// </summary>
+        public static Thickness DefaultMinChildMargin = 5;
+
+        private readonly TransparentPanel detailsPanel = new();
+        private readonly Label detailsPanelLabel = new();
+        private readonly TransparentPanel moreOptionsPanel = new();
+        private readonly Label moreOptionsPanelLabel = new();
+
         private readonly Label titleLabel = new();
         private readonly TextPicker titlePicker = new ();
         
@@ -29,6 +44,8 @@ namespace Alternet.UI
         private readonly Label statusLabel = new();
         private readonly DrawingResourcePicker statusPicker = new();
 
+        private readonly RepeatPatternPicker rulePicker = new();
+
         private CalendarItem? calendarItem;
 
         /// <summary>
@@ -36,14 +53,14 @@ namespace Alternet.UI
         /// </summary>
         public CalendarItemPicker()
         {
-            MinChildMargin = 5;
             Layout = LayoutStyle.Vertical;
+            Padding = DefaultPadding;
 
-            titleLabel.Text = CommonStrings.Default.CalendarItemLabelTitle + ":";
-            descriptionLabel.Text = CommonStrings.Default.CalendarItemLabelDescription + ":";
-            locationLabel.Text = CommonStrings.Default.CalendarItemLabelLocation + ":";
-            categoryLabel.Text = CommonStrings.Default.CalendarItemLabelCategory + ":";
-            statusLabel.Text = CommonStrings.Default.CalendarItemLabelStatus + ":";
+            titleLabel.Text = CommonStrings.Default.CalendarItemLabelTitle;
+            descriptionLabel.Text = CommonStrings.Default.CalendarItemLabelDescription;
+            locationLabel.Text = CommonStrings.Default.CalendarItemLabelLocation;
+            categoryLabel.Text = CommonStrings.Default.CalendarItemLabelCategory;
+            statusLabel.Text = CommonStrings.Default.CalendarItemLabelStatus;
 
             foreach (var item in KnownCalendarItemMarkers.Categories)
             {
@@ -57,21 +74,39 @@ namespace Alternet.UI
 
             ValueToControls();
 
-            titleLabel.Parent = this;
-            titlePicker.Parent = this;
+            void InitPanel(TransparentPanel panel)
+            {
+                panel.SetIgnoreTransparency().RoundCorners().SetHasBorder(true)
+                .SetLayout(LayoutStyle.Vertical).SetMinChildMargin(DefaultMinChildMargin).SetMargin(DefaultMinChildMargin);
+            }
 
-            categoryLabel.Parent = this;
-            categoryPicker.Parent = this;
+            InitPanel(detailsPanel);
+            InitPanel(moreOptionsPanel);
 
-            statusLabel.Parent = this;
-            statusPicker.Parent = this;
+            detailsPanelLabel = detailsPanel.Add<BoldLabel>(CommonStrings.Default.CalendarItemLabelDetails);
+            moreOptionsPanelLabel = moreOptionsPanel.Add<BoldLabel>(CommonStrings.Default.CalendarItemLabelMoreOptions);
 
-            locationLabel.Parent = this;
-            locationPicker.Parent = this;
+            titleLabel.Parent = detailsPanel;
+            titlePicker.Parent = detailsPanel;
 
-            descriptionLabel.Parent = this;
-            descriptionPicker.Parent = this;
+            categoryLabel.Parent = detailsPanel;
+            categoryPicker.Parent = detailsPanel;
 
+            statusLabel.Parent = detailsPanel;
+            statusPicker.Parent = detailsPanel;
+
+            detailsPanel.Parent = this;
+
+            rulePicker.Padding = 0;
+            rulePicker.Parent = this;
+
+            locationLabel.Parent = moreOptionsPanel;
+            locationPicker.Parent = moreOptionsPanel;
+
+            descriptionLabel.Parent = moreOptionsPanel;
+            descriptionPicker.Parent = moreOptionsPanel;
+
+            moreOptionsPanel.Parent = this;
 
             titlePicker.ValueChanged += (s, e) =>
             {
@@ -99,6 +134,11 @@ namespace Alternet.UI
                 var newValue = statusPicker.Value as CalendarItemStatus;
                 Value.Status = newValue ?? KnownCalendarItemMarkers.StatusUnknown;
             };
+
+            rulePicker.ValueChanged += (s, e) =>
+            {
+                Value.Rule = rulePicker.Value;
+            };
         }
 
         /// <summary>
@@ -107,8 +147,99 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
+        /// Gets the <see cref="TransparentPanel"/> that contains the controls for editing
+        /// the details of the <see cref="CalendarItem"/>.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel DetailsPanel => detailsPanel;
+
+        /// <summary>
+        /// Gets the <see cref="Label"/> that displays the label which is shown in the header of
+        /// details panel of the <see cref="CalendarItemPicker"/>.
+        /// </summary>
+        [Browsable(false)]
+        public Label DetailsPanelLabel => detailsPanelLabel;
+
+        /// <summary>
+        /// Gets the <see cref="RepeatPatternPicker"/> that is used to edit the recurrence rule.
+        /// </summary>
+        [Browsable(false)]
+        public RepeatPatternPicker RulePicker => rulePicker;
+
+        /// <summary>
+        /// Gets the <see cref="Label"/> that displays the label which is shown
+        /// above the <see cref="TitlePicker"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public Label TitleLabel => titleLabel;
+
+        /// <summary>
+        /// Gets the <see cref="TextPicker"/> that is used to edit the title
+        /// of the <see cref="CalendarItem"/> being edited.
+        /// </summary>
+        [Browsable(false)]
+        public TextPicker TitlePicker => titlePicker;
+
+        /// <summary>
+        /// Gets the <see cref="Label"/> that displays the label which is
+        /// shown above the <see cref="DescriptionPicker"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public Label DescriptionLabel => descriptionLabel;
+
+        /// <summary>
+        /// Gets the <see cref="MultilineTextPicker"/> that is used to edit
+        /// the description of the <see cref="CalendarItem"/> being edited.
+        /// </summary>
+        [Browsable(false)]
+        public MultilineTextPicker DescriptionPicker => descriptionPicker;
+
+        /// <summary>
+        /// Gets the <see cref="Label"/> that displays the label which
+        /// is shown above the <see cref="LocationPicker"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public Label LocationLabel => locationLabel;
+
+        /// <summary>
+        /// Gets the <see cref="TextPicker"/> that is used to edit the location
+        /// of the <see cref="CalendarItem"/> being edited.
+        /// </summary>
+        [Browsable(false)]
+        public TextPicker LocationPicker => locationPicker;
+
+        /// <summary>
+        /// Gets the <see cref="Label"/> that displays the label which is shown
+        /// above the <see cref="CategoryPicker"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public Label CategoryLabel => categoryLabel;
+
+        /// <summary>
+        /// Gets the <see cref="DrawingResourcePicker"/> that is used to select
+        /// the category of the <see cref="CalendarItem"/> being edited.
+        /// </summary>
+        [Browsable(false)]
+        public DrawingResourcePicker CategoryPicker => categoryPicker;
+
+        /// <summary>
+        /// Gets the <see cref="Label"/> that displays the label which is shown
+        /// above the <see cref="StatusPicker"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public Label StatusLabel => statusLabel;
+
+        /// <summary>
+        /// Gets the <see cref="DrawingResourcePicker"/> used to select the status
+        /// of the <see cref="CalendarItem"/> being edited.
+        /// </summary>
+        [Browsable(false)]
+        public DrawingResourcePicker StatusPicker => statusPicker;
+
+        /// <summary>
         /// Gets or sets the <see cref="CalendarItem"/> that is being edited by the picker.
         /// </summary>
+        [Browsable(false)]
         public virtual CalendarItem Value
         {
             get
@@ -150,6 +281,7 @@ namespace Alternet.UI
             locationPicker.Text = Value.Location?.ToString() ?? string.Empty;
             statusPicker.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
             categoryPicker.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
+            rulePicker.Value = Value.Rule;
         }
 
         /// <summary>
@@ -163,6 +295,15 @@ namespace Alternet.UI
             ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            if (calendarItem != null)
+                calendarItem.PropertyChanged -= OnCalendarItemChanged;
+
+            base.DisposeManaged();
+        }
+
         /// <summary>
         /// Creates a new instance of <see cref="CalendarItem"/>. This method can be overridden
         /// in derived classes to provide a custom implementation of <see cref="CalendarItem"/>.
@@ -171,6 +312,46 @@ namespace Alternet.UI
         protected virtual CalendarItem CreateCalendarItem()
         {
             return new CalendarItem();
+        }
+    }
+
+    /// <summary>
+    /// Represents a scrollable version of the <see cref="CalendarItemPicker"/> control.
+    /// </summary>
+    public class ScrollableCalendarItemPicker : ScrollViewer<CalendarItemPicker>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollableCalendarItemPicker"/> class.
+        /// </summary>
+        public ScrollableCalendarItemPicker()
+        {
+            ScrolledControl.HasBorder = false;
+        }
+
+        /// <summary>
+        /// Occurs when the selected calendar item changes in the inner <see cref="CalendarItemPicker"/> control.
+        /// </summary>
+        public event EventHandler? ValueChanged
+        {
+            add => ScrolledControl.ValueChanged += value;
+            remove => ScrolledControl.ValueChanged -= value;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="CalendarItem"/> instance representing
+        /// the selected calendar item and its associated rules.
+        /// </summary>
+        public CalendarItem Value
+        {
+            get
+            {
+                return ScrolledControl.Value;
+            }
+
+            set
+            {
+                ScrolledControl.Value = value;
+            }
         }
     }
 }
