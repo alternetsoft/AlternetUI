@@ -59,7 +59,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a JSON string representation of the current state of this <see cref="RepeatPatternRule"/> instance.
+        /// Gets or sets a JSON string representation of the current state of this instance.
         /// </summary>
         [Browsable(false)]
         public virtual string AsJsonString
@@ -136,28 +136,34 @@ namespace Alternet.UI
         /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public virtual bool LoadFrom(IPropertyBag? propertyBag)
+        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
         {
             if (propertyBag == null)
                 return false;
+
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
 
             return DoInsideSuspendedPropertyChanged(() =>
             {
                 Reset();
 
-                if (propertyBag.TryGetEnumProperty(nameof(Kind), out ScheduleRepeatPattern parsedKind))
+                if (propertyBag.TryGetEnumProperty(prefix + nameof(Kind), out ScheduleRepeatPattern parsedKind))
                 {
                     Kind = parsedKind;
                 }
 
-                if (propertyBag.TryGetStringProperty(nameof(Start), out var startString) &&
+                if (propertyBag.TryGetStringProperty(prefix + nameof(Start), out var startString) &&
                     TryDateTimeFromString(startString, out var startDateTime))
                 {
                     Start = startDateTime;
                 }
 
-                if (propertyBag.TryGetStringProperty(nameof(End), out var endString) &&
+                if (propertyBag.TryGetStringProperty(prefix + nameof(End), out var endString) &&
                     TryDateTimeFromString(endString, out var endDateTime))
                 {
                     End = endDateTime;
@@ -166,13 +172,13 @@ namespace Alternet.UI
                 switch (Kind)
                 {
                     case ScheduleRepeatPattern.Daily:
-                        return DailyRule.LoadFrom(propertyBag, nameof(DailyRule));
+                        return DailyRule.LoadFrom(propertyBag, prefix + nameof(DailyRule));
                     case ScheduleRepeatPattern.Weekly:
-                        return WeeklyRule.LoadFrom(propertyBag, nameof(WeeklyRule));
+                        return WeeklyRule.LoadFrom(propertyBag, prefix + nameof(WeeklyRule));
                     case ScheduleRepeatPattern.Monthly:
-                        return MonthlyRule.LoadFrom(propertyBag, nameof(MonthlyRule));
+                        return MonthlyRule.LoadFrom(propertyBag, prefix + nameof(MonthlyRule));
                     case ScheduleRepeatPattern.Yearly:
-                        return YearlyRule.LoadFrom(propertyBag, nameof(YearlyRule));
+                        return YearlyRule.LoadFrom(propertyBag, prefix + nameof(YearlyRule));
                 }
 
                 return true;
@@ -184,25 +190,31 @@ namespace Alternet.UI
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
-        public virtual void SaveTo(IPropertyBag propertyBag)
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
-            propertyBag.SetStringProperty(nameof(Kind), Kind.ToString());
-            propertyBag.SetStringProperty(nameof(Start), DateTimeToString(Start));
-            propertyBag.SetStringProperty(nameof(End), DateTimeToString(End));
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            propertyBag.SetStringProperty(prefix + nameof(Kind), Kind.ToString());
+            propertyBag.SetStringProperty(prefix + nameof(Start), DateTimeToString(Start));
+            propertyBag.SetStringProperty(prefix + nameof(End), DateTimeToString(End));
 
             switch (Kind)
             {
                 case ScheduleRepeatPattern.Daily:
-                    DailyRule.SaveTo(propertyBag, nameof(DailyRule));
+                    DailyRule.SaveTo(propertyBag, prefix + nameof(DailyRule));
                     break;
                 case ScheduleRepeatPattern.Weekly:
-                    WeeklyRule.SaveTo(propertyBag, nameof(WeeklyRule));
+                    WeeklyRule.SaveTo(propertyBag, prefix + nameof(WeeklyRule));
                     break;
                 case ScheduleRepeatPattern.Monthly:
-                    MonthlyRule.SaveTo(propertyBag, nameof(MonthlyRule));
+                    MonthlyRule.SaveTo(propertyBag, prefix + nameof(MonthlyRule));
                     break;
                 case ScheduleRepeatPattern.Yearly:
-                    YearlyRule.SaveTo(propertyBag, nameof(YearlyRule));
+                    YearlyRule.SaveTo(propertyBag, prefix + nameof(YearlyRule));
                     break;
             }
         }
