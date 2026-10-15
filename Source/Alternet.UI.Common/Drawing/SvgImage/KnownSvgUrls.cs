@@ -441,6 +441,26 @@ namespace Alternet.UI
         public static string UrlImageAngleUp { get; set; } = GetImageUrl("alternet-angle-up");
 
         /// <summary>
+        /// Gets or sets url used to load "Angles Right" svg image.
+        /// </summary>
+        public static string UrlImageAnglesRight { get; set; } = GetImageUrl("alternet-angles-right");
+
+        /// <summary>
+        /// Gets or sets url used to load "Angles Left" svg image.
+        /// </summary>
+        public static string UrlImageAnglesLeft { get; set; } = GetImageUrl("alternet-angles-left");
+
+        /// <summary>
+        /// Gets or sets url used to load "Angles Down" svg image.
+        /// </summary>
+        public static string UrlImageAnglesDown { get; set; } = GetImageUrl("alternet-angles-down");
+
+        /// <summary>
+        /// Gets or sets url used to load "Angles Up" svg image.
+        /// </summary>
+        public static string UrlImageAnglesUp { get; set; } = GetImageUrl("alternet-angles-up");
+
+        /// <summary>
         /// Gets or sets url used to load "Arrow Up" svg image.
         /// </summary>
         public static string UrlImageArrowUp { get; set; } = GetImageUrl("alternet-arrow-up");

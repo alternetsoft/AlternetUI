@@ -61,6 +61,11 @@ namespace Alternet.UI
         private static SvgImage? imgAngleLeft;
         private static SvgImage? imgAngleRight;
 
+        private static SvgImage? imgAnglesDown;
+        private static SvgImage? imgAnglesUp;
+        private static SvgImage? imgAnglesLeft;
+        private static SvgImage? imgAnglesRight;
+
         private static SvgImage? imgArrowDown;
         private static SvgImage? imgArrowUp;
         private static SvgImage? imgArrowRight;
@@ -556,15 +561,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets 'Angle Up' image.
-        /// </summary>
-        public static SvgImage ImgAngleUp
-        {
-            get => imgAngleUp ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleUp);
-            set => imgAngleUp = value;
-        }
-
-        /// <summary>
         /// Gets or sets 'Replace' image.
         /// </summary>
         public static SvgImage ImgReplace
@@ -625,6 +621,15 @@ namespace Alternet.UI
         {
             get => imgAngleDown ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleDown);
             set => imgAngleDown = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angle Up' image.
+        /// </summary>
+        public static SvgImage ImgAngleUp
+        {
+            get => imgAngleUp ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleUp);
+            set => imgAngleUp = value;
         }
 
         /// <summary>
@@ -1042,6 +1047,42 @@ namespace Alternet.UI
         {
             get => imgCircleDot ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleDot);
             set => imgCircleDot = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angle Down' image.
+        /// </summary>
+        public static SvgImage ImgAnglesDown
+        {
+            get => imgAnglesDown ??= new MonoSvgImage(KnownSvgUrls.UrlImageAnglesDown);
+            set => imgAnglesDown = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angles Up' image.
+        /// </summary>
+        public static SvgImage ImgAnglesUp
+        {
+            get => imgAnglesUp ??= new MonoSvgImage(KnownSvgUrls.UrlImageAnglesUp);
+            set => imgAnglesUp = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angles Right' image.
+        /// </summary>
+        public static SvgImage ImgAnglesRight
+        {
+            get => imgAnglesRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageAnglesRight);
+            set => imgAnglesRight = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Angles Left' image.
+        /// </summary>
+        public static SvgImage ImgAnglesLeft
+        {
+            get => imgAnglesLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageAnglesLeft);
+            set => imgAnglesLeft = value;
         }
 
         /// <summary>
