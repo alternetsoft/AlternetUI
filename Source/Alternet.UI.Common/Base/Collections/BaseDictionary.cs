@@ -43,10 +43,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Attempts to remove and return the value that has the specified key from the ditionary.
+        /// Attempts to remove the value with the specified key from the dictionary.
         /// </summary>
         /// <param name="key">The key of the element to remove.</param>
-        /// <returns>True if the object was removed successfully; otherwise, False.</returns>
+        /// <returns><c>true</c> if the object was removed successfully; otherwise, <c>false</c>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Remove(TKey key)
         {

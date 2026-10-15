@@ -383,6 +383,30 @@ namespace PropertyGridSample
             };
         }
 
+        public static string? json;
+
+        public static void InitCalendarItemPicker(CalendarItemPicker control)
+        {
+            control.ContextMenu.Add("Save to json", () =>
+            {
+                json = control.Value.AsJsonString;
+                App.Log(json);
+            });
+
+            control.ContextMenu.Add("Load from json", () =>
+            {
+                if (json is not null)
+                {
+                    control.Value.AsJsonString = json;
+                    App.Log(json);
+                }
+                else
+                {
+                    App.Log("No json to load");
+                }
+            });
+        }
+
         public static void InitDatePicker(DatePicker control)
         {
         }
