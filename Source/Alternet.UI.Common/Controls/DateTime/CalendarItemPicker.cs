@@ -31,13 +31,6 @@ namespace Alternet.UI
 
         private CalendarItem? calendarItem;
 
-        /*
-                private CalendarItemCategory? category;
-                private CalendarItemStatus? status;
-                private object? userData;
-                private string? userName;
-        */
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItemPicker"/> class.
         /// </summary>
@@ -62,6 +55,8 @@ namespace Alternet.UI
                 statusPicker.Add(item);
             }
 
+            ValueToControls();
+
             titleLabel.Parent = this;
             titlePicker.Parent = this;
 
@@ -76,6 +71,34 @@ namespace Alternet.UI
 
             descriptionLabel.Parent = this;
             descriptionPicker.Parent = this;
+
+
+            titlePicker.ValueChanged += (s, e) =>
+            {
+                Value.Title = titlePicker.Text;
+            };
+
+            locationPicker.ValueChanged += (s, e) =>
+            {
+                Value.Location = locationPicker.Text;
+            };
+            
+            descriptionPicker.ValueChanged += (s, e) =>
+            {
+                Value.Description = descriptionPicker.Text;
+            };
+            
+            categoryPicker.ValueChanged += (s, e) =>
+            {
+                var newValue = categoryPicker.Value as CalendarItemCategory;
+                Value.Category = newValue ?? KnownCalendarItemMarkers.CategoryNone;
+            };
+            
+            statusPicker.ValueChanged += (s, e) =>
+            {
+                var newValue = statusPicker.Value as CalendarItemStatus;
+                Value.Status = newValue ?? KnownCalendarItemMarkers.StatusUnknown;
+            };
         }
 
         /// <summary>
@@ -125,6 +148,8 @@ namespace Alternet.UI
             titlePicker.Text = Value.Title ?? string.Empty;
             descriptionPicker.Text = Value.Description ?? string.Empty;
             locationPicker.Text = Value.Location?.ToString() ?? string.Empty;
+            statusPicker.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
+            categoryPicker.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
         }
 
         /// <summary>

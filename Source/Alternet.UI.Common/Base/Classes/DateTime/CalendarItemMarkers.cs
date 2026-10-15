@@ -264,74 +264,74 @@ namespace Alternet.UI
         /// </summary>
         static KnownCalendarItemMarkers()
         {
-            Anniversary = Create(
+            CategoryAnniversary = Create(
             "Anniversary",
             CommonStrings.Default.CalendarItemCategoryAnniversary,
             () => ItemColors.AnniversaryLight,
             () => ItemColors.AnniversaryDark);
 
-            Birthday = Create(
+            CategoryBirthday = Create(
             "Birthday",
             CommonStrings.Default.CalendarItemCategoryBirthday,
             () => ItemColors.BirthdayLight,
             () => ItemColors.BirthdayDark);
 
-            Business = Create(
+            CategoryBusiness = Create(
             "Business",
             CommonStrings.Default.CalendarItemCategoryBusiness,
             () => ItemColors.BusinessLight,
             () => ItemColors.BusinessDark);
 
-            Important = Create(
+            CategoryImportant = Create(
                 "Important",
                 CommonStrings.Default.CalendarItemCategoryImportant,
                 () => ItemColors.ImportantLight,
                 () => ItemColors.ImportantDark);
 
-            MustAttend = Create(
+            CategoryMustAttend = Create(
                 "MustAttend",
                 CommonStrings.Default.CalendarItemCategoryMustAttend,
                 () => ItemColors.MustAttendLight,
                 () => ItemColors.MustAttendDark);
 
-            NeedPreparation = Create(
+            CategoryNeedPreparation = Create(
                 "NeedPreparation",
                 CommonStrings.Default.CalendarItemCategoryNeedPreparation,
                 () => ItemColors.NeedPreparationLight,
                 () => ItemColors.NeedPreparationDark);
 
-            None = Create(
+            CategoryNone = Create(
                 "None",
                 CommonStrings.Default.CalendarItemCategoryNone,
                 () => ItemColors.NoneLight,
                 () => ItemColors.NoneDark);
-            None.IsVisible = false;
+            CategoryNone.IsVisible = false;
 
-            Other = Create(
+            CategoryOther = Create(
                 "Other",
                 CommonStrings.Default.CalendarItemCategoryOther,
                 () => ItemColors.OtherLight,
                 () => ItemColors.OtherDark);
 
-            Personal = Create(
+            CategoryPersonal = Create(
                 "Personal",
                 CommonStrings.Default.CalendarItemCategoryPersonal,
                 () => ItemColors.PersonalLight,
                 () => ItemColors.PersonalDark);
 
-            PhoneCall = Create(
+            CategoryPhoneCall = Create(
                 "PhoneCall",
                 CommonStrings.Default.CalendarItemCategoryPhoneCall,
                 () => ItemColors.PhoneCallLight,
                 () => ItemColors.PhoneCallDark);
 
-            TravelRequired = Create(
+            CategoryTravelRequired = Create(
                 "TravelRequired",
                 CommonStrings.Default.CalendarItemCategoryTravelRequired,
                 () => ItemColors.TravelRequiredLight,
                 () => ItemColors.TravelRequiredDark);
 
-            Vacation = Create(
+            CategoryVacation = Create(
                 "Vacation",
                 CommonStrings.Default.CalendarItemCategoryVacation,
                 () => ItemColors.VacationLight,
@@ -349,80 +349,80 @@ namespace Alternet.UI
 
             Categories = new BaseCollection<CalendarItemCategory>
             {
-                None,
-                Anniversary,
-                Birthday,
-                Business,
-                Important,
-                MustAttend,
-                NeedPreparation,
-                Personal,
-                PhoneCall,
-                TravelRequired,
-                Vacation,
-                Other,
+                CategoryNone,
+                CategoryAnniversary,
+                CategoryBirthday,
+                CategoryBusiness,
+                CategoryImportant,
+                CategoryMustAttend,
+                CategoryNeedPreparation,
+                CategoryPersonal,
+                CategoryPhoneCall,
+                CategoryTravelRequired,
+                CategoryVacation,
+                CategoryOther,
             };
         }
 
         /// <summary>
         /// Gets the "Anniversary" calendar item category.
         /// </summary>
-        public static CalendarItemCategory Anniversary { get; }
+        public static CalendarItemCategory CategoryAnniversary { get; }
 
         /// <summary>
         /// Gets the "Birthday" calendar item category.
         /// </summary>
-        public static CalendarItemCategory Birthday { get; }
+        public static CalendarItemCategory CategoryBirthday { get; }
 
         /// <summary>
         /// Gets the "Business" calendar item category.
         /// </summary>
-        public static CalendarItemCategory Business { get; }
+        public static CalendarItemCategory CategoryBusiness { get; }
 
         /// <summary>
         /// Gets the "Important" calendar item category.
         /// </summary>
-        public static CalendarItemCategory Important { get; }
+        public static CalendarItemCategory CategoryImportant { get; }
 
         /// <summary>
         /// Gets the "MustAttend" calendar item category.
         /// </summary>
-        public static CalendarItemCategory MustAttend { get; }
+        public static CalendarItemCategory CategoryMustAttend { get; }
 
         /// <summary>
         /// Gets the "NeedPreparation" calendar item category.
         /// </summary>
-        public static CalendarItemCategory NeedPreparation { get; }
+        public static CalendarItemCategory CategoryNeedPreparation { get; }
 
         /// <summary>
         /// Gets the "None" calendar item category.
         /// </summary>
-        public static CalendarItemCategory None { get; }
+        public static CalendarItemCategory CategoryNone { get; }
 
         /// <summary>
         /// Gets the "Other" calendar item category.
         /// </summary>
-        public static CalendarItemCategory Other { get; }
+        public static CalendarItemCategory CategoryOther { get; }
 
         /// <summary>
         /// Gets the "Personal" calendar item category.
         /// </summary>
-        public static CalendarItemCategory Personal { get; }
+        public static CalendarItemCategory CategoryPersonal { get; }
 
         /// <summary>
         /// Gets the "PhoneCall" calendar item category.
         /// </summary>
-        public static CalendarItemCategory PhoneCall { get; }
+        public static CalendarItemCategory CategoryPhoneCall { get; }
 
         /// <summary>
         /// Gets the "TravelRequired" calendar item category.
         /// </summary>
-        public static CalendarItemCategory TravelRequired { get; }
+        public static CalendarItemCategory CategoryTravelRequired { get; }
 
         /// <summary>
         /// Gets the "Vacation" calendar item category.
         /// </summary>
-        public static CalendarItemCategory Vacation { get; }
+        public static CalendarItemCategory CategoryVacation { get; }
 
         /// <summary>
         /// Gets the collection of all calendar item categories.
@@ -433,7 +433,7 @@ namespace Alternet.UI
         /// Finds a calendar item category by its name.
         /// </summary>
         /// <param name="name">The name of the calendar item category.</param>
-        /// <returns>The matching <see cref="CalendarItemCategory"/> if found; otherwise, <see cref="None"/>.</returns>
+        /// <returns>The matching <see cref="CalendarItemCategory"/> if found; otherwise, <see cref="CategoryNone"/>.</returns>
         public static CalendarItemCategory FindCategory(string name)
         {
             foreach (var item in Categories)
@@ -442,13 +442,13 @@ namespace Alternet.UI
                     return item;
             }
 
-            return None;
+            return CategoryNone;
         }
 
         /// <summary>
         /// Gets the "Absent" calendar item status, which is used to indicate that a person is not present or unavailable.
         /// </summary>
-        public static CalendarItemStatus Absent { get; set; } = new CalendarItemStatus(
+        public static CalendarItemStatus StatusAbsent { get; set; } = new CalendarItemStatus(
             "Absent",
             CommonStrings.Default.CalendarItemStatusAbsent,
             () => Color.FromArgb(179, 21, 166),
@@ -458,7 +458,7 @@ namespace Alternet.UI
         /// Gets the "Busy" calendar item status, which is used to indicate that
         /// a person is occupied or unavailable due to other commitments.
         /// </summary>
-        public static CalendarItemStatus Busy { get; set; } = new CalendarItemStatus(
+        public static CalendarItemStatus StatusBusy { get; set; } = new CalendarItemStatus(
             "Busy",
             CommonStrings.Default.CalendarItemStatusBusy,
             () => Color.FromArgb(31, 118, 193),
@@ -468,7 +468,7 @@ namespace Alternet.UI
         /// Gets the "Free" calendar item status, which is used to indicate that a person
         /// is available or not occupied with any other commitments.
         /// </summary>
-        public static CalendarItemStatus Free { get; set; } = new CalendarItemStatus(
+        public static CalendarItemStatus StatusFree { get; set; } = new CalendarItemStatus(
             "Free",
             CommonStrings.Default.CalendarItemStatusFree,
             () => Color.FromArgb(78, 201, 176),
@@ -478,7 +478,7 @@ namespace Alternet.UI
         /// Gets the "Tentative" calendar item status, which is used to indicate
         /// that a person's availability is uncertain or subject to change.
         /// </summary>
-        public static CalendarItemStatus Tentative { get; set; } = new CalendarItemStatus(
+        public static CalendarItemStatus StatusTentative { get; set; } = new CalendarItemStatus(
             "Tentative",
             CommonStrings.Default.CalendarItemStatusTentative,
             () => new HatchBrush(HatchStyle.BackwardDiagonal, Color.FromArgb(31, 118, 193), Color.White),
@@ -487,7 +487,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the "Unknown" calendar item status, which is used when a status cannot be determined.
         /// </summary>
-        public static CalendarItemStatus Unknown { get; set; } = new CalendarItemStatus(
+        public static CalendarItemStatus StatusUnknown { get; set; } = new CalendarItemStatus(
             "Unknown",
             CommonStrings.Default.CalendarItemStatusUnknown,
             () => SystemColors.Window,
@@ -498,13 +498,13 @@ namespace Alternet.UI
         /// Gets the collection of all calendar item statuses.
         /// </summary>
         public static Collection<CalendarItemStatus> Statuses { get; set; } =
-            [Absent, Busy, Free, Tentative, Unknown];
+            [StatusAbsent, StatusBusy, StatusFree, StatusTentative, StatusUnknown];
 
         /// <summary>
         /// Finds a calendar item status by its name.
         /// </summary>
         /// <param name="name">The name of the calendar item status.</param>
-        /// <returns>The matching <see cref="CalendarItemStatus"/> if found; otherwise, <see cref="Unknown"/>.</returns>
+        /// <returns>The matching <see cref="CalendarItemStatus"/> if found; otherwise, <see cref="StatusUnknown"/>.</returns>
         public static CalendarItemStatus FindStatus(string name)
         {
             foreach (var item in Statuses)
@@ -513,7 +513,7 @@ namespace Alternet.UI
                     return item;
             }
 
-            return Unknown;
+            return StatusUnknown;
         }
 
         internal static class ItemColors

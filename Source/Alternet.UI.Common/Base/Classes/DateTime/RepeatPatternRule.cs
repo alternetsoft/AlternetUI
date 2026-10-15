@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a composite repeat pattern rule that combines daily, weekly, monthly, yearly
     /// and other repeat pattern rules.
     /// </summary>
-    public partial class RepeatPatternRule : BaseRepeatPatternRule
+    public partial class RepeatPatternRule : BaseRepeatPatternRule, IEquatable<RepeatPatternRule>
     {
         private readonly DailyRepeatPatternRule dailyRule;
         private readonly WeeklyRepeatPatternRule weeklyRule;
@@ -208,10 +208,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a deep copy of the current <see cref="RepeatPatternRule"/> instance.
+        /// Creates a deep copy of the current instance.
         /// </summary>
-        /// <returns>A new <see cref="RepeatPatternRule"/> instance that is a deep 
-        /// copy of the current instance.</returns>
+        /// <returns>A new instance that is a deep copy of the current instance.</returns>
         public virtual RepeatPatternRule Clone()
         {
             var clone = new RepeatPatternRule();
@@ -228,6 +227,17 @@ namespace Alternet.UI
         public override bool Equals(object? obj)
         {
             if (obj is not RepeatPatternRule other)
+            {
+                return false;
+            }
+
+            return Equals(other);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(RepeatPatternRule? other)
+        {
+            if (other == null)
             {
                 return false;
             }
@@ -321,6 +331,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return (Kind, DailyRule, WeeklyRule, MonthlyRule, YearlyRule).GetHashCode();
+        }
+
+        /// <inheritdoc/>
         public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
             return GetSelectedRule()?.GetDates(prm) ?? IDateRepeatPatternRule.RuleGetDatesResult.Empty;
@@ -388,12 +404,6 @@ namespace Alternet.UI
         protected virtual DailyRepeatPatternRule CreateDailyRule()
         {
             return new DailyRepeatPatternRule(this);
-        }
-
-        /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            return (Kind, DailyRule, WeeklyRule, MonthlyRule, YearlyRule).GetHashCode();
         }
     }
 }
