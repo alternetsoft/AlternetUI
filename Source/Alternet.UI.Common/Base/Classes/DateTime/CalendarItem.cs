@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -9,6 +10,9 @@ namespace Alternet.UI
     /// </summary>
     public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>
     {
+        private readonly RepeatPatternRule rule;
+
+        private int? hashCode;
         private string? title;
         private string? description;
         private object? location;
@@ -25,6 +29,21 @@ namespace Alternet.UI
         {
             category = KnownCalendarItemMarkers.CategoryNone;
             status = KnownCalendarItemMarkers.StatusUnknown;
+            rule = CreateRule();
+            rule.PropertyChanged += OnRuleChanged;
+        }
+
+        /// <summary>
+        /// Gets the repeat pattern rule associated with this calendar item.
+        /// </summary>
+        public RepeatPatternRule Rule
+        {
+            get => rule;
+
+            set
+            {
+                rule.Assign(value);
+            }
         }
 
         /// <summary>
@@ -156,7 +175,8 @@ namespace Alternet.UI
         /// <returns>A new instance that is a deep copy of the current instance.</returns>
         public virtual CalendarItem Clone()
         {
-            var clone = new CalendarItem();
+            var clone = Activator.CreateInstance(GetType()) as CalendarItem;
+            clone ??= new CalendarItem();
             clone.Assign(this);
             return clone;
         }
@@ -192,7 +212,8 @@ namespace Alternet.UI
                    Status == other.Status &&
                    Equals(UserData, other.UserData) &&
                    UserName == other.UserName &&
-                   Visible == other.Visible;
+                   Visible == other.Visible &&
+                   Rule.Equals(other.Rule);
         }
 
         /// <summary>
@@ -201,6 +222,26 @@ namespace Alternet.UI
         public virtual void Reset()
         {
             Assign(null);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            if (hashCode.HasValue)
+                return hashCode.Value;
+
+            hashCode = (
+                Title,
+                Description,
+                Location?.GetHashCode(),
+                Category,
+                Status,
+                UserData,
+                UserName,
+                Visible,
+                Rule.GetHashCode())
+                .GetHashCode();
+            return hashCode.Value;  
         }
 
         /// <summary>
@@ -221,6 +262,8 @@ namespace Alternet.UI
                 UserData = null;
                 UserName = null;
                 Visible = true;
+                Rule.Assign(null);
+                hashCode = null;
 
                 ResumePropertyChanged();
                 return;
@@ -241,15 +284,39 @@ namespace Alternet.UI
                 UserData = otherItem.UserData;
                 UserName = otherItem.UserName;
                 Visible = otherItem.Visible;
+                Rule = otherItem.Rule;
+                hashCode = null;
 
                 ResumePropertyChanged();
             }
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        protected override void OnPropertyChanged(string? propertyName = null)
         {
-            return (Title, Description, Location?.ToString(), Category, Status, UserData, UserName, Visible).GetHashCode();
+            base.OnPropertyChanged(propertyName);
+            hashCode = null;
+        }
+
+        /// <summary>
+        /// Called when a property of the <see cref="RepeatPatternRule"/> associated with this calendar item changes.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
+        protected virtual void OnRuleChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            hashCode = null;
+            RaisePropertyChanged(nameof(Rule));
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="RepeatPatternRule"/>. This method can be overridden
+        /// in derived classes to provide a custom implementation of <see cref="RepeatPatternRule"/>.
+        /// </summary>
+        /// <returns>A new instance of <see cref="RepeatPatternRule"/>.</returns>
+        protected virtual RepeatPatternRule CreateRule()
+        {
+            return new RepeatPatternRule();
         }
     }
 }
