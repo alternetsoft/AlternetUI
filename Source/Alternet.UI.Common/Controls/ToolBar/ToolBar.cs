@@ -3785,4 +3785,175 @@ namespace Alternet.UI
             }
         }
     }
+
+    /// <summary>
+    /// Implements a toolbar with a title label and a collapse button,
+    /// allowing the user to collapse or expand the associated content.
+    /// </summary>
+    public class SectionHeaderToolBar : ToolBar
+    {
+        /// <summary>
+        /// Gets or sets the default image for the collapse button in the <see cref="SectionHeaderToolBar"/> control.
+        /// </summary>
+        public static SvgImage? DefaultCollapseButtonImage = KnownSvgImages.ImgAnglesDown;
+
+        /// <summary>
+        /// Gets or sets the default image for the expand button in the <see cref="SectionHeaderToolBar"/> control.
+        /// </summary>
+        public static SvgImage? DefaultExpandButtonImage = KnownSvgImages.ImgAnglesRight;
+
+        /// <summary>
+        /// Gets or sets the default margin for the label in the <see cref="SectionHeaderToolBar"/> control.
+        /// </summary>
+        public static Thickness DefaultLabelMargin = 0;
+
+        private readonly AbstractControl label;
+        private readonly SpeedButton collapseButton;
+        private SvgImage? collapseButtonImage = DefaultCollapseButtonImage;
+        private SvgImage? expandButtonImage = DefaultExpandButtonImage;
+        private bool isCollapsed;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SectionHeaderToolBar"/> class.
+        /// </summary>
+        public SectionHeaderToolBar()
+        {
+            label = AddTextCore();
+            label.IsBold = true;
+            label.Margin = DefaultLabelMargin;
+
+            collapseButton = AddSpeedBtnCore(null, GetCollapseButtonImage(), null, OnCollapseButtonClick);
+            collapseButton.HorizontalAlignment = HorizontalAlignment.Right;
+        }
+
+        /// <summary>
+        /// Occurs when the collapse button is clicked.
+        /// </summary>
+        public event EventHandler? CollapseButtonClick;
+
+        /// <summary>
+        /// Gets or sets the button image for the collapsed state.
+        /// </summary>
+        [Browsable(false)]
+        public SvgImage? CollapseButtonImage
+        {
+            get => collapseButtonImage;
+            set
+            {
+                if (collapseButtonImage == value)
+                    return;
+                collapseButtonImage = value;
+                collapseButton.SvgImage = GetCollapseButtonImage();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the button image for the expanded state.
+        /// </summary>
+        [Browsable(false)]
+        public SvgImage? ExpandButtonImage
+        {
+            get => expandButtonImage;
+            set
+            {
+                if (expandButtonImage == value)
+                    return;
+                expandButtonImage = value;
+                collapseButton.SvgImage = GetCollapseButtonImage();
+            }
+        }
+
+        /// <summary>
+        /// Gets the title label of the <see cref="SectionHeaderToolBar"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl Label => label;
+
+        /// <summary>
+        /// Gets the collapse button of the <see cref="SectionHeaderToolBar"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public SpeedButton CollapseButton => collapseButton;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// the "Collapse" action can be performed.
+        /// </summary>
+        public virtual bool CanCollapse { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether
+        /// the "Expand" action can be performed.
+        /// </summary>
+        public virtual bool CanExpand { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the visibility of sibling controls should
+        /// be toggled when the collapse button is clicked.
+        /// </summary>
+        public virtual bool ToggleSiblingsVisibility { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="SectionHeaderToolBar"/> control is 
+        /// in the collapsed state.
+        /// </summary>
+        public virtual bool IsCollapsed
+        {
+            get => isCollapsed;
+            set
+            {
+                if (!CanCollapse && value)
+                    return;
+                if (!CanExpand && !value)
+                    return;
+                if (isCollapsed == value)
+                    return;
+                isCollapsed = value;
+                collapseButton.SvgImage = GetCollapseButtonImage();
+
+                if (ToggleSiblingsVisibility)
+                {
+                    DoInsideLayout(() =>
+                    {
+                        foreach (var child in Siblings)
+                        {
+                            child.Visible = !isCollapsed;
+                        }
+                    });
+                }
+
+                OnCollapsedChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets the image for the collapse button based on the current state of the <see cref="IsCollapsed"/> property.
+        /// </summary>
+        /// <returns>The <see cref="SvgImage"/> to be used for the collapse button.</returns>
+        protected virtual SvgImage? GetCollapseButtonImage()
+        {
+            return IsCollapsed
+                ? expandButtonImage
+                : collapseButtonImage;
+        }
+
+        /// <summary>
+        /// Called when the <see cref="IsCollapsed"/> property changes.
+        /// Override this method to handle the collapse state change.
+        /// </summary>
+        protected virtual void OnCollapsedChanged()
+        {
+        }
+
+        /// <summary>
+        /// Called when the label is clicked. Override this method to handle the click event.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnCollapseButtonClick(object? sender, EventArgs e)
+        {
+            IsCollapsed = !IsCollapsed;
+            CollapseButtonClick?.Invoke(this, EventArgs.Empty);
+        }
+    }
 }
