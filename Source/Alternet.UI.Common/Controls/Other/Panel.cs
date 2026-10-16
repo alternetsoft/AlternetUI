@@ -94,14 +94,15 @@ namespace Alternet.UI
     /// </summary>
     public partial class RoundBorderWithTitle : RoundBorder
     {
-        private readonly BoldLabel label;
+        private readonly SectionHeaderToolBar toolBar;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RoundBorderWithTitle"/> class.
         /// </summary>
         public RoundBorderWithTitle()
         {
-            label = Add<BoldLabel>();
+            toolBar = new();
+            toolBar.Parent = this;
         }
 
         /// <summary>
@@ -111,12 +112,37 @@ namespace Alternet.UI
         public RoundBorderWithTitle(string labelTitle)
             : this()
         {
-            label.Text = labelTitle;
+            toolBar.Label.Text = labelTitle;
         }
 
         /// <summary>
-        /// Gets the title label of the <see cref="RoundBorderWithTitle"/> control.
+        /// Gets the header toolbar of the <see cref="RoundBorderWithTitle"/> control.
         /// </summary>
-        public BoldLabel Label => label;
+        public SectionHeaderToolBar HeaderToolBar => toolBar;
+    }
+
+    /// <summary>
+    /// Implements a panel with square corners, a border, and a title.
+    /// </summary>
+    public partial class SquareBorderWithTitle : RoundBorderWithTitle
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SquareBorderWithTitle"/> class.
+        /// </summary>
+        public SquareBorderWithTitle()
+        {
+            SquareCorners();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SquareBorderWithTitle"/>
+        /// class with the specified title.
+        /// </summary>
+        /// <param name="labelTitle">The title of the label.</param>
+        public SquareBorderWithTitle(string labelTitle)
+            : this()
+        {
+            HeaderToolBar.Label.Text = labelTitle;
+        }
     }
 }
