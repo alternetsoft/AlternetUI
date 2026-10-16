@@ -246,7 +246,7 @@ namespace Alternet.UI
         /// Gets the panel which contains the <see cref="TabControl"/> used for selecting the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public Panel TabControlPanel => tabControlPanel;
+        public RoundBorderWithTitle TabControlPanel => tabControlPanel;
 
         [Browsable(false)]
         DateUtils.TimePeriodUnitTextFormat TimeUnitTextFormat
@@ -262,7 +262,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the seconds selection is visible in the <see cref="RepeatPatternPicker"/> control.
+        /// Gets or sets a value indicating whether the collapse buttons
+        /// are displayed in the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public virtual bool ShowCollapseButtons
+        {
+            get
+            {
+                return tabControlPanel.HeaderToolBar.CollapseButton.Visible;
+            }
+
+            set
+            {
+                tabControlPanel.HeaderToolBar.CollapseButton.Visible = value;
+                startPanel.HeaderToolBar.CollapseButton.Visible = value;
+                endPanel.HeaderToolBar.CollapseButton.Visible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the seconds selection
+        /// is visible in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public virtual bool SecondsVisible
         {
