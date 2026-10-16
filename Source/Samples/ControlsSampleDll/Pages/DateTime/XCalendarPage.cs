@@ -30,6 +30,7 @@ namespace ControlsSample
             patternPicker.IsTimeVisible = false;
             patternPicker.ShowPanelBorders = false;
             patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
+            patternPicker.ShowCollapseButtons = false;
 
             Padding = 5;
 
