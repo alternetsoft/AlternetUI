@@ -280,6 +280,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sorts two <see cref="DateOnly"/> values in ascending order.
+        /// </summary>
+        /// <param name="date1">The first date to compare.</param>
+        /// <param name="date2">The second date to compare.</param>
+        public static void Sort(ref DateOnly date1, ref DateOnly date2)
+        {
+            if (date1 > date2)
+            {
+                (date1, date2) = (date2, date1);
+            }
+        }
+
+        /// <summary>
         /// Enumerates the days of the week based on the specified first day of the week
         /// and returns the corresponding <see cref="DaysOfWeek"/> values and titles.
         /// </summary>
@@ -429,12 +442,14 @@ namespace Alternet.UI
             None = 0,
 
             /// <summary>
-            /// Specifies that seconds should be hidden when formatting duration text, even if the duration includes seconds.
+            /// Specifies that seconds should be hidden when formatting duration text,
+            /// even if the duration includes seconds.
             /// </summary>
             HideSeconds = 1 << 0,
 
             /// <summary>
-            /// Specifies that if the duration is zero, the formatted duration text should return "0" instead of an empty string.
+            /// Specifies that if the duration is zero, the formatted duration text
+            /// should return "0" instead of an empty string.
             /// </summary>
             ReturnIfZero = 1 << 1,
         }

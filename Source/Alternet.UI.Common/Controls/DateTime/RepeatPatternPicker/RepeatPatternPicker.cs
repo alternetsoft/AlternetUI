@@ -15,12 +15,14 @@ namespace Alternet.UI
     public partial class RepeatPatternPicker : HiddenBorder
     {
         /// <summary>
-        /// Gets or sets the default minimum margin between child controls in the <see cref="RepeatPatternPicker"/> control.
+        /// Gets or sets the default minimum margin between child controls
+        /// in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public static Thickness DefaultMinChildMargin = 5;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
+        /// Gets or sets a value indicating whether the drop-down image for
+        /// the combo controls is shown by default.
         /// </summary>
         public static bool DefaultShowDropDownImage = false;
 
@@ -28,10 +30,12 @@ namespace Alternet.UI
         /// Gets or sets the default time unit text format used for displaying durations
         /// in the duration label of the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
-        public static DateUtils.TimePeriodUnitTextFormat DefaultTimeUnitTextFormat = DateUtils.TimePeriodUnitTextFormat.Short;
+        public static DateUtils.TimePeriodUnitTextFormat DefaultTimeUnitTextFormat
+            = DateUtils.TimePeriodUnitTextFormat.Short;
 
         /// <summary>
-        /// Gets or sets the default date format used for displaying dates in the <see cref="RepeatPatternPicker"/> control.
+        /// Gets or sets the default date format used for displaying dates
+        /// in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public static string DefaultDateFormat = "D";
 
@@ -126,7 +130,8 @@ namespace Alternet.UI
             endTimeIcon = startPicker.CreatePictureBox(DateTimePickerKind.Time);
 
             endDatePanel.SetLayout(LayoutStyle.Horizontal);
-            endDateIcon.WithAlignment(VerticalAlignment.Top).WithMarginTop(DefaultMinChildMargin.Top).SetParent(endDatePanel);
+            endDateIcon.WithAlignment(VerticalAlignment.Top)
+                .WithMarginTop(DefaultMinChildMargin.Top).SetParent(endDatePanel);
 
             endDateControlsPanel.SetParent(endDatePanel);
             endDatePanel.Parent = endPanel;
@@ -140,10 +145,12 @@ namespace Alternet.UI
 
             endPanel.Parent = this;
 
-            // Other initializations
+            // Other
 
-            XRadioButton[] radioButtons
-                = { endsOnRadioButton.MainControl, endsAfterOccurrenceRadioButton.MainControl, endsNeverRadioButton.MainControl };
+            XRadioButton[] radioButtons = {
+                endsOnRadioButton.MainControl,
+                endsAfterOccurrenceRadioButton.MainControl,
+                endsNeverRadioButton.MainControl };
 
             endsOnRadioButton.MainControl.RadioSiblings = radioButtons;
             endsAfterOccurrenceRadioButton.MainControl.RadioSiblings = radioButtons;
@@ -178,11 +185,12 @@ namespace Alternet.UI
 
             DateFormat = DefaultDateFormat;
 
-            // DataToControls
+            endsNeverRadioButton.IsEnabled = false;
+            endsAfterOccurrenceRadioButton.IsEnabled = false;
 
             ValueToControls();
 
-            // Event handlers for updating the repeat pattern rule based on user interactions with the controls
+            // Event handlers
 
             startPicker.ValueChanged += (s, e) =>
             {
@@ -380,19 +388,22 @@ namespace Alternet.UI
         public TimePicker EndTimePicker => endTimePicker.MainControl;
 
         /// <summary>
-        /// Gets the end date icon control used for displaying the end date icon in the <see cref="RepeatPatternPicker"/> control.
+        /// Gets the end date icon control used for displaying the end date icon
+        /// in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         [Browsable(false)]
         public PictureBox EndDateIcon => endDateIcon;
 
         /// <summary>
-        /// Gets the end time icon control used for displaying the end time icon in the <see cref="RepeatPatternPicker"/> control.
+        /// Gets the end time icon control used for displaying the end time icon
+        /// in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         [Browsable(false)]
         public PictureBox EndTimeIcon => endTimeIcon;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the time selection is visible in the <see cref="RepeatPatternPicker"/> control.
+        /// Gets or sets a value indicating whether the time selection is visible
+        /// in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public virtual bool IsTimeVisible
         {
@@ -406,7 +417,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the time selection is enabled in the <see cref="RepeatPatternPicker"/> control.
+        /// Gets or sets a value indicating whether the time selection is enabled
+        /// in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public virtual bool IsTimeEnabled
         {
@@ -553,6 +565,11 @@ namespace Alternet.UI
             tabControl.ContentVisible = newPattern != ScheduleRepeatPattern.None;
 
             SelectedPattern = newPattern;
+
+            endsOnRadioButton.IsChecked = true;
+
+            endsNeverRadioButton.SetEnabled(index > 0);
+            endsAfterOccurrenceRadioButton.SetEnabled(index > 0);
         }
 
         /// <summary>

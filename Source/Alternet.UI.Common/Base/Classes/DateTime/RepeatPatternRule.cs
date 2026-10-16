@@ -351,7 +351,46 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
         {
-            return GetSelectedRule()?.GetDates(prm) ?? IDateRepeatPatternRule.RuleGetDatesResult.Empty;
+            var rule = GetSelectedRule();
+
+            if (rule == null)
+            {
+                return new IDateRepeatPatternRule.RuleGetDatesResult(Internal());
+            }
+
+            IEnumerable<DateOnly> Internal()
+            {
+                var minDate = prm.MinDate;
+                var maxDate = prm.MaxDate;
+                var startDate = StartDate;
+                var endDate = EndDate;
+
+                DateUtils.Sort(ref minDate, ref maxDate);
+                DateUtils.Sort(ref startDate, ref endDate);
+
+                if (minDate > endDate || maxDate < startDate)
+                {
+                    yield break;
+                }
+
+                if (minDate > startDate)
+                {
+                    startDate = minDate;
+                }
+
+                if (maxDate < endDate)
+                {
+                    endDate = maxDate;
+                }
+
+                while (startDate <= endDate)
+                {
+                    yield return startDate;
+                    startDate = startDate.AddDays(1);
+                }
+            }
+
+            return rule.GetDates(prm);
         }
 
         /// <summary>
