@@ -59,7 +59,10 @@ namespace Alternet.UI
         /// Gets a value indicating whether there is data on the
         /// <see cref='Clipboard'/> in the <see cref="DataFormats.Text"/> format.
         /// </summary>
-        public static bool ContainsText() => ContainsData(DataFormats.Text);
+        public static bool ContainsText()
+        {
+            return ContainsData(DataFormats.Text);
+        }
 
         /// <summary>
         /// Gets a value indicating whether there is data on the

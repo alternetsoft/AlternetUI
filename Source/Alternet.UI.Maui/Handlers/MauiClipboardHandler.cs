@@ -121,7 +121,12 @@ namespace Alternet.UI
         public virtual bool HasFormat(string format)
         {
             if (format == DataFormats.Text || format == DataFormats.UnicodeText)
+            {
+                if (App.IsAndroidOS)
+                    return true;
+
                 return SystemClipboard.HasText;
+            }
 
             var result = lastData?.HasFormat(format) ?? false;
 
