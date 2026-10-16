@@ -120,36 +120,14 @@ namespace Alternet.UI
     /// </summary>
     public partial class GenericRoundBorderWithTitle : GenericRoundBorder
     {
-        /// <summary>
-        /// Gets or sets the default image for the collapse button in the <see cref="GenericRoundBorderWithTitle"/> control.
-        /// </summary>
-        public static SvgImage? DefaultCollapseButtonImage = KnownSvgImages.ImgAnglesDown;
-        
-        /// <summary>
-        /// Gets or sets the default image for the expand button in the <see cref="GenericRoundBorderWithTitle"/> control.
-        /// </summary>
-        public static SvgImage? DefaultExpandButtonImage = KnownSvgImages.ImgAnglesRight;
-
-        private readonly ToolBar toolBar;
-        private readonly AbstractControl label;
-        private readonly SpeedButton collapseButton;
-        private SvgImage? collapseButtonImage = DefaultCollapseButtonImage;
-        private SvgImage? expandButtonImage = DefaultExpandButtonImage;
-        private bool isCollapsed;
+        private readonly SectionHeaderToolBar toolBar;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericRoundBorderWithTitle"/> class.
         /// </summary>
         public GenericRoundBorderWithTitle()
         {
-            toolBar = new ToolBar();
-
-            label = toolBar.AddTextCore();
-            label.IsBold = true;
-
-            collapseButton = toolBar.AddSpeedBtnCore(null, GetCollapseButtonImage(), null, OnCollapseButtonClick);
-            collapseButton.HorizontalAlignment = HorizontalAlignment.Right;
-
+            toolBar = new ();
             toolBar.Parent = this;
         }
 
@@ -161,90 +139,37 @@ namespace Alternet.UI
         public GenericRoundBorderWithTitle(string labelTitle)
             : this()
         {
-            label.Text = labelTitle;
+            toolBar.Label.Text = labelTitle;
         }
 
         /// <summary>
-        /// Gets the title label of the <see cref="GenericRoundBorderWithTitle"/> control.
+        /// Gets the header toolbar of the <see cref="GenericRoundBorderWithTitle"/> control.
         /// </summary>
-        [Browsable(false)]
-        public AbstractControl Label => label;
+        public SectionHeaderToolBar HeaderToolBar => toolBar;
+    }
 
+    /// <summary>
+    /// Implements a generic panel with square corners, a border, and a title.
+    /// </summary>
+    public partial class GenericSquareBorderWithTitle : GenericRoundBorderWithTitle
+    {
         /// <summary>
-        /// Gets the collapse button of the <see cref="GenericRoundBorderWithTitle"/> control.
+        /// Initializes a new instance of the <see cref="GenericSquareBorderWithTitle"/> class.
         /// </summary>
-        [Browsable(false)]
-        public SpeedButton CollapseButton => collapseButton;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether
-        /// the <see cref="GenericRoundBorderWithTitle"/> control can be collapsed.
-        /// </summary>
-        public virtual bool CanCollapse { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether
-        /// the <see cref="GenericRoundBorderWithTitle"/> control can be expanded.
-        /// </summary>
-        public virtual bool CanExpand { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the <see cref="GenericRoundBorderWithTitle"/> control is collapsed.
-        /// </summary>
-        public virtual bool IsCollapsed
+        public GenericSquareBorderWithTitle()
         {
-            get => isCollapsed;
-            set
-            {
-                if (!CanCollapse && value)
-                    return;
-                if (!CanExpand && !value)
-                    return;
-                if (isCollapsed == value)
-                    return;
-                isCollapsed = value;
-                collapseButton.SvgImage = GetCollapseButtonImage();
-
-                DoInsideLayout(() =>
-                {
-                    foreach (var child in Children)
-                    {
-                        if (child != toolBar)
-                            child.Visible = !isCollapsed;
-                    }
-                });
-
-                OnCollapsedChanged();
-            }
+            SquareCorners();
         }
 
         /// <summary>
-        /// Gets the image for the collapse button based on the current state of the <see cref="IsCollapsed"/> property.
+        /// Initializes a new instance of the <see cref="GenericSquareBorderWithTitle"/>
+        /// class with the specified title.
         /// </summary>
-        /// <returns>The <see cref="SvgImage"/> to be used for the collapse button.</returns>
-        protected virtual SvgImage? GetCollapseButtonImage()
+        /// <param name="labelTitle">The title of the label.</param>
+        public GenericSquareBorderWithTitle(string labelTitle)
+            : this()
         {
-            return IsCollapsed
-                ? expandButtonImage
-                : collapseButtonImage;
-        }
-
-        /// <summary>
-        /// Called when the <see cref="IsCollapsed"/> property changes.
-        /// Override this method to handle the collapse state change.
-        /// </summary>
-        protected virtual void OnCollapsedChanged()
-        {
-        }
-
-        /// <summary>
-        /// Called when the label is clicked. Override this method to handle the click event.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnCollapseButtonClick(object? sender, EventArgs e)
-        {
-            IsCollapsed = !IsCollapsed;
+            HeaderToolBar.Label.Text = labelTitle;
         }
     }
 }
