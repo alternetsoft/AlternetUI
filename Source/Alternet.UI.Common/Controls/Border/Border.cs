@@ -389,6 +389,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Configures the border to have square corners by setting the corner radius to zero.
+        /// </summary>
+        /// <returns>The current instance of <see cref="Border"/>.</returns>
+        public virtual Border SquareCorners()
+        {
+            this.NormalBorder.SetCornerRadius(new BorderCornerRadius(0));
+            return this;
+        }
+
+        /// <summary>
         /// Sets the color of the bottom border.
         /// </summary>
         /// <param name="value">
