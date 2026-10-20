@@ -37,10 +37,10 @@ namespace Alternet.UI
         private readonly TextPicker locationPicker = new();
 
         private readonly Label categoryLabel = new();
-        private readonly DrawingResourcePicker categoryPicker = new();
+        private readonly CalendarItemCategoryPicker categoryPicker = new();
 
         private readonly Label statusLabel = new();
-        private readonly DrawingResourcePicker statusPicker = new();
+        private readonly CalendarItemStatusPicker statusPicker = new();
 
         private readonly RepeatPatternPicker rulePicker = new();
 
@@ -62,16 +62,6 @@ namespace Alternet.UI
             locationLabel.Text = CommonStrings.Default.CalendarItemLabelLocation;
             categoryLabel.Text = CommonStrings.Default.CalendarItemLabelCategory;
             statusLabel.Text = CommonStrings.Default.CalendarItemLabelStatus;
-
-            foreach (var item in KnownCalendarItemMarkers.Categories)
-            {
-                categoryPicker.Add(item);
-            }
-
-            foreach (var item in KnownCalendarItemMarkers.Statuses)
-            {
-                statusPicker.Add(item);
-            }
 
             ValueToControls();
 
@@ -114,13 +104,13 @@ namespace Alternet.UI
             
             categoryPicker.ValueChanged += (s, e) =>
             {
-                var newValue = categoryPicker.Value as CalendarItemCategory;
+                var newValue = categoryPicker.Value;
                 Value.Category = newValue ?? KnownCalendarItemMarkers.CategoryNone;
             };
             
             statusPicker.ValueChanged += (s, e) =>
             {
-                var newValue = statusPicker.Value as CalendarItemStatus;
+                var newValue = statusPicker.Value;
                 Value.Status = newValue ?? KnownCalendarItemMarkers.StatusUnknown;
             };
 
