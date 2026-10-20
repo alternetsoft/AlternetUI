@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -17,8 +19,8 @@ namespace Alternet.UI
         public static void LoadSampleData(CalendarItemSource server)
         {
             var createNewDemo = server.CreateItem();
-            createNewDemo.Start = DateTime.Today.AddDays(0).AddHours(0).AddMinutes(0).AddSeconds(0);
-            createNewDemo.End = DateTime.Today.AddDays(2).AddHours(0).AddMinutes(0).AddSeconds(0);
+            createNewDemo.Start = DateTime.Today;
+            createNewDemo.End = DateTime.Today.AddDays(2);
             createNewDemo.Text = "Create New Demo";
             createNewDemo.Description = "The new Scheduler demo.";
             createNewDemo.Location = "work";
@@ -29,8 +31,8 @@ namespace Alternet.UI
             server.Add(createNewDemo);
 
             var gototheBeach = server.CreateItem();
-            gototheBeach.Start = DateTime.Today.AddDays(0).AddHours(18).AddMinutes(0).AddSeconds(0);
-            gototheBeach.End = DateTime.Today.AddDays(0).AddHours(21).AddMinutes(0).AddSeconds(0);
+            gototheBeach.Start = DateTime.Today.AddHours(18);
+            gototheBeach.End = DateTime.Today.AddHours(21);
             gototheBeach.Text = "Go to the Beach";
             gototheBeach.Description = "Try to surf-riding.";
             gototheBeach.Location = "home";
@@ -41,8 +43,8 @@ namespace Alternet.UI
             server.Add(gototheBeach);
 
             var calltofather = server.CreateItem();
-            calltofather.Start = DateTime.Today.AddDays(0).AddHours(20).AddMinutes(0).AddSeconds(0);
-            calltofather.End = DateTime.Today.AddDays(0).AddHours(20).AddMinutes(30).AddSeconds(0);
+            calltofather.Start = DateTime.Today.AddHours(20);
+            calltofather.End = DateTime.Today.AddHours(20).AddMinutes(30);
             calltofather.Text = "Call to father";
             calltofather.Category = KnownCalendarItemMarkers.CategoryPhoneCall;
             calltofather.Status = KnownCalendarItemMarkers.StatusUnknown;
@@ -51,8 +53,8 @@ namespace Alternet.UI
             server.Add(calltofather);
 
             var makeNewInstallation = server.CreateItem();
-            makeNewInstallation.Start = DateTime.Today.AddDays(1).AddHours(0).AddMinutes(0).AddSeconds(0);
-            makeNewInstallation.End = DateTime.Today.AddDays(4).AddHours(0).AddMinutes(0).AddSeconds(0);
+            makeNewInstallation.Start = DateTime.Today.AddDays(1);
+            makeNewInstallation.End = DateTime.Today.AddDays(4);
             makeNewInstallation.Text = "Make New Installation";
             makeNewInstallation.Description = "The new Scheduler installation.";
             makeNewInstallation.Location = "work";
@@ -63,8 +65,8 @@ namespace Alternet.UI
             server.Add(makeNewInstallation);
 
             var doctorsAppointment = server.CreateItem();
-            doctorsAppointment.Start = DateTime.Today.AddDays(1).AddHours(17).AddMinutes(0).AddSeconds(0);
-            doctorsAppointment.End = DateTime.Today.AddDays(1).AddHours(17).AddMinutes(30).AddSeconds(0);
+            doctorsAppointment.Start = DateTime.Today.AddDays(1).AddHours(17);
+            doctorsAppointment.End = DateTime.Today.AddDays(1).AddHours(17).AddMinutes(30);
             doctorsAppointment.Text = "Doctor's Appointment";
             doctorsAppointment.Category = KnownCalendarItemMarkers.CategoryPersonal;
             doctorsAppointment.Status = KnownCalendarItemMarkers.StatusTentative;
@@ -73,8 +75,8 @@ namespace Alternet.UI
             server.Add(doctorsAppointment);
 
             var meetmyfriends = server.CreateItem();
-            meetmyfriends.Start = DateTime.Today.AddDays(1).AddHours(18).AddMinutes(0).AddSeconds(0);
-            meetmyfriends.End = DateTime.Today.AddDays(1).AddHours(21).AddMinutes(0).AddSeconds(0);
+            meetmyfriends.Start = DateTime.Today.AddDays(1).AddHours(18);
+            meetmyfriends.End = DateTime.Today.AddDays(1).AddHours(21);
             meetmyfriends.Text = "Meet my friends";
             meetmyfriends.Category = KnownCalendarItemMarkers.CategoryPersonal;
             meetmyfriends.Status = KnownCalendarItemMarkers.StatusBusy;
@@ -83,8 +85,8 @@ namespace Alternet.UI
             server.Add(meetmyfriends);
 
             var mydaughtertheatricalperformance = server.CreateItem();
-            mydaughtertheatricalperformance.Start = DateTime.Today.AddDays(2).AddHours(19).AddMinutes(0).AddSeconds(0);
-            mydaughtertheatricalperformance.End = DateTime.Today.AddDays(2).AddHours(20).AddMinutes(30).AddSeconds(0);
+            mydaughtertheatricalperformance.Start = DateTime.Today.AddDays(2).AddHours(19);
+            mydaughtertheatricalperformance.End = DateTime.Today.AddDays(2).AddHours(20).AddMinutes(30);
             mydaughtertheatricalperformance.Text = "My daughter theatrical performance";
             mydaughtertheatricalperformance.Category = KnownCalendarItemMarkers.CategoryOther;
             mydaughtertheatricalperformance.Status = KnownCalendarItemMarkers.StatusAbsent;
@@ -93,8 +95,8 @@ namespace Alternet.UI
             server.Add(mydaughtertheatricalperformance);
 
             var mybossparty = server.CreateItem();
-            mybossparty.Start = DateTime.Today.AddDays(4).AddHours(18).AddMinutes(0).AddSeconds(0);
-            mybossparty.End = DateTime.Today.AddDays(4).AddHours(22).AddMinutes(0).AddSeconds(0);
+            mybossparty.Start = DateTime.Today.AddDays(4).AddHours(18);
+            mybossparty.End = DateTime.Today.AddDays(4).AddHours(22);
             mybossparty.Text = "My boss party";
             mybossparty.Category = KnownCalendarItemMarkers.CategoryPersonal;
             mybossparty.Status = KnownCalendarItemMarkers.StatusBusy;
@@ -103,17 +105,17 @@ namespace Alternet.UI
             server.Add(mybossparty);
 
             var vacationpicnicwithbarbecue = server.CreateItem();
-            vacationpicnicwithbarbecue.Start = DateTime.Today.AddDays(5).AddHours(8).AddMinutes(0).AddSeconds(0);
-            vacationpicnicwithbarbecue.End = DateTime.Today.AddDays(5).AddHours(16).AddMinutes(0).AddSeconds(0);
+            vacationpicnicwithbarbecue.Start = DateTime.Today.AddDays(5).AddHours(8);
+            vacationpicnicwithbarbecue.End = DateTime.Today.AddDays(5).AddHours(16);
             vacationpicnicwithbarbecue.Text = "Vacation picnic with barbecue";
             vacationpicnicwithbarbecue.Category = KnownCalendarItemMarkers.CategoryVacation;
             vacationpicnicwithbarbecue.Status = KnownCalendarItemMarkers.StatusAbsent;
             vacationpicnicwithbarbecue.AlarmInfo.Enabled = true;
             vacationpicnicwithbarbecue.AlarmInfo.Advance = TimeSpan.FromMinutes(5);
-            vacationpicnicwithbarbecue.Recurrence.RecurrenceType = SchedulerServerRecurrenceType.Recurrence;
-            vacationpicnicwithbarbecue.Recurrence.Range = SchedulerServerRecurrenceRange.Week;
-            vacationpicnicwithbarbecue.Recurrence.MaxDate = DateTime.Today.AddDays(100);
-            vacationpicnicwithbarbecue.Recurrence.DaysOfWeek = SchedulerWeekDay.Sunday;
+
+            vacationpicnicwithbarbecue.Rule.Kind = ScheduleRepeatPattern.Weekly;
+            vacationpicnicwithbarbecue.Rule.EndDate = DateTime.Today.AddDays(100).ToDateOnly();
+            vacationpicnicwithbarbecue.Rule.WeeklyRule.WeekDays = DaysOfWeek.Sunday;
             server.Add(vacationpicnicwithbarbecue);
         }
 
