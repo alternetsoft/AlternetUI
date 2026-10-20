@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a calendar item that can be displayed in a calendar or scheduler control.
     /// </summary>
-    public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>
+    public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>, ICalendarItem
     {
         private readonly RepeatPatternRule rule;
 
@@ -34,7 +34,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the repeat pattern rule associated with this calendar item.
+        /// Gets or sets the repeat pattern rule associated with this calendar item.
+        /// When set, the rule is assigned to the existing <see cref="RepeatPatternRule"/> instance.
         /// </summary>
         public RepeatPatternRule Rule
         {
