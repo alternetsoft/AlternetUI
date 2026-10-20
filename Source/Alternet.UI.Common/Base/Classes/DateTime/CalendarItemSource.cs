@@ -15,5 +15,13 @@ namespace Alternet.UI
         public CalendarItemSource()
         {
         }
+
+        /// <inheritdoc/>
+        public virtual CalendarItem CreateItem()
+        {
+            var item = new CalendarItem();
+            Add(item);
+            return item;
+        }
     }
 }

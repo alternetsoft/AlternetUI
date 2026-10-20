@@ -9,5 +9,11 @@ namespace Alternet.UI
     /// </summary>
     public interface ICalendarItemSource : IListSource<CalendarItem>
     {
+        /// <summary>
+        /// Creates a new calendar item and adds it to the source.
+        /// The new item is initialized with default values.
+        /// </summary>
+        /// <returns>A new instance of <see cref="CalendarItem"/>.</returns>
+        public CalendarItem CreateItem();
     }
 }

@@ -34,6 +34,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the end date and time of the calendar item.
+        /// </summary>
+        public DateTime End
+        {
+            get => rule.End;
+            set
+            {
+                rule.End = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the start date and time of the calendar item.
+        /// </summary>
+        public DateTime Start
+        {
+            get => rule.Start;
+            set
+            {
+                rule.Start = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the repeat pattern rule associated with this calendar item.
         /// When set, the rule is assigned to the existing <see cref="RepeatPatternRule"/> instance.
         /// </summary>
@@ -71,12 +95,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the title of the calendar item.
         /// </summary>
-        public virtual string? Title
+        public virtual string? Text
         {
             get => title;
             set
             {
-                this.SetProperty(ref title, value, nameof(Title));
+                this.SetProperty(ref title, value, nameof(Text));
             }
         }
 
@@ -189,7 +213,7 @@ namespace Alternet.UI
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
         public virtual void SaveTo(IPropertyBag propertyBag)
         {
-            propertyBag.SetStringProperty(nameof(Title), Title ?? string.Empty);
+            propertyBag.SetStringProperty(nameof(Text), Text ?? string.Empty);
             propertyBag.SetStringProperty(nameof(Description), Description ?? string.Empty);
             propertyBag.SetStringProperty(nameof(Location), Location?.ToString() ?? string.Empty);
             propertyBag.SetStringProperty(nameof(Status), Status.Name ?? string.Empty);
@@ -240,7 +264,7 @@ namespace Alternet.UI
                 return false;
             }
 
-            return Title == other.Title &&
+            return Text == other.Text &&
                    Description == other.Description &&
                    Location?.ToString() == other.Location?.ToString() &&
                    Category == other.Category &&
@@ -266,7 +290,7 @@ namespace Alternet.UI
                 return hashCode.Value;
 
             hashCode = (
-                Title,
+                Text,
                 Description,
                 Location?.GetHashCode(),
                 Category,
@@ -289,7 +313,7 @@ namespace Alternet.UI
             {
                 SuspendPropertyChanged();
 
-                Title = null;
+                Text = null;
                 Description = null;
                 Location = null;
                 Category = KnownCalendarItemMarkers.CategoryNone;
@@ -311,7 +335,7 @@ namespace Alternet.UI
 
                 SuspendPropertyChanged();
 
-                Title = otherItem.Title;
+                Text = otherItem.Text;
                 Description = otherItem.Description;
                 Location = otherItem.Location;
                 Category = otherItem.Category;

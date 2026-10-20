@@ -89,7 +89,7 @@ namespace Alternet.UI
 
             titlePicker.ValueChanged += (s, e) =>
             {
-                Value.Title = titlePicker.Text;
+                Value.Text = titlePicker.Text;
             };
 
             locationPicker.ValueChanged += (s, e) =>
@@ -255,7 +255,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ValueToControls()
         {
-            titlePicker.Text = Value.Title ?? string.Empty;
+            titlePicker.Text = Value.Text ?? string.Empty;
             descriptionPicker.Text = Value.Description ?? string.Empty;
             locationPicker.Text = Value.Location?.ToString() ?? string.Empty;
             statusPicker.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;

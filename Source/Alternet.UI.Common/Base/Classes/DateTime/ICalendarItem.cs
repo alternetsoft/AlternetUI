@@ -17,8 +17,8 @@ namespace Alternet.UI
         /// <inheritdoc cref="CalendarItem.AsJsonString"/>
         string AsJsonString { get; set; }
 
-        /// <inheritdoc cref="CalendarItem.Title"/>
-        string? Title { get; set; }
+        /// <inheritdoc cref="CalendarItem.Text"/>
+        string? Text { get; set; }
 
         /// <inheritdoc cref="CalendarItem.Description"/>
         string? Description { get; set; }
