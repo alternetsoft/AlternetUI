@@ -54,6 +54,8 @@ namespace Alternet.UI
         private ThemedColor? valueImageBorder;
         private bool useFontSizeAsValueImageSize = true;
 
+        private SpeedButton? gearButton;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawingResourcePicker"/> class.
         /// </summary>
@@ -83,6 +85,24 @@ namespace Alternet.UI
         /// Occurs when <see cref="Value"/> property is changed.
         /// </summary>
         public event EventHandler? ValueChanged;
+
+        /// <summary>
+        /// Occurs when the gear button of the picker is clicked.
+        /// </summary>
+        public event EventHandler<HandledEventArgs>? GearButtonClick;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to close the popup window when the gear button is clicked.
+        /// </summary>
+        public virtual bool ClosePopupOnGearButton { get; set; } = true;
+
+        /// <summary>
+        /// Gets the gear button of the picker.
+        /// Use <see cref="RequireGearButton"/> method to create and add the gear button
+        /// to the toolbar of the popup window.
+        /// </summary>
+        [Browsable(false)]
+        public SpeedButton? GearButton => gearButton;
 
         /// <summary>
         /// Enumerates possible actions when the user clicks on the button.
@@ -362,6 +382,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Requires the gear button to be created and added to the toolbar of the popup window.
+        /// </summary>
+        public virtual void RequireGearButton()
+        {
+            if (gearButton != null)
+                return;
+
+            gearButton = this.PopupWindow.LeftBottomToolBar.AddSpeedBtnCore(
+                text: null,
+                KnownSvgImages.ImgGear,
+                toolTip: null,
+                OnGearButtonClick);
+            gearButton.UseTheme = this.PopupWindow.ButtonOk.UseTheme;
+        }
+
+        /// <summary>
         /// Shows popup or does other action depending on the value of <see cref="ActionKind"/> property.
         /// Called when control is clicked.
         /// </summary>
@@ -550,6 +586,21 @@ namespace Alternet.UI
 
             if (refresh)
                 Refresh();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="GearButton"/> click event.
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
+        protected virtual void OnGearButtonClick(object? sender, EventArgs e)
+        {
+            var handledEventArgs = new HandledEventArgs();
+
+            GearButtonClick?.Invoke(sender, handledEventArgs);
+
+            if (ClosePopupOnGearButton)
+                PopupWindow.HidePopup(ModalResult.Canceled);
         }
 
         /// <summary>
