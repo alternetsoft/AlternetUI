@@ -11,6 +11,7 @@ namespace Alternet.UI
     public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>, ICalendarItem
     {
         private readonly RepeatPatternRule rule;
+        private readonly CalendarAlarmInfo alarmInfo = new ();
 
         private int? hashCode;
         private string? title;
@@ -31,6 +32,22 @@ namespace Alternet.UI
             status = KnownCalendarItemMarkers.StatusUnknown;
             rule = CreateRule();
             rule.PropertyChanged += OnRuleChanged;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="CalendarAlarmInfo"/> associated with this calendar item.
+        /// </summary>
+        public virtual CalendarAlarmInfo AlarmInfo
+        {
+            get
+            {
+                return alarmInfo;
+            }
+
+            set
+            {
+                alarmInfo.Assign(value);
+            }
         }
 
         /// <summary>
