@@ -164,6 +164,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
+        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        {
+            if (propertyBag == null)
+                return false;
+
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            return DoInsideSuspendedPropertyChanged(() =>
+            {
+                Reset();
+
+                if (propertyBag.TryGetStringProperty(prefix + nameof(SoundPath), out var textString))
+                    SoundPath = textString;
+                if (propertyBag.TryGetBoolProperty(prefix + nameof(Enabled), out var enabledValue))
+                    Enabled = enabledValue;
+                if (propertyBag.TryGetBoolProperty(prefix + nameof(PlaySound), out var playSoundValue))
+                    PlaySound = playSoundValue;
+                if (propertyBag.TryGetDateTimeProperty(prefix + nameof(SnoozeTime), out var snoozeTimeValue))
+                    SnoozeTime = snoozeTimeValue;
+                if (propertyBag.TryGetTimeSpanProperty(prefix + nameof(Advance), out var advanceValue))
+                    Advance = advanceValue;
+
+                return true;
+            });
+        }
+
+        /// <summary>
         /// Copies the contents from another <c>CalendarAlarmInfo</c> object.
         /// </summary>
         /// <param name="source">Specifies <c>CalendarAlarmInfo</c> to assign.</param>

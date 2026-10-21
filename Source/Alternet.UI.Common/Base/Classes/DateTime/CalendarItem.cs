@@ -241,6 +241,9 @@ namespace Alternet.UI
                     Status = KnownCalendarItemMarkers.FindStatus(statusString);
                 if (propertyBag.TryGetStringProperty(prefix + nameof(Category), out var categoryString))
                     Category = KnownCalendarItemMarkers.FindCategory(categoryString);
+                
+                Rule.LoadFrom(propertyBag, prefix + nameof(Rule));
+                AlarmInfo.LoadFrom(propertyBag, prefix + nameof(AlarmInfo));
 
                 return true;
             });
