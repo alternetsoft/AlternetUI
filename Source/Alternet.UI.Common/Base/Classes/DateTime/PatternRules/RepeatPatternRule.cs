@@ -105,34 +105,6 @@ namespace Alternet.UI
         public IReadOnlyList<BaseRepeatPatternRule> Rules => rules;
 
         /// <summary>
-        /// Converts the specified <see cref="DateTime"/> to its string representation.
-        /// </summary>
-        /// <param name="date">The date and time to convert.</param>
-        /// <returns>A string representation of the specified <see cref="DateTime"/>.</returns>
-        public virtual string DateTimeToString(DateTime date)
-        {
-            return DateTimeSerialization.Instance.DateTimeToString(date);
-        }
-
-        /// <summary>
-        /// Attempts to convert the specified string representation of a date and time to a <see cref="DateTime"/>.
-        /// </summary>
-        /// <param name="s">The string representation of the date and time to convert.</param>
-        /// <param name="result">When this method returns, contains the converted <see cref="DateTime"/>
-        /// if the conversion succeeded, or <see cref="DateTime.MinValue"/> if the conversion failed.</param>
-        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
-        public virtual bool TryDateTimeFromString(string? s, out DateTime result)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                result = DateTime.MinValue;
-                return false;
-            }
-
-            return DateTimeSerialization.Instance.TryDateTimeFromString(s, out result);
-        }
-
-        /// <summary>
         /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag from which to load the state.</param>
@@ -157,14 +129,12 @@ namespace Alternet.UI
                     Kind = parsedKind;
                 }
 
-                if (propertyBag.TryGetStringProperty(prefix + nameof(Start), out var startString) &&
-                    TryDateTimeFromString(startString, out var startDateTime))
+                if (propertyBag.TryGetDateTimeProperty(prefix + nameof(Start), out var startDateTime))
                 {
                     Start = startDateTime;
                 }
 
-                if (propertyBag.TryGetStringProperty(prefix + nameof(End), out var endString) &&
-                    TryDateTimeFromString(endString, out var endDateTime))
+                if (propertyBag.TryGetDateTimeProperty(prefix + nameof(End), out var endDateTime))
                 {
                     End = endDateTime;
                 }
@@ -199,8 +169,8 @@ namespace Alternet.UI
                 prefix = "";
 
             propertyBag.SetStringProperty(prefix + nameof(Kind), Kind.ToString());
-            propertyBag.SetStringProperty(prefix + nameof(Start), DateTimeToString(Start));
-            propertyBag.SetStringProperty(prefix + nameof(End), DateTimeToString(End));
+            propertyBag.SetDateTimeProperty(prefix + nameof(Start), Start);
+            propertyBag.SetDateTimeProperty(prefix + nameof(End), End);
 
             switch (Kind)
             {
