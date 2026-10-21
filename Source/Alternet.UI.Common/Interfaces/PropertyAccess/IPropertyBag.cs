@@ -170,6 +170,83 @@ namespace Alternet.UI
         void SetStringProperty(string name, string value);
 
         /// <summary>
+        /// Converts the specified <see cref="DateTime"/> to its string representation.
+        /// </summary>
+        /// <param name="date">The date and time to convert.</param>
+        /// <returns>A string representation of the specified <see cref="DateTime"/>.</returns>
+        public string DateTimeToString(DateTime date)
+        {
+            return DateTimeSerialization.Instance.DateTimeToString(date);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a time span to a <see cref="TimeSpan"/>.
+        /// </summary>
+        /// <param name="timeSpan">The time span to convert.</param>
+        /// <returns>A string representation of the specified <see cref="TimeSpan"/>.</returns>
+        public string TimeSpanToString(TimeSpan timeSpan)
+        {
+            return DateTimeSerialization.Instance.TimeSpanToString(timeSpan);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a date and time to a <see cref="DateTime"/>.
+        /// </summary>
+        /// <param name="s">The string representation of the date and time to convert.</param>
+        /// <param name="result">When this method returns, contains the converted <see cref="DateTime"/>
+        /// if the conversion succeeded, or <see cref="DateTime.MinValue"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public bool TryDateTimeFromString(string? s, out DateTime result)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                result = DateTime.MinValue;
+                return false;
+            }
+
+            return DateTimeSerialization.Instance.TryDateTimeFromString(s, out result);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a time span to a <see cref="TimeSpan"/>.
+        /// </summary>
+        /// <param name="s">The string representation of the time span to convert.</param>
+        /// <param name="result">When this method returns, contains the converted <see cref="TimeSpan"/>
+        /// if the conversion succeeded, or <see cref="TimeSpan.Zero"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public bool TryTimeSpanFromString(string? s, out TimeSpan result)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                result = TimeSpan.Zero;
+                return false;
+            }
+
+            return DateTimeSerialization.Instance.TryTimeSpanFromString(s, out result);
+        }
+
+        /// <summary>
+        /// Sets the value of a <see cref="DateTime"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        public void SetDateTimeProperty(string name, DateTime value)
+        {
+            SetStringProperty(name, DateTimeToString(value));
+        }
+
+        /// <summary>
+        /// Sets the value of a <see cref="TimeSpan"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        public void SetTimeSpanProperty(string name, TimeSpan value)
+        {
+            var s = TimeSpanToString(value);
+            SetStringProperty(name, s);
+        }
+
+        /// <summary>
         /// Removes a property by name from the property bag.
         /// </summary>
         /// <param name="name">The name of the property to remove.</param>
@@ -200,6 +277,46 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
         bool TryGetEnumProperty<TEnum>(string name, out TEnum value)
             where TEnum : struct, Enum;
+
+        /// <summary>
+        /// Tries to get the value of a <see cref="DateTime"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains the value of the <see cref="DateTime"/> property
+        /// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public bool TryGetDateTimeProperty(string name, out DateTime value)
+        {
+            if (TryGetStringProperty(name, out var str) &&
+                TryDateTimeFromString(str, out var startDateTime))
+            {
+                value = startDateTime;
+                return true;
+            }
+
+            value = DateTime.MinValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Attempts to get the value of a <see cref="TimeSpan"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains the value of the <see cref="TimeSpan"/> property
+        /// if the conversion succeeded, or <see cref="TimeSpan.Zero"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public bool TryGetTimeSpanProperty(string name, out TimeSpan value)
+        {
+            if (TryGetStringProperty(name, out var str) &&
+                TryTimeSpanFromString(str, out var timeSpan))
+            {
+                value = timeSpan;
+                return true;
+            }
+
+            value = TimeSpan.Zero;
+            return false;
+        }
 
         /// <summary>
         /// Gets all properties as a collection of name-value pairs.
