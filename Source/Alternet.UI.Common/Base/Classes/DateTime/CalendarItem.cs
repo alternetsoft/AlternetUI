@@ -268,6 +268,7 @@ namespace Alternet.UI
             propertyBag.SetStringProperty(prefix + nameof(UserName), UserName ?? string.Empty);
 
             Rule.SaveTo(propertyBag, prefix + nameof(Rule));
+            AlarmInfo.SaveTo(propertyBag, prefix + nameof(AlarmInfo));
         }
 
         /// <summary>
