@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text;
 
 namespace Alternet.UI
@@ -49,6 +50,25 @@ namespace Alternet.UI
         public virtual bool TryDateTimeFromString(string s, out DateTime result)
         {
             return DateTime.TryParse(s, out result);
+        }
+
+        /// <inheritdoc/>
+        public string TimeSpanToString(TimeSpan timeSpan)
+        {
+            var s = timeSpan.ToString("c", CultureInfo.InvariantCulture);
+            return s;
+        }
+
+        /// <inheritdoc/>
+        public bool TryTimeSpanFromString(string s, out TimeSpan result)
+        {
+            var success = TimeSpan.TryParseExact(
+                s,
+                "c",
+                CultureInfo.InvariantCulture,
+                out var ts2);
+            result = ts2;
+            return success;
         }
     }
 }
