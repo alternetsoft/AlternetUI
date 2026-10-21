@@ -144,6 +144,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Saves the current state of this instance
+        /// to the specified <see cref="IPropertyBag"/>.
+        /// </summary>
+        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        {
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            propertyBag.SetBoolProperty(prefix + nameof(Enabled), Enabled);
+            propertyBag.SetBoolProperty(prefix + nameof(PlaySound), PlaySound);
+            propertyBag.SetStringProperty(prefix + nameof(SoundPath), SoundPath ?? string.Empty);
+            propertyBag.SetDateTimeProperty(prefix + nameof(SnoozeTime), SnoozeTime);
+            propertyBag.SetTimeSpanProperty(prefix + nameof(Advance), Advance);
+        }
+
+        /// <summary>
         /// Copies the contents from another <c>CalendarAlarmInfo</c> object.
         /// </summary>
         /// <param name="source">Specifies <c>CalendarAlarmInfo</c> to assign.</param>
