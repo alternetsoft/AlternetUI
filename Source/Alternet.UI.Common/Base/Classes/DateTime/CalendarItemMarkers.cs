@@ -433,9 +433,13 @@ namespace Alternet.UI
         /// Finds a calendar item category by its name.
         /// </summary>
         /// <param name="name">The name of the calendar item category.</param>
-        /// <returns>The matching <see cref="CalendarItemCategory"/> if found; otherwise, <see cref="CategoryNone"/>.</returns>
-        public static CalendarItemCategory FindCategory(string name)
+        /// <returns>The matching <see cref="CalendarItemCategory"/> if found;
+        /// otherwise, <see cref="CategoryNone"/>.</returns>
+        public static CalendarItemCategory FindCategory(string? name)
         {
+            if (name is null || name.Length == 0)
+                return CategoryNone;
+
             foreach (var item in Categories)
             {
                 if (item.Name?.Equals(name) == true)
@@ -446,7 +450,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the "Absent" calendar item status, which is used to indicate that a person is not present or unavailable.
+        /// Gets the "Absent" calendar item status, which is used to indicate
+        /// that a person is not present or unavailable.
         /// </summary>
         public static CalendarItemStatus StatusAbsent { get; set; } = new CalendarItemStatus(
             "Absent",
@@ -505,8 +510,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">The name of the calendar item status.</param>
         /// <returns>The matching <see cref="CalendarItemStatus"/> if found; otherwise, <see cref="StatusUnknown"/>.</returns>
-        public static CalendarItemStatus FindStatus(string name)
+        public static CalendarItemStatus FindStatus(string? name)
         {
+            if (name is null || name.Length == 0)
+                return StatusUnknown;
+
             foreach (var item in Statuses)
             {
                 if (item.Name?.Equals(name) == true)

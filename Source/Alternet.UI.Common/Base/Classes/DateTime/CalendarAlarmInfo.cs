@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents information about a calendar alarm, including its advance time,
     /// enabled state, sound settings, and snooze time.
     /// </summary>
-    public partial class CalendarAlarmInfo : ImmutableObject
+    public partial class CalendarAlarmInfo : ImmutableObject, IEquatable<CalendarAlarmInfo>
     {
         /// <summary>
         /// Gets or sets the default advance time for alarms.
@@ -113,6 +113,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified object is equal to the current instance of <see cref="CalendarAlarmInfo"/>.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current instance;
+        /// otherwise, <c>false</c>.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (obj is not CalendarAlarmInfo other)
+            {
+                return false;
+            }
+
+            return Equals(other);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(CalendarAlarmInfo? other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return Advance == other.Advance &&
+                   SnoozeTime == other.SnoozeTime &&
+                   Enabled == other.Enabled &&
+                   PlaySound == other.PlaySound &&
+                   SoundPath == other.SoundPath;
+        }
+
+        /// <summary>
         /// Copies the contents from another <c>CalendarAlarmInfo</c> object.
         /// </summary>
         /// <param name="source">Specifies <c>CalendarAlarmInfo</c> to assign.</param>
@@ -159,7 +190,8 @@ namespace Alternet.UI
         /// clone of the current <c>CalendarAlarmInfo</c> object.</returns>
         public virtual CalendarAlarmInfo Clone()
         {
-            CalendarAlarmInfo result = Activator.CreateInstance<CalendarAlarmInfo>() ?? new CalendarAlarmInfo();
+            var result = Activator.CreateInstance(GetType()) as CalendarAlarmInfo;
+            result ??= new CalendarAlarmInfo();
             result.Assign(this);
             return result;
         }
@@ -202,6 +234,12 @@ namespace Alternet.UI
         public virtual void ResetSoundPath()
         {
             SoundPath = string.Empty;
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return (Advance, Enabled, PlaySound, SnoozeTime, SoundPath).GetHashCode();
         }
     }
 }

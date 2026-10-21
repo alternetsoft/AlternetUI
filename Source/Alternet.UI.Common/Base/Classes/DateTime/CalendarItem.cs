@@ -8,10 +8,10 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a calendar item that can be displayed in a calendar or scheduler control.
     /// </summary>
-    public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>, ICalendarItem
+    public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>
     {
         private readonly RepeatPatternRule rule;
-        private readonly CalendarAlarmInfo alarmInfo = new ();
+        private readonly CalendarAlarmInfo alarmInfo;
 
         private int? hashCode;
         private string? title;
@@ -31,7 +31,9 @@ namespace Alternet.UI
             category = KnownCalendarItemMarkers.CategoryNone;
             status = KnownCalendarItemMarkers.StatusUnknown;
             rule = CreateRule();
+            alarmInfo = CreateAlarmInfo();
             rule.PropertyChanged += OnRuleChanged;
+            alarmInfo.PropertyChanged += OnAlarmInfoChanged;
         }
 
         /// <summary>
@@ -208,16 +210,37 @@ namespace Alternet.UI
         /// <summary>
         /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
         /// </summary>
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
         /// <param name="propertyBag">The property bag from which to load the state.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public virtual bool LoadFrom(IPropertyBag? propertyBag)
+        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
         {
             if (propertyBag == null)
                 return false;
 
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
             return DoInsideSuspendedPropertyChanged(() =>
             {
                 Reset();
+
+                if (propertyBag.TryGetStringProperty(prefix + nameof(Text), out var textString))
+                    Text = textString;
+                if (propertyBag.TryGetStringProperty(prefix + nameof(Description), out var descriptionString))
+                    Description = descriptionString;
+                if (propertyBag.TryGetStringProperty(prefix + nameof(Location), out var locationString))
+                    Location = locationString;
+                if (propertyBag.TryGetBoolProperty(prefix + nameof(Visible), out var visibleBool))
+                    Visible = visibleBool;
+                if (propertyBag.TryGetStringProperty(prefix + nameof(UserName), out var userNameString))
+                    UserName = userNameString;
+                if (propertyBag.TryGetStringProperty(prefix + nameof(Status), out var statusString))
+                    Status = KnownCalendarItemMarkers.FindStatus(statusString);
+                if (propertyBag.TryGetStringProperty(prefix + nameof(Category), out var categoryString))
+                    Category = KnownCalendarItemMarkers.FindCategory(categoryString);
 
                 return true;
             });
@@ -228,21 +251,23 @@ namespace Alternet.UI
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
-        public virtual void SaveTo(IPropertyBag propertyBag)
+        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
-            propertyBag.SetStringProperty(nameof(Text), Text ?? string.Empty);
-            propertyBag.SetStringProperty(nameof(Description), Description ?? string.Empty);
-            propertyBag.SetStringProperty(nameof(Location), Location?.ToString() ?? string.Empty);
-            propertyBag.SetStringProperty(nameof(Status), Status.Name ?? string.Empty);
-            propertyBag.SetStringProperty(nameof(Category), Category.Name ?? string.Empty);
-            propertyBag.SetBoolProperty(nameof(Visible), Visible);
-            propertyBag.SetStringProperty(nameof(UserName), UserName ?? string.Empty);
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
 
-            Rule.SaveTo(propertyBag, "Rule");
-            /*
-            UserData
-            Rule
-            */
+            propertyBag.SetStringProperty(prefix + nameof(Text), Text ?? string.Empty);
+            propertyBag.SetStringProperty(prefix + nameof(Description), Description ?? string.Empty);
+            propertyBag.SetStringProperty(prefix + nameof(Location), Location?.ToString() ?? string.Empty);
+            propertyBag.SetStringProperty(prefix + nameof(Status), Status.Name ?? string.Empty);
+            propertyBag.SetStringProperty(prefix + nameof(Category), Category.Name ?? string.Empty);
+            propertyBag.SetBoolProperty(prefix + nameof(Visible), Visible);
+            propertyBag.SetStringProperty(prefix + nameof(UserName), UserName ?? string.Empty);
+
+            Rule.SaveTo(propertyBag, prefix + nameof(Rule));
         }
 
         /// <summary>
@@ -287,6 +312,7 @@ namespace Alternet.UI
                    Category == other.Category &&
                    Status == other.Status &&
                    Equals(UserData, other.UserData) &&
+                   AlarmInfo.Equals(other.AlarmInfo) &&
                    UserName == other.UserName &&
                    Visible == other.Visible &&
                    Rule.Equals(other.Rule);
@@ -315,9 +341,10 @@ namespace Alternet.UI
                 UserData,
                 UserName,
                 Visible,
+                AlarmInfo.GetHashCode(),
                 Rule.GetHashCode())
                 .GetHashCode();
-            return hashCode.Value;  
+            return hashCode.Value;
         }
 
         /// <summary>
@@ -328,43 +355,60 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                SuspendPropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    Text = null;
+                    Description = null;
+                    AlarmInfo.Assign(null);
+                    Location = null;
+                    Category = KnownCalendarItemMarkers.CategoryNone;
+                    Status = KnownCalendarItemMarkers.StatusUnknown;
+                    UserData = null;
+                    UserName = null;
+                    Visible = true;
+                    Rule.Assign(null);
+                    hashCode = null;
 
-                Text = null;
-                Description = null;
-                Location = null;
-                Category = KnownCalendarItemMarkers.CategoryNone;
-                Status = KnownCalendarItemMarkers.StatusUnknown;
-                UserData = null;
-                UserName = null;
-                Visible = true;
-                Rule.Assign(null);
-                hashCode = null;
+                });
 
-                ResumePropertyChanged();
                 return;
             }
 
             if (other is CalendarItem otherItem)
             {
-                if (Equals(other))
-                    return;
-
-                SuspendPropertyChanged();
-
-                Text = otherItem.Text;
-                Description = otherItem.Description;
-                Location = otherItem.Location;
-                Category = otherItem.Category;
-                Status = otherItem.Status;
-                UserData = otherItem.UserData;
-                UserName = otherItem.UserName;
-                Visible = otherItem.Visible;
-                Rule = otherItem.Rule;
-                hashCode = null;
-
-                ResumePropertyChanged();
+                Assign(otherItem);
             }
+        }
+
+        /// <summary>
+        /// Assigns the values from another <see cref="CalendarItem"/> instance to the current instance.
+        /// </summary>
+        /// <param name="other">The instance from which to copy values.</param>
+        public virtual void Assign(CalendarItem? other)
+        {
+            if (other == null)
+            {
+                Reset();
+                return;
+            }
+
+            if (Equals(other))
+                return;
+
+            DoInsideSuspendedPropertyChanged(() =>
+            {
+                Text = other.Text;
+                Description = other.Description;
+                Location = other.Location;
+                Category = other.Category;
+                Status = other.Status;
+                UserData = other.UserData;
+                UserName = other.UserName;
+                Visible = other.Visible;
+                Rule = other.Rule;
+                AlarmInfo = other.AlarmInfo;
+                hashCode = null;
+            });
         }
 
         /// <inheritdoc/>
@@ -386,6 +430,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when a property of the <see cref="CalendarAlarmInfo"/> associated with this calendar item changes.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
+        protected virtual void OnAlarmInfoChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            hashCode = null;
+            RaisePropertyChanged(nameof(AlarmInfo));
+        }
+
+        /// <summary>
         /// Creates a new instance of <see cref="RepeatPatternRule"/>. This method can be overridden
         /// in derived classes to provide a custom implementation of <see cref="RepeatPatternRule"/>.
         /// </summary>
@@ -393,6 +448,16 @@ namespace Alternet.UI
         protected virtual RepeatPatternRule CreateRule()
         {
             return new RepeatPatternRule();
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="CalendarAlarmInfo"/>. This method can be overridden
+        /// in derived classes to provide a custom implementation of <see cref="CalendarAlarmInfo"/>.
+        /// </summary>
+        /// <returns>A new instance of <see cref="CalendarAlarmInfo"/>.</returns>
+        protected virtual CalendarAlarmInfo CreateAlarmInfo()
+        {
+            return new CalendarAlarmInfo();
         }
     }
 }
