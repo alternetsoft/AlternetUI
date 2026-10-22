@@ -35,6 +35,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an advance time.
         /// </summary>
+        [PropertyBag]
         public virtual TimeSpan Advance
         {
             get
@@ -51,6 +52,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the alarm is active.
         /// </summary>
+        [PropertyBag]
         public virtual bool Enabled
         {
             get
@@ -67,6 +69,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the alarm have to play some sound.
         /// </summary>
+        [PropertyBag]
         public virtual bool PlaySound
         {
             get
@@ -83,6 +86,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <c>CalendarAlarmInfo</c> snooze interval.
         /// </summary>
+        [PropertyBag]
         public virtual DateTime SnoozeTime
         {
             get
@@ -99,6 +103,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a path and file name of sound file to play.
         /// </summary>
+        [PropertyBag]
         public virtual string? SoundPath
         {
             get
