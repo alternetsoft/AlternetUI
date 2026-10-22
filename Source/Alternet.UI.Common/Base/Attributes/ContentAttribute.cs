@@ -5,11 +5,11 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// This item supports the framework infrastructure and is not intended to be used directly
-    /// from your code.
+    /// Indicates which property of a type is the content property. An UIXML processor uses this information
+    /// when processing child elements of UIXML representations of the attributed type.
     /// </summary>
     [AttributeUsage(AttributeTargets.All)]
-    public class ContentAttribute : Attribute
+    public class ContentAttribute : BaseAttribute
     {
     }
 }

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Specifies the category in which the control will be displayed in a tool box.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public sealed class ControlCategoryAttribute : Attribute
+    public sealed class ControlCategoryAttribute : BaseAttribute
     {
         private readonly object locker = new();
         private readonly string categoryId;

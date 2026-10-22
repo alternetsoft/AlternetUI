@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// such as a form designer.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class ToolboxBitmapAttribute : Attribute
+    public class ToolboxBitmapAttribute : BaseAttribute
     {
         private readonly string? imageFile;
         private readonly Type? imageType;

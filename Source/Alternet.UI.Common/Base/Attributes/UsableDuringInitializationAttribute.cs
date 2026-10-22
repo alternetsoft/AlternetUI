@@ -8,11 +8,10 @@ namespace Alternet.UI
     /// This item supports the framework infrastructure and is not intended to be used directly
     /// from your code.
     /// </summary>
-    public class UsableDuringInitializationAttribute : Attribute
+    public class UsableDuringInitializationAttribute : BaseAttribute
     {
         /// <summary>
-        /// This item supports the framework infrastructure and is not intended to be used
-        /// directly from your code.
+        /// Initializes a new instance of the <see cref="UsableDuringInitializationAttribute"/> class.
         /// </summary>
         public UsableDuringInitializationAttribute(bool usable)
         {
