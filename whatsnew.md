@@ -1,3 +1,26 @@
+# 1.1.14 (2026 October 22)
+
+- Create InnerPopupCalendarItem.
+- Derive framework attributes from BaseAttribute.
+- Add DateTime/TimeSpan helpers to IPropertyBag.
+- Create SampleCalendarItems, CalendarItemSource amd CalendarAlarmInfo.
+- Add RequireGearButton() to DrawingResourcePicker popup.
+- Create CalendarItemCategoryPicker and CalendarItemStatusPicker.
+- Create RoundBorder and RoundBorderWithTitle panels.
+- Create CalendarItem and CalendarItemPicker.
+- Create MultilineTextPicker.
+- Fix fill color for some of the svg resources .
+- RepeatPatternRule: Fix None case.
+- Add ShowCollapseButtons to RepeatPatternPicker.
+- Create SectionHeaderToolBar with a bold title label and a collapse/expand button. 
+- Border and GenericBorder: Add SquareCorners() to set the normal border's corner radius to zero.
+- Avoid "App pasted from your clipboard" on Android.
+- Use RoundBorderWithTitle panels in date pickers.
+- Allow RepeatPatternRule to load and save property bag data with an optional key prefix.
+- DrawingResourcePicker: fix size and painting when Value is null.
+
+---
+
 # 1.1.13 (2026 October 14)
 
 - Improve RepeatPatternRule and RepeatPatternRule.
