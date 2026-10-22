@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a yearly repeat pattern rule.
     /// </summary>
-    public partial class YearlyRepeatPatternRule : OwnedRepeatPatternRule
+    public partial class YearlyRepeatPatternRule : OwnedRepeatPatternRule, IPropertyBagSerialize
     {
         private int intervalYears = 1;
         private CalendarMonth month = CalendarMonth.January;

@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a monthly repeat pattern rule.
     /// </summary>
-    public partial class MonthlyRepeatPatternRule : OwnedRepeatPatternRule
+    public partial class MonthlyRepeatPatternRule : OwnedRepeatPatternRule, IPropertyBagSerialize
     {
         private int dayOfMonth = 1;
         private int intervalMonths = 1;

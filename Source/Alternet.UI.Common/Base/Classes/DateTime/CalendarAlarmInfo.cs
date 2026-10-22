@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents information about a calendar alarm, including its advance time,
     /// enabled state, sound settings, and snooze time.
     /// </summary>
-    public partial class CalendarAlarmInfo : ImmutableObject, IEquatable<CalendarAlarmInfo>
+    public partial class CalendarAlarmInfo : ImmutableObject, IEquatable<CalendarAlarmInfo>, IPropertyBagSerialize
     {
         /// <summary>
         /// Gets or sets the default advance time for alarms.

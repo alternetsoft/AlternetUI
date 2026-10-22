@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a weekly repeat pattern rule.
     /// </summary>
-    public partial class WeeklyRepeatPatternRule : OwnedRepeatPatternRule
+    public partial class WeeklyRepeatPatternRule : OwnedRepeatPatternRule, IPropertyBagSerialize
     {
         private int intervalWeeks = 1;
         private DaysOfWeek days;

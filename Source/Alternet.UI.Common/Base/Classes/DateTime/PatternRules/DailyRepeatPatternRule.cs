@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a daily repeat pattern rule.
     /// </summary>
-    public partial class DailyRepeatPatternRule : OwnedRepeatPatternRule
+    public partial class DailyRepeatPatternRule : OwnedRepeatPatternRule, IPropertyBagSerialize
     {
         private int intervalDays = 2;
         private RepeatKind kind = RepeatKind.EveryDay;

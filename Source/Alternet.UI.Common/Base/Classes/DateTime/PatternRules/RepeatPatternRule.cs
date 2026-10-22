@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a composite repeat pattern rule that combines daily, weekly, monthly, yearly
     /// and other repeat pattern rules.
     /// </summary>
-    public partial class RepeatPatternRule : BaseRepeatPatternRule, IEquatable<RepeatPatternRule>
+    public partial class RepeatPatternRule : BaseRepeatPatternRule, IEquatable<RepeatPatternRule>, IPropertyBagSerialize
     {
         private readonly DailyRepeatPatternRule dailyRule;
         private readonly WeeklyRepeatPatternRule weeklyRule;

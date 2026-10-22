@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a calendar item that can be displayed in a calendar or scheduler control.
     /// </summary>
-    public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>
+    public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>, IPropertyBagSerialize
     {
         private readonly RepeatPatternRule rule;
         private readonly CalendarAlarmInfo alarmInfo;
