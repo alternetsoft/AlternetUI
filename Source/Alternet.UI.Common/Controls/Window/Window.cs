@@ -49,20 +49,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Window"/> class.
-        /// </summary>
-        /// <param name="windowKind">Window kind to use instead of default value.</param>
-        /// <remarks>
-        /// Fo example, this constructor allows to use window as control
-        /// (specify <see cref="WindowKind.Control"/>) as a parameter.
-        /// </remarks>
-        public Window(WindowKind windowKind)
-        {
-            windowKindOverride = windowKind;
-            Initialize();
-        }
-
-        /// <summary>
         /// Occurs before a window is displayed for the first time.
         /// </summary>
         [Category(KnownMemberCategory.Behavior)]
@@ -2030,7 +2016,9 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
-            => ControlFactory.Handler.CreateWindowHandler(this);
+        {
+            return ControlFactory.Handler.CreateWindowHandler(this);
+        }
 
         /// <summary>
         /// Applies <see cref="StartLocation"/> to the window position
@@ -2302,8 +2290,10 @@ namespace Alternet.UI
         /// Gets window kind used instead of the default value.
         /// </summary>
         /// <returns></returns>
-        protected WindowKind? GetWindowKindOverride()
-            => globalWindowKindOverride ?? windowKindOverride;
+        protected virtual WindowKind? GetWindowKindOverride()
+        {
+            return globalWindowKindOverride ?? windowKindOverride;
+        }
 
         /// <summary>
         /// Handles the disposal of the menu by resetting the <see cref="Menu"/> property to null.

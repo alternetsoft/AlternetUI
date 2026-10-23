@@ -21,19 +21,6 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MiniFrameWindow"/> class.
-        /// </summary>
-        /// <param name="windowKind">Window kind to use instead of default value.</param>
-        /// <remarks>
-        /// Fo example, this constructor allows to use window as control
-        /// (specify <see cref="WindowKind.Control"/>) as a parameter.
-        /// </remarks>
-        public MiniFrameWindow(WindowKind windowKind)
-            : base(windowKind)
-        {
-        }
-
         /// <inheritdoc />
         public override WindowKind GetWindowKind() => GetWindowKindOverride() ?? WindowKind.MiniFrame;
     }
