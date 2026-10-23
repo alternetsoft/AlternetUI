@@ -91,7 +91,6 @@ namespace Alternet.UI
 
         /// <summary>
         /// Forces the application to use the X11 windowing system on Linux platforms.
-        /// Default is True.
         /// </summary>
         /// <remarks>
         /// If set to <c>true</c>, the application bypasses automatic platform detection and
@@ -100,7 +99,7 @@ namespace Alternet.UI
         /// This can be useful for compatibility or debugging purposes where Wayland
         /// or other backends cause issues.
         /// </remarks>
-        public static bool ForceX11OnLinux = true;
+        public static bool ForceX11OnLinux = false;
 
         /// <summary>
         /// Gets device the app is running on, such as a desktop computer or a tablet.
