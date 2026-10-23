@@ -186,7 +186,7 @@ namespace Alternet.UI
         /// Writes each string in the specified collection to the log, appending a new line after each entry.
         /// </summary>
         /// <remarks>This method writes each string in <paramref name="lines"/> to the log by calling <see
-        /// cref="ILogWriter.WriteLine(string)"/> for each element. The order of the lines is preserved.</remarks>
+        /// cref="IStructuredTextWriter.WriteLine(string)"/> for each element. The order of the lines is preserved.</remarks>
         /// <param name="writer">The log writer to which the lines will be written. Cannot be null.</param>
         /// <param name="lines">The collection of strings to write to the log. Cannot be null.</param>
         /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
@@ -524,6 +524,42 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
+            public override int IndentLevel
+            {
+                get
+                {
+                    if (writers.Count > 0)
+                    {
+                        try
+                        {
+                            return writers[0]().IndentLevel;
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    return 0;
+                }
+
+                set
+                {
+                    foreach (var writer in writers)
+                    {
+                        if (writer == null)
+                            continue;
+
+                        try
+                        {
+                            writer().IndentLevel = value;
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+            }
+
+            /// <inheritdoc/>
             public override ILogWriter Unindent()
             {
                 foreach (var writer in writers)
@@ -568,6 +604,19 @@ namespace Alternet.UI
         public class NullLogWriter : BaseLogWriter
         {
             /// <inheritdoc/>
+            public override int IndentLevel
+            {
+                get
+                {
+                    return 0;
+                }
+
+                set
+                {
+                }
+            }
+
+            /// <inheritdoc/>
             public override ILogWriter Indent()
             {
                 return this;
@@ -595,6 +644,16 @@ namespace Alternet.UI
         /// listeners configured for the application.</remarks>
         public class DebugLogWriter : BaseLogWriter
         {
+            /// <inheritdoc/>
+            public override int IndentLevel
+            {
+                get => System.Diagnostics.Debug.IndentLevel;
+                set
+                {
+                    System.Diagnostics.Debug.IndentLevel = value;
+                }
+            }
+
             /// <inheritdoc/>
             public override ILogWriter Indent()
             {
@@ -629,6 +688,9 @@ namespace Alternet.UI
         public abstract class BaseLogWriter : DisposableObject, ILogWriter
         {
             /// <inheritdoc/>
+            public abstract int IndentLevel { get; set; }
+
+            /// <inheritdoc/>
             public abstract ILogWriter Indent();
 
             /// <inheritdoc/>
@@ -636,6 +698,21 @@ namespace Alternet.UI
 
             /// <inheritdoc/>
             public abstract ILogWriter WriteLine(string message);
+
+            void IStructuredTextWriter.Indent()
+            {
+                Indent();
+            }
+
+            void IStructuredTextWriter.Unindent()
+            {
+                Unindent();
+            }
+
+            void IStructuredTextWriter.WriteLine(string message)
+            {
+                WriteLine(message);
+            }
         }
 
         /// <summary>
@@ -650,9 +727,24 @@ namespace Alternet.UI
             private int indentLevel = 0;
 
             /// <summary>
-            /// Gets the current indentation level used for formatting output.
+            /// Gets or sets the current indentation level used for formatting output.
+            /// Use <see cref="Indent"/> and <see cref="Unindent"/> to adjust the indentation level,
+            /// it is not recommended to set this property directly.
             /// </summary>
-            public int IndentLevel => indentLevel;
+            public override int IndentLevel
+            {
+                get
+                {
+                    return indentLevel;
+                }
+
+                set
+                {
+                    if (value < 0)
+                        value = 0;
+                    indentLevel = value;
+                }
+            }
 
             /// <inheritdoc/>
             public override ILogWriter Indent()
