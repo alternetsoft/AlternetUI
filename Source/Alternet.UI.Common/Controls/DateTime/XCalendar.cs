@@ -228,7 +228,15 @@ namespace Alternet.UI
             }
 
             header.OverlayProvider = dayView;
+
+            CalendarCreated?.Invoke(this, EventArgs.Empty);
         }
+
+        /// <summary>
+        /// Occurs when a new instance of the <see cref="XCalendar"/> control is created,
+        /// allowing subscribers to perform initialization or customization tasks.
+        /// </summary>
+        public static event EventHandler CalendarCreated;
 
         /// <summary>
         /// Occurs when the <see cref="XCalendar"/> control needs to query the attributes for a specific day,
