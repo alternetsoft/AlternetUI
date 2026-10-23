@@ -43,7 +43,8 @@ namespace ApiGenerator
                     managedServerClassTypes);
             }
 
-            Console.WriteLine("All done.");
+            Console.WriteLine("All done. Press any key to exit.");
+            Console.ReadKey();
         }
     }
 }

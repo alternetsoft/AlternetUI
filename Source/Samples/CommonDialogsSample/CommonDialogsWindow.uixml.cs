@@ -26,12 +26,6 @@ Environment.NewLine + Environment.NewLine +
         private FontInfo fontInfo = AbstractControl.DefaultFont;
         private string messageBoxText = "Message Box Text";
 
-        public CommonDialogsWindow(WindowKind kind)
-            : base(kind)
-        {
-            Initialize();
-        }
-
         public CommonDialogsWindow()
         {
             Initialize();

@@ -20,8 +20,15 @@ namespace Alternet.UI
     public delegate void PaintEventHandler(object? sender, PaintEventArgs e);
 
     /// <summary>
-    /// Defines the base abstract class for controls, which are components with
-    /// visual representation.
+    /// Represents the base class for all controls in the Alternet UI framework.
+    /// <see cref="AbstractControl"/> is an abstract class that provides the foundation
+    /// for creating user interface elements.
+    /// <see cref="Control"/> is a concrete implementation of <see cref="AbstractControl"/> that
+    /// uses native controls for rendering. <see cref="GenericControl"/> is a concrete implementation
+    /// of <see cref="AbstractControl"/> that 
+    /// uses a generic rendering approach and is implemented inside the library. 
+    /// Use <see cref="Parent"/> property to get or set the parent control of the current control.
+    /// Use <see cref="Layout"/> property to get or set the layout style of the child controls. 
     /// </summary>
     [DesignerCategory("Code")]
     [DefaultProperty("Text")]

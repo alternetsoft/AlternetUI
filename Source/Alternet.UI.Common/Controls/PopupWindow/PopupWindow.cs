@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Generic popup control.
+    /// Represents a popup window that can be used to display content in a separate window.
+    /// <see cref="PopupWindow"/> is a descendant of <see cref="PopupWindow{T}"/> where the content type
+    /// is specified as <see cref="Panel"/>.
     /// </summary>
     public partial class PopupWindow : PopupWindow<Panel>
     {
