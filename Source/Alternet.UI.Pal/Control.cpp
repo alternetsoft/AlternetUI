@@ -15,10 +15,8 @@ namespace Alternet::UI
 #endif
     }
 
-    void Control::CreateWxWindow()
+    wxWindow* Control::GetParentSafe()
     {
-        _flags.Set(ControlFlags::CreatingWxWindow, true);
-        _flags.Set(ControlFlags::DestroyingWxWindow, false);
         wxWindow* parentingWxWindow = nullptr;
 
         if (_parent == nullptr)
@@ -32,6 +30,16 @@ namespace Alternet::UI
             if (parentingWxWindow == nullptr)
                 parentingWxWindow = ParkingWindow::GetWindow();
         }
+
+        return parentingWxWindow;
+    }
+
+    void Control::CreateWxWindow()
+    {
+        _flags.Set(ControlFlags::CreatingWxWindow, true);
+        _flags.Set(ControlFlags::DestroyingWxWindow, false);
+
+		auto parentingWxWindow = GetParentSafe();
 
         _wxWindow = CreateWxWindowCore(parentingWxWindow);
 

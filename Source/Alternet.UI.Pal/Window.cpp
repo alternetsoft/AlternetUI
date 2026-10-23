@@ -157,12 +157,18 @@ namespace Alternet::UI
 
     wxString Window::RetrieveTitle()
     {
-        return GetTopLevelWindow()->GetTitle();
+        auto frame = GetTopLevelWindow();
+        if (frame == nullptr)
+            return "";
+        return frame->GetTitle();
     }
 
     void Window::ApplyTitle(const wxString& value)
     {
-        GetTopLevelWindow()->SetTitle(value);
+        auto frame = GetTopLevelWindow();
+        if (frame == nullptr)
+            return;
+        frame->SetTitle(value);
     }
 
     bool Window::GetIsPopupWindow()
@@ -247,7 +253,7 @@ namespace Alternet::UI
             size = wxSize(rect.width, rect.height);
         }
 
-        wxTopLevelWindow* frame;
+        wxWindow* frame;
 
         switch(_frameKind)
         {
@@ -268,15 +274,26 @@ namespace Alternet::UI
                 size,
                 style);
             break;
+		case WindowKind::Popup:
+			frame = new wxPopupWindow2(parent, style);
+			break;
+        case WindowKind::TransientPopup:
+            frame = new wxPopupTransientWindow2(parent, style);
+            break;
+        case WindowKind::FocusablePopup:
+            frame = new wxPopupWindow2(parent, style | wxPU_CONTAINS_CONTROLS);
+            break;
+        case WindowKind::FocusableTransientPopup:
+            frame = new wxPopupTransientWindow2(parent, style | wxPU_CONTAINS_CONTROLS);
+            break;
         }
 
         frame->Hide();
 
-        ApplyIcon(frame);
-
-        auto asFrame = dynamic_cast<Frame*>(frame);
+        auto asFrame = dynamic_cast<wxTopLevelWindow*>(frame);
         if (asFrame != nullptr)
         {
+            ApplyIcon(asFrame);
         }
 
         frame->Bind(wxEVT_SYS_COLOUR_CHANGED, &Control::OnSysColorChanged, this);
@@ -394,6 +411,10 @@ namespace Alternet::UI
     WindowState Window::GetState()
     {
         auto frame = GetTopLevelWindow();
+
+		if (frame == nullptr)
+			return WindowState::Normal;
+
         if (frame->IsMaximized())
             return WindowState::Maximized;
 
@@ -409,6 +430,10 @@ namespace Alternet::UI
             return;
 
         auto frame = GetTopLevelWindow();
+
+		if (frame == nullptr)
+			return;
+
         if (value == WindowState::Maximized)
             frame->Maximize();
         else if (value == WindowState::Minimized)

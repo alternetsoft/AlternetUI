@@ -66,6 +66,23 @@ namespace Alternet::UI
     private:
     };
 
+    class wxPopupWindow2 : public wxPopupWindow, public wxWidgetExtender
+    {
+    public:
+        wxPopupWindow2(wxWindow* parent, int flags = wxBORDER_NONE)
+			: wxPopupWindow(parent, flags)
+        {
+        }
+    };
+
+    class wxPopupTransientWindow2 : public wxPopupTransientWindow, public wxWidgetExtender
+    {
+    public:
+        wxPopupTransientWindow2(wxWindow* parent, int flags = wxBORDER_NONE)
+            : wxPopupTransientWindow(parent, flags)
+        {}
+    };
+
     class MiniFrame : public wxMiniFrame, public wxWidgetExtender
     {
     public:

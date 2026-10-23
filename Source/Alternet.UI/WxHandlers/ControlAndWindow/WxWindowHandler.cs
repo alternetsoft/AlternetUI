@@ -194,7 +194,8 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new NativeWindow((int)(Control?.GetWindowKind() ?? WindowKind.Control));
+            var kind = Control?.GetWindowKind() ?? WindowKind.Control;
+            return new NativeWindow((int)kind);
         }
 
         public void SetIcon(IconSet? value)

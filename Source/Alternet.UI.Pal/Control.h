@@ -150,6 +150,8 @@ namespace Alternet::UI
 
         Control* GetParent();
 
+        virtual wxWindow* GetParentSafe();
+
         static Control* TryFindControlByWxWindow(wxWindow* wxWindow);
 
         wxDragResult RaiseDragOver(const wxPoint& location,

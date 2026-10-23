@@ -42,5 +42,15 @@ namespace Alternet.UI
         /// Transient popup.
         /// </summary>
         TransientPopup = 5,
+
+        /// <summary>
+        /// Popup which can be focused.
+        /// </summary>
+        FocusablePopup = 6,
+
+        /// <summary>
+        /// Transient popup which can be focused.
+        /// </summary>
+        FocusableTransientPopup = 7,
     }
 }

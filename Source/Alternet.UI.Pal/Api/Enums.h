@@ -178,6 +178,8 @@ namespace Alternet::UI
     {
         Content = 0,
         Available = 1,
+        AvailableWidth = 2,
+        AvailableHeight = 3,
     };
     
     enum class RightToLeft
@@ -2940,6 +2942,8 @@ namespace Alternet::UI
         Control = 3,
         Popup = 4,
         TransientPopup = 5,
+        FocusablePopup = 6,
+        FocusableTransientPopup = 7,
     };
     
     enum class WindowSizeToContentMode
