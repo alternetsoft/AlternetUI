@@ -121,7 +121,7 @@ namespace Alternet.UI
         /// <param name="value">When this method returns, contains
         /// the value of the property if found; otherwise, the default value for the type.</param>
         /// <returns><c>true</c> if the property was found; otherwise, <c>false</c>.</returns>
-        bool TryGetCollectionProperty(string name, out IEnumerable? value);
+        bool TryGetCollectionProperty(string name, out IEnumerable<IPropertyBag>? value);
 
         /// <summary>
         /// Tries to get the value of an int property by name.
@@ -190,7 +190,32 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">The name of the property.</param>
         /// <param name="collection">The collection to set.</param>
-        void SetCollectionProperty(string name, IEnumerable collection);
+        void SetCollectionProperty(string name, IEnumerable<IPropertyBag> collection);
+
+        /// <summary>
+        /// Sets the value of a collection property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="collection">The collection to set.</param>
+        public void SetCollectionProperty(string name, IEnumerable collection)
+        {
+            var propertyBags = new List<IPropertyBag>();
+            foreach (var item in collection)
+            {
+                if (item is IPropertyBag propertyBag)
+                {
+                    propertyBags.Add(propertyBag);
+                }
+                else if (item is IPropertyBagSerialize serialize)
+                {
+                    var newPropertyBag = PropertyBag.Create();
+                    serialize.SaveTo(newPropertyBag);
+                    propertyBags.Add(newPropertyBag);
+                }
+            }
+
+            SetCollectionProperty(name, propertyBags);
+        }
 
         /// <summary>
         /// Converts the specified <see cref="DateTime"/> to its string representation.

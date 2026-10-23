@@ -30,9 +30,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual bool TryGetCollectionProperty(string name, out IEnumerable? value)
+        public virtual bool TryGetCollectionProperty(string name, out IEnumerable<IPropertyBag>? value)
         {
-            if (properties.TryGetValue(name, out var objValue) && objValue is IEnumerable collectionValue)
+            if (properties.TryGetValue(name, out var objValue) && objValue is IEnumerable<IPropertyBag> collectionValue)
             {
                 value = collectionValue;
                 return true;
@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual IPropertyBag.PropertyType GetValueType(object? value)
         {
-            if (value is IEnumerable)
+            if (value is IEnumerable<IPropertyBag>)
                 return IPropertyBag.PropertyType.Collection;
             if (value is int or byte or short or long or sbyte or ushort or uint or ulong)
                 return IPropertyBag.PropertyType.Integer;
@@ -208,7 +208,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void SetCollectionProperty(string name, IEnumerable collection)
+        public virtual void SetCollectionProperty(string name, IEnumerable<IPropertyBag> collection)
         {
             properties[name] = collection;
         }

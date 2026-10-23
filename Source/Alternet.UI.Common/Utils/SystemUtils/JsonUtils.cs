@@ -138,7 +138,7 @@ public static class JsonUtils
     /// </summary>
     /// <param name="items">The collection of items to serialize.</param>
     /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the JSON array to.</param>
-    public static void SerializeJsonArray(IEnumerable items, IStructuredTextWriter? writer = null)
+    public static void SerializeJsonArray(IEnumerable<IPropertyBag> items, IStructuredTextWriter? writer = null)
     {
         if (writer is null)
             return;
@@ -153,17 +153,31 @@ public static class JsonUtils
 
             if (!isString)
             {
-                if (value is IPropertyBagSerialize serialize)
+                void SavePropertyBag(IPropertyBag propertyBag)
+                {
+                    writer.Indent();
+                    JsonUtils.ToJsonStringFlags flags = isLast
+                        ? JsonUtils.ToJsonStringFlags.None : JsonUtils.ToJsonStringFlags.AddComma;
+                    propertyBag.ToJsonString(writer, flags);
+                    writer.Unindent();
+                }
+
+                void SavePropertyBagSerialize(IPropertyBagSerialize serialize)
                 {
                     IPropertyBag propertyBag = PropertyBag.Create();
                     serialize.SaveTo(propertyBag);
-                    writer.Indent();
+                    SavePropertyBag(propertyBag);
+                }
 
-                    JsonUtils.ToJsonStringFlags flags = isLast
-                        ? JsonUtils.ToJsonStringFlags.None : JsonUtils.ToJsonStringFlags.AddComma;
+                if (value is IPropertyBag propertyBag)
+                {
+                    SavePropertyBag(propertyBag);
+                    continue;
+                }
 
-                    propertyBag.ToJsonString(writer, flags);
-                    writer.Unindent();
+                if (value is IPropertyBagSerialize serialize)
+                {
+                    SavePropertyBagSerialize(serialize);
                     continue;
                 }
             }
@@ -203,7 +217,7 @@ public static class JsonUtils
 
             if (!isString)
             {
-                if (value is IEnumerable collectionValue)
+                if (value is IEnumerable<IPropertyBag> collectionValue)
                 {
                     writer.WriteLine($"\"{escapedPropertyName}\" : [");
                     writer.Indent();
