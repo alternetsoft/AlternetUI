@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 using System.Text.Json;
+
+using Alternet.UI.Extensions;
 
 namespace Alternet.UI;
 
@@ -72,20 +75,113 @@ public static class JsonUtils
             long or ulong or
             float or double or decimal => false,
 
+            IEnumerable => false,
             _ => true
         };
     }
 
     /// <summary>
+    /// Emits a JSON property with a quoted value to the specified <see cref="IStructuredTextWriter"/>.
+    /// </summary>
+    /// <param name="value">The value to emit.</param>
+    /// <param name="propName">The name of the JSON property.</param>
+    /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the JSON property to.</param>
+    /// <param name="isLast">Indicates whether this is the last property in the JSON object.</param>
+    public static void EmitQuotedValue(string? propName, string? value, IStructuredTextWriter writer, bool isLast)
+    {
+        if (propName is not null)
+            propName = $"\"{propName}\" : ";
+
+        var escapedValue = JsonUtils.EscapeString(value ?? string.Empty);
+        writer.WriteLine($"{propName}\"{escapedValue}\"{(isLast ? "" : ",")}");
+    }
+
+    /// <summary>
+    /// Emits a JSON property with a value to the specified <see cref="IStructuredTextWriter"/>.
+    /// </summary>
+    /// <param name="value">The value to emit.</param>
+    /// <param name="propName">The name of the JSON property.</param>
+    /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the JSON property to.</param>
+    /// <param name="isLast">Indicates whether this is the last property in the JSON object.</param>
+    public static void EmitUnquotedValue(string? propName, string? value, IStructuredTextWriter writer, bool isLast)
+    {
+        if (propName is not null)
+            propName = $"\"{propName}\" : ";
+
+        writer.WriteLine($"{propName}{value}{(isLast ? "" : ",")}");
+    }
+
+    /// <summary>
+    /// Emits a JSON property with the specified value to the specified <see cref="IStructuredTextWriter"/>.
+    /// Depending on the type of the value, it may be emitted with or without quotes.
+    /// </summary>
+    /// <param name="propName">The name of the JSON property.</param>
+    /// <param name="value">The value to emit.</param>
+    /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the JSON property to.</param>
+    /// <param name="isLast">Indicates whether this is the last property in the JSON object.</param>
+    public static void EmitValue(string? propName, string? value, IStructuredTextWriter writer, bool isLast)
+    {
+        var needQuotes = ValueNeedQuotes(value);
+
+        if (needQuotes)
+        {
+            EmitQuotedValue(propName, value?.ToString(), writer, isLast);
+        }
+        else
+        {
+            EmitUnquotedValue(propName, value?.ToString(), writer, isLast);
+        }
+    }
+
+    /// <summary>
+    /// Serializes a collection of items into a JSON array and writes it to the specified <see cref="IStructuredTextWriter"/>.
+    /// </summary>
+    /// <param name="items">The collection of items to serialize.</param>
+    /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the JSON array to.</param>
+    public static void SerializeJsonArray(IEnumerable items, IStructuredTextWriter? writer = null)
+    {
+        if (writer is null)
+            return;
+
+        var itemsArray = items.Cast<object?>().ToArray();
+
+        for (int i = 0; i < itemsArray.Length; i++)
+        {
+            var isLast = (i == itemsArray.Length - 1);
+            var value = itemsArray[i];
+            var isString = value is string;
+
+            if (!isString)
+            {
+                if (value is IPropertyBagSerialize serialize)
+                {
+                    IPropertyBag propertyBag = PropertyBag.Create();
+                    serialize.SaveTo(propertyBag);
+                    writer.Indent();
+
+                    JsonUtils.ToJsonStringFlags flags = isLast
+                        ? JsonUtils.ToJsonStringFlags.None : JsonUtils.ToJsonStringFlags.AddComma;
+
+                    propertyBag.ToJsonString(writer, flags);
+                    writer.Unindent();
+                    continue;
+                }
+            }
+
+            EmitValue(null, value?.ToString(), writer, isLast);
+        }
+    }
+
+    /// <summary>
     /// Converts a collection of name-value pairs into a JSON string representation
-    /// and writes it to the specified <see cref="ILogWriter"/>.
+    /// and writes it to the specified <see cref="IStructuredTextWriter"/>.
     /// </summary>
     /// <param name="nameValuePairs">The collection of name-value pairs to convert to JSON.</param>
-    /// <param name="writer">The <see cref="ILogWriter"/> to write the JSON string to.</param>
+    /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the JSON string to.</param>
     /// <param name="flags">Flags that control the behavior of the JSON string conversion.</param>
     public static void ToJsonString(
         IEnumerable<KeyValuePair<string, object?>> nameValuePairs,
-        ILogWriter? writer = null,
+        IStructuredTextWriter? writer = null,
         ToJsonStringFlags flags = ToJsonStringFlags.None)
     {
         if (writer is null)
@@ -102,28 +198,23 @@ public static class JsonUtils
             var escapedPropertyName = JsonUtils.EscapeString(propertyName);
             var isLastProperty = (i == pairs.Length - 1);
 
-            void EmitQuotedValue(string? value)
-            {
-                var escapedValue = JsonUtils.EscapeString(value ?? string.Empty);
-                writer.WriteLine($"\"{escapedPropertyName}\" : \"{escapedValue}\"{(isLastProperty ? "" : ",")}");
-            }
-
-            void EmitValue(string? value)
-            {
-                writer.WriteLine($"\"{escapedPropertyName}\" : {value}{(isLastProperty ? "" : ",")}");
-            }
-
             var value = pairs[i].Value;
-            var needQuotes = ValueNeedQuotes(value);
+            var isString = value is string;
 
-            if (needQuotes)
+            if (!isString)
             {
-                EmitQuotedValue(value?.ToString());
+                if (value is IEnumerable collectionValue)
+                {
+                    writer.WriteLine($"\"{escapedPropertyName}\" : [");
+                    writer.Indent();
+                    SerializeJsonArray(collectionValue, writer);
+                    writer.Unindent();
+                    writer.WriteLine($" ]{(isLastProperty ? "" : ",")}");
+                    continue;
+                }
             }
-            else
-            {
-                EmitValue(value?.ToString());
-            }
+
+            EmitValue(escapedPropertyName, value?.ToString(), writer, isLastProperty);
         }
 
         writer.Unindent();
