@@ -11,7 +11,8 @@ namespace Alternet.UI
 {
     /// <summary>
     /// This class displays content in a separate window that floats
-    /// over the current application window.
+    /// over the current application window. <see cref="PopupWindow"/> can have a title bar,
+    /// a bottom toolbar with 'Ok' and 'Cancel' buttons, and other controls.
     /// </summary>
     /// <typeparam name="T">Type of the main control.</typeparam>
     public partial class PopupWindow<T> : Window
@@ -60,9 +61,7 @@ namespace Alternet.UI
             Layout = LayoutStyle.Vertical;
             mainPanel.VerticalAlignment = VerticalAlignment.Fill;
 
-            topToolBarPanel.MinHeight = Coord.Max(
-                Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow),
-                ToolBar.DefaultMinItemSize);
+            topToolBarPanel.MinHeight = GetDefaultMinHeight();
 
             topGripComponent = new GripComponent();
             topGripComponent.ConfigureAsMovingGrip();
@@ -125,6 +124,7 @@ namespace Alternet.UI
             MainControl.Required();
             HideOnDeactivate = true;
             AllowFormKeyPreview = false;
+            HasInnerBorder = true;
         }
 
         /// <summary>
@@ -786,6 +786,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc />
+        public override WindowKind GetWindowKind()
+        {
+            var result = GetWindowKindOverride() ?? WindowKind.FocusablePopup;
+            return result;
+        }
+
         /// <summary>
         /// Moves the popup window to the valid position, i.e. such that it is entirely visible.
         /// </summary>
@@ -1021,6 +1028,17 @@ namespace Alternet.UI
         protected virtual void OnCancelButtonClick()
         {
             HidePopup(ModalResult.Canceled);
+        }
+
+        /// <summary>
+        /// Gets the default minimum height of the popup window.
+        /// </summary>
+        /// <returns>The default minimum height.</returns>
+        protected virtual float GetDefaultMinHeight()
+        {
+            return Coord.Max(
+                Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow),
+                ToolBar.DefaultMinItemSize);
         }
 
         /// <inheritdoc/>
