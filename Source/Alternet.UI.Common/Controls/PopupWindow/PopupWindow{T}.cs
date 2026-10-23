@@ -34,6 +34,8 @@ namespace Alternet.UI
         /// </summary>
         public static SpeedButton.KnownTheme DefaultOkCancelTheme = SpeedButton.KnownTheme.RoundBorder;
 
+        private static readonly bool useNativePopup;
+
         private readonly object? initialSettings;
         private readonly VerticalStackPanel mainPanel = new();
         private readonly ControlSubscriber notification = new();
@@ -50,6 +52,11 @@ namespace Alternet.UI
         private ModalResult popupResult;
         private T? mainControl;
         private ToolBar? leftBottomToolBar;
+
+        static PopupWindow()
+        {
+            useNativePopup = App.IsLinuxOS;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupWindow{T}"/> class with specified parameters.
@@ -124,7 +131,9 @@ namespace Alternet.UI
             MainControl.Required();
             HideOnDeactivate = true;
             AllowFormKeyPreview = false;
-            HasInnerBorder = true;
+
+            if (useNativePopup)
+                HasInnerBorder = true;
         }
 
         /// <summary>
@@ -789,8 +798,13 @@ namespace Alternet.UI
         /// <inheritdoc />
         public override WindowKind GetWindowKind()
         {
-            var result = GetWindowKindOverride() ?? WindowKind.FocusablePopup;
-            return result;
+            if (useNativePopup)
+            {
+                var result = GetWindowKindOverride() ?? WindowKind.FocusablePopup;
+                return result;
+            }
+
+            return base.GetWindowKind();
         }
 
         /// <summary>
@@ -872,7 +886,7 @@ namespace Alternet.UI
             {
                 x = x + ptSize.Width - sizeSelf.Width;
 
-                if(x + sizeSelf.Width > posScreen.X + sizeScreen.Width)
+                if (x + sizeSelf.Width > posScreen.X + sizeScreen.Width)
                 {
                     x = posScreen.X + sizeScreen.Width - sizeSelf.Width;
                 }
