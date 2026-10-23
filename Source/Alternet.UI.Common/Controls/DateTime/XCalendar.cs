@@ -1076,6 +1076,12 @@ namespace Alternet.UI
             return FirstDayOfWeek ?? DateUtils.GetFirstDayOfWeek(EffectiveFormatProvider());
         }
 
+        /// <inheritdoc/>
+        public override bool SetFocus()
+        {
+            return DayView.SetFocus();
+        }
+
         /// <summary>
         /// Gets the start date of the specified week number in the given year,
         /// considering the calendar's week rule and first day of the week.
