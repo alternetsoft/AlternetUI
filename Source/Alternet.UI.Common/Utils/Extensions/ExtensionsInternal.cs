@@ -23,7 +23,8 @@ namespace Alternet.UI.Extensions
         }
 
         /// <summary>
-        /// Converts a <see cref="DateOnly"/> to a <see cref="DateTime"/> by combining it with the minimum time value (00:00:00).
+        /// Converts a <see cref="DateOnly"/> to a <see cref="DateTime"/> by combining it with
+        /// the minimum time value (00:00:00).
         /// </summary>
         /// <param name="date">The <see cref="DateOnly"/> to convert.</param>
         /// <returns>A <see cref="DateTime"/> representing the specified <see cref="DateOnly"/>
@@ -35,7 +36,8 @@ namespace Alternet.UI.Extensions
         }
 
         /// <summary>
-        /// Converts a <see cref="TimeOnly"/> and a <see cref="DateOnly"/> to a <see cref="DateTime"/> by combining them.
+        /// Converts a <see cref="TimeOnly"/> and a <see cref="DateOnly"/> to
+        /// a <see cref="DateTime"/> by combining them.
         /// </summary>
         /// <param name="time">The <see cref="TimeOnly"/> to convert.</param>
         /// <param name="datePart">The <see cref="DateOnly"/> to combine with the time.</param>
@@ -63,7 +65,8 @@ namespace Alternet.UI.Extensions
         /// Converts a <see cref="DateTime"/> to a <see cref="DateOnly"/> by extracting the date component.
         /// </summary>
         /// <param name="dateTime">The <see cref="DateTime"/> to convert.</param>
-        /// <returns>A <see cref="DateOnly"/> representing the date component of the specified <see cref="DateTime"/>.</returns>
+        /// <returns>A <see cref="DateOnly"/> representing the date component of
+        /// the specified <see cref="DateTime"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly ToDateOnly(this DateTime dateTime)
         {
@@ -74,7 +77,8 @@ namespace Alternet.UI.Extensions
         /// Converts a <see cref="DateTime"/> to a <see cref="TimeOnly"/> by extracting the time component.
         /// </summary>
         /// <param name="dateTime">The <see cref="DateTime"/> to convert.</param>
-        /// <returns>A <see cref="TimeOnly"/> representing the time component of the specified <see cref="DateTime"/>.</returns>
+        /// <returns>A <see cref="TimeOnly"/> representing the time component
+        /// of the specified <see cref="DateTime"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static TimeOnly ToTimeOnly(this DateTime dateTime)
         {

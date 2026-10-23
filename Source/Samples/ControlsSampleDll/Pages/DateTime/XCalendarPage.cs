@@ -109,6 +109,17 @@ namespace ControlsSample
                 App.Log(json);
             });
 
+            calendar.ContextMenu.Add("Save calendar items as json", () =>
+            {
+                var source = new CalendarItemSource();
+                SampleCalendarItems.LoadSampleData(source);
+                var s = source.AsJsonString;
+
+                var form = new WindowWithMessageAndButton("Calendar Items JSON", s);
+                form.CloseAction = WindowCloseAction.Dispose;
+                form.Show();
+            });
+
             calendar.ContextMenu.Add("Load pattern from json", () =>
             {
                 if (json != null)
