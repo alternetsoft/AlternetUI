@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -48,13 +49,18 @@ namespace Alternet.UI
             Flags,
 
             /// <summary>
+            /// Indicates that the property value is a collection (e.g., an array or a list).
+            /// </summary>
+            Collection,
+
+            /// <summary>
             /// Indicates that the property value is of a type not explicitly defined in this enumeration.
             /// </summary>
             Other,
         }
 
         /// <summary>
-        /// Gets the JSON string representation of the property bag.
+        /// Gets or sets the JSON string representation of the property bag.
         /// </summary>
         public string AsJsonString
         {
@@ -109,6 +115,15 @@ namespace Alternet.UI
         bool TryGetStringProperty(string name, out string? value);
 
         /// <summary>
+        /// Tries to get the value of a collection property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains
+        /// the value of the property if found; otherwise, the default value for the type.</param>
+        /// <returns><c>true</c> if the property was found; otherwise, <c>false</c>.</returns>
+        bool TryGetCollectionProperty(string name, out IEnumerable? value);
+
+        /// <summary>
         /// Tries to get the value of an int property by name.
         /// </summary>
         /// <param name="name">The name of the property.</param>
@@ -120,8 +135,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the names of all properties in the property bag.
         /// </summary>
+        /// <param name="sorted">Indicates whether the property names should be returned in sorted order.</param>
         /// <returns>An enumerable collection of property names.</returns>
-        IEnumerable<string> GetPropertyNames();
+        IEnumerable<string> GetPropertyNames(bool sorted = true);
 
         /// <summary>
         /// Gets the type of a value.
@@ -168,6 +184,13 @@ namespace Alternet.UI
         /// <param name="name">The name of the property.</param>
         /// <param name="value">The value to set.</param>
         void SetStringProperty(string name, string value);
+
+        /// <summary>
+        /// Sets the value of a collection property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="collection">The collection to set.</param>
+        void SetCollectionProperty(string name, IEnumerable collection);
 
         /// <summary>
         /// Converts the specified <see cref="DateTime"/> to its string representation.
@@ -333,6 +356,13 @@ namespace Alternet.UI
 
                 switch (valueType)
                 {
+                    case PropertyType.Collection:
+                        if (TryGetCollectionProperty(propertyName, out var collectionValue))
+                        {
+                            yield return new KeyValuePair<string, object?>(propertyName, collectionValue);
+                        }
+
+                        break;
                     default:
                     case PropertyType.String:
                     case PropertyType.Flags:
@@ -359,13 +389,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts the property bag to a JSON string representation with the specified indentation level.
+        /// </summary>
+        /// <param name="indentLevel">The indentation level to apply to the JSON string.</param>
+        /// <returns>A JSON string representation of the property bag with the specified indentation level.</returns>
+        public string ToIndentedJsonString(int indentLevel)
+        {
+            var writer = new LogWriter.StringBuilderLogWriter();
+            writer.IndentLevel = indentLevel;
+            ToJsonString(writer);
+            return writer.ToString();
+        }
+
+        /// <summary>
         /// Converts the property bag to a JSON string representation
         /// and writes it to the specified <see cref="ILogWriter"/>.
         /// </summary>
         /// <param name="writer">The log writer to write the JSON string to.</param>
         /// <param name="flags">Flags to control the JSON string formatting.</param>
         public void ToJsonString(
-            ILogWriter? writer = null,
+            IStructuredTextWriter? writer = null,
             JsonUtils.ToJsonStringFlags flags = JsonUtils.ToJsonStringFlags.None)
         {
             var properties = GetAllProperties();
@@ -375,7 +418,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs the properties of the property bag.
         /// </summary>
-        public void Log(ILogWriter? writer = null)
+        public void Log(IStructuredTextWriter? writer = null)
         {
             writer ??= LogWriter.Debug;
             ToJsonString(writer);

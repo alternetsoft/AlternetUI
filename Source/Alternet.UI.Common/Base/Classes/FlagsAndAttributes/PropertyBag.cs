@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Alternet.UI
@@ -8,14 +10,36 @@ namespace Alternet.UI
     /// Represents a property bag that allows getting and setting properties by name.
     /// It supports both simple properties (string) and complex properties (IPropertyBag).
     /// </summary>
-    public class PropertyBag : IPropertyBag
+    public partial class PropertyBag : IPropertyBag
     {
-        private readonly BaseDictionary<string, object> properties = new ();
+        private readonly BaseDictionary<string, object> properties = new();
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyBag"/> class.
         /// </summary>
         public PropertyBag()
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="PropertyBag"/> class and returns it.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="PropertyBag"/> class.</returns>
+        public static PropertyBag Create()
+        {
+            return new PropertyBag();
+        }
+
+        /// <inheritdoc/>
+        public virtual bool TryGetCollectionProperty(string name, out IEnumerable? value)
+        {
+            if (properties.TryGetValue(name, out var objValue) && objValue is IEnumerable collectionValue)
+            {
+                value = collectionValue;
+                return true;
+            }
+
+            value = null;
+            return false;
         }
 
         /// <inheritdoc/>
@@ -54,6 +78,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual IPropertyBag.PropertyType GetValueType(object? value)
         {
+            if (value is IEnumerable)
+                return IPropertyBag.PropertyType.Collection;
             if (value is int or byte or short or long or sbyte or ushort or uint or ulong)
                 return IPropertyBag.PropertyType.Integer;
             if (value is bool)
@@ -182,9 +208,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IEnumerable<string> GetPropertyNames()
+        public virtual void SetCollectionProperty(string name, IEnumerable collection)
         {
-            return properties.Keys;
+            properties[name] = collection;
+        }
+
+        /// <inheritdoc/>
+        public virtual IEnumerable<string> GetPropertyNames(bool sorted)
+        {
+            return sorted ? properties.Keys.OrderBy(k => k) : properties.Keys;
         }
 
         /// <inheritdoc/>

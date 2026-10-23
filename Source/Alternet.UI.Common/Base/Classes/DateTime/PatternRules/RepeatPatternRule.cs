@@ -66,14 +66,14 @@ namespace Alternet.UI
         {
             get
             {
-                IPropertyBag propertyBag = new PropertyBag();
+                IPropertyBag propertyBag = PropertyBag.Create();
                 SaveTo(propertyBag);
                 return propertyBag.AsJsonString;
             }
 
             set
             {
-                IPropertyBag propertyBag = new PropertyBag();
+                IPropertyBag propertyBag = PropertyBag.Create();
                 propertyBag.AsJsonString = value;
                 LoadFrom(propertyBag);
             }
