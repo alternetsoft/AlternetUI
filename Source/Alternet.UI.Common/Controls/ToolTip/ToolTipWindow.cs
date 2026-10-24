@@ -280,6 +280,13 @@ namespace Alternet.UI
             RemoveGlobalNotification(subscriber);
         }
 
+        /// <inheritdoc />
+        public override WindowKind GetWindowKind()
+        {
+            var result = GetWindowKindOverride() ?? WindowKind.TransientPopup;
+            return result;
+        }
+
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
