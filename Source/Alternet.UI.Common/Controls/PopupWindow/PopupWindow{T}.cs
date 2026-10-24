@@ -832,7 +832,6 @@ namespace Alternet.UI
 
             ptOrigin += AlignUtils.GetDropDownPosition(ptSize, sizeSelf, position) - ptSize;
 
-            // determine the position and size of the screen we clamp the popup to
             PointD posScreen;
             SizeD sizeScreen;
             Display display;
@@ -847,7 +846,6 @@ namespace Alternet.UI
             }
             else
             {
-                // just use the primary one then
                 display = Display.Primary;
                 posScreen = PointD.Empty;
                 sizeScreen = display.ClientAreaDip.Size;
@@ -875,7 +873,8 @@ namespace Alternet.UI
             {
                 // shift the window to the left instead of the right.
                 x -= ptSize.Width;
-                x -= sizeSelf.Width;        // also shift it by window width.
+                // also shift it by window width.
+                x -= sizeSelf.Width;        
             }
             else
             {

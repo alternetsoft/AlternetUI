@@ -114,10 +114,7 @@ namespace ControlsSample
                 var source = new CalendarItemSource();
                 SampleCalendarItems.LoadSampleData(source);
                 var s = source.AsJsonString;
-
-                var form = new WindowWithMessageAndButton("Calendar Items JSON", s);
-                form.CloseAction = WindowCloseAction.Dispose;
-                form.Show();
+                WindowWithMessageAndButton.ShowDialog("Calendar Items JSON", s);
             });
 
             calendar.ContextMenu.Add("Load pattern from json", () =>
