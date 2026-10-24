@@ -1,4 +1,6 @@
-﻿using Alternet.UI.Localization;
+﻿using System;
+
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -66,9 +68,11 @@ namespace Alternet.UI
         /// <param name="title">The title of the dialog window. Cannot be null or empty.</param>
         /// <param name="details">The details or message to display in the dialog window.
         /// Cannot be null or empty.</param>
-        public static void ShowDialog(string title, string details)
+        /// <param name="onCreate">The action to perform with the window instance after it is created.</param>
+        public static void ShowDialog(string title, string details, Action<WindowWithMessageAndButton>? onCreate = null)
         {
             var window = new WindowWithMessageAndButton(title, details);
+            onCreate?.Invoke(window);
             window.ShowDialogAsync(null, (result) =>
             {
                 window.Dispose();
