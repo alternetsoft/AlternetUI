@@ -70,8 +70,6 @@ namespace NativeApi.Api
         public bool AcceptsFocus { get; set; }
         public bool AcceptsFocusFromKeyboard { get; set; }
         public bool AcceptsFocusRecursively { get; set; }
-        public bool AcceptsFocusAll { get; set; }
-
         public int BorderStyle { get; set; }
         public int LayoutDirection { get; set; }
         public NativeStringSpan GetName() => default;

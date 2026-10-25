@@ -122,20 +122,6 @@ ALTERNET_UI_API void Control_SetAcceptsFocusRecursively_(Control* obj, c_bool va
     });
 }
 
-ALTERNET_UI_API c_bool Control_GetAcceptsFocusAll_(Control* obj)
-{
-    return MarshalExceptions<c_bool>([&](){
-        return obj->GetAcceptsFocusAll();
-    });
-}
-
-ALTERNET_UI_API void Control_SetAcceptsFocusAll_(Control* obj, c_bool value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetAcceptsFocusAll(value);
-    });
-}
-
 ALTERNET_UI_API int Control_GetBorderStyle_(Control* obj)
 {
     return MarshalExceptions<int>([&](){

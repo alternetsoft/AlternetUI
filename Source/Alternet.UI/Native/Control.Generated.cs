@@ -144,21 +144,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public bool AcceptsFocusAll
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetAcceptsFocusAll_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetAcceptsFocusAll_(NativePointer, value);
-            }
-        }
-        
         public int BorderStyle
         {
             get
@@ -1287,12 +1272,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetAcceptsFocusRecursively_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Control_GetAcceptsFocusAll_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetAcceptsFocusAll_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetBorderStyle_(IntPtr obj);

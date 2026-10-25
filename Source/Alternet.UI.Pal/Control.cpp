@@ -941,12 +941,6 @@ namespace Alternet::UI
     {
     }
 
-    bool Control::GetAcceptsFocus()
-    {
-        auto wxWindow = GetWxWindow();
-        return wxWindow->AcceptsFocus();
-    }
-
     void Control::SetTabStop(bool value)
     {
         if (GetTabStop() == value)
@@ -960,39 +954,40 @@ namespace Alternet::UI
 
     void Control::SetFocusFlags(bool canSelect, bool tabStop, bool canSelectChildren)
     {
+        _acceptsFocus = canSelect;
+        _flags.Set(ControlFlags::TabStop, tabStop);
+        _acceptsFocusFromKeyboard = tabStop;
+        _acceptsFocusRecursively = canSelectChildren;
     }
 
     void Control::SetAcceptsFocus(bool value)
     {
-    }
-
-    bool Control::GetAcceptsFocusAll()
-    {
-        return true;
-    }
-
-    void Control::SetAcceptsFocusAll(bool value)
-    {
-    }
-
-    bool Control::GetAcceptsFocusFromKeyboard()
-    {
-        auto wxWindow = GetWxWindow();
-        return wxWindow->AcceptsFocusFromKeyboard();
+        _acceptsFocus = value;
     }
 
     void Control::SetAcceptsFocusFromKeyboard(bool value)
     {
-    }
-
-    bool Control::GetAcceptsFocusRecursively()
-    {
-        auto wxWindow = GetWxWindow();
-        return wxWindow->AcceptsFocusRecursively();
+        _acceptsFocusFromKeyboard = value;
     }
 
     void Control::SetAcceptsFocusRecursively(bool value)
     {
+        _acceptsFocusRecursively = value;
+    }
+
+    bool Control::GetAcceptsFocus()
+    {
+        return _acceptsFocus;
+    }
+
+    bool Control::GetAcceptsFocusFromKeyboard()
+    {
+        return _acceptsFocusFromKeyboard;
+    }
+
+    bool Control::GetAcceptsFocusRecursively()
+    {
+        return _acceptsFocusRecursively;
     }
 
     void Control::SetAllowDoubleBuffered(bool allow)

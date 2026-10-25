@@ -14,9 +14,9 @@ namespace Alternet.UI
     /// over the current application window. <see cref="PopupWindow"/> can have a title bar,
     /// a bottom toolbar with 'Ok' and 'Cancel' buttons, and other controls.
     /// </summary>
-    /// <typeparam name="T">Type of the main control.</typeparam>
-    public partial class PopupWindow<T> : Window
-        where T : AbstractControl, new()
+    /// <typeparam name="TContent">Type of the main control.</typeparam>
+    public partial class PopupWindow<TContent> : Window
+        where TContent : AbstractControl, new()
     {
         /// <summary>
         /// Gets or sets the default distance between OK and Cancel buttons in the bottom toolbar.
@@ -39,31 +39,47 @@ namespace Alternet.UI
         private readonly object? initialSettings;
         private readonly VerticalStackPanel mainPanel = new();
         private readonly ControlSubscriber notification = new();
-        private readonly ToolBar bottomToolBar = new();
-        private readonly Panel topToolBarPanel = new();
-        private readonly Panel bottomToolBarPanel = new();
+        private readonly ToolBar bottomToolBar = new()
+        {
+            IsGraphicControl = true,
+        };
+
+        private readonly ToolBarPanel topToolBarPanel = new()
+        {
+            IsGraphicControl = true,
+        };
+
+        private readonly ToolBarPanel bottomToolBarPanel = new()
+        {
+            IsGraphicControl = true,
+        };
+
         private readonly SpeedButton buttonOk;
         private readonly SpeedButton buttonCancel;
         private readonly AbstractControl buttonSpacer;
-        private readonly Label label;
+        private readonly Label titleLabel;
         private readonly GripComponent topGripComponent;
         private readonly GripComponent bottomGripComponent = new();
 
         private ModalResult popupResult;
-        private T? mainControl;
+        private TContent? mainControl;
         private ToolBar? leftBottomToolBar;
+        private readonly Type? contentType;
 
         static PopupWindow()
         {
-            useNativePopup = App.IsLinuxOS;
+            useNativePopup = App.IsLinuxOS || true;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupWindow{T}"/> class with specified parameters.
         /// </summary>
         /// <param name="initialSettings">The initial settings for the popup window.</param>
-        public PopupWindow(object? initialSettings)
+        /// <param name="contentType">The type of the main control to be used in the popup window.
+        /// If not specified, the default type <typeparamref name="TContent"/> will be used.</param>
+        public PopupWindow(object? initialSettings, Type? contentType = null)
         {
+            this.contentType = contentType ?? typeof(TContent);
             this.initialSettings = initialSettings;
             Layout = LayoutStyle.Vertical;
             mainPanel.VerticalAlignment = VerticalAlignment.Fill;
@@ -75,12 +91,12 @@ namespace Alternet.UI
             topGripComponent.Target = this;
             topGripComponent.InteractionControl = topToolBarPanel;
 
-            label = new Label();
-            label.VerticalAlignment = VerticalAlignment.Center;
-            label.HorizontalAlignment = HorizontalAlignment.Left;
-            label.Margin = DefaultTitleMargin;
-            label.InputTransparent = true;
-            label.Parent = topToolBarPanel;
+            titleLabel = new Label();
+            titleLabel.VerticalAlignment = VerticalAlignment.Center;
+            titleLabel.HorizontalAlignment = HorizontalAlignment.Left;
+            titleLabel.Margin = DefaultTitleMargin;
+            titleLabel.InputTransparent = true;
+            titleLabel.Parent = topToolBarPanel;
 
             topToolBarPanel.Parent = this;
 
@@ -239,6 +255,18 @@ namespace Alternet.UI
         /// </summary>
         public AbstractControl BottomToolBarPanel => bottomToolBarPanel;
 
+        /// <inheritdoc/>
+        public override bool Resizable
+        {
+            get => base.Resizable;
+            set
+            {
+                if (Resizable == value)
+                    return;
+                base.Resizable = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets a boolean value indicating whether title bar is visible.
         /// </summary>
@@ -264,7 +292,7 @@ namespace Alternet.UI
         /// Gets the label used for displaying the title.
         /// </summary>
         [Browsable(false)]
-        public Label TitleLabel => label;
+        public Label TitleLabel => titleLabel;
 
         /// <summary>
         /// Gets or sets whether 'Ok' button is visible.
@@ -502,7 +530,7 @@ namespace Alternet.UI
         /// Gets or sets main control used in the popup window.
         /// </summary>
         [Browsable(false)]
-        public virtual T MainControl
+        public virtual TContent MainControl
         {
             get
             {
@@ -547,7 +575,7 @@ namespace Alternet.UI
         /// Result is sorted by last activation time.
         /// </summary>
         public static IEnumerable<T1> GetVisiblePopups<T1>()
-            where T1 : PopupWindow<T>
+            where T1 : PopupWindow<TContent>
         {
             if (!App.HasApplication)
                 yield break;
@@ -941,7 +969,12 @@ namespace Alternet.UI
         /// <summary>
         /// Creates main control of the popup window.
         /// </summary>
-        protected virtual T CreateMainControl() => new();
+        protected virtual TContent CreateMainControl()
+        {
+            var result = contentType is not null ? (TContent?)Activator.CreateInstance(contentType) : null;
+            result ??= new();
+            return result;
+        }
 
         /// <summary>
         /// Override to bind events to the main control of the popup window.
@@ -959,7 +992,7 @@ namespace Alternet.UI
         protected override void OnTitleChanged(EventArgs e)
         {
             base.OnTitleChanged(e);
-            label.Text = Title;
+            titleLabel.Text = Title;
         }
 
         /// <summary>
@@ -1062,6 +1095,14 @@ namespace Alternet.UI
             if (HideOnDeactivate && Visible)
             {
                 Post(() => HidePopup(ModalResult.Canceled, focusOwner: false));
+            }
+        }
+
+        private class ToolBarPanel : Panel
+        {
+            protected override void OnGotFocus(EventArgs e)
+            {
+                base.OnGotFocus(e);
             }
         }
     }

@@ -29,8 +29,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupListBox{T}"/> class with specified parameters.
         /// </summary>
-        public PopupListBox(object? initialSettings)
-            : base(initialSettings)
+        public PopupListBox(object? initialSettings, Type? contentType = null)
+            : base(initialSettings, contentType)
         {
             InitPopup();
         }

@@ -38,17 +38,23 @@ namespace Alternet::UI
     
     bool wxPanel2::AcceptsFocus() const
     {
-        return true;
+        if(_owner == nullptr)
+            return true;
+        return _owner->GetAcceptsFocus();
     }
 
     bool wxPanel2::AcceptsFocusFromKeyboard() const
     {
-        return true;
+        if(_owner == nullptr)
+            return true;
+        return _owner->GetAcceptsFocusFromKeyboard();
     }
 
     bool wxPanel2::AcceptsFocusRecursively() const
     {
-        return true;
+        if(_owner == nullptr)
+            return true;
+        return _owner->GetAcceptsFocusRecursively();
     }
 
     wxWindow* Panel::CreateWxWindowUnparented()

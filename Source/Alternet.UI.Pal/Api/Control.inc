@@ -25,9 +25,6 @@ void SetAcceptsFocusFromKeyboard(bool value);
 bool GetAcceptsFocusRecursively();
 void SetAcceptsFocusRecursively(bool value);
 
-bool GetAcceptsFocusAll();
-void SetAcceptsFocusAll(bool value);
-
 int GetBorderStyle();
 void SetBorderStyle(int value);
 

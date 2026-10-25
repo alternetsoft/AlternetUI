@@ -172,6 +172,10 @@ namespace Alternet::UI
 
         virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
         virtual void OnEraseBackground(wxEraseEvent& event);
+    private:
+        bool _acceptsFocus = true;
+        bool _acceptsFocusFromKeyboard = true;
+        bool _acceptsFocusRecursively = true;
     protected:
         DrawingContext* _drawingContext = nullptr;
         wxString _textValue = "";

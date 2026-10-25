@@ -610,7 +610,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool SetFocus()
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || IsGraphicControl)
                 return false;
             var window = ParentWindow;
             if (window is null || window.State == WindowState.Minimized)
