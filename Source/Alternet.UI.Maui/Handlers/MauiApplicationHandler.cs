@@ -213,7 +213,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual ISoundFactoryHandler CreateSoundFactoryHandler()
         {
-            throw new NotImplementedException();
+            return MauiSoundFactoryHandler.CreateSoundFactoryHandler();
         }
 
         /// <inheritdoc/>
