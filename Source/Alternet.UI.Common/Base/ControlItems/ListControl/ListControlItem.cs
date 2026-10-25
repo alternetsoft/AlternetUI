@@ -2579,7 +2579,7 @@ namespace Alternet.UI
             var control = prm.Container?.Control;
             */
 
-            var isSelected = IsSelectedCell(prm.AsCellContext);
+            var isSelected = IsSelectedCell(prm.AsCellContext) || prm.PaintArgs.IsSelected;
             var isDark = IsContainerDark(prm.Container);
 
             var s = DefaultGetItemText(this, forDisplay: true, prm.Container?.FormatProvider);
