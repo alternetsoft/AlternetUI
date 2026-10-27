@@ -453,13 +453,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates and adds new item to <see cref="ItemContainerElement{T}.Items"/> collection.
+        /// Creates and adds new item to <see cref="ItemContainerElement{T}.Items"/> collection
+        /// using the specified title and click action.
         /// </summary>
         /// <returns>Created item.</returns>
         /// <param name="title">Item title.</param>
         /// <param name="onClick">Item click action.</param>
-        /// <returns></returns>
+        /// <returns>Created item.</returns>
         public virtual MenuItem Add(string title, Action onClick)
+        {
+            MenuItem item = new(title, onClick);
+            Items.Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Creates and adds new item to <see cref="ItemContainerElement{T}.Items"/> collection
+        /// using the specified title and event handler.
+        /// </summary>
+        /// <param name="title">Item title.</param>
+        /// <param name="onClick">Item click event handler.</param>
+        /// <returns>Created item.</returns>
+        public virtual MenuItem Add(string title, EventHandler onClick)
         {
             MenuItem item = new(title, onClick);
             Items.Add(item);
