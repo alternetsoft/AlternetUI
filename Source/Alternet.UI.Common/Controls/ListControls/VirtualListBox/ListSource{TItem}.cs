@@ -12,8 +12,8 @@ namespace Alternet.UI
     /// This class provides a basic implementation of the <see cref="IListSource{TItem}"/> interface
     /// using an internal <see cref="BaseCollection{TItem}"/> to store the items.
     /// </summary>
-    /// <typeparam name="TItem"></typeparam>
-    public class ListSource<TItem> : IListSource<TItem>
+    /// <typeparam name="TItem">The type of items stored in the list source.</typeparam>
+    public class ListSource<TItem> : BaseObject, IListSource<TItem>
         where TItem : class, new()
     {
         private readonly BaseCollection<TItem> collection;
@@ -39,7 +39,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListSource{TItem}"/> class with the specified collection of items.
+        /// Initializes a new instance of the <see cref="ListSource{TItem}"/>
+        /// class with the specified collection of items.
         /// </summary>
         /// <param name="collection">The collection of items to initialize the list source with.</param>
         public ListSource(BaseCollection<TItem>? collection)
@@ -60,7 +61,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the underlying collection of items.
         /// </summary>  
-        public BaseCollection<TItem> Collection => collection;
+        public BaseCollection<TItem> Collection
+        {
+            get
+            {
+                return collection;
+            }
+        }
 
         /// <inheritdoc/>
         public virtual int Count
