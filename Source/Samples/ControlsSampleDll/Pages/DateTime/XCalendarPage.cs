@@ -17,7 +17,8 @@ namespace ControlsSample
         private readonly ScrollableRepeatPatternPicker patternPickerContainer;
         private readonly RepeatPatternPicker patternPicker;
         private bool highlightDates;
-        private string? json;
+        private string? patternJson;
+        private string? calendarItemsJson;
 
         static XCalendarPage()
         {
@@ -103,31 +104,54 @@ namespace ControlsSample
             {
             }).Enabled = false;
 
-            calendar.ContextMenu.Add("Save pattern as json", () =>
+            var loadCalendarItemsMenuItem = calendar.ContextMenu.Add("Load calendar items from json", () =>
             {
-                json = patternPicker.Value.AsJsonString;
-                App.Log(json);
+                if (calendarItemsJson != null)
+                {
+                    App.Log("Loading calendar items from json");
+
+                    var source = new CalendarItemSource();
+                    source.AsJsonString = calendarItemsJson;
+                    WindowWithMessageAndButton.ShowDialog("Calendar Items JSON", calendarItemsJson);
+                }
+                else
+                {
+                    App.Log("No calendar items saved in json");
+                }
             });
+
+            loadCalendarItemsMenuItem.Enabled = false;
 
             calendar.ContextMenu.Add("Save calendar items as json", () =>
             {
                 var source = new CalendarItemSource();
                 SampleCalendarItems.LoadSampleData(source);
                 var s = source.AsJsonString;
+                calendarItemsJson = s;
                 WindowWithMessageAndButton.ShowDialog("Calendar Items JSON", s);
+                loadCalendarItemsMenuItem.Enabled = true;
             });
 
-            calendar.ContextMenu.Add("Load pattern from json", () =>
+            var loadPatternFromJsonMenuItem = calendar.ContextMenu.Add("Load pattern from json", () =>
             {
-                if (json != null)
+                if (patternJson != null)
                 {
                     App.Log("Loading pattern from json");
-                    patternPicker.Value.AsJsonString = json;
+                    patternPicker.Value.AsJsonString = patternJson;
                 }
                 else
                 {
                     App.Log("No pattern saved in json");
                 }
+            });
+
+            loadPatternFromJsonMenuItem.Enabled = false;
+
+            calendar.ContextMenu.Add("Save pattern as json", () =>
+            {
+                patternJson = patternPicker.Value.AsJsonString;
+                App.Log(patternJson);
+                loadPatternFromJsonMenuItem.Enabled = true;
             });
 
             DoInsideLayout(Fn);
