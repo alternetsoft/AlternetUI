@@ -31,12 +31,25 @@ namespace Alternet.UI
                 SaveTo(propertyBag);
                 return propertyBag.AsJsonString;
             }
+
+            set
+            {
+                IPropertyBag propertyBag = PropertyBag.Create();
+                propertyBag.AsJsonString = value;
+                LoadFrom(propertyBag);
+            }
         }
 
         /// <summary>
         /// Gets a collection of <see cref="CalendarItem"/> objects.
         /// </summary>
-        public ListSource<CalendarItem> Items => items;
+        public ListSource<CalendarItem> Items
+        {
+            get
+            {
+                return items;
+            }
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="CalendarItem"/> and returns it.
@@ -62,7 +75,38 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        {
+            if (propertyBag == null)
+                return false;
+
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            return DoInsideSuspendedPropertyChanged(() =>
+            {
+                Items.Clear();
+
+                propertyBag.TryGetCollectionProperty(prefix + nameof(Items), out var itemsCollection);
+                
+                if (itemsCollection != null)
+                {
+                    foreach (var IPropertyBag in itemsCollection)
+                    {
+                        CalendarItem calendarItem = CreateItem();
+                        calendarItem.LoadFrom(IPropertyBag);
+                        Add(calendarItem);
+                    }
+                }
+
+                return true;
+            });
+        }
+
+        /// <inheritdoc/>
+        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
             if (prefix is not null)
                 prefix += ".";
