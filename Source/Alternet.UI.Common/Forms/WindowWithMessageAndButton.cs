@@ -60,6 +60,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Displays a dialog window with the specified title and details.
+        /// If you need to show a non-modal window, use
+        /// <see cref="ShowWindow(string, string, Action{WindowWithMessageAndButton}?)"/> instead.
         /// </summary>
         /// <remarks>This method creates a dialog window and displays it asynchronously.
         /// The dialog is disposed of automatically after it is closed.
@@ -77,6 +79,22 @@ namespace Alternet.UI
             {
                 window.Dispose();
             });
+        }
+
+        /// <summary>
+        /// Displays a non-modal window with the specified title and details.
+        /// If you need to show a modal dialog, use
+        /// <see cref="ShowDialog(string, string, Action{WindowWithMessageAndButton}?)"/> instead.
+        /// </summary>
+        /// <param name="title">The title of the dialog window. Cannot be null or empty.</param>
+        /// <param name="details">The details or message to display in the dialog window.
+        /// Cannot be null or empty.</param>
+        /// <param name="onCreate">The action to perform with the window instance after it is created.</param>
+        public static void ShowWindow(string title, string details, Action<WindowWithMessageAndButton>? onCreate = null)
+        {
+            var window = new WindowWithMessageAndButton(title, details);
+            onCreate?.Invoke(window);
+            window.Show();
         }
 
         /// <summary>
