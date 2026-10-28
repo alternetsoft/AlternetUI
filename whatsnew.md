@@ -1,3 +1,24 @@
+# 1.1.15 (2026 October 28)
+
+- Fix tooltip window not showing on Linux with Wayland.
+- Fix popup behavior on Linux with Wayland.
+- VirtualListBox: Fix selected item fore color when columns are used.
+- ListSource.Collection now has a setter.
+- Add BeginUpdate/EndUpdate to BaseCollection.
+- Add EventHandler overload to Menu.Add.
+- Make ListSource derive from BaseObject.
+- Add JSON save and load to CalendarSource.
+- Create MauiSoundPlayerHandler, MauiSoundFactoryHandler.
+- Classify tooltip windows as transient popups.
+- CalendarSource: Add SaveTo and LoadFrom to persist the object into an IPropertyBag.
+- Add collection support to PropertyBag.
+- Expose IndentLevel property on log writers.
+- Expose a static CalendarCreated event and raise it after an XCalendar instance is initialized.
+- Fix XCalendar set focus behavior.
+- Introduce IPropertyBagSerialize and implement it on calendar items, alarms, and repeat pattern rules.
+
+---
+
 # 1.1.14 (2026 October 22)
 
 - Create InnerPopupCalendarItem.
