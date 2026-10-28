@@ -8,14 +8,14 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a source for <see cref="CalendarItem"/> objects.
     /// </summary>
-    public partial class CalendarItemSource : DisposableObject
+    public partial class CalendarSource : DisposableObject
     {
         private readonly ListSource<CalendarItem> items = new ();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CalendarItemSource"/> class.
+        /// Initializes a new instance of the <see cref="CalendarSource"/> class.
         /// </summary>
-        public CalendarItemSource()
+        public CalendarSource()
         {
         }
 
@@ -87,19 +87,22 @@ namespace Alternet.UI
 
             return DoInsideSuspendedPropertyChanged(() =>
             {
-                Items.Clear();
-
-                propertyBag.TryGetCollectionProperty(prefix + nameof(Items), out var itemsCollection);
-                
-                if (itemsCollection != null)
+                Items.DoInsideUpdate(() =>
                 {
-                    foreach (var IPropertyBag in itemsCollection)
+                    Items.Clear();
+
+                    propertyBag.TryGetCollectionProperty(prefix + nameof(Items), out var itemsCollection);
+
+                    if (itemsCollection != null)
                     {
-                        CalendarItem calendarItem = CreateItem();
-                        calendarItem.LoadFrom(IPropertyBag);
-                        Add(calendarItem);
+                        foreach (var IPropertyBag in itemsCollection)
+                        {
+                            CalendarItem calendarItem = CreateItem();
+                            calendarItem.LoadFrom(IPropertyBag);
+                            Add(calendarItem);
+                        }
                     }
-                }
+                });
 
                 return true;
             });
