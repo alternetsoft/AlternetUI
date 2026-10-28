@@ -42,6 +42,7 @@ namespace Alternet.UI
     public class BaseCollection<T> : BaseObservableCollection<T>
     {
         private CollectionSecurityFlags securityFlags;
+        private int updateCounter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseCollection{T}"/> class.
@@ -94,10 +95,14 @@ namespace Alternet.UI
         public CollectionSecurityFlags Flags => securityFlags;
 
         /// <summary>
-        /// Returns <see langword="true"/> if <see cref="AddRange"/> is being
-        /// executed at the moment.
+        /// Returns <see langword="true"/> if a range operation is in progress, otherwise <see langword="false"/>.
         /// </summary>
-        public bool RangeOpInProgress { get; private set; }
+        public bool RangeOpInProgress => updateCounter > 0;
+
+        /// <summary>
+        /// Gets a value indicating whether the collection is currently being updated.
+        /// </summary>
+        public bool InUpdate => updateCounter > 0;
 
         /// <summary>
         /// Gets the first item in the collection or 'default'.
@@ -213,6 +218,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Begins a range operation on the collection, incrementing the update counter.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void BeginUpdate()
+        {
+            updateCounter++;
+        }
+
+        /// <summary>
+        /// Ends a range operation on the collection, decrementing the update counter.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void EndUpdate()
+        {
+            updateCounter--;
+        }
+
+        /// <summary>
         /// Adds the elements of the specified <see cref="IEnumerable{T}"/> to the end
         /// of the collection.
         /// </summary>
@@ -229,23 +252,27 @@ namespace Alternet.UI
         /// The order of the elements in the <see cref="IEnumerable{T}"/> is preserved
         /// in the collection.
         /// </remarks>
-        public void AddRange(IEnumerable<T>? collection)
+        public virtual void AddRange(IEnumerable<T>? collection)
         {
             if (collection is null)
                 return;
 
-            RangeOpInProgress = true;
-
+            BeginUpdate();
             int index = Count;
+            bool added = false;
             try
             {
                 foreach (var item in collection)
+                {
+                    added = true;
                     Add(item);
+                }
             }
             finally
             {
-                RangeOpInProgress = false;
-                OnItemRangeAdditionFinished(index, collection);
+                EndUpdate();
+                if (added)
+                    OnItemRangeAdditionFinished(index, collection);
             }
         }
 
@@ -326,10 +353,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Reduces the number of elements in the collection to the specified count, removing items from the end if
+        /// Reduces the number of elements in the collection to the specified count,
+        /// removing items from the end if
         /// necessary.
         /// </summary>
-        /// <param name="newCount">The maximum number of elements to retain in the collection. Must be non-negative.</param>
+        /// <param name="newCount">The maximum number of elements to retain in the collection.
+        /// Must be non-negative.</param>
         public virtual void TrimCount(int newCount)
         {
             ListUtils.TrimCount(this, newCount);
