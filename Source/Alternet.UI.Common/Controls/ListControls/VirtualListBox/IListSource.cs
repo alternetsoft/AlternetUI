@@ -34,6 +34,11 @@ namespace Alternet.UI
         event CollectionItemChangedHandler<TItem>? ItemRemoved;
 
         /// <summary>
+        /// Gets a value indicating whether the list is currently being updated.
+        /// </summary>
+        bool InUpdate { get; }
+
+        /// <summary>
         /// Gets the items as <see cref="IList"/>.
         /// </summary>
         IList AsList {  get; }
@@ -59,6 +64,34 @@ namespace Alternet.UI
         /// <param name="count">The new size of the list.</param>
         /// <param name="fnCreateItem">A function to create new items if the list is expanded.</param>
         void SetCount(int count, Func<TItem> fnCreateItem);
+
+        /// <summary>
+        /// Begins an update operation on the list.
+        /// This method can be used to optimize performance when making multiple changes to the list.
+        /// </summary>
+        void BeginUpdate();
+
+        /// <summary>
+        /// Ends an update operation on the list.
+        /// </summary>
+        void EndUpdate();
+
+        /// <summary>
+        /// Executes the specified action inside an update operation.
+        /// </summary>
+        /// <param name="action">The action to execute inside the update operation.</param>
+        public void DoInsideUpdate(Action action)
+        {
+            BeginUpdate();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndUpdate();
+            }
+        }
 
         /// <summary>
         /// Sets the item at the specified index.
