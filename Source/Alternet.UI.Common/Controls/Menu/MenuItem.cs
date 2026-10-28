@@ -1499,6 +1499,9 @@ namespace Alternet.UI
                 }
             }
 
+
+            public bool InUpdate => menu.Items.InUpdate;
+
             public int Count
             {
                 get
@@ -1527,6 +1530,14 @@ namespace Alternet.UI
             }
 
             public void AddRange(IEnumerable<TreeViewItem> items)
+            {
+            }
+
+            public void BeginUpdate()
+            {
+            }
+
+            public void EndUpdate()
             {
             }
 

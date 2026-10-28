@@ -85,6 +85,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public bool InUpdate => provider().InUpdate;
+
+        /// <inheritdoc/>
         public bool IsReadOnly
         {
             get
@@ -142,6 +145,18 @@ namespace Alternet.UI
             var result = new ListBoxItems();
             result.AddRange(items);
             return result;
+        }
+
+        /// <inheritdoc/>
+        public void BeginUpdate()
+        {
+            provider().BeginUpdate();
+        }
+
+        /// <inheritdoc/>
+        public void EndUpdate()
+        {
+            provider().EndUpdate();
         }
 
         /// <inheritdoc/>
