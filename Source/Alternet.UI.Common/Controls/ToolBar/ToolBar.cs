@@ -749,7 +749,7 @@ namespace Alternet.UI
         /// <param name="image">Item image.</param>
         /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">Click action.</param>
-        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        /// <returns><see cref="SpeedButton"/> of the added item.</returns>
         public virtual SpeedButton AddSpeedBtnCore(
             string? text,
             SvgImage? image = null,
@@ -1118,6 +1118,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a known speed button to the toolbar with optional svg override.
+        /// </summary>
+        /// <param name="btn">The known button to add.</param>
+        /// <param name="svg">The SVG image associated with the button.
+        /// This parameter can be used to specify optional image override.</param>
+        /// <param name="action">The action to perform when the button is clicked.</param>
+        /// <returns>The unique ID of the added button.</returns>
+        public virtual SpeedButton AddSpeedBtnCore(
+            KnownButton btn,
+            SvgImage? svg,
+            EventHandler? action = null)
+        {
+            SpeedButton result;
+
+            if (svg is null)
+            {
+                result = AddSpeedBtnCore(btn, action);
+            }
+            else
+            {
+                result = AddSpeedBtnCore(null, image: svg, action: action);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Adds known <see cref="SpeedButton"/> to the control with the specified action.
         /// </summary>
         public ObjectUniqueId AddSpeedBtn(KnownButton button, Action action)
@@ -1133,6 +1160,17 @@ namespace Alternet.UI
             var info = KnownButtons.GetInfo(button);
 
             var result = AddSpeedBtn(text: null, info?.SvgImage, toolTip: info?.Text?.SafeToString(), action);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds known <see cref="SpeedButton"/> to the control.
+        /// </summary>
+        public virtual SpeedButton AddSpeedBtnCore(KnownButton button, EventHandler? action = null)
+        {
+            var info = KnownButtons.GetInfo(button);
+
+            var result = AddSpeedBtnCore(text: null, info?.SvgImage, toolTip: info?.Text?.SafeToString(), action);
             return result;
         }
 
