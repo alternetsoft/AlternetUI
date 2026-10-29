@@ -400,6 +400,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Clears the text in the control.
+        /// </summary>
+        public virtual void Clear()
+        {
+            Text = string.Empty;
+        }
+
+        /// <summary>
         /// Starts editing the text in the control using popup text box.
         /// </summary>
         public virtual void BeginEdit(bool selectAll = true)
