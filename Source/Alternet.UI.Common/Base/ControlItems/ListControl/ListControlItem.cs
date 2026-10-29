@@ -103,6 +103,7 @@ namespace Alternet.UI
         private bool canRemove = true;
         private Action? action;
         private Action? doubleClickAction;
+        private Action? clickAction;
         private ObjectUniqueId? group;
         private Graphics.DrawElementParams[]? prefixElements;
         private Graphics.DrawElementParams[]? suffixElements;
@@ -1213,6 +1214,16 @@ namespace Alternet.UI
         {
             get => action;
             set => action = value;
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Action"/> which is executed on mouse click.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Action? ClickAction
+        {
+            get => clickAction;
+            set => clickAction = value;
         }
 
         /// <summary>
