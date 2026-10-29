@@ -12,6 +12,7 @@ namespace ControlsSample
         private readonly PopupTreeView popupTreeView = new();
         private int suppressExpandEvents = 0;
         private int newItemIndex = 0;
+        private ContextMenu? exampleContextMenu;
 
         public TreeViewPage()
         {
@@ -52,16 +53,12 @@ namespace ControlsSample
 
             pageControl.FirstPage?.ContextMenuStrip.Add("Assign sample menu items to tree view", () =>
             {
-                var menu = new MenuSample.ExampleContextMenu();
-
-                var popupTreeView = treeView.FirstChildOfType<InnerPopupTreeView>();
-                if (popupTreeView is null)
-                {
-                    popupTreeView = new();
-                    popupTreeView.SetItemSource(menu, setStyle: true);
-                }
-
-                popupTreeView.ShowInContainer(treeView, null, HVDropDownAlignment.Center);
+                exampleContextMenu ??= new MenuSample.ExampleContextMenu();
+                InnerPopupTreeView.ShowInContainer(
+                    exampleContextMenu,
+                    treeView.ListBox,
+                    null,
+                    HVDropDownAlignment.Center);
             });
 
             pageControl.FirstPage?.ContextMenuStrip.Add("Show linear index", () =>

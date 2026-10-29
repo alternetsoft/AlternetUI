@@ -25,7 +25,7 @@ namespace Alternet.UI
         {
             Content.HasBorder = false;
             Content.Margin = 10;
-            HasBorder = false;
+            HasBorder = true;
             BorderControl.ToolBar.ParentBackColor = true;
             BorderControl.CloseButton.ClickAction = () => Hide();
         }
@@ -56,6 +56,33 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether to use default minimal popup width.
         /// </summary>
         public virtual bool UseDefaultMinPopupWidth { get; set; } = true;
+
+        /// <summary>
+        /// Shows the specified <see cref="ContextMenu"/> as a popup within the given container.
+        /// </summary>
+        /// <param name="menu">The context menu to display.</param>
+        /// <param name="container">The container in which to display the popup.</param>
+        /// <param name="position">The position, in container coordinates, where the popup should appear.</param>
+        /// <param name="align">The alignment of the popup relative to the container.</param>
+        public static void ShowInContainer(
+            ContextMenu? menu,
+            AbstractControl container,
+            PointD? position = null,
+            HVDropDownAlignment? align = null)
+        {
+            if (menu is null)
+                return;
+
+            var popupTreeView = container.FirstChildOfType<InnerContextMenuView>();
+            if (popupTreeView is null)
+            {
+                popupTreeView = new();
+            }
+
+            popupTreeView.SetItemSource(menu, setStyle: true);
+
+            popupTreeView.ShowInContainer(container, position, align ?? HVDropDownAlignment.Center);
+        }
 
         /// <summary>
         /// Shows popup inside the container.
@@ -240,6 +267,20 @@ namespace Alternet.UI
             };
 
             Show();
+        }
+
+        /// <summary>
+        /// Represents a specialized version of <see cref="InnerPopupTreeView"/> designed for displaying context menus.
+        /// </summary>
+        public partial class InnerContextMenuView : InnerPopupTreeView
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="InnerContextMenuView"/> class.
+            /// </summary>
+            public InnerContextMenuView()
+                : base(CreateFlags.Resizable)
+            {
+            }
         }
     }
 }
