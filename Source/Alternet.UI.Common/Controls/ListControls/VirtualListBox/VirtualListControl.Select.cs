@@ -686,6 +686,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Runs action specified in the <see cref="ListControlItem.ClickAction"/> property
+        /// of the selected item.
+        /// </summary>
+        public virtual void RunSelectedItemClickAction()
+        {
+            if (DisposingOrDisposed)
+                return;
+            var item = SelectedItem as ListControlItem;
+            var action = item?.ClickAction;
+            action?.Invoke();
+        }
+
+        /// <summary>
         /// Runs action specified in the <see cref="ListControlItem.DoubleClickAction"/> property
         /// of the selected item.
         /// </summary>

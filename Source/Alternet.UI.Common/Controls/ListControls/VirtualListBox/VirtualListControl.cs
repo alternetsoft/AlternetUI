@@ -1619,6 +1619,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnClick(EventArgs e)
+        {
+            base.OnClick(e);
+            RunSelectedItemClickAction();
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
             base.OnMouseDoubleClick(e);
