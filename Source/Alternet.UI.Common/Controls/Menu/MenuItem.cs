@@ -1690,8 +1690,13 @@ namespace Alternet.UI
                 OnMenuItemCheckedChanged(null, EventArgs.Empty);
                 OnMenuItemImageChanged(null, EventArgs.Empty);
                 ItemSource = new ListSourceForMenu(menuItem);
+                this.ClickAction = () =>
+                {
+                    menuItem.RaiseClick();
+                };
             }
 
+            /// <inheritdoc/>
             protected override void DisposeManaged()
             {
                 menuItem.TextChanged -= OnMenuItemTextChanged;
@@ -1701,7 +1706,12 @@ namespace Alternet.UI
                 base.DisposeManaged();
             }
 
-            private void OnMenuItemImageChanged(object? sender, EventArgs e)
+            /// <summary>
+            /// Called when the image of the menu item changes.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+            protected virtual void OnMenuItemImageChanged(object? sender, EventArgs e)
             {
                 SvgImageSize = menuItem.SvgImageSize;
 
@@ -1713,12 +1723,22 @@ namespace Alternet.UI
                 DisabledImage = menuItem.DisabledImage?.AsImage();
             }
 
-            private void OnMenuItemVisibleChanged(object? sender, EventArgs e)
+            /// <summary>
+            /// Called when the visibility of the menu item changes.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+            protected virtual void OnMenuItemVisibleChanged(object? sender, EventArgs e)
             {
                 IsVisible = menuItem.Visible;
             }
 
-            private void OnMenuItemCheckedChanged(object? sender, EventArgs e)
+            /// <summary>
+            /// Called when the checked state of the menu item changes.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+            protected virtual void OnMenuItemCheckedChanged(object? sender, EventArgs e)
             {
                 if (menuItem.Checked)
                 {
@@ -1735,7 +1755,12 @@ namespace Alternet.UI
                 }
             }
 
-            private void OnMenuItemTextChanged(object? sender, EventArgs e)
+            /// <summary>
+            /// Called when the text of the menu item changes.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+            protected virtual void OnMenuItemTextChanged(object? sender, EventArgs e)
             {
                 if (Text == "-")
                 {
