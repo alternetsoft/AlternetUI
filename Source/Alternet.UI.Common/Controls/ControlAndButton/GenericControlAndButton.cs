@@ -104,6 +104,7 @@ namespace Alternet.UI
 
                 buttons = new();
                 buttons.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
+                buttons.IsTransparent = true;
                 buttons.ParentBackColor = true;
                 buttons.ParentForeColor = true;
 
@@ -952,11 +953,13 @@ namespace Alternet.UI
                         RaiseButtonClick(args);
                     }
 
-                    id = Buttons.AddSpeedBtn(btn, svg, ClickAction);
+                    var button = Buttons.AddSpeedBtnCore(btn, svg, ClickAction);
+                    button.IsNormalTransparent = true;
+                    id = button.UniqueId;
 
                     if (isClickRepeat)
                     {
-                        Buttons.SetToolIsClickRepeated(id.Value, true);
+                        button.IsClickRepeated = true;
                     }
                 }
                 else
