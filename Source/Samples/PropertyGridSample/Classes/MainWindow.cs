@@ -182,8 +182,9 @@ namespace PropertyGridSample
 
                 toolBoxFilterEdit.VerticalAlignment = VerticalAlignment.Top;
                 toolBoxFilterEdit.MarginBottom = 5;
+                toolBoxFilterEdit.MarginTop = 5;
                 toolBoxFilterEdit.InnerOuterBorder = InnerOuterSelector.Outer;
-                panel.LeftPanel.Children.Prepend(toolBoxFilterEdit);
+                panel.LeftPanel.Children.Add(toolBoxFilterEdit);
 
                 toolBoxFilterEdit.InitSearchEdit();
 
@@ -241,7 +242,7 @@ namespace PropertyGridSample
         }
 
 
-        private readonly TextBoxAndButton toolBoxFilterEdit = new()
+        private readonly TextPickerAndButton toolBoxFilterEdit = new()
         {
         };
 

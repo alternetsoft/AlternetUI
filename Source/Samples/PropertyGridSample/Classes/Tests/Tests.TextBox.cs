@@ -51,7 +51,7 @@ namespace PropertyGridSample
 
         void InitTestsTextBoxAndButton()
         {
-            AddControlAction<TextBoxAndButton>("Edit Thickness", (control) =>
+            AddControlAction<TextPickerAndButton>("Edit Thickness", (control) =>
             {
                 control.AutoShowError = true;
 
@@ -70,7 +70,7 @@ namespace PropertyGridSample
 
             });
 
-            AddControlAction<TextBoxAndButton>("Edit KeyGesture", (control) =>
+            AddControlAction<TextPickerAndButton>("Edit KeyGesture", (control) =>
             {
                 control.AutoShowError = true;
                 var c = control.TextBox;
@@ -86,7 +86,7 @@ namespace PropertyGridSample
                 c.DelayedTextChanged += HandleTextChangedForTextAsValue;
             });
 
-            AddControlAction<TextBoxAndButton>("Edit DateTime", (control) =>
+            AddControlAction<TextPickerAndButton>("Edit DateTime", (control) =>
             {
                 control.AutoShowError = true;
                 var c = control.TextBox;

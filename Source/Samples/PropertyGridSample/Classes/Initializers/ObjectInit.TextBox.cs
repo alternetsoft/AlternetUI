@@ -9,26 +9,6 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
-        public static void InitTextBoxAndButton(object control)
-        {
-            if (control is not TextBoxAndButton textBox)
-                return;
-            textBox.Text = "some text";
-            textBox.HasBtnEllipsis = true;
-            textBox.InnerSuggestedWidth = 200;
-            textBox.ButtonClick += (s, e) =>
-            {
-                var str = textBox.GetBtnName(e.ButtonId);
-
-                if (!string.IsNullOrEmpty(str))
-                    str = ": " + str;
-
-                var prefix = "TextBoxAndButon.ButtonClick";
-
-                App.Log($"{prefix}{str}");
-            };
-        }
-
         public static void InitTextBoxAndLabel(object control)
         {
             if (control is not TextBoxAndLabel textBox)

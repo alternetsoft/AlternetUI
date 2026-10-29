@@ -469,24 +469,6 @@ namespace PropertyGridSample
             };
         }
 
-        public static void InitTextBoxWithListPopup(TextBoxWithListPopup control)
-        {
-            control.Text = "some text";
-
-            var btn = control.ButtonCombo;
-
-            btn.Add("Item 1");
-            btn.Add("Item 2");
-            btn.Add("Item 3");
-            btn.Add("Item 4");
-            btn.Add("Item 5");
-            btn.Add("Item 6");
-            btn.Add("Item 7");
-            btn.Add("Item 8");
-
-            control.SyncTextAndComboButton();
-        }
-
         public static void InitFontNamePicker(FontNamePicker control)
         {
         }

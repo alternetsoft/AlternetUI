@@ -1511,6 +1511,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnChildInserted(int index, AbstractControl childControl)
+        {
+            base.OnChildInserted(index, childControl);
+        }
+
+        /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
