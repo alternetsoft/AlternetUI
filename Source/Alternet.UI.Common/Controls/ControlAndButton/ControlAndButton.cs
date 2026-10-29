@@ -80,7 +80,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControlAndButton"/> class with the specified type of the main child control.
+        /// Initializes a new instance of the <see cref="ControlAndButton"/> class
+        /// with the specified type of the main child control.
         /// </summary>
         /// <param name="typeOfControl">The type of the main child control.</param>
         public ControlAndButton(Type? typeOfControl)
@@ -170,6 +171,9 @@ namespace Alternet.UI
             get => !mainControl.Visible;
             set
             {
+                if (UseSubstituteControl == value)
+                    return;
+
                 if (value)
                 {
                     DoInsideLayout(() =>
@@ -284,6 +288,8 @@ namespace Alternet.UI
 
             set
             {
+                if (HasBtnComboBox == value)
+                    return;
                 Buttons.OverrideButtonType(GetBtnComboType(), () =>
                 {
                     SetHasButton(
@@ -394,6 +400,8 @@ namespace Alternet.UI
 
             set
             {
+                if (HasBtnPlusMinus == value)
+                    return;
                 if (IsMinusButtonFirst)
                 {
                     ToggleMinusButton();
@@ -538,7 +546,7 @@ namespace Alternet.UI
             set
             {
                 MainControl.HasBorder = value;
-                if(substituteControl is not null)
+                if (substituteControl is not null)
                     substituteControl.HasBorder = value;
             }
         }
@@ -647,7 +655,7 @@ namespace Alternet.UI
         public virtual void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
         }
-        
+
         /// <summary>
         /// Gets whether button with the specified id is visible.
         /// </summary>
@@ -740,7 +748,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool SetFocus()
         {
-            if(MainControl.CanFocus)
+            if (MainControl.CanFocus)
                 return MainControl.SetFocus();
             return base.SetFocus();
         }
@@ -918,6 +926,12 @@ namespace Alternet.UI
         protected virtual Type GetBtnEllipsisType()
         {
             return typeof(SpeedButton);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnChildInserted(int index, AbstractControl childControl)
+        {
+            base.OnChildInserted(index, childControl);
         }
 
         /// <summary>
