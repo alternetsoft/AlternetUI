@@ -11,12 +11,14 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+        private static WeakReferenceValue<Control> lastCursorControl = new();
+
         /// <summary>
         /// Notifies all windows and their child controls about changed dpi.
         /// </summary>
         public static void BubbleDpiChanged()
         {
-            foreach(var window in App.Current.Windows)
+            foreach (var window in App.Current.Windows)
             {
                 window.RaiseDpiChanged(true);
             }
@@ -527,7 +529,7 @@ namespace Alternet.UI
             BubbleKeyAction(e, (s, e) =>
             {
                 e.CurrentTarget = s;
-                if(raiseUpEvent)
+                if (raiseUpEvent)
                     s.RaiseKeyUp(e);
                 else
                     s.RaiseKeyDown(e);
@@ -554,7 +556,7 @@ namespace Alternet.UI
         {
             var currentTarget = this;
 
-            while(currentTarget != null)
+            while (currentTarget != null)
             {
                 currentTarget.ErrorsChanged?.Invoke(currentTarget, e);
                 currentTarget = currentTarget.Parent;
@@ -569,16 +571,33 @@ namespace Alternet.UI
                 return;
 
             if (originalTarget is not Control originalTargetControl)
-                return;
+            {
+                var platformBackedParent = originalTarget?.PlatformBackedParent;
+                if (platformBackedParent is null)
+                    return;
+                originalTargetControl = platformBackedParent;
+            }
+
+            Cursor? newCursor = null;
+
+            var lastUsedControl = lastCursorControl.Value;
+
+            if (lastUsedControl is not null && lastUsedControl != originalTargetControl)
+            {
+                lastUsedControl.UpdateCursor();
+                lastCursorControl.Value = null;
+            }
 
             if (!currentTarget.IsPlatformControl)
             {
-                originalTargetControl.UpdateCursor(currentTarget.Cursor ?? Cursors.Default);
+                newCursor = currentTarget.Cursor ?? Cursors.Default;
+                lastCursorControl.Value = originalTargetControl;
             }
             else
             {
-                originalTargetControl.UpdateCursor();
             }
+
+            originalTargetControl.UpdateCursor(newCursor);
         }
     }
 }
