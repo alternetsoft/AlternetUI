@@ -102,7 +102,7 @@ namespace Alternet.UI
 
             topToolBarPanel.Visible = DefaultHasTitleBar;
 
-            mainPanel.Margin = DefaultMainPanelMargin;
+            mainPanel.Padding = DefaultMainPanelMargin;
 
             MakeWithoutTitleBar();
             ShowInTaskbar = false;
@@ -149,7 +149,11 @@ namespace Alternet.UI
             AllowFormKeyPreview = false;
 
             if (useNativePopup)
-                HasInnerBorder = true;
+            {
+                mainPanel.HasBorder = true;
+                topToolBarPanel.SetVisibleBorders(true, true, true, false);
+                topToolBarPanel.HasBorder = true;
+            }
         }
 
         /// <summary>
