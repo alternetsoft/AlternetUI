@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
 
@@ -47,6 +48,21 @@ namespace Alternet.UI
             Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
             PopupWindowTitle = CommonStrings.Default.WindowTitleSelectDate;
             Value = DateTime.Now;
+
+            /*
+            void UpdateDrawParamsAction(ref Graphics.DrawLabelParams p)
+            {
+                if (p.Text is null || p.Text.Length == 0)
+                {
+                    if (p.ForegroundColor == Color.Empty)
+                    {
+                        p.Text = "Wg";
+                    }
+                }
+            }
+
+            Label.UpdateDrawParamsAction = UpdateDrawParamsAction;
+            */
         }
 
         /// <summary>
@@ -168,13 +184,29 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool HasVisibleText
+        {
+            get
+            {
+                return true;
+            }
+        }
+
         /// <summary>
         /// Gets or sets selected date.
         /// </summary>
         public new virtual DateTime? Value
         {
-            get => (DateTime?)base.Value;
-            set => base.Value = value;
+            get
+            {
+                return (DateTime?)base.Value;
+            }
+
+            set
+            {
+                base.Value = value;
+            }
         }
 
         /// <summary>
@@ -313,6 +345,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override string CoerceBaseText(string text)
+        {
+            return text;
+        }
+
+        /// <inheritdoc/>
         public override void ShowPopup()
         {
             if (ReadOnly)
@@ -344,6 +382,12 @@ namespace Alternet.UI
                 else
                     return dateTime.ToString(Format, FormatProvider);
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
         }
 
         /// <summary>
