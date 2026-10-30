@@ -46,8 +46,6 @@ namespace Alternet.UI
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
         private ClickActionKind longTapAction = ClickActionKind.None;
         private ClickActionKind ctrlAction = ClickActionKind.None;
-        private ThemedColor? disabledImageColor;
-        private bool useDisabledImageColor = true;
         private DrawingShapeType? colorImageShape = DefaultColorImageShape;
         private ThemedColor? colorImageBorder;
         private bool useFontSizeAsItemImageSize = true;
@@ -326,55 +324,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets disabled image color.
-        /// </summary>
-        /// <remarks>
-        /// This color is used for painting color image when control is disabled.
-        /// If this property is null, color image will be painted using
-        /// <see cref="ColorListBox.DefaultDisabledImageColor"/>.
-        /// </remarks>
-        public virtual ThemedColor? DisabledImageColor
-        {
-            get
-            {
-                return disabledImageColor;
-            }
-
-            set
-            {
-                if (disabledImageColor == value)
-                    return;
-                disabledImageColor = value;
-                if (Enabled)
-                    return;
-                OnColorImageChanged();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting
-        /// of the color image
-        /// when control is disabled.
-        /// </summary>
-        public virtual bool UseDisabledImageColor
-        {
-            get
-            {
-                return useDisabledImageColor;
-            }
-
-            set
-            {
-                if (useDisabledImageColor == value)
-                    return;
-                useDisabledImageColor = value;
-                if (Enabled)
-                    return;
-                OnColorImageChanged();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets <see cref="Value"/> as <see cref="string"/>.
         /// </summary>
         [Browsable(false)]
@@ -632,11 +581,9 @@ namespace Alternet.UI
         {
             var imageColor = color ?? Color.Transparent;
 
-            if (!Enabled && useDisabledImageColor)
+            if (!IsEnabled)
             {
-                var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
-                if (disabledColor is not null)
-                    imageColor = disabledColor.GetColor(this);
+                imageColor = imageColor.AsDisabled;
             }
 
             LabelImage = imageColor.AsImageWithBorder(
