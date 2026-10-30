@@ -40,6 +40,40 @@ namespace Alternet.UI
         public static readonly DateTime MinimumDateNoon = DateTime.MinValue.Date.AddHours(12);
 
         /// <summary>
+        /// Specifies the predefined reminder intervals used in scheduling and notification scenarios.
+        /// </summary>
+        public static TimePeriod[] ReminderIntervals =
+        [
+            new (0, TimePeriodUnit.Minutes),
+            new (5, TimePeriodUnit.Minutes),
+            new (10, TimePeriodUnit.Minutes),
+            new (15, TimePeriodUnit.Minutes),
+            new (30, TimePeriodUnit.Minutes),
+
+            new (1, TimePeriodUnit.Hours),
+            new (2, TimePeriodUnit.Hours),
+            new (3, TimePeriodUnit.Hours),
+            new (4, TimePeriodUnit.Hours),
+            new (5, TimePeriodUnit.Hours),
+            new (6, TimePeriodUnit.Hours),
+            new (7, TimePeriodUnit.Hours),
+            new (8, TimePeriodUnit.Hours),
+            new (9, TimePeriodUnit.Hours),
+            new (10, TimePeriodUnit.Hours),
+            new (11, TimePeriodUnit.Hours),
+            new (12, TimePeriodUnit.Hours),
+            new (18, TimePeriodUnit.Hours),
+
+            new (1, TimePeriodUnit.Days),
+            new (2, TimePeriodUnit.Days),
+            new (3, TimePeriodUnit.Days),
+            new (4, TimePeriodUnit.Days),
+
+            new (1, TimePeriodUnit.Weeks),
+            new (2, TimePeriodUnit.Weeks),
+        ];
+
+        /// <summary>
         /// Gets or sets the designator override for AM/PM formatting in time representations.
         /// </summary>
         /// <remarks>This property allows customization of the AM designator used in date and time
@@ -333,7 +367,7 @@ namespace Alternet.UI
         /// value is not valid.</exception>
         public static DaysOfWeek ToDaysOfWeek(DayOfWeek dayOfWeek)
         {
-            switch(dayOfWeek)
+            switch (dayOfWeek)
             {
                 case DayOfWeek.Sunday:
                     return DaysOfWeek.Sunday;
@@ -351,7 +385,8 @@ namespace Alternet.UI
                     return DaysOfWeek.Saturday;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(dayOfWeek), dayOfWeek, "Invalid DayOfWeek value.");
-            };
+            }
+            ;
         }
 
         /// <summary>
