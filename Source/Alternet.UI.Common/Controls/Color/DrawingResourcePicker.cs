@@ -48,8 +48,6 @@ namespace Alternet.UI
         private PopupColorListBox? popupWindow;
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
         private ClickActionKind longTapAction = ClickActionKind.None;
-        private ThemedColor? disabledImageColor;
-        private bool useDisabledImageColor = true;
         private DrawingShapeType? valueImageShape = DefaultValueImageShape;
         private ThemedColor? valueImageBorder;
         private bool useFontSizeAsValueImageSize = true;
@@ -266,54 +264,6 @@ namespace Alternet.UI
                 base.Text = s;
 
                 ValueChanged?.Invoke(this, EventArgs.Empty);
-                OnValueImageChanged();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets disabled image color.
-        /// </summary>
-        /// <remarks>
-        /// This color is used for painting color image when control is disabled.
-        /// If this property is null, color image will be painted using
-        /// <see cref="ColorListBox.DefaultDisabledImageColor"/>.
-        /// </remarks>
-        public virtual ThemedColor? DisabledImageColor
-        {
-            get
-            {
-                return disabledImageColor;
-            }
-
-            set
-            {
-                if (disabledImageColor == value)
-                    return;
-                disabledImageColor = value;
-                if (Enabled)
-                    return;
-                OnValueImageChanged();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether to use <see cref="DisabledImageColor"/> for painting
-        /// of the color image when control is disabled.
-        /// </summary>
-        public virtual bool UseDisabledImageColor
-        {
-            get
-            {
-                return useDisabledImageColor;
-            }
-
-            set
-            {
-                if (useDisabledImageColor == value)
-                    return;
-                useDisabledImageColor = value;
-                if (Enabled)
-                    return;
                 OnValueImageChanged();
             }
         }
@@ -556,14 +506,6 @@ namespace Alternet.UI
         {
             IThemedDrawingResource? imageResource = data;
 
-            if (!Enabled && useDisabledImageColor)
-            {
-                var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
-                if (disabledColor is not null)
-                    imageResource = new ThemedDrawingResource(
-                        new DrawingResource(disabledColor.Light), new DrawingResource(disabledColor.Dark));
-            }
-
             imageResource ??= new ThemedDrawingResource(new DrawingResource(Color.Empty), new DrawingResource(Color.Empty));
 
             Brush? brush;
@@ -621,11 +563,16 @@ namespace Alternet.UI
                 borderColor = (ValueImageBorder ?? ListControlItem.DefaultImageBorderColor).GetColor(this);
             }
 
-            LabelImage = brush.AsImageWithBorder(
+            var image = brush.AsImageWithBorder(
                 EffectiveValueImageSize(),
                 ScaleFactor,
                 borderColor,
                 ValueImageShape);
+
+            if (IsEnabled)
+                LabelImage = image;
+            else
+                LabelImage = image.ToGrayScaleCached();
         }
     }
 }
