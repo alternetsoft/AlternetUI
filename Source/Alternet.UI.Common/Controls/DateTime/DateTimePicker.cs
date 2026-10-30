@@ -136,6 +136,55 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="DateTimePicker"/> control is empty.
+        /// </summary>
+        public virtual bool IsValueEmpty
+        {
+            get
+            {
+                return timePicker.IsValueEmpty;
+            }
+            set
+            {
+                datePicker.IsValueEmpty = value;
+                timePicker.IsValueEmpty = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is read-only.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get
+            {
+                return timePicker.ReadOnly;
+            }
+            set
+            {
+                datePicker.ReadOnly = value;
+                timePicker.ReadOnly = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is transparent.
+        /// </summary>
+        public virtual bool TextTransparent
+        {
+            get
+            {
+                return datePicker.TextTransparent;
+            }
+
+            set
+            {
+                datePicker.TextTransparent = value;
+                timePicker.TextTransparent = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the format used for formatting the date.
         /// </summary>
         [Browsable(false)]
