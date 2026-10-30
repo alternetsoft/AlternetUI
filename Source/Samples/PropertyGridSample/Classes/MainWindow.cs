@@ -184,7 +184,7 @@ namespace PropertyGridSample
                 toolBoxFilterEdit.MarginBottom = 5;
                 toolBoxFilterEdit.MarginTop = 5;
                 toolBoxFilterEdit.InnerOuterBorder = InnerOuterSelector.Outer;
-                panel.LeftPanel.Children.Add(toolBoxFilterEdit);
+                panel.LeftPanel.Children.Prepend(toolBoxFilterEdit);
 
                 toolBoxFilterEdit.InitSearchEdit();
 
