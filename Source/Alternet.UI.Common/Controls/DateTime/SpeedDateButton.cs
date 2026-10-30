@@ -36,6 +36,7 @@ namespace Alternet.UI
         private DateTime min = DateTime.MinValue;
         private bool useMinDate = false;
         private bool useMaxDate = false;
+        private bool readOnly;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedDateButton"/> class.
@@ -65,6 +66,46 @@ namespace Alternet.UI
                     return;
                 formatProvider = value;
                 UpdateBaseText();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <c>SpeedDateButton</c> is empty.
+        /// </summary>
+        public virtual bool IsValueEmpty
+        {
+            get
+            {
+                return Value is null;
+            }
+
+            set
+            {
+                if (IsValueEmpty == value)
+                    return;
+                if (value)
+                    Value = null;
+                else
+                    Value = DateTime.Today;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is read-only.
+        /// When set to true, the user cannot change the date value through the control's interface.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get
+            {
+                return readOnly;
+            }
+
+            set
+            {
+                if (readOnly == value)
+                    return;
+                readOnly = value;
             }
         }
 
@@ -117,7 +158,9 @@ namespace Alternet.UI
             set
             {
                 if (value is null)
+                {
                     Value = null;
+                }
                 else
                 {
                     Value = DateUtils.ToDateTime(TimeOnly.FromDateTime(Value ?? DateTime.Now), value.Value);
@@ -272,6 +315,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void ShowPopup()
         {
+            if (ReadOnly)
+                return;
+
             Calendar.Required();
             SetRange();
             Calendar.AsDateTime = Value ?? DateTime.Now;
