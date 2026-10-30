@@ -157,6 +157,19 @@ namespace ControlsSample
                 listBox.SetColorThemeToLight();
             });
 
+            contextMenu.Add("Add item with three text lines", () =>
+            {
+                ListControlItem item = new("item A line 1\nitem A line 2\nItem A line 3");
+                item.LabelFlags = DrawLabelFlags.TextHasNewLineChars;
+                listBox.Add(item);
+
+                listBox.AddSeparator();
+
+                ListControlItem item2 = new("item B line 1\nitem B line 2\nItem B line 3");
+                item2.LabelFlags = DrawLabelFlags.TextHasNewLineChars;
+                listBox.Add(item2);
+            });
+
             var item = listBox.GetItem(1);
 
             if (item is not null)
