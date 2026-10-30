@@ -481,6 +481,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            if (!IsEnabled)
+                return;
+
             base.OnMouseWheel(e);
 
             var delta = e.Delta;
