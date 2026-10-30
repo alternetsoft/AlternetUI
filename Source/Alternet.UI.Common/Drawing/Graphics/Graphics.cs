@@ -372,6 +372,42 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Executes the specified action with a grayscale paint effect applied
+        /// to the graphics context if <paramref name="isEnabled"/> is false.
+        /// </summary>
+        /// <param name="action">The action to execute.</param>
+        /// <param name="isEnabled">A value indicating whether the action is enabled.</param>
+        public void EnabledOrDisabledPaint(bool isEnabled, Action action)
+        {
+            if (isEnabled)
+            {
+                action();
+            }
+            else
+            {
+                GrayscalePaint(action);
+            }
+        }
+
+        /// <summary>
+        /// Executes the specified action with a grayscale paint effect applied to the graphics context.
+        /// </summary>
+        /// <param name="action">The action to execute with the grayscale paint effect.</param>
+        public virtual void GrayscalePaint(Action action)
+        {
+            Canvas.SaveLayer(SkiaUtils.GrayscalePaint);
+
+            try
+            {
+                action();
+            }
+            finally
+            {
+                Canvas.Restore();
+            }
+        }
+
+        /// <summary>
         /// Fills and/or draws the border of the specified pie.
         /// </summary>
         /// <param name="pen">The pen to use for drawing the border of the pie. If null, no border will be drawn.</param>
@@ -380,7 +416,13 @@ namespace Alternet.Drawing
         /// <param name="radius">The radius of the pie.</param>
         /// <param name="startAngle">The start angle of the pie, in degrees.</param>
         /// <param name="sweepAngle">The sweep angle of the pie, in degrees.</param>
-        public virtual void FillOrDrawPie(Pen? pen, Brush? brush, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
+        public virtual void FillOrDrawPie(
+            Pen? pen,
+            Brush? brush,
+            PointD center,
+            Coord radius,
+            Coord startAngle,
+            Coord sweepAngle)
         {
             if (pen is null)
             {
