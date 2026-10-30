@@ -39,16 +39,18 @@ namespace Alternet.UI
         public static TimePickerHourFormat DefaultHourFormat = TimePickerHourFormat.System;
 
         private readonly SpeedButton hoursButton;
-        private readonly AbstractControl hoursAndMinutesSeparator;
+        private readonly Label hoursAndMinutesSeparator;
         private readonly SpeedButton minutesButton;
-        private readonly AbstractControl minutesAndSecondsSeparator;
+        private readonly Label minutesAndSecondsSeparator;
         private readonly SpeedButton secondsButton;
-        private readonly AbstractControl secondsAndAmPmSeparator;
+        private readonly Spacer secondsAndAmPmSeparator;
         private readonly SpeedButton amPmButton;
 
         private TimePickerHourFormat? hourFormat;
         private IFormatProvider? formatProvider;
         private TimeOnly time;
+        private bool readOnly;
+        private bool isValueEmpty;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimePicker"/> class.
@@ -157,6 +159,39 @@ namespace Alternet.UI
         public SpeedButton HoursButton => hoursButton;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the <c>TimePicker</c> is empty.
+        /// </summary>
+        public virtual bool IsValueEmpty
+        {
+            get
+            {
+                return isValueEmpty;
+            }
+
+            set
+            {
+                if (isValueEmpty == value)
+                    return;
+                isValueEmpty = value;
+                TextTransparent = isValueEmpty;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <c>TimePicker</c> is read-only.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get => readOnly;
+            set
+            {
+                if (readOnly == value)
+                    return;
+                readOnly = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the separator control between hours and minutes buttons.
         /// </summary>
         public AbstractControl HoursAndMinutesSeparator => hoursAndMinutesSeparator;
@@ -187,6 +222,32 @@ namespace Alternet.UI
         public SpeedButton AmPmButton => amPmButton;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the text of the control is visible.
+        /// </summary>
+        public virtual bool TextTransparent
+        {
+            get
+            {
+                return hoursButton.TextTransparent;
+            }
+
+            set
+            {
+                if (TextTransparent == value)
+                    return;
+                hoursButton.TextTransparent = value;
+                minutesButton.TextTransparent = value;
+                secondsButton.TextTransparent = value;
+                amPmButton.TextTransparent = value;
+                hoursAndMinutesSeparator.TextTransparent = value;
+                minutesAndSecondsSeparator.TextTransparent = value;
+
+                if (value)
+                    SelectedPart = null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the currently selected part of the time value.
         /// </summary>
         public virtual TimePickerValuePart? SelectedPart
@@ -206,6 +267,14 @@ namespace Alternet.UI
 
             set
             {
+                if (value is not null)
+                {
+                    if (TextTransparent)
+                    {
+                        value = null;
+                    }
+                }
+
                 if (!amPmButton.IsVisible && value == TimePickerValuePart.AmPm)
                 {
                     value = null;
@@ -325,12 +394,14 @@ namespace Alternet.UI
             if (e.ButtonId == IdButtonPlus)
             {
                 e.Handled = true;
-                IncPartValue(1);
+                if (!ReadOnly)
+                    IncPartValue(1);
             }
             else if (e.ButtonId == IdButtonMinus)
             {
                 e.Handled = true;
-                IncPartValue(-1);
+                if (!ReadOnly)
+                    IncPartValue(-1);
             }
         }
 
@@ -535,11 +606,13 @@ namespace Alternet.UI
                     e.Suppressed();
                     break;
                 case Key.Up:
-                    IncPartValue(1);
+                    if(!ReadOnly)
+                        IncPartValue(1);
                     e.Suppressed();
                     break;
                 case Key.Down:
-                    IncPartValue(-1);
+                    if (!ReadOnly)
+                        IncPartValue(-1);
                     e.Suppressed();
                     break;
             }
