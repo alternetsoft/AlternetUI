@@ -24,6 +24,26 @@ namespace Alternet.Drawing
     public static partial class SkiaUtils
     {
         /// <summary>
+        /// Gets or sets a grayscale color matrix that can be used to convert colors to grayscale.
+        /// </summary>
+        public static float[] GrayscaleMatrix =
+        {
+            0.2126f, 0.7152f, 0.0722f, 0, 0,
+            0.2126f, 0.7152f, 0.0722f, 0, 0,
+            0.2126f, 0.7152f, 0.0722f, 0, 0,
+            0,       0,       0,       1, 0
+        };
+
+        /// <summary>
+        /// Gets a <see cref="SKPaint"/> configured to convert colors to grayscale.
+        /// </summary>
+        public static SKPaint GrayscalePaint { get; set; } = new SKPaint
+        {
+            ColorFilter = SKColorFilter.CreateColorMatrix(GrayscaleMatrix),
+            IsAntialias = true,
+        };
+
+        /// <summary>
         /// Gets an empty <see cref="SKPicture"/>.
         /// </summary>
         public static SKPicture EmptyPicture = CreateEmptyPicture();
@@ -192,7 +212,10 @@ namespace Alternet.Drawing
         /// If not specified, the default sampling options will be used.</param>
         /// <returns>A new <see cref="SKBitmap"/> that has been rotated and/or flipped according to the
         /// specified <paramref name="type"/>.</returns>
-        public static SKBitmap RotateFlip(this SKBitmap source, RotateFlipType type, SKSamplingOptions? samplingOptions = null)
+        public static SKBitmap RotateFlip(
+            this SKBitmap source,
+            RotateFlipType type,
+            SKSamplingOptions? samplingOptions = null)
         {
             // Determine target dimensions
             int width = source.Width;
