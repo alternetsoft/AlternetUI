@@ -74,6 +74,7 @@ namespace Alternet.UI
         private string? emptyTextHint;
         private VerticalTextDirection? vertDirection;
         private bool isPassword;
+        private bool textTransparent;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -174,6 +175,25 @@ namespace Alternet.UI
         /// <remarks>Assign this property to customize how label drawing parameters are updated before
         /// rendering. If not set, default behavior is used.</remarks>
         public virtual UpdateDrawLabelParamsDelegate? UpdateDrawParamsAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the label is visible.
+        /// </summary>
+        public virtual bool TextTransparent
+        {
+            get
+            {
+                return textTransparent;
+            }
+
+            set
+            {
+                if (textTransparent == value)
+                    return;
+                textTransparent = value;
+                Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the flags that control label drawing behavior.
@@ -812,6 +832,11 @@ namespace Alternet.UI
             bool isDark = IsDarkBackground;
 
             var realForeColor = labelForeColor.GetColor(isDark);
+
+            if (TextTransparent)
+            {
+                realForeColor = Color.Empty;
+            }
 
             prm = new(
                 labelText,
