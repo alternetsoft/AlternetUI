@@ -43,6 +43,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
+            if (!sender.IsEnabled)
+                return;
+
             if (isDragging && hitTestsMouseDown is not null)
             {
                 e.Handled = true;
@@ -135,6 +138,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseDown(AbstractControl sender, MouseEventArgs e)
         {
+            if (!sender.IsEnabled)
+                return;
+
             ResetDragging(sender);
 
             if (e.Button != MouseButtons.Left)
@@ -186,6 +192,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterClick(AbstractControl sender, EventArgs e)
         {
+            if (!sender.IsEnabled)
+                return;
+
             var mouseLocation = Mouse.GetPosition(sender);
             var hitTests = interior.HitTests(sender, mouseLocation);
 
@@ -236,7 +245,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Handles the click event on the interior drawable and raises the appropriate scroll events if a scroll bar is clicked.
+        /// Handles the click event on the interior drawable and raises the appropriate scroll
+        /// events if a scroll bar is clicked.
         /// </summary>
         /// <param name="sender">The control that raised the click event.</param>
         /// <param name="clickLocation">The location of the click event.</param>
@@ -282,7 +292,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Handles the repeated click event on the interior drawable and raises the appropriate scroll events if a scroll bar is clicked.
+        /// Handles the repeated click event on the interior drawable and raises the
+        /// appropriate scroll events if a scroll bar is clicked.
         /// </summary>
         /// <param name="sender">The control that raised the repeated click event.</param>
         /// <param name="e">The event data.</param>
