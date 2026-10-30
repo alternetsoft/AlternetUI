@@ -1596,6 +1596,14 @@ namespace Alternet.UI
             OnEnabledChanged(e);
             EnabledChanged?.Invoke(this, e);
             Parent?.OnChildPropertyChanged(this, nameof(Enabled));
+
+            if (HasChildren)
+            {
+                foreach (var child in Children)
+                {
+                    child.RaiseEnabledChanged(e);
+                }
+            }
         }
     }
 }
