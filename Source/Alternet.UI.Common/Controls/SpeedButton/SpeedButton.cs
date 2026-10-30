@@ -53,6 +53,7 @@ namespace Alternet.UI
         private bool isNormalTransparent;
         private bool isDisabledTransparent;
         private bool useTextColorForSvg;
+        private bool textTransparent;
 
         static SpeedButton()
         {
@@ -122,6 +123,26 @@ namespace Alternet.UI
         /// is displayed when the user hovers over the associated control.
         /// </summary>
         public virtual bool ShowDropDownMenuWhenHovered { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is transparent.
+        /// </summary>
+        public virtual bool TextTransparent
+        {
+            get
+            {
+                return textTransparent;
+            }
+
+            set
+            {
+                if (textTransparent == value)
+                    return;
+                textTransparent = value;
+                if (TextVisible)
+                    Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control
@@ -1987,7 +2008,15 @@ namespace Alternet.UI
 
             if (HasVisibleText)
             {
-                Label.ForegroundColor = labelTextColor;
+                if (TextTransparent)
+                {
+                    Label.ForegroundColor = ExactColors.Empty;
+                }
+                else
+                {
+                    Label.ForegroundColor = labelTextColor;
+                }
+
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
             }
 
