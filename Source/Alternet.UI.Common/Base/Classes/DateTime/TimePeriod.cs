@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Alternet.UI
@@ -7,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a time period defined by a numeric value and a unit of measurement.
     /// </summary>
-    public struct TimePeriod
+    public struct TimePeriod : IEquatable<TimePeriod>
     {
         private string? text;
 
@@ -49,19 +50,75 @@ namespace Alternet.UI
         public DateUtils.TimePeriodUnitTextFormat? TextFormat { get; set; }
 
         /// <summary>
-        /// Gets or sets an optional title or description for the time period, providing additional context or information.
+        /// Gets or sets an optional title or description for the time period,
+        /// providing additional context or information.
         /// </summary>
         public string Text
         {
-            get
+            readonly get
             {
-                return text ?? DateUtils.ToDisplayString(Unit, Value, TextFormat ?? DateUtils.TimePeriodUnitTextFormat.Long);
+                return text ?? GetDefaultText();
             }
 
             set
             {
                 text = value;
             }
+        }
+
+        /// <summary>
+        /// Defines the equality operator for comparing two <see cref="TimePeriod"/>
+        /// instances based on their value and unit.
+        /// </summary>
+        /// <param name="left">The first <see cref="TimePeriod"/> to compare.</param>
+        /// <param name="right">The second <see cref="TimePeriod"/> to compare.</param>
+        /// <returns><c>true</c> if the two <see cref="TimePeriod"/> instances are equal;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool operator ==(TimePeriod left, TimePeriod right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Defines the inequality operator for comparing two <see cref="TimePeriod"/>
+        /// instances based on their value and unit.
+        /// </summary>
+        /// <param name="left">The first <see cref="TimePeriod"/> to compare.</param>
+        /// <param name="right">The second <see cref="TimePeriod"/> to compare.</param>
+        /// <returns><c>true</c> if the two <see cref="TimePeriod"/> instances are not equal;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool operator !=(TimePeriod left, TimePeriod right)
+        {
+            return !(left == right);
+        }
+
+        /// <inheritdoc/>
+        public readonly override string ToString()
+        {
+            return Text;
+        }
+
+        /// <summary>
+        /// Gets the default text representation of the time period,
+        /// combining the numeric value and the unit of measurement.
+        /// </summary>
+        /// <returns>The default text representation of the time period.</returns>
+        public readonly string GetDefaultText()
+        {
+            return Value.ToString() + " "
+                + DateUtils.ToDisplayString(Unit, Value, TextFormat ?? DateUtils.TimePeriodUnitTextFormat.Long);
+        }
+
+        /// <inheritdoc/>
+        public readonly override int GetHashCode()
+        {
+            return (Value, Unit).GetHashCode();
+        }
+
+        /// <inheritdoc/>
+        public readonly override bool Equals([NotNullWhen(true)] object? obj)
+        {
+            return obj is TimePeriod period && Equals(period);
         }
 
         /// <summary>
@@ -91,6 +148,12 @@ namespace Alternet.UI
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        /// <inheritdoc />
+        public readonly bool Equals(TimePeriod other)
+        {
+            return Value == other.Value && Unit == other.Unit;
         }
     }
 }

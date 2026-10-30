@@ -421,6 +421,14 @@ namespace PropertyGridSample
         {
         }
 
+        public static void InitTimePeriodPicker(TimePeriodPicker control)
+        {
+            control.ValueChanged += (s, e) =>
+            {
+                App.LogReplace($"TimePeriodPicker: {control.Value}");
+            };
+        }
+
         public static void InitListPicker(ListPicker control)
         {
             control.Add("Item 1");
