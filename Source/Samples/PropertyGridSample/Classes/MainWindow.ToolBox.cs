@@ -123,7 +123,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<PinCodePicker>();
                 ToolBoxAdd<RelativeWeekdayOfMonthPicker>();
                 ToolBoxAdd<RelativeWeekdayPicker>();
-                ToolBoxAdd<RepeatPatternPicker>(ObjectInit.InitRepeatPatternPicker);
+                ToolBoxAdd<ScrollableRepeatPatternPicker>(ObjectInit.InitRepeatPatternPicker);
                 ToolBoxAdd<ResizableBorder>(ObjectInit.InitResizableBorder);
                 ToolBoxAdd<ResizableWindowBorder>(ObjectInit.InitResizableWindowBorder);
                 ToolBoxAdd<RichToolTip>(ObjectInit.InitRichToolTip);

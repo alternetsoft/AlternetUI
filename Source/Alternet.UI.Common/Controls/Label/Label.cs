@@ -260,7 +260,8 @@ namespace Alternet.UI
         /// label drawing parameters, which include
         /// information such as text alignment, word wrap settings, and other
         /// rendering options. Do not modify the returned
-        /// object directly; instead, use the <see cref="UpdateDrawLabelParams(UpdateDrawLabelParamsDelegate)"/> method
+        /// object directly; instead, use the
+        /// <see cref="UpdateDrawLabelParams(UpdateDrawLabelParamsDelegate)"/> method
         /// to update the drawing parameters safely.
         /// </summary>
         [Browsable(false)]

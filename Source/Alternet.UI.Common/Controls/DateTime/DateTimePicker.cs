@@ -142,7 +142,7 @@ namespace Alternet.UI
         {
             get
             {
-                return timePicker.IsValueEmpty;
+                return timePicker.IsValueEmpty && datePicker.IsValueEmpty;
             }
             set
             {

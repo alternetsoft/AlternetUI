@@ -662,8 +662,9 @@ namespace PropertyGridSample
             contextMenu.Items.Add(menuItem2);
         }
 
-        public static void InitRepeatPatternPicker(RepeatPatternPicker picker)
+        public static void InitRepeatPatternPicker(ScrollableRepeatPatternPicker picker)
         {
+
             picker.ValueChanged += (s, e) =>
             {
                 App.Log("RepeatPatternPicker.ValueChanged");

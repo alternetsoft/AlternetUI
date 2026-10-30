@@ -469,7 +469,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void UpdateBaseText()
         {
-            base.Text = Text ?? string.Empty;
+            base.Text = CoerceBaseText(Text ?? string.Empty);
         }
 
         /// <summary>
@@ -495,6 +495,17 @@ namespace Alternet.UI
                 return;
             OnDropDownClosed(EventArgs.Empty);
             DropDownClosed?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Called when base text is updated with the new value.
+        /// You can override this method to customize the behavior when the base text is updated.
+        /// </summary>
+        /// <param name="text">The text to coerce.</param>
+        /// <returns>A valid string representation of the text.</returns>
+        protected virtual string CoerceBaseText(string text)
+        {
+            return text;
         }
 
         /// <summary>
