@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A new instance of <see cref="Label"/> representing
         /// a label in the toolbar.</returns>
-        protected virtual AbstractControl CreateToolLabel()
+        protected virtual Label CreateToolLabel()
         {
             var label = new Label();
             label.CustomFlags["CreatedByToolBar"] = true;

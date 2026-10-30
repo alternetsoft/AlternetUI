@@ -1532,9 +1532,9 @@ namespace Alternet.UI
         /// Adds static text to the control.
         /// </summary>
         /// <param name="text">Text string.</param>
-        /// <returns><see cref="AbstractControl"/> which is used to show text
+        /// <returns><see cref="Label"/> which is used to show text
         /// for the added item.</returns>
-        public virtual AbstractControl AddTextCore(string? text = null)
+        public virtual Label AddTextCore(string? text = null)
         {
             var label = InsertTextCore(Children.Count, text);
             return label;
@@ -1545,8 +1545,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">The index at which to insert the text.</param>
         /// <param name="text">The text to insert.</param>
-        /// <returns><see cref="AbstractControl"/> representing the inserted text.</returns>
-        public virtual AbstractControl InsertTextCore(int index, string? text = null)
+        /// <returns><see cref="Label"/> representing the inserted text.</returns>
+        public virtual Label InsertTextCore(int index, string? text = null)
         {
             var label = CreateToolLabel();
             label.VerticalAlignment = UI.VerticalAlignment.Center;
@@ -1574,8 +1574,8 @@ namespace Alternet.UI
         /// Adds an empty space with the specified or default size.
         /// </summary>
         /// <param name="size">The optional spacer size.</param>
-        /// <returns><see cref="AbstractControl"/> which represents the spacer added.</returns>
-        public virtual AbstractControl AddSpacerCore(Coord? size = null)
+        /// <returns><see cref="Spacer"/> which represents the spacer added.</returns>
+        public virtual Spacer AddSpacerCore(Coord? size = null)
         {
             return InsertSpacerCore(Children.Count, size);
         }
@@ -1585,8 +1585,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">The zero-based index at which the spacer should be inserted.</param>
         /// <param name="size">The optional spacer size.</param>
-        /// <returns><see cref="AbstractControl"/> representing the inserted spacer.</returns>
-        public virtual AbstractControl InsertSpacerCore(int index, Coord? size = null)
+        /// <returns><see cref="Spacer"/> representing the inserted spacer.</returns>
+        public virtual Spacer InsertSpacerCore(int index, Coord? size = null)
         {
             var control = CreateToolSpacer();
             control.SuggestedSize = size ?? DefaultSpacerSize;
