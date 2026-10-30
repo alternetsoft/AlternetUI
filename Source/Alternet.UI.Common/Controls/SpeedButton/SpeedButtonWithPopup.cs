@@ -584,7 +584,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called before popup window is shown..
+        /// Called before popup window is shown.
         /// </summary>
         /// <param name="e">An <see cref="BaseCancelEventArgs"/> that contains the
         /// event data.</param>
