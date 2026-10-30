@@ -32,17 +32,6 @@ namespace Alternet.UI
         public static DrawingShapeType? DefaultItemImageShape = DrawingShapeType.Circle;
 
         /// <summary>
-        /// Gets or sets default disabled image color.
-        /// </summary>
-        /// <remarks>
-        /// This color is used when control is disabled
-        /// for painting color image when color of the disabled image is not specified.
-        /// If this property is null, color image will be painted in the same way like it is done
-        /// when control is enabled.
-        /// </remarks>
-        public static ThemedColor? DefaultDisabledImageColor = new(Color.LightGray);
-
-        /// <summary>
         /// Gets or sets default painter for the <see cref="ColorListBox"/> items.
         /// </summary>
         public static IListBoxItemPainter Painter = new DefaultItemPainter();
@@ -52,8 +41,6 @@ namespace Alternet.UI
         /// </summary>
         public static Action<ColorListBox>? InitColors = InitDefaultColors;
 
-        private ThemedColor? disabledImageColor;
-        private bool useDisabledImageColor = true;
         private bool isColorRightAligned;
         private ItemImageSizeKind colorImageSizeKind = ItemImageSizeKind.Ratio;
         private SizeD? colorImageSize;
@@ -182,29 +169,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether to use <see cref="DisabledImageColor"/>
-        /// for painting of the color image
-        /// when control is disabled.
-        /// </summary>
-        public virtual bool UseDisabledImageColor
-        {
-            get
-            {
-                return useDisabledImageColor;
-            }
-
-            set
-            {
-                if (useDisabledImageColor == value)
-                    return;
-                useDisabledImageColor = value;
-                if (Enabled)
-                    return;
-                Invalidate();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets how to determine size of the color image in the item.
         /// </summary>
         [Browsable(false)]
@@ -265,32 +229,6 @@ namespace Alternet.UI
                 if (isColorRightAligned == value)
                     return;
                 isColorRightAligned = value;
-                Invalidate();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets disabled image color.
-        /// </summary>
-        /// <remarks>
-        /// This color is used for painting color image when control is disabled.
-        /// If this property is null, color image will be painted using
-        /// <see cref="DefaultDisabledImageColor"/>.
-        /// </remarks>
-        public virtual ThemedColor? DisabledImageColor
-        {
-            get
-            {
-                return disabledImageColor;
-            }
-
-            set
-            {
-                if (disabledImageColor == value)
-                    return;
-                disabledImageColor = value;
-                if (Enabled)
-                    return;
                 Invalidate();
             }
         }
@@ -559,7 +497,10 @@ namespace Alternet.UI
                     Color.Empty,
                     borderColor.GetColor(this));
 
-                canvas.FillRectangle(brush, colorRect);
+                canvas.EnabledOrDisabledPaint(IsEnabled, () =>
+                {
+                    canvas.FillRectangle(brush, colorRect);
+                });
             }
             else
             {
@@ -569,7 +510,11 @@ namespace Alternet.UI
                 shapeDrawable.Brush = brush;
                 shapeDrawable.Pen = borderColor?.GetColor(this).AsPen;
                 shapeDrawable.ShapeType = ItemImageShape.Value;
-                shapeDrawable.Draw(this, canvas);
+
+                canvas.EnabledOrDisabledPaint(IsEnabled, () =>
+                {
+                    shapeDrawable.Draw(this, canvas);
+                });
             }
         }
 
@@ -831,13 +776,10 @@ namespace Alternet.UI
             public virtual Color GetImageColor(ColorListBox sender, ListBoxItemPaintEventArgs e)
             {
                 var itemColor = GetItemValueOrDefault(sender, e.ItemIndex, Color.White);
-                var useDisabledImageColor = sender.UseDisabledImageColor;
 
-                if (!sender.Enabled && useDisabledImageColor)
+                if (!sender.IsEnabled)
                 {
-                    var disabledColor = sender.DisabledImageColor ?? DefaultDisabledImageColor;
-                    if (disabledColor is not null)
-                        itemColor = disabledColor.GetColor(sender);
+                    itemColor = itemColor.AsDisabled;
                 }
 
                 return itemColor;
@@ -857,15 +799,6 @@ namespace Alternet.UI
                 {
                     result = GetImageColor(sender, e).AsBrush;
                     return result;
-                }
-
-                var useDisabledImageColor = sender.UseDisabledImageColor;
-
-                if (!sender.Enabled && useDisabledImageColor)
-                {
-                    var disabledColor = sender.DisabledImageColor ?? DefaultDisabledImageColor;
-                    if (disabledColor is not null)
-                        result = disabledColor.GetColor(sender).AsBrush;
                 }
 
                 return result;
