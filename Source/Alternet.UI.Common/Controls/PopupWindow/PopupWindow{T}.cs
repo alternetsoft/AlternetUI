@@ -35,10 +35,12 @@ namespace Alternet.UI
         public static SpeedButton.KnownTheme DefaultOkCancelTheme = SpeedButton.KnownTheme.RoundBorder;
 
         private static readonly bool useNativePopup;
+        private static readonly WindowKind nativePopupWindowKind;
 
         private readonly object? initialSettings;
         private readonly VerticalStackPanel mainPanel = new();
         private readonly ControlSubscriber notification = new();
+
         private readonly ToolBar bottomToolBar = new()
         {
             IsGraphicControl = true,
@@ -68,7 +70,8 @@ namespace Alternet.UI
 
         static PopupWindow()
         {
-            useNativePopup = App.IsLinuxOS || true;
+            useNativePopup = App.IsLinuxOS;
+            nativePopupWindowKind = WindowKind.FocusablePopup;
         }
 
         /// <summary>
@@ -86,16 +89,12 @@ namespace Alternet.UI
 
             topToolBarPanel.MinHeight = GetDefaultMinHeight();
 
-            topGripComponent = new GripComponent();
+            topGripComponent = CreateGripComponent();
             topGripComponent.ConfigureAsMovingGrip();
             topGripComponent.Target = this;
             topGripComponent.InteractionControl = topToolBarPanel;
 
-            titleLabel = new Label();
-            titleLabel.VerticalAlignment = VerticalAlignment.Center;
-            titleLabel.HorizontalAlignment = HorizontalAlignment.Left;
-            titleLabel.Margin = DefaultTitleMargin;
-            titleLabel.InputTransparent = true;
+            titleLabel = CreateTitleLabel();
             titleLabel.Parent = topToolBarPanel;
 
             topToolBarPanel.Parent = this;
@@ -153,6 +152,74 @@ namespace Alternet.UI
                 mainPanel.HasBorder = true;
                 topToolBarPanel.SetVisibleBorders(true, true, true, false);
                 topToolBarPanel.HasBorder = true;
+
+                bool IgnoreEvent()
+                {
+                    return !Visible;
+                }
+
+                void DeactivatePopupIfNotMe(object? s)
+                {
+                    if (IgnoreEvent())
+                        return;
+                    if (s is not AbstractControl control)
+                        return;
+                    if (control.ParentWindow == this || control == this)
+                        return;
+                    DeactivateIfRequired();
+                }
+
+                void DeactivatePopupIfMe(object? s)
+                {
+                    if (IgnoreEvent())
+                        return;
+                    if (s is not AbstractControl control)
+                        return;
+                    if (control.ParentWindow != this && control != this)
+                        return;
+                    DeactivateIfRequired();
+                }
+
+                void DeactivatePopupIfWindow(object? s)
+                {
+                    if (IgnoreEvent())
+                        return;
+                    if (s is not Window control)
+                        return;
+                    DeactivateIfRequired();
+                }
+
+                bool logEvent = false;
+
+                Subscriber.AfterControlActivated += (s, e) =>
+                {
+                    App.LogIf("AfterControlActivated", logEvent && s is Window);
+                    DeactivatePopupIfNotMe(s);
+                };
+
+                Subscriber.AfterControlDeactivated += (s, e) =>
+                {
+                    App.LogIf("AfterControlDeactivated", logEvent && s is Window);
+                    DeactivatePopupIfWindow(s);
+                };
+
+                Subscriber.BeforeControlMouseDown += (s, e) =>
+                {
+                    App.LogIf("BeforeControlMouseDown", logEvent);
+                    DeactivatePopupIfNotMe(s);
+                };
+
+                Subscriber.AfterControlGotFocus += (s, e) =>
+                {
+                    App.LogIf("AfterControlGotFocus", logEvent);
+                    DeactivatePopupIfNotMe(s);
+                };
+
+                Subscriber.AfterControlLostFocus += (s, e) =>
+                {
+                    App.LogIf("AfterControlLostFocus", logEvent);
+                    DeactivatePopupIfMe(s);
+                };
             }
         }
 
@@ -832,7 +899,7 @@ namespace Alternet.UI
         {
             if (useNativePopup)
             {
-                var result = GetWindowKindOverride() ?? WindowKind.FocusablePopup;
+                var result = GetWindowKindOverride() ?? nativePopupWindowKind;
                 return result;
             }
 
@@ -1091,15 +1158,51 @@ namespace Alternet.UI
                 ToolBar.DefaultMinItemSize);
         }
 
+        /// <summary>
+        /// Creates the grip component used for moving the target control
+        /// when user interacts with the title bar.
+        /// This method is called from the constructor and can be overridden
+        /// in derived classes to customize the grip component's appearance and behavior.
+        /// </summary>
+        /// <returns> The created grip component. </returns>
+        protected virtual GripComponent CreateGripComponent()
+        {
+            return new GripComponent();
+        }
+
+        /// <summary>
+        /// Creates the title label for the popup window.
+        /// This method is called from the constructor and can be overridden
+        /// in derived classes to customize the title label's appearance and behavior.
+        /// </summary>
+        /// <returns> The created title label. </returns>
+        protected virtual Label CreateTitleLabel()
+        {
+            var label = new Label();
+            label.VerticalAlignment = VerticalAlignment.Center;
+            label.HorizontalAlignment = HorizontalAlignment.Left;
+            label.Margin = DefaultTitleMargin;
+            label.InputTransparent = true;
+            return label;
+        }
+
+        /// <summary>
+        /// Deactivates the popup window if required.
+        /// </summary>
+        protected virtual void DeactivateIfRequired()
+        {
+            if (HideOnDeactivate && Visible)
+            {
+                Post(() => HidePopup(ModalResult.Canceled, focusOwner: false));
+            }
+        }
+
         /// <inheritdoc/>
         protected override void OnDeactivated(EventArgs e)
         {
             base.OnDeactivated(e);
 
-            if (HideOnDeactivate && Visible)
-            {
-                Post(() => HidePopup(ModalResult.Canceled, focusOwner: false));
-            }
+            DeactivateIfRequired();
         }
 
         private class ToolBarPanel : Panel
