@@ -17,6 +17,8 @@ namespace Alternet.UI
     /// guaranteed unless the underlying assignment operation is thread-safe.</remarks>
     public partial class ToolTipWindow : Window, IToolTipProvider
     {
+        private static readonly bool useNativePopup;
+
         private readonly RichToolTip toolTip = new();
         private readonly ControlSubscriber subscriber = new();
 
@@ -26,6 +28,7 @@ namespace Alternet.UI
 
         static ToolTipWindow()
         {
+            useNativePopup = App.IsLinuxOS;
         }
 
         /// <summary>
@@ -36,77 +39,7 @@ namespace Alternet.UI
             toolTip.IsScrolledVertically = false;
             toolTip.IsScrolledHorizontally = false;
 
-            VisibleChanged += (s, e) =>
-            {
-                if (!Visible)
-                {
-                    lastToolTipControlId = null;
-                }
-            };
-
-            toolTip.ToolTipVisibleChanged += (s, e) =>
-            {
-                Hide();
-
-                if (toolTip.ToolTipVisible)
-                {
-                    if (!UI.ContextMenu.ShowToolTipsDuringContextMenu)
-                    {
-                        if (UI.ContextMenu.HasOpenedContextMenus)
-                            return;
-                    }
-
-                    SizeD size = toolTip.LayoutMaxSize;
-
-                    if (size == SizeD.Empty)
-                    {
-                        return;
-                    }
-
-                    size += toolTip.Margin.Size;
-
-                    ClientSize = size;
-
-                    toolTip.SuggestedSize = size;
-
-                    var location = toolTip.ToolTipLocation;
-                    PointD windowLcation;
-
-                    var toolTipOffset = ToolTipFactory.OverlayToolTipOffset;
-
-                    if (location is null || toolTip.ToolTipOwner is not AbstractControl locationOwner)
-                    {
-                        var mousePos = Mouse.GetPosition(this.ScaleFactor);
-
-                        windowLcation = mousePos + new PointD(toolTipOffset);
-                    }
-                    else
-                    {
-                        windowLcation = locationOwner.PointToScreen(location.Value);
-                    }
-
-                    RectD windowRect = new(windowLcation, Size);
-
-                    var display = Instance.GetDisplay();
-                    var containerRect = display.ClientAreaDip;
-
-                    var alignedLocation = AlignUtils.FitToolTipIntoContainer(
-                        containerRect,
-                        windowRect,
-                        new(toolTipOffset),
-                        ScaleFactor);
-
-                    Location = alignedLocation;
-
-                    PerformLayoutAndInvalidate();
-                    Show();
-                }
-                else
-                {
-                    toolTip.ToolTipOwner = null;
-                    toolTip.ToolTipLocation = null;
-                }
-            };
+            toolTip.ToolTipVisibleChanged += OnToolTipVisibleChanged;
 
             MakeToolWindowWithoutTitleBar();
             StartLocation = WindowStartLocation.Manual;
@@ -187,6 +120,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the control subscriber associated with this tooltip window.
+        /// </summary>
+        public ControlSubscriber Subscriber => subscriber;
+
+        /// <summary>
         /// Gets the rich tooltip associated with this control.
         /// </summary>
         public RichToolTip RichToolTip => toolTip;
@@ -241,6 +179,7 @@ namespace Alternet.UI
             else
             {
                 UnbindGlobalEvents();
+                lastToolTipControlId = null;
             }
         }
 
@@ -283,8 +222,15 @@ namespace Alternet.UI
         /// <inheritdoc />
         public override WindowKind GetWindowKind()
         {
-            var result = GetWindowKindOverride() ?? WindowKind.TransientPopup;
-            return result;
+            if (useNativePopup)
+            {
+                var result = GetWindowKindOverride() ?? WindowKind.TransientPopup;
+                return result;
+            }
+            else
+            {
+                return base.GetWindowKind();
+            }
         }
 
         /// <inheritdoc/>
@@ -379,6 +325,75 @@ namespace Alternet.UI
                 {
                     lastToolTipControlId = null;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Handles the event that occurs when the visibility of the tooltip changes.
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">An object that contains the event data.</param>
+        protected virtual void OnToolTipVisibleChanged(object? s, EventArgs e)
+        {
+            Hide();
+
+            if (toolTip.ToolTipVisible)
+            {
+                if (!UI.ContextMenu.ShowToolTipsDuringContextMenu)
+                {
+                    if (UI.ContextMenu.HasOpenedContextMenus)
+                        return;
+                }
+
+                SizeD size = toolTip.LayoutMaxSize;
+
+                if (size == SizeD.Empty)
+                {
+                    return;
+                }
+
+                size += toolTip.Margin.Size;
+
+                ClientSize = size;
+
+                toolTip.SuggestedSize = size;
+
+                var location = toolTip.ToolTipLocation;
+                PointD windowLcation;
+
+                var toolTipOffset = ToolTipFactory.OverlayToolTipOffset;
+
+                if (location is null || toolTip.ToolTipOwner is not AbstractControl locationOwner)
+                {
+                    var mousePos = Mouse.GetPosition(this.ScaleFactor);
+
+                    windowLcation = mousePos + new PointD(toolTipOffset);
+                }
+                else
+                {
+                    windowLcation = locationOwner.PointToScreen(location.Value);
+                }
+
+                RectD windowRect = new(windowLcation, Size);
+
+                var display = Instance.GetDisplay();
+                var containerRect = display.ClientAreaDip;
+
+                var alignedLocation = AlignUtils.FitToolTipIntoContainer(
+                    containerRect,
+                    windowRect,
+                    new(toolTipOffset),
+                    ScaleFactor);
+
+                Location = alignedLocation;
+
+                PerformLayoutAndInvalidate();
+                Show();
+            }
+            else
+            {
+                toolTip.ToolTipOwner = null;
+                toolTip.ToolTipLocation = null;
             }
         }
 
