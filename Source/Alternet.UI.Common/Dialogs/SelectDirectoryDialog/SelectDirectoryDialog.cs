@@ -109,4 +109,17 @@ namespace Alternet.UI
             return DialogFactory.Handler.CreateSelectDirectoryDialogHandler(this);
         }
     }
+
+    /// <summary>
+    /// Represents a dummy implementation of <see cref="SelectDirectoryDialog"/> class.
+    /// It can be used as a storage for values of <see cref="SelectDirectoryDialog"/> properties.
+    /// </summary>
+    public class DummySelectDirectoryDialog : SelectDirectoryDialog
+    {
+        /// <inheritdoc/>
+        protected override IDialogHandler CreateHandler()
+        {
+            return new BaseSelectDirectoryDialogHandler();
+        }
+    }
 }
