@@ -65,6 +65,11 @@ namespace Alternet.UI
         public static string UrlImageRotate { get; set; } = GetImageUrl("alternet-rotate");
 
         /// <summary>
+        /// Gets or sets url used to load "Folder Ellipsis" svg image.
+        /// </summary>
+        public static string UrlImageFolderEllipsis { get; set; } = GetImageUrl("alternet-folder-ellipsis");
+
+        /// <summary>
         /// Gets or sets url used to load "Square Plus Filled" svg image.
         /// </summary>
         public static string UrlImageSquarePlusFilled { get; set; }

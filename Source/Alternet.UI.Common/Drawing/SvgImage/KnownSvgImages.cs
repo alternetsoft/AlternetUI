@@ -121,6 +121,7 @@ namespace Alternet.UI
         private static SvgImage? imgBell;
         private static SvgImage? imgBackspace;
         private static SvgImage? imgAddressCard;
+        private static SvgImage? imgFolderEllipsis;
 
         static KnownSvgImages()
         {
@@ -141,6 +142,15 @@ namespace Alternet.UI
         {
             get => imgCircleCheckmark ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleCheckmark);
             set => imgCircleCheckmark = value;
+        }
+
+        /// <summary>
+        /// Gets or sets svg image which can be used for indicating a folder selection action.
+        /// </summary>
+        public static SvgImage ImgFolderEllipsis
+        {
+            get => imgFolderEllipsis ??= new MonoSvgImage(KnownSvgUrls.UrlImageFolderEllipsis);
+            set => imgFolderEllipsis = value;
         }
 
         /// <summary>

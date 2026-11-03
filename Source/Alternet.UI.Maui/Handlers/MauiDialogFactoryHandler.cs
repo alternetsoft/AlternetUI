@@ -36,7 +36,7 @@ namespace Alternet.UI
         public ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(
             SelectDirectoryDialog dialog)
         {
-            throw new NotImplementedException();
+            return new BaseSelectDirectoryDialogHandler();
         }
 
         /// <param name="message">A (possibly) multiline dialog message above the single line
