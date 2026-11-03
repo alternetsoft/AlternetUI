@@ -263,6 +263,28 @@ namespace Alternet.UI
         public new IFileDialogHandler Handler => (IFileDialogHandler)base.Handler;
 
         /// <summary>
+        /// Assigns the properties of the specified <see cref="FileDialog"/> to this instance.
+        /// </summary>
+        /// <param name="source">The source <see cref="FileDialog"/> to copy properties from.</param>
+        public virtual void Assign(FileDialog? source)
+        {
+            if (source == null)
+            {
+                Reset();
+                return;
+            }
+
+            NoShortcutFollow = source.NoShortcutFollow;
+            ChangeDir = source.ChangeDir;
+            PreviewFiles = source.PreviewFiles;
+            ShowHiddenFiles = source.ShowHiddenFiles;
+            InitialDirectory = source.InitialDirectory;
+            Filter = source.Filter;
+            SelectedFilterIndex = source.SelectedFilterIndex;
+            FileName = source.FileName;
+        }
+
+        /// <summary>
         /// Resets properties to the default values.
         /// </summary>
         public virtual void Reset()

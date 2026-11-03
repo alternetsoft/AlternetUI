@@ -72,6 +72,30 @@ namespace Alternet.UI
             OverwritePrompt = DefaultOverwritePrompt;
         }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="SaveFileDialog"/> that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new instance of <see cref="SaveFileDialog"/> that is a copy of the current instance.</returns>
+        public virtual SaveFileDialog Clone()
+        {
+            CheckDisposed();
+            var clone = new SaveFileDialog();
+            clone.Assign(this);
+            return clone;
+        }
+
+        /// <inheritdoc/>
+        public override void Assign(FileDialog? source)
+        {
+            base.Assign(source);
+
+            if (source is SaveFileDialog saveFileDialog)
+            {
+                AllowNullFileName = saveFileDialog.AllowNullFileName;
+                OverwritePrompt = saveFileDialog.OverwritePrompt;
+            }
+        }
+
         /// <inheritdoc/>
         protected override bool CoerceDialogResult(bool dialogResult)
         {
