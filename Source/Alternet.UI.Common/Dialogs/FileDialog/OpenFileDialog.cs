@@ -159,4 +159,17 @@ namespace Alternet.UI
             return DialogFactory.Handler.CreateOpenFileDialogHandler(this);
         }
     }
+
+    /// <summary>
+    /// Represents a dummy implementation of <see cref="OpenFileDialog"/> class.
+    /// It can be used as a storage for values of <see cref="OpenFileDialog"/> properties.
+    /// </summary>
+    public class DummyOpenFileDialog : OpenFileDialog
+    {
+        /// <inheritdoc/>
+        protected override IDialogHandler CreateHandler()
+        {
+            return new BaseOpenFileDialogHandler();
+        }
+    }
 }
