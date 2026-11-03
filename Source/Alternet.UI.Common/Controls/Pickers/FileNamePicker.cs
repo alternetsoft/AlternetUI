@@ -54,6 +54,10 @@ namespace Alternet.UI
         public FileNamePicker()
         {
             BtnComboBoxSvg = DefaultButtonImage ?? KnownSvgImages.ImgIconFolder;
+            InnerOuterBorder = InnerOuterSelector.Outer;
+            RoundCorners();
+            HasBorder = true;
+            IgnoreTransparency = true;
         }
 
         /// <summary>

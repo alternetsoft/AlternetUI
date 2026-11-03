@@ -18,6 +18,10 @@ namespace Alternet.UI.Localization
         /// </summary>
         public static CommonStrings Default { get; set; } = new();
 
+        public string PlaySound { get; set; } = "Play sound";
+
+        public string DefaultSound { get; set; } = "Default Sound";
+
         public string NoValue { get; set; } = "no value";
 
         public string ButtonOk { get; set; } = "Ok";

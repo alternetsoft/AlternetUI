@@ -251,7 +251,8 @@ namespace ControlsSample
                 p.AddLinkLabel($"{GenericStrings.Allow} {GenericStrings.AnyDate}", RangeAnyDate);
                 p.AddLinkLabel($"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}", RangeTomorrow);
                 p.AddLinkLabel($"{GenericStrings.Allow} >= {GenericStrings.Yesterday}", RangeYesterday);
-                p.AddLinkLabel($"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow);
+                p.AddLinkLabel(
+                    $"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}", RangeYesterdayTomorrow);
 
                 // Day Border
 

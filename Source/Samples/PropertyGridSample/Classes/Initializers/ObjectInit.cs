@@ -373,6 +373,16 @@ namespace PropertyGridSample
             }
         }
 
+        public static void InitCalendarAlarmPicker(CalendarAlarmPicker control)
+        {
+            control.ValueChanged += (s, e) =>
+            {
+                App.LogBeginSection($"CalendarAlarmPicker");
+                App.Log($"{control.Value.AsJsonString}");
+                App.LogEndSection();
+            };
+        }
+
         public static void InitDateTimePicker(DateTimePicker control)
         {
             control.Kind = DateTimePickerKind.DateTime;
