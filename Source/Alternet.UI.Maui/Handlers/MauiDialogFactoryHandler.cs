@@ -25,12 +25,12 @@ namespace Alternet.UI
 
         public IOpenFileDialogHandler CreateOpenFileDialogHandler(OpenFileDialog dialog)
         {
-            throw new NotImplementedException();
+            return new BaseOpenFileDialogHandler();
         }
 
         public ISaveFileDialogHandler CreateSaveFileDialogHandler(SaveFileDialog dialog)
         {
-            throw new NotImplementedException();
+            return new BaseSaveFileDialogHandler();
         }
 
         public ISelectDirectoryDialogHandler CreateSelectDirectoryDialogHandler(
