@@ -117,4 +117,17 @@ namespace Alternet.UI
             return DialogFactory.Handler.CreateSaveFileDialogHandler(this);
         }
     }
+
+    /// <summary>
+    /// Represents a dummy implementation of <see cref="SaveFileDialog"/> class.
+    /// It can be used as a storage for values of <see cref="SaveFileDialog"/> properties.
+    /// </summary>
+    public class DummySaveFileDialog : SaveFileDialog
+    {
+        /// <inheritdoc/>
+        protected override IDialogHandler CreateHandler()
+        {
+            return new BaseSaveFileDialogHandler();
+        }
+    }
 }
