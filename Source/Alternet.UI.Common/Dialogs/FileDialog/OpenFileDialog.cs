@@ -121,6 +121,30 @@ namespace Alternet.UI
             });
         }
 
+        /// <summary>
+        /// Creates a new instance of <see cref="OpenFileDialog"/> that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new instance of <see cref="OpenFileDialog"/> that is a copy of the current instance.</returns>
+        public virtual OpenFileDialog Clone()
+        {
+            CheckDisposed();
+            var clone = new OpenFileDialog();
+            clone.Assign(this);
+            return clone;
+        }
+
+        /// <inheritdoc/>
+        public override void Assign(FileDialog? source)
+        {
+            base.Assign(source);
+
+            if (source is OpenFileDialog openFileDialog)
+            {
+                AllowMultipleSelection = openFileDialog.AllowMultipleSelection;
+                FileMustExist = openFileDialog.FileMustExist;
+            }
+        }
+
         /// <inheritdoc/>
         public override void Reset()
         {
