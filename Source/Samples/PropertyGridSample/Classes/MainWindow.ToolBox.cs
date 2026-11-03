@@ -101,6 +101,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<EnumPicker>(ObjectInit.InitEnumPicker);
                 ToolBoxAdd<EnumPickerAndButton>(ObjectInit.InitEnumPickerAndButton);
                 ToolBoxAdd<FileListBox>(ObjectInit.InitFileListBox);
+                ToolBoxAdd<FileNamePicker>();
                 ToolBoxAdd<FindReplaceControl>(ObjectInit.InitFindReplaceControl);
                 ToolBoxAdd<FontListBox>();
                 ToolBoxAdd<FontNamePicker>(ObjectInit.InitFontNamePicker);
