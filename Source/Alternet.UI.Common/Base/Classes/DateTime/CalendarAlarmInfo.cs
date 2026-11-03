@@ -33,6 +33,27 @@ namespace Alternet.UI
         private string? soundPath = DefaultSoundPath;
 
         /// <summary>
+        /// Gets or sets a JSON string representation of the current state of this instance.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string AsJsonString
+        {
+            get
+            {
+                IPropertyBag propertyBag = PropertyBag.Create();
+                SaveTo(propertyBag);
+                return propertyBag.AsJsonString;
+            }
+
+            set
+            {
+                IPropertyBag propertyBag = PropertyBag.Create();
+                propertyBag.AsJsonString = value;
+                LoadFrom(propertyBag);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets an advance time.
         /// </summary>
         [PropertyBag]
