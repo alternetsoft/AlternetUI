@@ -196,7 +196,16 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ValueToControls()
         {
+            playSoundCheckBox.Checked = data.PlaySound;
+            !!!
+            soundFilePicker.MainControl.Text = data.SoundPath ?? string.Empty;
         }
+
+        /*
+                        var value = timePeriodPicker.Value;
+                        data.Advance = value.AsTimeSpan();
+                        data.Enabled = value.Value != 0;
+        */
 
         /// <summary>
         /// Raises the <see cref="ValueChanged"/> event when the <see cref="Value"/> property changes.
