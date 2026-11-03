@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -45,30 +47,68 @@ namespace Alternet.UI
             new (2, TimePeriodUnit.Weeks),
         ];
 
+        private TimePeriod noneItem;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TimePeriodPicker"/> class,
         /// which allows users to select a time period from a predefined list of durations.
         /// </summary>
         public TimePeriodPicker()
         {
+            noneItem = new TimePeriod(0, TimePeriodUnit.Minutes);
+            noneItem.Text = CommonStrings.Default.TimePeriodNone;
             AddDefaultItems();
             Value = new TimePeriod(15, TimePeriodUnit.Minutes);
         }
 
         /// <summary>
+        /// Gets the "None" time period item, which represents a state where no specific time period is selected.
+        /// </summary>
+        public TimePeriod NoneTimePeriod
+        {
+            get => noneItem;
+        }
+
+        /// <summary>
         /// Gets or sets the currently selected time period, represented by a numeric value and a unit of measurement.
         /// </summary>
-        public new TimePeriod Value
+        public new virtual TimePeriod Value
         {
             get => (TimePeriod?)SelectedItem ?? new TimePeriod(0, TimePeriodUnit.Minutes);
             set => SelectedItem = value;
         }
 
         /// <summary>
+        /// Selects the "None" item in the picker,
+        /// allowing users to indicate that no specific time period is chosen.
+        /// </summary>
+        public virtual void SelectNoneItem()
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i] is TimePeriod timePeriod && timePeriod.Value == 0)
+                {
+                    Value = timePeriod;
+                    return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inserts a "None" item at the beginning of the picker,
+        /// allowing users to select a state where no time period is specified.
+        /// </summary>
+        public virtual TimePeriod AddNoneItem()
+        {
+            Items.Insert(0, noneItem);
+            return noneItem;
+        }
+
+        /// <summary>
         /// Adds the default set of time period items to the picker, which can be overridden in derived classes.
         /// By default uses the <see cref="DefaultItems"/> array to populate the picker with common time periods.
         /// </summary>
-        protected virtual void AddDefaultItems()
+        public virtual void AddDefaultItems()
         {
             foreach (var item in DefaultItems)
             {
