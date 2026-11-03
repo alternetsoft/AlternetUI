@@ -271,6 +271,8 @@ namespace Alternet.UI.Localization
 
         // ========================
 
+        public string TimePeriodNone { get; set; } = "None";
+
         public string TimePeriodUnitYear { get; set; } = "year";
 
         public string TimePeriodUnitMonth { get; set; } = "month";

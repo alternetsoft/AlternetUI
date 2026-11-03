@@ -14,6 +14,7 @@ namespace Alternet.UI
     {
         private readonly CalendarAlarmInfo data;
         private readonly FileNamePicker soundFilePicker = new();
+        private readonly TimePeriodPicker timePeriodPicker = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarAlarmPicker"/> class
@@ -26,6 +27,9 @@ namespace Alternet.UI
             data.PropertyChanged += (s, e) => OnValueChanged(e);
             soundFilePicker.OpenFileProps.Filter = FileMaskUtils.FileDialogFilterSoundFiles;
             soundFilePicker.OpenFileProps.Title = CommonStrings.Default.WindowTitleSelectSoundFile;
+
+            timePeriodPicker.Parent = this;
+            soundFilePicker.Parent = this;
         }
 
         /// <summary>
