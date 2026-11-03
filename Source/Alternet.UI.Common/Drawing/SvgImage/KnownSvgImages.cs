@@ -122,6 +122,8 @@ namespace Alternet.UI
         private static SvgImage? imgBackspace;
         private static SvgImage? imgAddressCard;
         private static SvgImage? imgFolderEllipsis;
+        private static SvgImage? imgHourglassHalf;
+        private static SvgImage? imgHourglass;
 
         static KnownSvgImages()
         {
@@ -151,6 +153,24 @@ namespace Alternet.UI
         {
             get => imgFolderEllipsis ??= new MonoSvgImage(KnownSvgUrls.UrlImageFolderEllipsis);
             set => imgFolderEllipsis = value;
+        }
+
+        /// <summary>
+        /// Gets or sets svg image which can be used for displaying a half-filled hourglass.
+        /// </summary>
+        public static SvgImage ImgHourglassHalf
+        {
+            get => imgHourglassHalf ??= new MonoSvgImage(KnownSvgUrls.UrlImageHourglassHalf);
+            set => imgHourglassHalf = value;
+        }
+
+        /// <summary>
+        /// Gets or sets svg image which can be used for displaying a hourglass.
+        /// </summary>
+        public static SvgImage ImgHourglass
+        {
+            get => imgHourglass ??= new MonoSvgImage(KnownSvgUrls.UrlImageHourglass);
+            set => imgHourglass = value;
         }
 
         /// <summary>

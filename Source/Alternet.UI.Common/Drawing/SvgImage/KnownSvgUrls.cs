@@ -50,6 +50,16 @@ namespace Alternet.UI
         public static string UrlImageCalendar { get; set; } = GetImageUrl("alternet-calendar");
 
         /// <summary>
+        /// Gets or sets url used to load "Hourglass Half" svg image.
+        /// </summary>
+        public static string UrlImageHourglassHalf { get; set; } = GetImageUrl("alternet-hourglass-half");
+
+        /// <summary>
+        /// Gets or sets url used to load "Hourglass" svg image.
+        /// </summary>
+        public static string UrlImageHourglass { get; set; } = GetImageUrl("alternet-hourglass");
+
+        /// <summary>
         /// Gets or sets url used to load "Calendar Check" svg image.
         /// </summary>
         public static string UrlImageCalendarCheck { get; set; } = GetImageUrl("alternet-calendar-check");
