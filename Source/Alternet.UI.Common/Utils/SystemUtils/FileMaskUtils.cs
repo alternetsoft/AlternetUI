@@ -15,30 +15,35 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets localization for "Files" string.
         /// </summary>
-        public static string StrFiles = "Files";
+        public static string StrFiles { get; set; } = "Files";
 
         /// <summary>
         /// Gets or sets localization for "All Files" string.
         /// </summary>
-        public static string StrAllFiles = "All Files";
+        public static string StrAllFiles { get; set; } = "All Files";
 
         /// <summary>
         /// Gets or sets localization for "Image Files" string.
         /// </summary>
-        public static string StrImageFiles = "Image Files";
+        public static string StrImageFiles { get; set; } = "Image Files";
 
         /// <summary>
         /// Gets or sets localization for "Animation Files" string.
         /// </summary>
-        public static string StrAnimationFiles = "Animation Files";
+        public static string StrAnimationFiles { get; set; } = "Animation Files";
 
         /// <summary>
         /// Gets or sets localization for "Library Files" string.
         /// </summary>
-        public static string StrLibraryFiles = "Library Files";
+        public static string StrLibraryFiles { get; set; } = "Library Files";
+        
+        /// <summary>
+        /// Gets or sets localization for "Audio Files" string.
+        /// </summary>
+        public static string StrSoundFiles { get; set; } = "Sound Files";
 
         /// <summary>
-        /// Gets "Library Files (*.*)|*.*" string.
+        /// Gets "Library Files (*.dll)|*.dll" string.
         /// </summary>
         public static string FileDialogFilterLibraryFiles => $"{StrLibraryFiles} (*.dll)|*.dll";
 
@@ -46,6 +51,11 @@ namespace Alternet.UI
         /// Gets "All Files (*.*)|*.*" string.
         /// </summary>
         public static string FileDialogFilterAllFiles => $"{StrAllFiles} (*.*)|*.*";
+
+        /// <summary>
+        /// Gets "Sound Files (*.wav)|*.wav" string.
+        /// </summary>
+        public static string FileDialogFilterSoundFiles => $"{StrSoundFiles} (*.wav)|*.wav";
 
         /// <summary>
         /// Gets string like "Image Files (*.png; *.jpg)|*.png;*.jpg", but with all supported
