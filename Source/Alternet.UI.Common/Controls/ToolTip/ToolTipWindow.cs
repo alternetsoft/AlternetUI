@@ -62,6 +62,27 @@ namespace Alternet.UI
             subscriber.AfterControlKeyDown += HideToolTip;
             subscriber.AfterControlMouseLeave += HideToolTip;
 
+            subscriber.AfterControlActivated += (s, e) =>
+            {
+                if (s == this || s is not Window)
+                    return;
+                HideToolTip(s, e);
+            };
+
+            subscriber.AfterControlDeactivated += (s, e) =>
+            {
+                if (s is not Window)
+                    return;
+                HideToolTip(s, e);
+            };
+
+            subscriber.AfterControlMouseMove += (s, e) =>
+            {
+                if (s == toolTip.ToolTipOwner)
+                    return;
+                HideToolTip(s, e);
+            };
+
             subscriber.AfterControlMouseLeave += (s, e) =>
             {
                 HideToolTip(s, e);
