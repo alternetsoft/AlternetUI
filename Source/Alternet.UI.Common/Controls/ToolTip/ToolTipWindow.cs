@@ -272,7 +272,7 @@ namespace Alternet.UI
         {
             if (useNativePopup)
             {
-                var result = GetWindowKindOverride() ?? WindowKind.TransientPopup;
+                var result = GetWindowKindOverride() ?? WindowKind.Popup;
                 return result;
             }
             else
