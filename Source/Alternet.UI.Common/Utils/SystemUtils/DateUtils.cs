@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -124,6 +125,35 @@ namespace Alternet.UI
             }
 
             return minSupportedDateTime;
+        }
+
+        /// <summary>
+        /// Converts the time period to a <see cref="TimeSpan"/> representation.
+        /// </summary>
+        /// <returns>A <see cref="TimeSpan"/> representing the time period.</returns>
+        public static TimeSpan AsTimeSpan(int value, TimePeriodUnit unit)
+        {
+            switch (unit)
+            {
+                case TimePeriodUnit.Years:
+                    return TimeSpan.FromDays(value * 365);
+                case TimePeriodUnit.Months:
+                    return TimeSpan.FromDays(value * 30);
+                case TimePeriodUnit.Weeks:
+                    return TimeSpan.FromDays(value * 7);
+                case TimePeriodUnit.Days:
+                    return TimeSpan.FromDays(value);
+                case TimePeriodUnit.Hours:
+                    return TimeSpan.FromHours(value);
+                case TimePeriodUnit.Minutes:
+                    return TimeSpan.FromMinutes(value);
+                case TimePeriodUnit.Seconds:
+                    return TimeSpan.FromSeconds(value);
+                case TimePeriodUnit.Milliseconds:
+                    return TimeSpan.FromMilliseconds(value);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(unit), unit, null);
+            }
         }
 
         /// <summary>
@@ -371,6 +401,90 @@ namespace Alternet.UI
             /// For example, "d" for the unit of days.
             /// </summary>
             Short,
+        }
+
+        /// <summary>
+        /// Gets the part of the <see cref="TimeSpan"/> value corresponding
+        /// to the specified <see cref="TimePeriodUnit"/>.
+        /// </summary>
+        /// <param name="timeSpan">The time span value.</param>
+        /// <param name="unit">The time period unit.</param>
+        /// <returns>The part of the time span value corresponding to the specified unit.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public static int GetPartOfValue(TimeSpan timeSpan, TimePeriodUnit unit)
+        {
+            switch (unit)
+            {
+                case TimePeriodUnit.Days:
+                    return timeSpan.Days;
+                case TimePeriodUnit.Hours:
+                    return timeSpan.Hours;
+                case TimePeriodUnit.Minutes:
+                    return timeSpan.Minutes;
+                case TimePeriodUnit.Seconds:
+                    return timeSpan.Seconds;
+                case TimePeriodUnit.Milliseconds:
+                    return timeSpan.Milliseconds;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(unit), unit, null);
+            }
+        }
+
+        /// <summary>
+        /// Returns display string for the <see cref="TimeSpan"/>.
+        /// Result contains only non-zero parts of the <see cref="TimeSpan"/> value.
+        /// Only days, hours, minutes and seconds are displayed.
+        /// If long format is used and there are multiple parts, the result includes commas.
+        /// </summary>
+        /// <param name="timeSpan">The time span to display.</param>
+        /// <param name="format">The format of the time period unit text.</param>
+        /// <returns>A display string representing the specified time span.</returns>
+        public static string ToDisplayString(
+            TimeSpan timeSpan,
+            TimePeriodUnitTextFormat format = TimePeriodUnitTextFormat.Long)
+        {
+            string result = string.Empty;
+            
+            var parts = new[]
+            {
+                TimePeriodUnit.Days,
+                TimePeriodUnit.Hours,
+                TimePeriodUnit.Minutes,
+                TimePeriodUnit.Seconds,
+            };
+
+            foreach (var part in parts)
+            {
+                var value = GetPartOfValue(timeSpan, part);
+                if (value != 0)
+                {
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        result += format == TimePeriodUnitTextFormat.Long ? ", " : " ";
+                    }
+
+                    result += ValueAndUnitToString(value, part, format);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a string representation of the specified time period value and unit,
+        /// formatted according to the specified format.
+        /// </summary>
+        /// <param name="value">The numeric value representing the magnitude of the time period.</param>
+        /// <param name="unit">The unit of measurement for the time period.</param>
+        /// <param name="format">The format of the time period unit text.</param>
+        /// <returns>A string representation of the specified time period value and unit.</returns>
+        public static string ValueAndUnitToString(
+            int value,
+            TimePeriodUnit unit,
+            TimePeriodUnitTextFormat format = TimePeriodUnitTextFormat.Long)
+        {
+            var unitText = unit.ToDisplayString(value, format);
+            return $"{value} {unitText}";
         }
 
         /// <summary>
