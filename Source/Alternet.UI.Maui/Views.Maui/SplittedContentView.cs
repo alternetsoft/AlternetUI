@@ -101,6 +101,10 @@ namespace Alternet.Maui
                 firstPaneSize = value;
             }
         }
+
+        /// <summary>
+        /// Rebuilds the layout of the control based on the current orientation and sizes of the panes.
+        /// </summary>
         protected virtual void RebuildLayout()
         {
             Children.Clear();
