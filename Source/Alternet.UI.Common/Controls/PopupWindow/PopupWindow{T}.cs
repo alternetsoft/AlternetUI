@@ -156,38 +156,22 @@ namespace Alternet.UI
                 topToolBarPanel.SetVisibleBorders(true, true, true, false);
                 topToolBarPanel.HasBorder = true;
 
-                bool IgnoreEvent()
-                {
-                    return !Visible;
-                }
-
                 void DeactivatePopupIfNotMe(object? s)
                 {
-                    if (IgnoreEvent())
-                        return;
                     if (s is not AbstractControl control)
+                        return;
+                    if (IgnoreSubscriberEvent(control))
                         return;
                     if (control.ParentWindow == this || control == this)
                         return;
                     DeactivateIfRequired();
                 }
 
-                void DeactivatePopupIfMe(object? s)
-                {
-                    if (IgnoreEvent())
-                        return;
-                    if (s is not AbstractControl control)
-                        return;
-                    if (control.ParentWindow != this && control != this)
-                        return;
-                    DeactivateIfRequired();
-                }
-
                 void DeactivatePopupIfWindow(object? s)
                 {
-                    if (IgnoreEvent())
-                        return;
                     if (s is not Window control)
+                        return;
+                    if (IgnoreSubscriberEvent(control))
                         return;
                     DeactivateIfRequired();
                 }
@@ -216,12 +200,6 @@ namespace Alternet.UI
                 {
                     App.LogIf("AfterControlGotFocus", logEvent);
                     DeactivatePopupIfNotMe(s);
-                };
-
-                Subscriber.AfterControlLostFocus += (s, e) =>
-                {
-                    App.LogIf("AfterControlLostFocus", logEvent);
-                    DeactivatePopupIfMe(s);
                 };
             }
         }
@@ -1205,6 +1183,22 @@ namespace Alternet.UI
         {
             base.OnDeactivated(e);
 
+            DeactivateIfRequired();
+        }
+
+        private bool IgnoreSubscriberEvent(AbstractControl? control)
+        {
+            return !Visible;
+        }
+
+        private void DeactivatePopupIfMe(object? s)
+        {
+            if (s is not AbstractControl control)
+                return;
+            if (IgnoreSubscriberEvent(control))
+                return;
+            if (control.ParentWindow != this && control != this)
+                return;
             DeactivateIfRequired();
         }
 
