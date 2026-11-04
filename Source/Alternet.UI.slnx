@@ -133,10 +133,5 @@
       <BuildType Solution="DLL Release|*" Project="Release" />
       <Deploy />
     </Project>
-    <Project Path="Tests/MauiTest/MauiTest.csproj">
-      <BuildType Solution="DLL Debug|*" Project="Debug" />
-      <BuildType Solution="DLL Release|*" Project="Release" />
-      <Deploy />
-    </Project>
   </Folder>
 </Solution>
