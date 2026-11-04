@@ -139,13 +139,20 @@ namespace Alternet.UI
         public GenericRoundBorderWithTitle(string labelTitle)
             : this()
         {
-            toolBar.Label.Text = labelTitle;
+            Title = labelTitle;
         }
 
         /// <summary>
         /// Gets the header toolbar of the <see cref="GenericRoundBorderWithTitle"/> control.
         /// </summary>
         public SectionHeaderToolBar HeaderToolBar => toolBar;
+
+        /// <inheritdoc/>
+        protected override void OnTitleChanged(EventArgs e)
+        {
+            base.OnTitleChanged(e);
+            toolBar.Label.Text = Title;
+        }
     }
 
     /// <summary>
