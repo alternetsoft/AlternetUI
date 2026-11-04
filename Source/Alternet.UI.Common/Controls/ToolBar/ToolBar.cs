@@ -3859,6 +3859,7 @@ namespace Alternet.UI
             label = AddTextCore();
             label.IsBold = true;
             label.Margin = DefaultLabelMargin;
+            label.Click += OnLabelClick;
 
             collapseButton = AddSpeedBtnCore(null, GetCollapseButtonImage(), null, OnCollapseButtonClick);
             collapseButton.HorizontalAlignment = HorizontalAlignment.Right;
@@ -3981,6 +3982,24 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnCollapsedChanged()
         {
+        }
+
+        /// <summary>
+        /// Called when the label is clicked. If the control can collapse or expand,
+        /// this method toggles the collapse state.
+        /// </summary>
+        /// <param name="sender"> The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnLabelClick(object? sender, EventArgs e)
+        {
+            OnCollapseButtonClick(sender, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnClick(EventArgs e)
+        {
+            base.OnClick(e);
+            OnCollapseButtonClick(this, e);
         }
 
         /// <summary>
