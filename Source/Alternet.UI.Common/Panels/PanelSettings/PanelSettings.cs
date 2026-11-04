@@ -1030,6 +1030,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Pushes a new <see cref="RoundBorder"/> container control onto the container stack,
+        /// performs the specified action on it, and then pops it from the stack.
+        /// This method can be used to group multiple items within a round border with a title.
+        /// </summary>
+        /// <param name="title">The title of the round border.</param>
+        /// <param name="action">An action to perform on the container control.</param>
+        /// <returns>The container control that was pushed onto the stack.</returns>
+        public RoundBorderWithTitle RoundBorder(string title, Action<RoundBorderWithTitle> action)
+        {
+            var result = DoInsideContainer<RoundBorderWithTitle>(action);
+            result.Title = title;
+            return result;
+        }
+
+        /// <summary>
         /// Pushes a new <see cref="VerticalStackPanel"/> container control onto the container stack,
         /// performs the specified action on it, and then pops it from the stack.
         /// This method can be used to group multiple items vertically within the panel settings.

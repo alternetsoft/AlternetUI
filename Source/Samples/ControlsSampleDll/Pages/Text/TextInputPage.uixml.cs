@@ -74,21 +74,27 @@ namespace ControlsSample
 
             panelSettings.DoInsideLayout(() =>
             {
+                panelSettings.MinChildMargin = (20, 10, 20, 10);
+
                 App.DebugLogIf("Adding TextBox settings inputs...", false);
 
-                panelSettings.AddInput<bool>(
-                            "ReadOnly",
-                            () => textBox.ReadOnly,
-                            (value) => textBox.ReadOnly = value,
-                            e: null);
+                panelSettings.RoundBorder("Flags", container =>
+                {
+                    panelSettings.AddInput<bool>(
+                                "ReadOnly",
+                                () => textBox.ReadOnly,
+                                (value) => textBox.ReadOnly = value,
+                                e: null);
 
-                panelSettings.AddInput("Password", textBox, nameof(TextPicker.IsPassword));
-                panelSettings.AddInput("Has Border", textBox, nameof(TextPicker.HasBorder));
-                panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
+                    panelSettings.AddInput("Password", textBox, nameof(TextPicker.IsPassword));
+                    panelSettings.AddInput("Has Border", textBox, nameof(TextPicker.HasBorder));
+                    panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
 
-                /*
-                panelSettings.AddInput("Process Enter", textBox, nameof(TextPicker.ProcessEnter));
-                */
+                    panelSettings.AddInput(
+                        "Allow Default Context Menu",
+                        textBox,
+                        nameof(TextBox.AllowDefaultContextMenu));
+                });
 
                 ControlUtils.AddContextMenuItemsForThemeSelection(panelSettings, scrollViewer);
 
@@ -97,79 +103,77 @@ namespace ControlsSample
                     App.Log("TextBox: Enter pressed");
                 };
 
-                panelSettings.AddInput(
-                    "Allow Default Context Menu",
-                    textBox,
-                    nameof(TextBox.AllowDefaultContextMenu));
+                // Second group of settings
 
-                panelSettings.AddHorizontalLine();
-
-                panelSettings.AddInput("Text Align", textBox, nameof(TextPicker.TextAlign));
-
-                CustomEventArgs lengthArgs = new("IsRequired", "CheckBoxInLabel");
-
-                var itemMinLengthEdit = panelSettings.AddInput(
-                    MinLengthEditLabel,
-                    textBox.ValueHelper,
-                    nameof(TextBox.ValueHelper.MinLength),
-                    lengthArgs);
-                itemMinLengthEdit.ValueChanged += (s, e) =>
+                panelSettings.RoundBorder("Text", container =>
                 {
-                    textBox.ValueHelper.RunDefaultValidation();
-                };
+                    panelSettings.AddInput("Text Align", textBox, nameof(TextPicker.TextAlign));
 
-                var minLengthEdit = panelSettings.GetItemControlEditor(itemMinLengthEdit);
-                var minLengthEditLabel = panelSettings.GetItemControlLabel(itemMinLengthEdit);
+                    CustomEventArgs lengthArgs = new("IsRequired", "CheckBoxInLabel");
 
-                if (minLengthEdit is TextPickerAndButton textBoxAndButton)
-                {
-                    textBoxAndButton.Buttons.IsVisible = true;
-                    textBoxAndButton.SetSingleButton(KnownButton.Cancel);
-                    textBoxAndButton.ButtonClick += (s, e) =>
+                    var itemMinLengthEdit = panelSettings.AddInput(
+                        MinLengthEditLabel,
+                        textBox.ValueHelper,
+                        nameof(TextBox.ValueHelper.MinLength),
+                        lengthArgs);
+                    itemMinLengthEdit.ValueChanged += (s, e) =>
                     {
-                        textBoxAndButton.Text = "0";
+                        textBox.ValueHelper.RunDefaultValidation();
                     };
-                }
 
-                if (minLengthEditLabel is XCheckBox checkBox)
+                    var minLengthEdit = panelSettings.GetItemControlEditor(itemMinLengthEdit);
+                    var minLengthEditLabel = panelSettings.GetItemControlLabel(itemMinLengthEdit);
+
+                    if (minLengthEdit is TextPickerAndButton textBoxAndButton)
+                    {
+                        textBoxAndButton.Buttons.IsVisible = true;
+                        textBoxAndButton.SetSingleButton(KnownButton.Cancel);
+                        textBoxAndButton.ButtonClick += (s, e) =>
+                        {
+                            textBoxAndButton.Text = "0";
+                        };
+                    }
+
+                    if (minLengthEditLabel is XCheckBox checkBox)
+                    {
+                        checkBox.Checked = true;
+                        checkBox.Item.IsCheckBoxEnabled = false;
+                    }
+
+                    var itemMaxLengthEdit = panelSettings.AddInput(
+                        MaxLengthEditLabel,
+                        textBox.ValueHelper,
+                        nameof(TextBox.ValueHelper.MaxLength),
+                        lengthArgs.Flag("UseUpDown"));
+
+                    var maxLengthEditLabel = panelSettings.GetItemControlLabel(itemMaxLengthEdit);
+
+                    if (maxLengthEditLabel is XCheckBox checkBox2)
+                    {
+                        checkBox2.Checked = true;
+                        checkBox2.Item.IsCheckBoxEnabled = false;
+                    }
+
+                    itemMaxLengthEdit.ValueChanged += (s, e) =>
+                    {
+                        textBox.ValueHelper.RunDefaultValidation();
+                    };
+
+                    panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
+
+                    panelSettings.AddInput("Log Text", this, nameof(LogText));
+                });
+
+                // Third group of settings
+
+                panelSettings.RoundBorder("Colors", container =>
                 {
-                    checkBox.Checked = true;
-                    checkBox.Item.IsCheckBoxEnabled = false;
-                }
+                    panelSettings.AddInput("Foreground Color", textBox, nameof(ForeColor));
 
-                var itemMaxLengthEdit = panelSettings.AddInput(
-                    MaxLengthEditLabel,
-                    textBox.ValueHelper,
-                    nameof(TextBox.ValueHelper.MaxLength),
-                    lengthArgs.Flag("UseUpDown"));
+                    panelSettings.AddInput("Background Color", textBox, nameof(BackColor));
+                });
 
-                var maxLengthEditLabel = panelSettings.GetItemControlLabel(itemMaxLengthEdit);
-
-                if (maxLengthEditLabel is XCheckBox checkBox2)
-                {
-                    checkBox2.Checked = true;
-                    checkBox2.Item.IsCheckBoxEnabled = false;
-                }
-
-                itemMaxLengthEdit.ValueChanged += (s, e) =>
-                {
-                    textBox.ValueHelper.RunDefaultValidation();
-                };
-
-                panelSettings.AddInput("Foreground Color", textBox, nameof(ForeColor));
-
-                panelSettings.AddInput("Background Color", textBox, nameof(BackColor));
-
-                panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
-
-                panelSettings.AddHorizontalLine();
-
-                panelSettings.AddInput("Log Text", this, nameof(LogText));
-
-                /*
-                panelSettings.AddInput("Log Position", this, nameof(LogPosition));
-                panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
-                */
+                panelSettings.FirstChild!.MarginTop = 20;
 
                 App.DebugLogIf("Done adding TextBox settings inputs...", false);
             });
