@@ -46,6 +46,18 @@ namespace Alternet.UI
         public static Color? AccentColor => accentColor.Value;
 
         /// <summary>
+        /// Gets the path to the Windows Media folder, typically located at "C:\Windows\Media".
+        /// </summary>
+        /// <returns>The path to the Windows Media folder.</returns>
+        public static string GetMediaFolder()
+        {
+            string mediaFolder = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.Windows),
+                "Media");
+            return mediaFolder;
+        }
+
+        /// <summary>
         /// Gets all cursor related registry values from "Control Panel\Cursors" into a dictionary.
         /// This function caches the result for future calls to avoid redundant registry access.
         /// </summary>
