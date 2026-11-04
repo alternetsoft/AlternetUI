@@ -86,6 +86,8 @@ namespace Alternet.UI
             data[KnownButton.Close] = () => new(strings.ButtonClose, KnownSvgImages.ImgClose);
             data[KnownButton.OK] = () => new(strings.ButtonOk, KnownSvgImages.ImgOk);
             data[KnownButton.Cancel] = () => new(strings.ButtonCancel, KnownSvgImages.ImgCancel);
+            data[KnownButton.TextBoxClear] = () => new(strings.ButtonClear, KnownSvgImages.ImgCancel);
+
             data[KnownButton.Yes] = () => new(strings.ButtonYes, KnownSvgImages.ImgYes);
             data[KnownButton.No] = () => new(strings.ButtonNo, KnownSvgImages.ImgNo);
             data[KnownButton.Abort] = () => new(strings.ButtonAbort, KnownSvgImages.ImgAbort);

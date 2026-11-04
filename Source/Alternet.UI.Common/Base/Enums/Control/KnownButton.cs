@@ -187,6 +187,11 @@ namespace Alternet.UI
         TextBoxHidePassword,
 
         /// <summary>
+        /// 'Clear' button that can be used near the textbox or other value editors.
+        /// </summary>
+        TextBoxClear,
+
+        /// <summary>
         /// 'Close' button that can be used to close a dialog or a window.
         /// </summary>
         Close,
