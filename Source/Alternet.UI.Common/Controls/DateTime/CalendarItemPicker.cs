@@ -24,9 +24,14 @@ namespace Alternet.UI
         /// </summary>
         public static Thickness DefaultMinChildMargin = 5;
 
+        /// <summary>
+        /// Gets or sets the default minimum width for the <see cref="CalendarItemPicker"/> control.
+        /// </summary>
+        public static float DefaultMinWidth = 300;
+
         private readonly GenericRoundBorderWithTitle detailsPanel = new(CommonStrings.Default.CalendarItemLabelDetails);
         private readonly GenericRoundBorderWithTitle moreOptionsPanel = new(CommonStrings.Default.CalendarItemLabelMoreOptions);
-
+        private readonly GenericRoundBorderWithTitle alarmPanel = new(CommonStrings.Default.CalendarItemLabelReminder);
         private readonly Label titleLabel = new();
         private readonly TextPicker titlePicker = new ();
         
@@ -43,6 +48,7 @@ namespace Alternet.UI
         private readonly CalendarItemStatusPicker statusPicker = new();
 
         private readonly RepeatPatternPicker rulePicker = new();
+        private readonly CalendarAlarmPicker alarmPicker = new();
 
         private CalendarItem? calendarItem;
 
@@ -51,11 +57,13 @@ namespace Alternet.UI
         /// </summary>
         public CalendarItemPicker()
         {
+            MinWidth = DefaultMinWidth;
             Layout = LayoutStyle.Vertical;
             Padding = DefaultPadding;
 
             detailsPanel.Margin = DefaultMinChildMargin;
             moreOptionsPanel.Margin = DefaultMinChildMargin;
+            alarmPanel.Margin = DefaultMinChildMargin;
 
             titleLabel.Text = CommonStrings.Default.CalendarItemLabelTitle;
             descriptionLabel.Text = CommonStrings.Default.CalendarItemLabelDescription;
@@ -64,6 +72,8 @@ namespace Alternet.UI
             statusLabel.Text = CommonStrings.Default.CalendarItemLabelStatus;
 
             ValueToControls();
+
+            alarmPicker.Parent = alarmPanel;
 
             titleLabel.Parent = detailsPanel;
             titlePicker.Parent = detailsPanel;
@@ -85,6 +95,7 @@ namespace Alternet.UI
             descriptionLabel.Parent = moreOptionsPanel;
             descriptionPicker.Parent = moreOptionsPanel;
 
+            alarmPanel.Parent = this;
             moreOptionsPanel.Parent = this;
 
             titlePicker.ValueChanged += (s, e) =>
@@ -118,6 +129,11 @@ namespace Alternet.UI
             {
                 Value.Rule = rulePicker.Value;
             };
+
+            alarmPicker.ValueChanged += (s, e) =>
+            {
+                Value.AlarmInfo = alarmPicker.Value;
+            };
         }
 
         /// <summary>
@@ -134,6 +150,13 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the <see cref="GenericRoundBorderWithTitle"/> that contains the controls for editing
+        /// the alarms of the <see cref="CalendarItem"/>.
+        /// </summary>
+        [Browsable(false)]
+        public GenericRoundBorderWithTitle AlarmPanel => alarmPanel;
+
+        /// <summary>
+        /// Gets the <see cref="GenericRoundBorderWithTitle"/> that contains the controls for editing
         /// the more options of the <see cref="CalendarItem"/>.
         /// </summary>
         [Browsable(false)]
@@ -144,6 +167,13 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public RepeatPatternPicker RulePicker => rulePicker;
+
+        /// <summary>
+        /// Gets the <see cref="CalendarAlarmPicker"/> that is used to edit the alarms
+        /// associated with the <see cref="CalendarItem"/>.
+        /// </summary>
+        [Browsable(false)]
+        public CalendarAlarmPicker AlarmPicker => alarmPicker;
 
         /// <summary>
         /// Gets the <see cref="Label"/> that displays the label which is shown
@@ -261,6 +291,7 @@ namespace Alternet.UI
             statusPicker.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
             categoryPicker.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
             rulePicker.Value = Value.Rule;
+            alarmPicker.Value = Value.AlarmInfo;
         }
 
         /// <summary>

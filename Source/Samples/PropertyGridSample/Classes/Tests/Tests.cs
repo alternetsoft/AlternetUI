@@ -218,6 +218,12 @@ namespace PropertyGridSample
                 c.Command = NamedCommands.CommandAppLog;
                 c.CommandParameter = "Button.Command executed";
             });
+
+            AddControlAction<XButton>("Set SvgImage", (c) =>
+            {
+                c.Image = null;
+                c.SvgImage = KnownSvgImages.ImgHourglass;
+            });
         }
 
         internal void InitTestsScrollBar()

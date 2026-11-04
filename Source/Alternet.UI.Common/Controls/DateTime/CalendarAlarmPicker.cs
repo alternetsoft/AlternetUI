@@ -64,8 +64,10 @@ namespace Alternet.UI
 
             this.data = data;
             data.PropertyChanged += (s, e) => OnValueChanged(e);
+            
             soundFilePicker.OpenFileProps.Filter = FileMaskUtils.FileDialogFilterSoundFiles;
             soundFilePicker.OpenFileProps.Title = CommonStrings.Default.WindowTitleSelectSoundFile;
+            soundFilePicker.HorizontalAlignment = HorizontalAlignment.Fill;
 
             periodImage.SvgImage = KnownSvgImages.ImgHourglass;
             periodImage.MarginRight = DefaultControlDistance;
@@ -76,6 +78,7 @@ namespace Alternet.UI
             soundImage.Parent = thirdRowPanel;
 
             timePeriodPicker.AddNoneItem();
+            timePeriodPicker.HorizontalAlignment = HorizontalAlignment.Fill;
             timePeriodPicker.Parent = firstRowPanel;
             soundFilePicker.Parent = thirdRowPanel;
 
@@ -97,14 +100,17 @@ namespace Alternet.UI
             soundFilePicker.OpenFileProps.InitialDirectory = initialFolder;
 
             firstRowPanel.Parent = this;
+            firstRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
             firstRowPanel.MarginBottom = DefaultControlDistance;
 
             playSoundCheckBox.Parent = secondRowPanel;
             playSoundCheckBox.PaddingLeft = 0;
 
+            secondRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
             secondRowPanel.Parent = this;
 
             thirdRowPanel.MarginTop = DefaultControlDistance;
+            thirdRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
             thirdRowPanel.Parent = this;
 
             ValueToControls();
