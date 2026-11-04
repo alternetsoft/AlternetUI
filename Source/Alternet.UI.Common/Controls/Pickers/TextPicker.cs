@@ -252,7 +252,7 @@ namespace Alternet.UI
             InnerPictureImageVisible = true;
             InnerPicture.CanSelect = true;
 
-            var button = SetSingleButton(clearButton ?? UI.KnownButton.Cancel);
+            var button = SetSingleButton(clearButton ?? UI.KnownButton.TextBoxClear);
 
             if (button is not null)
             {
@@ -264,9 +264,26 @@ namespace Alternet.UI
                     if (e.ButtonId != button.UniqueId)
                         return;
 
+                    MainControl.CancelEdit();
                     Text = string.Empty;
-                    TextBox.SetFocusIfPossible();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Adds a clear button to the control, which clears the text in the main child control when clicked.
+        /// </summary>
+        /// <param name="clearButton">The button to use for clearing the text box.
+        /// If null, a default cancel button is used.</param>
+        public virtual SpeedButton AddClearButton(UI.KnownButton? clearButton = null)
+        {
+            var button = AddButton(clearButton ?? UI.KnownButton.TextBoxClear, OnClearButtonClick);
+            return button;
+
+            void OnClearButtonClick(object? s, EventArgs e)
+            {
+                MainControl.CancelEdit();
+                Text = string.Empty;
             }
         }
 
