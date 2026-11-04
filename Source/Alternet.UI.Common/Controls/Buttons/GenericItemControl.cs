@@ -140,6 +140,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the SVG image that is displayed on a button control.
+        /// </summary>
+        public SvgImage? SvgImage
+        {
+            get
+            {
+                return StateSvgImages.Normal;
+            }
+
+            set
+            {
+                StateSvgImages.Normal = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the alignment of the image within the control.
         /// </summary>
         /// <remarks>The alignment determines how the image is positioned relative to the element's content.
@@ -210,6 +226,62 @@ namespace Alternet.UI
             set
             {
                 StateImages.Disabled = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="SvgImage"/> for hovered control state.
+        /// </summary>
+        [Browsable(false)]
+        public SvgImage? HoveredSvgImage
+        {
+            get => StateSvgImages.Hovered;
+
+            set
+            {
+                StateSvgImages.Hovered = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="SvgImage"/> for focused control state.
+        /// </summary>
+        [Browsable(false)]
+        public SvgImage? FocusedSvgImage
+        {
+            get => StateSvgImages.Focused;
+
+            set
+            {
+                StateSvgImages.Focused = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="SvgImage"/> for pressed control state.
+        /// </summary>
+        [Browsable(false)]
+        public SvgImage? PressedSvgImage
+        {
+            get => StateSvgImages.Pressed;
+
+            set
+            {
+                StateSvgImages.Pressed = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="SvgImage"/> for disabled control state.
+        /// </summary>
+        [Browsable(false)]
+        public SvgImage? DisabledSvgImage
+        {
+            get => StateSvgImages.Disabled;
+
+            set
+            {
+                StateSvgImages.Disabled = value;
             }
         }
 
