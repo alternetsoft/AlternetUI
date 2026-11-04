@@ -28,7 +28,10 @@ namespace Alternet.UI
 
         static ToolTipWindow()
         {
-            useNativePopup = App.IsLinuxOS;
+            if (App.PlatformKind == UIPlatformKind.WxWidgets)
+            {
+                useNativePopup = App.IsLinuxOS;
+            }
         }
 
         /// <summary>

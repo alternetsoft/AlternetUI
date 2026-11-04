@@ -70,8 +70,11 @@ namespace Alternet.UI
 
         static PopupWindow()
         {
-            useNativePopup = App.IsLinuxOS;
-            nativePopupWindowKind = WindowKind.FocusablePopup;
+            if (App.PlatformKind == UIPlatformKind.WxWidgets)
+            {
+                useNativePopup = App.IsLinuxOS;
+                nativePopupWindowKind = WindowKind.FocusablePopup;
+            }
         }
 
         /// <summary>
