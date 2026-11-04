@@ -81,6 +81,9 @@ namespace Alternet.UI
 
             soundFilePicker.MainControl.EmptyTextHint = CommonStrings.Default.DefaultSound;
             soundFilePicker.MainControl.IsEditable = false;
+
+            soundFilePicker.AddClearButton();
+
             soundFilePicker.MinWidth = DefaultMinControlWidth;
             timePeriodPicker.MinWidth = DefaultMinControlWidth;
 
