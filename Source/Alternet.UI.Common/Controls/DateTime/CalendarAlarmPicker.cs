@@ -22,12 +22,21 @@ namespace Alternet.UI
         /// </summary>
         public static float DefaultMinControlWidth = 200;
 
+        /// <summary>
+        /// Gets or sets the default initial folder for sound files
+        /// in the <see cref="CalendarAlarmPicker"/> control.
+        /// If this property is not set, on Windows it defaults to the Media folder.
+        /// </summary>
+        public static string? DefaultSoundsInitialFolder;
+
         private readonly CalendarAlarmInfo data;
         private readonly FileNamePicker soundFilePicker = new();
         private readonly TimePeriodPicker timePeriodPicker = new();
         private readonly PictureBox periodImage = new();
         private readonly PictureBox soundImage = new();
         private readonly XCheckBox playSoundCheckBox = new(CommonStrings.Default.PlaySound);
+
+        private bool valueChanging;
 
         private readonly TransparentPanel firstRowPanel = new()
         {
@@ -66,12 +75,23 @@ namespace Alternet.UI
             periodImage.Parent = firstRowPanel;
             soundImage.Parent = thirdRowPanel;
 
+            timePeriodPicker.AddNoneItem();
             timePeriodPicker.Parent = firstRowPanel;
             soundFilePicker.Parent = thirdRowPanel;
 
             soundFilePicker.MainControl.EmptyTextHint = CommonStrings.Default.DefaultSound;
+            soundFilePicker.MainControl.IsEditable = false;
             soundFilePicker.MinWidth = DefaultMinControlWidth;
             timePeriodPicker.MinWidth = DefaultMinControlWidth;
+
+            var initialFolder = DefaultSoundsInitialFolder;
+
+            if (App.IsWindowsOS)
+            {
+                initialFolder ??= MswUtils.GetMediaFolder();
+            }
+
+            soundFilePicker.OpenFileProps.InitialDirectory = initialFolder;
 
             firstRowPanel.Parent = this;
             firstRowPanel.MarginBottom = DefaultControlDistance;
@@ -89,8 +109,8 @@ namespace Alternet.UI
             timePeriodPicker.ValueChanged += (s, e) =>
             {
                 var value = timePeriodPicker.Value;
-                data.Advance = value.AsTimeSpan();
-                data.Enabled = value.Value != 0;
+                data.Advance = value.Value ?? TimeSpan.Zero;
+                data.Enabled = value.Value is not null;
             };
 
             playSoundCheckBox.CheckedChanged += (s, e) =>
@@ -196,16 +216,20 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ValueToControls()
         {
-            playSoundCheckBox.Checked = data.PlaySound;
-            !!!
+            playSoundCheckBox.Checked = data.PlaySound;            
             soundFilePicker.MainControl.Text = data.SoundPath ?? string.Empty;
-        }
+            soundFilePicker.IsEnabled = data.PlaySound;
+            soundImage.IsEnabled = data.PlaySound;
 
-        /*
-                        var value = timePeriodPicker.Value;
-                        data.Advance = value.AsTimeSpan();
-                        data.Enabled = value.Value != 0;
-        */
+            if (data.Enabled)
+            {
+                timePeriodPicker.Value = new(data.Advance);
+            }
+            else
+            {
+                timePeriodPicker.Value = TimePeriod.None;
+            }
+        }
 
         /// <summary>
         /// Raises the <see cref="ValueChanged"/> event when the <see cref="Value"/> property changes.
@@ -213,8 +237,19 @@ namespace Alternet.UI
         /// <param name="e"></param>
         protected virtual void OnValueChanged(PropertyChangedEventArgs e)
         {
-            ValueToControls();
-            ValueChanged?.Invoke(this, EventArgs.Empty);
+            if (valueChanging)
+                return;
+
+            valueChanging = true;
+            try
+            {
+                ValueToControls();
+                ValueChanged?.Invoke(this, EventArgs.Empty);
+            }
+            finally
+            {
+                valueChanging = false;
+            }
         }
     }
 }

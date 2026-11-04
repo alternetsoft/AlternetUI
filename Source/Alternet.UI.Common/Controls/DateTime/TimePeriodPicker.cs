@@ -47,26 +47,14 @@ namespace Alternet.UI
             new (2, TimePeriodUnit.Weeks),
         ];
 
-        private TimePeriod noneItem;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TimePeriodPicker"/> class,
         /// which allows users to select a time period from a predefined list of durations.
         /// </summary>
         public TimePeriodPicker()
         {
-            noneItem = new TimePeriod(0, TimePeriodUnit.Minutes);
-            noneItem.Text = CommonStrings.Default.TimePeriodNone;
             AddDefaultItems();
             Value = new TimePeriod(15, TimePeriodUnit.Minutes);
-        }
-
-        /// <summary>
-        /// Gets the "None" time period item, which represents a state where no specific time period is selected.
-        /// </summary>
-        public TimePeriod NoneTimePeriod
-        {
-            get => noneItem;
         }
 
         /// <summary>
@@ -86,7 +74,7 @@ namespace Alternet.UI
         {
             for (int i = 0; i < Items.Count; i++)
             {
-                if (Items[i] is TimePeriod timePeriod && timePeriod.Value == 0)
+                if (Items[i] is TimePeriod timePeriod && timePeriod.Value is null)
                 {
                     Value = timePeriod;
                     return;
@@ -100,8 +88,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual TimePeriod AddNoneItem()
         {
-            Items.Insert(0, noneItem);
-            return noneItem;
+            Items.Insert(0, TimePeriod.None);
+            return TimePeriod.None;
         }
 
         /// <summary>

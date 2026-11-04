@@ -3,61 +3,102 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
     /// Represents a time period defined by a numeric value and a unit of measurement.
     /// </summary>
-    public struct TimePeriod : IEquatable<TimePeriod>
+    public class TimePeriod : IEquatable<TimePeriod>
     {
+        /// <summary>
+        /// Gets a <see cref="TimePeriod"/> instance that represents no specific time period (null value).
+        /// </summary>
+        public static TimePeriod None => new ImmutableTimePeriod(null);
+
         private string? text;
+        private TimeSpan? data;
+        private TimePeriodUnit zeroUnit = TimePeriodUnit.Minutes;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TimePeriod"/> struct with the specified value and unit.
+        /// Initializes a new instance of the <see cref="TimePeriod"/> class with the specified value and unit.
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="unit"></param>
+        /// <param name="value">The numeric value representing the magnitude of the time period.</param>
+        /// <param name="unit">The unit of measurement for the time period.</param>
         public TimePeriod(int value, TimePeriodUnit unit)
         {
-            Value = value;
-            Unit = unit;
+            data = DateUtils.AsTimeSpan(value, unit);
+            this.zeroUnit = unit;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TimePeriod"/> struct with default values (0 days).
+        /// Initializes a new instance of the <see cref="TimePeriod"/> class
+        /// with the specified <see cref="TimeSpan"/> value.
+        /// </summary>
+        /// <param name="timeSpan"></param>
+        public TimePeriod(TimeSpan? timeSpan)
+        {
+            data = timeSpan;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimePeriod"/> class with default values (0 minutes).
         /// </summary>
         public TimePeriod()
+            : this(TimeSpan.Zero)
         {
-            Value = 0;
-            Unit = TimePeriodUnit.Days;
         }
 
         /// <summary>
-        /// Gets or sets the numeric value representing the magnitude of the time period.
+        /// Gets or sets the unit of measurement for the time period when the value is zero.
         /// </summary>
-        public int Value { get; set; }
+        public TimePeriodUnit ZeroUnit
+        {
+            get => zeroUnit;
+            set => zeroUnit = value;
+        }
 
         /// <summary>
-        /// Gets or sets the unit of measurement for the time period, indicating whether it is in years,
-        /// months, weeks, days, hours, minutes, seconds, or milliseconds.
+        /// Gets or sets the value representing the time period.
         /// </summary>
-        public TimePeriodUnit Unit { get; set; }
+        public virtual TimeSpan? Value
+        {
+            get => data;
+            set
+            {
+                if (data == value)
+                    return;
+                data = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the optional text format for displaying the time period,
         /// allowing customization of how the unit is represented in string form.
         /// </summary>
-        public DateUtils.TimePeriodUnitTextFormat? TextFormat { get; set; }
+        public virtual DateUtils.TimePeriodUnitTextFormat? TextFormat { get; set; }
 
         /// <summary>
         /// Gets or sets an optional title or description for the time period,
         /// providing additional context or information.
         /// </summary>
-        public string Text
+        public virtual string Text
         {
-            readonly get
+            get
             {
-                return text ?? GetDefaultText();
+                if (text is not null)
+                    return text;
+
+                if (Value is null)
+                    return CommonStrings.Default.TimePeriodNone;
+
+                var fmt = TextFormat ?? DateUtils.TimePeriodUnitTextFormat.Long;
+
+                if (Value == TimeSpan.Zero)
+                    return DateUtils.ValueAndUnitToString(0, zeroUnit, fmt);
+
+                return text ?? DateUtils.ToDisplayString(Value.Value, fmt);
             }
 
             set
@@ -93,67 +134,65 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public readonly override string ToString()
+        public override string ToString()
         {
             return Text;
         }
 
-        /// <summary>
-        /// Gets the default text representation of the time period,
-        /// combining the numeric value and the unit of measurement.
-        /// </summary>
-        /// <returns>The default text representation of the time period.</returns>
-        public readonly string GetDefaultText()
+        /// <inheritdoc/>
+        public override int GetHashCode()
         {
-            return Value.ToString() + " "
-                + DateUtils.ToDisplayString(Unit, Value, TextFormat ?? DateUtils.TimePeriodUnitTextFormat.Long);
+            return Value.GetHashCode();
         }
 
         /// <inheritdoc/>
-        public readonly override int GetHashCode()
-        {
-            return (Value, Unit).GetHashCode();
-        }
-
-        /// <inheritdoc/>
-        public readonly override bool Equals([NotNullWhen(true)] object? obj)
+        public override bool Equals([NotNullWhen(true)] object? obj)
         {
             return obj is TimePeriod period && Equals(period);
         }
 
-        /// <summary>
-        /// Converts the time period to a <see cref="TimeSpan"/> representation.
-        /// </summary>
-        /// <returns>A <see cref="TimeSpan"/> representing the time period.</returns>
-        public readonly TimeSpan AsTimeSpan()
+        /// <inheritdoc />
+        public virtual bool Equals(TimePeriod? other)
         {
-            switch (Unit)
-            {
-                case TimePeriodUnit.Years:
-                    return TimeSpan.FromDays(Value * 365);
-                case TimePeriodUnit.Months:
-                    return TimeSpan.FromDays(Value * 30);
-                case TimePeriodUnit.Weeks:
-                    return TimeSpan.FromDays(Value * 7);
-                case TimePeriodUnit.Days:
-                    return TimeSpan.FromDays(Value);
-                case TimePeriodUnit.Hours:
-                    return TimeSpan.FromHours(Value);
-                case TimePeriodUnit.Minutes:
-                    return TimeSpan.FromMinutes(Value);
-                case TimePeriodUnit.Seconds:
-                    return TimeSpan.FromSeconds(Value);
-                case TimePeriodUnit.Milliseconds:
-                    return TimeSpan.FromMilliseconds(Value);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return other is not null && Value == other.Value;
+        }
+    }
+
+    /// <summary>
+    /// Represents an immutable version of the <see cref="TimePeriod"/> class,
+    /// which cannot be modified after creation.
+    /// </summary>
+    public class ImmutableTimePeriod : TimePeriod
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImmutableTimePeriod"/> class
+        /// with the specified <see cref="TimeSpan"/> value.
+        /// </summary>
+        /// <param name="timeSpan">The <see cref="TimeSpan"/> value of the time period.</param>
+        public ImmutableTimePeriod(TimeSpan? timeSpan)
+            : base(timeSpan)
+        {
         }
 
-        /// <inheritdoc />
-        public readonly bool Equals(TimePeriod other)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ImmutableTimePeriod"/> class
+        /// with the specified value and unit.
+        /// </summary>
+        /// <param name="value">The numeric value of the time period.</param>
+        /// <param name="unit">The unit of measurement for the time period.</param>
+        public ImmutableTimePeriod(int value, TimePeriodUnit unit)
+            : base(value, unit)
         {
-            return Value == other.Value && Unit == other.Unit;
+        }
+
+        /// <inheritdoc/>
+        public override TimeSpan? Value
+        {
+            get => base.Value;
+            set
+            {
+                throw new InvalidOperationException("Cannot modify an immutable TimePeriod.");
+            }
         }
     }
 }
