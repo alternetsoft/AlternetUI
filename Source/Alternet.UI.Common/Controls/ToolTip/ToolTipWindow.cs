@@ -17,14 +17,20 @@ namespace Alternet.UI
     /// guaranteed unless the underlying assignment operation is thread-safe.</remarks>
     public partial class ToolTipWindow : Window, IToolTipProvider
     {
+        /// <summary>
+        /// Gets or sets a function that creates an instance of the <see cref="ToolTipWindow"/> class.
+        /// </summary>
+        public static Func<ToolTipWindow> CreateInstance = () => new ToolTipWindow();
+
         private static readonly bool useNativePopup;
 
-        private readonly RichToolTip toolTip = new();
+        private readonly RichToolTip toolTip;
         private readonly ControlSubscriber subscriber = new();
 
         private static ToolTipWindow? instance;
         private static bool provideToolTipsForGenericControls;
         private static ObjectUniqueId? lastToolTipControlId;
+        private PointD mousePosition;
 
         static ToolTipWindow()
         {
@@ -39,6 +45,7 @@ namespace Alternet.UI
         /// </summary>
         public ToolTipWindow()
         {
+            toolTip = CreateRichToolTip();
             toolTip.IsScrolledVertically = false;
             toolTip.IsScrolledHorizontally = false;
 
@@ -55,6 +62,11 @@ namespace Alternet.UI
             subscriber.AfterControlKeyDown += HideToolTip;
             subscriber.AfterControlMouseLeave += HideToolTip;
 
+            subscriber.AfterControlMouseLeave += (s, e) =>
+            {
+                HideToolTip(s, e);
+            };
+
             subscriber.AfterControlMouseEnter += (s, e) =>
             {
                 if (s == toolTip.ToolTipOwner)
@@ -64,10 +76,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether <see cref="ToolTipWindow"/> provides tooltips for generic controls.
+        /// Gets or sets a value indicating whether <see cref="ToolTipWindow"/>
+        /// provides tooltips for generic controls.
         /// </summary>
-        /// <remarks>When enabled, tooltips will be shown for supported generic controls unless the
-        /// application is running in a MAUI environment. Disabling this property removes global tooltip support for
+        /// <remarks>When enabled, tooltips will be shown for
+        /// supported generic controls unless the
+        /// application is running in a MAUI environment.
+        /// Disabling this property removes global tooltip support for
         /// these controls.</remarks>
         public static bool ProvideToolTipsForGenericControls
         {
@@ -113,7 +128,7 @@ namespace Alternet.UI
         {
             get
             {
-                return instance ??= new ToolTipWindow();
+                return instance ??= CreateInstance();
             }
 
             set
@@ -135,8 +150,8 @@ namespace Alternet.UI
         /// <summary>
         /// Hides the currently displayed tooltip, if any is visible.
         /// </summary>
-        /// <remarks>Call this method to programmatically dismiss any tooltip that is currently shown. If
-        /// no tooltip is visible, this method has no effect.</remarks>
+        /// <remarks>Call this method to programmatically dismiss any tooltip that is currently shown.
+        /// If no tooltip is visible, this method has no effect.</remarks>
         public static void HideGlobalToolTip()
         {
             try
@@ -170,8 +185,17 @@ namespace Alternet.UI
             return toolTip;
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="RichToolTip"/> class.
+        /// </summary>
+        /// <returns> A new instance of the <see cref="RichToolTip"/> class. </returns>
+        protected virtual RichToolTip CreateRichToolTip()
+        {
+            return new RichToolTip();
+        }
+
         /// <inheritdoc/>
-        override protected void OnVisibleChanged(EventArgs e)
+        protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
 
@@ -392,6 +416,7 @@ namespace Alternet.UI
 
                 PerformLayoutAndInvalidate();
                 Show();
+                mousePosition = Mouse.GetPosition(this);
             }
             else
             {
