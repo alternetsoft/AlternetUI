@@ -747,6 +747,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a button to the control with the specified known button type and click event handler.
+        /// </summary>
+        /// <param name="button">The known button type.</param>
+        /// <param name="onClick">The event handler for the button click event.</param>
+        /// <returns>The created SpeedButton instance.</returns>
+        public virtual SpeedButton AddButton(UI.KnownButton button, EventHandler onClick)
+        {
+            var result = Buttons.AddSpeedBtnCore(button, onClick);
+            Buttons.Visible = true;
+            return result;
+        }
+
+        /// <summary>
         /// Initializes buttons so only combo button with the specified image remains visible.
         /// </summary>
         /// <param name="button">Known button identifier.</param>
