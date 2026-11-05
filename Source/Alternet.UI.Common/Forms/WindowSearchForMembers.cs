@@ -52,7 +52,7 @@ namespace Alternet.UI
                     null,
                     ThemedColors.Green.GetColor(this));
 
-            textBox.EmptyTextHint = "Type here to search for classes and members...";
+            textBox.EmptyTextHint = "Type to search classes and members...";
 
             counter = ++globalCounter;
 
