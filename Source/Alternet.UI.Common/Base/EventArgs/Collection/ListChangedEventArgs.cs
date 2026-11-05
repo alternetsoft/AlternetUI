@@ -16,7 +16,6 @@ public delegate void ListChangedEventHandler(object? sender, ListChangedEventArg
 /// </summary>
 public class ListChangedEventArgs : BaseEventArgs
 {
-    private const string ErrWrongActionForCtor = "Wrong action {0} for ctor";
     private const string ErrResetActionRequiresNullItem = "Reset action requires null item";
     private const string ErrResetActionRequiresIndexMinus1 = "Reset action requires starting index to be -1";
     private const string ErrMustBeResetAddOrRemoveActionForCtor
@@ -125,8 +124,8 @@ public class ListChangedEventArgs : BaseEventArgs
     {
         if (action != NotifyCollectionChangedAction.Reset)
         {
-            throw new ArgumentException(
-                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Reset), nameof(action));
+            var s = string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Reset);
+            throw new ArgumentException(s, nameof(action));
         }
 
         this.action = action;
@@ -269,8 +268,8 @@ public class ListChangedEventArgs : BaseEventArgs
     {
         if (action != NotifyCollectionChangedAction.Replace)
         {
-            throw new ArgumentException(
-                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Replace), nameof(action));
+            var s = string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Replace);
+            throw new ArgumentException(s, nameof(action));
         }
 
         this.action = action;
@@ -311,8 +310,8 @@ public class ListChangedEventArgs : BaseEventArgs
     {
         if (action != NotifyCollectionChangedAction.Replace)
         {
-            throw new ArgumentException(
-                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Replace), nameof(action));
+            var s = string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Replace);
+            throw new ArgumentException(s, nameof(action));
         }
 
         ArgumentNullException.ThrowIfNull(newItems, nameof(newItems));
@@ -340,8 +339,8 @@ public class ListChangedEventArgs : BaseEventArgs
     {
         if (action != NotifyCollectionChangedAction.Move)
         {
-            throw new ArgumentException(
-                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Move), nameof(action));
+            var s = string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Move);
+            throw new ArgumentException(s, nameof(action));
         }
 
         ArgumentOutOfRangeException.ThrowIfNegative(index, nameof(index));
@@ -368,8 +367,8 @@ public class ListChangedEventArgs : BaseEventArgs
     {
         if (action != NotifyCollectionChangedAction.Move)
         {
-            throw new ArgumentException(
-                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Move), nameof(action));
+            var s = string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Move);
+            throw new ArgumentException(s, nameof(action));
         }
 
         ArgumentOutOfRangeException.ThrowIfNegative(index, nameof(index));
@@ -380,11 +379,14 @@ public class ListChangedEventArgs : BaseEventArgs
     }
 
     /// <summary>
-    /// Creates a new instance of the <see cref="ListChangedEventArgs"/> class that is a copy of the current instance.
+    /// Creates a new instance of the <see cref="ListChangedEventArgs"/>
+    /// class that is a copy of the current instance.
     /// </summary>
-    /// <param name="convertItems">A function to convert the items in the list. Optional. If not provided,
+    /// <param name="convertItems">A function to convert the items in the list.
+    /// Optional. If not provided,
     /// the items are copied as-is.</param>
-    /// <returns>A new instance of <see cref="ListChangedEventArgs"/> that is a copy of the current instance.</returns>
+    /// <returns>A new instance of <see cref="ListChangedEventArgs"/> that is
+    /// a copy of the current instance.</returns>
     public virtual ListChangedEventArgs Clone(Func<IList?, IList?>? convertItems = null)
     {
         ListChangedEventArgs args = new();

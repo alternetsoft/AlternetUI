@@ -26,6 +26,9 @@ namespace Alternet.UI
     /// <seealso cref="IList"/>
     public class ListBoxItems : DisposableObject, IListSource<object?>, IList
     {
+        private readonly object syncRoot = new();
+        private IListSourceListener<object?>[] listeners = [];
+
         private readonly ListSource<ListControlItem>? items;
 
         private Func<IListSource<ListControlItem>> provider;
@@ -69,6 +72,12 @@ namespace Alternet.UI
         /// It allows subscribers to react to collection modifications dynamically.
         /// </remarks>
         public event ListChangedEventHandler? CollectionChanged;
+    
+        /// <inheritdoc/>
+        public event EventHandler? UpdatesStarted;
+
+        /// <inheritdoc/>
+        public event EventHandler? UpdatesFinished;
 
         /// <inheritdoc/>
         public int Count
@@ -322,6 +331,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            provider().UpdatesStarted -= OnUpdatesStarted;
+            provider().UpdatesFinished -= OnUpdatesFinished;
             provider().PropertyChanged -= OnItemsPropertyChanged;
             provider().CollectionChanged -= OnItemsCollectionChanged;
             provider().ItemInserted -= OnItemsItemInserted;
@@ -332,6 +343,11 @@ namespace Alternet.UI
         private void OnItemsPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             RaisePropertyChangedEx(e);
+
+            foreach (var listener in listeners)
+            {
+                listener.OnListSourcePropertyChanged(this, e);
+            }
         }
 
         private void SetProvider(Func<IListSource<ListControlItem>> provider)
@@ -342,6 +358,28 @@ namespace Alternet.UI
             provider().CollectionChanged += OnItemsCollectionChanged;
             provider().ItemInserted += OnItemsItemInserted;
             provider().ItemRemoved += OnItemsItemRemoved;
+            provider().UpdatesStarted += OnUpdatesStarted;
+            provider().UpdatesFinished += OnUpdatesFinished;
+        }
+
+        private void OnUpdatesStarted(object? sender, EventArgs e)
+        {
+            UpdatesStarted?.Invoke(this, e);
+
+            foreach (var listener in listeners)
+            {
+                listener.OnListSourceUpdatesStarted(this);
+            }
+        }
+
+        private void OnUpdatesFinished(object? sender, EventArgs e)
+        {
+            UpdatesFinished?.Invoke(this, e);
+
+            foreach (var listener in listeners)
+            {
+                listener.OnListSourceUpdatesFinished(this);
+            }
         }
 
         private void OnItemsCollectionChanged(object? sender, ListChangedEventArgs e)
@@ -367,16 +405,31 @@ namespace Alternet.UI
             }
 
             CollectionChanged(this, newArgs);
+
+            foreach (var listener in listeners)
+            {
+                listener.OnListSourceChanged(this, newArgs);
+            }
         }
 
         private void OnItemsItemRemoved(object? sender, int index, ListControlItem item)
         {
             ItemRemoved?.Invoke(this, index, item.Value);
+
+            foreach (var listener in listeners)
+            {
+                listener.OnListSourceItemRemoved(this, index, item.Value);
+            }
         }
 
         private void OnItemsItemInserted(object? sender, int index, ListControlItem item)
         {
             ItemInserted?.Invoke(this, index, item.Value);
+
+            foreach (var listener in listeners)
+            {
+                listener.OnListSourceItemInserted(this, index, item.Value);
+            }
         }
 
         int IList.Add(object? value)
@@ -418,6 +471,30 @@ namespace Alternet.UI
         void ICollection.CopyTo(Array array, int index)
         {
             CopyTo((object?[])array, index);
+        }
+
+        /// <summary>
+        /// Subscribes the specified listener to receive notifications of changes in the list source.
+        /// </summary>
+        /// <param name="listener">The listener to subscribe.</param>
+        public virtual void Subscribe(IListSourceListener<object?> listener)
+        {
+            lock (syncRoot)
+                listeners = ArrayUtils.WithAddedElement(listeners, listener);
+        }
+
+        /// <summary>
+        /// Unsubscribes the specified listener from receiving notifications of changes in the list source.
+        /// </summary>
+        /// <param name="listener">The listener to unsubscribe.</param>
+        public virtual void Unsubscribe(IListSourceListener<object?> listener)
+        {
+            lock (syncRoot)
+            {
+                var index = Array.IndexOf(listeners, listener);
+                if (index >= 0)
+                    listeners = ArrayUtils.WithoutElementAt(listeners, index);
+            }
         }
     }
 }

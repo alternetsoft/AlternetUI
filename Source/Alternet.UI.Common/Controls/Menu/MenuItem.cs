@@ -1525,6 +1525,11 @@ namespace Alternet.UI
 
             public event CollectionItemChangedHandler<TreeViewItem>? ItemRemoved;
 
+#pragma warning disable            
+            public event EventHandler? UpdatesStarted;
+            public event EventHandler? UpdatesFinished;
+#pragma warning restore
+
             public void Add(TreeViewItem item)
             {
             }
@@ -1605,27 +1610,22 @@ namespace Alternet.UI
 
             public void Sort()
             {
-                throw new NotImplementedException();
             }
 
             public void Sort(IComparer<TreeViewItem>? comparer)
             {
-                throw new NotImplementedException();
             }
 
             public void Sort(int index, int count, IComparer<TreeViewItem>? comparer)
             {
-                throw new NotImplementedException();
             }
 
             public void Sort(Comparison<TreeViewItem> comparison)
             {
-                throw new NotImplementedException();
             }
 
             public void SortDescending(Comparison<TreeViewItem> comparison)
             {
-                throw new NotImplementedException();
             }
 
             IEnumerator IEnumerable.GetEnumerator()
@@ -1667,6 +1667,14 @@ namespace Alternet.UI
                 }
 
                 CollectionChanged?.Invoke(this, args);
+            }
+
+            public void Subscribe(IListSourceListener<TreeViewItem> listener)
+            {
+            }
+
+            public void Unsubscribe(IListSourceListener<TreeViewItem> listener)
+            {
             }
         }
 
