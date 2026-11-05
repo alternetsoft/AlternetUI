@@ -13,6 +13,63 @@ namespace Alternet.UI
     public static class ArrayUtils
     {
         /// <summary>
+        /// Creates a new array by removing the specified element from the source array.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the array.</typeparam>
+        /// <param name="source">The source array.</param>
+        /// <param name="element">The element to remove.</param>
+        /// <returns>A new array with the specified element removed.</returns>
+        public static T[] WithoutElement<T>(T[] source, T element)
+        {
+            var index = Array.IndexOf(source, element);
+
+            if (index < 0)
+                return source;
+
+            return WithoutElementAt(source, index);
+        }
+        
+        /// <summary>
+        /// Creates a new array by adding the specified element to the end of the source array.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the array.</typeparam>
+        /// <param name="source">The source array.</param>
+        /// <param name="element">The element to add.</param>
+        /// <returns>A new array with the specified element added.</returns>
+        public static T[] WithAddedElement<T>(T[] source, T element)
+        {
+            var result = new T[source.Length + 1];
+
+            Array.Copy(source, result, source.Length);
+            result[^1] = element;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a new array by removing the element at the specified index from the source array.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the array.</typeparam>
+        /// <param name="source">The source array.</param>
+        /// <param name="index">The index of the element to remove.</param>
+        /// <returns>A new array with the element at the specified index removed.</returns>
+        public static T[] WithoutElementAt<T>(T[] source, int index)
+        {
+            if (source.Length == 1)
+                return [];
+
+            var result = new T[source.Length - 1];
+
+            if (index > 0)
+                Array.Copy(source, 0, result, 0, index);
+
+            if (index < source.Length - 1)
+                Array.Copy(source, index + 1, result, index, source.Length - index - 1);
+
+            return result;
+        }
+
+        /// <summary>
         /// Combines up to three arrays of type <typeparamref name="T"/> into a single array.
         /// </summary>
         /// <typeparam name="T">The type of elements in the arrays.</typeparam>
