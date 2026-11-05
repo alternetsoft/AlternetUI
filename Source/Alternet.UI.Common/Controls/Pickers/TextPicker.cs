@@ -88,6 +88,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets empty text hint displayed in the control when the text is empty.
+        /// </summary>
+        public string? EmptyTextHint
+        {
+            get => TextBox.EmptyTextHint;
+            set => TextBox.EmptyTextHint = value;
+        }
+
+        /// <summary>
         /// Gets or sets whether error reporter is automatically shown/hidden when
         /// error state is changed.
         /// </summary>
@@ -248,7 +257,6 @@ namespace Alternet.UI
             InnerPicture.Dock = DockStyle.LeftAutoSize;
             InnerPicture.Margin = TextBoxUtils.GetInnerTextBoxPictureMargin(isRight: false);
             InnerPictureVisible = true;
-            InnerPictureToolTip = CommonStrings.Default.ButtonClear;
             InnerPictureImageVisible = true;
             InnerPicture.CanSelect = true;
 
@@ -256,6 +264,8 @@ namespace Alternet.UI
 
             if (button is not null)
             {
+                button.ToolTip = CommonStrings.Default.ButtonClear;
+
                 ButtonClick -= OnClearButtonClick;
                 ButtonClick += OnClearButtonClick;
 
@@ -290,6 +300,9 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes this control for the search text editing.
         /// </summary>
+        /// <param name="image">The search image to display on the left side of the control.</param>
+        /// <param name="emptyTextHint">The hint text to display when the text box is empty.</param>
+        /// <param name="clearButton">The button to use for clearing the text box.</param>
         public virtual void InitSearchEdit(
             SvgImage? image = null,
             string? emptyTextHint = null,
@@ -469,6 +482,27 @@ namespace Alternet.UI
                     return Default;
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Represents a generic control that allows to edit search text.
+    /// Search image is shown on the left side of the control
+    /// and a clear button is shown on the right side of the control.
+    /// </summary>
+    [ControlCategory(KnownControlCategory.Editors)]
+    public class SearchTextPicker : TextPickerAndButton
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SearchTextPicker"/> class.
+        /// </summary>
+        public SearchTextPicker()
+        {
+            InnerOuterBorder = InnerOuterSelector.Outer;
+            RoundCorners();
+            HasBorder = true;
+            IgnoreTransparency = true;
+            InitSearchEdit();
         }
     }
 }
