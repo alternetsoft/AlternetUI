@@ -21,7 +21,7 @@ namespace Alternet.UI
         private readonly int counter;
         private readonly GenericControl? statusPanel;
 
-        private readonly TextPickerAndButton textBox = new()
+        private readonly SearchTextPicker textBox = new()
         {
         };
 
@@ -44,14 +44,15 @@ namespace Alternet.UI
         /// </summary>
         public WindowSearchForMembers()
         {
+            Icon = KnownIcons.Default;
+
             runImageElement = Graphics.DrawElementParams.CreateImageElement(
                     this,
                     KnownSvgImages.ImgDebugRun,
                     null,
                     ThemedColors.Green.GetColor(this));
 
-            textBox.InitSearchEdit();
-            textBox.MainControl.EmptyTextHint = "Type here to search for classes and members...";
+            textBox.EmptyTextHint = "Type here to search for classes and members...";
 
             counter = ++globalCounter;
 
@@ -63,7 +64,7 @@ namespace Alternet.UI
             textBox.Margin = 10;
             textBox.Parent = this;
 
-            listBox.Margin = 10;
+            listBox.Margin = (10, 5, 10, 10);
             listBox.VerticalAlignment = VerticalAlignment.Fill;
             listBox.Parent = this;
             listBox.SelectionUnderImage = false;
