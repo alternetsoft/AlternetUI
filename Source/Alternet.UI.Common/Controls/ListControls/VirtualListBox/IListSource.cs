@@ -14,6 +14,16 @@ namespace Alternet.UI
     public interface IListSource<TItem> : IReadOnlyListSource<TItem>, IList<TItem>
     {
         /// <summary>
+        /// Occurs when updates are started in the list source.
+        /// </summary>
+        event EventHandler? UpdatesStarted;
+
+        /// <summary>
+        /// Occurs when updates are finished in the list source.
+        /// </summary>
+        event EventHandler? UpdatesFinished;
+
+        /// <summary>
         /// Occurs when the list of items changes.
         /// </summary>
         event ListChangedEventHandler? CollectionChanged;
@@ -75,6 +85,18 @@ namespace Alternet.UI
         /// Ends an update operation on the list.
         /// </summary>
         void EndUpdate();
+
+        /// <summary>
+        /// Subscribes the specified listener to receive notifications of changes in the list source.
+        /// </summary>
+        /// <param name="listener">The listener to subscribe.</param>
+        void Subscribe(IListSourceListener<TItem> listener);
+
+        /// <summary>
+        /// Unsubscribes the specified listener from receiving notifications of changes in the list source.
+        /// </summary>
+        /// <param name="listener">The listener to unsubscribe.</param>
+        void Unsubscribe(IListSourceListener<TItem> listener);
 
         /// <summary>
         /// Executes the specified action inside an update operation.
