@@ -1708,11 +1708,12 @@ namespace Alternet.UI
         /// will be used to get string representation of the tool-tip.
         /// </summary>
         [Browsable(false)]
+        [DefaultValue(null)]
         public virtual object? ToolTipObject
         {
             get
             {
-                return toolTip;
+                return ParentToolTip ? (Parent?.ToolTipObject ?? toolTip) : toolTip;
             }
 
             set
@@ -1723,6 +1724,11 @@ namespace Alternet.UI
                 RaiseToolTipChanged(EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Gets or sets whether this control should use tool-tip from its parent control.
+        /// </summary>
+        public virtual bool ParentToolTip { get; set; }
 
         /// <summary>
         /// Gets or sets the tool-tip that is displayed for this element
