@@ -53,4 +53,58 @@ namespace Alternet.UI
         /// <param name="sender">The list source where the update operation ended.</param>
         void OnListSourceUpdatesFinished(IListSource<TItem> sender);
     }
+
+    /// <summary>
+    /// A simple implementation of <see cref="IListSourceListener{TItem}"/> that logs events to a specified log writer.
+    /// </summary>
+    /// <typeparam name="TItem">The type of items in the list source.</typeparam>
+    public class ListSourceListenerLogger<TItem> : IListSourceListener<TItem>
+    {
+        private readonly ILogWriter writer;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListSourceListenerLogger{TItem}"/> class.
+        /// </summary>
+        /// <param name="writer">The log writer to use for logging. If null, <see cref="LogWriter.Debug"/> is used.</param>
+        public ListSourceListenerLogger(ILogWriter? writer = null)
+        {
+            this.writer = writer ?? LogWriter.Debug;   
+        }
+
+        /// <inheritdoc/>
+        public void OnListSourceChanged(IListSource<TItem> sender, ListChangedEventArgs e)
+        {
+            writer.WriteLine($"ListSource changed: {e.Action}");
+        }
+
+        /// <inheritdoc/>
+        public void OnListSourceItemInserted(IListSource<TItem> sender, int index, TItem item)
+        {
+            writer.WriteLine($"ListSource item inserted at index {index}: {item}");
+        }
+
+        /// <inheritdoc/>
+        public void OnListSourceItemRemoved(IListSource<TItem> sender, int index, TItem item)
+        {
+            writer.WriteLine($"ListSource item removed from index {index}: {item}");
+        }
+
+        /// <inheritdoc/>
+        public void OnListSourcePropertyChanged(IListSource<TItem> sender, PropertyChangedEventArgs e)
+        {
+            writer.WriteLine($"ListSource property changed: {e.PropertyName}");
+        }
+
+        /// <inheritdoc/>
+        public void OnListSourceUpdatesStarted(IListSource<TItem> sender)
+        {
+            writer.WriteLine("ListSource updates started.");
+        }
+
+        /// <inheritdoc/>
+        public void OnListSourceUpdatesFinished(IListSource<TItem> sender)
+        {
+            writer.WriteLine("ListSource updates finished.");
+        }
+    }
 }
