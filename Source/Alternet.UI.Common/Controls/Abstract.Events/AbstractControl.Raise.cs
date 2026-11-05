@@ -283,6 +283,15 @@ namespace Alternet.UI
         {
             OnToolTipChanged(e);
             ToolTipChanged?.Invoke(this, e);
+
+            if (HasChildren)
+            {
+                foreach (var child in Children)
+                {
+                    if (child.ParentToolTip)
+                        child.RaiseToolTipChanged(e);
+                }
+            }
         }
 
         /// <summary>
