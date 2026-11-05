@@ -14,10 +14,18 @@ namespace Alternet.UI
     /// using an internal <see cref="BaseCollection{TItem}"/> to store the items.
     /// </summary>
     /// <typeparam name="TItem">The type of items stored in the list source.</typeparam>
-    public class ListSource<TItem> : BaseObject, IListSource<TItem>
+    public class ListSource<TItem> : DisposableObject, IListSource<TItem>
         where TItem : class, new()
     {
+        private readonly object syncRoot = new();
         private BaseCollection<TItem> collection;
+        private IListSourceListener<TItem>[] listeners = [];
+
+        /// <inheritdoc/>
+        public event EventHandler? UpdatesStarted;
+
+        /// <inheritdoc/>
+        public event EventHandler? UpdatesFinished;
 
         /// <inheritdoc/>
         public event CollectionItemChangedHandler<TItem>? ItemInserted;
@@ -27,9 +35,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public event ListChangedEventHandler? CollectionChanged;
-
-        /// <inheritdoc/>
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListSource{TItem}"/> class.
@@ -212,25 +217,54 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void Sort(IComparer<TItem>? comparer)
         {
-            collection.Sort(comparer);
+            DoInsideUpdate(() => collection.Sort(comparer));
         }
 
         /// <inheritdoc/>
         public virtual void Sort(int index, int count, IComparer<TItem>? comparer)
         {
-            collection.Sort(index, count, comparer);
+            DoInsideUpdate(() => collection.Sort(index, count, comparer));
         }
 
         /// <inheritdoc/>
         public virtual void Sort(Comparison<TItem> comparison)
         {
-            collection.Sort(comparison);
+            DoInsideUpdate(() => collection.Sort(comparison));
         }
 
         /// <inheritdoc/>
         public virtual void SortDescending(Comparison<TItem> comparison)
         {
-            collection.SortDescending(comparison);
+            DoInsideUpdate(() => collection.SortDescending(comparison));
+        }
+
+        /// <summary>
+        /// Subscribes to events of the current underlying collection.
+        /// </summary>
+        protected virtual void BindCollection()
+        {
+            collection.CollectionChanged += OnCollectionChanged;
+            collection.PropertyChanged += OnPropertyChanged;
+            collection.ItemInserted += OnItemInserted;
+            collection.ItemRemoved += OnItemRemoved;
+            collection.UpdatesStarted += OnUpdatesStarted;
+            collection.UpdatesFinished += OnUpdatesFinished;
+        }
+
+        /// <summary>
+        /// Unsubscribes from events of the current underlying collection.
+        /// </summary>
+        protected virtual void UnbindCollection()
+        {
+            if (collection != null)
+            {
+                collection.CollectionChanged -= OnCollectionChanged;
+                collection.PropertyChanged -= OnPropertyChanged;
+                collection.ItemInserted -= OnItemInserted;
+                collection.ItemRemoved -= OnItemRemoved;
+                collection.UpdatesStarted -= OnUpdatesStarted;
+                collection.UpdatesFinished -= OnUpdatesFinished;
+            }
         }
 
         /// <summary>
@@ -240,19 +274,68 @@ namespace Alternet.UI
         [MemberNotNull(nameof(collection))]
         protected virtual void SetCollection(BaseCollection<TItem>? newCollection)
         {
-            if (collection != null)
-            {
-                collection.CollectionChanged -= OnCollectionChanged;
-                collection.PropertyChanged -= OnPropertyChanged;
-                collection.ItemInserted -= OnItemInserted;
-                collection.ItemRemoved -= OnItemRemoved;
-            }
+            UnbindCollection();
+            collection = newCollection ?? CreateCollection();
+            BindCollection();
+        }
 
-            collection = newCollection ?? new NotNullCollection<TItem>();
-            collection.CollectionChanged += OnCollectionChanged;
-            collection.PropertyChanged += OnPropertyChanged;
-            collection.ItemInserted += OnItemInserted;
-            collection.ItemRemoved += OnItemRemoved;
+        /// <summary>
+        /// Creates a new instance of the underlying collection of items for this list source.
+        /// </summary>
+        /// <returns>The newly created collection.</returns>
+        protected virtual BaseCollection<TItem> CreateCollection()
+        {
+            return new NotNullCollection<TItem>();
+        }
+
+        /// <summary>
+        /// Subscribes the specified listener to receive notifications of changes in the list source.
+        /// </summary>
+        /// <param name="listener">The listener to subscribe.</param>
+        public virtual void Subscribe(IListSourceListener<TItem> listener)
+        {
+            lock (syncRoot)
+                listeners = ArrayUtils.WithAddedElement(listeners, listener);
+        }
+
+        /// <summary>
+        /// Unsubscribes the specified listener from receiving notifications of changes in the list source.
+        /// </summary>
+        /// <param name="listener">The listener to unsubscribe.</param>
+        public virtual void Unsubscribe(IListSourceListener<TItem> listener)
+        {
+            lock (syncRoot)
+            {
+                var index = Array.IndexOf(listeners, listener);
+                if (index >= 0)
+                    listeners = ArrayUtils.WithoutElementAt(listeners, index);
+            }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="UpdatesFinished"/> event when an update operation on the list is finished.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnUpdatesFinished(object? sender, EventArgs e)
+        {
+            UpdatesFinished?.Invoke(this, EventArgs.Empty);
+
+            foreach (var listener in listeners)
+                listener.OnListSourceUpdatesFinished(this);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="UpdatesStarted"/> event when an update operation on the list is started.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnUpdatesStarted(object? sender, EventArgs e)
+        {
+            UpdatesStarted?.Invoke(this, EventArgs.Empty);
+
+            foreach (var listener in listeners)
+                listener.OnListSourceUpdatesStarted(this);
         }
 
         /// <summary>
@@ -264,6 +347,9 @@ namespace Alternet.UI
         protected virtual void OnItemRemoved(object? sender, int index, TItem item)
         {
             ItemRemoved?.Invoke(this, index, item);
+
+            foreach (var listener in listeners)
+                listener.OnListSourceItemRemoved(this, index, item);
         }
 
         /// <summary>
@@ -275,16 +361,22 @@ namespace Alternet.UI
         protected virtual void OnItemInserted(object? sender, int index, TItem item)
         {
             ItemInserted?.Invoke(this, index, item);
+
+            foreach (var listener in listeners)
+                listener.OnListSourceItemInserted(this, index, item);
         }
 
         /// <summary>
-        /// Raises the <see cref="PropertyChanged"/> event when a property of the underlying collection changes.
+        /// Raises the PropertyChanged event when a property of the underlying collection changes.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, e);
+            RaisePropertyChangedEx(e);
+
+            foreach (var listener in listeners)
+                listener.OnListSourcePropertyChanged(this, e);
         }
 
         /// <summary>
@@ -295,6 +387,16 @@ namespace Alternet.UI
         protected virtual void OnCollectionChanged(object? sender, ListChangedEventArgs e)
         {
             CollectionChanged?.Invoke(this, e);
+
+            foreach (var listener in listeners)
+                listener.OnListSourceChanged(this, e);
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            UnbindCollection();
+            base.DisposeManaged();
         }
     }
 }
