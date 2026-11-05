@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a repeat pattern rule that is owned by another <see cref="BaseRepeatPatternRule"/>.
     /// </summary>
-    public partial class OwnedRepeatPatternRule : BaseRepeatPatternRule
+    public abstract partial class OwnedRepeatPatternRule : BaseRepeatPatternRule
     {
         private readonly BaseRepeatPatternRule owner;
 

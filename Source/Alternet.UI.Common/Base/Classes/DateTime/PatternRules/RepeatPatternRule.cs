@@ -59,27 +59,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a JSON string representation of the current state of this instance.
-        /// </summary>
-        [Browsable(false)]
-        public virtual string AsJsonString
-        {
-            get
-            {
-                IPropertyBag propertyBag = PropertyBag.Create();
-                SaveTo(propertyBag);
-                return propertyBag.AsJsonString;
-            }
-
-            set
-            {
-                IPropertyBag propertyBag = PropertyBag.Create();
-                propertyBag.AsJsonString = value;
-                LoadFrom(propertyBag);
-            }
-        }
-
-        /// <summary>
         /// Gets the <see cref="DailyRepeatPatternRule"/> instance for daily recurrence settings.
         /// </summary>
         public DailyRepeatPatternRule DailyRule => dailyRule;
@@ -110,7 +89,7 @@ namespace Alternet.UI
         /// <param name="propertyBag">The property bag from which to load the state.</param>
         /// <param name="prefix">An optional prefix to prepend to property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        public override bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
         {
             if (propertyBag == null)
                 return false;
@@ -161,7 +140,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
         /// <param name="prefix">An optional prefix to prepend to property names.</param>
-        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        public override void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
             if (prefix is not null)
                 prefix += ".";

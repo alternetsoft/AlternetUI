@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a rule for a repeat pattern in scheduling events or tasks.
     /// </summary>
-    public abstract partial class BaseRepeatPatternRule : BaseObjectWithNotify, IDateRepeatPatternRule
+    public abstract partial class BaseRepeatPatternRule : SerializableObject, IDateRepeatPatternRule
     {
         private DateOnly startDate;
         private TimeOnly startTime;

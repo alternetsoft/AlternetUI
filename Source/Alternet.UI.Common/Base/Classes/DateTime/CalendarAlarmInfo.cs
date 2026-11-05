@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents information about a calendar alarm, including its advance time,
     /// enabled state, sound settings, and snooze time.
     /// </summary>
-    public partial class CalendarAlarmInfo : ImmutableObject, IEquatable<CalendarAlarmInfo>, IPropertyBagSerialize
+    public partial class CalendarAlarmInfo : SerializableObject, IEquatable<CalendarAlarmInfo>
     {
         /// <summary>
         /// Gets or sets the default advance time for alarms.
@@ -31,27 +31,6 @@ namespace Alternet.UI
         private bool playSound = DefaultPlaySound;
         private DateTime snoozeTime = DateTime.MinValue;
         private string? soundPath = DefaultSoundPath;
-
-        /// <summary>
-        /// Gets or sets a JSON string representation of the current state of this instance.
-        /// </summary>
-        [Browsable(false)]
-        public virtual string AsJsonString
-        {
-            get
-            {
-                IPropertyBag propertyBag = PropertyBag.Create();
-                SaveTo(propertyBag);
-                return propertyBag.AsJsonString;
-            }
-
-            set
-            {
-                IPropertyBag propertyBag = PropertyBag.Create();
-                propertyBag.AsJsonString = value;
-                LoadFrom(propertyBag);
-            }
-        }
 
         /// <summary>
         /// Gets or sets an advance time.
@@ -175,7 +154,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
         /// <param name="prefix">An optional prefix to prepend to property names.</param>
-        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        public override void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
             if (prefix is not null)
                 prefix += ".";
@@ -195,7 +174,7 @@ namespace Alternet.UI
         /// <param name="propertyBag">The property bag from which to load the state.</param>
         /// <param name="prefix">An optional prefix to prepend to property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        public override bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
         {
             if (propertyBag == null)
                 return false;

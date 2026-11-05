@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a calendar item that can be displayed in a calendar or scheduler control.
     /// </summary>
-    public partial class CalendarItem : ImmutableObject, IEquatable<CalendarItem>, IPropertyBagSerialize
+    public partial class CalendarItem : SerializableObject, IEquatable<CalendarItem>, IPropertyBagSerialize
     {
         private readonly RepeatPatternRule rule;
         private readonly CalendarAlarmInfo alarmInfo;
@@ -87,27 +87,6 @@ namespace Alternet.UI
             set
             {
                 rule.Assign(value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a JSON string representation of the current state of this instance.
-        /// </summary>
-        [Browsable(false)]
-        public virtual string AsJsonString
-        {
-            get
-            {
-                IPropertyBag propertyBag = PropertyBag.Create();
-                SaveTo(propertyBag);
-                return propertyBag.AsJsonString;
-            }
-
-            set
-            {
-                IPropertyBag propertyBag = PropertyBag.Create();
-                propertyBag.AsJsonString = value;
-                LoadFrom(propertyBag);
             }
         }
 
@@ -213,7 +192,7 @@ namespace Alternet.UI
         /// <param name="prefix">An optional prefix to prepend to property names.</param>
         /// <param name="propertyBag">The property bag from which to load the state.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        public override bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
         {
             if (propertyBag == null)
                 return false;
@@ -255,7 +234,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="propertyBag">The property bag to which the state will be saved.</param>
         /// <param name="prefix">An optional prefix to prepend to property names.</param>
-        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        public override void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
             if (prefix is not null)
                 prefix += ".";
