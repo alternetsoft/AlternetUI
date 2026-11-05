@@ -1,3 +1,41 @@
+# 1.1.16 (2026 November 5)
+
+- Create CalendarAlarmPicker, TimePeriodPicker, FileNamePicker.
+- Add a PanelSettings method to create and configure a RoundBorder container.
+- MAUI: Add SplittedContentView - horizontally or vertically split container with two child controls and a splitter bar.
+- Fix popup window border and behavior on Linux with Wayland.
+- Add alarm picker group to CalendarItemPicker.
+- SectionHeaderToolBar: Toggle collapse on label/header click.
+- GenericItemControl: Add SvgImage, HoveredSvgImage, FocusedSvgImage, PressedSvgImage and DisabledSvgImage.
+- GenericControlAndButton: new AddButton method to create a button from a known button type.
+- Add KnownButton.TextBoxClear enum value for a 'Clear' button used near textboxes.
+- Add AsJsonString property to CalendarAlarmInfo.
+- Add dummy file dialog classes as a property-storage implementation using the base open-file-dialog handler.
+- Use dummy file dialog handlers in MauiDialogFactoryHandler, so exception is not thrown when a file dialog is requested.
+- Add Clone and Assign to SelectDirectoryDialog, OpenFileDialog and SaveFileDialog.
+- Linux: Fix popup hide when other window is activated
+- SpeedDateButton: Fix painting and layout in case of null value.
+- TimePicker: Add ReadOnly and empty-value support.
+- ToolBar: CreateToolLabel, AddTextCore and InsertTextCore now return Label instead of AbstractControl.
+- ToolBar: AddSpacerCore and InsertSpacerCore now return Spacer.
+- Add TextTransparent property to Label and SpeedButton.
+- Add IsValueEmpty, ReadOnly, TextTransparent to DateTimePicker.
+- Add ReadOnly and IsValueEmpty to SpeedDateButton.
+- Add Graphics.GrayscalePaint, which runs an action with a grayscale paint, and Graphics.EnabledOrDisabledPaint.
+- Ignore mouse wheel input when control is disabled.
+- Simplify ColorListBox, DrawingResourcePicker and SpeedColorButton disabled color painting.
+- Ignore interior mouse activity on disabled controls.
+- Raise EnabledChanged recursively for child controls when a control's enabled state changes.
+- Add TimePeriod struct and reminder intervals.
+- EditableListPicker.Clear.
+- Make GenericControlAndButton buttons transparent.
+- ToolBar: Add KnownButton overloads for AddSpeedBtnCore.
+- Fix mouse cursor updates for bubbled events.
+- ListControlItem.ClickAction. Called when item is clicked in VirtualListBox.
+- Add a static InnerPopupTreeView.ShowInContainer overload that displays a ContextMenu inside a container.
+
+---
+
 # 1.1.15 (2026 October 28)
 
 - Fix tooltip window not showing on Linux with Wayland.
