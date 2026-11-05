@@ -90,6 +90,16 @@ namespace Alternet.UI
         public event CollectionItemRangeChangedHandler<T>? ItemRangeAdditionFinished;
 
         /// <summary>
+        /// Occurs when updates are started in the collection.
+        /// </summary>
+        public event EventHandler? UpdatesStarted;
+
+        /// <summary>
+        /// Occurs when updates are finished in the collection.
+        /// </summary>
+        public event EventHandler? UpdatesFinished;
+
+        /// <summary>
         /// Gets the security flags that define the permissions or restrictions.
         /// </summary>
         public CollectionSecurityFlags Flags => securityFlags;
@@ -223,6 +233,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void BeginUpdate()
         {
+            if (updateCounter == 0)
+                UpdatesStarted?.Invoke(this, EventArgs.Empty);
+
             updateCounter++;
         }
 
@@ -233,6 +246,9 @@ namespace Alternet.UI
         public virtual void EndUpdate()
         {
             updateCounter--;
+
+            if (updateCounter == 0)
+                UpdatesFinished?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
