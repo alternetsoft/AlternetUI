@@ -15,6 +15,11 @@ namespace Alternet.UI
     public static class XmlUtils
     {
         /// <summary>
+        /// Gets xml file prefix with version and UTF-8 encoding declaration.
+        /// </summary>
+        public const string XmlFilePrefix = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+
+        /// <summary>
         /// Gets uixml namespace uri.
         /// </summary>
         public const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
