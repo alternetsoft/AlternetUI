@@ -282,9 +282,9 @@ namespace Alternet.UI
         /// <summary>
         /// Raises a <see cref="PropertyChanged"/> event (per <see cref="INotifyPropertyChanged" />).
         /// </summary>
-        protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+        protected virtual void OnPropertyChanged(Func<PropertyChangedEventArgs> e)
         {
-            PropertyChanged?.Invoke(this, e);
+            PropertyChanged?.Invoke(this, e());
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Alternet.UI
         /// When overriding this method, either call its base implementation
         /// or call <see cref="BlockReentrancy"/> to guard against reentrant collection changes.
         /// </remarks>
-        protected virtual void OnCollectionChanged(ListChangedEventArgs e)
+        protected virtual void OnCollectionChanged(Func<ListChangedEventArgs> e)
         {
             ListChangedEventHandler? handler = CollectionChanged;
             if (handler != null)
@@ -305,7 +305,7 @@ namespace Alternet.UI
                 blockReentrancyCount++;
                 try
                 {
-                    handler(this, e);
+                    handler(this, e());
                 }
                 finally
                 {
@@ -319,7 +319,7 @@ namespace Alternet.UI
         /// </summary>
         protected void OnCollectionReset()
         {
-            OnCollectionChanged(EventArgsUtils.ResetCollectionChangedArgs);
+            OnCollectionChanged(() => EventArgsUtils.ResetCollectionChangedArgs);
         }
 
         /// <summary>
@@ -347,20 +347,20 @@ namespace Alternet.UI
         /// Helper to raise a <see cref="PropertyChanged"/> event for the Count property.
         /// </summary>
         protected void OnCountPropertyChanged()
-            => OnPropertyChanged(EventArgsUtils.CountPropertyChangedArgs);
+            => OnPropertyChanged(() => EventArgsUtils.CountPropertyChangedArgs);
 
         /// <summary>
         /// Helper to raise a <see cref="PropertyChanged"/> event for the Indexer property.
         /// </summary>
         protected void OnIndexerPropertyChanged()
-            => OnPropertyChanged(EventArgsUtils.IndexerPropertyChangedArgs);
+            => OnPropertyChanged(() => EventArgsUtils.IndexerPropertyChangedArgs);
 
         /// <summary>
         /// Helper to raise <see cref="CollectionChanged"/> event to any listeners.
         /// </summary>
         protected void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index)
         {
-            OnCollectionChanged(new ListChangedEventArgs(action, item, index));
+            OnCollectionChanged(() => new ListChangedEventArgs(action, item, index));
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace Alternet.UI
             int index,
             int oldIndex)
         {
-            OnCollectionChanged(new ListChangedEventArgs(action, item, index, oldIndex));
+            OnCollectionChanged(() => new ListChangedEventArgs(action, item, index, oldIndex));
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Alternet.UI
             object? newItem,
             int index)
         {
-            OnCollectionChanged(new ListChangedEventArgs(action, newItem, oldItem, index));
+            OnCollectionChanged(() => new ListChangedEventArgs(action, newItem, oldItem, index));
         }
 
         [Conditional("DEBUG")]
