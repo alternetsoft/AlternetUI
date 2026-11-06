@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -171,31 +173,57 @@ namespace Alternet.UI
         /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the XML property to.</param>
         public static void EmitValue(string? propName, string? value, IStructuredTextWriter writer)
         {
-            var needQuotes = JsonUtils.ValueNeedQuotes(value);
-
-            if (needQuotes)
-            {
-                EmitQuotedValue(propName, value?.ToString(), writer);
-            }
-            else
-            {
-                EmitUnquotedValue(propName, value?.ToString(), writer);
-            }
+            EmitUnquotedValue(propName, value?.ToString(), writer);
         }
 
         /// <summary>
-        /// Emits a XML property with a quoted value to the specified <see cref="IStructuredTextWriter"/>.
+        /// Unescapes the specified XML element name using <see cref="XmlConvert.DecodeName(string)"/>.
         /// </summary>
-        /// <param name="value">The value to emit.</param>
-        /// <param name="propName">The name of the XML property.</param>
-        /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the XML property to.</param>
-        public static void EmitQuotedValue(string? propName, string? value, IStructuredTextWriter writer)
+        /// <param name="name">The name of the XML element to unescape.</param>
+        /// <returns>The unescaped XML element name.</returns>
+        public static string UnescapeElementName(string name)
         {
-            if (propName is null)
-                return;
+            string decoded = XmlConvert.DecodeName(name);
+            return decoded;
+        }
 
-            var escapedValue = JsonUtils.EscapeString(value ?? string.Empty);
-            writer.WriteLine($"<{propName}>\"{escapedValue}\"</{propName}>");
+        /// <summary>
+        /// Escapes the specified XML element name using <see cref="XmlConvert.EncodeName(string)"/>.
+        /// </summary>
+        /// <param name="name">The name of the XML element to escape.</param>
+        /// <returns>The escaped XML element name.</returns>
+        public static string EscapeElementName(string name)
+        {
+            string encoded = XmlConvert.EncodeName(name);
+            return encoded;
+        }
+
+        /// <summary>
+        /// Escapes the specified XML element value.
+        /// </summary>
+        /// <param name="name">The value of the XML element to escape.</param>
+        /// <returns>The escaped XML element value.</returns>
+        public static string EscapeElementValue(string? name)
+        {
+            if (name is null || name.Length == 0)
+                return string.Empty;
+
+            string encoded = SecurityElement.Escape(name);
+            return encoded;
+        }
+
+        /// <summary>
+        /// Unescapes the specified XML element value.
+        /// </summary>
+        /// <param name="name">The value of the XML element to unescape.</param>
+        /// <returns>The unescaped XML element value.</returns>
+        public static string UnescapeElementValue(string? name)
+        {
+            if (name is null || name.Length == 0)
+                return string.Empty;
+
+            string decoded = WebUtility.HtmlDecode(name);
+            return decoded;
         }
 
         /// <summary>
@@ -209,7 +237,9 @@ namespace Alternet.UI
             if (propName is null)
                 return;
 
-            var escapedValue = JsonUtils.EscapeString(value ?? string.Empty);
+            propName = EscapeElementName(propName);
+
+            var escapedValue = EscapeElementValue(value);
             writer.WriteLine($"<{propName}>{escapedValue}</{propName}>");
         }
 
