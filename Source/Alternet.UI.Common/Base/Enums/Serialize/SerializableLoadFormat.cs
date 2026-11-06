@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the format in which a <see cref="SerializableObject"/> should be deserialized.
     /// </summary>
-    public enum SerializableOpenFormat
+    public enum SerializableLoadFormat
     {
         /// <summary>
         /// Specifies that the object should be deserialized from a JSON format.

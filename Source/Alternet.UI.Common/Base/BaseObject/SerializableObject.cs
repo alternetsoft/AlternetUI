@@ -106,14 +106,14 @@ namespace Alternet.UI
         /// <param name="s">The input string representation of the state.</param>
         /// <param name="format">The format in which the state is represented.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool LoadFromString(string s, SerializableOpenFormat format)
+        public virtual bool LoadFromString(string s, SerializableLoadFormat format)
         {
             switch (format)
             {
-                case SerializableOpenFormat.Json:
+                case SerializableLoadFormat.Json:
                     AsJsonString = s;
                     return true;
-                case SerializableOpenFormat.Xml:
+                case SerializableLoadFormat.Xml:
                     AsXmlString = s;
                     return true;
                 default:
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// <param name="fileName">The name of the file from which the state will be loaded.</param>
         /// <param name="format">The format in which the state is represented.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool LoadFromFile(string fileName, SerializableOpenFormat format)
+        public virtual bool LoadFromFile(string fileName, SerializableLoadFormat format)
         {
             using var fileStream = FileSystem.OpenRead(fileName);
             return LoadFromStream(fileStream, format);
@@ -165,7 +165,7 @@ namespace Alternet.UI
         /// <param name="stream">The input stream containing the serialized data.</param>
         /// <param name="format">The format in which the data is serialized.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool LoadFromStream(Stream stream, SerializableOpenFormat format)
+        public virtual bool LoadFromStream(Stream stream, SerializableLoadFormat format)
         {
             var s = StreamUtils.StringFromStreamOrNull(stream, Encoding.UTF8);
 
