@@ -20,6 +20,9 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        public string? ElementName { get; set; }
+
         /// <summary>
         /// Creates a new instance of the <see cref="PropertyBag"/> class and returns it.
         /// </summary>

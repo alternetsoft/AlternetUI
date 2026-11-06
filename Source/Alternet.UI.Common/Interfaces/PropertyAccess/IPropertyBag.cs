@@ -60,6 +60,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the name of the XML element that represents the property bag when serialized to XML.
+        /// </summary>
+        string? ElementName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the XML string representation of the property bag.
+        /// </summary>
+        public string AsXmlString
+        {
+            get
+            {
+                var writer = new LogWriter.StringBuilderLogWriter();
+                ToXmlString(ElementName, writer);
+                return writer.ToString();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the JSON string representation of the property bag.
         /// </summary>
         public string AsJsonString
@@ -428,16 +446,32 @@ namespace Alternet.UI
 
         /// <summary>
         /// Converts the property bag to a JSON string representation
-        /// and writes it to the specified <see cref="ILogWriter"/>.
+        /// and writes it to the specified <see cref="IStructuredTextWriter"/>.
         /// </summary>
         /// <param name="writer">The log writer to write the JSON string to.</param>
         /// <param name="flags">Flags to control the JSON string formatting.</param>
         public void ToJsonString(
             IStructuredTextWriter? writer = null,
-            JsonUtils.ToJsonStringFlags flags = JsonUtils.ToJsonStringFlags.None)
+            JsonUtils.StringFormatFlags flags = JsonUtils.StringFormatFlags.None)
         {
             var properties = GetAllProperties();
             JsonUtils.ToJsonString(properties, writer, flags);
+        }
+
+        /// <summary>
+        /// Converts the property bag to a XML string representation
+        /// and writes it to the specified <see cref="IStructuredTextWriter"/>.
+        /// </summary>
+        /// <param name="writer">The log writer to write the XML string to.</param>
+        /// <param name="flags">Flags to control the XML string formatting.</param>
+        /// <param name="nodeName">The name of the root XML node.</param>
+        public void ToXmlString(
+            string? nodeName,
+            IStructuredTextWriter? writer = null,
+            XmlUtils.StringFormatFlags flags = XmlUtils.StringFormatFlags.None)
+        {
+            var properties = GetAllProperties();
+            XmlUtils.ToXmlString(nodeName, properties, writer, flags);
         }
 
         /// <summary>
