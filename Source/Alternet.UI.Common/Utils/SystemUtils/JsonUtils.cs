@@ -134,7 +134,8 @@ public static class JsonUtils
     }
 
     /// <summary>
-    /// Serializes a collection of items into a JSON array and writes it to the specified <see cref="IStructuredTextWriter"/>.
+    /// Serializes a collection of items into a JSON array and writes
+    /// it to the specified <see cref="IStructuredTextWriter"/>.
     /// </summary>
     /// <param name="items">The collection of items to serialize.</param>
     /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the JSON array to.</param>
@@ -246,6 +247,19 @@ public static class JsonUtils
     {
         using var doc = JsonDocument.Parse(json);
 
+        EnumerateProperties(doc, action);
+    }
+
+    /// <summary>
+    /// Enumerates the properties of a JSON object represented by a <see cref="JsonDocument"/>
+    /// and invokes the specified action for each property.
+    /// </summary>
+    /// <param name="doc">The JSON document representing an object.</param>
+    /// <param name="action">The action to invoke for each property, with the property name and value.</param>
+    public static void EnumerateProperties(
+        JsonDocument doc,
+        JsonPropertyDelegate action)
+    {
         if (doc.RootElement.ValueKind != JsonValueKind.Object)
             return;
 
