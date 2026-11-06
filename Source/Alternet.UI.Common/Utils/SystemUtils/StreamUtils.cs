@@ -203,6 +203,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Writes a string to the specified stream using the specified encoding.
+        /// Returns true if the operation succeeds, otherwise false.
+        /// </summary>
+        /// <param name="stream">The stream to write to.</param>
+        /// <param name="s">The string to write.</param>
+        /// <param name="encoding">The encoding to use. Optional.
+        /// If not specified, <see cref="Encoding.UTF8"/> is used.</param>
+        /// <returns>True if the operation succeeds, otherwise false.   </returns>
+        public static bool StringToStreamSafe(Stream stream, string s, Encoding? encoding = null)
+        {
+            try
+            {
+                StringToStream(stream, s, encoding);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                BaseObject.Nop(ex);
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Copies stream to the file with the specified path.
         /// </summary>
         /// <param name="stream">Input stream to copy.</param>
