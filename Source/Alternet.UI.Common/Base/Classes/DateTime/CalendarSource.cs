@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a source for <see cref="CalendarItem"/> objects.
     /// </summary>
-    public partial class CalendarSource : DisposableObject
+    public partial class CalendarSource : SerializableObject
     {
         private readonly ListSource<CalendarItem> items = new ();
 
@@ -17,27 +17,6 @@ namespace Alternet.UI
         /// </summary>
         public CalendarSource()
         {
-        }
-
-        /// <summary>
-        /// Gets a JSON string representation of the current state of this instance.
-        /// </summary>
-        [Browsable(false)]
-        public virtual string AsJsonString
-        {
-            get
-            {
-                IPropertyBag propertyBag = PropertyBag.Create();
-                SaveTo(propertyBag);
-                return propertyBag.AsJsonString;
-            }
-
-            set
-            {
-                IPropertyBag propertyBag = PropertyBag.Create();
-                propertyBag.AsJsonString = value;
-                LoadFrom(propertyBag);
-            }
         }
 
         /// <summary>
@@ -75,7 +54,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        public override bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
         {
             if (propertyBag == null)
                 return false;
@@ -109,12 +88,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        public override void SaveTo(IPropertyBag propertyBag, string? prefix = null)
         {
             if (prefix is not null)
                 prefix += ".";
             else
                 prefix = "";
+
+            propertyBag.ElementName = "SchedulerDocument";
 
             propertyBag.SetCollectionProperty(prefix + nameof(Items), Items);
         }
