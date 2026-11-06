@@ -13,6 +13,17 @@ using System.Xml.Serialization;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Represents a delegate that is invoked for each property of a XML object during enumeration.
+    /// </summary>
+    /// <param name="property">The XML property.</param>
+    /// <param name="name">The name of the XML property.</param>
+    /// <param name="value">The value of the XML property as a .NET object.</param>
+    public delegate void XmlPropertyDelegate(
+        XmlElement property,
+        string name,
+        object? value);
+
+    /// <summary>
     /// Contains static methods and properties related to the xml documents handling.
     /// </summary>
     public static class XmlUtils
@@ -42,6 +53,132 @@ namespace Alternet.UI
         /// Gets uixml namespace uri.
         /// </summary>
         public const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
+
+        /// <summary>
+        /// Enumerates the properties of a XML object and invokes the specified action for each property.
+        /// </summary>
+        /// <param name="xml">The XML string representing an object.</param>
+        /// <param name="action">The action to invoke for each property, with the property name and value.</param>
+        public static void EnumerateProperties(
+            string xml,
+            XmlPropertyDelegate action)
+        {
+            XmlDocument doc = new ();
+            doc.LoadXml(xml);
+            EnumerateProperties(doc, action);
+        }
+
+        /// <summary>
+        /// Enumerates the properties of a XML object and invokes the specified action for each property.
+        /// </summary>
+        /// <param name="element">The XML element representing an object.</param>
+        /// <param name="action">The action to invoke for each property, with the property name and value.</param>
+        public static void EnumerateProperties(
+            XmlElement? element,
+            XmlPropertyDelegate action)
+        {
+            foreach (XmlElement child in element?.Elements() ?? Array.Empty<XmlElement>())
+            {
+                var name = UnescapeElementName(child.Name);
+
+                if (HasElements(child))
+                {
+                    action(child, name, child);
+                }
+                else
+                {
+                    var value = UnescapeElementValue(child.InnerText);
+                    action(child, name, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Enumerates the properties of a XML document and invokes the specified action for each property.
+        /// </summary>
+        /// <param name="doc">The XML document representing an object.</param>
+        /// <param name="action">The action to invoke for each property, with the property name and value.</param>
+        public static void EnumerateProperties(
+            XmlDocument doc,
+            XmlPropertyDelegate action)
+        {
+            var root = doc.DocumentElement;
+            EnumerateProperties(root, action);
+        }
+
+        /// <summary>
+        /// Returns the first child element of the specified <see cref="XmlElement"/>,
+        /// or null if there are no child elements.
+        /// </summary>
+        /// <param name="element">The XML element whose first child element is to be returned.</param>
+        /// <returns>The first child XML element, or null if there are no child elements.</returns>
+        public static XmlElement? FirstElement(XmlElement? element)
+        {
+            return element?.ChildNodes.OfType<XmlElement>().FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="XmlElement"/> is a collection element, 
+        /// meaning it has multiple child elements with the same name.
+        /// </summary>
+        /// <param name="element">The XML element to check.</param>
+        /// <returns><c>true</c> if the XML element is a collection element; otherwise, <c>false</c>.</returns>
+        public static bool IsCollectionElement(XmlElement? element)
+        {
+            if (element is null)
+                return false;
+            var childElements = element.ChildNodes.OfType<XmlElement>().ToArray();
+            if (childElements.Length == 0)
+                return false;
+            var firstChildName = childElements[0].Name;
+            return childElements.All(e => e.Name == firstChildName);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="XmlElement"/> has only child elements with the specified name.
+        /// </summary>
+        /// <param name="element">The XML element to check for child elements with the specified name.</param>
+        /// <param name="name">The name of the child elements to check for.</param>
+        /// <returns><c>true</c> if the XML element has only child elements with the specified name;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool HasOnlyElements(XmlElement? element, string name)
+        {
+            return element?.ChildNodes.OfType<XmlElement>().All(e => e.Name == name) ?? false;
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="XmlElement"/> has any child elements.
+        /// </summary>
+        /// <param name="element">The XML element to check for child elements.</param>
+        /// <returns><c>true</c> if the XML element has any child elements; otherwise, <c>false</c>.</returns>
+        public static bool HasElements(XmlElement? element)
+        {
+            return element?.ChildNodes.OfType<XmlElement>().Any() ?? false;
+        }
+
+        /// <summary>
+        /// Enumerates the child elements of the specified <see cref="XmlElement"/>
+        /// and returns them as an enumerable collection.
+        /// </summary>
+        /// <param name="element">The XML element whose child elements are to be enumerated.</param>
+        /// <returns>An enumerable collection of child XML elements.</returns>
+        public static IEnumerable<XmlElement> Elements(this XmlElement element)
+        {
+            return element.ChildNodes.OfType<XmlElement>();
+        }
+
+        /// <summary>
+        /// Enumerates the child elements of the specified <see cref="XmlElement"/>
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="action"></param>
+        public static void ForEachElement(
+            this XmlElement element,
+            Action<XmlElement> action)
+        {
+            foreach (XmlElement child in Elements(element))
+                action(child);
+        }
 
         /// <summary>
         /// Converts a collection of name-value pairs into a XML string representation
