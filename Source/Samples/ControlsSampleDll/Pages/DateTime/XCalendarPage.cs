@@ -108,7 +108,7 @@ namespace ControlsSample
                 {
                     App.Log("Loading calendar items from json");
 
-                    var source = new CalendarSource();
+                    var source = new SchedulerDocument();
                     source.AsJsonString = calendarItemsJson;
                     WindowWithMessageAndButton.ShowDialog("Calendar Items JSON", calendarItemsJson);
                 }
@@ -122,7 +122,7 @@ namespace ControlsSample
 
             calendar.ContextMenu.Add("Save calendar items as xml", () =>
             {
-                var source = new CalendarSource();
+                var source = new SchedulerDocument();
                 SampleCalendarItems.LoadSampleData(source);
                 var s = source.AsXmlString;
                 calendarItemsXml = s;
@@ -131,7 +131,7 @@ namespace ControlsSample
 
             calendar.ContextMenu.Add("Save calendar items as json", () =>
             {
-                var source = new CalendarSource();
+                var source = new SchedulerDocument();
                 SampleCalendarItems.LoadSampleData(source);
                 var s = source.AsJsonString;
                 calendarItemsJson = s;

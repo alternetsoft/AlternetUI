@@ -6,16 +6,17 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a source for <see cref="CalendarItem"/> objects.
+    /// Represents a document that contains a collection of <see cref="CalendarItem"/> and other
+    /// objects for scheduling purposes.
     /// </summary>
-    public partial class CalendarSource : SerializableObject
+    public partial class SchedulerDocument : SerializableObject
     {
         private readonly ListSource<CalendarItem> items = new ();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CalendarSource"/> class.
+        /// Initializes a new instance of the <see cref="SchedulerDocument"/> class.
         /// </summary>
-        public CalendarSource()
+        public SchedulerDocument()
         {
         }
 

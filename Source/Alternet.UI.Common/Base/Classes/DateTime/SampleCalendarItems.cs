@@ -13,10 +13,10 @@ namespace Alternet.UI
     public static class SampleCalendarItems
     {
         /// <summary>
-        /// Loads sample calendar items into the specified <see cref="CalendarSource"/>.
+        /// Loads sample calendar items into the specified <see cref="SchedulerDocument"/>.
         /// </summary>
         /// <param name="server"></param>
-        public static void LoadSampleData(CalendarSource server)
+        public static void LoadSampleData(SchedulerDocument server)
         {
             var createNewDemo = server.CreateItem();
             createNewDemo.Start = DateTime.Today;
@@ -120,10 +120,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Loads sample label events into the specified <see cref="CalendarSource"/>.
+        /// Loads sample label events into the specified <see cref="SchedulerDocument"/>.
         /// </summary>
         /// <param name="server">The calendar item source to load the sample events into.</param>
-        public static void LoadSampleLabelEvents(CalendarSource server)
+        public static void LoadSampleLabelEvents(SchedulerDocument server)
         {
             DateTime start = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 10, 0, 0);
             var statuses = KnownCalendarItemMarkers.Statuses.ToArray();
