@@ -18,7 +18,9 @@ namespace ControlsSample
         private readonly RepeatPatternPicker patternPicker;
         private bool highlightDates;
         private string? patternJson;
+        private string? patternXml;
         private string? calendarItemsJson;
+        private string? calendarItemsXml;
 
         static XCalendarPage()
         {
@@ -100,10 +102,6 @@ namespace ControlsSample
                 patternPicker.Value.Reset();
             });
 
-            calendar.ContextMenu.Add("Save pattern as xml", () =>
-            {
-            }).Enabled = false;
-
             var loadCalendarItemsMenuItem = calendar.ContextMenu.Add("Load calendar items from json", () =>
             {
                 if (calendarItemsJson != null)
@@ -121,6 +119,15 @@ namespace ControlsSample
             });
 
             loadCalendarItemsMenuItem.Enabled = false;
+
+            calendar.ContextMenu.Add("Save calendar items as xml", () =>
+            {
+                var source = new CalendarSource();
+                SampleCalendarItems.LoadSampleData(source);
+                var s = source.AsXmlString;
+                calendarItemsXml = s;
+                WindowWithMessageAndButton.ShowDialog("Calendar Items XML", s);
+            });
 
             calendar.ContextMenu.Add("Save calendar items as json", () =>
             {
@@ -152,6 +159,12 @@ namespace ControlsSample
                 patternJson = patternPicker.Value.AsJsonString;
                 App.Log(patternJson);
                 loadPatternFromJsonMenuItem.Enabled = true;
+            });
+
+            calendar.ContextMenu.Add("Save pattern as xml", () =>
+            {
+                patternXml = patternPicker.Value.AsXmlString;
+                App.Log(patternXml);
             });
 
             DoInsideLayout(Fn);

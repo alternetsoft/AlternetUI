@@ -52,7 +52,6 @@ namespace Alternet.UI
             }
         }
 
-/*
         /// <summary>
         /// Gets or sets a XML string representation of the current state of this instance.
         /// </summary>
@@ -64,14 +63,16 @@ namespace Alternet.UI
                 return AsPropertyBag.AsXmlString;
             }
 
+            /*
             set
             {
                 IPropertyBag propertyBag = PropertyBag.Create();
                 propertyBag.AsXmlString = value;
                 AsPropertyBag = propertyBag;
             }
+            */
         }
-*/
+
         /// <inheritdoc/>
         public abstract bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null);
 

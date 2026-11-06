@@ -18,7 +18,7 @@ public static class JsonUtils
     /// <summary>
     /// Defines flags for controlling the behavior of the <see cref="ToJsonString"/> method.
     /// </summary>
-    public enum ToJsonStringFlags
+    public enum StringFormatFlags
     {
         /// <summary>
         /// Indicates that no special formatting should be applied to the JSON string.
@@ -156,8 +156,8 @@ public static class JsonUtils
                 void SavePropertyBag(IPropertyBag propertyBag)
                 {
                     writer.Indent();
-                    JsonUtils.ToJsonStringFlags flags = isLast
-                        ? JsonUtils.ToJsonStringFlags.None : JsonUtils.ToJsonStringFlags.AddComma;
+                    JsonUtils.StringFormatFlags flags = isLast
+                        ? JsonUtils.StringFormatFlags.None : JsonUtils.StringFormatFlags.AddComma;
                     propertyBag.ToJsonString(writer, flags);
                     writer.Unindent();
                 }
@@ -196,7 +196,7 @@ public static class JsonUtils
     public static void ToJsonString(
         IEnumerable<KeyValuePair<string, object?>> nameValuePairs,
         IStructuredTextWriter? writer = null,
-        ToJsonStringFlags flags = ToJsonStringFlags.None)
+        StringFormatFlags flags = StringFormatFlags.None)
     {
         if (writer is null)
             return;
@@ -232,7 +232,7 @@ public static class JsonUtils
         }
 
         writer.Unindent();
-        writer.WriteLine(flags.HasFlag(ToJsonStringFlags.AddComma) ? "}," : "}");
+        writer.WriteLine(flags.HasFlag(StringFormatFlags.AddComma) ? "}," : "}");
     }
 
     /// <summary>
