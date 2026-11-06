@@ -65,58 +65,19 @@ namespace Alternet.UI
         string? ElementName { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this property bag is the root property bag in a hierarchy.
+        /// </summary>
+        bool IsRoot { get; set; }
+
+        /// <summary>
         /// Gets or sets the XML string representation of the property bag.
         /// </summary>
-        public string AsXmlString
-        {
-            get
-            {
-                var writer = new LogWriter.StringBuilderLogWriter();
-                ToXmlString(ElementName, writer);
-                return writer.ToString();
-            }
-        }
+        string AsXmlString { get; }
 
         /// <summary>
         /// Gets or sets the JSON string representation of the property bag.
         /// </summary>
-        public string AsJsonString
-        {
-            get
-            {
-                var writer = new LogWriter.StringBuilderLogWriter();
-                ToJsonString(writer);
-                return writer.ToString();
-            }
-
-            set
-            {
-                Clear();
-
-                JsonUtils.EnumerateProperties(value, (property, name, propertyValue) =>
-                {
-                    if (propertyValue is null)
-                        return;
-                    if (propertyValue is bool boolValue)
-                    {
-                        SetBoolProperty(name, boolValue);
-                        return;
-                    }
-                    if (propertyValue is int intValue)
-                    {
-                        SetIntProperty(name, intValue);
-                        return;
-                    }
-
-                    var s = propertyValue.ToString();
-
-                    if (s is null)
-                        return;
-
-                    SetStringProperty(name, s);
-                });
-            }
-        }
+        string AsJsonString { get; set; }
 
         /// <summary>
         /// Clears all properties from the property bag.
@@ -215,45 +176,21 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">The name of the property.</param>
         /// <param name="collection">The collection to set.</param>
-        public void SetCollectionProperty(string name, IEnumerable collection)
-        {
-            var propertyBags = new List<IPropertyBag>();
-            foreach (var item in collection)
-            {
-                if (item is IPropertyBag propertyBag)
-                {
-                    propertyBags.Add(propertyBag);
-                }
-                else if (item is IPropertyBagSerialize serialize)
-                {
-                    var newPropertyBag = PropertyBag.Create();
-                    serialize.SaveTo(newPropertyBag);
-                    propertyBags.Add(newPropertyBag);
-                }
-            }
-
-            SetCollectionProperty(name, propertyBags);
-        }
+        void SetCollectionProperty(string name, IEnumerable collection);
 
         /// <summary>
         /// Converts the specified <see cref="DateTime"/> to its string representation.
         /// </summary>
         /// <param name="date">The date and time to convert.</param>
         /// <returns>A string representation of the specified <see cref="DateTime"/>.</returns>
-        public string DateTimeToString(DateTime date)
-        {
-            return DateTimeSerialization.Instance.DateTimeToString(date);
-        }
+        string DateTimeToString(DateTime date);
 
         /// <summary>
         /// Attempts to convert the specified string representation of a time span to a <see cref="TimeSpan"/>.
         /// </summary>
         /// <param name="timeSpan">The time span to convert.</param>
         /// <returns>A string representation of the specified <see cref="TimeSpan"/>.</returns>
-        public string TimeSpanToString(TimeSpan timeSpan)
-        {
-            return DateTimeSerialization.Instance.TimeSpanToString(timeSpan);
-        }
+        string TimeSpanToString(TimeSpan timeSpan);
 
         /// <summary>
         /// Attempts to convert the specified string representation of a date and time to a <see cref="DateTime"/>.
@@ -262,16 +199,7 @@ namespace Alternet.UI
         /// <param name="result">When this method returns, contains the converted <see cref="DateTime"/>
         /// if the conversion succeeded, or <see cref="DateTime.MinValue"/> if the conversion failed.</param>
         /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
-        public bool TryDateTimeFromString(string? s, out DateTime result)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                result = DateTime.MinValue;
-                return false;
-            }
-
-            return DateTimeSerialization.Instance.TryDateTimeFromString(s, out result);
-        }
+        bool TryDateTimeFromString(string? s, out DateTime result);
 
         /// <summary>
         /// Attempts to convert the specified string representation of a time span to a <see cref="TimeSpan"/>.
@@ -280,37 +208,21 @@ namespace Alternet.UI
         /// <param name="result">When this method returns, contains the converted <see cref="TimeSpan"/>
         /// if the conversion succeeded, or <see cref="TimeSpan.Zero"/> if the conversion failed.</param>
         /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
-        public bool TryTimeSpanFromString(string? s, out TimeSpan result)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                result = TimeSpan.Zero;
-                return false;
-            }
-
-            return DateTimeSerialization.Instance.TryTimeSpanFromString(s, out result);
-        }
+        bool TryTimeSpanFromString(string? s, out TimeSpan result);
 
         /// <summary>
         /// Sets the value of a <see cref="DateTime"/> property by name.
         /// </summary>
         /// <param name="name">The name of the property.</param>
         /// <param name="value">The value to set.</param>
-        public void SetDateTimeProperty(string name, DateTime value)
-        {
-            SetStringProperty(name, DateTimeToString(value));
-        }
+        void SetDateTimeProperty(string name, DateTime value);
 
         /// <summary>
         /// Sets the value of a <see cref="TimeSpan"/> property by name.
         /// </summary>
         /// <param name="name">The name of the property.</param>
         /// <param name="value">The value to set.</param>
-        public void SetTimeSpanProperty(string name, TimeSpan value)
-        {
-            var s = TimeSpanToString(value);
-            SetStringProperty(name, s);
-        }
+        void SetTimeSpanProperty(string name, TimeSpan value);
 
         /// <summary>
         /// Removes a property by name from the property bag.
@@ -351,18 +263,7 @@ namespace Alternet.UI
         /// <param name="value">When this method returns, contains the value of the <see cref="DateTime"/> property
         /// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
         /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
-        public bool TryGetDateTimeProperty(string name, out DateTime value)
-        {
-            if (TryGetStringProperty(name, out var str) &&
-                TryDateTimeFromString(str, out var startDateTime))
-            {
-                value = startDateTime;
-                return true;
-            }
-
-            value = DateTime.MinValue;
-            return false;
-        }
+        bool TryGetDateTimeProperty(string name, out DateTime value);
 
         /// <summary>
         /// Attempts to get the value of a <see cref="TimeSpan"/> property by name.
@@ -371,78 +272,20 @@ namespace Alternet.UI
         /// <param name="value">When this method returns, contains the value of the <see cref="TimeSpan"/> property
         /// if the conversion succeeded, or <see cref="TimeSpan.Zero"/> if the conversion failed.</param>
         /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
-        public bool TryGetTimeSpanProperty(string name, out TimeSpan value)
-        {
-            if (TryGetStringProperty(name, out var str) &&
-                TryTimeSpanFromString(str, out var timeSpan))
-            {
-                value = timeSpan;
-                return true;
-            }
-
-            value = TimeSpan.Zero;
-            return false;
-        }
+        bool TryGetTimeSpanProperty(string name, out TimeSpan value);
 
         /// <summary>
         /// Gets all properties as a collection of name-value pairs.
         /// </summary>
         /// <returns>An enumerable collection of name-value pairs representing the properties.</returns>
-        public IEnumerable<KeyValuePair<string, object?>> GetAllProperties()
-        {
-            var propNames = GetPropertyNames().ToArray();
-
-            for (int i = 0; i < propNames.Length; i++)
-            {
-                var propertyName = propNames[i];
-                var valueType = GetPropertyType(propertyName);
-
-                switch (valueType)
-                {
-                    case PropertyType.Collection:
-                        if (TryGetCollectionProperty(propertyName, out var collectionValue))
-                        {
-                            yield return new KeyValuePair<string, object?>(propertyName, collectionValue);
-                        }
-
-                        break;
-                    default:
-                    case PropertyType.String:
-                    case PropertyType.Flags:
-                    case PropertyType.Enum:
-                        if (TryGetStringProperty(propertyName, out var stringValue))
-                        {
-                            yield return new KeyValuePair<string, object?>(propertyName, stringValue);
-                        }
-                        break;
-                    case PropertyType.Integer:
-                        if (TryGetIntProperty(propertyName, out var intValue))
-                        {
-                            yield return new KeyValuePair<string, object?>(propertyName, intValue);
-                        }
-                        break;
-                    case PropertyType.Bool:
-                        if (TryGetBoolProperty(propertyName, out var boolValue))
-                        {
-                            yield return new KeyValuePair<string, object?>(propertyName, boolValue);
-                        }
-                        break;
-                }
-            }
-        }
+        IEnumerable<KeyValuePair<string, object?>> GetAllProperties();
 
         /// <summary>
         /// Converts the property bag to a JSON string representation with the specified indentation level.
         /// </summary>
         /// <param name="indentLevel">The indentation level to apply to the JSON string.</param>
         /// <returns>A JSON string representation of the property bag with the specified indentation level.</returns>
-        public string ToIndentedJsonString(int indentLevel)
-        {
-            var writer = new LogWriter.StringBuilderLogWriter();
-            writer.IndentLevel = indentLevel;
-            ToJsonString(writer);
-            return writer.ToString();
-        }
+        string ToIndentedJsonString(int indentLevel);
 
         /// <summary>
         /// Converts the property bag to a JSON string representation
@@ -450,13 +293,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="writer">The log writer to write the JSON string to.</param>
         /// <param name="flags">Flags to control the JSON string formatting.</param>
-        public void ToJsonString(
+        void ToJsonString(
             IStructuredTextWriter? writer = null,
-            JsonUtils.StringFormatFlags flags = JsonUtils.StringFormatFlags.None)
-        {
-            var properties = GetAllProperties();
-            JsonUtils.ToJsonString(properties, writer, flags);
-        }
+            JsonUtils.StringFormatFlags flags = JsonUtils.StringFormatFlags.None);
 
         /// <summary>
         /// Converts the property bag to a XML string representation
@@ -465,22 +304,14 @@ namespace Alternet.UI
         /// <param name="writer">The log writer to write the XML string to.</param>
         /// <param name="flags">Flags to control the XML string formatting.</param>
         /// <param name="nodeName">The name of the root XML node.</param>
-        public void ToXmlString(
+        void ToXmlString(
             string? nodeName,
             IStructuredTextWriter? writer = null,
-            XmlUtils.StringFormatFlags flags = XmlUtils.StringFormatFlags.None)
-        {
-            var properties = GetAllProperties();
-            XmlUtils.ToXmlString(nodeName, properties, writer, flags);
-        }
+            XmlUtils.StringFormatFlags flags = XmlUtils.StringFormatFlags.None);
 
         /// <summary>
         /// Logs the properties of the property bag.
         /// </summary>
-        public void Log(IStructuredTextWriter? writer = null)
-        {
-            writer ??= LogWriter.Debug;
-            ToJsonString(writer);
-        }
+        void Log(IStructuredTextWriter? writer = null);
     }
 }

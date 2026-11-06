@@ -13,6 +13,7 @@ namespace Alternet.UI
     public partial class PropertyBag : IPropertyBag
     {
         private readonly BaseDictionary<string, object> properties = new();
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyBag"/> class.
         /// </summary>
@@ -21,7 +22,64 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public string? ElementName { get; set; }
+        public virtual bool IsRoot { get; set; }
+
+        /// <inheritdoc/>
+        public virtual string? ElementName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the XML string representation of the property bag.
+        /// </summary>
+        public virtual string AsXmlString
+        {
+            get
+            {
+                var writer = new LogWriter.StringBuilderLogWriter();
+                ToXmlString(ElementName, writer);
+                return writer.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the JSON string representation of the property bag.
+        /// </summary>
+        public virtual string AsJsonString
+        {
+            get
+            {
+                var writer = new LogWriter.StringBuilderLogWriter();
+                ToJsonString(writer);
+                return writer.ToString();
+            }
+
+            set
+            {
+                Clear();
+
+                JsonUtils.EnumerateProperties(value, (property, name, propertyValue) =>
+                {
+                    if (propertyValue is null)
+                        return;
+                    if (propertyValue is bool boolValue)
+                    {
+                        SetBoolProperty(name, boolValue);
+                        return;
+                    }
+                    if (propertyValue is int intValue)
+                    {
+                        SetIntProperty(name, intValue);
+                        return;
+                    }
+
+                    var s = propertyValue.ToString();
+
+                    if (s is null)
+                        return;
+
+                    SetStringProperty(name, s);
+                });
+            }
+        }
 
         /// <summary>
         /// Creates a new instance of the <see cref="PropertyBag"/> class and returns it.
@@ -30,6 +88,253 @@ namespace Alternet.UI
         public static PropertyBag Create()
         {
             return new PropertyBag();
+        }
+
+        /// <summary>
+        /// Sets the value of a collection property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="collection">The collection to set.</param>
+        public virtual void SetCollectionProperty(string name, IEnumerable collection)
+        {
+            var propertyBags = new List<IPropertyBag>();
+            foreach (var item in collection)
+            {
+                if (item is IPropertyBag propertyBag)
+                {
+                    propertyBags.Add(propertyBag);
+                }
+                else if (item is IPropertyBagSerialize serialize)
+                {
+                    var newPropertyBag = PropertyBag.Create();
+                    serialize.SaveTo(newPropertyBag);
+                    propertyBags.Add(newPropertyBag);
+                }
+            }
+
+            SetCollectionProperty(name, propertyBags);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="DateTime"/> to its string representation.
+        /// </summary>
+        /// <param name="date">The date and time to convert.</param>
+        /// <returns>A string representation of the specified <see cref="DateTime"/>.</returns>
+        public virtual string DateTimeToString(DateTime date)
+        {
+            return DateTimeSerialization.Instance.DateTimeToString(date);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a time span to a <see cref="TimeSpan"/>.
+        /// </summary>
+        /// <param name="timeSpan">The time span to convert.</param>
+        /// <returns>A string representation of the specified <see cref="TimeSpan"/>.</returns>
+        public virtual string TimeSpanToString(TimeSpan timeSpan)
+        {
+            return DateTimeSerialization.Instance.TimeSpanToString(timeSpan);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a date and time to a <see cref="DateTime"/>.
+        /// </summary>
+        /// <param name="s">The string representation of the date and time to convert.</param>
+        /// <param name="result">When this method returns, contains the converted <see cref="DateTime"/>
+        /// if the conversion succeeded, or <see cref="DateTime.MinValue"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public virtual bool TryDateTimeFromString(string? s, out DateTime result)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                result = DateTime.MinValue;
+                return false;
+            }
+
+            return DateTimeSerialization.Instance.TryDateTimeFromString(s, out result);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a time span to a <see cref="TimeSpan"/>.
+        /// </summary>
+        /// <param name="s">The string representation of the time span to convert.</param>
+        /// <param name="result">When this method returns, contains the converted <see cref="TimeSpan"/>
+        /// if the conversion succeeded, or <see cref="TimeSpan.Zero"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public virtual bool TryTimeSpanFromString(string? s, out TimeSpan result)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                result = TimeSpan.Zero;
+                return false;
+            }
+
+            return DateTimeSerialization.Instance.TryTimeSpanFromString(s, out result);
+        }
+
+        /// <summary>
+        /// Sets the value of a <see cref="DateTime"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        public virtual void SetDateTimeProperty(string name, DateTime value)
+        {
+            SetStringProperty(name, DateTimeToString(value));
+        }
+
+        /// <summary>
+        /// Sets the value of a <see cref="TimeSpan"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        public virtual void SetTimeSpanProperty(string name, TimeSpan value)
+        {
+            var s = TimeSpanToString(value);
+            SetStringProperty(name, s);
+        }
+
+        /// <summary>
+        /// Tries to get the value of a <see cref="DateTime"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains the value of the <see cref="DateTime"/> property
+        /// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public virtual bool TryGetDateTimeProperty(string name, out DateTime value)
+        {
+            if (TryGetStringProperty(name, out var str) &&
+                TryDateTimeFromString(str, out var startDateTime))
+            {
+                value = startDateTime;
+                return true;
+            }
+
+            value = DateTime.MinValue;
+            return false;
+        }
+
+        /// <summary>
+        /// Attempts to get the value of a <see cref="TimeSpan"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains the value of the <see cref="TimeSpan"/> property
+        /// if the conversion succeeded, or <see cref="TimeSpan.Zero"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public virtual bool TryGetTimeSpanProperty(string name, out TimeSpan value)
+        {
+            if (TryGetStringProperty(name, out var str) &&
+                TryTimeSpanFromString(str, out var timeSpan))
+            {
+                value = timeSpan;
+                return true;
+            }
+
+            value = TimeSpan.Zero;
+            return false;
+        }
+
+        /// <summary>
+        /// Gets all properties as a collection of name-value pairs.
+        /// </summary>
+        /// <returns>An enumerable collection of name-value pairs representing the properties.</returns>
+        public virtual IEnumerable<KeyValuePair<string, object?>> GetAllProperties()
+        {
+            var propNames = GetPropertyNames().ToArray();
+
+            for (int i = 0; i < propNames.Length; i++)
+            {
+                var propertyName = propNames[i];
+                var valueType = GetPropertyType(propertyName);
+
+                switch (valueType)
+                {
+                    case IPropertyBag.PropertyType.Collection:
+                        if (TryGetCollectionProperty(propertyName, out var collectionValue))
+                        {
+                            yield return new KeyValuePair<string, object?>(propertyName, collectionValue);
+                        }
+
+                        break;
+                    default:
+                    case IPropertyBag.PropertyType.String:
+                    case IPropertyBag.PropertyType.Flags:
+                    case IPropertyBag.PropertyType.Enum:
+                        if (TryGetStringProperty(propertyName, out var stringValue))
+                        {
+                            yield return new KeyValuePair<string, object?>(propertyName, stringValue);
+                        }
+                        break;
+                    case IPropertyBag.PropertyType.Integer:
+                        if (TryGetIntProperty(propertyName, out var intValue))
+                        {
+                            yield return new KeyValuePair<string, object?>(propertyName, intValue);
+                        }
+                        break;
+                    case IPropertyBag.PropertyType.Bool:
+                        if (TryGetBoolProperty(propertyName, out var boolValue))
+                        {
+                            yield return new KeyValuePair<string, object?>(propertyName, boolValue);
+                        }
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Converts the property bag to a JSON string representation with the specified indentation level.
+        /// </summary>
+        /// <param name="indentLevel">The indentation level to apply to the JSON string.</param>
+        /// <returns>A JSON string representation of the property bag with the specified indentation level.</returns>
+        public virtual string ToIndentedJsonString(int indentLevel)
+        {
+            var writer = new LogWriter.StringBuilderLogWriter();
+            writer.IndentLevel = indentLevel;
+            ToJsonString(writer);
+            return writer.ToString();
+        }
+
+        /// <summary>
+        /// Converts the property bag to a JSON string representation
+        /// and writes it to the specified <see cref="IStructuredTextWriter"/>.
+        /// </summary>
+        /// <param name="writer">The log writer to write the JSON string to.</param>
+        /// <param name="flags">Flags to control the JSON string formatting.</param>
+        public virtual void ToJsonString(
+            IStructuredTextWriter? writer = null,
+            JsonUtils.StringFormatFlags flags = JsonUtils.StringFormatFlags.None)
+        {
+            var properties = GetAllProperties();
+            JsonUtils.ToJsonString(properties, writer, flags);
+        }
+
+        /// <summary>
+        /// Converts the property bag to a XML string representation
+        /// and writes it to the specified <see cref="IStructuredTextWriter"/>.
+        /// </summary>
+        /// <param name="writer">The log writer to write the XML string to.</param>
+        /// <param name="flags">Flags to control the XML string formatting.</param>
+        /// <param name="nodeName">The name of the root XML node.</param>
+        public virtual void ToXmlString(
+            string? nodeName,
+            IStructuredTextWriter? writer = null,
+            XmlUtils.StringFormatFlags flags = XmlUtils.StringFormatFlags.None)
+        {
+            var properties = GetAllProperties();
+            
+            if (IsRoot)
+            {
+                flags |= XmlUtils.StringFormatFlags.AddXmlDeclaration;
+            }
+
+            XmlUtils.ToXmlString(nodeName, properties, writer, flags);
+        }
+
+        /// <summary>
+        /// Logs the properties of the property bag.
+        /// </summary>
+        public virtual void Log(IStructuredTextWriter? writer = null)
+        {
+            writer ??= LogWriter.Debug;
+            ToJsonString(writer);
         }
 
         /// <inheritdoc/>
@@ -217,7 +522,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IEnumerable<string> GetPropertyNames(bool sorted)
+        public virtual IEnumerable<string> GetPropertyNames(bool sorted = true)
         {
             return sorted ? properties.Keys.OrderBy(k => k) : properties.Keys;
         }
