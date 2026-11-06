@@ -84,15 +84,17 @@ namespace Alternet.UI
         public IReadOnlyList<BaseRepeatPatternRule> Rules => rules;
 
         /// <summary>
-        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// Loads the state of this instance from the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        /// <param name="propertyBag">The property bag from which to load the state.</param>
-        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        /// <param name="context">The context containing the property bag and optional prefix for property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public override bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        public override bool LoadFrom(ISerializableObjectContext? context)
         {
-            if (propertyBag == null)
+            if (context == null)
                 return false;
+
+            var prefix = context.Prefix;
+            var propertyBag = context.PropertyBag;
 
             if (prefix is not null)
                 prefix += ".";
@@ -121,13 +123,13 @@ namespace Alternet.UI
                 switch (Kind)
                 {
                     case ScheduleRepeatPattern.Daily:
-                        return DailyRule.LoadFrom(propertyBag, prefix + nameof(DailyRule));
+                        return DailyRule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(DailyRule)));
                     case ScheduleRepeatPattern.Weekly:
-                        return WeeklyRule.LoadFrom(propertyBag, prefix + nameof(WeeklyRule));
+                        return WeeklyRule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(WeeklyRule)));
                     case ScheduleRepeatPattern.Monthly:
-                        return MonthlyRule.LoadFrom(propertyBag, prefix + nameof(MonthlyRule));
+                        return MonthlyRule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(MonthlyRule)));
                     case ScheduleRepeatPattern.Yearly:
-                        return YearlyRule.LoadFrom(propertyBag, prefix + nameof(YearlyRule));
+                        return YearlyRule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(YearlyRule)));
                 }
 
                 return true;
@@ -138,10 +140,12 @@ namespace Alternet.UI
         /// Saves the current state of this instance
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
-        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
-        /// <param name="prefix">An optional prefix to prepend to property names.</param>
-        public override void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        /// <param name="context">The context to which the state will be saved.</param>
+        public override void SaveTo(ISerializableObjectContext context)
         {
+            var prefix = context.Prefix;
+            var propertyBag = context.PropertyBag;
+
             if (prefix is not null)
                 prefix += ".";
             else
@@ -154,16 +158,16 @@ namespace Alternet.UI
             switch (Kind)
             {
                 case ScheduleRepeatPattern.Daily:
-                    DailyRule.SaveTo(propertyBag, prefix + nameof(DailyRule));
+                    DailyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(DailyRule)));
                     break;
                 case ScheduleRepeatPattern.Weekly:
-                    WeeklyRule.SaveTo(propertyBag, prefix + nameof(WeeklyRule));
+                    WeeklyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(WeeklyRule)));
                     break;
                 case ScheduleRepeatPattern.Monthly:
-                    MonthlyRule.SaveTo(propertyBag, prefix + nameof(MonthlyRule));
+                    MonthlyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(MonthlyRule)));
                     break;
                 case ScheduleRepeatPattern.Yearly:
-                    YearlyRule.SaveTo(propertyBag, prefix + nameof(YearlyRule));
+                    YearlyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(YearlyRule)));
                     break;
             }
         }

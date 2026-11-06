@@ -29,7 +29,7 @@ namespace Alternet.UI
             {
                 IPropertyBag propertyBag = PropertyBag.Create();
                 propertyBag.AsJsonString = value;
-                LoadFrom(propertyBag);
+                LoadFrom(new SerializableObjectContext(propertyBag));
             }
         }
 
@@ -42,13 +42,13 @@ namespace Alternet.UI
             get
             {
                 IPropertyBag propertyBag = PropertyBag.Create();
-                SaveTo(propertyBag);
+                SaveTo(new SerializableObjectContext(propertyBag));
                 return propertyBag;
             }
 
             set
             {
-                LoadFrom(value);
+                LoadFrom(new SerializableObjectContext(value));
             }
         }
 
@@ -74,9 +74,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public abstract bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null);
+        public abstract bool LoadFrom(ISerializableObjectContext? context);
 
         /// <inheritdoc/>
-        public abstract void SaveTo(IPropertyBag propertyBag, string? prefix = null);
+        public abstract void SaveTo(ISerializableObjectContext context);
     }
 }

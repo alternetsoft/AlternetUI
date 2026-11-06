@@ -55,10 +55,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        public override bool LoadFrom(ISerializableObjectContext? context)
         {
-            if (propertyBag == null)
+            if (context == null)
                 return false;
+
+            var propertyBag = context.PropertyBag;
+            var prefix = context.Prefix;
 
             if (prefix is not null)
                 prefix += ".";
@@ -75,10 +78,10 @@ namespace Alternet.UI
 
                     if (itemsCollection != null)
                     {
-                        foreach (var IPropertyBag in itemsCollection)
+                        foreach (var propertyBag in itemsCollection)
                         {
                             CalendarItem calendarItem = CreateItem();
-                            calendarItem.LoadFrom(IPropertyBag);
+                            calendarItem.LoadFrom(new SerializableObjectContext(propertyBag));
                             Add(calendarItem);
                         }
                     }
@@ -89,8 +92,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        public override void SaveTo(ISerializableObjectContext context)
         {
+            var propertyBag = context.PropertyBag;
+            var prefix = context.Prefix;
+
             if (prefix is not null)
                 prefix += ".";
             else

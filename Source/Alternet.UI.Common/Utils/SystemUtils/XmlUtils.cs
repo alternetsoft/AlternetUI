@@ -143,7 +143,7 @@ namespace Alternet.UI
                     void SavePropertyBagSerialize(IPropertyBagSerialize serialize)
                     {
                         IPropertyBag propertyBag = PropertyBag.Create();
-                        serialize.SaveTo(propertyBag);
+                        serialize.SaveTo(new SerializableObjectContext(propertyBag));
                         SavePropertyBag(propertyBag);
                     }
 

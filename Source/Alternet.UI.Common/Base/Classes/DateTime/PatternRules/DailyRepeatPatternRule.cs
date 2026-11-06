@@ -84,15 +84,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// Loads the state of this instance from the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        /// <param name="propertyBag">The property bag from which to load the state.</param>
-        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        /// <param name="context">The context containing the property bag and optional prefix for property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public override bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        public override bool LoadFrom(ISerializableObjectContext? context)
         {
-            if (propertyBag == null)
+            if (context == null)
                 return false;
+
+            var prefix = context.Prefix;
+            var propertyBag = context.PropertyBag;
 
             if (prefix is not null)
                 prefix += ".";
@@ -122,10 +124,12 @@ namespace Alternet.UI
         /// Saves the current state of this instance
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
-        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
-        /// <param name="prefix">An optional prefix to prepend to property names.</param>
-        public override void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        /// <param name="context">The context to which the state will be saved.</param>
+        public override void SaveTo(ISerializableObjectContext context)
         {
+            var prefix = context.Prefix;
+            var propertyBag = context.PropertyBag;
+
             if (prefix is not null)
                 prefix += ".";
             else

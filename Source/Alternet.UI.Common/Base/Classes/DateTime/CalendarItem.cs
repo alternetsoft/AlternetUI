@@ -187,15 +187,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// Loads the state of this instance from the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        /// <param name="prefix">An optional prefix to prepend to property names.</param>
-        /// <param name="propertyBag">The property bag from which to load the state.</param>
+        /// <param name="context">The context containing the property bag and optional prefix for property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
-        public override bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null)
+        public override bool LoadFrom(ISerializableObjectContext? context)
         {
-            if (propertyBag == null)
+            if (context == null)
                 return false;
+
+            var propertyBag = context.PropertyBag;
+            var prefix = context.Prefix;
 
             if (prefix is not null)
                 prefix += ".";
@@ -221,8 +223,8 @@ namespace Alternet.UI
                 if (propertyBag.TryGetStringProperty(prefix + nameof(Category), out var categoryString))
                     Category = KnownCalendarItemMarkers.FindCategory(categoryString);
                 
-                Rule.LoadFrom(propertyBag, prefix + nameof(Rule));
-                AlarmInfo.LoadFrom(propertyBag, prefix + nameof(AlarmInfo));
+                Rule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(Rule)));
+                AlarmInfo.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(AlarmInfo)));
 
                 return true;
             });
@@ -230,12 +232,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Saves the current state of this instance
-        /// to the specified <see cref="IPropertyBag"/>.
+        /// to the specified <see cref="SerializableObjectContext"/>.
         /// </summary>
-        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
-        /// <param name="prefix">An optional prefix to prepend to property names.</param>
-        public override void SaveTo(IPropertyBag propertyBag, string? prefix = null)
+        /// <param name="context">The context to which the state will be saved.</param>
+        public override void SaveTo(ISerializableObjectContext context)
         {
+            var propertyBag = context.PropertyBag;
+            var prefix = context.Prefix;
+
             if (prefix is not null)
                 prefix += ".";
             else
@@ -249,8 +253,8 @@ namespace Alternet.UI
             propertyBag.SetBoolProperty(prefix + nameof(Visible), Visible);
             propertyBag.SetStringProperty(prefix + nameof(UserName), UserName ?? string.Empty);
 
-            Rule.SaveTo(propertyBag, prefix + nameof(Rule));
-            AlarmInfo.SaveTo(propertyBag, prefix + nameof(AlarmInfo));
+            Rule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(Rule)));
+            AlarmInfo.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(AlarmInfo)));
         }
 
         /// <summary>

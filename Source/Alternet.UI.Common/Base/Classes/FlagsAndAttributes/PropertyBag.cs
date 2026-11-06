@@ -107,7 +107,7 @@ namespace Alternet.UI
                 else if (item is IPropertyBagSerialize serialize)
                 {
                     var newPropertyBag = PropertyBag.Create();
-                    serialize.SaveTo(newPropertyBag);
+                    serialize.SaveTo(new SerializableObjectContext(newPropertyBag));
                     propertyBags.Add(newPropertyBag);
                 }
             }

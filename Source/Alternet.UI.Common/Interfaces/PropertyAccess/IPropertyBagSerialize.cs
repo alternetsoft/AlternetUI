@@ -10,19 +10,17 @@ namespace Alternet.UI
     public interface IPropertyBagSerialize
     {
         /// <summary>
-        /// Loads the state of this instance from the specified <see cref="IPropertyBag"/>.
+        /// Loads the state of this instance from the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        /// <param name="propertyBag">The property bag from which the state will be loaded.</param>
-        /// <param name="prefix">An optional prefix to prepend to property names.</param>
+        /// <param name="context">The context containing the property bag and optional prefix for property names.</param>
         /// <returns>True if the state was successfully loaded; otherwise, false.</returns>
-        bool LoadFrom(IPropertyBag? propertyBag, string? prefix = null);
+        bool LoadFrom(ISerializableObjectContext? context);
 
         /// <summary>
         /// Saves the current state of this instance
-        /// to the specified <see cref="IPropertyBag"/>.
+        /// to the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        /// <param name="propertyBag">The property bag to which the state will be saved.</param>
-        /// <param name="prefix">An optional prefix to prepend to property names.</param>
-        void SaveTo(IPropertyBag propertyBag, string? prefix = null);
+        /// <param name="context">The context to which the state will be saved.</param>
+        void SaveTo(ISerializableObjectContext context);
     }
 }
