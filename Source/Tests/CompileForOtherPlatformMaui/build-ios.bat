@@ -1,1 +1,1 @@
-dotnet build --framework net8.0-ios
+dotnet build --framework net10.0-ios

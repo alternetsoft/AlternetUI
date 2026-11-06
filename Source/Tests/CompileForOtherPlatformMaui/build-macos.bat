@@ -1,2 +1,2 @@
-dotnet build --framework net8.0-maccatalyst
+dotnet build --framework net10.0-maccatalyst
 

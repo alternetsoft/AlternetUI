@@ -95,7 +95,6 @@
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CustomAssembly/CustomAssembly.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CustomAssembly/ExternalAssembly/ExternalAssembly/ExternalAssembly.csproj" />
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ExpressionEvaluation/ExpressionEvaluation.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
