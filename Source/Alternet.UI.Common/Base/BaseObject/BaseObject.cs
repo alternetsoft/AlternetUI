@@ -513,6 +513,7 @@ namespace Alternet.UI
         /// <summary>
         /// Does nothing.
         /// </summary>
+        [Conditional("DEBUG")]
         public static void Nop()
         {
         }
@@ -521,6 +522,7 @@ namespace Alternet.UI
         /// Does nothing.
         /// </summary>
         /// <param name="exception"></param>
+        [Conditional("DEBUG")]
         public static void Nop(Exception? exception)
         {
         }
