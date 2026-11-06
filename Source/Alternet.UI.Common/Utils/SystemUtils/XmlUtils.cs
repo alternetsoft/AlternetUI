@@ -83,7 +83,7 @@ namespace Alternet.UI
 
                 if (HasElements(child))
                 {
-                    action(child, name, child);
+                    action(child, name, child.InnerXml);
                 }
                 else
                 {

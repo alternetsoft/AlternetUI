@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the XML string representation of the property bag.
         /// </summary>
-        string AsXmlString { get; }
+        string AsXmlString { get; set; }
 
         /// <summary>
         /// Gets or sets the JSON string representation of the property bag.

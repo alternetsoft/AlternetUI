@@ -110,7 +110,7 @@ namespace ControlsSample
 
                     var source = new SchedulerDocument();
                     source.AsJsonString = calendarItemsJson;
-                    WindowWithMessageAndButton.ShowDialog("Scheduler Document JSON", calendarItemsJson);
+                    WindowWithMessageAndButton.ShowDialog("Scheduler Document JSON", source.AsJsonString);
                 }
                 else
                 {
@@ -120,12 +120,31 @@ namespace ControlsSample
 
             loadCalendarItemsMenuItem.Enabled = false;
 
+            var loadCalendarItemsMenuItemXml = calendar.ContextMenu.Add("Load scheduler document from xml", () =>
+            {
+                if (calendarItemsXml != null)
+                {
+                    App.Log("Loading scheduler document from xml");
+
+                    var source = new SchedulerDocument();
+                    source.AsXmlString = calendarItemsXml;
+                    WindowWithMessageAndButton.ShowDialog("Scheduler Document XML", source.AsXmlString);
+                }
+                else
+                {
+                    App.Log("No scheduler document saved in xml");
+                }
+            });
+
+            loadCalendarItemsMenuItemXml.Enabled = false;
+
             calendar.ContextMenu.Add("Save scheduler document as xml", () =>
             {
                 var source = new SchedulerDocument();
                 SampleCalendarItems.LoadSampleData(source);
                 var s = source.AsXmlString;
                 calendarItemsXml = s;
+                loadCalendarItemsMenuItemXml.Enabled = true;
                 WindowWithMessageAndButton.ShowDialog("Scheduler Document XML", s);
             });
 
@@ -135,8 +154,8 @@ namespace ControlsSample
                 SampleCalendarItems.LoadSampleData(source);
                 var s = source.AsJsonString;
                 calendarItemsJson = s;
-                WindowWithMessageAndButton.ShowDialog("Scheduler Document JSON", s);
                 loadCalendarItemsMenuItem.Enabled = true;
+                WindowWithMessageAndButton.ShowDialog("Scheduler Document JSON", s);
             });
 
             var loadPatternFromJsonMenuItem = calendar.ContextMenu.Add("Load pattern from json", () =>

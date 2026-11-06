@@ -13,5 +13,10 @@ namespace Alternet.UI
         /// Specifies that the object should be deserialized from a JSON format.
         /// </summary>
         Json,
+
+        /// <summary>
+        /// Specifies that the object should be deserialized from an XML format.
+        /// </summary>
+        Xml,
     }
 }

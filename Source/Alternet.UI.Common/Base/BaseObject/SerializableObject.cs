@@ -64,14 +64,12 @@ namespace Alternet.UI
                 return AsPropertyBag.AsXmlString;
             }
 
-            /*
             set
             {
                 IPropertyBag propertyBag = PropertyBag.Create();
                 propertyBag.AsXmlString = value;
                 AsPropertyBag = propertyBag;
             }
-            */
         }
 
         /// <inheritdoc/>
@@ -114,6 +112,9 @@ namespace Alternet.UI
             {
                 case SerializableOpenFormat.Json:
                     AsJsonString = s;
+                    return true;
+                case SerializableOpenFormat.Xml:
+                    AsXmlString = s;
                     return true;
                 default:
                     return false;

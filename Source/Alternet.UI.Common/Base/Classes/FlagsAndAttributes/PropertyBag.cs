@@ -38,6 +38,34 @@ namespace Alternet.UI
                 ToXmlString(ElementName, writer);
                 return writer.ToString();
             }
+
+            set
+            {
+                Clear();
+
+                XmlUtils.EnumerateProperties(value, (property, name, propertyValue) =>
+                {
+                    if (propertyValue is null)
+                        return;
+                    if (propertyValue is bool boolValue)
+                    {
+                        SetBoolProperty(name, boolValue);
+                        return;
+                    }
+                    if (propertyValue is int intValue)
+                    {
+                        SetIntProperty(name, intValue);
+                        return;
+                    }
+
+                    var s = propertyValue.ToString();
+
+                    if (s is null)
+                        return;
+
+                    SetStringProperty(name, s);
+                });
+            }
         }
 
         /// <summary>
