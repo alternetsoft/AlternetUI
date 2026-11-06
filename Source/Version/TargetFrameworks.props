@@ -44,7 +44,6 @@
 	<TF9 Condition="$(BoolNet9)">net9.0;</TF9>
 	<TF10 Condition="$(BoolNet10)">net10.0;</TF10>
 
-    	<UIIntegrationUIXmlHostAppTargetFrameworks>net8.0-windows;net9.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
 	<TargetFrameworks>$(TF10)$(TF9)$(TF8)</TargetFrameworks>
   </PropertyGroup>
 

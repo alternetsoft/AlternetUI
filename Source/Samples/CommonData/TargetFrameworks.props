@@ -19,6 +19,7 @@
   	<BoolNet10>true</BoolNet10>
   	<BoolNet9>true</BoolNet9>
   	<BoolNet8>true</BoolNet8>
+  	<BoolNet11>false</BoolNet11>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsOsxX64)=='true'">
@@ -37,12 +38,9 @@
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
 
   <PropertyGroup>
-	<TF8 Condition="$(BoolNet8)">net8.0;</TF8>
-	<TF9 Condition="$(BoolNet9)">net9.0;</TF9>
-	<TF10 Condition="$(BoolNet10)">net10.0;</TF10>
+	<TF11 Condition="$(BoolNet11)">net11.0;</TF11>
 
-    	<UIIntegrationUIXmlHostAppTargetFrameworks>net8.0-windows;net9.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
-	<TargetFrameworks>$(TF10)$(TF9)$(TF8)</TargetFrameworks>
+	<TargetFrameworks>net10.0;$(TF11)</TargetFrameworks>
   </PropertyGroup>
 
 </Project>
