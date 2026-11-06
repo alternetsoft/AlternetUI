@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml;
@@ -15,6 +16,22 @@ namespace Alternet.UI
     public static class XmlUtils
     {
         /// <summary>
+        /// Specifies flags which are used in <see cref="ToXmlString"/> method.
+        /// </summary>
+        public enum StringFormatFlags
+        {
+            /// <summary>
+            /// No flags.
+            /// </summary>
+            None = 0,
+            
+            /// <summary>
+            /// Adds xml declaration with version and UTF-8 encoding.
+            /// </summary>
+            AddXmlDeclaration = 2,
+        }
+
+        /// <summary>
         /// Gets xml file prefix with version and UTF-8 encoding declaration.
         /// </summary>
         public const string XmlFilePrefix = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
@@ -23,6 +40,178 @@ namespace Alternet.UI
         /// Gets uixml namespace uri.
         /// </summary>
         public const string UIXmlNamespace = "http://schemas.alternetsoft.com/ui/2021/uixml";
+
+        /// <summary>
+        /// Converts a collection of name-value pairs into a XML string representation
+        /// and writes it to the specified <see cref="IStructuredTextWriter"/>.
+        /// </summary>
+        /// <param name="nameValuePairs">The collection of name-value pairs to convert to XML.</param>
+        /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the XML string to.</param>
+        /// <param name="flags">Flags that control the behavior of the XML string conversion.</param>
+        /// <param name="nodeName">The name of the XML node to use for the root element.
+        /// If not specified, no root element will be added.</param>
+        public static void ToXmlString(
+            string? nodeName,
+            IEnumerable<KeyValuePair<string, object?>> nameValuePairs,
+            IStructuredTextWriter? writer = null,
+            StringFormatFlags flags = StringFormatFlags.None)
+        {
+            if (writer is null)
+                return;
+
+            if (flags.HasFlag(StringFormatFlags.AddXmlDeclaration))
+            {
+                writer.WriteLine(XmlFilePrefix);
+            }
+
+            var hasElement = !string.IsNullOrEmpty(nodeName);
+
+            if (hasElement)
+            {
+                writer.WriteLine($"<{nodeName}>");
+                writer.Indent();
+            }
+
+            var pairs = nameValuePairs.ToArray();
+
+            for (int i = 0; i < pairs.Length; i++)
+            {
+                var propertyName = pairs[i].Key;
+                var escapedPropertyName = propertyName;
+
+                var value = pairs[i].Value;
+                var isString = value is string;
+
+                if (!isString)
+                {
+                    if (value is IEnumerable<IPropertyBag> collectionValue)
+                    {
+                        writer.WriteLine($"<{escapedPropertyName}>");
+                        writer.Indent();
+                        SerializeXmlArray("Item", collectionValue, writer);
+                        writer.Unindent();
+                        writer.WriteLine($"</{escapedPropertyName}>");
+                        continue;
+                    }
+                }
+
+                EmitValue(escapedPropertyName, value?.ToString(), writer);
+            }
+
+            if (hasElement)
+            {
+                writer.Unindent();
+                writer.WriteLine($"</{nodeName}>");
+            }
+        }
+
+        /// <summary>
+        /// Serializes a collection of items into a Xml array and writes
+        /// it to the specified <see cref="IStructuredTextWriter"/>.
+        /// </summary>
+        /// <param name="itemElementName">The name of the XML element to use for each item.</param>
+        /// <param name="items">The collection of items to serialize.</param>
+        /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the XML array to.</param>
+        public static void SerializeXmlArray(
+            string? itemElementName,
+            IEnumerable<IPropertyBag> items,
+            IStructuredTextWriter? writer = null)
+        {
+            if (writer is null)
+                return;
+
+            itemElementName ??= "Item";
+
+            var itemsArray = items.Cast<object?>().ToArray();
+
+            for (int i = 0; i < itemsArray.Length; i++)
+            {
+                var value = itemsArray[i];
+                var isString = value is string;
+
+                if (!isString)
+                {
+                    void SavePropertyBag(IPropertyBag propertyBag)
+                    {
+                        writer.Indent();
+                        propertyBag.ToXmlString(itemElementName, writer);
+                        writer.Unindent();
+                    }
+
+                    void SavePropertyBagSerialize(IPropertyBagSerialize serialize)
+                    {
+                        IPropertyBag propertyBag = PropertyBag.Create();
+                        serialize.SaveTo(propertyBag);
+                        SavePropertyBag(propertyBag);
+                    }
+
+                    if (value is IPropertyBag propertyBag)
+                    {
+                        SavePropertyBag(propertyBag);
+                        continue;
+                    }
+
+                    if (value is IPropertyBagSerialize serialize)
+                    {
+                        SavePropertyBagSerialize(serialize);
+                        continue;
+                    }
+                }
+
+                EmitValue(itemElementName, value?.ToString(), writer);
+            }
+        }
+
+        /// <summary>
+        /// Emits a XML property with the specified value to the specified <see cref="IStructuredTextWriter"/>.
+        /// Depending on the type of the value, it may be emitted with or without quotes.
+        /// </summary>
+        /// <param name="propName">The name of the XML property.</param>
+        /// <param name="value">The value to emit.</param>
+        /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the XML property to.</param>
+        public static void EmitValue(string? propName, string? value, IStructuredTextWriter writer)
+        {
+            var needQuotes = JsonUtils.ValueNeedQuotes(value);
+
+            if (needQuotes)
+            {
+                EmitQuotedValue(propName, value?.ToString(), writer);
+            }
+            else
+            {
+                EmitUnquotedValue(propName, value?.ToString(), writer);
+            }
+        }
+
+        /// <summary>
+        /// Emits a XML property with a quoted value to the specified <see cref="IStructuredTextWriter"/>.
+        /// </summary>
+        /// <param name="value">The value to emit.</param>
+        /// <param name="propName">The name of the XML property.</param>
+        /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the XML property to.</param>
+        public static void EmitQuotedValue(string? propName, string? value, IStructuredTextWriter writer)
+        {
+            if (propName is null)
+                return;
+
+            var escapedValue = JsonUtils.EscapeString(value ?? string.Empty);
+            writer.WriteLine($"<{propName}>\"{escapedValue}\"</{propName}>");
+        }
+
+        /// <summary>
+        /// Emits a XML property with an unquoted value to the specified <see cref="IStructuredTextWriter"/>.
+        /// </summary>
+        /// <param name="propName">The name of the XML property.</param>
+        /// <param name="value">The value to emit.</param>
+        /// <param name="writer">The <see cref="IStructuredTextWriter"/> to write the XML property to.</param>
+        public static void EmitUnquotedValue(string? propName, string? value, IStructuredTextWriter writer)
+        {
+            if (propName is null)
+                return;
+
+            var escapedValue = JsonUtils.EscapeString(value ?? string.Empty);
+            writer.WriteLine($"<{propName}>{escapedValue}</{propName}>");
+        }
 
         /// <summary>
         /// Creates <see cref="XmlWriter"/> using the specified <see cref="StringBuilder"/>
