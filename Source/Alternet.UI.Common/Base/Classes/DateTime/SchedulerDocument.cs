@@ -96,7 +96,8 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            propertyBag.ElementName = "SchedulerDocument";
+            propertyBag.ElementName ??= "SchedulerDocument";
+            propertyBag.IsRoot = true;
 
             propertyBag.SetCollectionProperty(prefix + nameof(Items), Items);
         }
