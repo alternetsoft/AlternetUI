@@ -45,8 +45,10 @@ namespace Alternet.UI
         public const string FileSizeEB = "EB";
 
         /// <summary>
-        /// Gets an array of strings representing the units used to express file sizes, ranging from bytes to exabytes.
-        /// Do not change number of elements and their order, because they are used in <see cref="SizeToExplorerString"/> method.
+        /// Gets an array of strings representing the units used to express
+        /// file sizes, ranging from bytes to exabytes.
+        /// Do not change number of elements and their order, because they are used
+        /// in <see cref="SizeToExplorerString"/> method.
         /// </summary>
         /// <remarks>This array can be used to format file sizes in a human-readable form by selecting the
         /// appropriate unit based on the file size value. The first element is an empty string, which typically
@@ -73,7 +75,8 @@ namespace Alternet.UI
         public static string FileSizeFormat = "{0:0.#} {1}";
 
         /// <summary>
-        /// Returns the text representation of a file size in the style used by Windows File Explorer, with localizable unit strings.
+        /// Returns the text representation of a file size in the style used by Windows File Explorer,
+        /// with localizable unit strings.
         /// </summary>
         /// <param name="bytes">The file size in bytes.</param>
         /// <param name="formatProvider">The format provider to use for formatting the file size.
@@ -441,13 +444,17 @@ namespace Alternet.UI
         /// Deletes all files in the 'bin' and 'obj' subfolders of the specified solution folder.
         /// </summary>
         /// <param name="path">Path to folder.</param>
+        /// <param name="logWriter">Optional log writer to log the deletion process.
+        /// If not specified, logs to console.</param>
         /// <remarks>
         /// This method works recursively. First it finds all '*.csproj' and '*.vcxproj' project files.
         /// For the each found project file it deletes all files in the 'bin' and 'obj' subfolders
         /// located in the project file path.
         /// </remarks>
-        public static void DeleteBinObjFiles(string path)
+        public static void DeleteBinObjFiles(string path, ILogWriter? logWriter = null)
         {
+            logWriter ??= LogWriter.Console;
+
             path = Path.GetFullPath(path);
 
             var files = Directory.EnumerateFiles(path, "*.*", SearchOption.AllDirectories)
@@ -477,14 +484,14 @@ namespace Alternet.UI
 
                 foreach (var s in filesToDelete)
                 {
-                    App.Log("Deleting file: " + s);
+                    logWriter.WriteLine("Deleting file: " + s);
                     try
                     {
                         File.Delete(s);
                     }
                     catch (Exception)
                     {
-                        App.Log("ERROR deleting file: " + s);
+                        logWriter.WriteLine("ERROR deleting file: " + s);
                     }
                 }
             }
