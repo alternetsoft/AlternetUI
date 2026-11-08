@@ -1,1 +1,1 @@
-"..\Source\Tools\Alternet.UI.RunCmd\bin\Debug\net8.0\Alternet.UI.RunCmd.exe" -saveCommits -r=saveCommits Days=10 Branch="WorkInProgress"
+"..\Source\Tools\Alternet.UI.RunCmd\bin\Debug\net10.0\Alternet.UI.RunCmd.exe" -saveCommits -r=saveCommits Days=10 Branch="WorkInProgress"

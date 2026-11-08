@@ -1,1 +1,1 @@
-dotnet build -f net9.0-maccatalyst
+dotnet build -f net10.0-maccatalyst

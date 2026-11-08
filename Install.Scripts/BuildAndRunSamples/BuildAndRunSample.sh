@@ -11,6 +11,6 @@ rm -rf obj/Release/*.*
 rm -rf obj/*.*
 
 dotnet build -tl:off --property WarningLevel=0
-dotnet run --property WarningLevel=0 --framework net8.0
+dotnet run --property WarningLevel=0 --framework net10.0
 
 popd

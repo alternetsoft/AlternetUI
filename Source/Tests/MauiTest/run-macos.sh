@@ -1,1 +1,1 @@
-dotnet run -f net9.0-maccatalyst
+dotnet run -f net10.0-maccatalyst

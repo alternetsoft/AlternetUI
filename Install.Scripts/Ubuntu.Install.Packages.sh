@@ -1,11 +1,9 @@
-# Ubuntu 26 installation info for net8.0 and net9.0
+# Ubuntu 26 installation info for net
 # https://devblogs.microsoft.com/dotnet/whats-new-for-dotnet-in-ubuntu-2604/
 
 sudo apt -y update
 sudo apt -y upgrade 
 
-sudo apt -y install dotnet-sdk-8.0
-sudo apt -y install dotnet-sdk-9.0
 sudo apt -y install dotnet-sdk-10.0
 sudo apt -y install git
 

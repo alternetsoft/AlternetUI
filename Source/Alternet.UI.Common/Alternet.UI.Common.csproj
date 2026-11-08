@@ -6,12 +6,6 @@
   <Import Project="..\Version\CommonPackages.props" />
   <Import Project="..\Version\TargetFrameworks.props" />
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net8.0'">
-    <Optimize>false</Optimize>
-    <DebugType>portable</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  
   <PropertyGroup>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <Nullable>enable</Nullable>

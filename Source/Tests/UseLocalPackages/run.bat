@@ -1,2 +1,2 @@
 ECHO ====================
-dotnet run --framework net8.0 --arch x64
+dotnet run --framework net10.0 --arch x64

@@ -1,1 +1,1 @@
-dotnet run --framework net9.0 -c Release
+dotnet run --framework net10.0 -c Release
