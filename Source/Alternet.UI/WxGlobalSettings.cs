@@ -130,6 +130,24 @@ entry.borderless:focus {
     outline: none;
 }
 ";
+
+            /// <summary>
+            /// Indicates whether the application should use a legacy PAL (Platform Abstraction Layer) on Linux systems.
+            /// </summary>
+            public static bool UseLegacyPal;
+
+            static Linux()
+            {
+                if (App.IsLinuxOS)
+                {
+                    var glibcVersion = LinuxUtils.GlibcVersion;
+
+                    if(glibcVersion.Major < 2 || (glibcVersion.Major == 2 && glibcVersion.Minor < 43))
+                    {
+                        UseLegacyPal = true;
+                    }
+                }
+            }
         }
     }
 }
