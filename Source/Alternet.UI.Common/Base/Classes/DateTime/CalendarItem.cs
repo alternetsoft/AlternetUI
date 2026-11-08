@@ -375,7 +375,21 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                Reset();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    Category = KnownCalendarItemMarkers.CategoryNone;
+                    Status = KnownCalendarItemMarkers.StatusUnknown;
+                    Text = null;
+                    Description = null;
+                    Location = null;
+                    UserData = null;
+                    UserName = null;
+                    Visible = true;
+                    Rule.Reset();
+                    AlarmInfo.Reset();
+                    hashCode = null;
+                });
+
                 return;
             }
 
