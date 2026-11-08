@@ -523,7 +523,7 @@ namespace Alternet.UI
             [DllImport("libc")]
             public static extern IntPtr strerror(int errnum);
 
-            [DllImport("libc.so.6")]
+            [DllImport("libc")]
             internal static extern int dl_iterate_phdr(DlIteratePhdrCallback callback, IntPtr data);
 
             [StructLayout(LayoutKind.Sequential)]
