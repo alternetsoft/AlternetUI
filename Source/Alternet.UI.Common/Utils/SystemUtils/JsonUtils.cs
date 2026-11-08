@@ -262,8 +262,20 @@ public static class JsonUtils
     {
         if (doc.RootElement.ValueKind != JsonValueKind.Object)
             return;
+        EnumerateProperties(doc.RootElement, action);
+    }
 
-        foreach (var prop in doc.RootElement.EnumerateObject())
+    /// <summary>
+    /// Enumerates the properties of a JSON object represented by a <see cref="JsonElement"/>
+    /// and invokes the specified action for each property.
+    /// </summary>
+    /// <param name="element">The JSON element representing an object.</param>
+    /// <param name="action">The action to invoke for each property, with the property name and value.</param>
+    public static void EnumerateProperties(
+        JsonElement element,
+        JsonPropertyDelegate action)
+    {
+        foreach (var prop in element.EnumerateObject())
         {
             action(prop, prop.Name, GetValue(prop.Value));
         }
@@ -290,7 +302,71 @@ public static class JsonUtils
 
             JsonValueKind.Null => null,
 
-            _ => element // object/array
+            JsonValueKind.Object => ConvertObjectElement(element),
+
+            JsonValueKind.Array => ConvertArrayElement(element),
+
+            _ => element.GetString(),
         };
+
+        object? ConvertObjectElement(JsonElement element)
+        {
+            var result = PropertyBag.Create();
+
+            EnumerateProperties(element, (prop, name, value) =>
+            {
+                result.SetProperty(name, value);
+            });
+
+            return result;
+        }
+
+        object ConvertArrayElement(JsonElement element)
+        {
+            var isObjectArray = IsObjectArray(element);
+
+            if (isObjectArray)
+            {
+                var result = new List<IPropertyBag>();
+                foreach (JsonElement item in element.EnumerateArray())
+                {
+                    var obj = ConvertObjectElement(item);
+                    if (obj is IPropertyBag propertyBag)
+                        result.Add(propertyBag);
+                }
+
+                return (IEnumerable<IPropertyBag>)result;
+            }
+            else
+            {
+                var result = new List<object?>();
+                foreach (JsonElement item in element.EnumerateArray())
+                {
+                    var value = GetValue(item);
+                    result.Add(value);
+                }
+
+                return result;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Determines whether the specified JSON element is an array of objects.
+    /// </summary>
+    /// <param name="element">The JSON element to check.</param>
+    /// <returns><c>true</c> if the element is an array of objects; otherwise, <c>false</c>.</returns>
+    public static bool IsObjectArray(JsonElement element)
+    {
+        if (element.ValueKind != JsonValueKind.Array)
+            return false;
+
+        foreach (var item in element.EnumerateArray())
+        {
+            if (item.ValueKind != JsonValueKind.Object)
+                return false;
+        }
+
+        return true;
     }
 }
