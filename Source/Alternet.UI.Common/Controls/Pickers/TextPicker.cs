@@ -269,6 +269,24 @@ namespace Alternet.UI
                 ButtonClick -= OnClearButtonClick;
                 ButtonClick += OnClearButtonClick;
 
+                TextBox.TextChanged -= OnTextChanged;
+                TextBox.TextChanged += OnTextChanged;
+
+                UpadateButtonVisibility();
+
+                void OnTextChanged(object? s, EventArgs e)
+                {
+                    Post(() =>
+                    {
+                        UpadateButtonVisibility();
+                    });
+                }
+
+                void UpadateButtonVisibility()
+                {
+                    button.Visible = !string.IsNullOrEmpty(TextBox.Text);
+                }
+
                 void OnClearButtonClick(object? s, ControlAndButtonClickEventArgs e)
                 {
                     if (e.ButtonId != button.UniqueId)
