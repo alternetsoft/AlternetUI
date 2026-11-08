@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Alternet.UI
@@ -13,6 +14,75 @@ namespace Alternet.UI
     /// All methods are static and can be accessed without instantiating the class.</remarks>
     public static class LibraryUtils
     {
+        /// <summary>
+        /// Attempts to retrieve the address of an exported function from a native library.
+        /// </summary>
+        /// <param name="libraryNames">An array of native library names to search for the export.</param>
+        /// <param name="exportName">The name of the exported function to retrieve.</param>
+        /// <param name="export">When this method returns, contains the address of the exported function if found;
+        /// otherwise, zero.</param>
+        /// <returns><see langword="true"/> if the export was found; otherwise, <see langword="false"/>.</returns>
+        public static bool TryGetExport(
+                string[] libraryNames,
+                string exportName,
+                out nint export)
+        {
+            export = 0;
+
+            foreach (var libraryName in libraryNames)
+            {
+                if (!NativeLibrary.TryLoad(
+                    libraryName,
+                    out var library))
+                {
+                    continue;
+                }
+
+                if (NativeLibrary.TryGetExport(
+                    library,
+                    exportName,
+                    out export))
+                {
+                    return true;
+                }
+
+                NativeLibrary.Free(library);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Attempts to retrieve a delegate for an exported function from a native library.
+        /// </summary>
+        /// <typeparam name="TDelegate">The type of the delegate to retrieve.</typeparam>
+        /// <param name="libraryNames">An array of native library names to search for the export.</param>
+        /// <param name="exportName">The name of the exported function to retrieve.</param>
+        /// <param name="function">When this method returns, contains the delegate for the
+        /// exported function if found; otherwise, <see langword="null"/>.</param>
+        /// <returns><see langword="true"/> if the export was found and the delegate was created;
+        /// otherwise, <see langword="false"/>.</returns>
+        public static bool TryGetExport<TDelegate>(
+            string[] libraryNames,
+            string exportName,
+            out TDelegate? function)
+            where TDelegate : Delegate
+        {
+            function = null;
+
+            if (!TryGetExport(
+                libraryNames,
+                exportName,
+                out var proc))
+            {
+                return false;
+            }
+
+            function = Marshal.GetDelegateForFunctionPointer<TDelegate>(proc);
+
+            return true;
+        }
+
         /// <summary>
         /// Determines whether a native library with the specified name is currently loaded in the process.
         /// </summary>
