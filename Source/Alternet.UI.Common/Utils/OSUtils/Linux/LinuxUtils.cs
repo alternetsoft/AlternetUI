@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -14,6 +16,7 @@ namespace Alternet.UI
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate nint GnuGetLibcVersionDelegate();
 
+        private static string[]? osReleaseFileData;
         private static bool? isUbuntu;
         private static string? uNameResult;
         private static bool? isAndroid;
@@ -117,6 +120,78 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the contents of the os-release file as a single string,
+        /// which contains information about the Linux distribution. 
+        /// Result contains line breaks between each line of the file.
+        /// Sample Result:
+        /// NAME="Ubuntu"
+        /// VERSION="24.04.1 LTS (Noble Numbat)"
+        /// ID=ubuntu
+        /// ID_LIKE = debian
+        /// PRETTY_NAME="Ubuntu 24.04.1 LTS"
+        /// VERSION_ID="24.04"
+        /// </summary>
+        public static string OsReleaseFileDataAsString => string.Join(Environment.NewLine, OsReleaseFileData);
+
+        /// <summary>
+        /// Gets the contents of the os-release file, which contains information about the Linux distribution.
+        /// Result is cached for future calls.
+        /// Sample Result:
+        /// NAME="Ubuntu"
+        /// VERSION="24.04.1 LTS (Noble Numbat)"
+        /// ID=ubuntu
+        /// ID_LIKE = debian
+        /// PRETTY_NAME="Ubuntu 24.04.1 LTS"
+        /// VERSION_ID="24.04"
+        /// </summary>
+        public static string[] OsReleaseFileData
+        {
+            get
+            {
+                if (osReleaseFileData is not null)
+                    return osReleaseFileData;
+
+                osReleaseFileData = Array.Empty<string>();
+
+                try
+                {
+                    // Use /etc/os-release when present; otherwise use the vendor fallback.
+                    string path = File.Exists("/etc/os-release")
+                        ? "/etc/os-release"
+                        : "/usr/lib/os-release";
+
+                    osReleaseFileData = File.ReadLines(path).ToArray();
+                }
+                catch (Exception ex)
+                {
+                    BaseObject.Nop(ex);
+                }
+
+                return osReleaseFileData;
+            }
+
+            set
+            {
+                osReleaseFileData = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the distribution ID from the os-release file, which identifies the Linux distribution.
+        /// </summary>
+        /// <returns>The distribution ID as a string, or <c>null</c> if it cannot be determined.</returns>
+        public static string? DistributionId
+        {
+            get
+            {
+                string? line = OsReleaseFileData.FirstOrDefault(line => line.StartsWith("ID=", StringComparison.Ordinal));
+
+                // ID is a restricted identifier and may be quoted.
+                return line?.Substring(3).Trim().Trim('"', '\'');
+            }
+        }
+
+        /// <summary>
         /// Indicates whether the current application is running on Ubuntu.
         /// </summary>
         public static bool IsUbuntu
@@ -127,8 +202,8 @@ namespace Alternet.UI
                 {
                     try
                     {
-                        var linuxInfo = new System.IO.StreamReader("/etc/os-release").ReadToEnd();
-                        isUbuntu = linuxInfo.Contains("Ubuntu");
+                        var id = DistributionId;
+                        isUbuntu = id?.Contains("Ubuntu") ?? false;
                     }
                     catch (Exception e)
                     {
@@ -138,6 +213,11 @@ namespace Alternet.UI
                 }
 
                 return isUbuntu.Value;
+            }
+
+            set
+            {
+                isUbuntu = value;
             }
         }
 
