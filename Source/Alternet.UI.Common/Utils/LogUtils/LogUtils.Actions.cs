@@ -848,6 +848,7 @@ namespace Alternet.UI
             {
                 App.LogNameValue("uname -s", LinuxUtils.UnameResult);
                 App.LogNameValue("IsUbuntu", LinuxUtils.IsUbuntu);
+                App.LogNameValue("GlibcVersion", LinuxUtils.GetGlibcVersion());
             }
 
             App.LogNameValue("CommonUtils.GetAppExePath()", CommonUtils.GetAppExePath());

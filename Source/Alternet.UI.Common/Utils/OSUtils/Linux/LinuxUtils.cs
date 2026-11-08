@@ -11,10 +11,36 @@ namespace Alternet.UI
     /// </summary>
     public static partial class LinuxUtils
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private delegate nint GnuGetLibcVersionDelegate();
+
         private static bool? isUbuntu;
         private static string? uNameResult;
         private static bool? isAndroid;
         private static bool? isMusl;
+        private static string? glibcVersion;
+
+        /// <summary>
+        /// Gets the version of the GNU C Library (glibc) used by the current Linux system.
+        /// </summary>
+        public static Version GlibcVersion
+        {
+            get
+            {
+                var versionString = GetGlibcVersion();
+                if (string.IsNullOrEmpty(versionString))
+                    return new Version(0, 0);
+                try
+                {
+                    return new Version(versionString);
+                }
+                catch (Exception e)
+                {
+                    BaseObject.Nop(e);
+                    return new Version(0, 0);
+                }
+            }
+        }
 
         /// <summary>
         /// Indicates whether the current application is running on Android.
@@ -112,6 +138,44 @@ namespace Alternet.UI
                 }
 
                 return isUbuntu.Value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the version of the GNU C Library (glibc) used by the current Linux system.
+        /// </summary>
+        /// <returns>A string representing the glibc version.
+        /// Returns an empty string if the version cannot be determined.</returns>
+        public static string GetGlibcVersion()
+        {
+            try
+            {
+                if (!App.IsLinuxOS)
+                    return string.Empty;
+
+                if (glibcVersion is not null)
+                    return glibcVersion;
+
+                glibcVersion = string.Empty;
+
+                if (LibraryUtils.TryGetExport(
+                    ["libc.so.6", "libc"],
+                    "gnu_get_libc_version",
+                    out GnuGetLibcVersionDelegate? getVersion))
+                {
+                    if (getVersion is null)
+                        return string.Empty;
+                    var version = Marshal.PtrToStringUTF8(getVersion()) ?? string.Empty;
+                    glibcVersion = version;
+                    return version;
+                }
+
+                return string.Empty;
+            }
+            catch (Exception e)
+            {
+                LogUtils.LogExceptionIfDebug(e);
+                return string.Empty;
             }
         }
 

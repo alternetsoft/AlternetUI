@@ -24,7 +24,8 @@ namespace Alternet.UI
     public static partial class LogUtils
     {
         /// <summary>
-        /// Gets or sets a value indicating whether <see cref="LogException"/> method logs exceptions to the debug output
+        /// Gets or sets a value indicating whether <see cref="LogException"/>
+        /// method logs exceptions to the debug output
         /// using <see cref="Debug.WriteLine(object?)"/> method.
         /// </summary>
         public static bool LogExceptionToDebugOutput = true;
