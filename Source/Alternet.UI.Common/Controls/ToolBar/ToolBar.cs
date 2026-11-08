@@ -2634,6 +2634,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds text only <see cref="SpeedButton"/> to the control with a specific type.
+        /// </summary>
+        /// <typeparam name="TSpeedButton">The type of the button to add.</typeparam>
+        /// <param name="text">The button text.</param>
+        /// <param name="toolTip">The button tooltip.</param>
+        /// <param name="action">The button click action.</param>
+        /// <returns>The added <see cref="SpeedButton"/>.</returns>
+        public virtual SpeedButton AddTextBtn<TSpeedButton>(
+            string? text = null,
+            object? toolTip = null,
+            EventHandler? action = null)
+            where TSpeedButton : SpeedButton, new()
+        {
+            var result = WithButtonTypeOverride(typeof(TSpeedButton), () =>
+            {
+                var speedButton = AddTextBtnCore(text, toolTip, action);
+                return speedButton;
+            });
+
+            return result;
+        }
+
+        /// <summary>
         /// Adds text only <see cref="SpeedButton"/> to the control.
         /// </summary>
         /// <param name="text">Item text.</param>
@@ -3052,6 +3075,32 @@ namespace Alternet.UI
             {
                 customButtonType = type;
                 action();
+            }
+            finally
+            {
+                customButtonType = null;
+            }
+        }
+
+        /// <summary>
+        /// Overrides button type used when items are created and calls the specified function.
+        /// </summary>
+        /// <param name="type">The type of the button to use as override.</param>
+        /// <param name="func">Function to call.</param>
+        /// <returns>The result of the function.</returns>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="type"/>
+        /// is not derived from <see cref="SpeedButton"/>.</exception>
+        public virtual SpeedButton WithButtonTypeOverride(Type type, Func<SpeedButton> func)
+        {
+            if (!typeof(SpeedButton).IsAssignableFrom(type))
+            {
+                throw new ArgumentException($"{type.Name} must inherit from {nameof(SpeedButton)}");
+            }
+
+            try
+            {
+                customButtonType = type;
+                return func();
             }
             finally
             {

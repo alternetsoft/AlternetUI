@@ -21,6 +21,11 @@ namespace PropertyGridSample
                 c.AddIcon(KnownIcons.Default);
             });
 
+            AddControlAction<ToolBar>("Add Snooze button", (c) =>
+            {
+                c.AddTextBtn<SnoozeSpeedButton>();
+            });
+
             PropertyGridUtils.AddSimpleAction<ToolBar>(
                 "Configure as ContextMenu",
                 () => {
