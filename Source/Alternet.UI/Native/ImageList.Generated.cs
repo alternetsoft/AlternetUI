@@ -95,39 +95,49 @@ namespace Alternet.UI.Native
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr ImageList_Create_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr ImageList_Create_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ImageList_GetPixelImageSizeX_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ImageList_GetPixelImageSizeX_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ImageList_GetPixelImageSizeY_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ImageList_GetPixelImageSizeY_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float ImageList_GetImageSizeX_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial float ImageList_GetImageSizeX_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float ImageList_GetImageSizeY_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial float ImageList_GetImageSizeY_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ImageList_AddImage_(IntPtr obj, IntPtr image);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ImageList_AddImage_(IntPtr obj, IntPtr image);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ImageList_SetImageSize_(IntPtr obj, float sizeX, float sizeY);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ImageList_SetImageSize_(IntPtr obj, float sizeX, float sizeY);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ImageList_SetPixelImageSize_(IntPtr obj, int sizeX, int sizeY);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ImageList_SetPixelImageSize_(IntPtr obj, int sizeX, int sizeY);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ImageList_Remove_(IntPtr obj, int index);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool ImageList_Remove_(IntPtr obj, int index);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ImageList_Clear_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool ImageList_Clear_(IntPtr obj);
             
         }
     }

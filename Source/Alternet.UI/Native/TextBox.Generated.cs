@@ -585,7 +585,7 @@ NativeApi.TextBox_WriteText_(NativePointer, ref text_Native);
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
@@ -599,233 +599,309 @@ NativeApi.TextBox_WriteText_(NativePointer, ref text_Native);
                 TextMaxLength,
             }
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetEventCallback_(TextBoxEventCallbackType callback);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr TextBox_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBox_GetTextWrap_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetTextWrap_(IntPtr obj, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBox_GetTextAlign_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetTextAlign_(IntPtr obj, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetEditControlOnly_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetEditControlOnly_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetReadOnly_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetReadOnly_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TextBox_GetValidator_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetValidator_(IntPtr obj, System.IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetMultiline_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetMultiline_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetIsRichEdit_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetIsRichEdit_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetHasSelection_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetIsModified_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetIsModified_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetCanCopy_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetCanCut_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetCanPaste_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetCanRedo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetCanUndo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetIsEmpty_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetHideSelection_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetHideSelection_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetProcessTab_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetProcessTab_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetProcessEnter_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetProcessEnter_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetIsPassword_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetIsPassword_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetAutoUrl_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetAutoUrl_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_GetHideVertScrollbar_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetHideVertScrollbar_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TextBox_CreateTextBox_(System.IntPtr validator);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBox_GetReportedUrl_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBox_GetLineLength_(IntPtr obj, long lineNo);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBox_GetLineText_(IntPtr obj, long lineNo);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBox_GetNumberOfLines_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI TextBox_PositionToXY_(IntPtr obj, long pos);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD TextBox_PositionToCoords_(IntPtr obj, long pos);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_ShowPosition_(IntPtr obj, long pos);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long TextBox_XYToPosition_(IntPtr obj, long x, long y);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TextBox_GetDefaultStyle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TextBox_GetStyle_(IntPtr obj, long position);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_SetDefaultStyle_(IntPtr obj, System.IntPtr style);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_SetStyle_(IntPtr obj, long start, long end, System.IntPtr style);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Clear_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Copy_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Cut_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_AppendText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long TextBox_GetInsertionPoint_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Paste_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Redo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Remove_(IntPtr obj, long from, long to);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Replace_(IntPtr obj, long from, long to, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetInsertionPoint_(IntPtr obj, long pos);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetInsertionPointEnd_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetMaxLength_(IntPtr obj, ulong len);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetSelection_(IntPtr obj, long from, long to);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SelectAll_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SelectNone_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBox_GetEmptyTextHint_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetEmptyTextHint_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Undo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_WriteText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBox_GetRange_(IntPtr obj, long from, long to);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBox_GetStringSelection_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_EmptyUndoBuffer_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBox_IsValidPosition_(IntPtr obj, long pos);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long TextBox_GetLastPosition_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long TextBox_GetSelectionStart_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long TextBox_GetSelectionEnd_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetEventCallback_(TextBoxEventCallbackType callback);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr TextBox_Create_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBox_GetTextWrap_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetTextWrap_(IntPtr obj, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBox_GetTextAlign_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetTextAlign_(IntPtr obj, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetEditControlOnly_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetEditControlOnly_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetReadOnly_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetReadOnly_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr TextBox_GetValidator_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetValidator_(IntPtr obj, System.IntPtr value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetMultiline_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetMultiline_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetIsRichEdit_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetIsRichEdit_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetHasSelection_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetIsModified_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetIsModified_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetCanCopy_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetCanCut_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetCanPaste_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetCanRedo_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetCanUndo_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetIsEmpty_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetHideSelection_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetHideSelection_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetProcessTab_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetProcessTab_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetProcessEnter_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetProcessEnter_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetIsPassword_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetIsPassword_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetAutoUrl_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetAutoUrl_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_GetHideVertScrollbar_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetHideVertScrollbar_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr TextBox_CreateTextBox_(System.IntPtr validator);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan TextBox_GetReportedUrl_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBox_GetLineLength_(IntPtr obj, long lineNo);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan TextBox_GetLineText_(IntPtr obj, long lineNo);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBox_GetNumberOfLines_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.PointI TextBox_PositionToXY_(IntPtr obj, long pos);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.PointD TextBox_PositionToCoords_(IntPtr obj, long pos);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_ShowPosition_(IntPtr obj, long pos);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long TextBox_XYToPosition_(IntPtr obj, long x, long y);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr TextBox_GetDefaultStyle_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr TextBox_GetStyle_(IntPtr obj, long position);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_SetDefaultStyle_(IntPtr obj, System.IntPtr style);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_SetStyle_(IntPtr obj, long start, long end, System.IntPtr style);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_Clear_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_Copy_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_Cut_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_AppendText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long TextBox_GetInsertionPoint_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_Paste_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_Redo_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_Remove_(IntPtr obj, long from, long to);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_Replace_(IntPtr obj, long from, long to, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetInsertionPoint_(IntPtr obj, long pos);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetInsertionPointEnd_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetMaxLength_(IntPtr obj, ulong len);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetSelection_(IntPtr obj, long from, long to);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SelectAll_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SelectNone_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan TextBox_GetEmptyTextHint_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_SetEmptyTextHint_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_Undo_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_WriteText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan TextBox_GetRange_(IntPtr obj, long from, long to);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan TextBox_GetStringSelection_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBox_EmptyUndoBuffer_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBox_IsValidPosition_(IntPtr obj, long pos);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long TextBox_GetLastPosition_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long TextBox_GetSelectionStart_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long TextBox_GetSelectionEnd_(IntPtr obj);
             
         }
     }

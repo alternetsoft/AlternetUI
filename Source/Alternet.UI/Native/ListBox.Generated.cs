@@ -277,7 +277,7 @@ return NativeApi.ListBox_Insert_(NativePointer, ref item_Native, pos);
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
@@ -290,113 +290,149 @@ return NativeApi.ListBox_Insert_(NativePointer, ref item_Native, pos);
                 CheckedChanged,
             }
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetEventCallback_(ListBoxEventCallbackType callback);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_SetEventCallback_(ListBoxEventCallbackType callback);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr ListBox_Create_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr ListBox_Create_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ListBox_GetHasBorder_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool ListBox_GetHasBorder_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetHasBorder_(IntPtr obj, bool value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_SetHasBorder_(IntPtr obj, bool value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_Check_(IntPtr obj, int item, bool check);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_Check_(IntPtr obj, int item, bool check);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ListBox_IsChecked_(IntPtr obj, int item);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool ListBox_IsChecked_(IntPtr obj, int item);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr ListBox_CreateListBox_(Alternet.UI.ListBoxHandlerCreateFlags createFlags);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr ListBox_CreateListBox_(Alternet.UI.ListBoxHandlerCreateFlags createFlags);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetSelection_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_GetSelection_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ListBox_IsSelected_(IntPtr obj, int n);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool ListBox_IsSelected_(IntPtr obj, int n);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ListBox_IsSorted_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool ListBox_IsSorted_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ListBox_SetStringSelection_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, bool select);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool ListBox_SetStringSelection_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, bool select);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetItemSelection_(IntPtr obj, int index, bool select);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_SetItemSelection_(IntPtr obj, int index, bool select);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_FindString_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, bool bCase);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_FindString_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, bool bCase);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetCountPerPage_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_GetCountPerPage_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetTopItem_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_GetTopItem_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_HitTest_(IntPtr obj, ref Alternet.Drawing.PointD point);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_HitTest_(IntPtr obj, ref Alternet.Drawing.PointD point);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan ListBox_GetString_(IntPtr obj, uint n);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan ListBox_GetString_(IntPtr obj, uint n);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern uint ListBox_GetCount_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial uint ListBox_GetCount_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_Deselect_(IntPtr obj, int n);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_Deselect_(IntPtr obj, int n);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_EnsureVisible_(IntPtr obj, int n);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_EnsureVisible_(IntPtr obj, int n);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetFirstItem_(IntPtr obj, int n);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_SetFirstItem_(IntPtr obj, int n);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetFirstItemStr_(IntPtr obj, ref Alternet.UI.NativeStringSpan s);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_SetFirstItemStr_(IntPtr obj, ref Alternet.UI.NativeStringSpan s);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetSelection_(IntPtr obj, int n);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_SetSelection_(IntPtr obj, int n);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetString_(IntPtr obj, uint n, ref Alternet.UI.NativeStringSpan s);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_SetString_(IntPtr obj, uint n, ref Alternet.UI.NativeStringSpan s);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_Clear_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_Clear_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_Delete_(IntPtr obj, uint n);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_Delete_(IntPtr obj, uint n);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_Append_(IntPtr obj, ref Alternet.UI.NativeStringSpan s);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_Append_(IntPtr obj, ref Alternet.UI.NativeStringSpan s);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_Insert_(IntPtr obj, ref Alternet.UI.NativeStringSpan item, uint pos);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_Insert_(IntPtr obj, ref Alternet.UI.NativeStringSpan item, uint pos);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetSelectionsCount_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_GetSelectionsCount_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetSelectionsItem_(IntPtr obj, int index);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_GetSelectionsItem_(IntPtr obj, int index);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_UpdateSelections_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_UpdateSelections_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetFlags_(IntPtr obj, Alternet.UI.ListBoxHandlerFlags flags);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_SetFlags_(IntPtr obj, Alternet.UI.ListBoxHandlerFlags flags);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.ListBoxHandlerFlags ListBox_GetFlags_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.ListBoxHandlerFlags ListBox_GetFlags_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetCheckedIndexesCount_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_GetCheckedIndexesCount_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_GetCheckedIndexesItem_(IntPtr obj, int index);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int ListBox_GetCheckedIndexesItem_(IntPtr obj, int index);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_UpdateCheckedIndexes_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void ListBox_UpdateCheckedIndexes_(IntPtr obj);
             
         }
     }

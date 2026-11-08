@@ -675,7 +675,7 @@ return NativeApi.WebBrowser_AddUserScript_(NativePointer, ref javascript_Native,
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
@@ -696,260 +696,345 @@ return NativeApi.WebBrowser_AddUserScript_(NativePointer, ref javascript_Native,
                 BeforeBrowserCreate,
             }
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetEventCallback_(WebBrowserEventCallbackType callback);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr WebBrowser_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetIsEdgeBackendEnabled_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetIsEdgeBackendEnabled_(bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetHasBorder_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetHasBorder_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetCanGoBack_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetCanGoForward_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetCanCut_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetCanCopy_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetCanUndo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetCanRedo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetIsBusy_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetCanPaste_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float WebBrowser_GetZoomFactor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetZoomFactor_(IntPtr obj, float value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetHasSelection_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetAccessToDevToolsEnabled_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetAccessToDevToolsEnabled_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WebBrowser_GetPreferredColorScheme_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetPreferredColorScheme_(IntPtr obj, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetContextMenuEnabled_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetContextMenuEnabled_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetEditable_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetEditable_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WebBrowser_GetZoom_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetZoom_(IntPtr obj, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_GetIsEdge_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WebBrowser_Find_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_CrtSetDbgFlag_(int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WebBrowser_GetBackend_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetZoomType_(IntPtr obj, int zoomType);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_CanSetZoomType_(IntPtr obj, int type);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetBackendVersionString_(int backend);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_IsBackendIEAvailable_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_IsBackendEdgeAvailable_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_IsBackendWebKitAvailable_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetBackend_(int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetLibraryVersionString_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultPage_(ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WebBrowser_GetZoomType_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WebBrowser_CreateWebBrowser_(ref Alternet.UI.NativeStringSpan url);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultUserAgent_(ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultScriptMesageName_(ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultFSNameMemory_(ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultFSNameArchive_(ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetSelectedSource_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetSelectedText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetPageSource_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetPageText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetUserAgent_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetUserAgent_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_DoCommand_(IntPtr obj, ref Alternet.UI.NativeStringSpan cmdName, ref Alternet.UI.NativeStringSpan cmdParam1, ref Alternet.UI.NativeStringSpan cmdParam2);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_DoCommandGlobal_(ref Alternet.UI.NativeStringSpan cmdName, ref Alternet.UI.NativeStringSpan cmdParam1, ref Alternet.UI.NativeStringSpan cmdParam2);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetVirtualHostNameToFolderMapping_(IntPtr obj, ref Alternet.UI.NativeStringSpan hostName, ref Alternet.UI.NativeStringSpan folderPath, int accessKind);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WebBrowser_GetNativeBackend_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_GoBack_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_GoForward_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_Stop_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_ClearSelection_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_Copy_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_Paste_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_Cut_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_ClearHistory_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_EnableHistory_(IntPtr obj, bool enable);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_ReloadDefault_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_Reload_(IntPtr obj, bool noCache);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SelectAll_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_DeleteSelection_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_Undo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_Redo_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_Print_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_RemoveAllUserScripts_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_AddScriptMessageHandler_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_RemoveScriptMessageHandler_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_RunScriptAsync_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript, System.IntPtr clientData);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_CreateBackend_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WebBrowser_GetBackendOS_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetEdgePath_(ref Alternet.UI.NativeStringSpan path);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetCurrentTitle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetCurrentURL_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_LoadURL_(IntPtr obj, ref Alternet.UI.NativeStringSpan url);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WebBrowser_RunScript_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetPage_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, ref Alternet.UI.NativeStringSpan baseUrl);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_AddUserScript_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript, int injectionTime);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetEventCallback_(WebBrowserEventCallbackType callback);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr WebBrowser_Create_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetIsEdgeBackendEnabled_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetIsEdgeBackendEnabled_(bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetHasBorder_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetHasBorder_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetCanGoBack_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetCanGoForward_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetCanCut_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetCanCopy_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetCanUndo_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetCanRedo_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetIsBusy_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetCanPaste_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial float WebBrowser_GetZoomFactor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetZoomFactor_(IntPtr obj, float value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetHasSelection_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetAccessToDevToolsEnabled_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetAccessToDevToolsEnabled_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WebBrowser_GetPreferredColorScheme_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetPreferredColorScheme_(IntPtr obj, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetContextMenuEnabled_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetContextMenuEnabled_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetEditable_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetEditable_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WebBrowser_GetZoom_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetZoom_(IntPtr obj, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_GetIsEdge_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WebBrowser_Find_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_CrtSetDbgFlag_(int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WebBrowser_GetBackend_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetZoomType_(IntPtr obj, int zoomType);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_CanSetZoomType_(IntPtr obj, int type);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetBackendVersionString_(int backend);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_IsBackendIEAvailable_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_IsBackendEdgeAvailable_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_IsBackendWebKitAvailable_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetBackend_(int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetLibraryVersionString_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetDefaultPage_(ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WebBrowser_GetZoomType_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WebBrowser_CreateWebBrowser_(ref Alternet.UI.NativeStringSpan url);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetDefaultUserAgent_(ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetDefaultScriptMesageName_(ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetDefaultFSNameMemory_(ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetDefaultFSNameArchive_(ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetSelectedSource_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetSelectedText_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetPageSource_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetPageText_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetUserAgent_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetUserAgent_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_DoCommand_(IntPtr obj, ref Alternet.UI.NativeStringSpan cmdName, ref Alternet.UI.NativeStringSpan cmdParam1, ref Alternet.UI.NativeStringSpan cmdParam2);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_DoCommandGlobal_(ref Alternet.UI.NativeStringSpan cmdName, ref Alternet.UI.NativeStringSpan cmdParam1, ref Alternet.UI.NativeStringSpan cmdParam2);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetVirtualHostNameToFolderMapping_(IntPtr obj, ref Alternet.UI.NativeStringSpan hostName, ref Alternet.UI.NativeStringSpan folderPath, int accessKind);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WebBrowser_GetNativeBackend_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_GoBack_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_GoForward_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_Stop_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_ClearSelection_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_Copy_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_Paste_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_Cut_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_ClearHistory_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_EnableHistory_(IntPtr obj, bool enable);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_ReloadDefault_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_Reload_(IntPtr obj, bool noCache);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SelectAll_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_DeleteSelection_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_Undo_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_Redo_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_Print_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_RemoveAllUserScripts_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_AddScriptMessageHandler_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_RemoveScriptMessageHandler_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_RunScriptAsync_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript, System.IntPtr clientData);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_CreateBackend_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WebBrowser_GetBackendOS_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetEdgePath_(ref Alternet.UI.NativeStringSpan path);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetCurrentTitle_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_GetCurrentURL_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_LoadURL_(IntPtr obj, ref Alternet.UI.NativeStringSpan url);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WebBrowser_RunScript_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WebBrowser_SetPage_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, ref Alternet.UI.NativeStringSpan baseUrl);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WebBrowser_AddUserScript_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript, int injectionTime);
             
         }
     }

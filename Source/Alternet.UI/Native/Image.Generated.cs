@@ -361,144 +361,189 @@ return NativeApi.Image_Rescale_(NativePointer, ref sizeNeeded_Native);
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Image_Create_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr Image_Create_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_GetHasMask_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_GetHasMask_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float Image_GetScaleFactor_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial float Image_GetScaleFactor_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_SetScaleFactor_(IntPtr obj, float value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Image_SetScaleFactor_(IntPtr obj, float value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetDipSizeX_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetDipSizeX_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetDipSizeY_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetDipSizeY_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float Image_GetScaledHeight_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial float Image_GetScaledHeight_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetScaledSizeX_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetScaledSizeX_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetScaledSizeY_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetScaledSizeY_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float Image_GetScaledWidth_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial float Image_GetScaledWidth_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetPixelSizeX_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetPixelSizeX_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetPixelSizeY_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetPixelSizeY_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_GetIsOk_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_GetIsOk_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_GetHasAlpha_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_GetHasAlpha_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_SetHasAlpha_(IntPtr obj, bool value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Image_SetHasAlpha_(IntPtr obj, bool value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetPixelWidth_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetPixelWidth_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetPixelHeight_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetPixelHeight_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetDepth_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetDepth_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetStaticOption_(int objectId, int propId);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetStaticOption_(int objectId, int propId);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_Log_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Image_Log_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_InitializeFromDipSize_(IntPtr obj, int width, int height, float scale, int depth);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_InitializeFromDipSize_(IntPtr obj, int width, int height, float scale, int depth);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_InitializeFromScreen_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_InitializeFromScreen_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadFromStream_(IntPtr obj, IntPtr stream);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_LoadFromStream_(IntPtr obj, IntPtr stream);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, ref NativeApiTypes.Color color);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, ref NativeApiTypes.Color color);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadSvgFromString_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, int width, int height, ref NativeApiTypes.Color color);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_LoadSvgFromString_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, int width, int height, ref NativeApiTypes.Color color);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_Initialize_(IntPtr obj, ref Alternet.Drawing.SizeI size, int depth);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Image_Initialize_(IntPtr obj, ref Alternet.Drawing.SizeI size, int depth);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_InitializeFromImage_(IntPtr obj, IntPtr source, ref Alternet.Drawing.SizeI size);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Image_InitializeFromImage_(IntPtr obj, IntPtr source, ref Alternet.Drawing.SizeI size);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_SaveToStream_(IntPtr obj, IntPtr stream, ref Alternet.UI.NativeStringSpan format);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_SaveToStream_(IntPtr obj, IntPtr stream, ref Alternet.UI.NativeStringSpan format);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_SaveToFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan fileName);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_SaveToFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan fileName);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Image_ConvertToGenericImage_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Image_ConvertToGenericImage_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_LoadFromGenericImage_(IntPtr obj, System.IntPtr image, int depth);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Image_LoadFromGenericImage_(IntPtr obj, System.IntPtr image, int depth);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_GrayScale_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_GrayScale_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_ResetAlpha_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_ResetAlpha_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, int type);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_LoadFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, int type);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_SaveFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, int type);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_SaveFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, int type);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_SaveStream_(IntPtr obj, IntPtr stream, int type);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_SaveStream_(IntPtr obj, IntPtr stream, int type);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadStream_(IntPtr obj, IntPtr stream, int type);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_LoadStream_(IntPtr obj, IntPtr stream, int type);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Image_GetSubBitmap_(IntPtr obj, ref Alternet.Drawing.RectI rect);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr Image_GetSubBitmap_(IntPtr obj, ref Alternet.Drawing.RectI rect);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Image_ConvertToDisabled_(IntPtr obj, byte brightness);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr Image_ConvertToDisabled_(IntPtr obj, byte brightness);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_Rescale_(IntPtr obj, ref Alternet.Drawing.SizeI sizeNeeded);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Image_Rescale_(IntPtr obj, ref Alternet.Drawing.SizeI sizeNeeded);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetDefaultBitmapType_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetDefaultBitmapType_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Image_LockBits_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Image_LockBits_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Image_GetStride_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Image_GetStride_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_UnlockBits_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Image_UnlockBits_(IntPtr obj);
             
         }
     }

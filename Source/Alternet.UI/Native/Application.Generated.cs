@@ -419,7 +419,7 @@ return NativeApi.Application_GetCustomData_(NativePointer, ref key_Native);
         public Action? AssertFailure;
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
@@ -442,143 +442,189 @@ return NativeApi.Application_GetCustomData_(NativePointer, ref key_Native);
                 AssertFailure,
             }
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetEventCallback_(ApplicationEventCallbackType callback);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetEventCallback_(ApplicationEventCallbackType callback);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Application_Create_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr Application_Create_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Application_GetKeyboard_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr Application_GetKeyboard_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Application_GetMouse_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr Application_GetMouse_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Application_GetClipboard_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr Application_GetClipboard_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_GetInUixmlPreviewerMode_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_GetInUixmlPreviewerMode_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetInUixmlPreviewerMode_(IntPtr obj, bool value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetInUixmlPreviewerMode_(IntPtr obj, bool value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_GetInvokeRequired_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_GetInvokeRequired_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetGtkCss_(bool inject, ref Alternet.UI.NativeStringSpan css);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetGtkCss_(bool inject, ref Alternet.UI.NativeStringSpan css);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.PropertyUpdateResult Application_SetAppearance_(IntPtr obj, Alternet.UI.ApplicationAppearance appearance);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.PropertyUpdateResult Application_SetAppearance_(IntPtr obj, Alternet.UI.ApplicationAppearance appearance);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_GetEventIdentifiers_(System.Int32[] eventIdentifiers, int eventIdentifiersCount);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_GetEventIdentifiers_(System.Int32[] eventIdentifiers, int eventIdentifiersCount);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetEventArgString_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Application_GetEventArgString_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_ThrowError_(int value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_ThrowError_(int value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetSystemOptionInt_(ref Alternet.UI.NativeStringSpan name, int value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetSystemOptionInt_(ref Alternet.UI.NativeStringSpan name, int value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetName_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Application_GetName_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_Run_(IntPtr obj, IntPtr window);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_Run_(IntPtr obj, IntPtr window);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetDisplayName_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Application_GetDisplayName_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetAppClassName_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Application_GetAppClassName_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetVendorName_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Application_GetVendorName_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetVendorDisplayName_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Application_GetVendorDisplayName_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetDisplayName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetDisplayName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetAppClassName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetAppClassName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetVendorName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetVendorName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetVendorDisplayName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetVendorDisplayName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Application_GetTopWindow_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Application_GetTopWindow_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_ExitMainLoop_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_ExitMainLoop_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_WakeUpIdle_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_WakeUpIdle_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_Exit_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_Exit_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SuppressDiagnostics_(int flags);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SuppressDiagnostics_(int flags);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_BeginInvoke_(IntPtr obj, PInvokeCallbackActionType action);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_BeginInvoke_(IntPtr obj, PInvokeCallbackActionType action);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_ProcessPendingEvents_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_ProcessPendingEvents_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_HasPendingEvents_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_HasPendingEvents_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Application_GetDisplayMode_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Application_GetDisplayMode_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_GetExitOnFrameDelete_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_GetExitOnFrameDelete_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Application_GetLayoutDirection_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int Application_GetLayoutDirection_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_GetUseBestVisual_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_GetUseBestVisual_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_IsActive_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_IsActive_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_SafeYield_(IntPtr obj, System.IntPtr window, bool onlyIfNeeded);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_SafeYield_(IntPtr obj, System.IntPtr window, bool onlyIfNeeded);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_SafeYieldFor_(IntPtr obj, System.IntPtr window, long eventsToProcess);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_SafeYieldFor_(IntPtr obj, System.IntPtr window, long eventsToProcess);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_SetDisplayMode_(IntPtr obj, System.IntPtr videoMode);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_SetDisplayMode_(IntPtr obj, System.IntPtr videoMode);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetExitOnFrameDelete_(IntPtr obj, bool flag);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetExitOnFrameDelete_(IntPtr obj, bool flag);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Application_SetNativeTheme_(IntPtr obj, ref Alternet.UI.NativeStringSpan theme);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Application_SetNativeTheme_(IntPtr obj, ref Alternet.UI.NativeStringSpan theme);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetTopWindow_(IntPtr obj, System.IntPtr window);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetTopWindow_(IntPtr obj, System.IntPtr window);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetUseBestVisual_(IntPtr obj, bool flag, bool forceTrueColor);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Application_SetUseBestVisual_(IntPtr obj, bool flag, bool forceTrueColor);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetCustomData_(IntPtr obj, ref Alternet.UI.NativeStringSpan key);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Application_GetCustomData_(IntPtr obj, ref Alternet.UI.NativeStringSpan key);
             
         }
     }

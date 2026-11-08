@@ -280,7 +280,7 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
         public Action? MenuDestroying;
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
@@ -296,113 +296,149 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
                 MenuDestroying,
             }
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetEventCallback_(MenuEventCallbackType callback);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetEventCallback_(MenuEventCallbackType callback);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Menu_Create_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr Menu_Create_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Menu_GetEventMenuItemChecked_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Menu_GetEventMenuItemChecked_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Menu_GetMacHelpMenuTitleName_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Menu_GetMacHelpMenuTitleName_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Menu_GetMacWindowMenuTitleName_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Menu_GetMacWindowMenuTitleName_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_MacSetCommonMenuBar_(IntPtr obj, System.IntPtr menuBar);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_MacSetCommonMenuBar_(IntPtr obj, System.IntPtr menuBar);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_GetMainMenu_(IntPtr window);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Menu_GetMainMenu_(IntPtr window);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_FindMenuItem_(IntPtr window, ref Alternet.UI.NativeStringSpan id);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Menu_FindMenuItem_(IntPtr window, ref Alternet.UI.NativeStringSpan id);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMainMenu_(IntPtr window, System.IntPtr menu);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetMainMenu_(IntPtr window, System.IntPtr menu);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Menu_MainMenuAppend_(System.IntPtr menuHandle, System.IntPtr menu, ref Alternet.UI.NativeStringSpan text);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Menu_MainMenuAppend_(System.IntPtr menuHandle, System.IntPtr menu, ref Alternet.UI.NativeStringSpan text);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_MainMenuSetEnabled_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, bool enable);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_MainMenuSetEnabled_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, bool enable);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_MainMenuGetSubMenu_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Menu_MainMenuGetSubMenu_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_MainMenuRemove_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Menu_MainMenuRemove_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Menu_MainMenuInsert_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr menu, ref Alternet.UI.NativeStringSpan title);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Menu_MainMenuInsert_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr menu, ref Alternet.UI.NativeStringSpan title);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_MainMenuReplace_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr menu, ref Alternet.UI.NativeStringSpan title);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Menu_MainMenuReplace_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr menu, ref Alternet.UI.NativeStringSpan title);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_MainMenuSetText_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, ref Alternet.UI.NativeStringSpan label);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_MainMenuSetText_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, ref Alternet.UI.NativeStringSpan label);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateMainMenu_(ref Alternet.UI.NativeStringSpan id);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Menu_CreateMainMenu_(ref Alternet.UI.NativeStringSpan id);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateContextMenu_(ref Alternet.UI.NativeStringSpan id);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Menu_CreateContextMenu_(ref Alternet.UI.NativeStringSpan id);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateMenuItem_(Alternet.UI.MenuItemType itemType, ref Alternet.UI.NativeStringSpan id, ref Alternet.UI.NativeStringSpan title, ref Alternet.UI.NativeStringSpan help, System.IntPtr menuHandle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr Menu_CreateMenuItem_(Alternet.UI.MenuItemType itemType, ref Alternet.UI.NativeStringSpan id, ref Alternet.UI.NativeStringSpan title, ref Alternet.UI.NativeStringSpan help, System.IntPtr menuHandle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_DestroyMainMenu_(System.IntPtr menuHandle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_DestroyMainMenu_(System.IntPtr menuHandle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_DestroyMenuItem_(System.IntPtr menuHandle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_DestroyMenuItem_(System.IntPtr menuHandle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_DestroyContextMenu_(System.IntPtr menuHandle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_DestroyContextMenu_(System.IntPtr menuHandle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Menu_GetMenuId_(System.IntPtr handle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Menu_GetMenuId_(System.IntPtr handle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.MenuItemType Menu_GetMenuItemType_(System.IntPtr handle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.MenuItemType Menu_GetMenuItemType_(System.IntPtr handle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemBitmap_(System.IntPtr handle, IntPtr value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetMenuItemBitmap_(System.IntPtr handle, IntPtr value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemEnabled_(System.IntPtr handle, bool value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetMenuItemEnabled_(System.IntPtr handle, bool value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemRole_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan role);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetMenuItemRole_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan role);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemText_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan value, ref Alternet.UI.NativeStringSpan rightValue);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetMenuItemText_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan value, ref Alternet.UI.NativeStringSpan rightValue);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemChecked_(System.IntPtr handle, bool value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetMenuItemChecked_(System.IntPtr handle, bool value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemSubMenu_(System.IntPtr handle, System.IntPtr subMenuHandle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetMenuItemSubMenu_(System.IntPtr handle, System.IntPtr subMenuHandle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemShortcut_(System.IntPtr handle, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_SetMenuItemShortcut_(System.IntPtr handle, Alternet.UI.Key key, Alternet.UI.ModifierKeys modifierKeys);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_MenuAddItem_(System.IntPtr handle, System.IntPtr itemHandle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_MenuAddItem_(System.IntPtr handle, System.IntPtr itemHandle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_MenuRemoveItem_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan childId);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_MenuRemoveItem_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan childId);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Menu_MenuInsertItem_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr itemHandle);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool Menu_MenuInsertItem_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr itemHandle);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_Show_(System.IntPtr menuHandle, IntPtr control, ref Alternet.Drawing.PointD position);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void Menu_Show_(System.IntPtr menuHandle, IntPtr control, ref Alternet.Drawing.PointD position);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Menu_GetEventMenuItemId_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan Menu_GetEventMenuItemId_();
             
         }
     }

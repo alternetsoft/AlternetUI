@@ -1462,7 +1462,7 @@ NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, ref attrName_Nati
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
@@ -1487,632 +1487,841 @@ NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, ref attrName_Nati
                 ColEndDrag,
             }
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetEventCallback_(PropertyGridEventCallbackType callback);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr PropertyGrid_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetEventValidationFailureBehavior_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetEventValidationFailureBehavior_(IntPtr obj, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetEventPropValue_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetEventColumn_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetEventProperty_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_GetHasBorder_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetHasBorder_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long PropertyGrid_GetCreateStyle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetCreateStyle_(IntPtr obj, long value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long PropertyGrid_GetCreateStyleEx_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetCreateStyleEx_(IntPtr obj, long value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI PropertyGrid_CalcScrolledPosition_(IntPtr obj, ref Alternet.Drawing.PointI point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI PropertyGrid_CalcUnscrolledPosition_(IntPtr obj, ref Alternet.Drawing.PointI point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetHitTestColumn_(IntPtr obj, ref Alternet.Drawing.PointI point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetHitTestProp_(IntPtr obj, ref Alternet.Drawing.PointI point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_ColorDatabaseCreate_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ColorDatabaseDelete_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ColorDatabaseSetGlobal_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ColorDatabaseAdd_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color color);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_ColorDatabaseFind_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_ColorDatabaseFindName_(System.IntPtr handle, ref NativeApiTypes.Color color);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_KnownColorsClear_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_KnownColorsAdd_(ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan title, ref NativeApiTypes.Color value, int knownColor);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_KnownColorsApply_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_KnownColorsSetCustomColorTitle_(ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyValidator_(IntPtr obj, System.IntPtr prop);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValidator_(IntPtr obj, System.IntPtr prop, System.IntPtr validator);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyFlag_(IntPtr obj, System.IntPtr prop, int flag, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetEventPropertyName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetEventValidationFailureMessage_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetEventValidationFailureMessage_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetNameAsLabel_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateEx_(long styles);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_AddActionTrigger_(IntPtr obj, int action, int keycode, int modifiers);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_DedicateKey_(IntPtr obj, int keycode);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_AutoGetTranslation_(bool enable);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_CenterSplitter_(IntPtr obj, bool enableAutoResizing);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ClearActionTriggers_(IntPtr obj, int action);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_CommitChangesFromEditor_(IntPtr obj, uint flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_EditorsValueWasModified_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_EditorsValueWasNotModified_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_EnableCategories_(IntPtr obj, bool enable);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeD PropertyGrid_FitColumns_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetCaptionBackgroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetCaptionForegroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetCellBackgroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetCellDisabledTextColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetCellTextColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern uint PropertyGrid_GetColumnCount_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetEmptySpaceColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetFontHeight_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetLineColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetMarginColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetMarginWidth_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetRowHeight_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetSelectionBackgroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetSelectionForegroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetSplitterPosition_(IntPtr obj, uint splitterIndex);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetVerticalSpacing_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsEditorFocused_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsEditorsValueModified_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsAnyModified_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ResetColors_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ResetColumnSizes_(IntPtr obj, bool enableAutoResizing);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_MakeColumnEditable_(IntPtr obj, uint column, bool editable);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_BeginLabelEdit_(IntPtr obj, uint column);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_EndLabelEdit_(IntPtr obj, bool commit);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetCaptionBackgroundColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetCaptionTextColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetCellBackgroundColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetCellDisabledTextColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetCellTextColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetColumnCount_(IntPtr obj, int colCount);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetEmptySpaceColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetLineColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetMarginColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetSelectionBackgroundColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetSelectionTextColor_(IntPtr obj, ref NativeApiTypes.Color col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetSplitterPosition_(IntPtr obj, int newXPos, int col);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetUnspecifiedValueText_(IntPtr obj, int argFlags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetVirtualWidth_(IntPtr obj, int width);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetSplitterLeft_(IntPtr obj, bool privateChildrenToo);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetVerticalSpacing_(IntPtr obj, int vspacing);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_HasVirtualWidth_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern uint PropertyGrid_GetCommonValueCount_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetCommonValueLabel_(IntPtr obj, uint i);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetUnspecifiedCommonValue_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetUnspecifiedCommonValue_(IntPtr obj, int index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsSmallScreen_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_RefreshEditor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_WasValueChangedInEvent_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetSpacingY_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetupTextCtrlValue_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_UnfocusEditor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetLastItem_(IntPtr obj, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetRoot_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetSelectedProperty_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_EnsureVisible_(IntPtr obj, System.IntPtr propArg);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_SelectProperty_(IntPtr obj, System.IntPtr propArg, bool focus);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_AddToSelection_(IntPtr obj, System.IntPtr propArg);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_RemoveFromSelection_(IntPtr obj, System.IntPtr propArg);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetCurrentCategory_(IntPtr obj, System.IntPtr propArg);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectI PropertyGrid_GetImageRect_(IntPtr obj, System.IntPtr p, int item);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI PropertyGrid_GetImageSize_(IntPtr obj, System.IntPtr p, int item);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateStringProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateFilenameProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateDirProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateImageFilenameProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateSystemColorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color value, uint kind);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateCursorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateBoolProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateIntProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, long value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateFloatProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, double value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateUIntProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ulong value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateLongStringProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateDateProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.DateTime value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_Clear_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_Append_(IntPtr obj, System.IntPtr property);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateEditEnumProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateEnumProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateFlagsProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_ClearSelection_(IntPtr obj, bool validation);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ClearModifiedStatus_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_CollapseAll_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_EditorValidate_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_ExpandAll_(IntPtr obj, bool expand);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreatePropCategory_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetFirst_(IntPtr obj, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyByLabel_(IntPtr obj, ref Alternet.UI.NativeStringSpan label);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyByName_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyByNameAndSubName_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan subname);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetSelection_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyName_(IntPtr obj, System.IntPtr property);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_InitAllTypeHandlers_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_RegisterAdditionalEditors_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_RestoreEditableState_(IntPtr obj, ref Alternet.UI.NativeStringSpan src, int restoreStates);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_SaveEditableState_(IntPtr obj, int includedStates);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetBoolChoices_(ref Alternet.UI.NativeStringSpan trueChoice, ref Alternet.UI.NativeStringSpan falseChoice);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_SetColumnProportion_(IntPtr obj, uint column, int proportion);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetColumnProportion_(IntPtr obj, uint column);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_Sort_(IntPtr obj, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_RefreshProperty_(IntPtr obj, System.IntPtr p);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateColorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyReadOnly_(IntPtr obj, System.IntPtr id, bool set, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_AppendIn_(IntPtr obj, System.IntPtr id, System.IntPtr newproperty);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_BeginAddChildren_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_Collapse_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_DeleteProperty_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_RemoveProperty_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_DisableProperty_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_EnableProperty_(IntPtr obj, System.IntPtr id, bool enable);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_EndAddChildren_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_Expand_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetFirstChild_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyCategory_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyClientData_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyHelpString_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyValueAsVariant_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long PropertyGrid_GetPropertyValueAsLong_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern ulong PropertyGrid_GetPropertyValueAsULong_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PropertyGrid_GetPropertyValueAsInt_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_GetPropertyValueAsBool_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern double PropertyGrid_GetPropertyValueAsDouble_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.DateTime PropertyGrid_GetPropertyValueAsDateTime_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_HideProperty_(IntPtr obj, System.IntPtr id, bool hide, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_Insert_(IntPtr obj, System.IntPtr priorThis, System.IntPtr newproperty);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_InsertByIndex_(IntPtr obj, System.IntPtr parent, int index, System.IntPtr newproperty);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsPropertyCategory_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsPropertyEnabled_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsPropertyExpanded_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsPropertyModified_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsPropertySelected_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsPropertyShown_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_IsPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_LimitPropertyEditing_(IntPtr obj, System.IntPtr id, bool limit);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_ReplaceProperty_(IntPtr obj, System.IntPtr id, System.IntPtr property);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyBackgroundColor_(IntPtr obj, System.IntPtr id, ref NativeApiTypes.Color color, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyColorsToDefault_(IntPtr obj, System.IntPtr id, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyTextColor_(IntPtr obj, System.IntPtr id, ref NativeApiTypes.Color col, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetPropertyBackgroundColor_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_GetPropertyTextColor_(IntPtr obj, System.IntPtr id);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyClientData_(IntPtr obj, System.IntPtr id, System.IntPtr clientData);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyEditor_(IntPtr obj, System.IntPtr id, System.IntPtr editor);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyEditorByName_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan editorName);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyLabel_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan newproplabel);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyName_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan newName);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyHelpString_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan helpString);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_SetPropertyMaxLength_(IntPtr obj, System.IntPtr id, int maxLen);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueAsLong_(IntPtr obj, System.IntPtr id, long value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueAsInt_(IntPtr obj, System.IntPtr id, int value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueAsDouble_(IntPtr obj, System.IntPtr id, double value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueAsBool_(IntPtr obj, System.IntPtr id, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueAsStr_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueAsVariant_(IntPtr obj, System.IntPtr id, System.IntPtr variant);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueAsDateTime_(IntPtr obj, System.IntPtr id, ref NativeApiTypes.DateTime value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetValidationFailureBehavior_(IntPtr obj, int vfbFlags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SortChildren_(IntPtr obj, System.IntPtr id, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetEditorByName_(ref Alternet.UI.NativeStringSpan editorName);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_ChangePropertyValue_(IntPtr obj, System.IntPtr id, System.IntPtr variant);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyAttribute_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan attrName, System.IntPtr variant, long argFlags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, ref Alternet.UI.NativeStringSpan attrName, System.IntPtr variant);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetEventCallback_(PropertyGridEventCallbackType callback);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr PropertyGrid_Create_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetEventValidationFailureBehavior_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetEventValidationFailureBehavior_(IntPtr obj, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetEventPropValue_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetEventColumn_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetEventProperty_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_GetHasBorder_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetHasBorder_(IntPtr obj, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long PropertyGrid_GetCreateStyle_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetCreateStyle_(IntPtr obj, long value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long PropertyGrid_GetCreateStyleEx_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetCreateStyleEx_(IntPtr obj, long value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.PointI PropertyGrid_CalcScrolledPosition_(IntPtr obj, ref Alternet.Drawing.PointI point);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.PointI PropertyGrid_CalcUnscrolledPosition_(IntPtr obj, ref Alternet.Drawing.PointI point);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetHitTestColumn_(IntPtr obj, ref Alternet.Drawing.PointI point);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetHitTestProp_(IntPtr obj, ref Alternet.Drawing.PointI point);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_ColorDatabaseCreate_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_ColorDatabaseDelete_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_ColorDatabaseSetGlobal_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_ColorDatabaseAdd_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color color);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_ColorDatabaseFind_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_ColorDatabaseFindName_(System.IntPtr handle, ref NativeApiTypes.Color color);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_KnownColorsClear_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_KnownColorsAdd_(ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan title, ref NativeApiTypes.Color value, int knownColor);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_KnownColorsApply_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_KnownColorsSetCustomColorTitle_(ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyValidator_(IntPtr obj, System.IntPtr prop);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValidator_(IntPtr obj, System.IntPtr prop, System.IntPtr validator);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyFlag_(IntPtr obj, System.IntPtr prop, int flag, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetEventPropertyName_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetEventValidationFailureMessage_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetEventValidationFailureMessage_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetNameAsLabel_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateEx_(long styles);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_AddActionTrigger_(IntPtr obj, int action, int keycode, int modifiers);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_DedicateKey_(IntPtr obj, int keycode);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_AutoGetTranslation_(bool enable);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_CenterSplitter_(IntPtr obj, bool enableAutoResizing);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_ClearActionTriggers_(IntPtr obj, int action);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_CommitChangesFromEditor_(IntPtr obj, uint flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_EditorsValueWasModified_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_EditorsValueWasNotModified_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_EnableCategories_(IntPtr obj, bool enable);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeD PropertyGrid_FitColumns_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetCaptionBackgroundColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetCaptionForegroundColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetCellBackgroundColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetCellDisabledTextColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetCellTextColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial uint PropertyGrid_GetColumnCount_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetEmptySpaceColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetFontHeight_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetLineColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetMarginColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetMarginWidth_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetRowHeight_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetSelectionBackgroundColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetSelectionForegroundColor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetSplitterPosition_(IntPtr obj, uint splitterIndex);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetVerticalSpacing_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsEditorFocused_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsEditorsValueModified_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsAnyModified_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_ResetColors_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_ResetColumnSizes_(IntPtr obj, bool enableAutoResizing);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_MakeColumnEditable_(IntPtr obj, uint column, bool editable);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_BeginLabelEdit_(IntPtr obj, uint column);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_EndLabelEdit_(IntPtr obj, bool commit);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetCaptionBackgroundColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetCaptionTextColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetCellBackgroundColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetCellDisabledTextColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetCellTextColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetColumnCount_(IntPtr obj, int colCount);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetEmptySpaceColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetLineColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetMarginColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetSelectionBackgroundColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetSelectionTextColor_(IntPtr obj, ref NativeApiTypes.Color col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetSplitterPosition_(IntPtr obj, int newXPos, int col);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetUnspecifiedValueText_(IntPtr obj, int argFlags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetVirtualWidth_(IntPtr obj, int width);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetSplitterLeft_(IntPtr obj, bool privateChildrenToo);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetVerticalSpacing_(IntPtr obj, int vspacing);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_HasVirtualWidth_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial uint PropertyGrid_GetCommonValueCount_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetCommonValueLabel_(IntPtr obj, uint i);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetUnspecifiedCommonValue_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetUnspecifiedCommonValue_(IntPtr obj, int index);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsSmallScreen_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_RefreshEditor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_WasValueChangedInEvent_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetSpacingY_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetupTextCtrlValue_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_UnfocusEditor_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetLastItem_(IntPtr obj, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetRoot_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetSelectedProperty_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_EnsureVisible_(IntPtr obj, System.IntPtr propArg);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_SelectProperty_(IntPtr obj, System.IntPtr propArg, bool focus);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_AddToSelection_(IntPtr obj, System.IntPtr propArg);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_RemoveFromSelection_(IntPtr obj, System.IntPtr propArg);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetCurrentCategory_(IntPtr obj, System.IntPtr propArg);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.RectI PropertyGrid_GetImageRect_(IntPtr obj, System.IntPtr p, int item);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeI PropertyGrid_GetImageSize_(IntPtr obj, System.IntPtr p, int item);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateStringProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateFilenameProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateDirProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateImageFilenameProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateSystemColorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color value, uint kind);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateCursorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateBoolProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateIntProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, long value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateFloatProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, double value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateUIntProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ulong value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateLongStringProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateDateProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.DateTime value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_Clear_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_Append_(IntPtr obj, System.IntPtr property);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateEditEnumProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateEnumProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateFlagsProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_ClearSelection_(IntPtr obj, bool validation);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_ClearModifiedStatus_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_CollapseAll_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_EditorValidate_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_ExpandAll_(IntPtr obj, bool expand);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreatePropCategory_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetFirst_(IntPtr obj, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyByLabel_(IntPtr obj, ref Alternet.UI.NativeStringSpan label);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyByName_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyByNameAndSubName_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan subname);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetSelection_(IntPtr obj);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyName_(IntPtr obj, System.IntPtr property);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_InitAllTypeHandlers_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_RegisterAdditionalEditors_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_RestoreEditableState_(IntPtr obj, ref Alternet.UI.NativeStringSpan src, int restoreStates);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_SaveEditableState_(IntPtr obj, int includedStates);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetBoolChoices_(ref Alternet.UI.NativeStringSpan trueChoice, ref Alternet.UI.NativeStringSpan falseChoice);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_SetColumnProportion_(IntPtr obj, uint column, int proportion);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetColumnProportion_(IntPtr obj, uint column);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_Sort_(IntPtr obj, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_RefreshProperty_(IntPtr obj, System.IntPtr p);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_CreateColorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyReadOnly_(IntPtr obj, System.IntPtr id, bool set, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_AppendIn_(IntPtr obj, System.IntPtr id, System.IntPtr newproperty);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_BeginAddChildren_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_Collapse_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_DeleteProperty_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_RemoveProperty_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_DisableProperty_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_EnableProperty_(IntPtr obj, System.IntPtr id, bool enable);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_EndAddChildren_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_Expand_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetFirstChild_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyCategory_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyClientData_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyHelpString_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetPropertyValueAsVariant_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long PropertyGrid_GetPropertyValueAsLong_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial ulong PropertyGrid_GetPropertyValueAsULong_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int PropertyGrid_GetPropertyValueAsInt_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_GetPropertyValueAsBool_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial double PropertyGrid_GetPropertyValueAsDouble_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.DateTime PropertyGrid_GetPropertyValueAsDateTime_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_HideProperty_(IntPtr obj, System.IntPtr id, bool hide, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_Insert_(IntPtr obj, System.IntPtr priorThis, System.IntPtr newproperty);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_InsertByIndex_(IntPtr obj, System.IntPtr parent, int index, System.IntPtr newproperty);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsPropertyCategory_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsPropertyEnabled_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsPropertyExpanded_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsPropertyModified_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsPropertySelected_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsPropertyShown_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_IsPropertyValueUnspecified_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_LimitPropertyEditing_(IntPtr obj, System.IntPtr id, bool limit);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_ReplaceProperty_(IntPtr obj, System.IntPtr id, System.IntPtr property);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyBackgroundColor_(IntPtr obj, System.IntPtr id, ref NativeApiTypes.Color color, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyColorsToDefault_(IntPtr obj, System.IntPtr id, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyTextColor_(IntPtr obj, System.IntPtr id, ref NativeApiTypes.Color col, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetPropertyBackgroundColor_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color PropertyGrid_GetPropertyTextColor_(IntPtr obj, System.IntPtr id);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyClientData_(IntPtr obj, System.IntPtr id, System.IntPtr clientData);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyEditor_(IntPtr obj, System.IntPtr id, System.IntPtr editor);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyEditorByName_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan editorName);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyLabel_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan newproplabel);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyName_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan newName);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyHelpString_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan helpString);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_SetPropertyMaxLength_(IntPtr obj, System.IntPtr id, int maxLen);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValueAsLong_(IntPtr obj, System.IntPtr id, long value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValueAsInt_(IntPtr obj, System.IntPtr id, int value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValueAsDouble_(IntPtr obj, System.IntPtr id, double value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValueAsBool_(IntPtr obj, System.IntPtr id, bool value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValueAsStr_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValueAsVariant_(IntPtr obj, System.IntPtr id, System.IntPtr variant);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyValueAsDateTime_(IntPtr obj, System.IntPtr id, ref NativeApiTypes.DateTime value);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetValidationFailureBehavior_(IntPtr obj, int vfbFlags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SortChildren_(IntPtr obj, System.IntPtr id, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr PropertyGrid_GetEditorByName_(ref Alternet.UI.NativeStringSpan editorName);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool PropertyGrid_ChangePropertyValue_(IntPtr obj, System.IntPtr id, System.IntPtr variant);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyAttribute_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan attrName, System.IntPtr variant, long argFlags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, ref Alternet.UI.NativeStringSpan attrName, System.IntPtr variant);
             
         }
     }

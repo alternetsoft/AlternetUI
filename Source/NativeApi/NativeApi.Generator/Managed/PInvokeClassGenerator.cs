@@ -19,7 +19,7 @@ namespace ApiGenerator.Managed
             /*var typeName = type.Name;*/
 
             w.WriteLine("[SuppressUnmanagedCodeSecurity]");
-            w.WriteLine("public class NativeApi : NativeApiProvider");
+            w.WriteLine("public partial class NativeApi : NativeApiProvider");
             w.WriteLine("{");
             w.Indent++;
             w.WriteLine("static NativeApi() => Initialize();");
@@ -43,15 +43,50 @@ namespace ApiGenerator.Managed
             w.WriteLine("}");
         }
 
-        static void WriteDllImport(IndentedTextWriter w) =>
-            w.WriteLine("[DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]");
+        private static readonly bool useDllImport = false;
+
+        public static void WriteDllImport(IndentedTextWriter w)
+        {
+            var unmanagedCallConv = "[UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]";
+
+            if (useDllImport)
+                w.WriteLine("[DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]");
+            else
+            {
+                w.WriteLine(unmanagedCallConv);
+                w.WriteLine("[LibraryImport(NativeModuleName)]");
+            }
+        }
+
+        public static string GetNativeMethodModifiers(bool isUnsafe)
+        {
+            if (isUnsafe)
+            {
+                if (useDllImport)
+                    return "public unsafe static extern";
+                else
+                    return "public unsafe static partial";
+            }
+            else
+            {
+                return GetNativeMethodModifiers();
+            }
+        }
+
+        public static string GetNativeMethodModifiers()
+        {
+            if (useDllImport)
+                return "public static extern";
+            else
+                return "public static partial";
+        }
 
         private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
         {
             var declaringTypeName = TypeProvider.GetNativeName(type);
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern void {declaringTypeName}_Destroy_(IntPtr obj);");
+            w.WriteLine($"{GetNativeMethodModifiers()} void {declaringTypeName}_Destroy_(IntPtr obj);");
             w.WriteLine();
         }
 
@@ -60,7 +95,7 @@ namespace ApiGenerator.Managed
             var declaringTypeName = TypeProvider.GetNativeName(type);
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern IntPtr {declaringTypeName}_Create_();");
+            w.WriteLine($"{GetNativeMethodModifiers()} IntPtr {declaringTypeName}_Create_();");
             w.WriteLine();
         }
 
@@ -81,7 +116,7 @@ namespace ApiGenerator.Managed
             {
                 WriteDllImport(w);
                 var argument = isStatic ? "" : "IntPtr obj";
-                w.WriteLine($"public static extern {managedDeclaringTypeName} {declaringTypeName}_Get{propertyName}_({argument});");
+                w.WriteLine($"{GetNativeMethodModifiers()} {managedDeclaringTypeName} {declaringTypeName}_Get{propertyName}_({argument});");
                 w.WriteLine();
             }
 
@@ -89,7 +124,7 @@ namespace ApiGenerator.Managed
             {
                 WriteDllImport(w);
                 var thisArgument = isStatic ? "" : "IntPtr obj, ";
-                w.WriteLine($"public static extern void {declaringTypeName}_Set{propertyName}_({thisArgument}{managedDeclaringTypeName} value);");
+                w.WriteLine($"{GetNativeMethodModifiers()} void {declaringTypeName}_Set{propertyName}_({thisArgument}{managedDeclaringTypeName} value);");
                 w.WriteLine();
             }
         }
@@ -167,9 +202,7 @@ namespace ApiGenerator.Managed
 
             WriteDllImport(w);
 
-            var needUnsafe = isUnsafe ? "unsafe " : "";
-
-            var sW = $"public {needUnsafe}static extern {returnTypeNameOverride} {declaringTypeName}_{methodName}_({signatureParametersString});";
+            var sW = $"{GetNativeMethodModifiers(isUnsafe)} {returnTypeNameOverride} {declaringTypeName}_{methodName}_({signatureParametersString});";
 
             w.WriteLine(sW);
             w.WriteLine();
@@ -197,7 +230,7 @@ namespace ApiGenerator.Managed
             w.WriteLine();
 
             WriteDllImport(w);
-            w.WriteLine($"public static extern void {declaringTypeName}_SetEventCallback_({declaringTypeName}EventCallbackType callback);");
+            w.WriteLine($"{GetNativeMethodModifiers()} void {declaringTypeName}_SetEventCallback_({declaringTypeName}EventCallbackType callback);");
             w.WriteLine();
         }
     }

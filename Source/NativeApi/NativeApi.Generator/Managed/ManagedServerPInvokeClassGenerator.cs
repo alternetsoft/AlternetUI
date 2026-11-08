@@ -19,7 +19,7 @@ namespace ApiGenerator.Managed
             /*var type = apiType.Type;*/
 
             w.WriteLine("[SuppressUnmanagedCodeSecurity]");
-            w.WriteLine("public class NativeApi : NativeApiProvider");
+            w.WriteLine("public partial class NativeApi : NativeApiProvider");
             w.WriteLine("{");
             w.Indent++;
             w.WriteLine("static NativeApi() => Initialize();");
@@ -40,7 +40,6 @@ namespace ApiGenerator.Managed
             w.WriteLine("}");
         }
 
-        static void WriteDllImport(IndentedTextWriter w) => w.WriteLine("[DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]");
         static void WriteDelegateAttributes(IndentedTextWriter w) => w.WriteLine("[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]");
 
         private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types)
@@ -130,8 +129,8 @@ namespace ApiGenerator.Managed
 
             w.WriteLine();
 
-            WriteDllImport(w);
-            w.WriteLine($"public static extern void {declaringTypeName}_SetTrampolineLocatorCallback({declaringTypeName}TrampolineLocatorCallbackType callback);");
+            PInvokeClassGenerator.WriteDllImport(w);
+            w.WriteLine($"{PInvokeClassGenerator.GetNativeMethodModifiers()} void {declaringTypeName}_SetTrampolineLocatorCallback({declaringTypeName}TrampolineLocatorCallbackType callback);");
             w.WriteLine();
         }
     }

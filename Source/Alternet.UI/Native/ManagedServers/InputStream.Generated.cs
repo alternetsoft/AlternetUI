@@ -123,7 +123,7 @@ namespace Alternet.UI.Native
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
@@ -140,8 +140,9 @@ namespace Alternet.UI.Native
                 SetPosition,
             }
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void InputStream_SetTrampolineLocatorCallback(InputStreamTrampolineLocatorCallbackType callback);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void InputStream_SetTrampolineLocatorCallback(InputStreamTrampolineLocatorCallbackType callback);
             
             [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
             public delegate long TGetLength(IntPtr obj);

@@ -95,39 +95,49 @@ return NativeApi.UnmanagedDataObject_GetDataPresent_(NativePointer, ref format_N
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr UnmanagedDataObject_Create_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr UnmanagedDataObject_Create_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetFormats_(IntPtr obj);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan UnmanagedDataObject_GetFormats_(IntPtr obj);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetStringData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan UnmanagedDataObject_GetStringData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetFileNamesData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan UnmanagedDataObject_GetFileNamesData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr UnmanagedDataObject_GetStreamData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr UnmanagedDataObject_GetStreamData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void UnmanagedDataObject_SetStringData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, ref Alternet.UI.NativeStringSpan value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void UnmanagedDataObject_SetStringData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, ref Alternet.UI.NativeStringSpan value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void UnmanagedDataObject_SetFileNamesData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, ref Alternet.UI.NativeStringSpan value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void UnmanagedDataObject_SetFileNamesData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, ref Alternet.UI.NativeStringSpan value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void UnmanagedDataObject_SetStreamData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, IntPtr value);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void UnmanagedDataObject_SetStreamData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, IntPtr value);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool UnmanagedDataObject_GetDataPresent_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool UnmanagedDataObject_GetDataPresent_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool UnmanagedDataObject_GetNativeDataPresent_(IntPtr obj, int format);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool UnmanagedDataObject_GetNativeDataPresent_(IntPtr obj, int format);
             
         }
     }

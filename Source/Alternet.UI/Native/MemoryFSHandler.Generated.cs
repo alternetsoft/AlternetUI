@@ -59,27 +59,33 @@ NativeApi.MemoryFSHandler_AddFileWithMimeType_(ref filename_Native, binarydata, 
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr MemoryFSHandler_Create_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr MemoryFSHandler_Create_();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_RemoveFile_(ref Alternet.UI.NativeStringSpan filename);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void MemoryFSHandler_RemoveFile_(ref Alternet.UI.NativeStringSpan filename);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_AddTextFileWithMimeType_(ref Alternet.UI.NativeStringSpan filename, ref Alternet.UI.NativeStringSpan textdata, ref Alternet.UI.NativeStringSpan mimetype);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void MemoryFSHandler_AddTextFileWithMimeType_(ref Alternet.UI.NativeStringSpan filename, ref Alternet.UI.NativeStringSpan textdata, ref Alternet.UI.NativeStringSpan mimetype);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_AddTextFile_(ref Alternet.UI.NativeStringSpan filename, ref Alternet.UI.NativeStringSpan textdata);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void MemoryFSHandler_AddTextFile_(ref Alternet.UI.NativeStringSpan filename, ref Alternet.UI.NativeStringSpan textdata);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_AddFile_(ref Alternet.UI.NativeStringSpan filename, System.IntPtr binarydata, int size);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void MemoryFSHandler_AddFile_(ref Alternet.UI.NativeStringSpan filename, System.IntPtr binarydata, int size);
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_AddFileWithMimeType_(ref Alternet.UI.NativeStringSpan filename, System.IntPtr binarydata, int size, ref Alternet.UI.NativeStringSpan mimetype);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void MemoryFSHandler_AddFileWithMimeType_(ref Alternet.UI.NativeStringSpan filename, System.IntPtr binarydata, int size, ref Alternet.UI.NativeStringSpan mimetype);
             
         }
     }

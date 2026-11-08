@@ -511,297 +511,393 @@ NativeApi.TextBoxTextAttr_SetBulletName_(attr, ref name_Native);
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr TextBoxTextAttr_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_Delete_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_DeleteRichTextAttr_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_Copy_(System.IntPtr toAttr, System.IntPtr fromAttr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TextBoxTextAttr_CreateTextAttr_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TextBoxTextAttr_CreateRichTextAttr_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TextBoxTextAttr_RichGetTextBoxAttr_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetTextColor_(System.IntPtr attr, ref NativeApiTypes.Color colText);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBackgroundColor_(System.IntPtr attr, ref NativeApiTypes.Color colBack);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetAlignment_(System.IntPtr attr, int alignment);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontPointSize_(System.IntPtr attr, int pointSize);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontStyle_(System.IntPtr attr, int fontStyle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontWeight_(System.IntPtr attr, int fontWeight);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontFaceName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan faceName);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontUnderlined_(System.IntPtr attr, bool underlined);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontUnderlinedEx_(System.IntPtr attr, int type, ref NativeApiTypes.Color colour);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontStrikethrough_(System.IntPtr attr, bool strikethrough);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontFamily_(System.IntPtr attr, int family);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color TextBoxTextAttr_GetTextColor_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color TextBoxTextAttr_GetBackgroundColor_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetAlignment_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetURL_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan url);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFlags_(System.IntPtr attr, long flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetParagraphSpacingAfter_(System.IntPtr attr, int spacing);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetParagraphSpacingBefore_(System.IntPtr attr, int spacing);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetLineSpacing_(System.IntPtr attr, int spacing);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletStyle_(System.IntPtr attr, int style);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletNumber_(System.IntPtr attr, int n);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletText_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan text);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetPageBreak_(System.IntPtr attr, bool pageBreak);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetCharacterStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetParagraphStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetListStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletFont_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan bulletFont);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetTextEffects_(System.IntPtr attr, int effects);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetTextEffectFlags_(System.IntPtr attr, int effects);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetOutlineLevel_(System.IntPtr attr, int level);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long TextBoxTextAttr_GetFlags_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetFontSize_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetFontStyle_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetFontWeight_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_GetFontUnderlined_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetUnderlineType_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color TextBoxTextAttr_GetUnderlineColor_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_GetFontStrikethrough_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBoxTextAttr_GetFontFaceName_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetFontFamily_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetParagraphSpacingAfter_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetParagraphSpacingBefore_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetLineSpacing_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetBulletStyle_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetBulletNumber_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBoxTextAttr_GetBulletText_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBoxTextAttr_GetURL_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetTextEffects_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetTextEffectFlags_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int TextBoxTextAttr_GetOutlineLevel_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_IsCharacterStyle_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_IsParagraphStyle_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_IsDefault_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasTextColor_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBackgroundColor_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasAlignment_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasTabs_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasLeftIndent_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasRightIndent_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontWeight_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontSize_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontPointSize_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontPixelSize_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontItalic_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontUnderlined_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontStrikethrough_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontFaceName_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontEncoding_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFontFamily_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFont_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasParagraphSpacingAfter_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasParagraphSpacingBefore_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasLineSpacing_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasCharacterStyleName_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasParagraphStyleName_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasListStyleName_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBulletStyle_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBulletNumber_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBulletText_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasBulletName_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasURL_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasPageBreak_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasTextEffects_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasTextEffect_(System.IntPtr attr, int effect);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasOutlineLevel_(System.IntPtr attr);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool TextBoxTextAttr_HasFlag_(System.IntPtr attr, long flag);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_RemoveFlag_(System.IntPtr attr, long flag);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_AddFlag_(System.IntPtr attr, long flag);
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr TextBoxTextAttr_Create_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_Delete_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_DeleteRichTextAttr_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_Copy_(System.IntPtr toAttr, System.IntPtr fromAttr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr TextBoxTextAttr_CreateTextAttr_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr TextBoxTextAttr_CreateRichTextAttr_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr TextBoxTextAttr_RichGetTextBoxAttr_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetTextColor_(System.IntPtr attr, ref NativeApiTypes.Color colText);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetBackgroundColor_(System.IntPtr attr, ref NativeApiTypes.Color colBack);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetAlignment_(System.IntPtr attr, int alignment);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFontPointSize_(System.IntPtr attr, int pointSize);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFontStyle_(System.IntPtr attr, int fontStyle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFontWeight_(System.IntPtr attr, int fontWeight);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFontFaceName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan faceName);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFontUnderlined_(System.IntPtr attr, bool underlined);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFontUnderlinedEx_(System.IntPtr attr, int type, ref NativeApiTypes.Color colour);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFontStrikethrough_(System.IntPtr attr, bool strikethrough);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFontFamily_(System.IntPtr attr, int family);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color TextBoxTextAttr_GetTextColor_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color TextBoxTextAttr_GetBackgroundColor_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetAlignment_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetURL_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan url);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetFlags_(System.IntPtr attr, long flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetParagraphSpacingAfter_(System.IntPtr attr, int spacing);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetParagraphSpacingBefore_(System.IntPtr attr, int spacing);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetLineSpacing_(System.IntPtr attr, int spacing);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetBulletStyle_(System.IntPtr attr, int style);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetBulletNumber_(System.IntPtr attr, int n);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetBulletText_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan text);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetPageBreak_(System.IntPtr attr, bool pageBreak);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetCharacterStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetParagraphStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetListStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetBulletFont_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan bulletFont);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetBulletName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetTextEffects_(System.IntPtr attr, int effects);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetTextEffectFlags_(System.IntPtr attr, int effects);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_SetOutlineLevel_(System.IntPtr attr, int level);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long TextBoxTextAttr_GetFlags_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetFontSize_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetFontStyle_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetFontWeight_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_GetFontUnderlined_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetUnderlineType_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color TextBoxTextAttr_GetUnderlineColor_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_GetFontStrikethrough_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan TextBoxTextAttr_GetFontFaceName_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetFontFamily_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetParagraphSpacingAfter_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetParagraphSpacingBefore_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetLineSpacing_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetBulletStyle_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetBulletNumber_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan TextBoxTextAttr_GetBulletText_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan TextBoxTextAttr_GetURL_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetTextEffects_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetTextEffectFlags_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int TextBoxTextAttr_GetOutlineLevel_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_IsCharacterStyle_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_IsParagraphStyle_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_IsDefault_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasTextColor_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasBackgroundColor_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasAlignment_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasTabs_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasLeftIndent_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasRightIndent_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontWeight_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontSize_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontPointSize_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontPixelSize_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontItalic_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontUnderlined_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontStrikethrough_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontFaceName_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontEncoding_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFontFamily_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFont_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasParagraphSpacingAfter_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasParagraphSpacingBefore_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasLineSpacing_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasCharacterStyleName_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasParagraphStyleName_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasListStyleName_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasBulletStyle_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasBulletNumber_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasBulletText_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasBulletName_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasURL_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasPageBreak_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasTextEffects_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasTextEffect_(System.IntPtr attr, int effect);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasOutlineLevel_(System.IntPtr attr);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool TextBoxTextAttr_HasFlag_(System.IntPtr attr, long flag);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_RemoveFlag_(System.IntPtr attr, long flag);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void TextBoxTextAttr_AddFlag_(System.IntPtr attr, long flag);
             
         }
     }

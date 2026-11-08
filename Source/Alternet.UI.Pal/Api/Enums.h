@@ -486,9 +486,10 @@ namespace Alternet::UI
         TextBoxMinus = 32,
         TextBoxShowPassword = 33,
         TextBoxHidePassword = 34,
-        Close = 35,
-        Apply = 36,
-        All = 37,
+        TextBoxClear = 35,
+        Close = 36,
+        Apply = 37,
+        All = 38,
     };
     
     enum class FileListBoxColumn
@@ -514,6 +515,13 @@ namespace Alternet::UI
         NoVertScrollBar = 1024,
         IntegralHeight = 2048,
         ShowHorzScrollWhenNeeded = 1073741824,
+    };
+    
+    enum class ListBoxSelectionMode
+    {
+        None = 0,
+        Single = 1,
+        Multiple = 2,
     };
     
     enum class ScrollBars
@@ -1923,13 +1931,6 @@ namespace Alternet::UI
         Visible = 2,
     };
     
-    enum class ListBoxSelectionMode
-    {
-        None = 0,
-        Single = 1,
-        Multiple = 2,
-    };
-    
     enum class MenuItemType
     {
         Standard = 0,
@@ -2284,6 +2285,18 @@ namespace Alternet::UI
         First = 6,
         Last = 7,
         EndScroll = 8,
+    };
+    
+    enum class SerializableLoadFormat
+    {
+        Json = 0,
+        Xml = 1,
+    };
+    
+    enum class SerializableSaveFormat
+    {
+        Json = 0,
+        Xml = 1,
     };
     
     enum class ApplicationAppearance

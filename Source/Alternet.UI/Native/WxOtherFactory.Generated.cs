@@ -693,387 +693,513 @@ return NativeApi.WxOtherFactory_UIActionSimulatorText_(handle, ref text_Native);
         
         
         [SuppressUnmanagedCodeSecurity]
-        public class NativeApi : NativeApiProvider
+        public partial class NativeApi : NativeApiProvider
         {
             static NativeApi() => Initialize();
             
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr WxOtherFactory_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, ref Alternet.Drawing.PointI pos, ref Alternet.Drawing.SizeI sz);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateToolTip_(ref Alternet.UI.NativeStringSpan tip);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_DeleteToolTip_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_ToolTipGetTip_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_ToolTipGetWindow_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_ToolTipSetTip_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan tip);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_ToolTipEnable_(bool flag);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_ToolTipSetAutoPop_(long msecs);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_ToolTipSetDelay_(long msecs);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_ToolTipSetMaxWidth_(int width);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_ToolTipSetReshow_(long msecs);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateCursor_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateCursor2_(int cursorId);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateCursor3_(ref Alternet.UI.NativeStringSpan cursorName, int type, int hotSpotX, int hotSpotY);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateCursor4_(IntPtr image, int hotSpotX, int hotSpotY);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateCursor5_(System.IntPtr image, int hotSpotX, int hotSpotY);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_DeleteCursor_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_CursorIsOk_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI WxOtherFactory_CursorGetHotSpot_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_SetCursor_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_CaretGetBlinkTime_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_CaretSetBlinkTime_(int milliseconds);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_DeleteCaret_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI WxOtherFactory_CaretGetPosition_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI WxOtherFactory_CaretGetSize_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_CaretMove_(System.IntPtr handle, int x, int y);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_CaretSetSize_(System.IntPtr handle, int width, int height);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateCaret_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateCaret2_(System.IntPtr window, int width, int height);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CaretGetWindow_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_CaretHide_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_CaretIsOk_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_CaretIsVisible_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_CaretShow_(System.IntPtr handle, bool show);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateDisplay_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateDisplay2_(uint index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateDisplay3_(System.IntPtr window);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_DeleteDisplay_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern uint WxOtherFactory_DisplayGetCount_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_DisplayIsOk_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_DisplayGetFromPoint_(ref Alternet.Drawing.PointI pt);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_DisplayGetFromWindow_(System.IntPtr win);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_DisplayGetStdPPIValue_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI WxOtherFactory_DisplayGetStdPPI_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_DisplayGetName_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI WxOtherFactory_DisplayGetPPI_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern float WxOtherFactory_DisplayGetScaleFactor_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_DisplayIsPrimary_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectI WxOtherFactory_DisplayGetClientArea_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectI WxOtherFactory_DisplayGetGeometry_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_SystemSettingsHasFeature_(int index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color WxOtherFactory_SystemSettingsGetColor_(int index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_SystemSettingsGetMetric_(int index, System.IntPtr win);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_SystemAppearanceGetName_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_SystemAppearanceIsDark_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_SystemAppearanceIsUsingDarkBackground_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_IsBusyCursor_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_BeginBusyCursor_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_EndBusyCursor_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_Bell_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_GetTextFromUser_(ref Alternet.UI.NativeStringSpan message, ref Alternet.UI.NativeStringSpan caption, ref Alternet.UI.NativeStringSpan defaultValue, System.IntPtr parent, int x, int y, bool centre);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long WxOtherFactory_GetNumberFromUser_(ref Alternet.UI.NativeStringSpan message, ref Alternet.UI.NativeStringSpan prompt, ref Alternet.UI.NativeStringSpan caption, long value, long min, long max, System.IntPtr parent, ref Alternet.Drawing.PointI pos);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_RendererDrawHeaderButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_RendererDrawHeaderButtonContents_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_RendererGetHeaderButtonHeight_(System.IntPtr renderer, System.IntPtr win);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_RendererGetHeaderButtonMargin_(System.IntPtr renderer, System.IntPtr win);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawTreeItemButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawSplitterBorder_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawSplitterSash_(System.IntPtr renderer, System.IntPtr win, IntPtr dcReal, ref Alternet.Drawing.SizeI sizeReal, int position, int orientation, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawComboBoxDropButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawDropArrow_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawCheckBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawCheckMark_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI WxOtherFactory_RendererGetCheckBoxSize_(System.IntPtr renderer, System.IntPtr win, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI WxOtherFactory_RendererGetCheckMarkSize_(System.IntPtr renderer, System.IntPtr win);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI WxOtherFactory_RendererGetExpanderSize_(System.IntPtr renderer, System.IntPtr win);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawPushButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawCollapseButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI WxOtherFactory_RendererGetCollapseButtonSize_(System.IntPtr renderer, System.IntPtr win, IntPtr dc);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawItemSelectionRect_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawFocusRect_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawChoice_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawComboBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawTextCtrl_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawRadioBitmap_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawGauge_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int value, int max, int flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawItemText_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.UI.NativeStringSpan text, ref Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_RendererGetVersion_(System.IntPtr renderer);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_MemoryAlloc_(ulong size);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_MemoryRealloc_(System.IntPtr memory, ulong newSize);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_MemoryFree_(System.IntPtr memory);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_MemoryCopy_(System.IntPtr dest, System.IntPtr src, ulong count);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_MemoryMove_(System.IntPtr dest, System.IntPtr src, ulong count);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_MemorySet_(System.IntPtr dest, int fillByte, ulong count);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_FsWatcherCreate_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_FsWatcherDelete_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherAdd_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path, int events);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherAddTree_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path, int events, ref Alternet.UI.NativeStringSpan filter);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_FsWatcherGetWatchedPathsCount_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherRemove_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherRemoveAll_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherRemoveTree_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_FsWatcherSetOwner_(System.IntPtr handle, System.IntPtr handler);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_SoundCreate_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_SoundCreate2_(ref Alternet.UI.NativeStringSpan fileName, bool isResource);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_SoundCreate4_(ulong size, System.IntPtr data);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_SoundDelete_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_SoundPlay2_(ref Alternet.UI.NativeStringSpan filename, uint flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_SoundPlay_(System.IntPtr handle, uint flags);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_SoundStop_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_SoundIsOk_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_UIActionSimulatorDelete_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_UIActionSimulatorCreate_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorChar_(System.IntPtr handle, int keycode, int modifiers);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorKeyDown_(System.IntPtr handle, int keycode, int modifiers);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorKeyUp_(System.IntPtr handle, int keycode, int modifiers);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorMouseClick_(System.IntPtr handle, int button);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorMouseDblClick_(System.IntPtr handle, int button);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorMouseDown_(System.IntPtr handle, int button);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorMouseDragDrop_(System.IntPtr handle, long x1, long y1, long x2, long y2, int button);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorMouseMove_(System.IntPtr handle, ref Alternet.Drawing.PointI point);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorMouseUp_(System.IntPtr handle, int button);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorSelect_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan text);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorText_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan text);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_UIActionSimulatorYield_();
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial IntPtr WxOtherFactory_Create_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, ref Alternet.Drawing.PointI pos, ref Alternet.Drawing.SizeI sz);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateToolTip_(ref Alternet.UI.NativeStringSpan tip);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_DeleteToolTip_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WxOtherFactory_ToolTipGetTip_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_ToolTipGetWindow_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_ToolTipSetTip_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan tip);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_ToolTipEnable_(bool flag);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_ToolTipSetAutoPop_(long msecs);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_ToolTipSetDelay_(long msecs);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_ToolTipSetMaxWidth_(int width);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_ToolTipSetReshow_(long msecs);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateCursor_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateCursor2_(int cursorId);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateCursor3_(ref Alternet.UI.NativeStringSpan cursorName, int type, int hotSpotX, int hotSpotY);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateCursor4_(IntPtr image, int hotSpotX, int hotSpotY);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateCursor5_(System.IntPtr image, int hotSpotX, int hotSpotY);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_DeleteCursor_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_CursorIsOk_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.PointI WxOtherFactory_CursorGetHotSpot_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_SetCursor_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_CaretGetBlinkTime_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_CaretSetBlinkTime_(int milliseconds);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_DeleteCaret_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.PointI WxOtherFactory_CaretGetPosition_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeI WxOtherFactory_CaretGetSize_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_CaretMove_(System.IntPtr handle, int x, int y);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_CaretSetSize_(System.IntPtr handle, int width, int height);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateCaret_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateCaret2_(System.IntPtr window, int width, int height);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CaretGetWindow_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_CaretHide_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_CaretIsOk_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_CaretIsVisible_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_CaretShow_(System.IntPtr handle, bool show);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateDisplay_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateDisplay2_(uint index);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_CreateDisplay3_(System.IntPtr window);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_DeleteDisplay_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial uint WxOtherFactory_DisplayGetCount_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_DisplayIsOk_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_DisplayGetFromPoint_(ref Alternet.Drawing.PointI pt);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_DisplayGetFromWindow_(System.IntPtr win);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_DisplayGetStdPPIValue_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeI WxOtherFactory_DisplayGetStdPPI_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WxOtherFactory_DisplayGetName_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeI WxOtherFactory_DisplayGetPPI_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial float WxOtherFactory_DisplayGetScaleFactor_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_DisplayIsPrimary_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.RectI WxOtherFactory_DisplayGetClientArea_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.RectI WxOtherFactory_DisplayGetGeometry_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_SystemSettingsHasFeature_(int index);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial NativeApiTypes.Color WxOtherFactory_SystemSettingsGetColor_(int index);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_SystemSettingsGetMetric_(int index, System.IntPtr win);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WxOtherFactory_SystemAppearanceGetName_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_SystemAppearanceIsDark_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_SystemAppearanceIsUsingDarkBackground_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_IsBusyCursor_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_BeginBusyCursor_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_EndBusyCursor_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_Bell_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WxOtherFactory_GetTextFromUser_(ref Alternet.UI.NativeStringSpan message, ref Alternet.UI.NativeStringSpan caption, ref Alternet.UI.NativeStringSpan defaultValue, System.IntPtr parent, int x, int y, bool centre);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial long WxOtherFactory_GetNumberFromUser_(ref Alternet.UI.NativeStringSpan message, ref Alternet.UI.NativeStringSpan prompt, ref Alternet.UI.NativeStringSpan caption, long value, long min, long max, System.IntPtr parent, ref Alternet.Drawing.PointI pos);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_RendererDrawHeaderButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_RendererDrawHeaderButtonContents_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_RendererGetHeaderButtonHeight_(System.IntPtr renderer, System.IntPtr win);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_RendererGetHeaderButtonMargin_(System.IntPtr renderer, System.IntPtr win);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawTreeItemButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawSplitterBorder_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawSplitterSash_(System.IntPtr renderer, System.IntPtr win, IntPtr dcReal, ref Alternet.Drawing.SizeI sizeReal, int position, int orientation, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawComboBoxDropButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawDropArrow_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawCheckBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawCheckMark_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeI WxOtherFactory_RendererGetCheckBoxSize_(System.IntPtr renderer, System.IntPtr win, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeI WxOtherFactory_RendererGetCheckMarkSize_(System.IntPtr renderer, System.IntPtr win);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeI WxOtherFactory_RendererGetExpanderSize_(System.IntPtr renderer, System.IntPtr win);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawPushButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawCollapseButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.Drawing.SizeI WxOtherFactory_RendererGetCollapseButtonSize_(System.IntPtr renderer, System.IntPtr win, IntPtr dc);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawItemSelectionRect_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawFocusRect_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawChoice_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawComboBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawTextCtrl_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawRadioBitmap_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawGauge_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int value, int max, int flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_RendererDrawItemText_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.UI.NativeStringSpan text, ref Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WxOtherFactory_RendererGetVersion_(System.IntPtr renderer);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_MemoryAlloc_(ulong size);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_MemoryRealloc_(System.IntPtr memory, ulong newSize);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_MemoryFree_(System.IntPtr memory);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_MemoryCopy_(System.IntPtr dest, System.IntPtr src, ulong count);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_MemoryMove_(System.IntPtr dest, System.IntPtr src, ulong count);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_MemorySet_(System.IntPtr dest, int fillByte, ulong count);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_FsWatcherCreate_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_FsWatcherDelete_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_FsWatcherAdd_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path, int events);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_FsWatcherAddTree_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path, int events, ref Alternet.UI.NativeStringSpan filter);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial int WxOtherFactory_FsWatcherGetWatchedPathsCount_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_FsWatcherRemove_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_FsWatcherRemoveAll_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_FsWatcherRemoveTree_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_FsWatcherSetOwner_(System.IntPtr handle, System.IntPtr handler);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_SoundCreate_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_SoundCreate2_(ref Alternet.UI.NativeStringSpan fileName, bool isResource);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_SoundCreate4_(ulong size, System.IntPtr data);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_SoundDelete_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_SoundPlay2_(ref Alternet.UI.NativeStringSpan filename, uint flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_SoundPlay_(System.IntPtr handle, uint flags);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_SoundStop_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_SoundIsOk_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_UIActionSimulatorDelete_(System.IntPtr handle);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial System.IntPtr WxOtherFactory_UIActionSimulatorCreate_();
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorChar_(System.IntPtr handle, int keycode, int modifiers);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorKeyDown_(System.IntPtr handle, int keycode, int modifiers);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorKeyUp_(System.IntPtr handle, int keycode, int modifiers);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorMouseClick_(System.IntPtr handle, int button);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorMouseDblClick_(System.IntPtr handle, int button);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorMouseDown_(System.IntPtr handle, int button);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorMouseDragDrop_(System.IntPtr handle, long x1, long y1, long x2, long y2, int button);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorMouseMove_(System.IntPtr handle, ref Alternet.Drawing.PointI point);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorMouseUp_(System.IntPtr handle, int button);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorSelect_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan text);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial bool WxOtherFactory_UIActionSimulatorText_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan text);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial void WxOtherFactory_UIActionSimulatorYield_();
             
         }
     }
