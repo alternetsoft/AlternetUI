@@ -19,6 +19,9 @@ namespace Alternet.UI
         /// <inheritdoc cref="Display.Name"/>
         public string GetName();
 
+        /// <inheritdoc cref="Display.Backend"/>
+        public string GetBackend();
+
         /// <inheritdoc cref="Display.ScaleFactor"/>
         public Coord GetScaleFactor();
 

@@ -35,6 +35,7 @@ static void CaretHide(void* handle);
 static bool CaretIsOk(void* handle);
 static bool CaretIsVisible(void* handle);
 static void CaretShow(void* handle, bool show);
+static NativeStringSpan GetDisplayBackend();
 static void* CreateDisplay();
 static void* CreateDisplay2(uint32_t index);
 static void* CreateDisplay3(void* window);

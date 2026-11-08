@@ -18,6 +18,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public string GetBackend()
+        {
+            var sp = UI.Native.WxOtherFactory.GetDisplayBackend();
+            var s = NativeStringSpan.ToManagedString(sp);
+            return s;
+        }
+
+
         public WxDisplayHandler(int index)
             : base(UI.Native.WxOtherFactory.CreateDisplay2((uint)index), true)
         {

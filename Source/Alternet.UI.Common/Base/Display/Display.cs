@@ -351,6 +351,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the display's backend name. In Linux it can be "X11", "Wayland" or "Unknown".
+        /// In other platforms it is "Unknown".
+        /// </summary>
+        public string Backend
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Handler.GetBackend();
+            }
+        }
+
+        /// <summary>
         /// Gets whether this <see cref="Display"/> object is ok.
         /// </summary>
         public bool IsOk
@@ -667,6 +680,7 @@ namespace Alternet.UI
                 method($"Bounds: {display.Bounds}");
                 method($"BoundsDip: {display.BoundsDip}");
                 method($"PixelToDip(100): {display.PixelToDip(100)}");
+                method($"Backend: {display.Backend}");
             }
 
             method(LogUtils.SectionSeparator);

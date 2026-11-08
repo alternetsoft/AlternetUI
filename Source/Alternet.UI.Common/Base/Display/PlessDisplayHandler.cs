@@ -15,6 +15,12 @@ namespace Alternet.UI
         public virtual bool IsOk => true;
 
         /// <inheritdoc/>
+        public string GetBackend()
+        {
+            return "Unknown";
+        }
+
+        /// <inheritdoc/>
         public virtual RectI GetClientArea()
         {
             return (0, 0, 1920, 1024);

@@ -10,6 +10,19 @@
 #include <wx/sound.h>
 #include <wx/uiaction.h>
 
+#if defined(__WXGTK__)
+
+#include <gtk/gtk.h>
+
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif
+
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+#endif
+
 namespace Alternet::UI
 {
 	//----------------------------------------------------------------------------
@@ -539,6 +552,41 @@ namespace Alternet::UI
 	Int32Rect WxOtherFactory::DisplayGetClientArea(void* handle)
 	{
 		return ((wxDisplay*)handle)->GetClientArea();
+	}
+
+	wxString WxOtherFactory::_stringValue = "";
+
+	NativeStringSpan WxOtherFactory::GetDisplayBackend()
+	{
+		_stringValue = "Unknown";
+
+#if defined(__WXGTK__)
+
+		GdkDisplay* display = gdk_display_get_default();
+		if (!display)
+		{
+			return wxStr(_stringValue);
+		}
+
+#ifdef GDK_WINDOWING_WAYLAND
+		if (GDK_IS_WAYLAND_DISPLAY(display))
+		{
+			_stringValue = "Wayland";
+			return wxStr(_stringValue);
+		}
+#endif
+
+#ifdef GDK_WINDOWING_X11
+		if (GDK_IS_X11_DISPLAY(display))
+		{
+			_stringValue = "X11";
+			return wxStr(_stringValue);
+		}
+#endif
+
+#endif
+
+		return wxStr(_stringValue);
 	}
 
 	Int32Rect WxOtherFactory::DisplayGetGeometry(void* handle)

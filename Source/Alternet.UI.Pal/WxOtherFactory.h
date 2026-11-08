@@ -21,7 +21,7 @@ namespace Alternet::UI
     {
 #include "Api/WxOtherFactory.inc"
     public:
-    
+        static wxString _stringValue;
     private:    
     
     };

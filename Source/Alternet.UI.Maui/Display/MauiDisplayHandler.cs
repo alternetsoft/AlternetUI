@@ -24,6 +24,12 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        public string GetBackend()
+        {
+            return "Unknown";
+        }
+
         public bool IsOk => true;
 
         public static Coord GetDefaultScaleFactor()

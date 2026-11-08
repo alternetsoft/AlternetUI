@@ -254,6 +254,13 @@ ALTERNET_UI_API void WxOtherFactory_CaretShow_(void* handle, c_bool show)
     });
 }
 
+ALTERNET_UI_API NativeStringSpan_C WxOtherFactory_GetDisplayBackend_()
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WxOtherFactory::GetDisplayBackend();
+    });
+}
+
 ALTERNET_UI_API void* WxOtherFactory_CreateDisplay_()
 {
     return MarshalExceptions<void*>([&](){

@@ -122,6 +122,8 @@ namespace NativeApi.Api
 
         // =================== Display
 
+        public static NativeStringSpan GetDisplayBackend() => default;
+
         // Defaultructor creating display object representing the primary display.
         public static IntPtr CreateDisplay() => default;
 

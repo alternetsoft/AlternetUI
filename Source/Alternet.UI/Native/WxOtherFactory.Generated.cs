@@ -198,6 +198,11 @@ return NativeApi.WxOtherFactory_CreateCursor3_(ref cursorName_Native, type, hotS
             NativeApi.WxOtherFactory_CaretShow_(handle, show);
         }
         
+        public static Alternet.UI.NativeStringSpan GetDisplayBackend()
+        {
+            return NativeApi.WxOtherFactory_GetDisplayBackend_();
+        }
+        
         public static System.IntPtr CreateDisplay()
         {
             return NativeApi.WxOtherFactory_CreateDisplay_();
@@ -836,6 +841,10 @@ return NativeApi.WxOtherFactory_UIActionSimulatorText_(handle, ref text_Native);
             [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
             [LibraryImport(NativeModuleName)]
             public static partial void WxOtherFactory_CaretShow_(System.IntPtr handle, bool show);
+            
+            [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
+            [LibraryImport(NativeModuleName)]
+            public static partial Alternet.UI.NativeStringSpan WxOtherFactory_GetDisplayBackend_();
             
             [UnmanagedCallConv(CallConvs = [typeof(System.Runtime.CompilerServices.CallConvCdecl)])]
             [LibraryImport(NativeModuleName)]
