@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class PropertyBag : IPropertyBag
     {
-        private readonly BaseDictionary<string, object> properties = new();
+        private readonly BaseDictionary<string, object?> properties = new();
         
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyBag"/> class.
@@ -45,29 +45,11 @@ namespace Alternet.UI
 
                 XmlUtils.EnumerateProperties(value, (property, name, propertyValue) =>
                 {
-                    if (propertyValue is null)
-                        return;
-                    if (propertyValue is bool boolValue)
-                    {
-                        SetBoolProperty(name, boolValue);
-                        return;
-                    }
-                    if (propertyValue is int intValue)
-                    {
-                        SetIntProperty(name, intValue);
-                        return;
-                    }
-
-                    var s = propertyValue.ToString();
-
-                    if (s is null)
-                        return;
-
-                    SetStringProperty(name, s);
+                    ConvertAndSetProperty(name, propertyValue);
                 });
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the JSON string representation of the property bag.
         /// </summary>
@@ -86,25 +68,7 @@ namespace Alternet.UI
 
                 JsonUtils.EnumerateProperties(value, (property, name, propertyValue) =>
                 {
-                    if (propertyValue is null)
-                        return;
-                    if (propertyValue is bool boolValue)
-                    {
-                        SetBoolProperty(name, boolValue);
-                        return;
-                    }
-                    if (propertyValue is int intValue)
-                    {
-                        SetIntProperty(name, intValue);
-                        return;
-                    }
-
-                    var s = propertyValue.ToString();
-
-                    if (s is null)
-                        return;
-
-                    SetStringProperty(name, s);
+                    ConvertAndSetProperty(name, propertyValue);
                 });
             }
         }
@@ -550,6 +514,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual void SetProperty(string name, object? value)
+        {
+            properties[name] = value;
+        }
+
+        /// <inheritdoc/>
         public virtual IEnumerable<string> GetPropertyNames(bool sorted = true)
         {
             return sorted ? properties.Keys.OrderBy(k => k) : properties.Keys;
@@ -559,6 +529,47 @@ namespace Alternet.UI
         public virtual bool Remove(string name)
         {
             return properties.Remove(name);
+        }
+
+        /// <summary>
+        /// Converts the specified value to the appropriate property type and sets it in the property bag.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        protected virtual void ConvertAndSetProperty(string name, object? value)
+        {
+            if (value is null)
+                return;
+            if (value is bool boolValue)
+            {
+                SetBoolProperty(name, boolValue);
+                return;
+            }
+
+            if (value is int intValue)
+            {
+                SetIntProperty(name, intValue);
+                return;
+            }
+
+            if (value is IEnumerable<IPropertyBag> propertyBags)
+            {
+                SetCollectionProperty(name, propertyBags);
+                return;
+            }
+
+            if (value is IEnumerable collection)
+            {
+                SetCollectionProperty(name, collection);
+                return;
+            }
+
+            var s = value.ToString();
+
+            if (s is null)
+                return;
+
+            SetStringProperty(name, s);
         }
     }
 }

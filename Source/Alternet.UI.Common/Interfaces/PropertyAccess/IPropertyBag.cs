@@ -158,6 +158,13 @@ namespace Alternet.UI
         string? GetStringProperty(string name);
 
         /// <summary>
+        /// Sets the value of a property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        void SetProperty(string name, object? value);
+
+        /// <summary>
         /// Sets the value of a string property by name.
         /// </summary>
         /// <param name="name">The name of the property.</param>
