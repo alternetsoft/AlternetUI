@@ -99,7 +99,7 @@ namespace Alternet.UI
         /// This can be useful for compatibility or debugging purposes where Wayland
         /// or other backends cause issues.
         /// </remarks>
-        public static bool ForceX11OnLinux = false;
+        public static bool ForceX11OnLinux = true;
 
         /// <summary>
         /// Gets device the app is running on, such as a desktop computer or a tablet.
