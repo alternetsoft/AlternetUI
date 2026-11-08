@@ -56,7 +56,7 @@ internal static class MswPrinterUtils
         {
             if (EnumPrinters(flags, null!, level, pPrinters, cbNeeded, out cbNeeded, out cReturned))
             {
-                int structSize = Marshal.SizeOf(typeof(PRINTER_INFO_4));
+                int structSize = Marshal.SizeOf<PRINTER_INFO_4>();
 
                 for (int i = 0; i < cReturned; i++)
                 {
@@ -84,7 +84,7 @@ internal static class MswPrinterUtils
         if (size == 0)
             return null;
 
-        StringBuilder buffer = new StringBuilder(size);
+        StringBuilder buffer = new (size);
         if (GetDefaultPrinter(buffer, ref size))
             return buffer.ToString();
 

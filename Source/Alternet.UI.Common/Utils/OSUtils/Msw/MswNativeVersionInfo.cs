@@ -16,9 +16,12 @@ namespace Alternet.UI
         /// <summary>
         /// Logs version information for all files matching the specified name in the given directory.
         /// </summary>
-        /// <param name="baseFolder">The path to the directory in which to search for files. Cannot be null or empty.</param>
-        /// <param name="fileNameWithoutPath">The name of the file to search for, without any directory path. Cannot be null or empty.</param>
-        /// <param name="recursive">true to search all subdirectories of the base folder; otherwise, false to search only the top-level
+        /// <param name="baseFolder">The path to the directory in which to search for files.
+        /// Cannot be null or empty.</param>
+        /// <param name="fileNameWithoutPath">The name of the file to search for, without any directory path.
+        /// Cannot be null or empty.</param>
+        /// <param name="recursive">true to search all subdirectories of the base folder; otherwise,
+        /// false to search only the top-level
         /// directory.</param>
         /// <exception cref="ArgumentNullException">Thrown if baseFolder or fileNameWithoutPath is null or empty.</exception>
         public static void LogVersionInfo(string baseFolder, string fileNameWithoutPath, bool recursive)
@@ -54,7 +57,8 @@ namespace Alternet.UI
         /// file does not contain version information or an error occurs during retrieval, the dictionary will be empty.
         /// This method uses both managed and native Windows APIs to extract as much version information as
         /// possible.</remarks>
-        /// <param name="filePath">The path to the file from which to extract version information. Must not be null or empty.</param>
+        /// <param name="filePath">The path to the file from which to extract version information.
+        /// Must not be null or empty.</param>
         /// <returns>A dictionary containing version information fields and their values. The dictionary is empty if the file
         /// does not exist or if version information cannot be retrieved.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="filePath"/> is null or empty.</exception>
@@ -116,7 +120,8 @@ namespace Alternet.UI
                         try
                         {
                             // Try to read VS_FIXEDFILEINFO at root ("\\")
-                            if (VerQueryValue(pBlock, "\\", out IntPtr fixedPtr, out uint fixedLen) && fixedLen >= Marshal.SizeOf<VS_FIXEDFILEINFO>())
+                            if (VerQueryValue(pBlock, "\\", out IntPtr fixedPtr, out uint fixedLen)
+                                && fixedLen >= Marshal.SizeOf<VS_FIXEDFILEINFO>())
                             {
                                 var ffi = Marshal.PtrToStructure<VS_FIXEDFILEINFO>(fixedPtr);
                                 // Extract numeric version from ffi
@@ -133,7 +138,8 @@ namespace Alternet.UI
                             }
 
                             // Read translation table: language+codepage
-                            if (VerQueryValue(pBlock, @"\VarFileInfo\Translation", out IntPtr transPtr, out uint transLen) && transLen >= 4)
+                            if (VerQueryValue(pBlock, @"\VarFileInfo\Translation", out IntPtr transPtr, out uint transLen)
+                                && transLen >= 4)
                             {
                                 // read first translation (WORD lang, WORD codepage)
                                 ushort lang = (ushort)Marshal.ReadInt16(transPtr);
