@@ -21,6 +21,6 @@ namespace Alternet.UI
         /// to the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
         /// <param name="context">The context to which the state will be saved.</param>
-        void SaveTo(ISerializableObjectContext context);
+        bool SaveTo(ISerializableObjectContext? context);
     }
 }

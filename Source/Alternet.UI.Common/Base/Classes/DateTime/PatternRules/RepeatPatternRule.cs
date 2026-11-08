@@ -96,6 +96,9 @@ namespace Alternet.UI
             var prefix = context.Prefix;
             var propertyBag = context.PropertyBag;
 
+            if (propertyBag == null)
+                return false;
+
             if (prefix is not null)
                 prefix += ".";
             else
@@ -141,10 +144,16 @@ namespace Alternet.UI
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="context">The context to which the state will be saved.</param>
-        public override void SaveTo(ISerializableObjectContext context)
+        public override bool SaveTo(ISerializableObjectContext? context)
         {
+            if (context == null)
+                return false;
+
             var prefix = context.Prefix;
             var propertyBag = context.PropertyBag;
+
+            if (propertyBag == null)
+                return false;
 
             if (prefix is not null)
                 prefix += ".";
@@ -170,6 +179,8 @@ namespace Alternet.UI
                     YearlyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(YearlyRule)));
                     break;
             }
+
+            return true;
         }
 
         /// <summary>

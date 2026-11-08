@@ -76,7 +76,7 @@ namespace Alternet.UI
         public abstract bool LoadFrom(ISerializableObjectContext? context);
 
         /// <inheritdoc/>
-        public abstract void SaveTo(ISerializableObjectContext context);
+        public abstract bool SaveTo(ISerializableObjectContext? context);
 
         /// <summary>
         /// Saves the current state of this instance to a string representation in the specified format.

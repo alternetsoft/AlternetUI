@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="IPropertyBag"/> used for serialization and deserialization.
         /// </summary>
-        public IPropertyBag PropertyBag { get; set; }
+        public IPropertyBag? PropertyBag { get; set; }
 
         /// <summary>
         /// Gets or sets an optional prefix for property names in the property bag.
@@ -53,7 +53,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the <see cref="IPropertyBag"/> used for serialization and deserialization.
         /// </summary>
-        public IPropertyBag PropertyBag { get; set; }
+        public IPropertyBag? PropertyBag { get; set; }
 
         /// <summary>
         /// Gets or sets an optional prefix for property names in the property bag.

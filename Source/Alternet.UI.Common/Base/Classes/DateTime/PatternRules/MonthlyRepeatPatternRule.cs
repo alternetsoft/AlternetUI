@@ -122,6 +122,10 @@ namespace Alternet.UI
                 return false;
 
             var propertyBag = context.PropertyBag;
+
+            if (propertyBag == null)
+                return false;
+
             var prefix = context.Prefix;
 
             if (prefix is not null)
@@ -178,10 +182,16 @@ namespace Alternet.UI
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
         /// <param name="context">The context to which the state will be saved.</param>
-        public override void SaveTo(ISerializableObjectContext context)
+        public override bool SaveTo(ISerializableObjectContext? context)
         {
+            if (context == null)
+                return false;
+
             var propertyBag = context.PropertyBag;
             var prefix = context.Prefix;
+
+            if (propertyBag == null)
+                return false;
 
             if (prefix is not null)
                 prefix += ".";
@@ -193,6 +203,8 @@ namespace Alternet.UI
             propertyBag.SetStringProperty(prefix + nameof(Kind), Kind.ToString());
             propertyBag.SetStringProperty(prefix + nameof(DayOfWeek), DayOfWeek.ToString());
             propertyBag.SetStringProperty(prefix + nameof(DayOfWeekIndex), DayOfWeekIndex.ToString());
+
+            return true;
         }
 
         /// <summary>

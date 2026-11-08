@@ -152,9 +152,16 @@ namespace Alternet.UI
         /// Saves the current state of this instance
         /// to the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        public override void SaveTo(ISerializableObjectContext context)
+        public override bool SaveTo(ISerializableObjectContext? context)
         {
+            if (context == null)
+                return false;
+
             var propertyBag = context.PropertyBag;
+
+            if (propertyBag == null)
+                return false;
+
             var prefix = context.Prefix;
 
             if (prefix is not null)
@@ -167,6 +174,7 @@ namespace Alternet.UI
             propertyBag.SetStringProperty(prefix + nameof(SoundPath), SoundPath ?? string.Empty);
             propertyBag.SetDateTimeProperty(prefix + nameof(SnoozeTime), SnoozeTime);
             propertyBag.SetTimeSpanProperty(prefix + nameof(Advance), Advance);
+            return true;
         }
 
         /// <summary>
@@ -179,6 +187,10 @@ namespace Alternet.UI
                 return false;
 
             var propertyBag = context.PropertyBag;
+
+            if (propertyBag == null)
+                return false;
+
             var prefix = context.Prefix;
 
             if (prefix is not null)
