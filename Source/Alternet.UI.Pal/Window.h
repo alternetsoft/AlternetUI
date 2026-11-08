@@ -3,7 +3,6 @@
 #include "Common.h"
 #include "Control.h"
 #include "IconSet.h"
-#include "StatusBar.h"
 
 #include <wx/minifram.h>
 

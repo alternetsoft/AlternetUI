@@ -392,7 +392,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClCompile Include="ScrollBar.cpp" />
     <ClCompile Include="SelectDirectoryDialog.cpp" />
     <ClCompile Include="Slider.cpp" />
-    <ClCompile Include="StatusBar.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TextBoxTextAttr.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -529,7 +528,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="ScrollBar.h" />
     <ClInclude Include="SelectDirectoryDialog.h" />
     <ClInclude Include="Slider.h" />
-    <ClInclude Include="StatusBar.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TextBoxTextAttr.h" />
     <ClInclude Include="Timer.h" />
