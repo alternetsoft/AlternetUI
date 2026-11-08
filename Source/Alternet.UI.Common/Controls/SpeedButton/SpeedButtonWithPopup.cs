@@ -81,6 +81,13 @@ namespace Alternet.UI
         public event EventHandler? DropDownClosed;
 
         /// <summary>
+        /// Occurs when the drop-down portion of the control is no longer visible
+        /// and the user has accepted the selection made in the popup window.
+        /// </summary>
+        [Category(KnownMemberCategory.Behavior)]
+        public event EventHandler? DropDownAccepted;
+
+        /// <summary>
         /// Occurs when the drop-down portion of the control is shown.
         /// </summary>
         [Category(KnownMemberCategory.Behavior)]
@@ -289,6 +296,11 @@ namespace Alternet.UI
                         popupLastClosedAt = DateTime.Now;
                         OnPopupWindowClosed(s, e);
                         RaiseDropDownClosed();
+
+                        if (popupWindow.PopupResult == ModalResult.Accepted)
+                        {
+                            RaiseDropDownAccepted();
+                        }
                     };
                 }
 
@@ -358,12 +370,12 @@ namespace Alternet.UI
                 return;
             var e = new BaseCancelEventArgs();
             RaiseBeforeShowPopup(e);
-            
+
             if (e.Cancel)
                 return;
 
             RaiseDropDown();
-            
+
             PopupWindow.ShowPopup(PopupOwner ?? this, PopupWindowPosition);
         }
 
@@ -498,6 +510,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="DropDownAccepted"/> event and
+        /// calls <see cref="OnDropDownAccepted"/> method.
+        /// </summary>
+        [Browsable(false)]
+        public void RaiseDropDownAccepted()
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnDropDownAccepted(EventArgs.Empty);
+            DropDownAccepted?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Called when base text is updated with the new value.
         /// You can override this method to customize the behavior when the base text is updated.
         /// </summary>
@@ -521,6 +546,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnDropDownClosed(EventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="DropDownAccepted"/> event is fired.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDropDownAccepted(EventArgs e)
         {
         }
 
