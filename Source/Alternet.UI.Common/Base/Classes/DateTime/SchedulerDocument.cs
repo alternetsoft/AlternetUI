@@ -78,10 +78,10 @@ namespace Alternet.UI
 
                     if (itemsCollection != null)
                     {
-                        foreach (var propertyBag in itemsCollection)
+                        foreach (var pb in itemsCollection)
                         {
                             CalendarItem calendarItem = CreateItem();
-                            calendarItem.LoadFrom(new SerializableObjectContext(propertyBag));
+                            calendarItem.LoadFrom(new SerializableObjectContext(pb));
                             Add(calendarItem);
                         }
                     }

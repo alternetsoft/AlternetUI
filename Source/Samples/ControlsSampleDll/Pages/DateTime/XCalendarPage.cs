@@ -111,6 +111,11 @@ namespace ControlsSample
                     var source = new SchedulerDocument();
                     source.AsJsonString = calendarItemsJson;
                     WindowWithMessageAndButton.ShowDialog("Scheduler Document JSON", source.AsJsonString);
+
+                    if (calendarItemsJson == source.AsJsonString)
+                    {
+                        App.Log("Scheduler document loaded successfully from json");
+                    }
                 }
                 else
                 {
@@ -129,6 +134,11 @@ namespace ControlsSample
                     var source = new SchedulerDocument();
                     source.AsXmlString = calendarItemsXml;
                     WindowWithMessageAndButton.ShowDialog("Scheduler Document XML", source.AsXmlString);
+
+                    if (calendarItemsXml == source.AsXmlString)
+                    {
+                        App.Log("Scheduler document loaded successfully from xml");
+                    }
                 }
                 else
                 {
