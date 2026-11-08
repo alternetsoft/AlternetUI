@@ -1,1 +1,0 @@
-sudo apt -y install dotnet-sdk-6.0
