@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// A control that allows users to select a time period, represented by a numeric value and a unit of
     /// measurement (e.g., days, hours, minutes).
     /// </summary>
+    [ControlCategory(KnownControlCategory.Date)]
     public partial class TimePeriodPicker : ListPicker
     {
         /// <summary>
@@ -93,15 +94,79 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the default set of time period items should include an item with a value of zero.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool AllowZeroInDefaultItems()
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Adds the default set of time period items to the picker, which can be overridden in derived classes.
         /// By default uses the <see cref="DefaultItems"/> array to populate the picker with common time periods.
         /// </summary>
         public virtual void AddDefaultItems()
         {
+            var allowZero = AllowZeroInDefaultItems();
+
             foreach (var item in DefaultItems)
             {
+                if (item.Value is null)
+                    continue;
+
+                if (!allowZero && item.Value.Value == TimeSpan.Zero)
+                    continue;
                 Items.Add(item);
             }
         }
     }
+
+    /// <summary>
+    /// Represents a specialized button control that allows users to select a snooze time period from
+    /// a predefined list of durations.
+    /// </summary>
+    [ControlCategory(KnownControlCategory.Date)]
+    public partial class SnoozeSpeedButton : TimePeriodPicker
+    {
+        private string? labelText;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SnoozeSpeedButton"/> class.
+        /// </summary>
+        public SnoozeSpeedButton()
+        {
+            ImageVisible = false;
+            PopupWindowTitle = CommonStrings.Default.WindowTitleRemindMeIn;
+        }
+
+        /// <summary>
+        /// Gets or sets the text label displayed on the button, which can be customized to indicate the snooze action.
+        /// If not set, a default label text is used.
+        /// </summary>
+        public virtual string? LabelText
+        {
+            get => labelText;
+            set => labelText = value;
+        }
+
+        /// <inheritdoc/>
+        protected override string CoerceLabelText(string text)
+        {
+            return labelText ?? CommonStrings.Default.ButtonSnooze;
+        }
+
+        /// <inheritdoc/>
+        public override bool UseSpeedButtonTheme()
+        {
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override bool AllowZeroInDefaultItems()
+        {
+            return false;
+        }
+    }
+
 }

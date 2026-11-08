@@ -130,6 +130,8 @@ namespace Alternet.UI.Localization
 
         public string ButtonAbort { get; set; } = "Abort";
 
+        public string ButtonSnooze { get; set; } = "Snooze";
+
         public string ButtonRetry { get; set; } = "Retry";
 
         public string ButtonIgnore { get; set; } = "Ignore";
@@ -179,6 +181,8 @@ namespace Alternet.UI.Localization
         public string WindowTitleSelectValue { get; set; } = "Select a Value";
 
         public string WindowTitleSelectValues { get; set; } = "Select Values";
+
+        public string WindowTitleRemindMeIn { get; set; } = "Remind me in…";
 
         public string WindowTitleSelectItem { get; set; } = "Select an Item";
 

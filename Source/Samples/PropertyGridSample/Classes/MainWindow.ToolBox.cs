@@ -135,7 +135,8 @@ namespace PropertyGridSample
                 ToolBoxAdd<ShapeControl>(ObjectInit.InitShapeControl);
                 ToolBoxAdd<SideBarPanel>(ObjectInit.InitSideBarPanel);
                 ToolBoxAdd<SpeedButton>(ObjectInit.InitSpeedButton);
-                ToolBoxAdd<SpeedButtonWithListPopup>();
+                ToolBoxAdd<SnoozeSpeedButton>(ObjectInit.InitSnoozeSpeedButton);
+                ToolBoxAdd<SpeedButtonWithListPopup>(ObjectInit.InitSpeedButtonWithListPopup);
                 ToolBoxAdd<SpeedColorButton>(ObjectInit.InitSpeedColorButton);
                 ToolBoxAdd<SpeedDateButton>();
                 ToolBoxAdd<SpeedEnumButton>(ObjectInit.InitSpeedEnumButton);

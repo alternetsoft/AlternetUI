@@ -71,6 +71,25 @@ namespace PropertyGridSample
             button.Click += LogClick;
         }
 
+        public static void InitSpeedButtonWithListPopup(object control)
+        {
+            if (control is not SpeedButtonWithListPopup button)
+                return;
+            button.Items.AddRange([ "First Item", "Second Item", "Third Item", "Fourth Item", "Fifth Item" ]);
+            button.Value = "Second Item";
+        }
+
+        public static void InitSnoozeSpeedButton(object control)
+        {
+            if (control is not SnoozeSpeedButton button)
+                return;
+            button.HorizontalAlignment = HorizontalAlignment.Left;
+            button.DropDownAccepted += (s, e) =>
+            {
+                App.Log($"SnoozeSpeedButton.DropDownAccepted: {button.Value}");
+            };
+        }
+
         public static void InitSpeedButton(object control)
         {
             if (control is not SpeedButton button)
