@@ -54,7 +54,9 @@ namespace Alternet.UI
             set
             {
                 base.ColorMode = value;
-                UseControlColors(DefaultUseControlColors);
+
+                if(!UseSpeedButtonTheme())
+                    UseControlColors(DefaultUseControlColors);
             }
         }
 
@@ -80,17 +82,31 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the control should use the SpeedButton theme.
+        /// When set to <c>true</c>, the control will use the theme of a SpeedButton, when <c>false</c>,
+        /// it will use the default theme and look like TextPicker.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool UseSpeedButtonTheme()
+        {
+            return false;
+        }
+
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            UseControlColors(DefaultUseControlColors);
+            if(!UseSpeedButtonTheme())
+                UseControlColors(DefaultUseControlColors);
             base.OnSystemColorsChanged(e);
         }
 
         /// <inheritdoc/>
         protected override KnownTheme GetDefaultUseTheme()
         {
-            return DefaultThemes.Picker;
+            if (!UseSpeedButtonTheme())
+                return DefaultThemes.Picker;
+            return base.GetDefaultUseTheme();
         }
     }
 }
