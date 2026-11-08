@@ -19,6 +19,17 @@ namespace Alternet.UI
         where TContent : AbstractControl, new()
     {
         /// <summary>
+        /// Gets or sets a value indicating whether a special window kind should be used for the tooltip window.
+        /// </summary>
+        public static bool UseSpecialWindowKind;
+
+        /// <summary>
+        /// Gets or sets the special window kind to be used for the tooltip window
+        /// when <see cref="UseSpecialWindowKind"/> is true.
+        /// </summary>
+        public static WindowKind SpecialWindowKind = WindowKind.FocusablePopup;
+
+        /// <summary>
         /// Gets or sets the default distance between OK and Cancel buttons in the bottom toolbar.
         /// If not specified, a default value will be used.
         /// </summary>
@@ -33,9 +44,6 @@ namespace Alternet.UI
         /// Gets or sets default theme for OK and Cancel buttons.
         /// </summary>
         public static SpeedButton.KnownTheme DefaultOkCancelTheme = SpeedButton.KnownTheme.RoundBorder;
-
-        private static readonly bool useNativePopup;
-        private static readonly WindowKind nativePopupWindowKind;
 
         private readonly object? initialSettings;
         private readonly VerticalStackPanel mainPanel = new();
@@ -72,8 +80,7 @@ namespace Alternet.UI
         {
             if (App.PlatformKind == UIPlatformKind.WxWidgets)
             {
-                useNativePopup = App.IsLinuxOS;
-                nativePopupWindowKind = WindowKind.FocusablePopup;
+                UseSpecialWindowKind = App.IsLinuxOS;
             }
         }
 
@@ -150,7 +157,7 @@ namespace Alternet.UI
             HideOnDeactivate = true;
             AllowFormKeyPreview = false;
 
-            if (useNativePopup)
+            if (UseSpecialWindowKind)
             {
                 mainPanel.HasBorder = true;
                 topToolBarPanel.SetVisibleBorders(true, true, true, false);
@@ -878,9 +885,9 @@ namespace Alternet.UI
         /// <inheritdoc />
         public override WindowKind GetWindowKind()
         {
-            if (useNativePopup)
+            if (UseSpecialWindowKind)
             {
-                var result = GetWindowKindOverride() ?? nativePopupWindowKind;
+                var result = GetWindowKindOverride() ?? SpecialWindowKind;
                 return result;
             }
 

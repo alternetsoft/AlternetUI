@@ -22,7 +22,16 @@ namespace Alternet.UI
         /// </summary>
         public static Func<ToolTipWindow> CreateInstance = () => new ToolTipWindow();
 
-        private static readonly bool useNativePopup;
+        /// <summary>
+        /// Gets or sets a value indicating whether a special window kind should be used for the tooltip window.
+        /// </summary>
+        public static bool UseSpecialWindowKind;
+
+        /// <summary>
+        /// Gets or sets the special window kind to be used for the tooltip window
+        /// when <see cref="UseSpecialWindowKind"/> is true.
+        /// </summary>
+        public static WindowKind SpecialWindowKind = WindowKind.Popup;
 
         private readonly RichToolTip toolTip;
         private readonly ControlSubscriber subscriber = new();
@@ -36,7 +45,7 @@ namespace Alternet.UI
         {
             if (App.PlatformKind == UIPlatformKind.WxWidgets)
             {
-                useNativePopup = App.IsLinuxOS;
+                UseSpecialWindowKind = App.IsLinuxOS;
             }
         }
 
@@ -270,9 +279,9 @@ namespace Alternet.UI
         /// <inheritdoc />
         public override WindowKind GetWindowKind()
         {
-            if (useNativePopup)
+            if (UseSpecialWindowKind)
             {
-                var result = GetWindowKindOverride() ?? WindowKind.Popup;
+                var result = GetWindowKindOverride() ?? SpecialWindowKind;
                 return result;
             }
             else
