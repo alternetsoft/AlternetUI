@@ -133,12 +133,21 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            propertyBag.ElementName ??= "SchedulerDocument";
+            propertyBag.ElementName ??= GetElementName();
             propertyBag.IsRoot = true;
 
             propertyBag.SetCollectionProperty(prefix + nameof(Items), Items);
 
             return true;
+        }
+
+        /// <summary>
+        /// Gets the name of the root element that represents this object when serialized.
+        /// </summary>
+        /// <returns>The name of the root element.</returns>
+        protected virtual string GetElementName()
+        {
+            return "SchedulerDocument";
         }
     }
 }
