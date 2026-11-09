@@ -14,7 +14,8 @@ namespace Alternet.UI
         private int suspendCounter;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseObjectWithNotify"/> class with the specified unique id.
+        /// Initializes a new instance of the <see cref="BaseObjectWithNotify"/>
+        /// class with the specified unique id.
         /// </summary>
         /// <param name="uniqueId">The unique identifier for the new instance.</param>
         public BaseObjectWithNotify(ObjectUniqueId uniqueId)
@@ -31,6 +32,11 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Occurs before a property value changes.
+        /// </summary>
+        public event EventHandler? BeforePropertyChange;
 
         /// <summary>
         /// Gets or sets an action which is called when a property value changes.
@@ -154,6 +160,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises <see cref="BeforePropertyChange"/> event and calls <see cref="OnBeforePropertyChange"/> method.
+        /// </summary>
+        public void RaiseBeforePropertyChange()
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnBeforePropertyChange();
+            BeforePropertyChange?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Called when object property is changed.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
@@ -177,6 +194,7 @@ namespace Alternet.UI
         {
             if (Immutable || Equals(storage, value))
                 return false;
+            RaiseBeforePropertyChange();
             storage = value;
             RaisePropertyChanged(propertyName);
             changedAction?.Invoke();
@@ -191,10 +209,14 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         /// <param name="changedAction">This action is called when property changes</param>
         /// <returns>True if the property value was changed; otherwise, false.</returns>
-        protected virtual bool SetProperty<T>(ref T? storage, T? value, Action? changedAction = null)
+        protected virtual bool SetProperty<T>(
+            ref T? storage,
+            T? value,
+            Action? changedAction = null)
         {
             if (Immutable || Equals(storage, value))
                 return false;
+            RaiseBeforePropertyChange();
             storage = value;
             RaisePropertyChanged();
             changedAction?.Invoke();
@@ -211,6 +233,7 @@ namespace Alternet.UI
         {
             if (Immutable || Equals(storage, value))
                 return false;
+            RaiseBeforePropertyChange();
             storage = value;
             RaisePropertyChanged();
             return true;
@@ -228,9 +251,18 @@ namespace Alternet.UI
         {
             if (Immutable || Equals(storage, value))
                 return false;
+            RaiseBeforePropertyChange();
             storage = value;
             RaisePropertyChanged();
             return true;
+        }
+
+        /// <summary>
+        /// Called before a property value changes.
+        /// Override this method to perform custom actions before a property change occurs.
+        /// </summary>
+        protected virtual void OnBeforePropertyChange()
+        {
         }
     }
 }

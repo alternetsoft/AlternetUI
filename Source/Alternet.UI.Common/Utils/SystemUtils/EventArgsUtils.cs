@@ -19,8 +19,7 @@ namespace Alternet.UI
         /// new <see cref="PropertyChangedEventArgs"/> instances for the
         /// "Count" property, improving performance in scenarios
         /// where property change notifications for "Count" are frequent.</remarks>
-        public static readonly PropertyChangedEventArgs CountPropertyChangedArgs
-            = new("Count");
+        public static readonly PropertyChangedEventArgs CountPropertyChangedArgs = new("Count");
 
         /// <summary>
         /// Provides a pre-initialized <see cref="PropertyChangedEventArgs"/>
@@ -30,8 +29,7 @@ namespace Alternet.UI
         /// new <see cref="PropertyChangedEventArgs"/> instances for the
         /// "Items[]" property, improving performance in scenarios
         /// where property change notifications for "Items[]" are frequent.</remarks>
-        public static readonly PropertyChangedEventArgs IndexerPropertyChangedArgs
-            = new("Item[]");
+        public static readonly PropertyChangedEventArgs IndexerPropertyChangedArgs = new("Item[]");
 
         /// <summary>
         /// Provides a pre-initialized instance
