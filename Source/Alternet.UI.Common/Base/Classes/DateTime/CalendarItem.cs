@@ -12,8 +12,6 @@ namespace Alternet.UI
     {
         private readonly RepeatPatternRule rule;
         private readonly CalendarAlarmInfo alarmInfo;
-
-        private int? hashCode;
         private string? title;
         private string? description;
         private object? location;
@@ -255,6 +253,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
+            propertyBag.SetStringProperty(prefix + nameof(UniqueId), UniqueId.ToString());
             propertyBag.SetStringProperty(prefix + nameof(Text), Text ?? string.Empty);
             propertyBag.SetStringProperty(prefix + nameof(Description), Description ?? string.Empty);
             propertyBag.SetStringProperty(prefix + nameof(Location), Location?.ToString() ?? string.Empty);
@@ -328,22 +327,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            if (hashCode.HasValue)
-                return hashCode.Value;
-
-            hashCode = (
-                Text,
-                Description,
-                Location?.GetHashCode(),
-                Category,
-                Status,
-                UserData,
-                UserName,
-                Visible,
-                AlarmInfo.GetHashCode(),
-                Rule.GetHashCode())
-                .GetHashCode();
-            return hashCode.Value;
+            return UniqueId.GetHashCode();
         }
 
         /// <summary>
@@ -366,8 +350,6 @@ namespace Alternet.UI
                     UserName = null;
                     Visible = true;
                     Rule.Assign(null);
-                    hashCode = null;
-
                 });
 
                 return;
@@ -399,7 +381,6 @@ namespace Alternet.UI
                     Visible = true;
                     Rule.Reset();
                     AlarmInfo.Reset();
-                    hashCode = null;
                 });
 
                 return;
@@ -420,7 +401,6 @@ namespace Alternet.UI
                 Visible = other.Visible;
                 Rule = other.Rule;
                 AlarmInfo = other.AlarmInfo;
-                hashCode = null;
             });
         }
 
@@ -428,7 +408,6 @@ namespace Alternet.UI
         protected override void OnPropertyChanged(string? propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-            hashCode = null;
         }
 
         /// <summary>
@@ -438,7 +417,6 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnRuleChanged(object? sender, PropertyChangedEventArgs e)
         {
-            hashCode = null;
             RaisePropertyChanged(nameof(Rule));
         }
 
@@ -449,9 +427,11 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnAlarmInfoChanged(object? sender, PropertyChangedEventArgs e)
         {
-            hashCode = null;
             RaisePropertyChanged(nameof(AlarmInfo));
         }
+
+        /// <inheritdoc/>
+        protected override bool UseGuidForUniqueId => true;
 
         /// <summary>
         /// Creates a new instance of <see cref="RepeatPatternRule"/>. This method can be overridden
