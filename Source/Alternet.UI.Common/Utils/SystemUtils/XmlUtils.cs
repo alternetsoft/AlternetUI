@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace Alternet.UI
             /// No flags.
             /// </summary>
             None = 0,
-            
+
             /// <summary>
             /// Adds xml declaration with version and UTF-8 encoding.
             /// </summary>
@@ -63,7 +64,7 @@ namespace Alternet.UI
             string xml,
             XmlPropertyDelegate action)
         {
-            XmlDocument doc = new ();
+            XmlDocument doc = new();
             doc.LoadXml(xml);
             EnumerateProperties(doc, action);
         }
@@ -83,7 +84,14 @@ namespace Alternet.UI
 
                 if (HasElements(child))
                 {
-                    action(child, name, child.InnerXml);
+                    if (HasOnlyElements(child, "Item"))
+                    {
+                        action(child, name, ConvertArrayElement(child));
+                    }
+                    else
+                    {
+                        action(child, name, ConvertObjectElement(child));
+                    }
                 }
                 else
                 {
@@ -91,6 +99,59 @@ namespace Alternet.UI
                     action(child, name, value);
                 }
             }
+
+            object? ConvertArrayElement(XmlElement element)
+            {
+                var elements = element.ChildNodes.OfType<XmlElement>().ToArray();
+
+                var containsObjects = true;
+
+                foreach (var child in elements)
+                {
+                    if (!HasElements(child))
+                    {
+                        containsObjects = false;
+                        break;
+                    }
+                }
+
+                if (containsObjects)
+                {
+                    var bagList = new List<IPropertyBag>();
+                    foreach (var child in elements)
+                    {
+                        var bag = ConvertObjectElement(child);
+                        if (bag is IPropertyBag propertyBag)
+                            bagList.Add(propertyBag);
+                    }
+
+                    return bagList;
+                }
+                else
+                {
+                    var valueList = new List<object?>();
+                    foreach (var child in elements)
+                    {
+                        var value = UnescapeElementValue(child.InnerText);
+                        valueList.Add(value);
+                    }
+
+                    return (IEnumerable)valueList;
+                }
+            }
+
+            object? ConvertObjectElement(XmlElement element)
+            {
+                var result = PropertyBag.Create();
+
+                EnumerateProperties(element, (prop, name, value) =>
+                {
+                    result.SetProperty(name, value);
+                });
+
+                return result;
+            }
+
         }
 
         /// <summary>
@@ -583,7 +644,7 @@ namespace Alternet.UI
             Type type,
             params NameValue<string>[] decl)
         {
-            foreach(var item in decl)
+            foreach (var item in decl)
             {
                 XmlElementAttribute myElementAttribute = new();
                 myElementAttribute.ElementName = item.Value;
