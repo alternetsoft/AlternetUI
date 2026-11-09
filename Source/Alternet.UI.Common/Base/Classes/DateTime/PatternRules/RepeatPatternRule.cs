@@ -195,7 +195,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether the specified object is equal to the current instance of <see cref="RepeatPatternRule"/>.
+        /// Determines whether the specified object is equal
+        /// to the current instance of <see cref="RepeatPatternRule"/>.
         /// </summary>
         /// <param name="obj">The object to compare with the current instance.</param>
         /// <returns><c>true</c> if the specified object is equal to the current instance;
@@ -219,6 +220,12 @@ namespace Alternet.UI
             }
 
             return Kind == other.Kind &&
+                   StartDate == other.StartDate &&
+                   StartTime == other.StartTime &&
+                   Duration == other.Duration &&
+                   EndDate == other.EndDate &&
+                   OccurrenceCount == other.OccurrenceCount &&
+                   EndCondition == other.EndCondition &&
                    DailyRule.Equals(other.DailyRule) &&
                    WeeklyRule.Equals(other.WeeklyRule) &&
                    MonthlyRule.Equals(other.MonthlyRule) &&
@@ -241,22 +248,23 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                SuspendPropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    var now = DateTime.Now;
+                    StartDate = now.ToDateOnly();
+                    StartTime = now.ToTimeOnly();
+                    Duration = TimeSpan.Zero;
+                    OccurrenceCount = 1;
+                    EndCondition = EndConditionKind.OnDate;
+                    EndDate = StartDate;
+                    Kind = ScheduleRepeatPattern.None;
 
-                var now = DateTime.Now;
-                StartDate = now.ToDateOnly();
-                StartTime = now.ToTimeOnly();
-                Duration = TimeSpan.Zero;
-                OccurrenceCount = 1;
-                EndCondition = EndConditionKind.OnDate;
-                EndDate = StartDate;
-                Kind = ScheduleRepeatPattern.None;
+                    DailyRule.Assign(null);
+                    WeeklyRule.Assign(null);
+                    MonthlyRule.Assign(null);
+                    YearlyRule.Assign(null);
+                });
 
-                DailyRule.Assign(null);
-                WeeklyRule.Assign(null);
-                MonthlyRule.Assign(null);
-                YearlyRule.Assign(null);
-                ResumePropertyChanged();
                 return;
             }
 
@@ -265,22 +273,22 @@ namespace Alternet.UI
                 if (Equals(other))
                     return;
 
-                SuspendPropertyChanged();
+                DoInsideSuspendedPropertyChanged(() =>
+                {
+                    StartDate = otherRule.StartDate;
+                    StartTime = otherRule.StartTime;
+                    Duration = otherRule.Duration;
+                    EndDate = otherRule.EndDate;
+                    OccurrenceCount = otherRule.OccurrenceCount;
+                    EndCondition = otherRule.EndCondition;
 
-                StartDate = otherRule.StartDate;
-                StartTime = otherRule.StartTime;
-                Duration = otherRule.Duration;
-                EndDate = otherRule.EndDate;
-                OccurrenceCount = otherRule.OccurrenceCount;
-                EndCondition = otherRule.EndCondition;
+                    DailyRule.Assign(otherRule.DailyRule);
+                    WeeklyRule.Assign(otherRule.WeeklyRule);
+                    MonthlyRule.Assign(otherRule.MonthlyRule);
+                    YearlyRule.Assign(otherRule.YearlyRule);
 
-                DailyRule.Assign(otherRule.DailyRule);
-                WeeklyRule.Assign(otherRule.WeeklyRule);
-                MonthlyRule.Assign(otherRule.MonthlyRule);
-                YearlyRule.Assign(otherRule.YearlyRule);
-
-                Kind = otherRule.Kind;
-                ResumePropertyChanged();
+                    Kind = otherRule.Kind;
+                });
             }
         }
 
@@ -309,7 +317,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return (Kind, DailyRule, WeeklyRule, MonthlyRule, YearlyRule).GetHashCode();
+            return UniqueId.GetHashCode();
         }
 
         /// <inheritdoc/>
@@ -378,6 +386,9 @@ namespace Alternet.UI
         {
             base.OnStartDateChanged();
         }
+
+        /// <inheritdoc/>
+        protected override bool UseGuidForUniqueId => true;
 
         /// <inheritdoc/>
         protected override void OnOccurrenceCountChanged()
