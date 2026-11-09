@@ -244,7 +244,9 @@ namespace Alternet.UI
         /// Assigns the values from another instance to the current instance.
         /// </summary>
         /// <param name="other">The instance from which to copy values.</param>
-        public virtual void Assign(object? other)
+        /// <returns><c>true</c> if the values were successfully assigned; otherwise, <c>false</c>.
+        /// When assigned value equals the current instance, the method returns <c>false</c>.</returns>
+        public virtual bool Assign(object? other)
         {
             if (other == null)
             {
@@ -265,13 +267,13 @@ namespace Alternet.UI
                     YearlyRule.Assign(null);
                 });
 
-                return;
+                return true;
             }
 
             if (other is RepeatPatternRule otherRule)
             {
                 if (Equals(other))
-                    return;
+                    return false;
 
                 DoInsideSuspendedPropertyChanged(() =>
                 {
@@ -289,7 +291,11 @@ namespace Alternet.UI
 
                     Kind = otherRule.Kind;
                 });
+
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>

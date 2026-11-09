@@ -91,7 +91,10 @@ namespace Alternet.UI
 
             set
             {
-                rule.Assign(value);
+                if (rule.Assign(value))
+                {
+                    RaisePropertyChanged(nameof(Rule));
+                }
             }
         }
 
@@ -139,7 +142,7 @@ namespace Alternet.UI
             get => category;
             set
             {
-                this.SetProperty(ref category!, value ?? KnownCalendarItemMarkers.CategoryNone, nameof(Category));
+                this.SetNotNullProperty(ref category, value ?? KnownCalendarItemMarkers.CategoryNone, nameof(Category));
             }
         }
 
@@ -151,7 +154,7 @@ namespace Alternet.UI
             get => status;
             set
             {
-                this.SetProperty(ref status!, value ?? KnownCalendarItemMarkers.StatusUnknown, nameof(Status));
+                this.SetNotNullProperty(ref status, value ?? KnownCalendarItemMarkers.StatusUnknown, nameof(Status));
             }
         }
 
@@ -189,6 +192,12 @@ namespace Alternet.UI
             {
                 this.SetProperty(ref visible, value, nameof(Visible));
             }
+        }
+
+        /// <inheritdoc/>
+        public override bool CanChangeProperty(string propertyName)
+        {
+            return base.CanChangeProperty(propertyName);
         }
 
         /// <summary>
@@ -231,7 +240,7 @@ namespace Alternet.UI
                     Status = KnownCalendarItemMarkers.FindStatus(statusString);
                 if (propertyBag.TryGetStringProperty(prefix + nameof(Category), out var categoryString))
                     Category = KnownCalendarItemMarkers.FindCategory(categoryString);
-                
+
                 Rule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(Rule)));
                 AlarmInfo.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(AlarmInfo)));
 
