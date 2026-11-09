@@ -15,6 +15,7 @@ namespace Alternet.UI
     {
         private bool isClipped = false;
         private bool hasBorder;
+        private bool ignorePaint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericControl"/> class.
@@ -91,6 +92,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control should ignore paint operations.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IgnorePaint
+        {
+            get => ignorePaint;
+            set
+            {
+                if (ignorePaint == value)
+                    return;
+                ignorePaint = value;
+                Parent?.Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control has a border.
         /// </summary>
         [Browsable(true)]
@@ -116,7 +133,7 @@ namespace Alternet.UI
         /// </summary>
         public override void Invalidate()
         {
-            if (!VisibleOnScreen)
+            if (!VisibleOnScreen || IgnorePaint)
                 return;
 
             var result = Parent;
@@ -243,6 +260,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (IgnorePaint)
+                return;
+
             e.Graphics.DoInsideClipped(
                 e.ClientRectangle,
                 () =>
