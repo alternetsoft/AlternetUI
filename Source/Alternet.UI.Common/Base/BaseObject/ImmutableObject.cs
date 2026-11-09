@@ -18,6 +18,15 @@ namespace Alternet.UI
         private bool immutable;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ImmutableObject"/> class with the specified unique id.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier for the new instance.</param>
+        public ImmutableObject(ObjectUniqueId uniqueId)
+            : base(uniqueId)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ImmutableObject"/> class.
         /// </summary>
         public ImmutableObject()

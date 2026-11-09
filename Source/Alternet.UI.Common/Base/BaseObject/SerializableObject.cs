@@ -16,6 +16,23 @@ namespace Alternet.UI
     public abstract partial class SerializableObject : ImmutableObject, IPropertyBagSerialize
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SerializableObject"/> class.
+        /// </summary>
+        public SerializableObject()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerializableObject"/> class
+        /// with the specified unique id.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier for the new instance.</param>
+        public SerializableObject(ObjectUniqueId uniqueId)
+            : base(uniqueId)
+        {
+        }
+
+        /// <summary>
         /// Gets or sets a JSON string representation of the current state of this instance.
         /// </summary>
         [Browsable(false)]
