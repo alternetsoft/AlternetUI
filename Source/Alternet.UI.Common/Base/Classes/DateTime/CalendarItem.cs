@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Alternet.UI
@@ -10,8 +11,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class CalendarItem : SerializableObject, IEquatable<CalendarItem>, IPropertyBagSerialize
     {
-        private readonly RepeatPatternRule rule;
-        private readonly CalendarAlarmInfo alarmInfo;
+        private RepeatPatternRule rule;
+        private CalendarAlarmInfo alarmInfo;
         private string? title;
         private string? description;
         private object? location;
@@ -26,12 +27,18 @@ namespace Alternet.UI
         /// </summary>
         public CalendarItem()
         {
-            category = KnownCalendarItemMarkers.CategoryNone;
-            status = KnownCalendarItemMarkers.StatusUnknown;
-            rule = CreateRule();
-            alarmInfo = CreateAlarmInfo();
-            rule.PropertyChanged += OnRuleChanged;
-            alarmInfo.PropertyChanged += OnAlarmInfoChanged;
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItem"/> class
+        /// with the specified unique id.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier for the new instance.</param>
+        public CalendarItem(ObjectUniqueId uniqueId)
+            : base(uniqueId)
+        {
+            Initialize();
         }
 
         /// <summary>
@@ -253,7 +260,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            propertyBag.SetStringProperty(prefix + nameof(UniqueId), UniqueId.ToString());
+            propertyBag.SetUniqueIdProperty(prefix + nameof(UniqueId), UniqueId);
             propertyBag.SetStringProperty(prefix + nameof(Text), Text ?? string.Empty);
             propertyBag.SetStringProperty(prefix + nameof(Description), Description ?? string.Empty);
             propertyBag.SetStringProperty(prefix + nameof(Location), Location?.ToString() ?? string.Empty);
@@ -441,6 +448,21 @@ namespace Alternet.UI
         protected virtual RepeatPatternRule CreateRule()
         {
             return new RepeatPatternRule();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItem"/> class
+        /// </summary>
+        [MemberNotNull(nameof(rule)), MemberNotNull(nameof(alarmInfo))]
+        [MemberNotNull(nameof(category)), MemberNotNull(nameof(status))]
+        protected virtual void Initialize()
+        {
+            category = KnownCalendarItemMarkers.CategoryNone;
+            status = KnownCalendarItemMarkers.StatusUnknown;
+            rule = CreateRule();
+            alarmInfo = CreateAlarmInfo();
+            rule.PropertyChanged += OnRuleChanged;
+            alarmInfo.PropertyChanged += OnAlarmInfoChanged;
         }
 
         /// <summary>

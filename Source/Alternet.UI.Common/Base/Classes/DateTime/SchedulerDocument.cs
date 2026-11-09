@@ -46,6 +46,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a new instance of <see cref="CalendarItem"/> with the specified unique id and returns it.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier for the new <see cref="CalendarItem"/>.</param>
+        /// <returns>A new instance of <see cref="CalendarItem"/> with the specified unique id.</returns>
+        public virtual CalendarItem CreateItem(ObjectUniqueId uniqueId)
+        {
+            var item = new CalendarItem(uniqueId);
+            return item;
+        }
+
+        /// <summary>
         /// Adds a <see cref="CalendarItem"/> to the source.
         /// </summary>
         /// <param name="item">The <see cref="CalendarItem"/> to add.</param>
@@ -84,7 +95,17 @@ namespace Alternet.UI
                     {
                         foreach (var pb in itemsCollection)
                         {
-                            CalendarItem calendarItem = CreateItem();
+                            CalendarItem calendarItem;
+
+                            if (pb.TryGetUniqueIdProperty(prefix + nameof(UniqueId), out var uniqueId))
+                            {
+                                calendarItem = CreateItem(uniqueId);
+                            }
+                            else
+                            {
+                                calendarItem = CreateItem();
+                            }
+
                             calendarItem.LoadFrom(new SerializableObjectContext(pb));
                             Add(calendarItem);
                         }
