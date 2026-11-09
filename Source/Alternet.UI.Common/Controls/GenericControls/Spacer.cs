@@ -38,6 +38,15 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Spacer"/> class with the specified suggested size.
+        /// </summary>
+        /// <param name="suggestedSize">The suggested size for the spacer.</param>
+        public Spacer(SizeD suggestedSize)
+        {
+            SuggestedSize = suggestedSize;
+        }
+
         /// <inheritdoc/>
         public override SizeD SuggestedSize
         {
