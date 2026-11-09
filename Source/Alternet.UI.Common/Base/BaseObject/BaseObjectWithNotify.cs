@@ -39,6 +39,12 @@ namespace Alternet.UI
         public event PropertyChangingEventHandler? PropertyChanging;
 
         /// <summary>
+        /// Occurs when a property value change is requested. In the event handler,
+        /// you can cancel the property change by setting 'Cancel' to <c>true</c>.
+        /// </summary>
+        public event EventHandler<PropertyChangeRequestedEventArgs>? PropertyChangeRequested;
+
+        /// <summary>
         /// Gets or sets an action which is called when a property value changes.
         /// </summary>
         [Browsable(false)]
@@ -199,6 +205,17 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the property can be changed; otherwise, <c>false</c>.</returns>
         public virtual bool CanChangeProperty(string propertyName)
         {
+            if (PropertyChangeRequested != null && !string.IsNullOrEmpty(propertyName))
+            {
+                if (DisposingOrDisposed)
+                    return false;
+
+                var args = new PropertyChangeRequestedEventArgs(propertyName);
+                PropertyChangeRequested(this, args);
+                if (args.Cancel)
+                    return false;
+            }
+
             return true;
         }
 
