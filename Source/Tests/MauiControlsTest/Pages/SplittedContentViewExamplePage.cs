@@ -34,6 +34,15 @@ namespace AllQuickStarts
                     sampleView.IsVertical = !sampleView.IsVertical;
                 });
 
+            toolbar.AddButton(
+                "Toggle visibility",
+                null,
+                null,
+                () =>
+                {
+                    sampleView.IsFirstPaneVisible = !sampleView.IsFirstPaneVisible;
+                });
+
             toolbar.AddExpandingSpace();
             toolbar.IsTopBorderVisible = true;
             toolbar.IsBottomBorderVisible = true;

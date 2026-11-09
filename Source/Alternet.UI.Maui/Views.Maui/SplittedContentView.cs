@@ -31,6 +31,7 @@ namespace Alternet.Maui
         private double firstPaneSize = 200;
         private double splitterThickness = DefaultSplitterThickness;
         private bool isVertical = true;
+        private bool isFirstVisible = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedContentView"/> class.
@@ -45,6 +46,21 @@ namespace Alternet.Maui
 
             RebuildLayout();
         }
+
+        /// <summary>
+        /// Gets the splitter control that separates the two panes.
+        /// </summary>
+        public Border Splitter => splitter;
+
+        /// <summary>
+        /// Gets the first pane of the control.
+        /// </summary>
+        public ContentView? FirstPane => firstPane;
+
+        /// <summary>
+        /// Gets the second pane of the control.
+        /// </summary>
+        public ContentView? SecondPane => secondPane;
 
         /// <summary>
         /// Gets or sets the content of the first pane.
@@ -62,6 +78,21 @@ namespace Alternet.Maui
         {
             get => secondPane.Content;
             set => secondPane.Content = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the first pane is visible.
+        /// </summary>
+        public virtual bool IsFirstPaneVisible
+        {
+            get => isFirstVisible;
+            set
+            {
+                if (isFirstVisible == value)
+                    return;
+                isFirstVisible = value;
+                RebuildLayout();
+            }
         }
 
         /// <summary>
@@ -113,27 +144,37 @@ namespace Alternet.Maui
 
             if (IsVertical)
             {
-                ColumnDefinitions.Add(new ColumnDefinition(FirstPaneSize));
-                ColumnDefinitions.Add(new ColumnDefinition(SplitterThickness));
-                ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+                if (IsFirstPaneVisible)
+                {
+                    ColumnDefinitions.Add(new ColumnDefinition(FirstPaneSize));
+                    ColumnDefinitions.Add(new ColumnDefinition(SplitterThickness));
+                    SetColumn(firstPane as IView, 0);
+                    SetColumn(splitter as IView, 1);
+                }
 
-                SetColumn(firstPane as IView, 0);
-                SetColumn(splitter as IView, 1);
-                SetColumn(secondPane as IView, 2);
+                ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+                SetColumn(secondPane as IView, IsFirstPaneVisible ? 2 : 0);
             }
             else
             {
-                RowDefinitions.Add(new RowDefinition(FirstPaneSize));
-                RowDefinitions.Add(new RowDefinition(SplitterThickness));
-                RowDefinitions.Add(new RowDefinition(GridLength.Star));
+                if (IsFirstPaneVisible)
+                {
+                    RowDefinitions.Add(new RowDefinition(FirstPaneSize));
+                    RowDefinitions.Add(new RowDefinition(SplitterThickness));
+                    SetRow(firstPane as IView, 0);
+                    SetRow(splitter as IView, 1);
+                }
 
-                SetRow(firstPane as IView, 0);
-                SetRow(splitter as IView, 1);
-                SetRow(secondPane as IView, 2);
+                RowDefinitions.Add(new RowDefinition(GridLength.Star));
+                SetRow(secondPane as IView, IsFirstPaneVisible ? 2 : 0);
             }
 
-            Children.Add(firstPane);
-            Children.Add(splitter);
+            if (IsFirstPaneVisible)
+            {
+                Children.Add(firstPane);
+                Children.Add(splitter);
+            }
+
             Children.Add(secondPane);
         }
 
@@ -144,6 +185,9 @@ namespace Alternet.Maui
         /// <param name="e">The <see cref="PanUpdatedEventArgs"/> instance containing the event data.</param>
         protected virtual void OnPanUpdated(object? sender, PanUpdatedEventArgs e)
         {
+            if (!IsFirstPaneVisible)
+                return;
+
             switch (e.StatusType)
             {
                 case GestureStatus.Started:
