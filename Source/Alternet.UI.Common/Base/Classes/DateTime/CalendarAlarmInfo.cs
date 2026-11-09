@@ -313,7 +313,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return (Advance, Enabled, PlaySound, SnoozeTime, SoundPath).GetHashCode();
+            return UniqueId.GetHashCode();
         }
+
+        /// <inheritdoc/>
+        protected override bool UseGuidForUniqueId => true;
     }
 }
