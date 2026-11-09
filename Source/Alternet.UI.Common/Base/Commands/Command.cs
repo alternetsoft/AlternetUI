@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Allows an application author to define a method to be invoked.
     /// </summary>
-    public class Command : BaseObject, ICommand
+    public partial class Command : BaseObject, ICommand
     {
         private static WeakReferenceValue<object> currentTarget = new();
 
@@ -204,6 +204,69 @@ namespace Alternet.UI
             BeforeExecute?.Invoke(parameter);
             executeDelegate?.Invoke(parameter);
             AfterExecute?.Invoke(parameter);
+        }
+    }
+
+    /// <summary>
+    /// Defines a command that is associated with an owner object of type <typeparamref name="TOwner"/>.
+    /// </summary>
+    /// <typeparam name="TOwner">The type of the owner object.</typeparam>
+    public class OwnedCommand<TOwner> : Command
+    {
+        private TOwner? owner;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OwnedCommand{TOwner}"/> class with the specified owner.
+        /// </summary>
+        /// <param name="owner"></param>
+        public OwnedCommand(TOwner owner)
+        {
+            this.owner = owner;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OwnedCommand{TOwner}"/> class.
+        /// </summary>
+        public OwnedCommand()
+        {
+        }
+
+        /// <summary>
+        /// Gets the owner object associated with this command.
+        /// </summary>
+        public virtual TOwner? Owner
+        {
+            get
+            {
+                return owner;
+            }
+
+            set
+            {
+                owner = value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Defines a command that is associated with an owner object of type <see cref="object"/>.
+    /// </summary>
+    public class OwnedCommand : OwnedCommand<object>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OwnedCommand"/> class with the specified owner.
+        /// </summary>
+        /// <param name="owner">The owner object.</param>
+        public OwnedCommand(object owner)
+            : base(owner)
+        {
+        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OwnedCommand"/> class.
+        /// </summary>
+        public OwnedCommand()
+            : base()
+        {
         }
     }
 }
