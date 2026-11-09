@@ -16,6 +16,22 @@ namespace Alternet.UI
         private FlagsAndAttributesStruct attr = new();
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BaseObjectWithAttr"/> class with the specified unique id.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier for the new instance.</param>
+        public BaseObjectWithAttr(ObjectUniqueId uniqueId)
+            : base(uniqueId)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseObjectWithAttr"/> class.
+        /// </summary>
+        public BaseObjectWithAttr()
+        {
+        }
+
+        /// <summary>
         /// Gets or sets the object that contains custom user-defined data.
         /// </summary>
         /// <value>An <see cref="object"/> that contains custom user-defined data.

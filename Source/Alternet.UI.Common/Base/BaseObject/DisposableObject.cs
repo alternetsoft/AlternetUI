@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides a mechanism for releasing managed and unmanaged resources.
     /// </summary>
-    public class DisposableObject : BaseObjectWithNotify, IDisposable, IDisposableObject
+    public partial class DisposableObject : BaseObjectWithNotify, IDisposable, IDisposableObject
     {
         private bool disposeHandle;
         private bool insideDisposing;
@@ -35,6 +35,16 @@ namespace Alternet.UI
         public DisposableObject()
             : this(disposeHandle: true)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DisposableObject"/> class with the specified unique id.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier for the new instance.</param>
+        public DisposableObject(ObjectUniqueId uniqueId)
+            : base(uniqueId)
+        {
+            this.disposeHandle = true;
         }
 
         /// <summary>

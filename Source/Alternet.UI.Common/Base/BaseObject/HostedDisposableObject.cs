@@ -21,6 +21,22 @@ namespace Alternet.UI
         private IList<object>? hostObjects;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="HostedDisposableObject"/> class with the specified unique id.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier for the new instance.</param>
+        public HostedDisposableObject(ObjectUniqueId uniqueId)
+            : base(uniqueId)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HostedDisposableObject"/> class.
+        /// </summary>
+        public HostedDisposableObject()
+        {
+        }
+
+        /// <summary>
         /// Gets list of host objects. For example, it can contain native object references or
         /// <see cref="IContextMenuHost"/> controls
         /// such as <see cref="PopupToolBar"/> or <see cref="InnerPopupToolBar"/>.

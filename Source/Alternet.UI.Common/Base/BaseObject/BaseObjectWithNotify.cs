@@ -13,6 +13,22 @@ namespace Alternet.UI
     {
         private int suspendCounter;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseObjectWithNotify"/> class with the specified unique id.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier for the new instance.</param>
+        public BaseObjectWithNotify(ObjectUniqueId uniqueId)
+            : base(uniqueId)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseObjectWithNotify"/> class.
+        /// </summary>
+        public BaseObjectWithNotify()
+        {
+        }
+
         /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged;
 
