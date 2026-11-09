@@ -172,7 +172,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Changed()
         {
-            RaisePropertyChanged();
+            RaiseNullPropertyChanged();
         }
 
         /// <summary>

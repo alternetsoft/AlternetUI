@@ -54,7 +54,7 @@ namespace Alternet.UI
             get => kind;
             set
             {
-                SetProperty(ref kind, value);
+                SetProperty(ref kind, value, nameof(Kind));
             }
         }
 
@@ -372,7 +372,7 @@ namespace Alternet.UI
         /// <param name="e">The event data.</param>
         protected virtual void OnChildRulePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            RaisePropertyChanged();
+            RaiseNullPropertyChanged();
         }
 
         /// <inheritdoc/>

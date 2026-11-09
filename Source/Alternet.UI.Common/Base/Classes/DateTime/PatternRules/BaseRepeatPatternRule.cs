@@ -97,7 +97,7 @@ namespace Alternet.UI
             get => startDate;
             set
             {
-                SetProperty(ref startDate, value, OnStartDateChanged);
+                SetProperty(ref startDate, value, nameof(StartDate), OnStartDateChanged);
             }
         }
 
@@ -126,7 +126,7 @@ namespace Alternet.UI
             get => startTime;
             set
             {
-                SetProperty(ref startTime, value);
+                SetProperty(ref startTime, value, nameof(StartTime));
             }
         }
 
@@ -140,7 +140,7 @@ namespace Alternet.UI
             {
                 if (value < TimeSpan.Zero)
                     value = TimeSpan.Zero;
-                SetProperty(ref duration, value);
+                SetProperty(ref duration, value, nameof(Duration));
             }
         }
 
@@ -157,7 +157,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref endCondtion, value);
+                SetProperty(ref endCondtion, value, nameof(EndCondition));
             }
         }
 
@@ -169,7 +169,7 @@ namespace Alternet.UI
             get => endDate;
             set
             {
-                SetProperty(ref endDate, value, OnEndDateChanged);
+                SetProperty(ref endDate, value, nameof(EndDate), OnEndDateChanged);
             }
         }
 
@@ -183,7 +183,7 @@ namespace Alternet.UI
             {
                 if (value < 0)
                     value = 0;
-                SetProperty(ref occurrenceCount, value, OnOccurrenceCountChanged);
+                SetProperty(ref occurrenceCount, value, nameof(OccurrenceCount), OnOccurrenceCountChanged);
             }
         }
 

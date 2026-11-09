@@ -26,7 +26,7 @@ namespace Alternet.Drawing
             get => sizeKind;
             set
             {
-                SetProperty(ref sizeKind, value);
+                SetProperty(ref sizeKind, value, nameof(SizeKind));
             }
         }
 
@@ -38,7 +38,7 @@ namespace Alternet.Drawing
             get => size;
             set
             {
-                SetProperty(ref size, value);
+                SetProperty(ref size, value, nameof(Size));
             }
         }
 
@@ -50,7 +50,7 @@ namespace Alternet.Drawing
             get => sizeFallback;
             set
             {
-                this.SetProperty(ref sizeFallback, value);
+                this.SetProperty(ref sizeFallback, value, nameof(SizeFallback));
             }
         }
 
@@ -63,7 +63,7 @@ namespace Alternet.Drawing
             get => allowScaled;
             set
             {
-                this.SetProperty(ref allowScaled, value);
+                this.SetProperty(ref allowScaled, value, nameof(AllowScaled));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Alternet.Drawing
             get => downscaleFirst;
             set
             {
-                this.SetProperty(ref downscaleFirst, value);
+                this.SetProperty(ref downscaleFirst, value, nameof(DownscaleFirst));
             }
         }
 
@@ -89,7 +89,7 @@ namespace Alternet.Drawing
             get => addScaled;
             set
             {
-                this.SetProperty(ref addScaled, value);
+                this.SetProperty(ref addScaled, value, nameof(AddScaled));
             }
         }
     }

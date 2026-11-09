@@ -29,7 +29,7 @@ namespace Alternet.UI
                 if (Immutable)
                     return;
                 record = value;
-                RaisePropertyChanged();
+                RaiseNullPropertyChanged();
             }
         }
 
@@ -51,7 +51,7 @@ namespace Alternet.UI
             if (Immutable)
                 return;
             record = value.record;
-            RaisePropertyChanged();
+            RaiseNullPropertyChanged();
         }
     }
 }

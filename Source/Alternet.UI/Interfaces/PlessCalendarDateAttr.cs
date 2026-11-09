@@ -46,7 +46,7 @@ namespace Alternet.UI
             get => textColor;
             set
             {
-                SetProperty(ref textColor, value);
+                SetProperty(ref textColor, value, nameof(TextColor));
             }
         }
 
@@ -56,7 +56,7 @@ namespace Alternet.UI
             get => backgroundColor;
             set
             {
-                SetProperty(ref backgroundColor, value);
+                SetProperty(ref backgroundColor, value, nameof(BackgroundColor));
             }
         }
 
@@ -66,7 +66,7 @@ namespace Alternet.UI
             get => borderColor;
             set
             {
-                SetProperty(ref borderColor, value);
+                SetProperty(ref borderColor, value, nameof(BorderColor));
             }
         }
 
@@ -76,7 +76,7 @@ namespace Alternet.UI
             get => isHoliday;
             set
             {
-                SetProperty(ref isHoliday, value);
+                SetProperty(ref isHoliday, value, nameof(IsHoliday));
             }
         }
 
@@ -86,7 +86,7 @@ namespace Alternet.UI
             get => border;
             set
             {
-                SetProperty(ref border, value);
+                SetProperty(ref border, value, nameof(Border));
             }
         }
 

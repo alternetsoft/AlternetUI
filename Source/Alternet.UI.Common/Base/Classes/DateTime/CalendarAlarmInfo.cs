@@ -45,7 +45,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref advance, value);
+                SetProperty(ref advance, value, nameof(Advance));
             }
         }
 
@@ -62,7 +62,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref enabled, value);
+                SetProperty(ref enabled, value, nameof(Enabled));
             }
         }
 
@@ -79,7 +79,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref playSound, value);
+                SetProperty(ref playSound, value, nameof(PlaySound));
             }
         }
 
@@ -96,7 +96,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref snoozeTime, value);
+                SetProperty(ref snoozeTime, value, nameof(SnoozeTime));
             }
         }
 
@@ -113,7 +113,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref soundPath, value);
+                SetProperty(ref soundPath, value, nameof(SoundPath));
             }
         }
 

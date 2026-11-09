@@ -26,7 +26,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref visibility, value);
+                SetProperty(ref visibility, value, nameof(SuggestedVisibility));
             }
         }
     }

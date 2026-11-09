@@ -64,7 +64,7 @@ namespace Alternet.UI
             get => kind;
             set
             {
-                SetProperty(ref kind, value);
+                SetProperty(ref kind, value, nameof(Kind));
             }
         }
 
@@ -79,7 +79,7 @@ namespace Alternet.UI
             {
                 if (value < 1)
                     value = 1;
-                SetProperty(ref intervalDays, value);
+                SetProperty(ref intervalDays, value, nameof(IntervalDays));
             }
         }
 

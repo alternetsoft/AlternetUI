@@ -104,7 +104,7 @@ namespace Alternet.UI
         /// <remarks>
         /// You can veto this event to prevent the action.
         /// </remarks>
-        public event EventHandler<CancelEventArgs>? PropertyChanging;
+        public new event EventHandler<CancelEventArgs>? PropertyChanging;
 
         /// <summary>
         /// Occurs when mouse moves over a property.

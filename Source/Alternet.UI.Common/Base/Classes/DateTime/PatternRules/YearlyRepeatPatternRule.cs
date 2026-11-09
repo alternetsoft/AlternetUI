@@ -48,7 +48,7 @@ namespace Alternet.UI
             get => kind;
             set
             {
-                SetProperty(ref kind, value);
+                SetProperty(ref kind, value, nameof(Kind));
             }
         }
 
@@ -63,7 +63,7 @@ namespace Alternet.UI
             {
                 if (value < 1)
                     value = 1;
-                SetProperty(ref intervalYears, value);
+                SetProperty(ref intervalYears, value, nameof(IntervalYears));
             }
         }
 
@@ -76,7 +76,7 @@ namespace Alternet.UI
             get => month;
             set
             {
-                SetProperty(ref month, value);
+                SetProperty(ref month, value, nameof(Month));
             }
         }
 
@@ -90,7 +90,7 @@ namespace Alternet.UI
             get => dayOfMonth;
             set
             {
-                SetProperty(ref dayOfMonth, value);
+                SetProperty(ref dayOfMonth, value, nameof(DayOfMonth));
             }
         }
 
@@ -104,7 +104,7 @@ namespace Alternet.UI
             get => dayOfWeekIndex;
             set
             {
-                SetProperty(ref dayOfWeekIndex, value);
+                SetProperty(ref dayOfWeekIndex, value, nameof(DayOfWeekIndex));
             }
         }
 
@@ -118,7 +118,7 @@ namespace Alternet.UI
             get => dayOfWeek;
             set
             {
-                SetProperty(ref dayOfWeek, value);
+                SetProperty(ref dayOfWeek, value, nameof(DayOfWeek));
             }
         }
 

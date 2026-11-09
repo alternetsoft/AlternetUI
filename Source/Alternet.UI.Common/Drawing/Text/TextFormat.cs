@@ -52,7 +52,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.HorizontalAlignment, value);
+                SetProperty(ref record.HorizontalAlignment, value, nameof(HorizontalAlignment));
             }
         }
 
@@ -72,7 +72,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.VerticalAlignment, value);
+                SetProperty(ref record.VerticalAlignment, value, nameof(VerticalAlignment));
             }
         }
 
@@ -93,7 +93,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.Trimming, value);
+                SetProperty(ref record.Trimming, value, nameof(Trimming));
             }
         }
 
@@ -109,7 +109,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.Distance, value);
+                SetProperty(ref record.Distance, value, nameof(Distance));
             }
         }
 
@@ -157,7 +157,7 @@ namespace Alternet.Drawing
         public virtual ThemedColor? TextBackColor
         {
             get => record.TextBackColor;
-            set => SetProperty(ref record.TextBackColor, value);
+            set => SetProperty(ref record.TextBackColor, value, nameof(TextBackColor));
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.Padding, value);
+                SetProperty(ref record.Padding, value, nameof(Padding));
             }
         }
 
@@ -188,7 +188,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.SuggestedWidth, value);
+                SetProperty(ref record.SuggestedWidth, value, nameof(SuggestedWidth));
             }
         }
 
@@ -204,7 +204,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.SuggestedHeight, value);
+                SetProperty(ref record.SuggestedHeight, value, nameof(SuggestedHeight));
             }
         }
 
@@ -220,7 +220,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.MaxWidth, value);
+                SetProperty(ref record.MaxWidth, value, nameof(MaxWidth));
             }
         }
 
@@ -236,7 +236,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.MaxHeight, value);
+                SetProperty(ref record.MaxHeight, value, nameof(MaxHeight));
             }
         }
 
@@ -258,7 +258,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetProperty(ref record.Wrapping, value);
+                SetProperty(ref record.Wrapping, value, nameof(Wrapping));
             }
         }
 

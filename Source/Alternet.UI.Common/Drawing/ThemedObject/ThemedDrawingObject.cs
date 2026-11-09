@@ -117,7 +117,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetNotNullProperty(ref dark, value);
+                SetNotNullProperty(ref dark, value, nameof(Dark));
             }
         }
 
@@ -133,7 +133,7 @@ namespace Alternet.Drawing
 
             set
             {
-                SetNotNullProperty(ref light, value);
+                SetNotNullProperty(ref light, value, nameof(Light));
             }
         }
 

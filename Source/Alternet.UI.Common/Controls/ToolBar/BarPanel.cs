@@ -602,7 +602,7 @@ namespace Alternet.UI
             Tag = item.Tag;
             AutomationId = item.AutomationId;
             Name = item.Name;
-            RaisePropertyChanged();
+            RaiseNullPropertyChanged();
         }
 
         /// <summary>

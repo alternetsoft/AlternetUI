@@ -92,7 +92,7 @@ namespace Alternet.UI
             get => title;
             set
             {
-                if (SetProperty(ref title, value))
+                if (SetProperty(ref title, value, nameof(Title)))
                 {
                     if (lightDrawingResource is not null)
                         lightDrawingResource.Title = Title;

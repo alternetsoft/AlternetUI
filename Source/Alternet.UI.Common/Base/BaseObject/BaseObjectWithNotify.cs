@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a base object with notification capabilities.
     /// </summary>
-    public partial class BaseObjectWithNotify : BaseObjectWithAttr, INotifyPropertyChanged
+    public partial class BaseObjectWithNotify : BaseObjectWithAttr, INotifyPropertyChanged, INotifyPropertyChanging
     {
         private int suspendCounter;
 
@@ -36,13 +36,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs before a property value changes.
         /// </summary>
-        public event EventHandler? BeforePropertyChange;
+        public event PropertyChangingEventHandler? PropertyChanging;
 
         /// <summary>
         /// Gets or sets an action which is called when a property value changes.
         /// </summary>
         [Browsable(false)]
-        public Action<PropertyChangedEventArgs>? PropertyChangedAction { get; set; }
+        public Action<string?>? PropertyChangedAction { get; set; }
 
         /// <summary>
         /// Gets whether <see cref="PropertyChanged"/> event is suspended.
@@ -85,7 +85,7 @@ namespace Alternet.UI
             if (suspendCounter == 0)
             {
                 if (callChangedOnResume)
-                    RaisePropertyChanged();
+                    RaiseNullPropertyChanged();
             }
         }
 
@@ -137,12 +137,13 @@ namespace Alternet.UI
         /// and calls <see cref="RaisePropertyChangedEx(PropertyChangedEventArgs)"/>.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        public virtual void RaisePropertyChanged(string? propertyName = null)
+        public virtual void RaisePropertyChanged(string? propertyName)
         {
-            if (suspendCounter > 0)
+            if (DisposingOrDisposed || suspendCounter > 0)
                 return;
-            var e = EventArgsUtils.GetPropertyChangedEventArgs(propertyName);
-            RaisePropertyChangedEx(e);
+            OnPropertyChanged(propertyName);
+            PropertyChanged?.Invoke(this, EventArgsUtils.GetPropertyChangedEventArgs(propertyName));
+            PropertyChangedAction?.Invoke(propertyName);
         }
 
         /// <summary>
@@ -154,20 +155,51 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed || suspendCounter > 0)
                 return;
-            OnPropertyChanged(e.PropertyName);
+            var propName = e.PropertyName;
+            OnPropertyChanged(propName);
             PropertyChanged?.Invoke(this, e);
-            PropertyChangedAction?.Invoke(e);
+            PropertyChangedAction?.Invoke(propName);
         }
 
         /// <summary>
-        /// Raises <see cref="BeforePropertyChange"/> event and calls <see cref="OnBeforePropertyChange"/> method.
+        /// Raises <see cref="PropertyChanged"/> event with <see langword="null"/> property name.
+        /// </summary>        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void RaiseNullPropertyChanged()
+        {
+            RaisePropertyChanged(null);
+        }
+
+        /// <summary>
+        /// Raises <see cref="PropertyChanged"/> event with empty property name.
         /// </summary>
-        public void RaiseBeforePropertyChange()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void RaiseEmptyPropertyChanged()
+        {
+            RaisePropertyChanged(string.Empty);
+        }
+
+        /// <summary>
+        /// Raises <see cref="PropertyChanging"/> event and calls <see cref="OnPropertyChanging"/> method.
+        /// </summary>
+        public void RaisePropertyChanging(string propertyName)
         {
             if (DisposingOrDisposed)
                 return;
-            OnBeforePropertyChange();
-            BeforePropertyChange?.Invoke(this, EventArgs.Empty);
+            OnPropertyChanging(propertyName);
+            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Determines whether the specified property can be changed.
+        /// Override this method to implement custom logic for property change validation.
+        /// By default, this method always returns true, allowing all property changes.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <returns><c>true</c> if the property can be changed; otherwise, <c>false</c>.</returns>
+        public virtual bool CanChangeProperty(string propertyName)
+        {
+            return true;
         }
 
         /// <summary>
@@ -189,12 +221,14 @@ namespace Alternet.UI
         protected virtual bool SetProperty<T>(
             ref T? storage,
             T? value,
-            string? propertyName = null,
+            string propertyName,
             Action? changedAction = null)
         {
             if (Immutable || Equals(storage, value))
                 return false;
-            RaiseBeforePropertyChange();
+            if (!CanChangeProperty(propertyName))
+                return false;
+            RaisePropertyChanging(propertyName);
             storage = value;
             RaisePropertyChanged(propertyName);
             changedAction?.Invoke();
@@ -204,56 +238,40 @@ namespace Alternet.UI
         /// <summary>
         /// Sets field value and raises property changed events and methods.
         /// </summary>
-        /// <typeparam name="T">Type of the field value.</typeparam>
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
-        /// <param name="changedAction">This action is called when property changes</param>
+        /// <param name="propertyName">Name of the property.</param>
         /// <returns>True if the property value was changed; otherwise, false.</returns>
-        protected virtual bool SetProperty<T>(
-            ref T? storage,
-            T? value,
-            Action? changedAction = null)
+        protected virtual bool SetProperty<T>(ref T? storage, T? value, string propertyName)
         {
             if (Immutable || Equals(storage, value))
                 return false;
-            RaiseBeforePropertyChange();
+            if (!CanChangeProperty(propertyName))
+                return false;
+            RaisePropertyChanging(propertyName);
             storage = value;
-            RaisePropertyChanged();
-            changedAction?.Invoke();
+            RaisePropertyChanged(propertyName);
             return true;
         }
 
         /// <summary>
         /// Sets field value and raises property changed events and methods.
-        /// </summary>
-        /// <param name="storage">Field where property is stored.</param>
-        /// <param name="value">New property value.</param>
-        /// <returns>True if the property value was changed; otherwise, false.</returns>
-        protected virtual bool SetProperty<T>(ref T? storage, T? value)
-        {
-            if (Immutable || Equals(storage, value))
-                return false;
-            RaiseBeforePropertyChange();
-            storage = value;
-            RaisePropertyChanged();
-            return true;
-        }
-
-        /// <summary>
-        /// Sets field value and raises property changed events and methods.
-        /// This is the same as <see cref="SetProperty{T}(ref T, T)"/> but parameters are not nullable.
+        /// This is the same as <see cref="SetProperty{T}(ref T, T, string)"/> but parameters are not nullable.
         /// </summary>
         /// <typeparam name="T">Type of the field value.</typeparam>
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
+        /// <param name="propertyName">Name of the property.</param>
         /// <returns>True if the property value was changed; otherwise, false.</returns>
-        protected virtual bool SetNotNullProperty<T>(ref T storage, T value)
+        protected virtual bool SetNotNullProperty<T>(ref T storage, T value, string propertyName)
         {
             if (Immutable || Equals(storage, value))
                 return false;
-            RaiseBeforePropertyChange();
+            if (!CanChangeProperty(propertyName))
+                return false;
+            RaisePropertyChanging(propertyName);
             storage = value;
-            RaisePropertyChanged();
+            RaisePropertyChanged(propertyName);
             return true;
         }
 
@@ -261,7 +279,7 @@ namespace Alternet.UI
         /// Called before a property value changes.
         /// Override this method to perform custom actions before a property change occurs.
         /// </summary>
-        protected virtual void OnBeforePropertyChange()
+        protected virtual void OnPropertyChanging(string propertyName)
         {
         }
     }

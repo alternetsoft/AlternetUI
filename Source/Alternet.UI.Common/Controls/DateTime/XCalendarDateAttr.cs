@@ -70,7 +70,7 @@ namespace Alternet.UI
             get => border;
             set
             {
-                SetProperty(ref border, value);
+                SetProperty(ref border, value, nameof(Border));
             }
         }
 
@@ -80,7 +80,7 @@ namespace Alternet.UI
             get => textColor;
             set
             {
-                SetProperty(ref textColor, value);
+                SetProperty(ref textColor, value, nameof(TextColor));
             }
         }
 
@@ -96,7 +96,7 @@ namespace Alternet.UI
             get => fontStyle;
             set
             {
-                SetProperty(ref fontStyle, value);
+                SetProperty(ref fontStyle, value, nameof(FontStyle));
             }
         }
 
@@ -106,7 +106,7 @@ namespace Alternet.UI
         public virtual ThemedColor? BackgroundColor
         {
             get => backgroundColor;
-            set => SetProperty(ref backgroundColor, value);
+            set => SetProperty(ref backgroundColor, value, nameof(BackgroundColor));
         }
 
         /// <inheritdoc/>

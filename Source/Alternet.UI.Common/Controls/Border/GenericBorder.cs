@@ -726,8 +726,8 @@ namespace Alternet.UI
         /// <summary>
         /// Called when border property is changed. By default, calls <see cref="AbstractControl.Refresh"/> method.
         /// </summary>
-        /// <param name="e">Event arguments.</param>
-        protected virtual void OnBorderPropertyChanged(PropertyChangedEventArgs e)
+        /// <param name="propName">The name of the property that changed.</param>
+        protected virtual void OnBorderPropertyChanged(string? propName)
         {
             Refresh();
         }
