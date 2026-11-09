@@ -435,6 +435,30 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual bool TryGetUniqueIdProperty(string name, out ObjectUniqueId value)
+        {
+            if (TryGetStringProperty(name, out string? stringValue))
+            {
+                var parsedValue = ObjectUniqueId.FromString(stringValue);
+
+                if (parsedValue != null)
+                {
+                    value = parsedValue.Value;
+                    return true;
+                }
+            }
+
+            value = ObjectUniqueId.Empty;
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public virtual void SetUniqueIdProperty(string name, ObjectUniqueId value)
+        {
+            SetStringProperty(name, value.ToString());
+        }
+
+        /// <inheritdoc/>
         public virtual bool TryGetProperty<TProperty>(string name, out TProperty value)
         {
             if (properties.TryGetValue(name, out var objValue) && objValue is TProperty typedValue)

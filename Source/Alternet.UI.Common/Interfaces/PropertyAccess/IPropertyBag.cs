@@ -94,6 +94,22 @@ namespace Alternet.UI
         bool TryGetStringProperty(string name, out string? value);
 
         /// <summary>
+        /// Tries to get the value of a unique identifier property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains
+        /// the value of the property if found; otherwise, the default value for the type.</param>
+        /// <returns><c>true</c> if the property was found; otherwise, <c>false</c>.</returns>
+        bool TryGetUniqueIdProperty(string name, out ObjectUniqueId value);
+
+        /// <summary>
+        /// Sets the value of a unique identifier property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set for the property.</param>
+        void SetUniqueIdProperty(string name, ObjectUniqueId value);
+
+        /// <summary>
         /// Tries to get the value of a collection property by name.
         /// </summary>
         /// <param name="name">The name of the property.</param>
