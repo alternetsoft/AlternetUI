@@ -11,6 +11,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class SchedulerDocument : SerializableObject
     {
+        private static SchedulerDocument? instance;
+
         private readonly ListSource<CalendarItem> items = new ();
 
         /// <summary>
@@ -18,6 +20,18 @@ namespace Alternet.UI
         /// </summary>
         public SchedulerDocument()
         {
+        }
+
+        /// <summary>
+        /// Gets the singleton instance of <see cref="SchedulerDocument"/>.
+        /// This instance can be used as a default document for scheduling purposes.
+        /// </summary>
+        public static SchedulerDocument Instance
+        {
+            get
+            {
+                return instance ??= new();
+            }
         }
 
         /// <summary>
