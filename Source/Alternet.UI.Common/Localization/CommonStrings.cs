@@ -100,6 +100,8 @@ namespace Alternet.UI.Localization
 
         public string ButtonClose { get; set; } = "Close";
 
+        public string ButtonSaveAndClose { get; set; } = "Save and Close";
+
         public string ButtonMinimize { get; set; } = "Minimize";
 
         public string ButtonMaximize { get; set; } = "Maximize";
