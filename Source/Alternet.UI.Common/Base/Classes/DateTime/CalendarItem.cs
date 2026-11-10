@@ -95,6 +95,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the duration of the calendar item.
+        /// </summary>
+        public TimeSpan Duration
+        {
+            get => rule.Duration;
+
+            set
+            {
+                rule.Duration = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the repeat pattern rule associated with this calendar item.
         /// When set, the rule is assigned to the existing <see cref="RepeatPatternRule"/> instance.
         /// </summary>
@@ -448,8 +461,9 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnRuleChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(RepeatPatternRule.Start) ||
-               e.PropertyName == nameof(RepeatPatternRule.End))
+            if (e.PropertyName == nameof(RepeatPatternRule.Start) ||
+               e.PropertyName == nameof(RepeatPatternRule.End) ||
+               e.PropertyName == nameof(RepeatPatternRule.Duration))
             {
                 RaisePropertyChanged(e.PropertyName);
             }
