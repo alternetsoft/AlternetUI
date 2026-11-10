@@ -471,6 +471,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the number of days in the range between two <see cref="DateOnly"/> values, inclusive.
+        /// </summary>
+        /// <param name="minDate">The minimum date of the range.</param>
+        /// <param name="maxDate">The maximum date of the range.</param>
+        /// <returns>The number of days in the range, inclusive.</returns>
+        public static int DayCount(DateOnly minDate, DateOnly maxDate)
+        {
+            return Math.Abs(maxDate.DayNumber - minDate.DayNumber) + 1;
+        }
+
+        /// <summary>
+        /// Calculates the difference in days between two <see cref="DateOnly"/> values.
+        /// If two dates are the same, the difference is 0.
+        /// If the first date is earlier than the second date, the difference is positive.
+        /// </summary>
+        /// <param name="date1">The first date.</param>
+        /// <param name="date2">The second date.</param>
+        /// <returns>The difference in days between the two dates.</returns>
+        public static int DayDifference(DateOnly date1, DateOnly date2)
+        {
+            return Math.Abs(date2.DayNumber - date1.DayNumber);
+        }
+
+        /// <summary>
         /// Returns a string representation of the specified time period value and unit,
         /// formatted according to the specified format.
         /// </summary>
