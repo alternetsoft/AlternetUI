@@ -193,9 +193,9 @@ namespace Alternet.UI
         /// <param name="prm">The parameters specifying the minimum and maximum
         /// dates to consider for the occurrences.</param>
         /// <returns>An enumerable of the occurrence dates.</returns>
-        public virtual IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
+        public virtual PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
-            return IDateRepeatPatternRule.RuleGetDatesResult.Empty;
+            return PatternRuleGetDatesResult.Empty;
         }
 
         /// <summary>
@@ -207,8 +207,8 @@ namespace Alternet.UI
         /// <param name="predicate">A predicate to filter the dates.</param>
         /// <param name="nextDate">A function to get the next date in the pattern.</param>
         /// <returns>An enumerable of the occurrence dates.</returns>
-        protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDates(
-            IDateRepeatPatternRule.RuleGetDatesParams prm,
+        protected virtual PatternRuleGetDatesResult GetDates(
+            PatternRuleGetDatesParams prm,
             Predicate<DateOnly> predicate,
             Func<DateOnly, DateOnly> nextDate)
         {
@@ -300,9 +300,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prm">The parameters specifying the date range and maximum date.</param>
         /// <param name="getDatesUnfiltered">A delegate to get unfiltered dates within the specified range.</param>
-        /// <returns>A <see cref="IDateRepeatPatternRule.RuleGetDatesResult"/> containing the filtered dates.</returns>
-        protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDates(
-            in IDateRepeatPatternRule.RuleGetDatesParams prm,
+        /// <returns>A <see cref="PatternRuleGetDatesResult"/> containing the filtered dates.</returns>
+        protected virtual PatternRuleGetDatesResult GetDates(
+            in PatternRuleGetDatesParams prm,
             GetDatesDelegate getDatesUnfiltered)
         {
             var weekFormat = prm.WeekFormat;
@@ -325,7 +325,7 @@ namespace Alternet.UI
 
             IEnumerable<DateOnly> GetUnfiltered()
             {
-                IDateRepeatPatternRule.RuleGetDatesParams unfilteredPrm = new()
+                PatternRuleGetDatesParams unfilteredPrm = new()
                 {
                     MinDate = minDate,
                     MaxDate = maxDate,

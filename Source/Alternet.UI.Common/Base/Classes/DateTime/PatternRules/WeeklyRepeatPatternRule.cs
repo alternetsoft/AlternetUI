@@ -176,7 +176,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
+        public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
             return GetDates(prm, GetDatesUnfiltered);
         }
@@ -197,7 +197,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prm">The parameters specifying the date range and maximum date.</param>
         /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
-        protected virtual IDateRepeatPatternRule.RuleGetDatesResult GetDatesUnfiltered(IDateRepeatPatternRule.RuleGetDatesParams prm)
+        protected virtual PatternRuleGetDatesResult GetDatesUnfiltered(PatternRuleGetDatesParams prm)
         {
             return new(Internal());
 

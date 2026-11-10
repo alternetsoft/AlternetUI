@@ -327,13 +327,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override IDateRepeatPatternRule.RuleGetDatesResult GetDates(IDateRepeatPatternRule.RuleGetDatesParams prm)
+        public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
             var rule = GetSelectedRule();
 
             if (rule == null)
             {
-                return new IDateRepeatPatternRule.RuleGetDatesResult(Internal());
+                return new PatternRuleGetDatesResult(Internal());
             }
 
             IEnumerable<DateOnly> Internal()

@@ -841,14 +841,16 @@ namespace Alternet.UI
         /// this method should be called again to mark dates in the new month.
         /// </summary>
         /// <param name="rule">The repeat pattern rule to match dates.</param>
-        /// <param name="attr">The attributes to apply to the matching dates. Pass <c>null</c> to reset attributes.</param>
-        /// <param name="invalidate">Indicates whether to invalidate the control after setting the attributes.</param>
+        /// <param name="attr">The attributes to apply to the matching dates.
+        /// Pass <c>null</c> to reset attributes.</param>
+        /// <param name="invalidate">Indicates whether to invalidate
+        /// the control after setting the attributes.</param>
         public virtual void MarkWithRule(
             RepeatPatternRule rule,
             IXCalendarDateAttr? attr,
             InvalidateMethod invalidate = InvalidateMethod.Invalidate)
         {
-            IDateRepeatPatternRule.RuleGetDatesParams prm = new();
+            PatternRuleGetDatesParams prm = new();
             prm.MinDate = FirstDateOfMonth;
             prm.MaxDate = LastDateOfMonth;
             prm.WeekFormat = this;
