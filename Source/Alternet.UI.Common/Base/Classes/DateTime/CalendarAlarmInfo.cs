@@ -221,16 +221,19 @@ namespace Alternet.UI
         /// Copies the contents from another <c>CalendarAlarmInfo</c> object.
         /// </summary>
         /// <param name="source">Specifies <c>CalendarAlarmInfo</c> to assign.</param>
-        public virtual void Assign(CalendarAlarmInfo? source)
+        public virtual bool Assign(CalendarAlarmInfo? source)
         {
             if (Immutable)
-                return;
+                return false;
 
             if (source == null)
             {
                 Reset();
-                return;
+                return true;
             }
+
+            if (Equals(source))
+                return false;
 
             DoInsideSuspendedPropertyChanged(() =>
             {
@@ -240,6 +243,8 @@ namespace Alternet.UI
                 PlaySound = source.PlaySound;
                 SoundPath = source.SoundPath;
             });
+
+            return true;
         }
 
         /// <summary>

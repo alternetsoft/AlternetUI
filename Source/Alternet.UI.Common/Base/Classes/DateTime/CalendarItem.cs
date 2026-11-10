@@ -91,10 +91,7 @@ namespace Alternet.UI
 
             set
             {
-                if (rule.Assign(value))
-                {
-                    RaisePropertyChanged(nameof(Rule));
-                }
+                rule.Assign(value);
             }
         }
 
@@ -325,10 +322,10 @@ namespace Alternet.UI
                    Location?.ToString() == other.Location?.ToString() &&
                    Category == other.Category &&
                    Status == other.Status &&
-                   Equals(UserData, other.UserData) &&
-                   AlarmInfo.Equals(other.AlarmInfo) &&
                    UserName == other.UserName &&
                    Visible == other.Visible &&
+                   Equals(UserData, other.UserData) &&
+                   AlarmInfo.Equals(other.AlarmInfo) &&
                    Rule.Equals(other.Rule);
         }
 
@@ -433,7 +430,15 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnRuleChanged(object? sender, PropertyChangedEventArgs e)
         {
-            RaisePropertyChanged(nameof(Rule));
+            if(e.PropertyName == nameof(RepeatPatternRule.Start) ||
+               e.PropertyName == nameof(RepeatPatternRule.End))
+            {
+                RaisePropertyChanged(e.PropertyName);
+            }
+            else
+            {
+                RaisePropertyChanged(nameof(Rule));
+            }
         }
 
         /// <summary>
