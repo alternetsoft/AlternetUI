@@ -7,7 +7,8 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a delegate for getting unfiltered dates based on a repeat pattern rule.
     /// </summary>
-    /// <param name="prm">The parameters specifying the minimum and maximum dates to consider for the occurrences.</param>
+    /// <param name="prm">The parameters specifying the minimum and maximum
+    /// dates to consider for the occurrences.</param>
     /// <returns>An enumerable collection of unfiltered dates within the specified range.</returns>
     public delegate PatternRuleGetDatesResult GetDatesDelegate(PatternRuleGetDatesParams prm);
 
@@ -17,7 +18,8 @@ namespace Alternet.UI
     public readonly struct PatternRuleGetDatesResult
     {
         /// <summary>
-        /// Gets an empty instance of the <see cref="PatternRuleGetDatesResult"/> struct, representing no dates found.
+        /// Gets an empty instance of the <see cref="PatternRuleGetDatesResult"/> struct,
+        /// representing no dates found.
         /// </summary>
         public static readonly PatternRuleGetDatesResult Empty = new(Array.Empty<DateOnly>());
 

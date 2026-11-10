@@ -144,12 +144,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when the selection of dates has changed, allowing subscribers to respond to changes in the selection state.
+        /// Occurs when the selection of dates has changed, allowing subscribers
+        /// to respond to changes in the selection state.
         /// </summary>
         public event EventHandler? SelectionChanged;
 
         /// <summary>
-        /// Begins a batch update operation, suspending change notifications until <see cref="EndUpdate"/> is called.
+        /// Begins a batch update operation, suspending change notifications
+        /// until <see cref="EndUpdate"/> is called.
         /// </summary>
         public virtual void BeginUpdate()
         {
