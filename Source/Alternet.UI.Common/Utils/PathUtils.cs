@@ -617,8 +617,12 @@ namespace Alternet.UI
         /// <param name="fileName">The file name to compare against the end of the URL. Cannot be null.</param>
         /// <param name="comparison">The string comparison option to use when comparing the file name. The default is
         /// StringComparison.OrdinalIgnoreCase.</param>
-        /// <returns>true if the URL ends with the specified file name according to the comparison option; otherwise, false.</returns>
-        public static bool UrlHasFileName(string url, string fileName, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        /// <returns>true if the URL ends with the specified file name according to the comparison option;
+        /// otherwise, false.</returns>
+        public static bool UrlHasFileName(
+            string url,
+            string fileName,
+            StringComparison comparison = StringComparison.OrdinalIgnoreCase)
         {
             var ok = TryExtractFileNameFromUrl(url, out var extractedFileName);
             if (ok)
@@ -633,11 +637,17 @@ namespace Alternet.UI
         /// <remarks>If the URL does not contain a file name segment, the method returns false. The
         /// comparison is performed only on the file name portion of the URL, not the entire URL string.</remarks>
         /// <param name="url">The URL to examine. Can be absolute or relative.</param>
-        /// <param name="fileName">The file name to compare against the end of the URL. Cannot be null or empty.</param>
-        /// <param name="comparison">One of the enumeration values that specifies how the file name comparison is performed. The default is
+        /// <param name="fileName">The file name to compare against the end of the URL.
+        /// Cannot be null or empty.</param>
+        /// <param name="comparison">One of the enumeration values that specifies how
+        /// the file name comparison is performed. The default is
         /// StringComparison.OrdinalIgnoreCase.</param>
-        /// <returns>true if the URL ends with the specified file name according to the comparison option; otherwise, false.</returns>
-        public static bool UrlEndsWithFileName(string? url, string fileName, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        /// <returns>true if the URL ends with the specified file name according
+        /// to the comparison option; otherwise, false.</returns>
+        public static bool UrlEndsWithFileName(
+            string? url,
+            string fileName,
+            StringComparison comparison = StringComparison.OrdinalIgnoreCase)
         {
             var ok = TryExtractFileNameFromUrl(url, out var extractedFileName);
             if (ok)

@@ -208,6 +208,12 @@
         <Copy SourceFiles="@(NativeBuildResultFilesRelease)" DestinationFolder="$(OutputDirectoryPath_X64_Release)" 
 		Condition="'$(OnlyDebug)' != 'true'"/>
         <CallTarget Targets="Zip_Pal_64" />
+
+        <Exec
+            Condition="$([MSBuild]::IsOsPlatform('Linux'))"
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=renameLegacyPal Path=&quot;$(UI_PUBLISH_PACKAGES)&quot;" />
+
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative" DependsOnTargets="BuildNative_Windows;BuildNative_Unix">

@@ -138,15 +138,7 @@ entry.borderless:focus {
 
             static Linux()
             {
-                if (App.IsLinuxOS)
-                {
-                    var glibcVersion = LinuxUtils.GlibcVersion;
-
-                    if(glibcVersion.Major < 2 || (glibcVersion.Major == 2 && glibcVersion.Minor < 43))
-                    {
-                        UseLegacyPal = true;
-                    }
-                }
+                UseLegacyPal = LinuxUtils.UsesLegacyGlibc;
             }
         }
     }

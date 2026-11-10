@@ -24,17 +24,42 @@ namespace Alternet.UI
         private static string? glibcVersion;
 
         /// <summary>
+        /// Gets a value indicating whether the current Linux system is using a legacy version of the GNU C Library (glibc).
+        /// </summary>
+        public static bool UsesLegacyGlibc
+        {
+            get
+            {
+                if (!App.IsLinuxOS)
+                    return false;
+
+                var glibcVersion = LinuxUtils.GlibcVersion;
+
+                if (glibcVersion == null || glibcVersion.Major == 0)
+                    return false;
+
+                if (glibcVersion.Major < 2 || (glibcVersion.Major == 2 && glibcVersion.Minor < 43))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Gets the version of the GNU C Library (glibc) used by the current Linux system.
         /// </summary>
         public static Version GlibcVersion
         {
             get
             {
-                var versionString = GetGlibcVersion();
-                if (string.IsNullOrEmpty(versionString))
-                    return new Version(0, 0);
                 try
                 {
+                    var versionString = GetGlibcVersion();
+                    if (string.IsNullOrEmpty(versionString))
+                        return new Version(0, 0);
+
                     return new Version(versionString);
                 }
                 catch (Exception e)

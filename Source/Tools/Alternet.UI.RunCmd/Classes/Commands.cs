@@ -392,6 +392,72 @@ namespace Alternet.UI
             Console.WriteLine("Completed");
         }
 
+        public static void CmdRenameLegacyPal(CommandLineArgs args)
+        {
+            string pathToFolder = args.AsString("Path");
+
+            Console.WriteLine($"Command: renameLegacyPal");
+            Console.WriteLine($"Path: {pathToFolder}");
+
+            pathToFolder = Path.GetFullPath(pathToFolder);
+
+            if (!Directory.Exists(pathToFolder))
+            {
+                Console.WriteLine($"Folder doesn't exist: [{pathToFolder}]");
+                return;
+            }
+
+            if (!App.IsLinuxOS)
+            {
+                Console.WriteLine($"Command is supported only on Linux OS");
+                return;
+            }
+
+            var usesLegacyGlibc = LinuxUtils.UsesLegacyGlibc;
+
+            Console.WriteLine($"UsesLegacyGlibc: {usesLegacyGlibc}");
+
+            if (!usesLegacyGlibc)
+            {
+                Console.WriteLine($"No need to rename legacy PAL");
+                return;
+            }
+
+            const string mask1 = "Alternet.UI.Pal*linux-arm64-release.zip";
+            const string mask2 = "Alternet.UI.Pal*linux-x64-release.zip";
+            const string mask3 = "Alternet.UI.Pal*linux-arm64-debug.zip";
+            const string mask4 = "Alternet.UI.Pal*linux-x64-debug.zip";
+
+            var files = FileUtils.FindFiles(
+                pathToFolder,
+                new string[] { mask1, mask2, mask3, mask4 },
+                SearchOption.TopDirectoryOnly).ToArray();
+
+            if (files.Length == 0)
+            {
+                Console.WriteLine($"No files found to rename");
+                return;
+            }
+
+            foreach (var file in files)
+            {
+                try
+                {
+                    var withoutExt = Path.GetFileNameWithoutExtension(file);
+                    var ext = Path.GetExtension(file);
+
+                    var newName = withoutExt + "-legacy" + ext;
+                    Console.WriteLine($"Renaming: {file} -> {newName}");
+                    File.Move(file, newName);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error renaming file: {file}");
+                    LogUtils.LogExceptionToFile(e);
+                }
+            }
+        }
+
         public static void CmdDarkImages(CommandLineArgs args)
         {
             string pathToFolder = args.AsString("Path");
@@ -400,7 +466,7 @@ namespace Alternet.UI
             if (string.IsNullOrWhiteSpace(pathToResult))
                 pathToResult = pathToFolder;
 
-            Console.WriteLine($"Command: lightImages");
+            Console.WriteLine($"Command: darkImages");
             Console.WriteLine($"Folder: {pathToFolder}");
             Console.WriteLine($"Result: {pathToResult}");
 
@@ -811,6 +877,11 @@ namespace Alternet.UI
                     CmdSomeAction,
                     "");
             }
+
+            RegisterCommand(
+                "renameLegacyPal",
+                CmdRenameLegacyPal,
+                "-r=renameLegacyPal Path=\"d:\\SomeFolder\"");
 
             RegisterCommand(
                 "replaceInFiles",
