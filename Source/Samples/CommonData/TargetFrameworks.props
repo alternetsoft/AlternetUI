@@ -16,29 +16,23 @@
 
   <PropertyGroup>
    	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
-  	<BoolNet10>true</BoolNet10>
-  	<BoolNet9>true</BoolNet9>
-  	<BoolNet8>true</BoolNet8>
   	<BoolNet11>false</BoolNet11>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsOsxX64)=='true'">
-  	<BoolNet9>false</BoolNet9>
-  	<BoolNet10>false</BoolNet10>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsOsxArm64)=='true'">
-  	<BoolNet10>true</BoolNet10>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsWindows)=='true'">
-  	<BoolNet10>true</BoolNet10>
+  	<BoolNet11>true</BoolNet11>
   </PropertyGroup>
 
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
 
   <PropertyGroup>
-	<TF11 Condition="$(BoolNet11)">net11.0;</TF11>
+	<TF11 Condition="$(BoolNet11)">net11.0</TF11>
 
 	<TargetFrameworks>net10.0;$(TF11)</TargetFrameworks>
   </PropertyGroup>

@@ -33,6 +33,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsWindows)=='true'">
+  	<BoolNet11>true</BoolNet11>
   </PropertyGroup>
 
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
