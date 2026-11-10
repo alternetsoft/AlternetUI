@@ -57,6 +57,7 @@ and it should be as short as possible.
 
 - macOs 26.2 (Tahoe) or newer is required.
 - Install appropriate XCode version. See this [page](https://developer.apple.com/support/xcode/). XCode 26.2 or newer is required.
+- Install XCode command line tools using this command: `xcode-select --install`.
 - Install [CMake](https://cmake.org/download/). Copy CMake.app into /Applications (or another location), double click to run it. 
 Follow the "How to Install For Command Line Use" menu item.
 - For development with Alternet.UI for Maui, install these dotnet workloads: android, ios, maccatalyst, macos, mono-android.
