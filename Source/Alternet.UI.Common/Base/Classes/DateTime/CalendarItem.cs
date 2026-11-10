@@ -21,6 +21,7 @@ namespace Alternet.UI
         private object? userData;
         private string? userName;
         private bool visible = true;
+        private SchedulerDocument? document;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItem"/> class.
@@ -39,6 +40,18 @@ namespace Alternet.UI
             : base(uniqueId)
         {
             Initialize();
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="SchedulerDocument"/> associated with this calendar item.
+        /// </summary>
+        public virtual SchedulerDocument? Document
+        {
+            get => document;
+            internal set
+            {
+                document = value;
+            }
         }
 
         /// <summary>
@@ -421,6 +434,11 @@ namespace Alternet.UI
         protected override void OnPropertyChanged(string? propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
+
+            if (Document is not null)
+            {
+                Document?.Items.RaiseItemPropertyChanged(this, propertyName);
+            }
         }
 
         /// <summary>
