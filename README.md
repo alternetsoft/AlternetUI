@@ -6,7 +6,7 @@ applications that run on Windows, macOS, and Linux.
 AlterNET UI is also compatible with .NET MAUI 10.0 platform. It provides a ControlView and its various descendants, 
 which allow you to use AlterNET UI controls inside MAUI applications.
 
-It is built on top of the .NET Framework and uses a XAML-like approach to define user interface and layout. 
+It is built on top of the .NET and uses a XAML-like approach to define user interface and layout. 
 It provides a set of standard controls that looks native on the target OS, such as TextBox, Label, CheckBox, Button, 
 Image, TreeView, ListView, WebBrowser and much more.
 
