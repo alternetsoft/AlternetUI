@@ -21,6 +21,8 @@ namespace Alternet.UI
         /// </summary>
         public SchedulerDocument()
         {
+            items.ItemInserted += OnItemInserted;
+            items.ItemRemoved += OnItemRemoved;
         }
 
         /// <summary>
@@ -193,6 +195,36 @@ namespace Alternet.UI
             propertyBag.SetCollectionProperty(prefix + nameof(Items), Items);
 
             return true;
+        }
+
+        /// <summary>
+        /// Called when an item is removed from the <see cref="Items"/> collection.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="index">The index of the removed item.</param>
+        /// <param name="item">The item that was removed.</param>
+        protected virtual void OnItemRemoved(object? sender, int index, CalendarItem item)
+        {
+            if (item.Document == this)
+            {
+                item.Document = null;
+            }
+        }
+
+        /// <summary>
+        /// Called when an item is inserted into the <see cref="Items"/> collection.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="index">The index of the inserted item.</param>
+        /// <param name="item">The item that was inserted.</param>
+        protected virtual void OnItemInserted(object? sender, int index, CalendarItem item)
+        {
+            if (item.Document is not null && item.Document != this)
+            {
+                throw new InvalidOperationException("The CalendarItem is already associated with a SchedulerDocument.");
+            }
+
+            item.Document = this;
         }
 
         /// <summary>
