@@ -489,4 +489,41 @@ namespace Alternet.UI
             return new CalendarAlarmInfo();
         }
     }
+
+    /// <summary>
+    /// Represents the dates from a <see cref="CalendarItem"/> based on its repeat pattern rule.
+    /// </summary>
+    public struct CalendarItemDates
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItemDates"/> struct
+        /// </summary>
+        /// <param name="dates">The collection of dates.</param>
+        /// <param name="calendarItem">The calendar item.</param>
+        public CalendarItemDates(CalendarItem calendarItem, DateOnly[] dates)
+        {
+            Dates = dates;
+            Item = calendarItem;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItemDates"/> struct with an empty collection of dates.
+        /// </summary>
+        /// <param name="calendarItem">The calendar item.</param>
+        public CalendarItemDates(CalendarItem calendarItem)
+        {
+            Dates = Array.Empty<DateOnly>();
+            Item = calendarItem;
+        }
+
+        /// <summary>
+        /// Gets the collection of dates that match the repeat pattern within the specified range.
+        /// </summary>
+        public DateOnly[] Dates { get; set; }
+
+        /// <summary>
+        /// Gets the calendar item associated with the dates.
+        /// </summary>
+        public CalendarItem Item { get; set; }
+    }
 }
