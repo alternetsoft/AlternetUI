@@ -399,6 +399,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns a collection of the full file names that match any of the specified search patterns in a given path,
+        /// and optionally searches subdirectories.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="searchPattern"></param>
+        /// <param name="searchOption"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> FindFiles(
+            string path,
+            string[] searchPattern,
+            SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            List<string> result = new();
+
+            foreach (var pattern in searchPattern)
+            {
+                try
+                {
+                    var files = Directory.EnumerateFiles(
+                        path,
+                        pattern,
+                        searchOption);
+                    foreach (var file in files)
+                    {
+                        result.Add(file);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    BaseObject.Nop(ex);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets whether the specified file name has the same char case as file on disk.
         /// </summary>
         /// <param name="fileName">Path to file.</param>
