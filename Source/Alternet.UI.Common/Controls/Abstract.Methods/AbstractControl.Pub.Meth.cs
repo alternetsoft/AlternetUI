@@ -2930,11 +2930,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool ReportBoundsChanged(bool layoutOnLocation = true)
         {
-            /*
-            LogUtils.LogToFileAndDebug(
-                $"{nameof(ReportBoundsChanged)} '{GetType()}'. Old={reportedBounds}, New={Bounds}");
-            */
-
             var newBounds = Bounds;
 
             var locationChanged = reportedBounds.Location != newBounds.Location;
