@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace Alternet.UI
@@ -77,6 +78,45 @@ namespace Alternet.UI
         public virtual void Add(CalendarItem item)
         {
             items.Add(item);
+        }
+
+        /// <summary>
+        /// Gets the <see cref="CalendarItemsByDate"/> for the specified parameters.
+        /// </summary>
+        /// <param name="prm">The parameters for getting the items by date.</param>
+        /// <returns>A <see cref="CalendarItemsByDate"/> containing the items for the specified date range.</returns>
+        public virtual CalendarItemsByDate GetItemsByDate(PatternRuleGetDatesParams prm)
+        {
+            var rangeData = new CalendarItemsByDate(prm.MinDate, prm.MaxDate);
+
+            foreach (var dates in GetItemDates(prm))
+            {
+                var item = dates.Item;
+
+                foreach (var date in dates.Dates)
+                {
+                    rangeData.AddItem(date, item);
+                }
+            }
+
+            return rangeData;
+        }
+
+        /// <summary>
+        /// Gets the dates for each <see cref="CalendarItem"/> in
+        /// the source that match the specified repeat pattern rule.
+        /// </summary>
+        /// <param name="prm">The parameters for getting the dates.</param>
+        /// <returns>An enumerable of <see cref="CalendarItemDates"/> objects.</returns>
+        public virtual IEnumerable<CalendarItemDates> GetItemDates(PatternRuleGetDatesParams prm)
+        {
+            foreach (var item in Items)
+            {
+                var dates = item.Rule.GetDates(prm);
+                var d = dates.Dates.ToArray();
+                if (d.Length > 0)
+                    yield return new CalendarItemDates(item, d);
+            }
         }
 
         /// <inheritdoc/>
