@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 using Alternet.Drawing;
 using Alternet.UI;
@@ -102,7 +103,43 @@ namespace Alternet.UI
             }
         }
 
-        IDrawingResource IThemedDrawingObject<IDrawingResource>.Dark
+        /// <summary>
+        /// Gets the brush for the dark theme, creating it if necessary.
+        /// </summary>
+        public virtual Brush? DarkBrush
+        {
+            get
+            {
+                return DarkDrawingResource.Brush;
+            }
+
+            set
+            {
+                DarkDrawingResource.Brush = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the brush for the light theme, creating it if necessary.
+        /// </summary>
+        public virtual Brush? LightBrush
+        {
+            get
+            {
+                return LightDrawingResource.Brush;
+            }
+
+            set
+            {
+                LightDrawingResource.Brush = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the drawing resource for the dark theme, creating it if necessary.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IDrawingResource DarkDrawingResource
         {
             get
             {
@@ -117,7 +154,19 @@ namespace Alternet.UI
             }
         }
 
-        IDrawingResource IThemedDrawingObject<IDrawingResource>.Light
+        IDrawingResource IThemedDrawingObject<IDrawingResource>.Dark
+        {
+            get
+            {
+                return DarkDrawingResource;
+            }
+        }
+
+        /// <summary>
+        /// Gets the drawing resource for the light theme, creating it if necessary.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IDrawingResource LightDrawingResource
         {
             get
             {
@@ -129,6 +178,14 @@ namespace Alternet.UI
                 }
 
                 return lightDrawingResource;
+            }
+        }
+
+        IDrawingResource IThemedDrawingObject<IDrawingResource>.Light
+        {
+            get
+            {
+                return LightDrawingResource;
             }
         }
 
