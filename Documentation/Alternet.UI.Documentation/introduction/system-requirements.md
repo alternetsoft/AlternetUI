@@ -1,14 +1,14 @@
 # System Requirements
 
-AlterNET UI Version 1.1.6 requires .NET 8.0 or newer.
+AlterNET UI Version 1.1.16 requires .NET 10.0 or newer.
 
 The following operating systems are supported:
 
 - Windows 11, Windows 10 (version 1607+), and Windows Server 2012 R2 or later.
-- macOS 10.15 or newer.
+- macOS 15 "Sequoia" or newer.
 - Linux (different distributions).
 
-See [this page](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md) for detailed information.
+See [this page](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md) for detailed information.
 
 **Microsoft Visual Studio 2022 and 2026** are supported by the **AlterNET UI Visual Studio Extension**.
 

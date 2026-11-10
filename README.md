@@ -39,16 +39,14 @@ It is better to use AlterNET UI from [NuGet](https://www.nuget.org/packages/Alte
 here is step by step instruction:
 
 - 3 build machines are needed: Windows, macOS, Linux.
-- On all machines installations of .NET SDK [8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0), 
-[9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) and [10.0](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
-are required.
+- On all machines installations of .NET SDK [10.0](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) is required.
 - If you want to use UI on single platform, skip installation steps for other platforms.
 
 ### <b>STEP 1.</b> Windows Machine Setup:
 
 - Windows 11 is required.
-- Install Visual Studio 2026 Version 18.7.3 or later, with C# Desktop development, C++ Desktop development workloads, 
-VS Extenstion Development installed. Net 10.0, 9.0, 8.0 targeting packs are required.
+- Install Visual Studio 2026 Version 18.11.3 or later, with C# Desktop development, C++ Desktop development workloads, 
+VS Extenstion Development installed. Net 10.0 targeting packs are required.
 - For development with Alternet.UI for Maui, install these dotnet workloads: android, ios, maccatalyst, macos, maui-windows, mono-android.
 - Update workloads to the latest version: ```dotnet workload update```.
 - Clone the AlterNET UI repo.
@@ -69,6 +67,7 @@ Follow the "How to Install For Command Line Use" menu item.
 - Install Ubuntu 26.04 or newer.
 - Install CMake and C compilers.
 - Install required packages, run ```Install.Scripts/Ubuntu.Install.Packages.sh```.
+- Update workloads to the latest version: ```dotnet workload update```.
 
 ### <b>STEP 4.</b> (Optional) Specify target frameworks for samples:
 You can modify list of target frameworks in file
