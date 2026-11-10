@@ -247,7 +247,7 @@ namespace ControlsSample
 
                 // Range Settings
 
-                p.AddHorizontalLine();
+                p.AddSeparatorLine();
                 p.Add<BoldLabel>("Range Settings");
 
                 var minDateItem = p.AddInput("MinDate:", calendar, nameof(calendar.MinDate));
@@ -286,7 +286,7 @@ namespace ControlsSample
 
                 // Actions
 
-                p.AddHorizontalLine();
+                p.AddSeparatorLine();
                 p.Add<BoldLabel>("Actions");
 
                 p.AddLinkLabel("Today", calendar.SelectToday);
@@ -298,7 +298,7 @@ namespace ControlsSample
 
                 // Day Border
 
-                p.AddHorizontalLine();
+                p.AddSeparatorLine();
                 p.Add<BoldLabel>("Selected Day Attributes");
 
                 p.AddLinkLabel("Clear All Days Attributes", () => calendar.ClearAttrAll());
@@ -357,7 +357,7 @@ namespace ControlsSample
 
                 // Color Theme
 
-                p.AddHorizontalLine();
+                p.AddSeparatorLine();
                 p.Add<BoldLabel>("Color Theme");
 
                 p.AddLinkLabel("Light Theme", () => calendar.SetColorThemeToLight());

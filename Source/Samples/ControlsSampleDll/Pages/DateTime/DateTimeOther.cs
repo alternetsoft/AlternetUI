@@ -29,15 +29,15 @@ namespace ControlsSample
             {
                 c.Kind = DateTimePickerKind.DateTime;
             });
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("MonthPicker");
             propGrid.Add<MonthPicker>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("YearPicker");
             propGrid.Add<YearPicker>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Horizontal(c =>
             {
@@ -53,48 +53,48 @@ namespace ControlsSample
                 showPopupItem.SetEditorClick(ShowPopupCalendar);
             });
 
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("DayOfWeekPicker");
             propGrid.Add<DayOfWeekPicker>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("RelativeWeekdayOfMonthPicker");
             propGrid.Add<RelativeWeekdayOfMonthPicker>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("MonthAndDayPicker");
             propGrid.Add<MonthAndDayPicker>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("RelativeWeekdayPicker");
             propGrid.Add<RelativeWeekdayPicker>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("XCalendar.MonthPickerPanel");
             propGrid.Add<XCalendar.MonthPickerPanel>((c) =>
             {
             });
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("SpeedDateButton");
             propGrid.Add<SpeedDateButton>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("MonthSpeedButton");
             propGrid.Add<MonthSpeedButton>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("XCalendar.CalendarHeader");
             propGrid.Add<XCalendar.CalendarHeader>(c =>
             {
                 c.IgnoreTransparency = true;
             });
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             propGrid.Add<BoldLabel>("RepeatPatternPicker");
             propGrid.Add<RepeatPatternPicker>();
-            propGrid.AddHorizontalLine();
+            propGrid.AddSeparatorLine();
 
             popupCalendar.AfterHide += PopupListBox_AfterHide;
         }

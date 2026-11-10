@@ -18,6 +18,11 @@ namespace Alternet.UI
     public partial class PanelSettings : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets default height of the separator line in the settings panel.
+        /// </summary>
+        public static float DefaultSeparatorLineHeight = 5;
+
+        /// <summary>
         /// Gets or sets default minimum margin between child controls in this panel.
         /// </summary>
         public static Thickness DefaultMinChildMargin = (5, 1, 5, 1);
@@ -154,6 +159,11 @@ namespace Alternet.UI
             UIPlatformKind platform = UIPlatformKind.Unspecified);
 
         /// <summary>
+        /// Gets or sets the height of the separator line in the settings panel.
+        /// </summary>
+        public virtual float SeparatorLineHeight { get; set; } = DefaultSeparatorLineHeight;
+
+        /// <summary>
         /// Gets whether controls are automatically created and updated
         /// when items are changed.
         /// </summary>
@@ -208,17 +218,22 @@ namespace Alternet.UI
         public static object? DefaultItemToLineControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
             var isVertical = item.CreateArg?.CustomFlags["IsVertical"] as bool?;
+            var size = item.CreateArg?.CustomAttr["Size"] as float?;
 
             if (isVertical == true)
             {
                 var spacer = CreateOrUpdateControl<VerticalLine>(sender, item, control);
                 spacer.Margin = DefaultVerticalLineMargin;
+                if (size.HasValue)
+                    spacer.LineWidth = size.Value;
                 return spacer;
             }
             else
             {
                 var spacer = CreateOrUpdateControl<HorizontalLine>(sender, item, control);
                 spacer.Margin = DefaultHorizontalLineMargin;
+                if (size.HasValue)
+                    spacer.LineHeight = size.Value;
                 return spacer;
             }
         }
@@ -1394,6 +1409,25 @@ namespace Alternet.UI
                 = CreateItemCore("HorizontalLine", PanelSettingsItemKind.Line, null, e);
             Items.Add(item);
             return item;
+        }
+
+        /// <summary>
+        /// Adds horizontal line with the specified height.
+        /// </summary>
+        /// <param name="height">The height of the horizontal line.</param>
+        /// <returns>The created PanelSettingsItem object.</returns>
+        public virtual PanelSettingsItem AddHorizontalLine(float height)
+        {
+            return AddHorizontalLine(new CustomEventArgs("Size", height));
+        }
+
+        /// <summary>
+        /// Adds a separator line with the default height which is defined by SeparatorLineHeight.
+        /// </summary>
+        /// <returns>The created PanelSettingsItem object.</returns>
+        public virtual PanelSettingsItem AddSeparatorLine()
+        {
+            return AddHorizontalLine(SeparatorLineHeight);
         }
 
         /// <summary>
