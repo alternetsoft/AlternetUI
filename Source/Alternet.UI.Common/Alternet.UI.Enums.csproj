@@ -9,7 +9,7 @@
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);ALTERNETUI</DefineConstants>
     <Nullable>enable</Nullable>
-    <LangVersion>12.0</LangVersion>
+    <LangVersion>14.0</LangVersion>
     <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
 

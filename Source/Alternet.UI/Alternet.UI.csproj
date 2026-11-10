@@ -10,7 +10,7 @@
   <PropertyGroup>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <NoWarn>$(NoWarn);CS8032</NoWarn>
-    <LangVersion>12.0</LangVersion>
+    <LangVersion>14.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
     <PackageId>Alternet.UI</PackageId>
