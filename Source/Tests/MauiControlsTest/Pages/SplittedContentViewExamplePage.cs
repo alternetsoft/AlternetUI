@@ -11,17 +11,44 @@ namespace AllQuickStarts
     public partial class SplittedContentViewExamplePage : ContentPage
     {
         private readonly SplittedContentView sampleView;
-        private readonly BoxView firstChild = new ();
-        private readonly BoxView secondChild = new ();
+        private readonly BoxView firstBoxView = new ();
+        private readonly BoxView secondBoxView = new ();
 
         public SplittedContentViewExamplePage()
         {
+            var firstLabel = new Label
+            {
+                Text = "First",
+                TextColor = Microsoft.Maui.Graphics.Colors.Black,
+                Margin = new Thickness(10, 10, 10, 10),
+            };
+
+            var secondLabel = new Label
+            {
+                Text = "Second",
+                TextColor = Microsoft.Maui.Graphics.Colors.Black,
+                Margin = new Thickness(10, 10, 10, 10),
+            };
+
+            var firstGrid = new Grid();
+            var secondGrid = new Grid();
+
+            firstGrid.Children.Add(firstBoxView);
+            firstGrid.Children.Add(firstLabel);
+            secondGrid.Children.Add(secondBoxView);
+            secondGrid.Children.Add(secondLabel);
+
             sampleView = new SplittedContentView();
-            sampleView.FirstContent = firstChild;
-            sampleView.SecondContent = secondChild;
+            sampleView.FirstContent = firstGrid;
+            sampleView.SecondContent = secondGrid;            
+
             var isDark = Alternet.UI.App.IsDark;
-            firstChild.Color = Alternet.Drawing.ThemedColors.Blue.GetColor(isDark).ToMaui();
-            secondChild.Color = Alternet.Drawing.ThemedColors.Green.GetColor(isDark).ToMaui();
+
+            var firstColor = Alternet.Drawing.ThemedColors.Blue.GetColor(isDark).ToMaui();
+            var secondColor = Alternet.Drawing.ThemedColors.Green.GetColor(isDark).ToMaui();
+
+            firstBoxView.Color = firstColor;
+            secondBoxView.Color = secondColor;
 
             var toolbar = new SimpleToolBarView();
 
@@ -40,7 +67,16 @@ namespace AllQuickStarts
                 null,
                 () =>
                 {
-                    sampleView.IsFirstPaneVisible = !sampleView.IsFirstPaneVisible;
+                    sampleView.IsFixedPaneVisible = !sampleView.IsFixedPaneVisible;
+                });
+
+            toolbar.AddButton(
+                "Toggle fixed",
+                null,
+                null,
+                () =>
+                {
+                    sampleView.IsFirstPaneFixed = !sampleView.IsFirstPaneFixed;
                 });
 
             toolbar.AddExpandingSpace();
