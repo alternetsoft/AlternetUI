@@ -83,6 +83,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="DateRangeData{TData}"/> indicating the number of items
+        /// associated with each date in the specified range.
+        /// </summary>
+        /// <param name="prm">The parameters for getting the dates.</param>
+        /// <returns>A <see cref="DateRangeData{TData}"/> indicating the number
+        /// of items associated with each date.</returns>
+        public virtual DateRangeData<int> GetItemsCountByDate(PatternRuleGetDatesParams prm)
+        {
+            var rangeData = new DateRangeData<int>(prm.MinDate, prm.MaxDate);
+            foreach (var dates in GetItemDates(prm))
+            {
+                foreach (var date in dates.Dates)
+                {
+                    rangeData[date] += 1;
+                }
+            }
+
+            return rangeData;
+        }
+
+        /// <summary>
+        /// Gets a <see cref="DateRangeData{TData}"/> indicating whether any items
+        /// exist for each date in the specified range.
+        /// </summary>
+        /// <param name="prm">The parameters for getting the dates.</param>
+        /// <returns>A <see cref="DateRangeData{TData}"/> indicating whether any items exist for each date.</returns>
+        public virtual DateRangeData<bool> GetItemsExistByDate(PatternRuleGetDatesParams prm)
+        {
+            var rangeData = new DateRangeData<bool>(prm.MinDate, prm.MaxDate);
+            foreach (var dates in GetItemDates(prm))
+            {
+                foreach (var date in dates.Dates)
+                {
+                    rangeData[date] = true;
+                }
+            }
+
+            return rangeData;
+        }
+
+        /// <summary>
         /// Gets the <see cref="CalendarItemsByDate"/> for the specified parameters.
         /// </summary>
         /// <param name="prm">The parameters for getting the items by date.</param>

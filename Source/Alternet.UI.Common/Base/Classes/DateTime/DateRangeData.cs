@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// and associated data of type <typeparamref name="TData"/>.
     /// </summary>
     /// <typeparam name="TData">The type of data associated with each date in the range.</typeparam>
-    public class DateRangeData<TData>
+    public class DateRangeData<TData> : BaseObject
     {
         private readonly TData[] items;
 
