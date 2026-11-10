@@ -22,6 +22,11 @@ namespace Alternet.UI
         public static bool DefaultGearButtonVisible { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the gear button is enabled by default.
+        /// </summary>
+        public static bool DefaultGearButtonEnabled { get; set; } = false;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItemStatusPicker"/> class.
         /// </summary>
         public CalendarItemStatusPicker()
@@ -33,6 +38,9 @@ namespace Alternet.UI
 
             if (DefaultGearButtonVisible)
                 RequireGearButton();
+
+            if (!DefaultGearButtonEnabled)
+                GearButton?.IsEnabled = false;
         }
 
         /// <summary>
