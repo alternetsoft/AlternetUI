@@ -346,7 +346,7 @@ namespace Alternet.UI
 
             foreach (var listener in listeners)
             {
-                listener.OnListSourcePropertyChanged(this, e);
+                listener.PropertyChanged(this, e);
             }
         }
 
@@ -368,7 +368,7 @@ namespace Alternet.UI
 
             foreach (var listener in listeners)
             {
-                listener.OnListSourceUpdatesStarted(this);
+                listener.UpdatesStarted(this);
             }
         }
 
@@ -378,7 +378,7 @@ namespace Alternet.UI
 
             foreach (var listener in listeners)
             {
-                listener.OnListSourceUpdatesFinished(this);
+                listener.UpdatesFinished(this);
             }
         }
 
@@ -408,7 +408,7 @@ namespace Alternet.UI
 
             foreach (var listener in listeners)
             {
-                listener.OnListSourceChanged(this, newArgs);
+                listener.Changed(this, newArgs);
             }
         }
 
@@ -418,7 +418,7 @@ namespace Alternet.UI
 
             foreach (var listener in listeners)
             {
-                listener.OnListSourceItemRemoved(this, index, item.Value);
+                listener.ItemRemoved(this, index, item.Value);
             }
         }
 
@@ -428,7 +428,7 @@ namespace Alternet.UI
 
             foreach (var listener in listeners)
             {
-                listener.OnListSourceItemInserted(this, index, item.Value);
+                listener.ItemInserted(this, index, item.Value);
             }
         }
 

@@ -57,35 +57,42 @@ namespace Alternet.UI
             }
         }
 
-        void IListSourceListener<CalendarItem>.OnListSourceChanged(IListSource<CalendarItem> sender, ListChangedEventArgs e)
+        void IListSourceListener<CalendarItem>.Changed(IListSource<CalendarItem> sender, ListChangedEventArgs e)
         {
         }
 
-        void IListSourceListener<CalendarItem>.OnListSourceItemInserted(
+        void IListSourceListener<CalendarItem>.ItemInserted(
             IListSource<CalendarItem> sender,
             int index,
             CalendarItem item)
         {
         }
 
-        void IListSourceListener<CalendarItem>.OnListSourceItemRemoved(
+        void IListSourceListener<CalendarItem>.ItemRemoved(
             IListSource<CalendarItem> sender,
             int index,
             CalendarItem item)
         {
         }
 
-        void IListSourceListener<CalendarItem>.OnListSourcePropertyChanged(
+        void IListSourceListener<CalendarItem>.ItemPropertyChanged(
+            IListSource<CalendarItem> sender,
+            CalendarItem item,
+            string? propertyName)
+        {
+        }
+
+        void IListSourceListener<CalendarItem>.PropertyChanged(
             IListSource<CalendarItem> sender,
             PropertyChangedEventArgs e)
         {
         }
 
-        void IListSourceListener<CalendarItem>.OnListSourceUpdatesFinished(IListSource<CalendarItem> sender)
+        void IListSourceListener<CalendarItem>.UpdatesFinished(IListSource<CalendarItem> sender)
         {
         }
 
-        void IListSourceListener<CalendarItem>.OnListSourceUpdatesStarted(IListSource<CalendarItem> sender)
+        void IListSourceListener<CalendarItem>.UpdatesStarted(IListSource<CalendarItem> sender)
         {
         }
 

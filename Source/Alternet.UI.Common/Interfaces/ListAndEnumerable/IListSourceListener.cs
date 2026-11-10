@@ -17,7 +17,7 @@ namespace Alternet.UI
         /// <param name="sender">The list source where the item was inserted.</param>
         /// <param name="index">The index at which the item was inserted.</param>
         /// <param name="item">The item that was inserted.</param>
-        void OnListSourceItemInserted(IListSource<TItem> sender, int index, TItem item);
+        void ItemInserted(IListSource<TItem> sender, int index, TItem item);
 
         /// <summary>
         /// Called when an item is removed from the list source.
@@ -25,33 +25,42 @@ namespace Alternet.UI
         /// <param name="sender">The list source where the item was removed.</param>
         /// <param name="index">The index from which the item was removed.</param>
         /// <param name="item">The item that was removed.</param>
-        void OnListSourceItemRemoved(IListSource<TItem> sender, int index, TItem item);
+        void ItemRemoved(IListSource<TItem> sender, int index, TItem item);
 
         /// <summary>
         /// Called when the collection changes.
         /// </summary>
         /// <param name="sender">The list source where the collection changed.</param>
         /// <param name="e">The event data describing the change.</param>
-        void OnListSourceChanged(IListSource<TItem> sender, ListChangedEventArgs e);
+        void Changed(IListSource<TItem> sender, ListChangedEventArgs e);
+
+        /// <summary>
+        /// Called when a property of an item in the list source changes.
+        /// This method is only called if the item notifies its containing list source about property changes.
+        /// </summary>
+        /// <param name="sender">The list source where the item property changed.</param>
+        /// <param name="item">The item whose property changed.</param>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        void ItemPropertyChanged(IListSource<TItem> sender, TItem item, string? propertyName);
 
         /// <summary>
         /// Called when a property of the list source changes.
         /// </summary>
         /// <param name="sender">The list source where the property changed.</param>
         /// <param name="e">The event data describing the property change.</param>
-        void OnListSourcePropertyChanged(IListSource<TItem> sender, PropertyChangedEventArgs e);
+        void PropertyChanged(IListSource<TItem> sender, PropertyChangedEventArgs e);
 
         /// <summary>
         /// Called when the list source begins an update operation.
         /// </summary>
         /// <param name="sender">The list source where the update operation began.</param>
-        void OnListSourceUpdatesStarted(IListSource<TItem> sender);
+        void UpdatesStarted(IListSource<TItem> sender);
 
         /// <summary>
         /// Called when the list source ends an update operation.
         /// </summary>
         /// <param name="sender">The list source where the update operation ended.</param>
-        void OnListSourceUpdatesFinished(IListSource<TItem> sender);
+        void UpdatesFinished(IListSource<TItem> sender);
     }
 
     /// <summary>
@@ -72,39 +81,45 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void OnListSourceChanged(IListSource<TItem> sender, ListChangedEventArgs e)
+        public void Changed(IListSource<TItem> sender, ListChangedEventArgs e)
         {
             writer.WriteLine($"ListSource changed: {e.Action}");
         }
 
         /// <inheritdoc/>
-        public void OnListSourceItemInserted(IListSource<TItem> sender, int index, TItem item)
+        public void ItemInserted(IListSource<TItem> sender, int index, TItem item)
         {
             writer.WriteLine($"ListSource item inserted at index {index}: {item}");
         }
 
         /// <inheritdoc/>
-        public void OnListSourceItemRemoved(IListSource<TItem> sender, int index, TItem item)
+        public void ItemRemoved(IListSource<TItem> sender, int index, TItem item)
         {
             writer.WriteLine($"ListSource item removed from index {index}: {item}");
         }
 
         /// <inheritdoc/>
-        public void OnListSourcePropertyChanged(IListSource<TItem> sender, PropertyChangedEventArgs e)
+        public void PropertyChanged(IListSource<TItem> sender, PropertyChangedEventArgs e)
         {
             writer.WriteLine($"ListSource property changed: {e.PropertyName}");
         }
 
         /// <inheritdoc/>
-        public void OnListSourceUpdatesStarted(IListSource<TItem> sender)
+        public void UpdatesStarted(IListSource<TItem> sender)
         {
             writer.WriteLine("ListSource updates started.");
         }
 
         /// <inheritdoc/>
-        public void OnListSourceUpdatesFinished(IListSource<TItem> sender)
+        public void UpdatesFinished(IListSource<TItem> sender)
         {
             writer.WriteLine("ListSource updates finished.");
+        }
+
+        /// <inheritdoc/>
+        public void ItemPropertyChanged(IListSource<TItem> sender, TItem item, string? propertyName)
+        {
+            writer.WriteLine($"ListSource item property changed: {propertyName ?? "null"} on item {item}");
         }
     }
 }
