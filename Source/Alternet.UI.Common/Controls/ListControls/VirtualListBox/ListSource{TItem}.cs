@@ -294,8 +294,23 @@ namespace Alternet.UI
         /// <param name="listener">The listener to subscribe.</param>
         public virtual void Subscribe(IListSourceListener<TItem> listener)
         {
+            if (DisposingOrDisposed)
+                return;
             lock (syncRoot)
                 listeners = ArrayUtils.WithAddedElement(listeners, listener);
+        }
+
+        /// <summary>
+        /// Notifies listeners when a property of an item in the underlying collection changes.
+        /// </summary>
+        /// <param name="item">The item whose property has changed.</param>
+        /// <param name="propertyName">The name of the property that has changed.</param>
+        public virtual void RaiseItemPropertyChanged(TItem item, string? propertyName)
+        {
+            if (DisposingOrDisposed)
+                return;
+            foreach (var listener in listeners)
+                listener.ItemPropertyChanged(this, item, propertyName);
         }
 
         /// <summary>
@@ -319,10 +334,11 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnUpdatesFinished(object? sender, EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             UpdatesFinished?.Invoke(this, EventArgs.Empty);
-
             foreach (var listener in listeners)
-                listener.OnListSourceUpdatesFinished(this);
+                listener.UpdatesFinished(this);
         }
 
         /// <summary>
@@ -332,10 +348,11 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnUpdatesStarted(object? sender, EventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             UpdatesStarted?.Invoke(this, EventArgs.Empty);
-
             foreach (var listener in listeners)
-                listener.OnListSourceUpdatesStarted(this);
+                listener.UpdatesStarted(this);
         }
 
         /// <summary>
@@ -346,10 +363,11 @@ namespace Alternet.UI
         /// <param name="item">The item that was removed.</param>
         protected virtual void OnItemRemoved(object? sender, int index, TItem item)
         {
+            if (DisposingOrDisposed)
+                return;
             ItemRemoved?.Invoke(this, index, item);
-
             foreach (var listener in listeners)
-                listener.OnListSourceItemRemoved(this, index, item);
+                listener.ItemRemoved(this, index, item);
         }
 
         /// <summary>
@@ -360,10 +378,11 @@ namespace Alternet.UI
         /// <param name="item">The item that was inserted.</param>
         protected virtual void OnItemInserted(object? sender, int index, TItem item)
         {
+            if (DisposingOrDisposed)
+                return;
             ItemInserted?.Invoke(this, index, item);
-
             foreach (var listener in listeners)
-                listener.OnListSourceItemInserted(this, index, item);
+                listener.ItemInserted(this, index, item);
         }
 
         /// <summary>
@@ -373,10 +392,11 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             RaisePropertyChangedEx(e);
-
             foreach (var listener in listeners)
-                listener.OnListSourcePropertyChanged(this, e);
+                listener.PropertyChanged(this, e);
         }
 
         /// <summary>
@@ -386,10 +406,11 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="ListChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnCollectionChanged(object? sender, ListChangedEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
             CollectionChanged?.Invoke(this, e);
-
             foreach (var listener in listeners)
-                listener.OnListSourceChanged(this, e);
+                listener.Changed(this, e);
         }
 
         /// <inheritdoc/>
