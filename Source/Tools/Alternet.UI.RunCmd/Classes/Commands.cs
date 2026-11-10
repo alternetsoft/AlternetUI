@@ -444,11 +444,13 @@ namespace Alternet.UI
                 try
                 {
                     var withoutExt = Path.GetFileNameWithoutExtension(file);
+                    var path = Path.GetDirectoryName(file) ?? string.Empty;
                     var ext = Path.GetExtension(file);
 
                     var newName = withoutExt + "-legacy" + ext;
-                    Console.WriteLine($"Renaming: {file} -> {newName}");
-                    File.Move(file, newName);
+                    var newPath = Path.Combine(path, newName);
+                    Console.WriteLine($"Renaming: {file} -> {newPath}");
+                    File.Move(file, newPath);
                 }
                 catch (Exception e)
                 {
