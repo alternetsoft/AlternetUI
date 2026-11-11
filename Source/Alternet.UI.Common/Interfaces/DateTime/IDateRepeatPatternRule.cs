@@ -53,6 +53,52 @@ namespace Alternet.UI
     public struct PatternRuleGetDatesParams
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="PatternRuleGetDatesParams"/> struct using
+        /// the specified minimum and maximum dates.
+        /// </summary>
+        /// <param name="minDate">The minimum date to consider.</param>
+        /// <param name="maxDate">The maximum date to consider.</param>
+        public PatternRuleGetDatesParams(DateOnly minDate, DateOnly maxDate)
+        {
+            MinDate = minDate;
+            MaxDate = maxDate;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PatternRuleGetDatesParams"/> struct using
+        /// the specified minimum and maximum dates.
+        /// </summary>
+        /// <param name="minDate">The minimum date to consider.</param>
+        /// <param name="maxDate">The maximum date to consider.</param>
+        public PatternRuleGetDatesParams(DateTime minDate, DateTime maxDate)
+        {
+            MinDate = DateOnly.FromDateTime(minDate);
+            MaxDate = DateOnly.FromDateTime(maxDate);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PatternRuleGetDatesParams"/> struct using
+        /// the specified date for both the minimum and maximum dates.
+        /// </summary>
+        /// <param name="date">The date to consider for both the minimum and maximum dates.</param>
+        public PatternRuleGetDatesParams(DateTime date)
+        {
+            MinDate = DateOnly.FromDateTime(date);
+            MaxDate = DateOnly.FromDateTime(date);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PatternRuleGetDatesParams"/> struct using
+        /// the specified date for both the minimum and maximum dates.
+        /// </summary>
+        /// <param name="date">The date to consider for both the minimum and maximum dates.</param>
+        public PatternRuleGetDatesParams(DateOnly date)
+        {
+            MinDate = date;
+            MaxDate = date;
+        }
+
+        /// <summary>
         /// Gets or sets the minimum date to consider.
         /// </summary>
         public DateOnly MinDate { get; set; }
