@@ -15,8 +15,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="DailyRepeatPatternRule"/> class with the specified owner.
         /// </summary>
-        /// <param name="owner">The owner <see cref="BaseRepeatPatternRule"/> of this rule.</param>
-        public DailyRepeatPatternRule(BaseRepeatPatternRule owner) : base(owner)
+        /// <param name="owner">The owner <see cref="IRepeatPatternRuleOwner"/> of this rule.</param>
+        public DailyRepeatPatternRule(IRepeatPatternRuleOwner owner) : base(owner)
         {
         }
 
@@ -151,10 +151,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether the specified object is equal to the current instance of <see cref="DailyRepeatPatternRule"/>.
+        /// Determines whether the specified object is equal to the current
+        /// instance of <see cref="DailyRepeatPatternRule"/>.
         /// </summary>
         /// <param name="obj">The object to compare with the current instance.</param>
-        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified object is equal to the current instance;
+        /// otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
             if (obj is not DailyRepeatPatternRule other)
@@ -176,7 +178,8 @@ namespace Alternet.UI
         /// Determines whether the specified date is part of the repeat pattern.
         /// </summary>
         /// <param name="date">The date to check.</param>
-        /// <returns><c>true</c> if the specified date is part of the repeat pattern; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the specified date is part of the repeat pattern;
+        /// otherwise, <c>false</c>.</returns>
         protected virtual bool IsDateInPattern(DateOnly date)
         {
             switch (Kind)
