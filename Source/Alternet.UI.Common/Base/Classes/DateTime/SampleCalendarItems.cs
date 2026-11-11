@@ -125,9 +125,9 @@ namespace Alternet.UI
         /// <param name="server">The calendar item source to load the sample events into.</param>
         public static void LoadSampleLabelEvents(SchedulerDocument server)
         {
-            DateTime start = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 10, 0, 0);
+            DateTime start = new (DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 10, 0, 0);
             var statuses = KnownCalendarItemMarkers.Statuses.ToArray();
-            Random random = new Random();
+            Random random = new ();
             foreach (var category in KnownCalendarItemMarkers.Categories)
             {
                 var item = server.CreateItem();

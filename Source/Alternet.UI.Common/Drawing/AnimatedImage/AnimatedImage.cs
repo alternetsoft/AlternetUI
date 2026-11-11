@@ -148,10 +148,10 @@ public partial class AnimatedImage : DisposableObject
 
         set
         {
-            SetProperty(ref inactiveBitmap, value, nameof(InactiveBitmap), () =>
+            if (SetProperty(ref inactiveBitmap, value, nameof(InactiveBitmap)))
             {
                 InactiveBitmapChanged?.Invoke(this, EventArgs.Empty);
-            });
+            }
         }
     }
 
@@ -169,10 +169,10 @@ public partial class AnimatedImage : DisposableObject
 
         set
         {
-            SetProperty(ref inactiveFrameIndex, value, nameof(InactiveBitmap), () =>
+            if (SetProperty(ref inactiveFrameIndex, value, nameof(InactiveFrameIndex)))
             {
                 InactiveFrameIndexChanged?.Invoke(this, EventArgs.Empty);
-            });
+            }
         }
     }
 

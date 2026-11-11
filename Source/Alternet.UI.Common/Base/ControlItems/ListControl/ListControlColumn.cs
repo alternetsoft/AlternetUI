@@ -70,9 +70,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref title, value, nameof(Title), () =>
-                {
-                });
+                SetProperty(ref title, value, nameof(Title));
             }
         }
 
@@ -88,9 +86,7 @@ namespace Alternet.UI
 
             set
             {
-                SetProperty(ref suggestedWidth, value, nameof(SuggestedWidth), () =>
-                {
-                });
+                SetProperty(ref suggestedWidth, value, nameof(SuggestedWidth));
             }
         }
 

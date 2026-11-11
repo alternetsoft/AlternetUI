@@ -152,6 +152,13 @@ namespace ControlsSample
             {
                 var source = new SchedulerDocument();
                 SampleCalendarItems.LoadSampleData(source);
+
+                PatternRuleGetDatesParams prm = new(DateTime.Now);
+
+                var result = source.GetItemsByDate(prm);
+
+                result = source.GetItemsByDate(new(DateTime.Now, DateTime.Now.AddMonths(1)));
+
                 var s = source.AsXmlString;
                 calendarItemsXml = s;
                 loadCalendarItemsMenuItemXml.Enabled = true;

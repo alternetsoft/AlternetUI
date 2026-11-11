@@ -95,7 +95,10 @@ namespace Alternet.UI
             get => normal;
             set
             {
-                SetProperty(ref normal, value, nameof(Normal), RaiseNormalChanged);
+                if (SetProperty(ref normal, value, nameof(Normal)))
+                {
+                    RaiseNormalChanged();
+                }
             }
         }
 
@@ -105,7 +108,13 @@ namespace Alternet.UI
         public virtual T? Focused
         {
             get => focused;
-            set => SetProperty(ref focused, value, nameof(Focused), RaiseFocusedChanged);
+            set
+            {
+                if (SetProperty(ref focused, value, nameof(Focused)))
+                {
+                    RaiseFocusedChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -114,7 +123,13 @@ namespace Alternet.UI
         public virtual T? Selected
         {
             get => selected;
-            set => SetProperty(ref selected, value, nameof(Selected), RaiseSelectedChanged);
+            set
+            {
+                if (SetProperty(ref selected, value, nameof(Selected)))
+                {
+                    RaiseSelectedChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -123,7 +138,13 @@ namespace Alternet.UI
         public virtual T? Hovered
         {
             get => hovered;
-            set => SetProperty(ref hovered, value, nameof(Hovered), RaiseHoveredChanged);
+            set
+            {
+                if (SetProperty(ref hovered, value, nameof(Hovered)))
+                {
+                    RaiseHoveredChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -132,7 +153,13 @@ namespace Alternet.UI
         public virtual T? Pressed
         {
             get => pressed;
-            set => SetProperty(ref pressed, value, nameof(Pressed), RaisePressedChanged);
+            set
+            {
+                if (SetProperty(ref pressed, value, nameof(Pressed)))
+                {
+                    RaisePressedChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -141,7 +168,13 @@ namespace Alternet.UI
         public virtual T? Disabled
         {
             get => disabled;
-            set => SetProperty(ref disabled, value, nameof(Disabled), RaiseDisabledChanged);
+            set
+            {
+                if (SetProperty(ref disabled, value, nameof(Disabled)))
+                {
+                    RaiseDisabledChanged();
+                }
+            }
         }
 
         /// <summary>
