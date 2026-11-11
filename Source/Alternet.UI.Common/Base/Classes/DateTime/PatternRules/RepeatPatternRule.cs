@@ -20,6 +20,7 @@ namespace Alternet.UI
         private readonly YearlyRepeatPatternRule yearlyRule;
         private readonly List<BaseRepeatPatternRule> rules = new();
         private ScheduleRepeatPattern kind = ScheduleRepeatPattern.None;
+        private DateSelectionManager? excludedDates;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternRule"/> class.
@@ -86,9 +87,26 @@ namespace Alternet.UI
         public IReadOnlyList<BaseRepeatPatternRule> Rules => rules;
 
         /// <summary>
+        /// Gets the list of excluded dates in the repeat pattern rule.
+        /// </summary>
+        public virtual IEnumerable<DateOnly> ExcludedDates
+        {
+            get
+            {
+                if (excludedDates != null)
+                {
+                    return excludedDates.SelectedDates;
+                }
+
+                return Array.Empty<DateOnly>();
+            }
+        }
+
+        /// <summary>
         /// Loads the state of this instance from the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        /// <param name="context">The context containing the property bag and optional prefix for property names.</param>
+        /// <param name="context">The context containing the property bag
+        /// and optional prefix for property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
         public override bool LoadFrom(ISerializableObjectContext? context)
         {
@@ -140,7 +158,9 @@ namespace Alternet.UI
                     Duration = duration;
                 }
 
-                if (propertyBag.TryGetEnumProperty(prefix + nameof(EndCondition), out RepeatPatternEndCondition endCondition))
+                if (propertyBag.TryGetEnumProperty(
+                    prefix + nameof(EndCondition),
+                    out RepeatPatternEndCondition endCondition))
                 {
                     EndCondition = endCondition;
                 }
@@ -148,13 +168,25 @@ namespace Alternet.UI
                 switch (Kind)
                 {
                     case ScheduleRepeatPattern.Daily:
-                        return DailyRule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(DailyRule)));
+                        return DailyRule.LoadFrom(
+                            new SerializableObjectContext(
+                                propertyBag,
+                                prefix + nameof(DailyRule)));
                     case ScheduleRepeatPattern.Weekly:
-                        return WeeklyRule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(WeeklyRule)));
+                        return WeeklyRule.LoadFrom(
+                            new SerializableObjectContext(
+                                propertyBag,
+                                prefix + nameof(WeeklyRule)));
                     case ScheduleRepeatPattern.Monthly:
-                        return MonthlyRule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(MonthlyRule)));
+                        return MonthlyRule.LoadFrom(
+                            new SerializableObjectContext(
+                                propertyBag,
+                                prefix + nameof(MonthlyRule)));
                     case ScheduleRepeatPattern.Yearly:
-                        return YearlyRule.LoadFrom(new SerializableObjectContext(propertyBag, prefix + nameof(YearlyRule)));
+                        return YearlyRule.LoadFrom(
+                            new SerializableObjectContext(
+                                propertyBag,
+                                prefix + nameof(YearlyRule)));
                 }
 
                 return true;
@@ -352,6 +384,79 @@ namespace Alternet.UI
             return UniqueId.GetHashCode();
         }
 
+        /// <summary>
+        /// Determines whether the specified date is excluded from the repeat pattern.
+        /// </summary>
+        /// <param name="date">The date to check.</param>
+        /// <returns><c>true</c> if the date is excluded; otherwise, <c>false</c>.</returns>
+        public virtual bool IsDateExcluded(DateOnly date)
+        {
+            return excludedDates != null && excludedDates.IsSelected(date);
+        }
+
+        /// <summary>
+        /// Clears all excluded dates from the repeat pattern.
+        /// </summary>
+        public virtual void ClearExcludedDates()
+        {
+            if (excludedDates != null)
+            {
+                excludedDates.Clear();
+                RaisePropertyChanged(nameof(ExcludedDates));
+            }
+        }
+
+        /// <summary>
+        /// Determines whether there are any excluded dates in the repeat pattern.
+        /// </summary>
+        /// <returns><c>true</c> if there are any excluded dates; otherwise, <c>false</c>.</returns>
+        public virtual bool HasExcludedDates()
+        {
+            return excludedDates != null && excludedDates.HasAnySelected();
+        }
+
+        /// <summary>
+        /// Adds a date to the list of excluded dates in the repeat pattern.
+        /// </summary>
+        /// <param name="date">The date to add to the list of excluded dates.</param>
+        /// <returns><c>true</c> if the exclusion state of the date was changed;
+        /// otherwise, <c>false</c>.</returns>
+        public virtual bool AddExcludedDate(DateOnly date)
+        {
+            excludedDates ??= new DateSelectionManager();
+            var result = excludedDates.Select(date);
+
+            if (result)
+            {
+                RaisePropertyChanged(nameof(ExcludedDates));
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Removes a date from the list of excluded dates in the repeat pattern.
+        /// </summary>
+        /// <param name="date">The date to remove from the list of excluded dates.</param>
+        /// <returns><c>true</c> if the exclusion state of the date was changed;
+        /// otherwise, <c>false</c>.</returns>
+        public virtual bool RemoveExcludedDate(DateOnly date)
+        {
+            if (excludedDates != null)
+            {
+                var result = excludedDates.Select(date, false);
+
+                if (result)
+                {
+                    RaisePropertyChanged(nameof(ExcludedDates));
+                }
+
+                return result;
+            }
+
+            return false;
+        }
+
         /// <inheritdoc/>
         public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
@@ -359,7 +464,30 @@ namespace Alternet.UI
 
             if (rule == null)
             {
-                return new PatternRuleGetDatesResult(Internal());
+                return new PatternRuleGetDatesResult(WithoutExcludedDates(Internal()));
+            }
+
+            IEnumerable<DateOnly> WithoutExcludedDates(IEnumerable<DateOnly> dates)
+            {
+                if (HasExcludedDates())
+                {
+                    return Internal();
+                }
+                else
+                {
+                    return dates;
+                }
+
+                IEnumerable<DateOnly> Internal()
+                {
+                    foreach (var date in dates)
+                    {
+                        if (!IsDateExcluded(date))
+                        {
+                            yield return date;
+                        }
+                    }
+                }
             }
 
             IEnumerable<DateOnly> Internal()
@@ -394,7 +522,9 @@ namespace Alternet.UI
                 }
             }
 
-            return rule.GetDates(prm);
+            var result = rule.GetDates(prm);
+
+            return new(WithoutExcludedDates(result.Dates));
         }
 
         /// <summary>
