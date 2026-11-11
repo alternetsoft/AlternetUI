@@ -7,8 +7,8 @@
 
   <PropertyGroup>
 
-		<TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net11.0-android;net11.0-ios;net11.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net11.0-windows10.0.19041.0</TargetFrameworks>
 
 		<!-- Note for MacCatalyst:
 		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
@@ -53,12 +53,10 @@
     <PackageReference Include="Microsoft.Maui.Core" Version="$(MicrosoftMauiVersion)" />
     <PackageReference Include="Microsoft.Maui.Essentials" Version="$(MicrosoftMauiVersion)" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MicrosoftMauiVersion)" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MicrosoftMauiVersion)" />
+
     <PackageReference Include="Microsoft.Maui.Graphics.Text.Markdig" Version="$(MicrosoftMauiVersion)" />
 
     <PackageReference Include="CommunityToolkit.Maui" Version="$(CommunityToolkitMauiVersion)" />
-
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
