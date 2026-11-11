@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides a mechanism for releasing managed and unmanaged resources.
     /// </summary>
-    public partial class DisposableObject : BaseObjectWithNotify, IDisposable, IDisposableObject
+    public partial class DisposableObject : BaseTransactionalObject, IDisposable, IDisposableObject
     {
         private bool disposeHandle;
         private bool insideDisposing;

@@ -468,6 +468,20 @@ namespace Alternet.UI
             Document?.Items.RaiseItemPropertyChanging(this, propertyName);
         }
 
+        /// <inheritdoc/>
+        protected override void OnTransactionStarted()
+        {
+            base.OnTransactionStarted();
+            Document?.Items.RaiseItemTransactionStarted(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTransactionEnded()
+        {
+            base.OnTransactionEnded();
+            Document?.Items.RaiseItemTransactionEnded(this);
+        }
+
         /// <summary>
         /// Called when a property of the <see cref="RepeatPatternRule"/> associated with this calendar item changes.
         /// </summary>

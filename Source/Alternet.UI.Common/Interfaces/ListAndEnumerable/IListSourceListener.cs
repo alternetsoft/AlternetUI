@@ -44,6 +44,20 @@ namespace Alternet.UI
         void ItemPropertyChanged(IListSource<TItem> sender, TItem item, string? propertyName);
 
         /// <summary>
+        /// Called when a transaction on an item in the list source has ended.
+        /// </summary>
+        /// <param name="sender">The list source where the item transaction ended.</param>
+        /// <param name="item">The item whose transaction ended.</param>
+        void ItemTransactionEnded(IListSource<TItem> sender, TItem item);
+
+        /// <summary>
+        /// Called when a transaction on an item in the list source has started.
+        /// </summary>
+        /// <param name="sender">The list source where the item transaction started.</param>
+        /// <param name="item">The item whose transaction started.</param>
+        void ItemTransactionStarted(IListSource<TItem> sender, TItem item);
+
+        /// <summary>
         /// Called when a property of an item in the list source is about to change.
         /// This method is only called if the item notifies its containing list source about property changes.
         /// </summary>
@@ -151,6 +165,18 @@ namespace Alternet.UI
         public bool CanChangeItemProperty(IListSource<TItem> sender, TItem item, string propertyName)
         {
             return true;
+        }
+
+        /// <inheritdoc/>
+        public void ItemTransactionEnded(IListSource<TItem> sender, TItem item)
+        {
+            writer.WriteLine($"ListSource item transaction ended on item {item}");
+        }
+
+        /// <inheritdoc/>
+        public void ItemTransactionStarted(IListSource<TItem> sender, TItem item)
+        {
+            writer.WriteLine($"ListSource item transaction started on item {item}");
         }
     }
 }

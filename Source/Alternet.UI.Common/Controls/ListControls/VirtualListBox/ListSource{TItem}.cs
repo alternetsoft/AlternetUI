@@ -302,6 +302,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Notifies listeners when a property of an item in the underlying collection changes.
+        /// This method should be called from the property setter of the item.
         /// </summary>
         /// <param name="item">The item whose property has changed.</param>
         /// <param name="propertyName">The name of the property that has changed.</param>
@@ -314,7 +315,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Notifies listeners when a transaction on an item in the underlying collection has ended.
+        /// </summary>
+        /// <param name="item">The item whose transaction has ended.</param>
+        public virtual void RaiseItemTransactionEnded(TItem item)
+        {
+            if (DisposingOrDisposed)
+                return;
+            foreach (var listener in listeners)
+                listener.ItemTransactionEnded(this, item);
+        }
+
+        /// <summary>
+        /// Notifies listeners when a transaction on an item in the underlying collection has started.
+        /// </summary>
+        /// <param name="item">The item whose transaction has started.</param>
+        public virtual void RaiseItemTransactionStarted(TItem item)
+        {
+            if (DisposingOrDisposed)
+                return;
+            foreach (var listener in listeners)
+                listener.ItemTransactionStarted(this, item);
+        }
+
+        /// <summary>
         /// Notifies listeners when a property of an item in the underlying collection is about to change.
+        /// This method should be called from the property setter of the item.
         /// </summary>
         /// <param name="item">The item whose property is about to change.</param>
         /// <param name="propertyName">The name of the property that is about to change.</param>
