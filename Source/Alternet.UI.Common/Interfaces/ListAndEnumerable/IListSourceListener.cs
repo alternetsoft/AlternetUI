@@ -44,6 +44,25 @@ namespace Alternet.UI
         void ItemPropertyChanged(IListSource<TItem> sender, TItem item, string? propertyName);
 
         /// <summary>
+        /// Called when a property of an item in the list source is about to change.
+        /// This method is only called if the item notifies its containing list source about property changes.
+        /// </summary>
+        /// <param name="sender">The list source where the item property is about to change.</param>
+        /// <param name="item">The item whose property is about to change.</param>
+        /// <param name="propertyName">The name of the property that is about to change.</param>
+        void ItemPropertyChanging(IListSource<TItem> sender, TItem item, string? propertyName);
+
+        /// <summary>
+        /// Called to determine whether a property of an item in the list source can be changed.
+        /// This method is only called if the item notifies its containing list source about property changes.
+        /// </summary>
+        /// <param name="sender">The list source where the item property is about to change.</param>
+        /// <param name="item">The item whose property is about to change.</param>
+        /// <param name="propertyName">The name of the property that is about to change.</param>
+        /// <returns><c>true</c> if the property can be changed; otherwise, <c>false</c>.</returns>
+        bool CanChangeItemProperty(IListSource<TItem> sender, TItem item, string propertyName);
+
+        /// <summary>
         /// Called when a property of the list source changes.
         /// </summary>
         /// <param name="sender">The list source where the property changed.</param>
@@ -120,6 +139,18 @@ namespace Alternet.UI
         public void ItemPropertyChanged(IListSource<TItem> sender, TItem item, string? propertyName)
         {
             writer.WriteLine($"ListSource item property changed: {propertyName ?? "null"} on item {item}");
+        }
+
+        /// <inheritdoc/>
+        public void ItemPropertyChanging(IListSource<TItem> sender, TItem item, string? propertyName)
+        {
+            writer.WriteLine($"ListSource item property changing: {propertyName ?? "null"} on item {item}");
+        }
+
+        /// <inheritdoc/>
+        public bool CanChangeItemProperty(IListSource<TItem> sender, TItem item, string propertyName)
+        {
+            return true;
         }
     }
 }

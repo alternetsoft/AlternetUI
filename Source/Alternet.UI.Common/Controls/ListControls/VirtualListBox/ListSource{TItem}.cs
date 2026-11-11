@@ -314,6 +314,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Notifies listeners when a property of an item in the underlying collection is about to change.
+        /// </summary>
+        /// <param name="item">The item whose property is about to change.</param>
+        /// <param name="propertyName">The name of the property that is about to change.</param>
+        public virtual void RaiseItemPropertyChanging(TItem item, string? propertyName)
+        {
+            if (DisposingOrDisposed)
+                return;
+            foreach (var listener in listeners)
+                listener.ItemPropertyChanging(this, item, propertyName);
+        }
+
+        /// <summary>
+        /// Determines whether a property of an item can be changed.
+        /// This method is called before a property of an item is changed, allowing
+        /// derived classes to implement custom logic for property change validation.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <returns><c>true</c> if the property can be changed; otherwise, <c>false</c>.</returns>
+        public virtual bool CanChangeItemProperty(TItem item, string propertyName)
+        {
+            if (DisposingOrDisposed)
+                return false;
+
+            var canChange = true;
+
+            foreach (var listener in listeners)
+            {
+                if (!listener.CanChangeItemProperty(this, item, propertyName))
+                {
+                    canChange = false;
+                    break;
+                }
+            }
+
+            return canChange;
+        }
+
+        /// <summary>
         /// Unsubscribes the specified listener from receiving notifications of changes in the list source.
         /// </summary>
         /// <param name="listener">The listener to unsubscribe.</param>

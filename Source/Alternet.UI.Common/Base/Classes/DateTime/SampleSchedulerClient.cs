@@ -82,6 +82,21 @@ namespace Alternet.UI
         {
         }
 
+        bool IListSourceListener<CalendarItem>.CanChangeItemProperty(
+            IListSource<CalendarItem> sender,
+            CalendarItem item,
+            string propertyName)
+        {
+            return true;
+        }
+
+        void IListSourceListener<CalendarItem>.ItemPropertyChanging(
+            IListSource<CalendarItem> sender,
+            CalendarItem item,
+            string? propertyName)
+        {
+        }
+
         void IListSourceListener<CalendarItem>.PropertyChanged(
             IListSource<CalendarItem> sender,
             PropertyChangedEventArgs e)

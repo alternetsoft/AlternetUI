@@ -296,7 +296,7 @@ namespace Alternet.UI
         /// Called before a property value changes.
         /// Override this method to perform custom actions before a property change occurs.
         /// </summary>
-        protected virtual void OnPropertyChanging(string propertyName)
+        protected virtual void OnPropertyChanging(string? propertyName)
         {
         }
     }

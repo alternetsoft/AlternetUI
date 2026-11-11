@@ -72,6 +72,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the end date and time of the calendar item.
+        /// This property is derived from the <see cref="RepeatPatternRule"/> associated with this calendar item.
         /// </summary>
         public DateTime End
         {
@@ -84,6 +85,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the start date and time of the calendar item.
+        /// This property is derived from the <see cref="RepeatPatternRule"/> associated with this calendar item.
         /// </summary>
         public DateTime Start
         {
@@ -95,7 +97,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the duration of the calendar item.
+        /// Gets or sets the duration of the calendar item.
+        /// This property is derived from the <see cref="RepeatPatternRule"/> associated with this calendar item.
         /// </summary>
         public TimeSpan Duration
         {
@@ -217,16 +220,11 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override bool CanChangeProperty(string propertyName)
-        {
-            return base.CanChangeProperty(propertyName);
-        }
-
         /// <summary>
         /// Loads the state of this instance from the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        /// <param name="context">The context containing the property bag and optional prefix for property names.</param>
+        /// <param name="context">The context containing the property bag
+        /// and optional prefix for property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
         public override bool LoadFrom(ISerializableObjectContext? context)
         {
@@ -447,11 +445,27 @@ namespace Alternet.UI
         protected override void OnPropertyChanged(string? propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
+            Document?.Items.RaiseItemPropertyChanged(this, propertyName);
+        }
 
-            if (Document is not null)
+        /// <inheritdoc/>
+        public override bool CanChangeProperty(string propertyName)
+        {
+            var canChange = base.CanChangeProperty(propertyName);
+
+            if (canChange && Document != null)
             {
-                Document?.Items.RaiseItemPropertyChanged(this, propertyName);
+                canChange = Document.Items.CanChangeItemProperty(this, propertyName);
             }
+
+            return canChange;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnPropertyChanging(string? propertyName)
+        {
+            base.OnPropertyChanging(propertyName);
+            Document?.Items.RaiseItemPropertyChanging(this, propertyName);
         }
 
         /// <summary>
