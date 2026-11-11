@@ -188,7 +188,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="PropertyChanging"/> event and calls <see cref="OnPropertyChanging"/> method.
         /// </summary>
-        public void RaisePropertyChanging(string propertyName)
+        public virtual void RaisePropertyChanging(string propertyName)
         {
             if (DisposingOrDisposed)
                 return;
@@ -233,42 +233,11 @@ namespace Alternet.UI
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
         /// <param name="propertyName">Name of the property.</param>
-        /// <param name="changedAction">This action is called when property changes</param>
         /// <returns>True if the property value was changed; otherwise, false.</returns>
-        protected virtual bool SetProperty<T>(
-            ref T? storage,
-            T? value,
-            string propertyName,
-            Action? changedAction = null)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected bool SetProperty<T>(ref T? storage, T? value, string propertyName)
         {
-            if (Immutable || Equals(storage, value))
-                return false;
-            if (!CanChangeProperty(propertyName))
-                return false;
-            RaisePropertyChanging(propertyName);
-            storage = value;
-            RaisePropertyChanged(propertyName);
-            changedAction?.Invoke();
-            return true;
-        }
-
-        /// <summary>
-        /// Sets field value and raises property changed events and methods.
-        /// </summary>
-        /// <param name="storage">Field where property is stored.</param>
-        /// <param name="value">New property value.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <returns>True if the property value was changed; otherwise, false.</returns>
-        protected virtual bool SetProperty<T>(ref T? storage, T? value, string propertyName)
-        {
-            if (Immutable || Equals(storage, value))
-                return false;
-            if (!CanChangeProperty(propertyName))
-                return false;
-            RaisePropertyChanging(propertyName);
-            storage = value;
-            RaisePropertyChanged(propertyName);
-            return true;
+            return SetPropertyCore(ref storage, value, propertyName);
         }
 
         /// <summary>
@@ -280,16 +249,32 @@ namespace Alternet.UI
         /// <param name="value">New property value.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <returns>True if the property value was changed; otherwise, false.</returns>
-        protected virtual bool SetNotNullProperty<T>(ref T storage, T value, string propertyName)
+        protected virtual bool SetPropertyCore<T>(ref T storage, T value, string propertyName)
         {
-            if (Immutable || Equals(storage, value))
+            if (Immutable)
+                return false;
+            if (EqualityComparer<T>.Default.Equals(storage, value))
                 return false;
             if (!CanChangeProperty(propertyName))
                 return false;
             RaisePropertyChanging(propertyName);
-            storage = value;
+            SetFieldValue(ref storage, value, propertyName);
             RaisePropertyChanged(propertyName);
             return true;
+        }
+
+        /// <summary>
+        /// Sets the value of a field. <paramref name="storage"/> is the field which is being set
+        /// and <paramref name="value"/> is the new value for the field.
+        /// 
+        /// </summary>
+        /// <typeparam name="T">Type of the field value.</typeparam>
+        /// <param name="storage">Field where property is stored.</param>
+        /// <param name="value">New property value.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        protected virtual void SetFieldValue<T>(ref T storage, T value, string propertyName)
+        {
+            storage = value;
         }
 
         /// <summary>
