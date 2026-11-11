@@ -50,6 +50,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the repeat pattern rule is used.
+        /// (i.e., not set to <see cref="ScheduleRepeatPattern.None"/>).
+        /// </summary>
+        public bool IsRepeated => Kind != ScheduleRepeatPattern.None;
+
+        /// <summary>
         /// Gets or sets the kind of repeat pattern represented by this composite rule.
         /// </summary>
         public virtual ScheduleRepeatPattern Kind
