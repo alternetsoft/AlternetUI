@@ -296,7 +296,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return (IntervalMonths, DayOfWeek, DayOfMonth, DayOfWeekIndex, Kind, StartDate, EndDate, OccurrenceCount).GetHashCode();
+            var s = (IntervalMonths, DayOfWeek, DayOfMonth, DayOfWeekIndex, Kind, ValidFromDate, ValidToDate, OccurrenceCount);
+            return s.GetHashCode();
         }
 
         /// <summary>

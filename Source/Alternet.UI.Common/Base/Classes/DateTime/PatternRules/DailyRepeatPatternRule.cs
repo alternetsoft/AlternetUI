@@ -253,7 +253,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return (IntervalDays, Kind, StartDate, EndDate, OccurrenceCount).GetHashCode();
+            return (IntervalDays, Kind, ValidFromDate, ValidToDate, OccurrenceCount).GetHashCode();
         }
     }
 }

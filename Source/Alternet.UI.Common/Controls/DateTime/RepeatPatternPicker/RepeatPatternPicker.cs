@@ -489,9 +489,9 @@ namespace Alternet.UI
             tabControl.SelectedIndex = tabIndex;
 
             tabControl.SelectedIndex = (int)SelectedPattern;
-            startPicker.AsDateOnly = data.StartDate;
+            startPicker.AsDateOnly = data.ValidFromDate;
             startPicker.AsTimeOnly = data.StartTime;
-            endDatePicker.MainControl.AsDateOnly = data.EndDate;
+            endDatePicker.MainControl.AsDateOnly = data.ValidToDate;
             endTimePicker.MainControl.AsTimeOnly = data.EndTime;
 
             UpdateDurationText();
@@ -621,7 +621,7 @@ namespace Alternet.UI
         {
             data.DoInsideSuspendedPropertyChanged(() =>
             {
-                data.StartDate = startPicker.AsDateOnlyOrToday;
+                data.ValidFromDate = startPicker.AsDateOnlyOrToday;
                 data.StartTime = startPicker.TimePicker.AsTimeOnly;
             });
         }
@@ -644,7 +644,7 @@ namespace Alternet.UI
         /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
         protected virtual void OnEndDatePickerChanged(object? s, EventArgs e)
         {
-            data.EndDate = endDatePicker.MainControl.AsDateOnlyOrToday;
+            data.ValidToDate = endDatePicker.MainControl.AsDateOnlyOrToday;
         }
 
         /// <summary>

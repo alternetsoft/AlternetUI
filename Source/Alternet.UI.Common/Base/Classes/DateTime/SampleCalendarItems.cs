@@ -19,8 +19,8 @@ namespace Alternet.UI
         public static void LoadSampleData(SchedulerDocument server)
         {
             var createNewDemo = server.CreateItem();
-            createNewDemo.Start = DateTime.Today;
-            createNewDemo.End = DateTime.Today.AddDays(2);
+            createNewDemo.Rule.ValidFromDate = DateUtils.Today();
+            createNewDemo.Rule.ValidToDate = DateUtils.Today().AddDays(2);
             createNewDemo.Text = "Create New Demo";
             createNewDemo.Description = "The new Scheduler demo.";
             createNewDemo.Location = "work";
@@ -31,8 +31,10 @@ namespace Alternet.UI
             server.Add(createNewDemo);
 
             var gototheBeach = server.CreateItem();
-            gototheBeach.Start = DateTime.Today.AddHours(18);
-            gototheBeach.End = DateTime.Today.AddHours(21);
+            gototheBeach.Rule.ValidFromDate = DateUtils.Today();
+            gototheBeach.Rule.StartTime = new (18, 0);
+            gototheBeach.Rule.ValidToDate = DateUtils.Today();
+            gototheBeach.Rule.Duration = TimeSpan.FromHours(3);
             gototheBeach.Text = "Go to the Beach";
             gototheBeach.Description = "Try to surf-riding.";
             gototheBeach.Location = "home";
@@ -43,8 +45,10 @@ namespace Alternet.UI
             server.Add(gototheBeach);
 
             var calltofather = server.CreateItem();
-            calltofather.Start = DateTime.Today.AddHours(20);
-            calltofather.End = DateTime.Today.AddHours(20).AddMinutes(30);
+            calltofather.Rule.ValidFromDate = DateUtils.Today();
+            calltofather.Rule.StartTime = new (20, 0);
+            calltofather.Rule.ValidToDate = DateUtils.Today();
+            calltofather.Rule.Duration = TimeSpan.FromMinutes(30);
             calltofather.Text = "Call to father";
             calltofather.Category = KnownCalendarItemMarkers.CategoryPhoneCall;
             calltofather.Status = KnownCalendarItemMarkers.StatusUnknown;
@@ -53,8 +57,9 @@ namespace Alternet.UI
             server.Add(calltofather);
 
             var makeNewInstallation = server.CreateItem();
-            makeNewInstallation.Start = DateTime.Today.AddDays(1);
-            makeNewInstallation.End = DateTime.Today.AddDays(4);
+            makeNewInstallation.Rule.ValidFromDate = DateUtils.Tomorrow();
+
+            makeNewInstallation.Rule.ValidToDate = DateUtils.Today().AddDays(4);
             makeNewInstallation.Text = "Make New Installation";
             makeNewInstallation.Description = "The new Scheduler installation.";
             makeNewInstallation.Location = "work";
@@ -65,8 +70,10 @@ namespace Alternet.UI
             server.Add(makeNewInstallation);
 
             var doctorsAppointment = server.CreateItem();
-            doctorsAppointment.Start = DateTime.Today.AddDays(1).AddHours(17);
-            doctorsAppointment.End = DateTime.Today.AddDays(1).AddHours(17).AddMinutes(30);
+            doctorsAppointment.Rule.ValidFromDate = DateUtils.Tomorrow();
+            doctorsAppointment.Rule.ValidToDate = DateUtils.Tomorrow();
+            doctorsAppointment.Rule.StartTime = new(17, 0);
+            doctorsAppointment.Rule.Duration = TimeSpan.FromMinutes(30);
             doctorsAppointment.Text = "Doctor's Appointment";
             doctorsAppointment.Category = KnownCalendarItemMarkers.CategoryPersonal;
             doctorsAppointment.Status = KnownCalendarItemMarkers.StatusTentative;
@@ -75,8 +82,10 @@ namespace Alternet.UI
             server.Add(doctorsAppointment);
 
             var meetmyfriends = server.CreateItem();
-            meetmyfriends.Start = DateTime.Today.AddDays(1).AddHours(18);
-            meetmyfriends.End = DateTime.Today.AddDays(1).AddHours(21);
+            meetmyfriends.Rule.ValidFromDate = DateUtils.Tomorrow();
+            meetmyfriends.Rule.ValidToDate = DateUtils.Tomorrow();
+            meetmyfriends.Rule.StartTime = new(18, 0);
+            meetmyfriends.Rule.Duration = TimeSpan.FromHours(3);
             meetmyfriends.Text = "Meet my friends";
             meetmyfriends.Category = KnownCalendarItemMarkers.CategoryPersonal;
             meetmyfriends.Status = KnownCalendarItemMarkers.StatusBusy;
@@ -85,8 +94,10 @@ namespace Alternet.UI
             server.Add(meetmyfriends);
 
             var mydaughtertheatricalperformance = server.CreateItem();
-            mydaughtertheatricalperformance.Start = DateTime.Today.AddDays(2).AddHours(19);
-            mydaughtertheatricalperformance.End = DateTime.Today.AddDays(2).AddHours(20).AddMinutes(30);
+            mydaughtertheatricalperformance.Rule.ValidFromDate = DateUtils.Today().AddDays(2);
+            mydaughtertheatricalperformance.Rule.ValidToDate = DateUtils.Today().AddDays(2);
+            mydaughtertheatricalperformance.Rule.StartTime = new(19, 0);
+            mydaughtertheatricalperformance.Rule.Duration = TimeSpan.FromHours(1.5);
             mydaughtertheatricalperformance.Text = "My daughter theatrical performance";
             mydaughtertheatricalperformance.Category = KnownCalendarItemMarkers.CategoryOther;
             mydaughtertheatricalperformance.Status = KnownCalendarItemMarkers.StatusAbsent;
@@ -95,8 +106,10 @@ namespace Alternet.UI
             server.Add(mydaughtertheatricalperformance);
 
             var mybossparty = server.CreateItem();
-            mybossparty.Start = DateTime.Today.AddDays(4).AddHours(18);
-            mybossparty.End = DateTime.Today.AddDays(4).AddHours(22);
+            mybossparty.Rule.ValidFromDate = DateUtils.Today().AddDays(4);
+            mybossparty.Rule.ValidToDate = DateUtils.Today().AddDays(4);
+            mybossparty.Rule.StartTime = new(18, 0);
+            mybossparty.Rule.Duration = TimeSpan.FromHours(4);
             mybossparty.Text = "My boss party";
             mybossparty.Category = KnownCalendarItemMarkers.CategoryPersonal;
             mybossparty.Status = KnownCalendarItemMarkers.StatusBusy;
@@ -105,8 +118,10 @@ namespace Alternet.UI
             server.Add(mybossparty);
 
             var vacationpicnicwithbarbecue = server.CreateItem();
-            vacationpicnicwithbarbecue.Start = DateTime.Today.AddDays(5).AddHours(8);
-            vacationpicnicwithbarbecue.End = DateTime.Today.AddDays(5).AddHours(16);
+            vacationpicnicwithbarbecue.Rule.ValidFromDate = DateUtils.Today().AddDays(5);
+            vacationpicnicwithbarbecue.Rule.ValidToDate = DateUtils.Today().AddDays(100);
+            vacationpicnicwithbarbecue.Rule.StartTime = new(8, 0);
+            vacationpicnicwithbarbecue.Rule.Duration = TimeSpan.FromHours(8);
             vacationpicnicwithbarbecue.Text = "Vacation picnic with barbecue";
             vacationpicnicwithbarbecue.Category = KnownCalendarItemMarkers.CategoryVacation;
             vacationpicnicwithbarbecue.Status = KnownCalendarItemMarkers.StatusAbsent;
@@ -114,7 +129,6 @@ namespace Alternet.UI
             vacationpicnicwithbarbecue.AlarmInfo.Advance = TimeSpan.FromMinutes(5);
 
             vacationpicnicwithbarbecue.Rule.Kind = ScheduleRepeatPattern.Weekly;
-            vacationpicnicwithbarbecue.Rule.EndDate = DateTime.Today.AddDays(100).ToDateOnly();
             vacationpicnicwithbarbecue.Rule.WeeklyRule.WeekDays = DaysOfWeek.Sunday;
             server.Add(vacationpicnicwithbarbecue);
         }
@@ -125,15 +139,17 @@ namespace Alternet.UI
         /// <param name="server">The calendar item source to load the sample events into.</param>
         public static void LoadSampleLabelEvents(SchedulerDocument server)
         {
-            DateTime start = new (DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day, 10, 0, 0);
+            TimeOnly start = new (10, 0);
             var statuses = KnownCalendarItemMarkers.Statuses.ToArray();
             Random random = new ();
             foreach (var category in KnownCalendarItemMarkers.Categories)
             {
                 var item = server.CreateItem();
 
-                item.Start = start;
-                item.End = start.AddMinutes(10);
+                item.Rule.ValidFromDate = DateUtils.Today();
+                item.Rule.ValidToDate = DateUtils.Today();
+                item.Rule.StartTime = start;
+                item.Rule.Duration = TimeSpan.FromMinutes(10);
                 item.Text = category.Title;
                 item.Category = category;
                 item.Status = statuses[random.Next(statuses.Length)];

@@ -32,62 +32,12 @@ namespace Alternet.UI
     /// </summary>
     public abstract partial class BaseRepeatPatternRule : SerializableObject, IDateRepeatPatternRule
     {
-        private DateOnly startDate;
+        private DateOnly validFromDate;
         private TimeOnly startTime;
-        private TimeSpan duration;
-        private DateOnly endDate;
+        private TimeSpan duration = TimeSpan.FromDays(1);
+        private DateOnly validToDate;
         private int occurrenceCount = 1;
         private RepeatPatternEndCondition endCondtion = RepeatPatternEndCondition.OnDate;
-
-        /// <summary>
-        /// Gets or sets the end date and time of the repeat pattern,
-        /// combining the <see cref="EndDate"/> and <see cref="EndTime"/> properties.
-        /// </summary>
-        [Browsable(false)]
-        public virtual DateTime End
-        {
-            get
-            {
-                return EndDate.ToDateTime(EndTime);
-            }
-
-            set
-            {
-                if (value == End)
-                    return;
-
-                DoInsideSuspendedPropertyChanged(() =>
-                {
-                    EndDate = DateOnly.FromDateTime(value);
-                    EndTime = TimeOnly.FromDateTime(value);
-                });
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the start date and time of the repeat pattern,
-        /// combining the <see cref="StartDate"/> and <see cref="StartTime"/> properties.
-        /// </summary>
-        [Browsable(false)]
-        public virtual DateTime Start
-        {
-            get
-            {
-                return StartDate.ToDateTime(StartTime);
-            }
-
-            set
-            {
-                if (value == Start)
-                    return;
-
-                DoInsideSuspendedPropertyChanged(() =>
-                {
-                    StartDate = DateOnly.FromDateTime(value);
-                    StartTime = TimeOnly.FromDateTime(value);
-                });
-            }
-        }
 
         /// <summary>
         /// Gets or sets a value indicating whether it is an all-day event.
@@ -107,20 +57,20 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the start date of the repeat pattern range. 
         /// </summary>
-        public virtual DateOnly StartDate
+        public virtual DateOnly ValidFromDate
         {
-            get => startDate;
+            get => validFromDate;
             set
             {
-                if (SetProperty(ref startDate, value, nameof(StartDate)))
+                if (SetProperty(ref validFromDate, value, nameof(ValidFromDate)))
                 {
-                    OnStartDateChanged();
+                    OnValidFromDateChanged();
                 }
             }
         }
 
         /// <summary>
-        /// Gets the end time of the repeat pattern, calculated as the start time plus the duration.
+        /// Gets the end time, calculated as the start time plus the duration.
         /// </summary>
         [Browsable(false)]
         public TimeOnly EndTime
@@ -190,14 +140,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the end date of the repeat pattern range.
         /// </summary>
-        public virtual DateOnly EndDate
+        public virtual DateOnly ValidToDate
         {
-            get => endDate;
+            get => validToDate;
             set
             {
-                if (SetProperty(ref endDate, value, nameof(EndDate)))
+                if (SetProperty(ref validToDate, value, nameof(ValidToDate)))
                 {
-                    OnEndDateChanged();
+                    OnValidToDateChanged();
                 }
             }
         }
@@ -251,14 +201,14 @@ namespace Alternet.UI
                 case RepeatPatternEndCondition.AfterOccurrence:
                     return new(GetDatesEndsAfterOccurrence());
                 case RepeatPatternEndCondition.OnDate:
-                    return new(GetDatesEndsOnDate(DateUtils.Min(EndDate, prm.MaxDate)));
+                    return new(GetDatesEndsOnDate(DateUtils.Min(ValidToDate, prm.MaxDate)));
                 default:
                     return new();
             }
 
             IEnumerable<DateOnly> GetDatesEndsOnDate(DateOnly maxDate)
             {
-                var currentDate = StartDate;
+                var currentDate = ValidFromDate;
 
                 while (currentDate <= maxDate)
                 {
@@ -279,7 +229,7 @@ namespace Alternet.UI
                 if (OccurrenceCount <= 0)
                     yield break;
 
-                var currentDate = StartDate;
+                var currentDate = ValidFromDate;
                 var maxDate = prm.MaxDate;
                 var numProcessed = 0;
 
@@ -303,18 +253,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the <see cref="EndDate"/> property changes.
-        /// Override this method to implement custom behavior when the end date is updated.
+        /// Called when the <see cref="ValidToDate"/> property changes.
+        /// Override this method to implement custom behavior when the valid to date is updated.
         /// </summary>
-        protected virtual void OnEndDateChanged()
+        protected virtual void OnValidToDateChanged()
         {
         }
 
         /// <summary>
-        /// Called when the <see cref="StartDate"/> property changes.
-        /// Override this method to implement custom behavior when the start date is updated.
+        /// Called when the <see cref="ValidFromDate"/> property changes.
+        /// Override this method to implement custom behavior when the valid from date is updated.
         /// </summary>
-        protected virtual void OnStartDateChanged()
+        protected virtual void OnValidFromDateChanged()
         {
         }
 
@@ -339,9 +289,9 @@ namespace Alternet.UI
         {
             var weekFormat = prm.WeekFormat;
             var prmMinDate = prm.MinDate;
-            DateOnly minDate = StartDate;
+            DateOnly minDate = ValidFromDate;
             DateOnly maxDate;
-            var min = DateUtils.Max(StartDate, prmMinDate);
+            var min = DateUtils.Max(ValidFromDate, prmMinDate);
 
             switch (EndCondition)
             {
@@ -351,7 +301,7 @@ namespace Alternet.UI
                     maxDate = prm.MaxDate;
                     break;
                 case RepeatPatternEndCondition.OnDate:
-                    maxDate = DateUtils.Min(EndDate, prm.MaxDate);
+                    maxDate = DateUtils.Min(ValidToDate, prm.MaxDate);
                     break;
             }
 

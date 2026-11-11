@@ -311,8 +311,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return (IntervalYears, Month, DayOfWeek, DayOfMonth, DayOfWeekIndex, Kind, StartDate, EndDate, OccurrenceCount)
-                .GetHashCode();
+            var s = (
+                IntervalYears,
+                Month,
+                DayOfWeek,
+                DayOfMonth,
+                DayOfWeekIndex,
+                Kind,
+                ValidFromDate,
+                ValidToDate,
+                OccurrenceCount);
+            return s.GetHashCode();
         }
 
         /// <summary>

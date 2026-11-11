@@ -72,42 +72,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the end date and time of the calendar item.
-        /// </summary>
-        public DateTime End
-        {
-            get => rule.End;
-            set
-            {
-                if (End == value)
-                    return;
-                DoInsideTransaction(() =>
-                {
-                    rule.End = value;
-                    RaisePropertyChanged(nameof(End));
-                });
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the start date and time of the calendar item.
-        /// </summary>
-        public DateTime Start
-        {
-            get => rule.Start;
-            set
-            {
-                if (Start == value)
-                    return;
-                DoInsideTransaction(() =>
-                {
-                    rule.Start = value;
-                    RaisePropertyChanged(nameof(Start));
-                });
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether it is an all-day event.
         /// This is calculated based on the <see cref="Duration"/> property
         /// and can be set to coerce the duration to an all-day duration.
@@ -123,6 +87,38 @@ namespace Alternet.UI
                 {
                     rule.IsAllDay = value;
                     RaisePropertyChanged(nameof(IsAllDay));
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the end time of the calendar item.
+        /// </summary>
+        public TimeOnly EndTime
+        {
+            get => rule.EndTime;
+            set
+            {
+                DoInsideTransaction(() =>
+                {
+                    rule.EndTime = value;
+                    RaisePropertyChanged(nameof(EndTime));
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the start time of the calendar item.
+        /// </summary>
+        public TimeOnly StartTime
+        {
+            get => rule.StartTime;
+            set
+            {
+                DoInsideTransaction(() =>
+                {
+                    rule.StartTime = value;
+                    RaisePropertyChanged(nameof(StartTime));
                 });
             }
         }
@@ -524,16 +520,7 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnRuleChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(RepeatPatternRule.Start) ||
-               e.PropertyName == nameof(RepeatPatternRule.End) ||
-               e.PropertyName == nameof(RepeatPatternRule.Duration))
-            {
-                RaisePropertyChanged(e.PropertyName);
-            }
-            else
-            {
-                RaisePropertyChanged(nameof(Rule));
-            }
+            RaisePropertyChanged(nameof(Rule));
         }
 
         /// <summary>

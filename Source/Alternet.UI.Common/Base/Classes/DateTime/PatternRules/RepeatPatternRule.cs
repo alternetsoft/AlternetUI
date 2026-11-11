@@ -28,9 +28,9 @@ namespace Alternet.UI
             : base(owner)
         {
             var now = DateTime.Now;
-            StartDate = now.ToDateOnly();
+            ValidFromDate = now.ToDateOnly();
             StartTime = now.ToTimeOnly();
-            EndDate = StartDate;
+            ValidToDate = ValidFromDate;
 
             dailyRule = CreateDailyRule();
             weeklyRule = CreateWeeklyRule();
@@ -115,14 +115,34 @@ namespace Alternet.UI
                     Kind = parsedKind;
                 }
 
-                if (propertyBag.TryGetDateTimeProperty(prefix + nameof(Start), out var startDateTime))
+                if (propertyBag.TryGetDateProperty(prefix + nameof(ValidFromDate), out var validFromDate))
                 {
-                    Start = startDateTime;
+                    ValidFromDate = validFromDate;
                 }
 
-                if (propertyBag.TryGetDateTimeProperty(prefix + nameof(End), out var endDateTime))
+                if (propertyBag.TryGetDateProperty(prefix + nameof(ValidToDate), out var validToDate))
                 {
-                    End = endDateTime;
+                    ValidToDate = validToDate;
+                }
+
+                if (propertyBag.TryGetTimeProperty(prefix + nameof(StartTime), out var startTime))
+                {
+                    StartTime = startTime;
+                }
+
+                if (propertyBag.TryGetIntProperty(prefix + nameof(OccurrenceCount), out var occurrenceCount))
+                {
+                    OccurrenceCount = occurrenceCount;
+                }
+
+                if (propertyBag.TryGetTimeSpanProperty(prefix + nameof(Duration), out var duration))
+                {
+                    Duration = duration;
+                }
+
+                if (propertyBag.TryGetEnumProperty(prefix + nameof(EndCondition), out RepeatPatternEndCondition endCondition))
+                {
+                    EndCondition = endCondition;
                 }
 
                 switch (Kind)
@@ -163,8 +183,12 @@ namespace Alternet.UI
                 prefix = "";
 
             propertyBag.SetStringProperty(prefix + nameof(Kind), Kind.ToString());
-            propertyBag.SetDateTimeProperty(prefix + nameof(Start), Start);
-            propertyBag.SetDateTimeProperty(prefix + nameof(End), End);
+            propertyBag.SetTimeProperty(prefix + nameof(StartTime), StartTime);
+            propertyBag.SetTimeSpanProperty(prefix + nameof(Duration), Duration);
+            propertyBag.SetIntProperty(prefix + nameof(OccurrenceCount), OccurrenceCount);
+            propertyBag.SetStringProperty(prefix + nameof(EndCondition), EndCondition.ToString());
+            propertyBag.SetDateProperty(prefix + nameof(ValidFromDate), ValidFromDate);
+            propertyBag.SetDateProperty(prefix + nameof(ValidToDate), ValidToDate);
 
             switch (Kind)
             {
@@ -222,10 +246,10 @@ namespace Alternet.UI
             }
 
             return Kind == other.Kind &&
-                   StartDate == other.StartDate &&
+                   ValidFromDate == other.ValidFromDate &&
                    StartTime == other.StartTime &&
                    Duration == other.Duration &&
-                   EndDate == other.EndDate &&
+                   ValidToDate == other.ValidToDate &&
                    OccurrenceCount == other.OccurrenceCount &&
                    EndCondition == other.EndCondition &&
                    DailyRule.Equals(other.DailyRule) &&
@@ -255,12 +279,12 @@ namespace Alternet.UI
                 DoInsideSuspendedPropertyChanged(() =>
                 {
                     var now = DateTime.Now;
-                    StartDate = now.ToDateOnly();
+                    ValidFromDate = now.ToDateOnly();
                     StartTime = now.ToTimeOnly();
                     Duration = TimeSpan.Zero;
                     OccurrenceCount = 1;
                     EndCondition = RepeatPatternEndCondition.OnDate;
-                    EndDate = StartDate;
+                    ValidToDate = ValidFromDate;
                     Kind = ScheduleRepeatPattern.None;
 
                     DailyRule.Assign(null);
@@ -279,10 +303,10 @@ namespace Alternet.UI
 
                 DoInsideSuspendedPropertyChanged(() =>
                 {
-                    StartDate = otherRule.StartDate;
+                    ValidFromDate = otherRule.ValidFromDate;
                     StartTime = otherRule.StartTime;
                     Duration = otherRule.Duration;
-                    EndDate = otherRule.EndDate;
+                    ValidToDate = otherRule.ValidToDate;
                     OccurrenceCount = otherRule.OccurrenceCount;
                     EndCondition = otherRule.EndCondition;
 
@@ -342,8 +366,8 @@ namespace Alternet.UI
             {
                 var minDate = prm.MinDate;
                 var maxDate = prm.MaxDate;
-                var startDate = StartDate;
-                var endDate = EndDate;
+                var startDate = ValidFromDate;
+                var endDate = ValidToDate;
 
                 DateUtils.Sort(ref minDate, ref maxDate);
                 DateUtils.Sort(ref startDate, ref endDate);
@@ -381,18 +405,6 @@ namespace Alternet.UI
         protected virtual void OnChildRulePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             RaiseNullPropertyChanged();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnEndDateChanged()
-        {
-            base.OnEndDateChanged();
-        }
-
-        /// <inheritdoc/>
-        protected override void OnStartDateChanged()
-        {
-            base.OnStartDateChanged();
         }
 
         /// <inheritdoc/>

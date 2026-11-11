@@ -165,8 +165,8 @@ namespace ControlsSample
 
                 patternPicker.Children.Prepend(patternSettings);
 
-                patternPicker.Value.StartDate = DateUtils.GetFirstDateOfMonth(DateTime.Today.ToDateOnly());
-                patternPicker.Value.EndDate = DateUtils.GetLastDateOfMonth(DateTime.Today.ToDateOnly());
+                patternPicker.Value.ValidFromDate = DateUtils.GetFirstDateOfMonth(DateTime.Today.ToDateOnly());
+                patternPicker.Value.ValidToDate = DateUtils.GetLastDateOfMonth(DateTime.Today.ToDateOnly());
 
                 patternPickerContainer.Margin = 5;
                 patternPickerContainer.Title = "Highlight";

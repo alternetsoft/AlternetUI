@@ -990,13 +990,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the current date as a <see cref="DateOnly"/> value, representing today's date without the time component.
+        /// Gets the current date as a <see cref="DateOnly"/> value,
+        /// representing today's date without the time component.
         /// </summary>
         /// <returns>The current date as a <see cref="DateOnly"/> value.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static DateOnly Today()
         {
-            return DateTime.Now.ToDateOnly();
+            return DateOnly.FromDateTime(DateTime.Today);
+        }
+
+        /// <summary>
+        /// Gets the date of tomorrow as a <see cref="DateOnly"/> value, 
+        /// representing tomorrow's date without the time component.
+        /// </summary>
+        /// <returns>The date of tomorrow as a <see cref="DateOnly"/> value.</returns>
+        public static DateOnly Tomorrow()
+        {
+            return DateOnly.FromDateTime(DateTime.Today.AddDays(1));
         }
 
         /// <summary>

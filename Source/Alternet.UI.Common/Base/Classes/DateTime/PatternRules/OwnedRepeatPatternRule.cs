@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the start date of the repeat pattern.
         /// </summary>
-        DateOnly StartDate { get; set; }
+        DateOnly ValidFromDate { get; set; }
 
         /// <summary>
         /// Gets or sets the duration of the repeat pattern.
@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the end date of the repeat pattern.
         /// </summary>
-        DateOnly EndDate { get; set; }
+        DateOnly ValidToDate { get; set; }
 
         /// <summary>
         /// Gets or sets the occurrence count of the repeat pattern.
@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the start date of the repeat pattern.
         /// </summary>
-        public DateOnly StartDate;
+        public DateOnly ValidFromDate;
 
         /// <summary>
         /// Gets or sets the duration of the repeat pattern.
@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the end date of the repeat pattern.
         /// </summary>
-        public DateOnly EndDate;
+        public DateOnly ValidToDate;
 
         /// <summary>
         /// Gets or sets the occurrence count of the repeat pattern.
@@ -82,10 +82,10 @@ namespace Alternet.UI
         public RepeatPatternEndCondition EndCondition;
 
         /// <inheritdoc/>
-        DateOnly IRepeatPatternRuleOwner.StartDate
+        DateOnly IRepeatPatternRuleOwner.ValidFromDate
         {
-            readonly get => StartDate;
-            set => StartDate = value;
+            readonly get => ValidFromDate;
+            set => ValidFromDate = value;
         }
 
         /// <inheritdoc/>
@@ -103,10 +103,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        DateOnly IRepeatPatternRuleOwner.EndDate
+        DateOnly IRepeatPatternRuleOwner.ValidToDate
         {
-            readonly get => EndDate;
-            set => EndDate = value;
+            readonly get => ValidToDate;
+            set => ValidToDate = value;
         }
 
         /// <inheritdoc/>
@@ -146,15 +146,15 @@ namespace Alternet.UI
         public IRepeatPatternRuleOwner? Owner => owner;
 
         /// <inheritdoc/>
-        public override DateOnly StartDate
+        public override DateOnly ValidFromDate
         {
-            get => owner?.StartDate ?? base.StartDate;
+            get => owner?.ValidFromDate ?? base.ValidFromDate;
             set
             {
                 if (owner is null)
-                    base.StartDate = value;
+                    base.ValidFromDate = value;
                 else
-                    owner.StartDate = value;
+                    owner.ValidFromDate = value;
             }
         }
 
@@ -185,15 +185,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override DateOnly EndDate
+        public override DateOnly ValidToDate
         {
-            get => owner?.EndDate ?? base.EndDate;
+            get => owner?.ValidToDate ?? base.ValidToDate;
             set
             {
                 if (owner is null)
-                    base.EndDate = value;
+                    base.ValidToDate = value;
                 else
-                    owner.EndDate = value;
+                    owner.ValidToDate = value;
             }
         }
 
