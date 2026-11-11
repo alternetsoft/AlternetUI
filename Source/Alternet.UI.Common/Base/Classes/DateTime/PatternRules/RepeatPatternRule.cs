@@ -11,7 +11,8 @@ namespace Alternet.UI
     /// Represents a composite repeat pattern rule that combines daily, weekly, monthly, yearly
     /// and other repeat pattern rules.
     /// </summary>
-    public partial class RepeatPatternRule : BaseRepeatPatternRule, IEquatable<RepeatPatternRule>, IPropertyBagSerialize
+    public partial class RepeatPatternRule : OwnedRepeatPatternRule,
+        IEquatable<RepeatPatternRule>, IPropertyBagSerialize, IRepeatPatternRuleOwner
     {
         private readonly DailyRepeatPatternRule dailyRule;
         private readonly WeeklyRepeatPatternRule weeklyRule;
@@ -23,7 +24,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternRule"/> class.
         /// </summary>
-        public RepeatPatternRule()
+        public RepeatPatternRule(IRepeatPatternRuleOwner? owner = null)
+            : base(owner)
         {
             var now = DateTime.Now;
             StartDate = now.ToDateOnly();
@@ -257,7 +259,7 @@ namespace Alternet.UI
                     StartTime = now.ToTimeOnly();
                     Duration = TimeSpan.Zero;
                     OccurrenceCount = 1;
-                    EndCondition = EndConditionKind.OnDate;
+                    EndCondition = RepeatPatternEndCondition.OnDate;
                     EndDate = StartDate;
                     Kind = ScheduleRepeatPattern.None;
 
