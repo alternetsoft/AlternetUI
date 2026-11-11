@@ -431,6 +431,30 @@ namespace ControlsSample
 
                 tabControl.Add(panel);
 
+                // Excluded dates
+
+                p.AddSeparatorLine();
+
+                p.AddLabel("Excluded Dates in Highlight");
+
+                p.AddLinkLabel("Exclude selected date", () =>
+                {
+                    patternPicker.Value.AddExcludedDate(calendar.Value);
+                    UpdateHighlightedDates();
+                });
+
+                p.AddLinkLabel("Remove selected date from excluded", () =>
+                {
+                    patternPicker.Value.RemoveExcludedDate(calendar.Value);
+                    UpdateHighlightedDates();
+                });
+
+                p.AddLinkLabel("Clear excluded dates", () =>
+                {
+                    patternPicker.Value.ClearExcludedDates();
+                    UpdateHighlightedDates();
+                });
+
                 // Repeat Pattern Panel
 
                 var patternSettings = new PanelSettings();

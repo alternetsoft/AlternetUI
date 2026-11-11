@@ -32,7 +32,8 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PatternRuleGetDatesResult"/> struct
         /// with the specified collection of dates.
         /// </summary>
-        /// <param name="dates">The collection of dates that match the repeat pattern within the specified range.</param>
+        /// <param name="dates">The collection of dates that match the repeat
+        /// pattern within the specified range.</param>
         public PatternRuleGetDatesResult(IEnumerable<DateOnly> dates)
         {
             Dates = dates;
