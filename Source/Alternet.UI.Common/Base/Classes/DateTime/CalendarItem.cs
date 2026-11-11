@@ -108,6 +108,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether it is an all-day event.
+        /// This is calculated based on the <see cref="Duration"/> property
+        /// and can be set to coerce the duration to an all-day duration.
+        /// </summary>
+        public bool IsAllDay
+        {
+            get => rule.IsAllDay;
+            set
+            {
+                if (IsAllDay == value)
+                    return;
+                DoInsideTransaction(() =>
+                {
+                    rule.IsAllDay = value;
+                    RaisePropertyChanged(nameof(IsAllDay));
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the duration of the calendar item.
         /// </summary>
         public TimeSpan Duration
