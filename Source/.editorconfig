@@ -1,6 +1,9 @@
 ﻿# top-most EditorConfig file
 root = true
 
+[*]
+max_line_length = 115
+
 [*.{cpp,h}]
 spelling_checkable_types = comments
 
