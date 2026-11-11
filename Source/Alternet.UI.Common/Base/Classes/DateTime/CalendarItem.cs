@@ -11,6 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class CalendarItem : SerializableObject, IEquatable<CalendarItem>, IPropertyBagSerialize
     {
+        private RepeatPatternRuleOwnerStruct ruleContainer = new();
         private RepeatPatternRule rule;
         private CalendarAlarmInfo alarmInfo;
         private string? title;
@@ -66,39 +67,48 @@ namespace Alternet.UI
 
             set
             {
-                alarmInfo.Assign(value);
+                DoInsideTransaction(() => alarmInfo.Assign(value));
             }
         }
 
         /// <summary>
         /// Gets or sets the end date and time of the calendar item.
-        /// This property is derived from the <see cref="RepeatPatternRule"/> associated with this calendar item.
         /// </summary>
         public DateTime End
         {
             get => rule.End;
             set
             {
-                rule.End = value;
+                if (End == value)
+                    return;
+                DoInsideTransaction(() =>
+                {
+                    rule.End = value;
+                    RaisePropertyChanged(nameof(End));
+                });
             }
         }
 
         /// <summary>
         /// Gets or sets the start date and time of the calendar item.
-        /// This property is derived from the <see cref="RepeatPatternRule"/> associated with this calendar item.
         /// </summary>
         public DateTime Start
         {
             get => rule.Start;
             set
             {
-                rule.Start = value;
+                if (Start == value)
+                    return;
+                DoInsideTransaction(() =>
+                {
+                    rule.Start = value;
+                    RaisePropertyChanged(nameof(Start));
+                });
             }
         }
 
         /// <summary>
         /// Gets or sets the duration of the calendar item.
-        /// This property is derived from the <see cref="RepeatPatternRule"/> associated with this calendar item.
         /// </summary>
         public TimeSpan Duration
         {
@@ -106,7 +116,11 @@ namespace Alternet.UI
 
             set
             {
-                rule.Duration = value;
+                DoInsideTransaction(() =>
+                {
+                    rule.Duration = value;
+                    RaisePropertyChanged(nameof(Duration));
+                });
             }
         }
 
@@ -120,7 +134,7 @@ namespace Alternet.UI
 
             set
             {
-                rule.Assign(value);
+                DoInsideTransaction(() => rule.Assign(value));
             }
         }
 
@@ -168,7 +182,7 @@ namespace Alternet.UI
             get => category;
             set
             {
-                this.SetNotNullProperty(ref category, value ?? KnownCalendarItemMarkers.CategoryNone, nameof(Category));
+                this.SetPropertyCore(ref category, value ?? KnownCalendarItemMarkers.CategoryNone, nameof(Category));
             }
         }
 
@@ -180,7 +194,7 @@ namespace Alternet.UI
             get => status;
             set
             {
-                this.SetNotNullProperty(ref status, value ?? KnownCalendarItemMarkers.StatusUnknown, nameof(Status));
+                this.SetPropertyCore(ref status, value ?? KnownCalendarItemMarkers.StatusUnknown, nameof(Status));
             }
         }
 
@@ -483,7 +497,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when a property of the <see cref="RepeatPatternRule"/> associated with this calendar item changes.
+        /// Called when a property of the <see cref="RepeatPatternRule"/> associated
+        /// with this calendar item changes.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
@@ -519,9 +534,9 @@ namespace Alternet.UI
         /// in derived classes to provide a custom implementation of <see cref="RepeatPatternRule"/>.
         /// </summary>
         /// <returns>A new instance of <see cref="RepeatPatternRule"/>.</returns>
-        protected virtual RepeatPatternRule CreateRule()
+        protected virtual RepeatPatternRule CreateRule(IRepeatPatternRuleOwner owner)
         {
-            return new RepeatPatternRule();
+            return new RepeatPatternRule(owner);
         }
 
         /// <summary>
@@ -533,7 +548,7 @@ namespace Alternet.UI
         {
             category = KnownCalendarItemMarkers.CategoryNone;
             status = KnownCalendarItemMarkers.StatusUnknown;
-            rule = CreateRule();
+            rule = CreateRule(ruleContainer);
             alarmInfo = CreateAlarmInfo();
             rule.PropertyChanged += OnRuleChanged;
             alarmInfo.PropertyChanged += OnAlarmInfoChanged;
