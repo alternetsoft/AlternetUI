@@ -31,7 +31,7 @@ namespace Alternet.UI
         {
             if (date < MinDate || date > MaxDate)
                 return false;
-            var index = DateUtils.DayCount(MinDate, date);
+            var index = DateUtils.DayDifference(MinDate, date);
             var list = Items[index];
             
             if (list == null)
