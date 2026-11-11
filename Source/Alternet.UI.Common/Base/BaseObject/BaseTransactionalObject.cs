@@ -55,6 +55,25 @@ namespace Alternet.UI
         public int TransactionLevel => transactionLevel;
 
         /// <summary>
+        /// Executes the specified action inside a transaction.
+        /// Before executing the action, a transaction is started, and after the action is executed,
+        /// the transaction is ended.
+        /// </summary>
+        /// <param name="action">The action to execute inside the transaction.</param>
+        public void DoInsideTransaction(Action action)
+        {
+            StartTransaction();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                EndTransaction();
+            }
+        }
+
+        /// <summary>
         /// Starts a transaction.
         /// </summary>
         /// <remarks>
@@ -96,12 +115,36 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void SetFieldValue<T>(ref T storage, T value, string propertyName)
+        {
+            if (transactionLevel == 0)
+            {
+                try
+                {
+                    StartTransaction();
+                    base.SetFieldValue(ref storage, value, propertyName);
+                }
+                finally
+                {
+                    EndTransaction();
+                }
+            }
+            else
+            {
+                base.SetFieldValue(ref storage, value, propertyName);
+            }
+        }
+
         /// <summary>
         /// Raises the <see cref="TransactionStarted"/> event.
         /// </summary>
         protected virtual void OnTransactionStarted()
         {
-            TransactionStarted?.Invoke(this, EventArgs.Empty);
+            if (TransactionStarted is not null)
+            {
+                TransactionStarted(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -109,7 +152,10 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnTransactionEnded()
         {
-            TransactionEnded?.Invoke(this, EventArgs.Empty);
+            if (TransactionEnded is not null)
+            {
+                TransactionEnded(this, EventArgs.Empty);
+            }
         }
     }
 }
