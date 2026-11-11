@@ -43,6 +43,20 @@ namespace Alternet.UI
             Initialize();
         }
 
+        /// <inheritdoc/>
+        public override ISerializableObjectManager? SerializableObjectManager
+        {
+            get
+            {
+                return base.SerializableObjectManager ?? Document?.SerializableObjectManager;
+            }
+
+            set
+            {
+                base.SerializableObjectManager = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the <see cref="SchedulerDocument"/> associated with this calendar item.
         /// </summary>

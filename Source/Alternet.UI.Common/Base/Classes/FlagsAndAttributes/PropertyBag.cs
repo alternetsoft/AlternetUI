@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -74,6 +75,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the <see cref="ISerializableObjectManager"/> instance
+        /// used for managing the serialization and deserialization of this instance.
+        /// </summary>
+        [Browsable(false)]
+        public ISerializableObjectManager? SerializationManager { get; set; }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="PropertyBag"/> class and returns it.
         /// </summary>
         /// <returns>A new instance of the <see cref="PropertyBag"/> class.</returns>
@@ -114,7 +122,7 @@ namespace Alternet.UI
         /// <returns>A string representation of the specified <see cref="DateTime"/>.</returns>
         public virtual string DateTimeToString(DateTime date)
         {
-            return DateTimeSerialization.Instance.DateTimeToString(date);
+            return EffectiveDateTimeSerialization().DateTimeToString(date);
         }
 
         /// <summary>
@@ -124,7 +132,7 @@ namespace Alternet.UI
         /// <returns>A string representation of the specified <see cref="DateOnly"/>.</returns>
         public virtual string DateToString(DateOnly date)
         {
-            return DateTimeSerialization.Instance.DateToString(date);
+            return EffectiveDateTimeSerialization().DateToString(date);
         }
 
         /// <summary>
@@ -134,7 +142,7 @@ namespace Alternet.UI
         /// <returns>A string representation of the specified <see cref="TimeOnly"/>.</returns>
         public virtual string TimeToString(TimeOnly time)
         {
-            return DateTimeSerialization.Instance.TimeToString(time);
+            return EffectiveDateTimeSerialization().TimeToString(time);
         }
 
         /// <summary>
@@ -144,7 +152,7 @@ namespace Alternet.UI
         /// <returns>A string representation of the specified <see cref="TimeSpan"/>.</returns>
         public virtual string TimeSpanToString(TimeSpan timeSpan)
         {
-            return DateTimeSerialization.Instance.TimeSpanToString(timeSpan);
+            return EffectiveDateTimeSerialization().TimeSpanToString(timeSpan);
         }
 
         /// <summary>
@@ -690,6 +698,16 @@ namespace Alternet.UI
 
             value = DateOnly.MinValue;
             return false;
+        }
+
+        /// <summary>
+        /// Gets the effective <see cref="IDateTimeSerialization"/> instance to
+        /// use for date and time serialization and deserialization.
+        /// </summary>
+        /// <returns>The effective <see cref="IDateTimeSerialization"/> instance.</returns>
+        protected virtual IDateTimeSerialization EffectiveDateTimeSerialization()
+        {
+            return (SerializationManager ?? ISerializableObjectManager.Instance).DateTimeManager;
         }
     }
 }

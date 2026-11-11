@@ -45,7 +45,7 @@ namespace Alternet.UI
 
             set
             {
-                IPropertyBag propertyBag = PropertyBag.Create();
+                IPropertyBag propertyBag = CreatePropertyBag();
                 propertyBag.AsJsonString = value;
                 LoadFrom(new SerializableObjectContext(propertyBag));
             }
@@ -59,7 +59,7 @@ namespace Alternet.UI
         {
             get
             {
-                IPropertyBag propertyBag = PropertyBag.Create();
+                IPropertyBag propertyBag = CreatePropertyBag();
                 SaveTo(new SerializableObjectContext(propertyBag));
                 return propertyBag;
             }
@@ -83,10 +83,27 @@ namespace Alternet.UI
 
             set
             {
-                IPropertyBag propertyBag = PropertyBag.Create();
+                IPropertyBag propertyBag = CreatePropertyBag();
                 propertyBag.AsXmlString = value;
                 AsPropertyBag = propertyBag;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ISerializableObjectManager"/> instance
+        /// used for managing the serialization and deserialization of this instance.
+        /// </summary>
+        public virtual ISerializableObjectManager? SerializableObjectManager { get;set; }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="IPropertyBag"/> for serialization and deserialization.
+        /// </summary>
+        /// <returns>A new instance of <see cref="IPropertyBag"/>.</returns>
+        public virtual IPropertyBag CreatePropertyBag()
+        {
+            var result = PropertyBag.Create();
+            result.SerializationManager = SerializableObjectManager;
+            return result;
         }
 
         /// <inheritdoc/>

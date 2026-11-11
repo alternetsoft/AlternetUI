@@ -80,6 +80,12 @@ namespace Alternet.UI
         string AsJsonString { get; set; }
 
         /// <summary>
+        /// Gets or sets the <see cref="ISerializableObjectManager"/> instance
+        /// used for managing the serialization and deserialization of this property bag.
+        /// </summary>
+        ISerializableObjectManager? SerializationManager { get; set; }
+
+        /// <summary>
         /// Clears all properties from the property bag.
         /// </summary>
         void Clear();
