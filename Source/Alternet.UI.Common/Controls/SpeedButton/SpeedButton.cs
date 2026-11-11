@@ -2248,21 +2248,9 @@ namespace Alternet.UI
                 return;
             base.OnTextChanged(e);
 
-            string newText;
-
+            Label.Text = CoerceLabelText(base.Text);
             if (HasVisibleText)
             {
-                newText = CoerceLabelText(base.Text);
-            }
-            else
-            {
-                newText = string.Empty;
-            }
-
-            if (Label.Text != newText || Label.TextVisible != HasVisibleText)
-            {
-                Label.TextVisible = HasVisibleText;
-                Label.Text = newText;
                 PerformLayoutAndInvalidate();
             }
 
