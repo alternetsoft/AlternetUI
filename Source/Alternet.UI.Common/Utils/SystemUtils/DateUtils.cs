@@ -128,6 +128,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first date of the specified year.
+        /// </summary>
+        /// <param name="year">The year for which to get the first date.</param>
+        /// <returns>The first date of the specified year.</returns>
+        public static DateOnly GetYearFirstDate(int year) => new(year, 1, 1);
+
+        /// <summary>
+        /// Gets the last date of the specified year.
+        /// </summary>
+        /// <param name="year">The year for which to get the last date.</param>
+        /// <returns>The last date of the specified year.</returns>
+        public static DateOnly GetYearLastDate(int year) => new(year, 12, 31);
+
+        /// <summary>
+        /// Enumerates all dates in the specified year.
+        /// </summary>
+        /// <param name="year">The year for which to enumerate dates.</param>
+        /// <returns>An enumerable of all dates in the specified year.</returns>
+        public static IEnumerable<DateOnly> EnumYearDates(int year)
+        {
+            var firstDate = GetYearFirstDate(year);
+            var daysInYear = DateTime.IsLeapYear(year) ? 366 : 365;
+
+            for (var day = 0; day < daysInYear; day++)
+                yield return firstDate.AddDays(day);
+        }
+
+        /// <summary>
         /// Converts the time period to a <see cref="TimeSpan"/> representation.
         /// </summary>
         /// <returns>A <see cref="TimeSpan"/> representing the time period.</returns>
