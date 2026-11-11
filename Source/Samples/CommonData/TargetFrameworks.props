@@ -5,11 +5,15 @@
 
 <PropertyGroup>
   <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
+
+  <IsLinuxArm64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == Arm64">true</IsLinuxArm64>
   <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
+  <IsLinux Condition="$([MSBuild]::IsOsPlatform('Linux'))">true</IsLinux>
+
   <IsOsx Condition="$([MSBuild]::IsOsPlatform('OSX'))">true</IsOsx>
   <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
-  <IsLinux Condition="$([MSBuild]::IsOsPlatform('Linux'))">true</IsLinux>
   <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
+
   <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
   <IsWindows Condition="$([MSBuild]::IsOsPlatform('Windows'))">true</IsWindows>
 </PropertyGroup>
@@ -19,10 +23,20 @@
   	<BoolNet11>false</BoolNet11>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(IsLinuxX64)=='true'">
+  	<BoolNet11>false</BoolNet11>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsLinuxArm64)=='true'">
+  	<BoolNet11>false</BoolNet11>
+  </PropertyGroup>
+
   <PropertyGroup Condition="$(IsOsxX64)=='true'">
+  	<BoolNet11>true</BoolNet11>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsOsxArm64)=='true'">
+  	<BoolNet11>true</BoolNet11>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsWindows)=='true'">

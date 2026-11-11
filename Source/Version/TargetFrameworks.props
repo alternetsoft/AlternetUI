@@ -24,12 +24,20 @@
   	<BoolNet11>false</BoolNet11>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(IsOsxX64)=='true'">
+  <PropertyGroup Condition="$(IsLinuxX64)=='true'">
   	<BoolNet11>false</BoolNet11>
   </PropertyGroup>
 
-  <PropertyGroup Condition="$(IsOsxArm64)=='true'">
+  <PropertyGroup Condition="$(IsLinuxArm64)=='true'">
   	<BoolNet11>false</BoolNet11>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsOsxX64)=='true'">
+  	<BoolNet11>true</BoolNet11>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsOsxArm64)=='true'">
+  	<BoolNet11>true</BoolNet11>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsWindows)=='true'">
