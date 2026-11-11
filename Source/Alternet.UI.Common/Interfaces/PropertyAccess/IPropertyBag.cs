@@ -241,6 +241,20 @@ namespace Alternet.UI
         void SetDateTimeProperty(string name, DateTime value);
 
         /// <summary>
+        /// Sets the value of a <see cref="DateOnly"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        void SetDateProperty(string name, DateOnly value);
+
+        /// <summary>
+        /// Sets the value of a <see cref="TimeOnly"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        void SetTimeProperty(string name, TimeOnly value);
+
+        /// <summary>
         /// Sets the value of a <see cref="TimeSpan"/> property by name.
         /// </summary>
         /// <param name="name">The name of the property.</param>
@@ -287,6 +301,24 @@ namespace Alternet.UI
         /// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
         /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
         bool TryGetDateTimeProperty(string name, out DateTime value);
+
+        /// <summary>
+        /// Tries to get the value of a <see cref="DateOnly"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains the value of the <see cref="DateOnly"/> property
+        /// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        bool TryGetTimeProperty(string name, out TimeOnly value);
+
+        /// <summary>
+        /// Tries to get the value of a <see cref="DateOnly"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains the value of the <see cref="DateOnly"/> property
+        /// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        bool TryGetDateProperty(string name, out DateOnly value);
 
         /// <summary>
         /// Attempts to get the value of a <see cref="TimeSpan"/> property by name.

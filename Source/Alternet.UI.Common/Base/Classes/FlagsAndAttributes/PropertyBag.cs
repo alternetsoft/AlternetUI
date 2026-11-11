@@ -118,7 +118,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Attempts to convert the specified string representation of a time span to a <see cref="TimeSpan"/>.
+        /// Converts the specified <see cref="DateOnly"/> to its string representation.
+        /// </summary>
+        /// <param name="date">The date to convert.</param>
+        /// <returns>A string representation of the specified <see cref="DateOnly"/>.</returns>
+        public virtual string DateToString(DateOnly date)
+        {
+            return DateTimeSerialization.Instance.DateToString(date);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="TimeOnly"/> to its string representation.
+        /// </summary>
+        /// <param name="time">The time to convert.</param>
+        /// <returns>A string representation of the specified <see cref="TimeOnly"/>.</returns>
+        public virtual string TimeToString(TimeOnly time)
+        {
+            return DateTimeSerialization.Instance.TimeToString(time);
+        }
+
+        /// <summary>
+        /// Converts the specified <see cref="DateOnly"/> to its string representation.
         /// </summary>
         /// <param name="timeSpan">The time span to convert.</param>
         /// <returns>A string representation of the specified <see cref="TimeSpan"/>.</returns>
@@ -143,6 +163,42 @@ namespace Alternet.UI
             }
 
             return DateTimeSerialization.Instance.TryDateTimeFromString(s, out result);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a time to a <see cref="TimeOnly"/>.
+        /// </summary>
+        /// <param name="s">The string representation of the time to convert.</param>
+        /// <param name="result">When this method returns, contains the converted <see cref="TimeOnly"/>
+        /// if the conversion succeeded, or <see cref="TimeOnly.MinValue"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public virtual bool TryTimeFromString(string? s, out TimeOnly result)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                result = TimeOnly.MinValue;
+                return false;
+            }
+
+            return DateTimeSerialization.Instance.TryTimeFromString(s, out result);
+        }
+
+        /// <summary>
+        /// Attempts to convert the specified string representation of a date to a <see cref="DateOnly"/>.
+        /// </summary>
+        /// <param name="s">The string representation of the date to convert.</param>
+        /// <param name="result">When this method returns, contains the converted <see cref="DateOnly"/>
+        /// if the conversion succeeded, or <see cref="DateOnly.MinValue"/> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        public virtual bool TryDateFromString(string? s, out DateOnly result)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                result = DateOnly.MinValue;
+                return false;
+            }
+
+            return DateTimeSerialization.Instance.TryDateFromString(s, out result);
         }
 
         /// <summary>
@@ -194,9 +250,9 @@ namespace Alternet.UI
         public virtual bool TryGetDateTimeProperty(string name, out DateTime value)
         {
             if (TryGetStringProperty(name, out var str) &&
-                TryDateTimeFromString(str, out var startDateTime))
+                TryDateTimeFromString(str, out var dateTime))
             {
-                value = startDateTime;
+                value = dateTime;
                 return true;
             }
 
@@ -594,6 +650,46 @@ namespace Alternet.UI
                 return;
 
             SetStringProperty(name, s);
+        }
+
+        /// <inheritdoc/>
+        public void SetDateProperty(string name, DateOnly value)
+        {
+            SetStringProperty(name, DateToString(value));
+        }
+
+        /// <inheritdoc/>
+        public void SetTimeProperty(string name, TimeOnly value)
+        {
+            SetStringProperty(name, TimeToString(value));
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetTimeProperty(string name, out TimeOnly value)
+        {
+            if (TryGetStringProperty(name, out var str) &&
+                TryTimeFromString(str, out var timeValue))
+            {
+                value = timeValue;
+                return true;
+            }
+
+            value = TimeOnly.MinValue;
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetDateProperty(string name, out DateOnly value)
+        {
+            if (TryGetStringProperty(name, out var str) &&
+                TryDateFromString(str, out var dateValue))
+            {
+                value = dateValue;
+                return true;
+            }
+
+            value = DateOnly.MinValue;
+            return false;
         }
     }
 }
