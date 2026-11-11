@@ -482,6 +482,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified duration is valid for an all-day event.
+        /// It means that the duration is greater than zero and is a whole number
+        /// of days (i.e., no fractional days).
+        /// </summary>
+        /// <param name="duration">The duration to check.</param>
+        /// <returns><c>true</c> if the duration is valid for an all-day event; otherwise, <c>false</c>.</returns>
+        public static bool IsValidAllDayDuration(TimeSpan duration)
+        {
+            return duration > TimeSpan.Zero &&
+                   duration.Ticks % TimeSpan.TicksPerDay == 0;
+        }
+
+        /// <summary>
+        /// Coerces the specified duration to ensure it is at least one day long.
+        /// </summary>
+        /// <param name="duration">The duration to coerce.</param>
+        /// <returns>A <see cref="TimeSpan"/> representing the coerced duration.</returns>
+        public static TimeSpan CoerceAllDayDuration(TimeSpan duration)
+        {
+            if (duration <= TimeSpan.Zero)
+                return TimeSpan.FromDays(1);
+
+            long days = Math.Max(1, (long)Math.Round(duration.TotalDays));
+
+            return TimeSpan.FromDays(days);
+        }
+
+        /// <summary>
         /// Calculates the difference in days between two <see cref="DateOnly"/> values.
         /// If two dates are the same, the difference is 0.
         /// If the first date is earlier than the second date, the difference is positive.
