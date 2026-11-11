@@ -114,6 +114,7 @@ namespace Alternet.UI
         void IListSourceListener<CalendarItem>.ItemTransactionStarted(IListSource<CalendarItem> sender, CalendarItem item)
         {
         }
+
         void IListSourceListener<CalendarItem>.UpdatesStarted(IListSource<CalendarItem> sender)
         {
         }
