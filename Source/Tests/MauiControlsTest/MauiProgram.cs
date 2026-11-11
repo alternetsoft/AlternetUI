@@ -19,9 +19,6 @@ public static class MauiProgram
             })
             .UseMauiCommunityToolkit()
             .UseAlternetUI();
-#if DEBUG
-        builder.Logging.AddDebug();
-#endif
         return builder.Build();
     }
 }
