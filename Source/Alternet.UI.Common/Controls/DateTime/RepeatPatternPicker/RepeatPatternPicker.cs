@@ -39,9 +39,6 @@ namespace Alternet.UI
         /// </summary>
         public static string DefaultDateFormat = "D";
 
-        private IFormatProvider? formatProvider;
-        private DateUtils.TimePeriodUnitTextFormat timeUnitTextFormat = DefaultTimeUnitTextFormat;
-
         /// <summary>
         /// Gets the default padding for the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
@@ -72,6 +69,9 @@ namespace Alternet.UI
         private readonly HiddenBorder nonePicker = new();
         private readonly RepeatPatternRule data;
 
+        private IFormatProvider? formatProvider;
+        private DateUtils.TimePeriodUnitTextFormat timeUnitTextFormat = DefaultTimeUnitTextFormat;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternPicker"/> class.
         /// </summary>
@@ -91,7 +91,6 @@ namespace Alternet.UI
             startPicker.Parent = startPanel;
 
             allDayCheckBox.Parent = startPanel;
-            allDayCheckBox.CheckedChanged += OnAllDayCheckedChanged;
 
             startPanel.Parent = this;
 
@@ -190,59 +189,17 @@ namespace Alternet.UI
 
             ValueToControls();
 
-            // Event handlers
-
-            startPicker.ValueChanged += (s, e) =>
-            {
-                data.DoInsideSuspendedPropertyChanged(() =>
-                {
-                    data.StartDate = startPicker.AsDateOnlyOrToday;
-                    data.StartTime = startPicker.TimePicker.AsTimeOnly;
-                });
-            };
-
-            endTimePicker.MainControl.ValueChanged += (s, e) =>
-            {
-                var duration = endTimePicker.MainControl.AsTimeOnly - data.StartTime;
-                if (duration < TimeSpan.Zero)
-                    duration = TimeSpan.Zero;
-                data.Duration = duration;
-            };
-
-            endDatePicker.MainControl.ValueChanged += (s, e) =>
-            {
-                data.EndDate = endDatePicker.MainControl.AsDateOnlyOrToday;
-            };
-            occurrencePicker.ValueChanged += (s, e) =>
-            {
-                data.OccurrenceCount = occurrencePicker.Value;
-                UpdateOccurrenceText();
-            };
-            endsNeverRadioButton.CheckedChanged += (s, e) =>
-            {
-                if (endsNeverRadioButton.IsChecked)
-                {
-                    data.EndCondition = BaseRepeatPatternRule.EndConditionKind.Never;
-                }
-            };
-            endsOnRadioButton.CheckedChanged += (s, e) =>
-            {
-                if (endsOnRadioButton.IsChecked)
-                {
-                    data.EndCondition = BaseRepeatPatternRule.EndConditionKind.OnDate;
-                }
-            };
-            endsAfterOccurrenceRadioButton.CheckedChanged += (s, e) =>
-            {
-                if (endsAfterOccurrenceRadioButton.IsChecked)
-                {
-                    data.EndCondition = BaseRepeatPatternRule.EndConditionKind.AfterOccurrence;
-                }
-            };
-
             SecondsVisible = false;
-
             endTimePicker.SuffixControl.Sticky = true;
+
+            allDayCheckBox.CheckedChanged += OnAllDayCheckedChanged;
+            startPicker.ValueChanged += OnStartPickerChanged;
+            endTimePicker.MainControl.ValueChanged += OnEndTimePickerChanged;
+            endDatePicker.MainControl.ValueChanged += OnEndDatePickerChanged;
+            occurrencePicker.ValueChanged += OnOccurrencePickerValueChanged;
+            endsNeverRadioButton.CheckedChanged += OnEndsNeverRadioChanged;
+            endsOnRadioButton.CheckedChanged += OnEndsOnRadioButton;
+            endsAfterOccurrenceRadioButton.CheckedChanged += OnEndsAfterOccurrenceRadioChanged;
         }
 
         /// <summary>
@@ -313,13 +270,15 @@ namespace Alternet.UI
         public TabControl InnerTabControl => tabControl;
 
         /// <summary>
-        /// Gets the end condition panel which contains controls for specifying the end condition of the repeat pattern.
+        /// Gets the end condition panel which contains controls for specifying
+        /// the end condition of the repeat pattern.
         /// </summary>
         [Browsable(false)]
         public TransparentPanel EndPanel => endPanel;
 
         /// <summary>
-        /// Gets the start date panel which contains controls for specifying the start date and time of the repeat pattern.
+        /// Gets the start date panel which contains controls for specifying
+        /// the start date and time of the repeat pattern.
         /// </summary>
         [Browsable(false)]
         public TransparentPanel StartPanel => startPanel;
@@ -519,10 +478,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called to update the control values based on the current state of the <see cref="RepeatPatternRule"/> instance.
+        /// Called to update the control values based on the current
+        /// state of the <see cref="RepeatPatternRule"/> instance.
         /// </summary>
         public virtual void ValueToControls()
         {
+            allDayCheckBox.Checked = data.IsAllDay;
+
             var tabIndex = (int)SelectedPattern;
             tabControl.SelectedIndex = tabIndex;
 
@@ -534,10 +496,10 @@ namespace Alternet.UI
 
             UpdateDurationText();
 
-            endsOnRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.OnDate;
+            endsOnRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.OnDate;
             endsAfterOccurrenceRadioButton.IsChecked
-                = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.AfterOccurrence;
-            endsNeverRadioButton.IsChecked = data.EndCondition == BaseRepeatPatternRule.EndConditionKind.Never;
+                = data.EndCondition == RepeatPatternEndCondition.AfterOccurrence;
+            endsNeverRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.Never;
 
             occurrencePicker.Value = data.OccurrenceCount;
             UpdateOccurrenceText();
@@ -649,6 +611,90 @@ namespace Alternet.UI
         protected virtual void OnAllDayCheckedChanged(object? sender, EventArgs e)
         {
             IsTimeEnabled = !allDayCheckBox.Checked;
+            data.IsAllDay = allDayCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// Handles the ValueChanged event of the <see cref="StartPicker"/> control.
+        /// </summary>
+        protected virtual void OnStartPickerChanged(object? s, EventArgs e)
+        {
+            data.DoInsideSuspendedPropertyChanged(() =>
+            {
+                data.StartDate = startPicker.AsDateOnlyOrToday;
+                data.StartTime = startPicker.TimePicker.AsTimeOnly;
+            });
+        }
+
+        /// <summary>
+        /// Handles the ValueChanged event of the <see cref="EndTimePicker"/> control.
+        /// </summary>
+        protected virtual void OnEndTimePickerChanged(object? s, EventArgs e)
+        {
+            var duration = endTimePicker.MainControl.AsTimeOnly - data.StartTime;
+            if (duration < TimeSpan.Zero)
+                duration = TimeSpan.Zero;
+            data.Duration = duration;
+        }
+
+        /// <summary>
+        /// Handles the ValueChanged event of the end date picker control.
+        /// </summary>
+        /// <param name="s"> The source of the event. </param>
+        /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
+        protected virtual void OnEndDatePickerChanged(object? s, EventArgs e)
+        {
+            data.EndDate = endDatePicker.MainControl.AsDateOnlyOrToday;
+        }
+
+        /// <summary>
+        /// Handles the ValueChanged event of the occurrence picker controlt
+        /// </summary>
+        /// <param name="s"> The source of the event. </param>
+        /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
+        protected virtual void OnOccurrencePickerValueChanged(object? s, EventArgs e)
+        {
+            data.OccurrenceCount = occurrencePicker.Value;
+            UpdateOccurrenceText();
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the "Ends Never" radio button control.
+        /// </summary>
+        /// <param name="s"> The source of the event. </param>
+        /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
+        protected virtual void OnEndsNeverRadioChanged(object? s, EventArgs e)
+        {
+            if (endsNeverRadioButton.IsChecked)
+            {
+                data.EndCondition = RepeatPatternEndCondition.Never;
+            }
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the "Ends On" radio button control.
+        /// </summary>
+        /// <param name="s"> The source of the event. </param>
+        /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
+        protected virtual void OnEndsOnRadioButton(object? s, EventArgs e)
+        {
+            if (endsOnRadioButton.IsChecked)
+            {
+                data.EndCondition = RepeatPatternEndCondition.OnDate;
+            }
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the "Ends After Occurrence" radio button control.
+        /// </summary>
+        /// <param name="s"> The source of the event. </param>
+        /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
+        protected virtual void OnEndsAfterOccurrenceRadioChanged(object? s, EventArgs e)
+        {
+            if (endsAfterOccurrenceRadioButton.IsChecked)
+            {
+                data.EndCondition = RepeatPatternEndCondition.AfterOccurrence;
+            }
         }
     }
 
