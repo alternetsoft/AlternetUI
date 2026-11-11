@@ -28,7 +28,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="day">The day of the year to select or deselect. Day starts from 1.</param>
         /// <param name="isSelected"><c>true</c> to select the day; <c>false</c> to deselect it.</param>
-        void Select(int day, bool isSelected);
+        /// <returns><c>true</c> if the selection state changed; otherwise, <c>false</c>.</returns>
+        bool Select(int day, bool isSelected);
 
         /// <summary>
         /// Determines whether the specified day is selected.
@@ -40,24 +41,30 @@ namespace Alternet.UI
         /// <summary>
         /// Selects or deselects a range of days within the year based on the provided selection state.
         /// </summary>
-        /// <param name="startDay">The starting day of the range to select or deselect. Day starts from 1.</param>
-        /// <param name="endDay">The ending day of the range to select or deselect. Day starts from 1.</param>
+        /// <param name="startDay">The starting day of the range
+        /// to select or deselect. Day starts from 1.</param>
+        /// <param name="endDay">The ending day of the range
+        /// to select or deselect. Day starts from 1.</param>
         /// <param name="isSelected"><c>true</c> to select the range; <c>false</c> to deselect it.</param>
-        void SelectRange(int startDay, int endDay, bool isSelected = true);
+        /// <returns><c>true</c> if the selection state changed; otherwise, <c>false</c>.</returns>
+        bool SelectRange(int startDay, int endDay, bool isSelected = true);
     }
 
     /// <summary>
-    /// Defines an interface for managing the selection of dates, allowing for selection of individual dates or ranges of dates.
+    /// Defines an interface for managing the selection of dates, allowing
+    /// for selection of individual dates or ranges of dates.
     /// </summary>
     public interface IDateSelectionManager
     {
         /// <summary>
-        /// Occurs when the selection of dates has changed, allowing subscribers to respond to changes in the selection state.
+        /// Occurs when the selection of dates has changed, allowing subscribers
+        /// to respond to changes in the selection state.
         /// </summary>
         public event EventHandler? SelectionChanged;
 
         /// <summary>
-        /// Begins a batch update operation, suspending change notifications until <see cref="EndUpdate"/> is called.
+        /// Begins a batch update operation, suspending change notifications
+        /// until <see cref="EndUpdate"/> is called.
         /// </summary>
         void BeginUpdate();
 
@@ -116,7 +123,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to select or deselect.</param>
         /// <param name="isSelected"><c>true</c> to select the date; <c>false</c> to deselect it.</param>
-        void Select(DateOnly date, bool isSelected = true);
+        /// <returns><c>true</c> if the selection state changed; otherwise, <c>false</c>.</returns>
+        bool Select(DateOnly date, bool isSelected = true);
 
         /// <summary>
         /// Selects or deselects a range of dates based on the provided selection state.
@@ -148,6 +156,28 @@ namespace Alternet.UI
         /// to respond to changes in the selection state.
         /// </summary>
         public event EventHandler? SelectionChanged;
+
+        /// <summary>
+        /// Gets an enumerable collection of all selected dates within the selection manager.
+        /// </summary>
+        public virtual IEnumerable<DateOnly> SelectedDates
+        {
+            get
+            {
+                foreach (var yearSelection in yearSelections)
+                {
+                    var year = yearSelection.Key;
+                    var selection = yearSelection.Value;
+                    for (int day = 1; day <= 366; day++)
+                    {
+                        if (selection.IsSelected(day))
+                        {
+                            yield return new DateOnly(year, 1, 1).AddDays(day - 1);
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Begins a batch update operation, suspending change notifications
@@ -191,20 +221,36 @@ namespace Alternet.UI
         /// Gets the maximum year for which a selection exists, or <c>null</c> if no selections exist.
         /// </summary>
         /// <returns>The maximum year selection, or <c>null</c> if no selections exist.</returns>
-        public int? GetMaxYear()
+        public virtual int? GetMaxYear()
         {
-            var maxYearSelection = GetMaxYearSelection();
-            return maxYearSelection?.Year;
+            int? result = null;
+            foreach (var yearSelection in yearSelections)
+            {
+                if (result is null || yearSelection.Key > result)
+                {
+                    result = yearSelection.Key;
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
         /// Gets the minimum year for which a selection exists, or <c>null</c> if no selections exist.
         /// </summary>
         /// <returns>The minimum year selection, or <c>null</c> if no selections exist.</returns>
-        public int? GetMinYear()
+        public virtual int? GetMinYear()
         {
-            var minYearSelection = GetMinYearSelection();
-            return minYearSelection?.Year;
+            int? result = null;
+            foreach (var yearSelection in yearSelections)
+            {
+                if (result is null || yearSelection.Key < result)
+                {
+                    result = yearSelection.Key;
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -250,10 +296,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether there are any selected dates in the selection manager.
+        /// </summary>
+        /// <returns><c>true</c> if there are any selected dates; otherwise, <c>false</c>.</returns>
+        public virtual bool HasAnySelected()
+        {
+            foreach (var yearSelection in yearSelections)
+            {
+                if (yearSelection.Value.HasAnySelected())
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Clears the selection for the specified year, removing any selected days within that year.
         /// </summary>
         /// <param name="year">The year for which to clear the selection.</param>
-        /// <returns><c>true</c> if there were any selections for the specified year; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if there were any selections for the specified year;
+        /// otherwise, <c>false</c>.</returns>
         public virtual bool ClearYearSelection(int year)
         {
             return yearSelections.Remove(year);
@@ -264,23 +326,27 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="date">The date to select or deselect.</param>
         /// <param name="isSelected"><c>true</c> to select the date; <c>false</c> to deselect it.</param>
-        public virtual void Select(DateOnly date, bool isSelected = true)
+        /// <returns><c>true</c> if the selection state changed; otherwise, <c>false</c>.</returns>
+        public virtual bool Select(DateOnly date, bool isSelected = true)
         {
             if (isSelected)
             {
                 var selection = GetOrCreateYearSelection(date.Year);
-                selection.Select(date.DayOfYear, true);
+                return selection.Select(date.DayOfYear, true);
             }
             else
             {
                 var selection = GetYearSelection(date.Year);
                 if (selection != null)
                 {
-                    selection.Select(date.DayOfYear, false);
+                    var result = selection.Select(date.DayOfYear, false);
                     if (!selection.HasAnySelected())
                         ClearYearSelection(date.Year);
+                    return result;
                 }
             }
+
+            return false;
         }
 
         /// <summary>
@@ -336,7 +402,7 @@ namespace Alternet.UI
         /// Gets the selection with the maximum year, or <c>null</c> if no selections exist.
         /// </summary>
         /// <returns>The maximum year selection, or <c>null</c> if no selections exist.</returns>
-        protected virtual IYearSelectionManager? GetMaxYearSelection()
+        public virtual IYearSelectionManager? GetMaxYearSelection()
         {
             IYearSelectionManager? maxYearSelection = null;
             foreach (var yearSelection in yearSelections)
@@ -354,7 +420,7 @@ namespace Alternet.UI
         /// Gets the selection with the minimum year, or <c>null</c> if no selections exist.
         /// </summary>
         /// <returns>The minimum year selection, or <c>null</c> if no selections exist.</returns>
-        protected virtual IYearSelectionManager? GetMinYearSelection()
+        public virtual IYearSelectionManager? GetMinYearSelection()
         {
             IYearSelectionManager? minYearSelection = null;
             foreach (var yearSelection in yearSelections)
@@ -373,8 +439,9 @@ namespace Alternet.UI
         /// of individual days within that year.
         /// </summary>
         /// <param name="year">The year for which to get the selection state.</param>
-        /// <returns>The selection state for the specified year, or <c>null</c> if no selection exists for that year.</returns>
-        protected virtual IYearSelectionManager? GetYearSelection(int year)
+        /// <returns>The selection state for the specified year, or <c>null</c>
+        /// if no selection exists for that year.</returns>
+        public virtual IYearSelectionManager? GetYearSelection(int year)
         {
             if (cachedYearSelection?.Year == year)
                 return cachedYearSelection;
@@ -423,7 +490,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Represents the selection state of a specific year, allowing for selection of individual days within that year.
+        /// Represents the selection state of a specific year, allowing
+        /// for selection of individual days within that year.
         /// </summary>
         private class YearSelection : IYearSelectionManager
         {
@@ -449,18 +517,25 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public void SelectRange(int startDay, int endDay, bool isSelected = true)
+            public bool SelectRange(int startDay, int endDay, bool isSelected = true)
             {
+                bool result = false;
+
                 for (int day = startDay; day <= endDay; day++)
                 {
-                    selectedDays[day] = isSelected;
+                    result |= Select(day, isSelected);
                 }
+
+                return result;
             }
 
             /// <inheritdoc/>
-            public void Select(int day, bool isSelected)
+            public bool Select(int day, bool isSelected)
             {
+                if (selectedDays[day] == isSelected)
+                    return false;
                 selectedDays[day] = isSelected;
+                return true;
             }
 
             /// <inheritdoc/>
