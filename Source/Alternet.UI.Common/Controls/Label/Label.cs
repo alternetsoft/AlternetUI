@@ -75,6 +75,7 @@ namespace Alternet.UI
         private VerticalTextDirection? vertDirection;
         private bool isPassword;
         private bool textTransparent;
+        private bool textVisible = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -175,6 +176,21 @@ namespace Alternet.UI
         /// <remarks>Assign this property to customize how label drawing parameters are updated before
         /// rendering. If not set, default behavior is used.</remarks>
         public virtual UpdateDrawLabelParamsDelegate? UpdateDrawParamsAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the label is visible.
+        /// </summary>
+        public virtual bool TextVisible
+        {
+            get => textVisible;
+            set
+            {
+                if (textVisible == value)
+                    return;
+                textVisible = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the text in the label is visible.
@@ -350,7 +366,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether text is line wrapped in order to fit label in the parent's client area. Default is False.
+        /// Gets or sets whether text is line wrapped in order to fit label
+        /// in the parent's client area. Default is False.
         /// This is different from <see cref="WordWrap"/> property, which wraps text at word boundaries.
         /// <see cref="NewLineWrap"/> breaks text at new line characters.
         /// </summary>
@@ -464,7 +481,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the direction in which vertical text should be drawn.
-        /// If not specified, the default direction is used (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
+        /// If not specified, the default direction is used
+        /// (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
         /// This property is relevant only when <see cref="IsVerticalText"/> is set to <see langword="true"/>.
         /// </summary>
         public virtual VerticalTextDirection? VertDirection
@@ -806,7 +824,7 @@ namespace Alternet.UI
                 rect.Size - Padding.Size);
 
             var labelImage = GetImage(state);
-            var labelText = GetFormattedText();
+            var labelText = TextVisible ? GetFormattedText() : string.Empty;
 
             if (labelImage is null && labelText == string.Empty)
                 return RectD.Empty;
