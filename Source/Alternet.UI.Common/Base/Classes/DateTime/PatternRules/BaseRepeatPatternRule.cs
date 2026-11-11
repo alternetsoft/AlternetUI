@@ -7,6 +7,27 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Defines the types of end conditions for a repeat pattern.
+    /// </summary>
+    public enum RepeatPatternEndCondition
+    {
+        /// <summary>
+        /// The repeat pattern has no end date and no occurrence limit.
+        /// </summary>
+        Never,
+
+        /// <summary>
+        /// The repeat pattern ends after a specific number of occurrences.
+        /// </summary>
+        AfterOccurrence,
+
+        /// <summary>
+        /// The repeat pattern ends on a specific date.
+        /// </summary>
+        OnDate,
+    }
+
+    /// <summary>
     /// Represents a rule for a repeat pattern in scheduling events or tasks.
     /// </summary>
     public abstract partial class BaseRepeatPatternRule : SerializableObject, IDateRepeatPatternRule
@@ -16,28 +37,7 @@ namespace Alternet.UI
         private TimeSpan duration;
         private DateOnly endDate;
         private int occurrenceCount = 1;
-        private EndConditionKind endCondtion = EndConditionKind.OnDate;
-
-        /// <summary>
-        /// Defines the types of end conditions for a repeat pattern.
-        /// </summary>
-        public enum EndConditionKind
-        {
-            /// <summary>
-            /// The repeat pattern has no end date and no occurrence limit.
-            /// </summary>
-            Never,
-
-            /// <summary>
-            /// The repeat pattern ends after a specific number of occurrences.
-            /// </summary>
-            AfterOccurrence,
-
-            /// <summary>
-            /// The repeat pattern ends on a specific date.
-            /// </summary>
-            OnDate,
-        }
+        private RepeatPatternEndCondition endCondtion = RepeatPatternEndCondition.OnDate;
 
         /// <summary>
         /// Gets or sets the end date and time of the repeat pattern,
@@ -90,6 +90,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether it is an all-day event.
+        /// This is calculated based on the <see cref="Duration"/> property
+        /// and can be set to coerce the duration to an all-day duration.
+        /// </summary>
+        public virtual bool IsAllDay
+        {
+            get => DateUtils.IsValidAllDayDuration(Duration);
+            set
+            {
+                if (value)
+                    Duration = DateUtils.CoerceAllDayDuration(Duration);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the start date of the repeat pattern range. 
         /// </summary>
         public virtual DateOnly StartDate
@@ -97,7 +112,10 @@ namespace Alternet.UI
             get => startDate;
             set
             {
-                SetProperty(ref startDate, value, nameof(StartDate), OnStartDateChanged);
+                if (SetProperty(ref startDate, value, nameof(StartDate)))
+                {
+                    OnStartDateChanged();
+                }
             }
         }
 
@@ -123,7 +141,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual TimeOnly StartTime
         {
-            get => startTime;
+            get
+            {
+                return startTime;
+            }
+
             set
             {
                 SetProperty(ref startTime, value, nameof(StartTime));
@@ -135,7 +157,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual TimeSpan Duration
         {
-            get => duration;
+            get
+            {
+                return duration;
+            }
+
             set
             {
                 if (value < TimeSpan.Zero)
@@ -148,7 +174,7 @@ namespace Alternet.UI
         /// Gets or sets the end condition of the repeat pattern, which determines
         /// how the repeat pattern ends (never, after a number of occurrences, or on a specific date).
         /// </summary>
-        public virtual EndConditionKind EndCondition
+        public virtual RepeatPatternEndCondition EndCondition
         {
             get
             {
@@ -169,7 +195,10 @@ namespace Alternet.UI
             get => endDate;
             set
             {
-                SetProperty(ref endDate, value, nameof(EndDate), OnEndDateChanged);
+                if (SetProperty(ref endDate, value, nameof(EndDate)))
+                {
+                    OnEndDateChanged();
+                }
             }
         }
 
@@ -183,7 +212,10 @@ namespace Alternet.UI
             {
                 if (value < 0)
                     value = 0;
-                SetProperty(ref occurrenceCount, value, nameof(OccurrenceCount), OnOccurrenceCountChanged);
+                if (SetProperty(ref occurrenceCount, value, nameof(OccurrenceCount)))
+                {
+                    OnOccurrenceCountChanged();
+                }
             }
         }
 
@@ -214,11 +246,11 @@ namespace Alternet.UI
         {
             switch (EndCondition)
             {
-                case EndConditionKind.Never:
+                case RepeatPatternEndCondition.Never:
                     return new(GetDatesEndsOnDate(prm.MaxDate));
-                case EndConditionKind.AfterOccurrence:
+                case RepeatPatternEndCondition.AfterOccurrence:
                     return new(GetDatesEndsAfterOccurrence());
-                case EndConditionKind.OnDate:
+                case RepeatPatternEndCondition.OnDate:
                     return new(GetDatesEndsOnDate(DateUtils.Min(EndDate, prm.MaxDate)));
                 default:
                     return new();
@@ -314,11 +346,11 @@ namespace Alternet.UI
             switch (EndCondition)
             {
                 default:
-                case EndConditionKind.Never:
-                case EndConditionKind.AfterOccurrence:
+                case RepeatPatternEndCondition.Never:
+                case RepeatPatternEndCondition.AfterOccurrence:
                     maxDate = prm.MaxDate;
                     break;
-                case EndConditionKind.OnDate:
+                case RepeatPatternEndCondition.OnDate:
                     maxDate = DateUtils.Min(EndDate, prm.MaxDate);
                     break;
             }
@@ -364,7 +396,7 @@ namespace Alternet.UI
                 }
             }
 
-            if (EndCondition == EndConditionKind.AfterOccurrence)
+            if (EndCondition == RepeatPatternEndCondition.AfterOccurrence)
             {
                 return new(GetDatesEndsAfterOccurrence());
             }
