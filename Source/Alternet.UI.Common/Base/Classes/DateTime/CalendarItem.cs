@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a calendar item that can be displayed in a calendar or scheduler control.
     /// </summary>
-    public partial class CalendarItem : SerializableObject, IEquatable<CalendarItem>, IPropertyBagSerialize
+    public partial class CalendarItem : SchedulerDocumentItem, IEquatable<CalendarItem>
     {
         private RepeatPatternRuleOwnerStruct ruleContainer = new();
         private RepeatPatternRule rule;
@@ -22,7 +22,6 @@ namespace Alternet.UI
         private object? userData;
         private string? userName;
         private bool visible = true;
-        private SchedulerDocument? document;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItem"/> class.
@@ -41,32 +40,6 @@ namespace Alternet.UI
             : base(uniqueId)
         {
             Initialize();
-        }
-
-        /// <inheritdoc/>
-        public override ISerializableObjectManager? SerializableObjectManager
-        {
-            get
-            {
-                return base.SerializableObjectManager ?? Document?.SerializableObjectManager;
-            }
-
-            set
-            {
-                base.SerializableObjectManager = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="SchedulerDocument"/> associated with this calendar item.
-        /// </summary>
-        public virtual SchedulerDocument? Document
-        {
-            get => document;
-            internal set
-            {
-                document = value;
-            }
         }
 
         /// <summary>
@@ -485,6 +458,37 @@ namespace Alternet.UI
             });
         }
 
+        /// <summary>
+        /// Called when a property of the <see cref="RepeatPatternRule"/> associated
+        /// with this calendar item changes.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
+        protected virtual void OnRuleChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            RaisePropertyChanged(nameof(Rule));
+        }
+
+        /// <summary>
+        /// Called when a property of the <see cref="CalendarAlarmInfo"/> associated with this calendar item changes.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
+        protected virtual void OnAlarmInfoChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            RaisePropertyChanged(nameof(AlarmInfo));
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="RepeatPatternRule"/>. This method can be overridden
+        /// in derived classes to provide a custom implementation of <see cref="RepeatPatternRule"/>.
+        /// </summary>
+        /// <returns>A new instance of <see cref="RepeatPatternRule"/>.</returns>
+        protected virtual RepeatPatternRule CreateRule(IRepeatPatternRuleOwner owner)
+        {
+            return new RepeatPatternRule(owner);
+        }
+
         /// <inheritdoc/>
         protected override void OnPropertyChanged(string? propertyName = null)
         {
@@ -512,54 +516,6 @@ namespace Alternet.UI
             Document?.Items.RaiseItemPropertyChanging(this, propertyName);
         }
 
-        /// <inheritdoc/>
-        protected override void OnTransactionStarted()
-        {
-            base.OnTransactionStarted();
-            Document?.Items.RaiseItemTransactionStarted(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnTransactionEnded()
-        {
-            base.OnTransactionEnded();
-            Document?.Items.RaiseItemTransactionEnded(this);
-        }
-
-        /// <summary>
-        /// Called when a property of the <see cref="RepeatPatternRule"/> associated
-        /// with this calendar item changes.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
-        protected virtual void OnRuleChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            RaisePropertyChanged(nameof(Rule));
-        }
-
-        /// <summary>
-        /// Called when a property of the <see cref="CalendarAlarmInfo"/> associated with this calendar item changes.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
-        protected virtual void OnAlarmInfoChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            RaisePropertyChanged(nameof(AlarmInfo));
-        }
-
-        /// <inheritdoc/>
-        protected override bool UseGuidForUniqueId => true;
-
-        /// <summary>
-        /// Creates a new instance of <see cref="RepeatPatternRule"/>. This method can be overridden
-        /// in derived classes to provide a custom implementation of <see cref="RepeatPatternRule"/>.
-        /// </summary>
-        /// <returns>A new instance of <see cref="RepeatPatternRule"/>.</returns>
-        protected virtual RepeatPatternRule CreateRule(IRepeatPatternRuleOwner owner)
-        {
-            return new RepeatPatternRule(owner);
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItem"/> class
         /// </summary>
@@ -573,6 +529,20 @@ namespace Alternet.UI
             alarmInfo = CreateAlarmInfo();
             rule.PropertyChanged += OnRuleChanged;
             alarmInfo.PropertyChanged += OnAlarmInfoChanged;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTransactionStarted()
+        {
+            base.OnTransactionStarted();
+            Document?.Items.RaiseItemTransactionStarted(this);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTransactionEnded()
+        {
+            base.OnTransactionEnded();
+            Document?.Items.RaiseItemTransactionEnded(this);
         }
 
         /// <summary>
