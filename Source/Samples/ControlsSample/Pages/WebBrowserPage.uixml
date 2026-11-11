@@ -17,11 +17,10 @@
             Margin="0,10,0,5" Click="ZoomInButton_Click" />
     <SpeedButton Name="ZoomOutButton"
             Margin="0,10,0,5" Click="ZoomOutButton_Click" />
-    <TextBox Margin="0,10,0,5" Name="UrlTextBox"
-           KeyDown="UrlTextBox_KeyDown" HorizontalAlignment="Fill"/>
+    <TextPicker Margin="0,10,0,5" Name="UrlTextBox" HorizontalAlignment="Fill"/>
     <SpeedButton Name="GoButton" HorizontalAlignment="Right"
             Margin="0,10,0,5" Click="GoButton_Click" />
-    <SpeedButtonWithListPopup Name="openButton" HorizontalAlignment="Right"
+    <NoTextSpeedButtonWithListPopup Name="openButton" HorizontalAlignment="Right"
                               VerticalAlignment="Center" Margin="0,10,0,5"/>
   </StackPanel>
 

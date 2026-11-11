@@ -39,26 +39,30 @@ namespace ControlsSample
 
         static WebBrowserPage()
         {
-            string[] commandLineArgs = Environment.GetCommandLineArgs();
-            ControlsSampleUtils.ParseCmdLine(commandLineArgs);
-            if (ControlsSampleUtils.CmdLineNoMfcDedug)
-                WebBrowser.CrtSetDbgFlag(0);
         }
 
         public WebBrowserPage()
         {
             InitializeComponent();
 
-            BackButton.Image = KnownSvgImages.ImgArrowLeft.AsNormalImage(this);
-            ForwardButton.Image = KnownSvgImages.ImgArrowRight.AsNormalImage(this);
-            ZoomInButton.Image = KnownSvgImages.ImgZoomIn.AsNormalImage(this);
-            ZoomOutButton.Image = KnownSvgImages.ImgZoomOut.AsNormalImage(this);
-            GoButton.Image = KnownSvgImages.ImgTriangleArrowRight.AsNormalImage(this);
+            BackButton.SvgImage = KnownSvgImages.ImgArrowLeft;
+            ForwardButton.SvgImage = KnownSvgImages.ImgArrowRight;
+            ZoomInButton.SvgImage = KnownSvgImages.ImgZoomIn;
+            ZoomOutButton.SvgImage = KnownSvgImages.ImgZoomOut;
+            GoButton.SvgImage = KnownSvgImages.ImgTriangleArrowRight;
+
+            var buttons = new ControlSet<SpeedButton>(
+                BackButton, ForwardButton, ZoomInButton, ZoomOutButton, GoButton, openButton);
+            buttons.ForEach(b =>
+            {
+                b.SuggestedSize = 32;
+            });
 
             webBrowser = new(GetPandaUrl())
             {
                 Visible = false,
             };
+
             webBrowser.Navigated += WebBrowser1_Navigated;
             webBrowser.Loaded += WebBrowser1_Loaded;
             webBrowser.NewWindow += WebBrowser1_NewWindow;
@@ -67,6 +71,7 @@ namespace ControlsSample
             mainPanel.Children.Add(webBrowser);
 
             headerText = HeaderLabel.Text;
+            HeaderLabel.MarginLeft = 5;
             webBrowser.ZoomType = WebBrowserZoomType.Layout;
 
             List<string> items = new()
@@ -83,15 +88,18 @@ namespace ControlsSample
                 webBrowser.Backend != WebBrowserBackend.IELatest)
                 items.Add(SItemPDF);
 
-            openButton.Image = KnownSvgImages.ImgFileOpen.AsNormalImage(this);
+            openButton.SvgImage = KnownSvgImages.ImgFileOpen;
             openButton.AddRange(items);
             openButton.ValueChanged += OpenButton_ValueChanged;
-            openButton.ImageVisible = true;
-            openButton.TextVisible = false;
 
             HeaderLabel.WordWrap = true;
 
             PerformLayout();
+
+            UrlTextBox.EnterPressed += (s, e) =>
+            {
+                LoadUrl(UrlTextBox.Text);
+            };
         }
 
         private static string GetPandaFileName()
@@ -117,16 +125,6 @@ namespace ControlsSample
         {
             int findResult = webBrowser.Find(FindTextBox.Text);
             Log("Find Result = " + findResult.ToString());
-        }
-
-        private void UrlTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                var s = UrlTextBox.Text;
-
-                LoadUrl(s);
-            }
         }
 
         private void Log(string s)

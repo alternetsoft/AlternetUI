@@ -99,6 +99,7 @@ namespace Alternet.UI
         public SpeedButtonWithListPopup()
         {
             PopupWindowTitle = CommonStrings.Default.WindowTitleSelectValue;
+            HasVisibleTextOverride = true;
         }
 
         /// <summary>
@@ -119,15 +120,15 @@ namespace Alternet.UI
         public virtual bool LookupByValue { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use the selected item from the popup as the value of the control.
-        /// When set to <see langword="true"/>, the control's value will be updated to the selected item from the popup.
-        /// When set to <see langword="false"/>, the control's value will be updated to the Value property
+        /// Gets or sets a value indicating whether to use the selected item
+        /// from the popup as the value of the control.
+        /// When set to <see langword="true"/>, the control's value will be updated
+        /// to the selected item from the popup.
+        /// When set to <see langword="false"/>, the control's value will be updated
+        /// to the Value property
         /// of the selected item from the popup.
         /// </summary>
         public virtual bool UsePopupItemAsValue { get; set; } = false;
-
-        /// <inheritdoc/>
-        public override bool HasVisibleText => true;
 
         /// <summary>
         /// Gets or sets a value indicating whether to perform an exact text lookup
@@ -457,9 +458,11 @@ namespace Alternet.UI
         /// Adds the specified item to the collection and returns the index at which it was added.
         /// </summary>
         /// <remarks>If the collection allows duplicate items, the returned index corresponds to the newly
-        /// added instance. If the item is not added at the end, the method returns the index of the new item as found
+        /// added instance. If the item is not added at the end, the method returns
+        /// the index of the new item as found
         /// in the collection.</remarks>
-        /// <param name="item">The item to add to the collection. Can be any object supported by the collection.</param>
+        /// <param name="item">The item to add to the collection. Can be any object
+        /// supported by the collection.</param>
         /// <returns>The zero-based index of the added item within the collection.</returns>
         public virtual int AddAndReturnIndex(object item)
         {
