@@ -54,6 +54,7 @@ namespace Alternet.UI
         private bool isDisabledTransparent;
         private bool useTextColorForSvg;
         private bool textTransparent;
+        private bool? hasVisibleTextOverride;
 
         static SpeedButton()
         {
@@ -123,6 +124,51 @@ namespace Alternet.UI
         /// is displayed when the user hovers over the associated control.
         /// </summary>
         public virtual bool ShowDropDownMenuWhenHovered { get; set; }
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<AbstractControl> AllChildrenInLayout
+        {
+            get
+            {
+                if (HasVisibleText)
+                {
+                    if (HasVisibleImage)
+                    {
+                        if (ImageToText == ImageToText.Horizontal)
+                        {
+                            if (PictureBoxSpacer.HorizontalAlignment == HorizontalAlignment.Right)
+                            {
+                                return new AbstractControl[] { Label, spacer, PictureBoxSpacer };
+                            }
+                            else
+                            {
+                                return new AbstractControl[] { PictureBoxSpacer, spacer, Label };
+                            }
+                        }
+                        else
+                        {
+                            if (PictureBoxSpacer.VerticalAlignment == VerticalAlignment.Bottom)
+                            {
+                                return new AbstractControl[] { Label, spacer, PictureBoxSpacer };
+                            }
+                            else
+                            {
+                                return new AbstractControl[] { PictureBoxSpacer, spacer, Label };
+                            }
+                        }
+                    }
+                    else
+                        return new AbstractControl[] { Label };
+                }
+                else
+                {
+                    if (HasVisibleImage)
+                        return new AbstractControl[] { PictureBoxSpacer };
+                    else
+                        return Array.Empty<AbstractControl>();
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the text in the control is transparent.
@@ -275,11 +321,28 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether text is not empty and visible.
         /// </summary>
+        [Browsable(false)]
         public virtual bool HasVisibleText
         {
             get
             {
-                return TextVisible && !string.IsNullOrEmpty(Text);
+                return HasVisibleTextOverride ?? (TextVisible && !string.IsNullOrEmpty(Text));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an override value for the <see cref="HasVisibleText"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool? HasVisibleTextOverride
+        {
+            get => hasVisibleTextOverride;
+            set
+            {
+                if (hasVisibleTextOverride == value)
+                    return;
+                hasVisibleTextOverride = value;
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -472,7 +535,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the SVG color.
         /// </summary>
-        /// <remarks>Setting this property triggers an invalidation of the control if the image is visible.</remarks>
+        /// <remarks>Setting this property triggers an invalidation
+        /// of the control if the image is visible.</remarks>
         public virtual Color? SvgColor
         {
             get => drawable.SvgColor;
@@ -968,51 +1032,6 @@ namespace Alternet.UI
             get
             {
                 return ImageVisible && HasImage;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override IReadOnlyList<AbstractControl> AllChildrenInLayout
-        {
-            get
-            {
-                if (HasVisibleText)
-                {
-                    if (HasVisibleImage)
-                    {
-                        if (ImageToText == ImageToText.Horizontal)
-                        {
-                            if (PictureBoxSpacer.HorizontalAlignment == HorizontalAlignment.Right)
-                            {
-                                return new AbstractControl[] { Label, spacer, PictureBoxSpacer };
-                            }
-                            else
-                            {
-                                return new AbstractControl[] { PictureBoxSpacer, spacer, Label };
-                            }
-                        }
-                        else
-                        {
-                            if (PictureBoxSpacer.VerticalAlignment == VerticalAlignment.Bottom)
-                            {
-                                return new AbstractControl[] { Label, spacer, PictureBoxSpacer };
-                            }
-                            else
-                            {
-                                return new AbstractControl[] { PictureBoxSpacer, spacer, Label };
-                            }
-                        }
-                    }
-                    else
-                        return new AbstractControl[] { Label };
-                }
-                else
-                {
-                    if (HasVisibleImage)
-                        return new AbstractControl[] { PictureBoxSpacer };
-                    else
-                        return Array.Empty<AbstractControl>();
-                }
             }
         }
 
@@ -2228,9 +2247,25 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnTextChanged(e);
-            Label.Text = CoerceLabelText(base.Text);
+
+            string newText;
+
             if (HasVisibleText)
+            {
+                newText = CoerceLabelText(base.Text);
+            }
+            else
+            {
+                newText = string.Empty;
+            }
+
+            if (Label.Text != newText || Label.TextVisible != HasVisibleText)
+            {
+                Label.TextVisible = HasVisibleText;
+                Label.Text = newText;
                 PerformLayoutAndInvalidate();
+            }
+
             if (ValueHelper.Options.HasFlag(TextBoxOptions.DefaultValidation))
                 ValueHelper.RunDefaultValidation();
         }
