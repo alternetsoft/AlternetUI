@@ -562,38 +562,40 @@ namespace Alternet.UI
     }
 
     /// <summary>
-    /// Represents the dates from a <see cref="CalendarItem"/> based on its repeat pattern rule.
+    /// Represents the start dates for a <see cref="CalendarItem"/> based on its repeat pattern rule.
     /// </summary>
-    public struct CalendarItemDates
+    public struct CalendarItemStartDates
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CalendarItemDates"/> struct
+        /// Initializes a new instance of the <see cref="CalendarItemStartDates"/> struct
+        /// with the specified calendar item and a collection of start dates.
         /// </summary>
-        /// <param name="dates">The collection of dates.</param>
+        /// <param name="startDates">The collection of start dates.</param>
         /// <param name="calendarItem">The calendar item.</param>
-        public CalendarItemDates(CalendarItem calendarItem, DateOnly[] dates)
+        public CalendarItemStartDates(CalendarItem calendarItem, DateOnly[] startDates)
         {
-            Dates = dates;
+            StartDates = startDates;
             Item = calendarItem;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CalendarItemDates"/> struct with an empty collection of dates.
+        /// Initializes a new instance of the <see cref="CalendarItemStartDates"/>
+        /// struct with an empty collection of start dates.
         /// </summary>
         /// <param name="calendarItem">The calendar item.</param>
-        public CalendarItemDates(CalendarItem calendarItem)
+        public CalendarItemStartDates(CalendarItem calendarItem)
         {
-            Dates = Array.Empty<DateOnly>();
+            StartDates = Array.Empty<DateOnly>();
             Item = calendarItem;
         }
 
         /// <summary>
-        /// Gets the collection of dates that match the repeat pattern within the specified range.
+        /// Gets the collection of start dates that match the repeat pattern within the specified range.
         /// </summary>
-        public DateOnly[] Dates { get; set; }
+        public DateOnly[] StartDates { get; set; }
 
         /// <summary>
-        /// Gets the calendar item associated with the dates.
+        /// Gets the calendar item associated with the start dates.
         /// </summary>
         public CalendarItem Item { get; set; }
     }

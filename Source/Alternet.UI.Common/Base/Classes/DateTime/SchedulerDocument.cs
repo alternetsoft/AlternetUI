@@ -92,9 +92,9 @@ namespace Alternet.UI
         public virtual DateRangeData<int> GetItemsCountByDate(PatternRuleGetDatesParams prm)
         {
             var rangeData = new DateRangeData<int>(prm.MinDate, prm.MaxDate);
-            foreach (var dates in GetItemDates(prm))
+            foreach (var dates in GetStartDates(prm))
             {
-                foreach (var date in dates.Dates)
+                foreach (var date in dates.StartDates)
                 {
                     rangeData[date] += 1;
                 }
@@ -112,9 +112,9 @@ namespace Alternet.UI
         public virtual DateRangeData<bool> GetItemsExistByDate(PatternRuleGetDatesParams prm)
         {
             var rangeData = new DateRangeData<bool>(prm.MinDate, prm.MaxDate);
-            foreach (var dates in GetItemDates(prm))
+            foreach (var dates in GetStartDates(prm))
             {
-                foreach (var date in dates.Dates)
+                foreach (var date in dates.StartDates)
                 {
                     rangeData[date] = true;
                 }
@@ -132,11 +132,11 @@ namespace Alternet.UI
         {
             var rangeData = new CalendarItemsByDate(prm.MinDate, prm.MaxDate);
 
-            foreach (var dates in GetItemDates(prm))
+            foreach (var dates in GetStartDates(prm))
             {
                 var item = dates.Item;
 
-                foreach (var date in dates.Dates)
+                foreach (var date in dates.StartDates)
                 {
                     rangeData.AddItem(date, item);
                 }
@@ -150,15 +150,15 @@ namespace Alternet.UI
         /// the source that match the specified repeat pattern rule.
         /// </summary>
         /// <param name="prm">The parameters for getting the dates.</param>
-        /// <returns>An enumerable of <see cref="CalendarItemDates"/> objects.</returns>
-        public virtual IEnumerable<CalendarItemDates> GetItemDates(PatternRuleGetDatesParams prm)
+        /// <returns>An enumerable of <see cref="CalendarItemStartDates"/> objects.</returns>
+        public virtual IEnumerable<CalendarItemStartDates> GetStartDates(PatternRuleGetDatesParams prm)
         {
             foreach (var item in Items)
             {
                 var dates = item.Rule.GetDates(prm);
                 var d = dates.Dates.ToArray();
                 if (d.Length > 0)
-                    yield return new CalendarItemDates(item, d);
+                    yield return new CalendarItemStartDates(item, d);
             }
         }
 
