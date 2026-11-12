@@ -1181,6 +1181,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the last date of the month for the specified <see cref="DateOnly"/>.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns>The last date of the month.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateOnly GetLastDateOfMonth(DateOnly date)
+        {
+            return new DateOnly(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+        }
+
+        /// <summary>
         /// Gets the first date of the specified month and year.
         /// </summary>
         /// <param name="year">The year to evaluate.</param>
@@ -1394,17 +1405,6 @@ namespace Alternet.UI
             }
 
             return new DateOnly(date.Year, date.Month, day);
-        }
-
-        /// <summary>
-        /// Gets the last date of the month for the specified <see cref="DateOnly"/>.
-        /// </summary>
-        /// <param name="date">The date to evaluate.</param>
-        /// <returns>The last date of the month.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static DateOnly GetLastDateOfMonth(DateOnly date)
-        {
-            return new DateOnly(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
         }
 
         /// <summary>
