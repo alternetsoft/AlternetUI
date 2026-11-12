@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 using Alternet.UI.Extensions;
@@ -101,10 +102,41 @@ namespace Alternet.UI
             {
                 if (excludedDates != null)
                 {
-                    return excludedDates.SelectedDates;
+                    try
+                    {
+                        var result = excludedDates.SelectedDates.ToArray();
+                        return result;
+                    }
+                    catch (Exception ex)
+                    {
+                        BaseObject.Nop(ex);
+                        return [];
+                    }
                 }
 
                 return Array.Empty<DateOnly>();
+            }
+
+            set
+            {
+                if (value == null || !value.Any())
+                {
+                    ClearExcludedDates();
+                    return;
+                }
+
+                if (excludedDates != null)
+                {
+                    excludedDates.Clear();
+                }
+                else
+                {
+                    excludedDates = new DateSelectionManager();
+                }
+
+                excludedDates.SelectRange(value);
+
+                RaisePropertyChanged(nameof(ExcludedDates));
             }
         }
 
