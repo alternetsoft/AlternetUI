@@ -626,5 +626,50 @@ namespace Alternet.UI
         /// Gets the start date of the calendar item instance.
         /// </summary>
         public DateOnly StartDate { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the calendar item instance is an all-day event.
+        /// </summary>
+        public bool IsAllDay => Item.IsAllDay;
+
+        /// <summary>
+        /// Gets a value indicating whether the calendar item instance is repeated
+        /// based on its repeat pattern rule.
+        /// </summary>
+        public bool IsRepeated => Item.IsRepeated;
+
+        /// <summary>
+        /// Gets the start date and time of the calendar item instance.
+        /// </summary>
+        public DateTime Start => StartDate.ToDateTime(Item.StartTime);
+    
+        /// <summary>
+        /// Gets the end date and time of the calendar item instance.
+        /// </summary>
+        public DateTime End => Start + Item.Duration;
+
+        /// <summary>
+        /// Gets the start time of the calendar item instance.
+        /// </summary>
+        public TimeOnly StartTime => Item.StartTime;
+
+        /// <summary>
+        /// Gets the end time of the calendar item instance.
+        /// </summary>
+        public TimeOnly EndTime => Item.EndTime;
+
+        /// <summary>
+        /// Gets the end date of the calendar item instance.
+        /// </summary>
+        public DateOnly EndDate => DateOnly.FromDateTime(End);
+
+        /// <summary>
+        /// Returns a string that represents the current <see cref="CalendarItemInstance"/>.
+        /// </summary>
+        /// <returns>A string that represents the current <see cref="CalendarItemInstance"/>.</returns>
+        public override string ToString()
+        {
+            return $"{Item.Text} ({Start} - {End})";
+        }
     }
 }
