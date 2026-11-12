@@ -21,6 +21,8 @@ namespace ControlsSample
         private string? patternXml;
         private string? calendarItemsJson;
         private string? calendarItemsXml;
+        private SchedulerDocument? schedulerDocument = null;
+
 
         static XCalendarPage()
         {
@@ -201,6 +203,17 @@ namespace ControlsSample
             {
                 patternXml = patternPicker.Value.AsXmlString;
                 App.Log(patternXml);
+            });
+
+            calendar.ContextMenu.Add("Show Scheduler Document Browser", () =>
+            {
+                if (schedulerDocument == null)
+                {
+                    schedulerDocument = new();
+                    SampleCalendarItems.LoadSampleData(schedulerDocument);
+                }
+
+                WindowSchedulerDocumentBrowser.ShowDocumentBrowser(schedulerDocument);
             });
 
             DoInsideLayout(Fn);

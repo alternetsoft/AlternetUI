@@ -18,6 +18,10 @@ namespace Alternet.UI.Localization
         /// </summary>
         public static CommonStrings Default { get; set; } = new();
 
+        public string NewItemText { get; set; } = "New Item";
+
+        public string UntitledItemText { get; set; } = "Untitled Item";
+
         public string PlaySound { get; set; } = "Play sound";
 
         public string DefaultSound { get; set; } = "Default Sound";
@@ -163,6 +167,8 @@ namespace Alternet.UI.Localization
         public string WindowTitleCollectionEditor { get; set; } = "Collection Editor";
 
         public string WindowTitleExcludedDatesEditor { get; set; } = "Excluded Dates Editor";
+
+        public string WindowTitleSchedulerDocumentBrowser { get; set; } = "Scheduler Document Browser";
 
         public string WindowTitleGoToLine { get; set; } = "Go To Line";
 
