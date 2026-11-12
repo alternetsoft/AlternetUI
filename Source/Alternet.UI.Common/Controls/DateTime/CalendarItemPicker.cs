@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -33,8 +34,8 @@ namespace Alternet.UI
         private readonly GenericRoundBorderWithTitle moreOptionsPanel = new(CommonStrings.Default.CalendarItemLabelMoreOptions);
         private readonly GenericRoundBorderWithTitle alarmPanel = new(CommonStrings.Default.CalendarItemLabelReminder);
         private readonly Label titleLabel = new();
-        private readonly TextPicker titlePicker = new ();
-        
+        private readonly TextPicker titlePicker = new();
+
         private readonly Label descriptionLabel = new();
         private readonly MultilineTextPicker descriptionPicker = new();
 
@@ -97,15 +98,21 @@ namespace Alternet.UI
             descriptionLabel.Parent = moreOptionsPanel;
             descriptionPicker.Parent = moreOptionsPanel;
 
+            void OnEditExcludedDatesLinkLabelClick(object? sender, CancelEventArgs e)
+            {
+                ShowExcludedDatesEditor();
+            }
+
             editExcludedDatesLinkLabel.Parent = moreOptionsPanel;
+            editExcludedDatesLinkLabel.LinkClicked += OnEditExcludedDatesLinkLabelClick;
 
             alarmPanel.Parent = this;
             moreOptionsPanel.Parent = this;
 
             titlePicker.ValueChanged += OnTitlePickerValueChanged;
-            locationPicker.ValueChanged += OnLocationPickerValueChanged;            
-            descriptionPicker.ValueChanged += OnDescriptionPickerValueChanged;            
-            categoryPicker.ValueChanged += OnCategoryPickerValueChanged;            
+            locationPicker.ValueChanged += OnLocationPickerValueChanged;
+            descriptionPicker.ValueChanged += OnDescriptionPickerValueChanged;
+            categoryPicker.ValueChanged += OnCategoryPickerValueChanged;
             statusPicker.ValueChanged += OnStatusPickerValueChanged;
             rulePicker.ValueChanged += OnRulePickerValueChanged;
             alarmPicker.ValueChanged += OnAlarmPickerValueChanged;
@@ -255,6 +262,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows the editor for excluded dates of the <see cref="CalendarItem"/> being edited.
+        /// </summary>
+        public virtual void ShowExcludedDatesEditor()
+        {
+            IListEditSource source = new ExcludedDatesListSource(Value);
+
+            WindowCollectionEditor.ShowCollectionEditor(source, OnCreate);
+
+            void OnCreate(WindowCollectionEditor e)
+            {
+                e.AutoSuffixNewTitle = false;
+                e.Title = CommonStrings.Default.WindowTitleExcludedDatesEditor;
+            }
+        }
+
+        /// <summary>
         /// Updates the controls of the picker to reflect the current values
         /// of the <see cref="CalendarItem"/> being edited.
         /// </summary>
@@ -345,7 +368,7 @@ namespace Alternet.UI
             var newValue = statusPicker.Value;
             Value.Status = newValue ?? KnownCalendarItemMarkers.StatusUnknown;
         }
-        
+
         /// <summary>
         /// Called when the value of the rule picker changes.
         /// This method updates the <see cref="CalendarItem.Rule"/> property
@@ -356,7 +379,7 @@ namespace Alternet.UI
         {
             Value.Rule = rulePicker.Value;
         }
-        
+
         /// <summary>
         /// Called when the value of the alarm picker changes.
         /// This method updates the <see cref="CalendarItem.AlarmInfo"/> property
@@ -416,6 +439,56 @@ namespace Alternet.UI
             {
                 ScrolledControl.Value = value;
             }
+        }
+    }
+
+    /// <summary>
+    /// Represents a list source for excluded dates in the <see cref="CalendarItemPicker"/> control.
+    /// </summary>
+    public class ExcludedDatesListSource : ListEditSource
+    {
+        private readonly CalendarItem item;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExcludedDatesListSource"/> class
+        /// with the specified <see cref="CalendarItem"/>.
+        /// </summary>
+        /// <param name="item">The <see cref="CalendarItem"/> instance.</param>
+        public ExcludedDatesListSource(CalendarItem item)
+        {
+            this.item = item;
+            Instance = item.Rule;
+            PropInfo = typeof(CalendarItem).GetProperty(nameof(CalendarItem.Rule.ExcludedDates));
+        }
+
+        /// <inheritdoc/>
+        public override IEnumerable? RootItems
+        {
+            get
+            {
+                return item.Rule.ExcludedDates;
+            }
+        }
+
+
+        /// <inheritdoc/>
+        public override object? CreateNewItem()
+        {
+            return DateUtils.Today();
+        }
+
+        /// <inheritdoc/>
+        public override void ApplyData(IEnumerableTree tree)
+        {
+            var items = EnumerableUtils.GetItems<DateOnly>(tree);
+
+            item.Rule.ExcludedDates = items;
+        }
+
+        /// <inheritdoc/>
+        public override object CloneItem(object item)
+        {
+            return item;
         }
     }
 }
