@@ -162,6 +162,8 @@ namespace Alternet.UI.Localization
 
         public string WindowTitleCollectionEditor { get; set; } = "Collection Editor";
 
+        public string WindowTitleExcludedDatesEditor { get; set; } = "Excluded Dates Editor";
+
         public string WindowTitleGoToLine { get; set; } = "Go To Line";
 
         public string WindowTitleInput { get; set; } = "Input";
