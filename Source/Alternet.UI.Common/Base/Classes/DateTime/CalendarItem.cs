@@ -675,9 +675,10 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a single instance of a <see cref="CalendarItem"/> with its corresponding start date.
     /// </summary>
-    public readonly struct CalendarItemInstance
+    public readonly struct CalendarItemInstance : IEquatable<CalendarItemInstance>
     {
         private readonly ObjectUniqueId changeToken;
+        private readonly int hashCode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItemInstance"/> struct
@@ -690,6 +691,7 @@ namespace Alternet.UI
             Item = item;
             StartDate = startDate;
             changeToken = Item.ChangeToken;
+            hashCode = HashCode.Combine(Item.GetHashCode(), StartDate.GetHashCode());
         }
 
         /// <summary>
@@ -749,6 +751,51 @@ namespace Alternet.UI
         /// Gets the end date of the calendar item instance.
         /// </summary>
         public DateOnly EndDate => DateOnly.FromDateTime(End);
+
+        /// <summary>
+        /// Determines whether two <see cref="CalendarItemInstance"/> instances are equal.
+        /// </summary>
+        /// <param name="left"> The first <see cref="CalendarItemInstance"/> to compare. </param>
+        /// <param name="right"> The second <see cref="CalendarItemInstance"/> to compare. </param>
+        /// <returns> <c>true</c> if the instances are equal; otherwise, <c>false</c>. </returns>
+        public static bool operator ==(CalendarItemInstance left, CalendarItemInstance right)
+        {
+            return left.Equals(right);
+        }
+
+        /// <summary>
+        /// Determines whether two <see cref="CalendarItemInstance"/> instances are not equal.
+        /// </summary>
+        /// <param name="left"> The first <see cref="CalendarItemInstance"/> to compare. </param>
+        /// <param name="right"> The second <see cref="CalendarItemInstance"/> to compare. </param>
+        /// <returns> <c>true</c> if the instances are not equal; otherwise, <c>false</c>. </returns>
+        public static bool operator !=(CalendarItemInstance left, CalendarItemInstance right)
+        {
+            return !left.Equals(right);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return hashCode;
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals([NotNullWhen(true)] object? obj)
+        {
+            if (obj is not CalendarItemInstance other)
+            {
+                return false;
+            }
+
+            return Equals(other);
+        }
+
+        /// <inheritdoc/>
+        public bool Equals(CalendarItemInstance other)
+        {
+            return Item == other.Item && StartDate == other.StartDate;
+        }
 
         /// <summary>
         /// Returns a string that represents the current <see cref="CalendarItemInstance"/>.
