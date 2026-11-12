@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base abstract class which implements <see cref="IListEditSource"/>.
     /// </summary>
-    public abstract class ListEditSource : IListEditSource
+    public abstract class ListEditSource : DisposableObject, IListEditSource
     {
         private WeakReferenceValue<object> instance;
         private PropertyInfo? propInfo;
@@ -60,7 +60,7 @@ namespace Alternet.UI
         public virtual ImageList? ImageList => null;
 
         /// <inheritdoc/>
-        public bool AllowApplyData => true;
+        public virtual bool AllowApplyData => true;
 
         /// <inheritdoc/>
         public virtual bool AllowAdd => true;
@@ -148,6 +148,23 @@ namespace Alternet.UI
             T[] asArray = value.ToArray();
 
             PropInfo?.SetValue(Instance, asArray);
+        }
+    }
+
+    /// <summary>
+    /// Dummy implementation of <see cref="IListEditSource"/> which does nothing.
+    /// </summary>
+    public class DummyListEditSource : ListEditSource
+    {
+        /// <inheritdoc/>
+        public override void ApplyData(IEnumerableTree tree)
+        {
+        }
+
+        /// <inheritdoc/>
+        public override object CloneItem(object item)
+        {
+            return item;
         }
     }
 }
