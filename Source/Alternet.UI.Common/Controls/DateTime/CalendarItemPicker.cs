@@ -266,13 +266,14 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ShowExcludedDatesEditor()
         {
-            IListEditSource source = new ExcludedDatesListSource(Value);
+            IListEditSource source = new DatesListEditSource(
+                () => Value.Rule.ExcludedDates,
+                items => Value.Rule.ExcludedDates = items);
 
             WindowCollectionEditor.ShowCollectionEditor<WindowDateCollectionEditor>(source, OnCreate);
 
             void OnCreate(WindowDateCollectionEditor e)
             {
-                e.AutoSuffixNewTitle = false;
                 e.Title = CommonStrings.Default.WindowTitleExcludedDatesEditor;
             }
         }
@@ -445,20 +446,22 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a list source for excluded dates in the <see cref="CalendarItemPicker"/> control.
     /// </summary>
-    public class ExcludedDatesListSource : ListEditSource
+    public class DatesListEditSource : ListEditSource
     {
-        private readonly CalendarItem item;
+        private readonly Func<IEnumerable<DateOnly>> getItems;
+        private readonly Action<IEnumerable<DateOnly>> applyItems;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExcludedDatesListSource"/> class
+        /// Initializes a new instance of the <see cref="DatesListEditSource"/> class
         /// with the specified <see cref="CalendarItem"/>.
         /// </summary>
-        /// <param name="item">The <see cref="CalendarItem"/> instance.</param>
-        public ExcludedDatesListSource(CalendarItem item)
+        /// <param name="getItems">A function that returns the items.</param>
+        /// <param name="applyItems">An action that applies the items.</param>
+        public DatesListEditSource(Func<IEnumerable<DateOnly>> getItems, Action<IEnumerable<DateOnly>> applyItems)
         {
-            this.item = item;
-            Instance = item.Rule;
-            PropInfo = typeof(CalendarItem).GetProperty(nameof(CalendarItem.Rule.ExcludedDates));
+            this.getItems = getItems;
+            this.applyItems = applyItems;
+            Instance = new object();
         }
 
         /// <inheritdoc/>
@@ -466,7 +469,7 @@ namespace Alternet.UI
         {
             get
             {
-                return item.Rule.ExcludedDates;
+                return getItems();
             }
         }
 
@@ -482,7 +485,7 @@ namespace Alternet.UI
         {
             var items = EnumerableUtils.GetItems<DateOnly>(tree);
 
-            item.Rule.ExcludedDates = items;
+            applyItems(items);
         }
 
         /// <inheritdoc/>
