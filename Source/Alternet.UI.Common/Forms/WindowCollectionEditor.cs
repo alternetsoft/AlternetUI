@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
@@ -47,6 +48,7 @@ namespace Alternet.UI
         };
 
         private IListEditSource? dataSource;
+        private bool autoSuffixNewTitle = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowCollectionEditor"/> class.
@@ -80,7 +82,7 @@ namespace Alternet.UI
 
             var propName = source.PropInfo?.Name;
 
-            if(propName is not null && elementName is not null)
+            if (propName is not null && elementName is not null)
             {
                 s += " - " + elementName + " - " + propName;
             }
@@ -93,7 +95,7 @@ namespace Alternet.UI
                 buttonIdAdd = toolbar.AddSpeedBtn(KnownButton.Add, OnAddButtonClick);
             }
 
-            if(source.AllowSubItems && source.AllowAdd)
+            if (source.AllowSubItems && source.AllowAdd)
             {
                 buttonIdAddChild = toolbar.AddSpeedBtn(KnownButton.AddChild, OnAddChildButtonClick);
             }
@@ -114,10 +116,6 @@ namespace Alternet.UI
             toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
             toolbar.SetVisibleBorders(false, false, false, true);
             BackgroundColor = ThemedColors.Window;
-
-            Closing += Window_Closing;
-            Closed += Window_Closed;
-            Disposed += Window_Disposed;
 
             DataSource = source;
         }
@@ -150,7 +148,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="source">The list edit source to be edited.</param>
         /// <param name="callback">The callback action to be invoked with the created WindowCollectionEditor.</param>
-        public static void ShowCollectionEditor(IListEditSource source, Action<WindowCollectionEditor>? callback = null)
+        public static void ShowCollectionEditor(IListEditSource? source, Action<WindowCollectionEditor>? callback = null)
         {
             var existing = App.FindVisibleWindow<WindowCollectionEditor>();
 
@@ -161,46 +159,32 @@ namespace Alternet.UI
             }
             else
             {
-                WindowCollectionEditor dialog = new(source);
+                WindowCollectionEditor dialog = new(source ?? new DummyListEditSource());
                 callback?.Invoke(dialog);
                 dialog.Show();
             }
         }
 
-        internal void SaveData()
-        {
-            if (dataSource is null || dataSource.Instance is null)
-                return;
-            dataSource.ApplyData(treeView);
-        }
-
-        internal void Clear()
-        {
-            treeView.RemoveAll();
-        }
-
-        private void Window_Closed(object? sender, EventArgs e)
-        {
-        }
-
-        private void Window_Closing(object? sender, WindowClosingEventArgs e)
-        {
-        }
-
-        private void Window_Disposed(object? sender, EventArgs e)
-        {
-        }
-
-        private void OnCancelButtonClick(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the click event of the "Cancel" button in the collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnCancelButtonClick(object? sender, EventArgs e)
         {
             Close();
         }
 
-        private void OnOkButtonClick(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the click event of the "OK" button in the collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnOkButtonClick(object? sender, EventArgs e)
         {
             SetFocusIfPossible();
 
-            if(DataSource?.Instance is not null)
+            if (DataSource?.Instance is not null)
             {
                 SaveData();
                 Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
@@ -209,23 +193,79 @@ namespace Alternet.UI
             Close();
         }
 
-        private void OnRemoveAllButtonClick(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the click event of the "Remove All" button in the collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnRemoveAllButtonClick(object? sender, EventArgs e)
         {
             Clear();
             UpdateButtons();
         }
 
-        private void OnAddChildButtonClick(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the click event of the "Add Child" button in the collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnAddChildButtonClick(object? sender, EventArgs e)
         {
             AddItem(treeView.SelectedItem);
         }
 
-        private void OnAddButtonClick(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the click event of the "Add" button in the collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnAddButtonClick(object? sender, EventArgs e)
         {
             AddItem(treeView.SelectedItem?.Parent);
         }
 
-        private void AddItem(TreeViewItem? parentItem)
+        /// <summary>
+        /// Saves the data from the collection editor back to the underlying data source.
+        /// </summary>
+        protected virtual void SaveData()
+        {
+            if (dataSource is null || dataSource.Instance is null)
+                return;
+            dataSource.ApplyData(treeView);
+        }
+
+        /// <summary>
+        /// Clears all items from the collection editor window.
+        /// </summary>
+        protected virtual void Clear()
+        {
+            treeView.RemoveAll();
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to automatically suffix
+        /// new item titles with a unique identifier.
+        /// </summary>
+        public virtual bool AutoSuffixNewTitle
+        {
+            get
+            {
+                return autoSuffixNewTitle;
+            }
+
+            set
+            {
+                if (autoSuffixNewTitle == value)
+                    return;
+                autoSuffixNewTitle = value;
+            }
+        }
+
+        /// <summary>
+        /// Adds a new item to the collection editor window.
+        /// </summary>
+        /// <param name="parentItem">The parent item to which the new item will be added.</param>
+        protected virtual void AddItem(TreeViewItem? parentItem)
         {
             parentItem ??= treeView.RootItem;
 
@@ -241,7 +281,9 @@ namespace Alternet.UI
 
             var imageIndex = itemInfo?.ImageIndex ?? -1;
             var newTitle = itemInfo?.Title ?? CommonStrings.Default.ListEditDefaultItemTitle;
-            newTitle += " " + LogUtils.GenNewId();
+
+            if (AutoSuffixNewTitle)
+                newTitle += " " + LogUtils.GenNewId();
 
             AssemblyUtils.TrySetMemberValue(item, "Text", newTitle);
 
@@ -249,6 +291,7 @@ namespace Alternet.UI
             {
                 Tag = item,
             };
+
             parentItem.IsExpanded = true;
             parentItem.Add(treeItem);
             treeView.SelectItem(treeItem);
