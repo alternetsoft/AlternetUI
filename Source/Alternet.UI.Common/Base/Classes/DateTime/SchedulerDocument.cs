@@ -106,7 +106,8 @@ namespace Alternet.UI
         /// exist for each date in the specified range.
         /// </summary>
         /// <param name="prm">The parameters for getting the dates.</param>
-        /// <returns>A <see cref="DateRangeData{TData}"/> indicating whether any items exist for each date.</returns>
+        /// <returns>A <see cref="DateRangeData{TData}"/> indicating whether
+        /// any items exist for each date.</returns>
         public virtual DateRangeData<bool> GetItemsExistByDate(PatternRuleGetDatesParams prm)
         {
             var rangeData = new DateRangeData<bool>(prm.MinDate, prm.MaxDate);
@@ -148,11 +149,9 @@ namespace Alternet.UI
         {
             foreach (var item in Items)
             {
-                var dates = item.Rule.GetDates(prm);
-
-                foreach (var date in dates.Dates)
+                foreach (var instance in item.GetInstances(prm))
                 {
-                    yield return new CalendarItemInstance(item, date);
+                    yield return instance;
                 }
             }
         }
