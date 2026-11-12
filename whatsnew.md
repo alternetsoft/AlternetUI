@@ -1,3 +1,67 @@
+# 1.1.17 (2026 November 12)
+
+- Add net11 support.
+- Add WindowCollectionEditor, WindowDateCollectionEditor - windows with collection editor.
+- Add excluded dates editor in RepeatPatternPicker.
+- DateSelectionManager: Fix date selection and add bulk selection.
+- Add change token to CalendarItem.
+- Introduce CalendarItemInstance and GetInstances to enumerate items by start date..
+- Use net11 MAUI and new SkiaSharp nuget.
+- Add no-text speed button with list popup - shows a centered image without visible text while retaining the list popup.
+- Label.TextVisible.
+- Expose IsRepeated on calendar items and repeat pattern rules to indicate whether a repeat pattern is applied.
+- Support excluded dates in repeat patterns.
+- Improve date and time serialization.
+- Rename recurrence range dates to ValidFromDate and ValidToDate.
+- Track calendar rule changes transactionally.
+- BaseTransactionalObject - wraps property updates in transactions.
+- Forward calendar item changes to the scheduler document.
+- Track scheduler document ownership of items.
+- Create DateRangeCollection, DateRangeData.
+- Add configurable settings panel separators.
+- BaseObjectWithNotify: Add cancelable property change requests.
+- Expose a lazily initialized SchedulerDocument.Instance as a default document for scheduling.
+- SplittedContentView improved.
+- BaseObjectWithNotify: Raise a PropertyChangeRequested event from CanChangeProperty so handlers can cancel changes to named properties.
+- BaseObjectWithNotify: INotifyPropertyChanging and CanChangeProperty.
+- BaseObjectWithNotify: Add before-property-change notifications
+- Add a horizontal panel with localized Save and Close and Close buttons.
+- Add sized Spacer constructor.
+- Add IgnorePaint option to GenericControl.
+- PropertyBag: Add unique ID property accessors.
+- Preserve calendar item IDs when loading.
+- Add unique ID constructor to base objects.
+- Use unique IDs for calendar item identity.
+- Fix repeat pattern rule equality and assignment.
+- Many different improvements and fixes to the ObjectUniqueId.
+- BaseObjectWithId: Allow callers to supply an ID, check initialization without generating one, and override the ID generation strategy.
+- JsonUtils: Convert nested JSON to property bags.
+- PropertyBag: Support nullable and collection properties.
+- Read Linux distribution ID from os-release.
+- Make popup window kinds configurable.
+- Add a Display.Backend property and include it in display diagnostics.
+- Support custom text button types in toolbars. Add a generic text button method and a scoped button type override that resets after use.
+- Add SpeedButton theme option to ListPicker.
+- SpeedButtonWithPopup: Add DropDownAccepted event.
+- SearchTextPicker: hide X button if no text.
+- Add SnoozeSpeedButton.
+- Use LibraryImport instead of DllImport.
+- Use context object in SerializableObject load/save.
+- Move IPropertyBag default methods into PropertyBag.
+- Rename CalendarSource to SchedulerDocument.
+- Add XML serialization helpers to XmlUtils.
+- Add XML serialization to property bags.
+- Remove net8 ad net9 support.
+- Create SerializableObject.
+- Add SearchTextPicker and TextPicker.EmptyTextHint
+- Add a ParentToolTip option so controls can use their parent's tooltip, falling back to their own when the parent has none.
+- When a control's tooltip changes, raise the change event on children with ParentToolTip enabled.
+- Add update events and listener API to IListSource.
+- Defer observable collection event args creation.
+- Add UpdatesStarted/UpdatesFinished events to BaseCollection.
+
+---
+
 # 1.1.16 (2026 November 5)
 
 - Create CalendarAlarmPicker, TimePeriodPicker, FileNamePicker.
