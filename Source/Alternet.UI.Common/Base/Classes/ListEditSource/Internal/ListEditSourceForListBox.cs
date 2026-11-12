@@ -8,10 +8,14 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class ListEditSourceForListBox : ListEditSource
+    /// <summary>
+    /// Represents a list edit source for a list box control.
+    /// </summary>
+    public class ListEditSourceForListBox : ListEditSource
     {
         private IEnumerable? rootItems;
 
+        /// <inheritdoc/>
         public override IEnumerable RootItems
         {
             get
@@ -31,8 +35,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         public override object? CreateNewItem() => new ListControlItem();
 
+        /// <inheritdoc/>
         public override object CloneItem(object item)
         {
             if (item is ListControlItem listItem)
@@ -45,11 +51,13 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         public override object? GetProperties(object item)
         {
             return item;
         }
 
+        /// <inheritdoc/>
         public override void ApplyData(IEnumerableTree tree)
         {
             if (Instance is null)

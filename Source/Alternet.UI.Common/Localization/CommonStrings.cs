@@ -160,7 +160,7 @@ namespace Alternet.UI.Localization
 
         public string WindowTitleReplace { get; set; } = "Replace";
 
-        public string WindowTitleListEdit { get; set; } = "List Editor";
+        public string WindowTitleCollectionEditor { get; set; } = "Collection Editor";
 
         public string WindowTitleGoToLine { get; set; } = "Go To Line";
 

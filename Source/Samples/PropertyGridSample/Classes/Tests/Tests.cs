@@ -402,6 +402,14 @@ namespace PropertyGridSample
                 c.RemoveAll();
                 c.AddColors([KnownColorCategory.System], false);
             });
+
+            AddControlAction<ColorListBox>("Show Collection Editor", (c) =>
+            {
+                var source = new ListEditSourceForListBox();
+                source.Instance = c;
+
+                WindowCollectionEditor.ShowCollectionEditor(source);
+            });
         }
 
         internal void TestMemoFindReplace(bool replace)

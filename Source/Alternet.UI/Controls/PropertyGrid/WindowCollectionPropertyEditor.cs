@@ -14,7 +14,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     [ControlCategory(KnownControlCategory.Hidden)]
-    internal class WindowListEdit : Window
+    internal class WindowCollectionPropertyEditor : Window
     {
         private readonly SplittedPanel panel = new()
         {
@@ -49,7 +49,7 @@ namespace Alternet.UI
         private IListEditSource? dataSource;
         private object? lastPropInstance;
 
-        public WindowListEdit(IListEditSource source)
+        public WindowCollectionPropertyEditor(IListEditSource source)
         {
             Layout = LayoutStyle.Vertical;
             Size = new(750, 600);
@@ -67,7 +67,7 @@ namespace Alternet.UI
                 | PropertyGridApplyFlags.ReloadAllAfterSetValue;
             propertyGrid.Parent = panel.RightPanel;
 
-            var s = CommonStrings.Default.WindowTitleListEdit;
+            var s = CommonStrings.Default.WindowTitleCollectionEditor;
 
             string? elementName = null;
 

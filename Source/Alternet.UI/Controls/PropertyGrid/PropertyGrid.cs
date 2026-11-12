@@ -313,7 +313,7 @@ namespace Alternet.UI
             if (source == null)
                 return;
 
-            var existing = App.FindVisibleWindow<WindowListEdit>();
+            var existing = App.FindVisibleWindow<WindowCollectionPropertyEditor>();
 
             if (existing is not null)
             {
@@ -322,7 +322,7 @@ namespace Alternet.UI
             }
             else
             {
-                WindowListEdit dialog = new(source);
+                WindowCollectionPropertyEditor dialog = new(source);
                 dialog.Show();
             }
         }
