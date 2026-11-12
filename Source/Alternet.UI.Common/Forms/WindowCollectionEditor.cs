@@ -36,13 +36,13 @@ namespace Alternet.UI
             ItemSize = 32,
         };
 
-        private readonly ObjectUniqueId? buttonIdAdd;
-        private readonly ObjectUniqueId? buttonIdRemove;
-        private readonly ObjectUniqueId? buttonIdRemoveAll;
-        private readonly ObjectUniqueId? buttonIdAddChild;
-        private readonly ObjectUniqueId? buttonIdOk;
+        private readonly ObjectUniqueId buttonIdAdd;
+        private readonly ObjectUniqueId buttonIdRemove;
+        private readonly ObjectUniqueId buttonIdRemoveAll;
+        private readonly ObjectUniqueId buttonIdAddChild;
+        private readonly ObjectUniqueId buttonIdOk;
 
-        private readonly TreeViewPlus treeView = new()
+        private readonly XEnumerableTreeView treeView = new()
         {
             HasBorder = false,
         };
@@ -121,6 +121,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the main panel of the collection editor window.
+        /// </summary>
+        public SplittedPanel MainPanel => panel;
+
+        /// <summary>
+        /// Gets the toolbar of the collection editor window.
+        /// </summary>
+        public ToolBar Toolbar => toolbar;
+
+        /// <summary>
+        /// Gets the tree view control that displays the collection items in the collection editor window.
+        /// </summary>
+        public XTreeView MainView => treeView;
+
+        /// <summary>
+        /// Gets the unique identifier of the "Add" button in the collection editor window.
+        /// </summary>
+        public ObjectUniqueId ButtonIdAdd => buttonIdAdd;
+
+        /// <summary>
+        /// Gets the unique identifier of the "Remove" button in the collection editor window.
+        /// </summary>
+        public ObjectUniqueId ButtonIdRemove => buttonIdRemove;
+
+        /// <summary>
+        /// Gets the unique identifier of the "Remove All" button in the collection editor window.
+        /// </summary>
+        public ObjectUniqueId ButtonIdRemoveAll => buttonIdRemoveAll;
+
+        /// <summary>
+        /// Gets the unique identifier of the "Add Child" button in the collection editor window.
+        /// </summary>
+        public ObjectUniqueId ButtonIdAddChild => buttonIdAddChild;
+        
+        /// <summary>
+        /// Gets the unique identifier of the "OK" button in the collection editor window.
+        /// </summary>
+        public ObjectUniqueId ButtonIdOk => buttonIdOk;
+
+        /// <summary>
         /// Gets or sets the data source for the list editor.
         /// </summary>
         public virtual IListEditSource? DataSource
@@ -145,12 +185,16 @@ namespace Alternet.UI
 
         /// <summary>
         /// Shows the collection editor window for the specified list edit source.
+        /// This method creates an instance of the specified <typeparamref name="TWindow"/> type,
+        /// which must be a subclass of <see cref="WindowCollectionEditor"/>.
         /// </summary>
+        /// <typeparam name="TWindow">The type of the window to be created.</typeparam>
         /// <param name="source">The list edit source to be edited.</param>
-        /// <param name="callback">The callback action to be invoked with the created WindowCollectionEditor.</param>
-        public static void ShowCollectionEditor(IListEditSource? source, Action<WindowCollectionEditor>? callback = null)
+        /// <param name="callback">The callback action to be invoked with the created window.</param>
+        public static void ShowCollectionEditor<TWindow>(IListEditSource? source, Action<TWindow>? callback = null)
+            where TWindow : WindowCollectionEditor
         {
-            var existing = App.FindVisibleWindow<WindowCollectionEditor>();
+            var existing = App.FindVisibleWindow<TWindow>();
 
             if (existing is not null)
             {
@@ -159,10 +203,21 @@ namespace Alternet.UI
             }
             else
             {
-                WindowCollectionEditor dialog = new(source ?? new DummyListEditSource());
+                TWindow dialog = (TWindow)Activator.CreateInstance(typeof(TWindow), source ?? new DummyListEditSource())!;
                 callback?.Invoke(dialog);
                 dialog.Show();
             }
+        }
+
+
+        /// <summary>
+        /// Shows the collection editor window for the specified list edit source.
+        /// </summary>
+        /// <param name="source">The list edit source to be edited.</param>
+        /// <param name="callback">The callback action to be invoked with the created WindowCollectionEditor.</param>
+        public static void ShowCollectionEditor(IListEditSource? source, Action<WindowCollectionEditor>? callback = null)
+        {
+            ShowCollectionEditor<WindowCollectionEditor>(source, callback);
         }
 
         /// <summary>
@@ -298,13 +353,21 @@ namespace Alternet.UI
             UpdateButtons();
         }
 
-        private void OnRemoveButtonClick(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the click event of the "Remove" button in the collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnRemoveButtonClick(object? sender, EventArgs e)
         {
             treeView.RemoveItemAndSelectSibling(treeView.SelectedItem);
             UpdateButtons();
         }
-
-        private void UpdateButtons()
+        
+        /// <summary>
+        /// Updates the enabled state of the toolbar buttons in the collection editor window.
+        /// </summary>
+        protected virtual void UpdateButtons()
         {
             var canAdd = false;
             var canAddChild = false;
@@ -328,7 +391,12 @@ namespace Alternet.UI
             toolbar.SetToolEnabled(buttonIdOk, canApply);
         }
 
-        private void OnTreeViewSelectionChanged(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the selection changed event of the tree view in the collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnTreeViewSelectionChanged(object? sender, EventArgs e)
         {
             UpdateButtons();
             var item = treeView.SelectedItem;
@@ -338,15 +406,23 @@ namespace Alternet.UI
             }
         }
 
-        private void LoadData()
+        /// <summary>
+        /// Loads the data from the data source into the tree view.
+        /// </summary>
+        protected virtual void LoadData()
         {
             Clear();
             if (dataSource == null)
                 return;
             AddItems(treeView.RootItem, dataSource.RootItems);
         }
-
-        private (string? Title, int? ImageIndex)? GetItemInfo(object? item)
+        
+        /// <summary>
+        /// Gets the title and image index for the specified item.
+        /// </summary>
+        /// <param name="item">The item for which to get the information.</param>
+        /// <returns>A tuple containing the title and image index, or null if the item is null.</returns>   
+        protected virtual (string? Title, int? ImageIndex)? GetItemInfo(object? item)
         {
             if (item == null)
                 return null;
@@ -358,7 +434,12 @@ namespace Alternet.UI
             return (s, imageIndex);
         }
 
-        private void AddItems(TreeViewItem parentItem, IEnumerable? data)
+        /// <summary>
+        /// Adds the specified data items as child nodes to the given parent tree view item.
+        /// </summary>
+        /// <param name="parentItem">The parent tree view item.</param>
+        /// <param name="data">The data items to add.</param>
+        protected virtual void AddItems(TreeViewItem parentItem, IEnumerable? data)
         {
             if (data == null)
                 return;
@@ -378,19 +459,25 @@ namespace Alternet.UI
             }
         }
 
-        private void Bind()
+        /// <summary>
+        /// Binds the data source to the tree view.
+        /// </summary>
+        protected virtual void Bind()
         {
             treeView.ImageList = dataSource?.ImageList;
         }
 
-        private void Unbind()
+        /// <summary>
+        /// Unbinds the data source from the tree view.
+        /// </summary>
+        protected virtual void Unbind()
         {
             treeView.ImageList = null;
         }
 
-        private class TreeViewPlus : XTreeView, IEnumerableTree<TreeViewItem>
+        private class XEnumerableTreeView : XTreeView, IEnumerableTree<TreeViewItem>
         {
-            public TreeViewPlus()
+            public XEnumerableTreeView()
             {
                 // AllowDrop = true;
                 // DragDrop += OnDragDropEvent;
@@ -505,6 +592,101 @@ namespace Alternet.UI
             {
                 App.DebugLog("DragLeave");
             }
+        }
+    }
+
+    /// <summary>
+    /// Represents a specialized collection editor window for editing collections of <see cref="DateOnly"/>.
+    /// </summary>
+    public class WindowDateCollectionEditor : WindowCollectionEditor
+    {
+        private readonly XCalendar calendar = new()
+        {
+            VerticalAlignment = VerticalAlignment.Fill,
+            HorizontalAlignment = HorizontalAlignment.Fill,
+        };
+
+        private bool suspendCalendarValueChanged;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowDateCollectionEditor"/>
+        /// class with the specified list edit source.
+        /// </summary>
+        /// <param name="source">The list edit source.</param>
+        public WindowDateCollectionEditor(IListEditSource source) : base(source)
+        {
+            MainPanel.RightVisible = true;
+            calendar.Parent = MainPanel.RightPanel;
+            calendar.ValueChanged += OnCalendarValueChanged;
+            calendar.Enabled = false;
+
+            MainView.RootItem.ItemSource.ItemInserted += OnItemInserted;
+            MainView.RootItem.ItemSource.ItemRemoved += OnItemRemoved;
+        }
+
+        private void OnItemInserted(object? sender, int index, TreeViewItem item)
+        {
+            OnCalendarValueChanged(this, EventArgs.Empty);
+        }
+
+        private void OnItemRemoved(object? sender, int index, TreeViewItem item)
+        {
+            OnCalendarValueChanged(this, EventArgs.Empty);
+        }
+
+        /// <inheritdoc/>
+        protected override void Clear()
+        {
+            base.Clear();
+            OnCalendarValueChanged(this, EventArgs.Empty);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTreeViewSelectionChanged(object? sender, EventArgs e)
+        {
+            base.OnTreeViewSelectionChanged(sender, e);
+
+            var item = MainView.SelectedItem;
+            if (item == null)
+            {
+                calendar.Enabled = false;
+                return;
+            }
+
+            calendar.Enabled = true;
+
+            if (item.Tag is DateOnly date)
+            {
+                suspendCalendarValueChanged = true;
+                try
+                {
+                    calendar.Value = date;
+                }
+                finally
+                {
+                    suspendCalendarValueChanged = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the value changed event of the calendar control in the date collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnCalendarValueChanged(object? sender, EventArgs e)
+        {
+            if (suspendCalendarValueChanged)
+                return;
+            var item = MainView.SelectedItem;
+            if (item is not null)
+            {
+                var value = calendar.Value;
+                item.Tag = value;
+                item.Text = value.ToString();
+            }
+
+            calendar.Enabled = item is not null;
         }
     }
 }

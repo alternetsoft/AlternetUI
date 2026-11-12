@@ -268,9 +268,9 @@ namespace Alternet.UI
         {
             IListEditSource source = new ExcludedDatesListSource(Value);
 
-            WindowCollectionEditor.ShowCollectionEditor(source, OnCreate);
+            WindowCollectionEditor.ShowCollectionEditor<WindowDateCollectionEditor>(source, OnCreate);
 
-            void OnCreate(WindowCollectionEditor e)
+            void OnCreate(WindowDateCollectionEditor e)
             {
                 e.AutoSuffixNewTitle = false;
                 e.Title = CommonStrings.Default.WindowTitleExcludedDatesEditor;
