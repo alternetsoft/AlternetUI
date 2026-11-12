@@ -4,8 +4,6 @@ public partial class App : Application
 {
     public App()
     {
-        InitializeComponent();
-
         Alternet.UI.App.LogMessage += (s, e) =>
         {
             if (e.Message is not null)

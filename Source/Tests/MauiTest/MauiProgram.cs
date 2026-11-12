@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using SkiaSharp.Views.Maui.Controls.Hosting;
+﻿using SkiaSharp.Views.Maui.Controls.Hosting;
 using CommunityToolkit.Maui;
 
 using Alternet.UI;
@@ -15,12 +14,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>()
             .UseSkiaSharp()
             .UseAlternetUI()
-            .UseMauiCommunityToolkit()
-            .ConfigureFonts(fonts =>
-        {
-            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-        });
+            .UseMauiCommunityToolkit();
 
         return builder.Build();
     }
