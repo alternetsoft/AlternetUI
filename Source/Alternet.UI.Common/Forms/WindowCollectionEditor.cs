@@ -596,75 +596,141 @@ namespace Alternet.UI
     }
 
     /// <summary>
-    /// Represents a specialized collection editor window for editing collections of <see cref="DateOnly"/>.
+    /// Represents a generic collection editor window that allows editing a collection of items
+    /// using a specified item editor control.
     /// </summary>
-    public class WindowDateCollectionEditor : WindowCollectionEditor
+    /// <typeparam name="TItemEditor">The type of the item editor control.</typeparam>
+    public partial class WindowCollectionEditor<TItemEditor> : WindowCollectionEditor
+        where TItemEditor : AbstractControl, new()
     {
-        private readonly XCalendar calendar = new()
+        private readonly TItemEditor itemEditor = new()
         {
             VerticalAlignment = VerticalAlignment.Fill,
             HorizontalAlignment = HorizontalAlignment.Fill,
         };
 
-        private bool suspendCalendarValueChanged;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowDateCollectionEditor"/>
-        /// class with the specified list edit source.
+        /// Initializes a new instance of the <see cref="WindowCollectionEditor{TItemEditor}"/> class.
         /// </summary>
         /// <param name="source">The list edit source.</param>
-        public WindowDateCollectionEditor(IListEditSource source) : base(source)
+        public WindowCollectionEditor(IListEditSource source) : base(source)
         {
             MainPanel.RightVisible = true;
-            calendar.Parent = MainPanel.RightPanel;
-            calendar.ValueChanged += OnCalendarValueChanged;
-            calendar.Enabled = false;
-
+            itemEditor.Parent = MainPanel.RightPanel;
+            itemEditor.Enabled = false;
             MainView.RootItem.ItemSource.ItemInserted += OnItemInserted;
             MainView.RootItem.ItemSource.ItemRemoved += OnItemRemoved;
         }
 
-        private void OnItemInserted(object? sender, int index, TreeViewItem item)
-        {
-            OnCalendarValueChanged(this, EventArgs.Empty);
-        }
+        /// <summary>
+        /// Gets the item editor control used for editing individual items in the collection.
+        /// </summary>
+        public TItemEditor ItemEditor => itemEditor;
 
-        private void OnItemRemoved(object? sender, int index, TreeViewItem item)
+        /// <summary>
+        /// Called when an item is inserted into the collection editor's tree view.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="index">The index at which the item was inserted.</param>
+        /// <param name="item">The item that was inserted.</param>
+        protected virtual void OnItemInserted(object? sender, int index, TreeViewItem item)
         {
-            OnCalendarValueChanged(this, EventArgs.Empty);
+            UpdateItemEditor();
+        }
+        
+        /// <summary>
+        /// Called when an item is removed from the collection editor's tree view.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="index">The index at which the item was removed.</param>
+        /// <param name="item">The item that was removed.</param>
+        protected virtual void OnItemRemoved(object? sender, int index, TreeViewItem item)
+        {
+            UpdateItemEditor();
         }
 
         /// <inheritdoc/>
         protected override void Clear()
         {
             base.Clear();
-            OnCalendarValueChanged(this, EventArgs.Empty);
+            UpdateItemEditor();
         }
 
         /// <inheritdoc/>
         protected override void OnTreeViewSelectionChanged(object? sender, EventArgs e)
         {
             base.OnTreeViewSelectionChanged(sender, e);
+            UpdateItemEditor();
+        }
 
+        /// <summary>
+        /// Updates the item editor control based on the currently selected item
+        /// in the collection editor's tree view.
+        /// </summary>
+        protected virtual void UpdateItemEditor()
+        {
+        }
+    }
+
+    /// <summary>
+    /// Represents a specialized collection editor window for editing collections of <see cref="CalendarItem"/>
+    /// in a <see cref="SchedulerDocument"/>.
+    /// </summary>
+    public partial class WindowSchedulerDocumentBrowser : WindowCollectionEditor<ScrollableCalendarItemPicker>
+    {
+        private bool suspendValueChanged;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowSchedulerDocumentBrowser"/> class
+        /// with the specified list edit source.
+        /// </summary>
+        /// <param name="source">The list edit source.</param>
+        public WindowSchedulerDocumentBrowser(IListEditSource source) : base(source)
+        {
+            AutoSuffixNewTitle = false;
+            ItemEditor.ValueChanged += OnValueChanged;
+            ItemEditor.ScrolledControl.MinWidth = 300;
+            ItemEditor.ScrolledControl.MaxWidth = 300;
+        }
+
+        /// <summary>
+        /// Shows the scheduler document browser window for the specified <see cref="SchedulerDocument"/>.
+        /// </summary>
+        /// <param name="document">The scheduler document to browse.</param>
+        public static void ShowDocumentBrowser(SchedulerDocument document)
+        {
+            IListEditSource source = new SchedulerDocumentListEditSource(document);
+
+            WindowCollectionEditor.ShowCollectionEditor<WindowSchedulerDocumentBrowser>(source, OnCreate);
+
+            void OnCreate(WindowSchedulerDocumentBrowser e)
+            {
+                e.Title = CommonStrings.Default.WindowTitleSchedulerDocumentBrowser;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateItemEditor()
+        {
             var item = MainView.SelectedItem;
             if (item == null)
             {
-                calendar.Enabled = false;
+                ItemEditor.Enabled = false;
                 return;
             }
 
-            calendar.Enabled = true;
+            ItemEditor.Enabled = true;
 
-            if (item.Tag is DateOnly date)
+            if (item.Tag is CalendarItem calendarItem)
             {
-                suspendCalendarValueChanged = true;
+                suspendValueChanged = true;
                 try
                 {
-                    calendar.Value = date;
+                    ItemEditor.Value = calendarItem;
                 }
                 finally
                 {
-                    suspendCalendarValueChanged = false;
+                    suspendValueChanged = false;
                 }
             }
         }
@@ -674,19 +740,84 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event data.</param>
-        protected virtual void OnCalendarValueChanged(object? sender, EventArgs e)
+        protected virtual void OnValueChanged(object? sender, EventArgs e)
         {
-            if (suspendCalendarValueChanged)
+            if (suspendValueChanged)
                 return;
             var item = MainView.SelectedItem;
             if (item is not null)
             {
-                var value = calendar.Value;
+                var value = ItemEditor.Value;
+                (item.Tag as CalendarItem)?.Assign(value);
+                item.Text = value.Text ?? CommonStrings.Default.UntitledItemText;
+            }
+
+            ItemEditor.Enabled = item is not null;
+        }
+    }
+
+    /// <summary>
+    /// Represents a specialized collection editor window for editing collections of <see cref="DateOnly"/>.
+    /// </summary>
+    public partial class WindowDateCollectionEditor : WindowCollectionEditor<XCalendar>
+    {
+        private bool suspendValueChanged;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowDateCollectionEditor"/>
+        /// class with the specified list edit source.
+        /// </summary>
+        /// <param name="source">The list edit source.</param>
+        public WindowDateCollectionEditor(IListEditSource source) : base(source)
+        {
+            AutoSuffixNewTitle = false;
+            ItemEditor.ValueChanged += OnValueChanged;
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateItemEditor()
+        {
+            var item = MainView.SelectedItem;
+            if (item == null)
+            {
+                ItemEditor.Enabled = false;
+                return;
+            }
+
+            ItemEditor.Enabled = true;
+
+            if (item.Tag is DateOnly date)
+            {
+                suspendValueChanged = true;
+                try
+                {
+                    ItemEditor.Value = date;
+                }
+                finally
+                {
+                    suspendValueChanged = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Handles the value changed event of the calendar control in the date collection editor window.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnValueChanged(object? sender, EventArgs e)
+        {
+            if (suspendValueChanged)
+                return;
+            var item = MainView.SelectedItem;
+            if (item is not null)
+            {
+                var value = ItemEditor.Value;
                 item.Tag = value;
                 item.Text = value.ToString();
             }
 
-            calendar.Enabled = item is not null;
+            ItemEditor.Enabled = item is not null;
         }
     }
 }
