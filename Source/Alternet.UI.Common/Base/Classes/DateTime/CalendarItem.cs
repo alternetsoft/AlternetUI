@@ -11,7 +11,6 @@ namespace Alternet.UI
     /// </summary>
     public partial class CalendarItem : SchedulerDocumentItem, IEquatable<CalendarItem>
     {
-        private ObjectUniqueId changeToken;
         private RepeatPatternRuleOwnerStruct ruleContainer = new();
         private RepeatPatternRule rule;
         private CalendarAlarmInfo alarmInfo;
@@ -220,6 +219,75 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the instances of the calendar item based on its repeat pattern
+        /// rule within the specified date range.
+        /// </summary>
+        /// <param name="minDate">The minimum date to consider.</param>
+        /// <param name="maxDate">The maximum date to consider.</param>
+        /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
+        public IEnumerable<CalendarItemInstance> GetInstances(DateOnly minDate, DateOnly maxDate)
+        {
+            return GetInstances(new PatternRuleGetDatesParams(minDate, maxDate));
+        }
+
+        /// <summary>
+        /// Gets the instances of the calendar item based on its repeat pattern
+        /// rule which occurs within the current year.
+        /// </summary>
+        /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
+        public IEnumerable<CalendarItemInstance> GetThisYearInstances()
+        {
+            return GetInstances(PatternRuleGetDatesParams.ThisYear);
+        }
+
+        /// <summary>
+        /// Gets the instances of the calendar item based on its repeat pattern
+        /// rule which occurs this month. 
+        /// </summary>
+        /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
+        public IEnumerable<CalendarItemInstance> GetThisMonthInstances()
+        {
+            return GetInstances(PatternRuleGetDatesParams.ThisMonth);
+        }
+
+        /// <summary>
+        /// Gets the instances of the calendar item based on its repeat pattern
+        /// rule which occurs today.
+        /// </summary>
+        /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
+        public IEnumerable<CalendarItemInstance> GetTodayInstances()
+        {
+            return GetInstances(DateUtils.Today());
+        }
+
+        /// <summary>
+        /// Gets the instances of the calendar item based on its repeat pattern
+        /// rule which occurs on the specified date.
+        /// </summary>
+        /// <param name="date">The date to consider.</param>
+        /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
+        public IEnumerable<CalendarItemInstance> GetInstances(DateOnly date)
+        {
+            return GetInstances(new PatternRuleGetDatesParams(date));
+        }
+
+        /// <summary>
+        /// Gets the instances of the calendar item based on its repeat pattern
+        /// rule within the specified date range.
+        /// </summary>
+        /// <param name="prm">The parameters for getting the dates.</param>
+        /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
+        public virtual IEnumerable<CalendarItemInstance> GetInstances(PatternRuleGetDatesParams prm)
+        {
+            var dates = Rule.GetDates(prm);
+
+            foreach (var date in dates.Dates)
+            {
+                yield return new CalendarItemInstance(this, date);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the user name of the calendar item.
         /// </summary>
         public virtual string? UserName
@@ -230,12 +298,6 @@ namespace Alternet.UI
                 this.SetProperty(ref userName, value, nameof(UserName));
             }
         }
-
-        /// <summary>
-        /// Gets the change token of the calendar item, which is updated
-        /// whenever a property of the item changes.
-        /// </summary>
-        public ObjectUniqueId ChangeToken => changeToken;
 
         /// <summary>
         /// Gets or sets a value indicating whether the calendar item is visible.
@@ -320,6 +382,7 @@ namespace Alternet.UI
                 prefix = "";
 
             propertyBag.SetUniqueIdProperty(prefix + nameof(UniqueId), UniqueId);
+            propertyBag.SetUniqueIdProperty(prefix + nameof(ChangeToken), ChangeToken);
             propertyBag.SetStringProperty(prefix + nameof(Text), Text ?? string.Empty);
             propertyBag.SetStringProperty(prefix + nameof(Description), Description ?? string.Empty);
             propertyBag.SetStringProperty(prefix + nameof(Location), Location?.ToString() ?? string.Empty);
@@ -380,14 +443,6 @@ namespace Alternet.UI
                    Equals(UserData, other.UserData) &&
                    AlarmInfo.Equals(other.AlarmInfo) &&
                    Rule.Equals(other.Rule);
-        }
-
-        /// <summary>
-        /// Renews the change token of the calendar item.
-        /// </summary>
-        public virtual void RenewChangeToken()
-        {
-            changeToken = new(useGuid: true);
         }
 
         /// <summary>
@@ -486,6 +541,7 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnRuleChanged(object? sender, PropertyChangedEventArgs e)
         {
+            RenewChangeToken();
             RaisePropertyChanged(nameof(Rule));
         }
 
@@ -496,6 +552,7 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnAlarmInfoChanged(object? sender, PropertyChangedEventArgs e)
         {
+            RenewChangeToken();
             RaisePropertyChanged(nameof(AlarmInfo));
         }
 
@@ -512,8 +569,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPropertyChanged(string? propertyName = null)
         {
-            RenewChangeToken();
-
             base.OnPropertyChanged(propertyName);
             Document?.Items.RaiseItemPropertyChanged(this, propertyName);
         }
@@ -545,7 +600,6 @@ namespace Alternet.UI
         [MemberNotNull(nameof(category)), MemberNotNull(nameof(status))]
         protected virtual void Initialize()
         {
-            RenewChangeToken();
             category = KnownCalendarItemMarkers.CategoryNone;
             status = KnownCalendarItemMarkers.StatusUnknown;
             rule = CreateRule(ruleContainer);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -22,12 +23,15 @@ namespace Alternet.UI
             createNewDemo.Rule.ValidFromDate = DateUtils.Today();
             createNewDemo.Rule.ValidToDate = DateUtils.Today().AddDays(2);
             createNewDemo.Text = "Create New Demo";
-            createNewDemo.Description = "The new Scheduler demo.";
             createNewDemo.Location = "work";
             createNewDemo.Category = KnownCalendarItemMarkers.CategoryImportant;
             createNewDemo.Status = KnownCalendarItemMarkers.StatusBusy;
             createNewDemo.AlarmInfo.Enabled = true;
             createNewDemo.AlarmInfo.Advance = TimeSpan.FromMinutes(5);
+            createNewDemo.Description = "The new Scheduler demo.";
+
+            TestIsValid(createNewDemo);
+
             server.Add(createNewDemo);
 
             var gototheBeach = server.CreateItem();
@@ -159,6 +163,26 @@ namespace Alternet.UI
 
                 start = start.AddMinutes(15);
             }
+        }
+
+        [Conditional("DEBUG")]
+        private static void TestIsValid(CalendarItem item)
+        {
+#pragma warning disable
+            var instance = item.GetThisYearInstances().FirstOrDefault();
+
+            var isValid = instance.IsValid;
+
+            instance.Item.Description = "new text";
+
+            isValid = instance.IsValid;
+
+            instance = item.GetThisYearInstances().FirstOrDefault();
+            isValid = instance.IsValid;
+
+            instance.Item.Rule.Kind = ScheduleRepeatPattern.Daily;
+            isValid = instance.IsValid;
+#pragma warning restore
         }
     }
 }
