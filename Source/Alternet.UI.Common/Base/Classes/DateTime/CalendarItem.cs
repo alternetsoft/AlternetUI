@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -584,6 +586,12 @@ namespace Alternet.UI
             }
 
             return canChange;
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return Text ?? base.ToString() ?? CommonStrings.Default.UntitledItemText;
         }
 
         /// <inheritdoc/>
