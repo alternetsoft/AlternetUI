@@ -9,6 +9,7 @@ namespace Alternet.UI
     /// </summary>
     public abstract class SchedulerDocumentItem : SerializableObject
     {
+        private ObjectUniqueId changeToken;
         private SchedulerDocument? document;
 
         /// <summary>
@@ -16,6 +17,7 @@ namespace Alternet.UI
         /// </summary>
         public SchedulerDocumentItem()
         {
+            RenewChangeToken();
         }
 
         /// <summary>
@@ -52,6 +54,27 @@ namespace Alternet.UI
             {
                 document = value;
             }
+        }
+
+        /// <summary>
+        /// Gets the change token of the item, which is updated
+        /// whenever a property of the item changes.
+        /// </summary>
+        public ObjectUniqueId ChangeToken => changeToken;
+
+        /// <summary>
+        /// Renews the change token of the item.
+        /// </summary>
+        public virtual void RenewChangeToken()
+        {
+            changeToken = new(useGuid: true);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTransactionEnded()
+        {
+            base.OnTransactionEnded();
+            RenewChangeToken();
         }
 
         /// <inheritdoc/>
