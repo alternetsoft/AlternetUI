@@ -11,6 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class CalendarItem : SchedulerDocumentItem, IEquatable<CalendarItem>
     {
+        private ObjectUniqueId changeToken;
         private RepeatPatternRuleOwnerStruct ruleContainer = new();
         private RepeatPatternRule rule;
         private CalendarAlarmInfo alarmInfo;
@@ -231,6 +232,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the change token of the calendar item, which is updated
+        /// whenever a property of the item changes.
+        /// </summary>
+        public ObjectUniqueId ChangeToken => changeToken;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the calendar item is visible.
         /// </summary>
         public virtual bool Visible
@@ -376,6 +383,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Renews the change token of the calendar item.
+        /// </summary>
+        public virtual void RenewChangeToken()
+        {
+            changeToken = new(useGuid: true);
+        }
+
+        /// <summary>
         /// Resets the current instance to its default state which was set when the instance was created.
         /// </summary>
         public virtual void Reset()
@@ -497,6 +512,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnPropertyChanged(string? propertyName = null)
         {
+            RenewChangeToken();
+
             base.OnPropertyChanged(propertyName);
             Document?.Items.RaiseItemPropertyChanged(this, propertyName);
         }
@@ -528,6 +545,7 @@ namespace Alternet.UI
         [MemberNotNull(nameof(category)), MemberNotNull(nameof(status))]
         protected virtual void Initialize()
         {
+            RenewChangeToken();
             category = KnownCalendarItemMarkers.CategoryNone;
             status = KnownCalendarItemMarkers.StatusUnknown;
             rule = CreateRule(ruleContainer);
@@ -605,6 +623,8 @@ namespace Alternet.UI
     /// </summary>
     public readonly struct CalendarItemInstance
     {
+        private readonly ObjectUniqueId changeToken;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItemInstance"/> struct
         /// with the specified calendar item and start date.
@@ -615,7 +635,20 @@ namespace Alternet.UI
         {
             Item = item;
             StartDate = startDate;
+            changeToken = Item.ChangeToken;
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the calendar item instance is still valid,
+        /// which means the change token has not been renewed.
+        /// </summary>
+        public bool IsValid => changeToken == Item.ChangeToken;
+
+        /// <summary>
+        /// Gets the duration of the calendar item instance, which
+        /// is the same as the duration of the associated <see cref="CalendarItem"/>.
+        /// </summary>
+        public TimeSpan Duration => Item.Duration;
 
         /// <summary>
         /// Gets the calendar item associated with this instance.
