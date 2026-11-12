@@ -451,6 +451,8 @@ namespace Alternet.UI.Localization
 
         // ========================
 
+        public string CalendarItemLabelEditExcludedDates { get; set; } = "Edit Excluded Dates";
+
         public string CalendarItemLabelDetails { get; set; } = "Details";
 
         public string CalendarItemLabelReminder { get; set; } = "Reminder";

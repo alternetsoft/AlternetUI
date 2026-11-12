@@ -50,6 +50,8 @@ namespace Alternet.UI
         private readonly RepeatPatternPicker rulePicker = new();
         private readonly CalendarAlarmPicker alarmPicker = new();
 
+        private readonly LinkLabel editExcludedDatesLinkLabel = new(CommonStrings.Default.CalendarItemLabelEditExcludedDates);
+
         private CalendarItem? calendarItem;
 
         /// <summary>
@@ -95,45 +97,18 @@ namespace Alternet.UI
             descriptionLabel.Parent = moreOptionsPanel;
             descriptionPicker.Parent = moreOptionsPanel;
 
+            editExcludedDatesLinkLabel.Parent = moreOptionsPanel;
+
             alarmPanel.Parent = this;
             moreOptionsPanel.Parent = this;
 
-            titlePicker.ValueChanged += (s, e) =>
-            {
-                Value.Text = titlePicker.Text;
-            };
-
-            locationPicker.ValueChanged += (s, e) =>
-            {
-                Value.Location = locationPicker.Text;
-            };
-            
-            descriptionPicker.ValueChanged += (s, e) =>
-            {
-                Value.Description = descriptionPicker.Text;
-            };
-            
-            categoryPicker.ValueChanged += (s, e) =>
-            {
-                var newValue = categoryPicker.Value;
-                Value.Category = newValue ?? KnownCalendarItemMarkers.CategoryNone;
-            };
-            
-            statusPicker.ValueChanged += (s, e) =>
-            {
-                var newValue = statusPicker.Value;
-                Value.Status = newValue ?? KnownCalendarItemMarkers.StatusUnknown;
-            };
-
-            rulePicker.ValueChanged += (s, e) =>
-            {
-                Value.Rule = rulePicker.Value;
-            };
-
-            alarmPicker.ValueChanged += (s, e) =>
-            {
-                Value.AlarmInfo = alarmPicker.Value;
-            };
+            titlePicker.ValueChanged += OnTitlePickerValueChanged;
+            locationPicker.ValueChanged += OnLocationPickerValueChanged;            
+            descriptionPicker.ValueChanged += OnDescriptionPickerValueChanged;            
+            categoryPicker.ValueChanged += OnCategoryPickerValueChanged;            
+            statusPicker.ValueChanged += OnStatusPickerValueChanged;
+            rulePicker.ValueChanged += OnRulePickerValueChanged;
+            alarmPicker.ValueChanged += OnAlarmPickerValueChanged;
         }
 
         /// <summary>
@@ -312,6 +287,85 @@ namespace Alternet.UI
                 calendarItem.PropertyChanged -= OnCalendarItemChanged;
 
             base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Called when the value of the title picker changes.
+        /// This method updates the <see cref="CalendarItem.Text"/> property
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnTitlePickerValueChanged(object? s, EventArgs e)
+        {
+            Value.Text = titlePicker.Text;
+        }
+
+        /// <summary>
+        /// Called when the value of the location picker changes.
+        /// This method updates the <see cref="CalendarItem.Location"/> property
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnLocationPickerValueChanged(object? s, EventArgs e)
+        {
+            Value.Location = locationPicker.Text;
+        }
+
+        /// <summary>
+        /// Called when the value of the description picker changes.
+        /// This method updates the <see cref="CalendarItem.Description"/> property
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDescriptionPickerValueChanged(object? s, EventArgs e)
+        {
+            Value.Description = descriptionPicker.Text;
+        }
+
+        /// <summary>
+        /// Called when the value of the category picker changes.
+        /// This method updates the <see cref="CalendarItem.Category"/> property
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnCategoryPickerValueChanged(object? s, EventArgs e)
+        {
+            var newValue = categoryPicker.Value;
+            Value.Category = newValue ?? KnownCalendarItemMarkers.CategoryNone;
+        }
+
+        /// <summary>
+        /// Called when the value of the status picker changes.
+        /// This method updates the <see cref="CalendarItem.Status"/> property
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnStatusPickerValueChanged(object? s, EventArgs e)
+        {
+            var newValue = statusPicker.Value;
+            Value.Status = newValue ?? KnownCalendarItemMarkers.StatusUnknown;
+        }
+        
+        /// <summary>
+        /// Called when the value of the rule picker changes.
+        /// This method updates the <see cref="CalendarItem.Rule"/> property
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnRulePickerValueChanged(object? s, EventArgs e)
+        {
+            Value.Rule = rulePicker.Value;
+        }
+        
+        /// <summary>
+        /// Called when the value of the alarm picker changes.
+        /// This method updates the <see cref="CalendarItem.AlarmInfo"/> property
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnAlarmPickerValueChanged(object? s, EventArgs e)
+        {
+            Value.AlarmInfo = alarmPicker.Value;
         }
 
         /// <summary>
