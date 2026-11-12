@@ -92,12 +92,10 @@ namespace Alternet.UI
         public virtual DateRangeData<int> GetItemsCountByDate(PatternRuleGetDatesParams prm)
         {
             var rangeData = new DateRangeData<int>(prm.MinDate, prm.MaxDate);
-            foreach (var dates in GetStartDates(prm))
+            foreach (var instance in GetInstances(prm))
             {
-                foreach (var date in dates.StartDates)
-                {
-                    rangeData[date] += 1;
-                }
+                var date = instance.StartDate;
+                rangeData[date] += 1;
             }
 
             return rangeData;
@@ -112,12 +110,10 @@ namespace Alternet.UI
         public virtual DateRangeData<bool> GetItemsExistByDate(PatternRuleGetDatesParams prm)
         {
             var rangeData = new DateRangeData<bool>(prm.MinDate, prm.MaxDate);
-            foreach (var dates in GetStartDates(prm))
+            foreach (var instance in GetInstances(prm))
             {
-                foreach (var date in dates.StartDates)
-                {
-                    rangeData[date] = true;
-                }
+                var date = instance.StartDate;
+                rangeData[date] = true;
             }
 
             return rangeData;
@@ -127,22 +123,38 @@ namespace Alternet.UI
         /// Gets the <see cref="CalendarItemsByDate"/> for the specified parameters.
         /// </summary>
         /// <param name="prm">The parameters for getting the items by date.</param>
-        /// <returns>A <see cref="CalendarItemsByDate"/> containing the items for the specified date range.</returns>
+        /// <returns>A <see cref="CalendarItemsByDate"/> containing the items
+        /// for the specified date range.</returns>
         public virtual CalendarItemsByDate GetItemsByDate(PatternRuleGetDatesParams prm)
         {
             var rangeData = new CalendarItemsByDate(prm.MinDate, prm.MaxDate);
 
-            foreach (var dates in GetStartDates(prm))
+            foreach (var instance in GetInstances(prm))
             {
-                var item = dates.Item;
-
-                foreach (var date in dates.StartDates)
-                {
-                    rangeData.AddItem(date, item);
-                }
+                var item = instance.Item;
+                var date = instance.StartDate;
+                rangeData.AddItem(date, item);
             }
 
             return rangeData;
+        }
+
+        /// <summary>
+        /// Gets the instances of <see cref="CalendarItem"/> that match the specified repeat pattern rule.
+        /// </summary>
+        /// <param name="prm">The parameters for getting the dates.</param>
+        /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
+        public virtual IEnumerable<CalendarItemInstance> GetInstances(PatternRuleGetDatesParams prm)
+        {
+            foreach (var item in Items)
+            {
+                var dates = item.Rule.GetDates(prm);
+
+                foreach (var date in dates.Dates)
+                {
+                    yield return new CalendarItemInstance(item, date);
+                }
+            }
         }
 
         /// <summary>
@@ -151,6 +163,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prm">The parameters for getting the dates.</param>
         /// <returns>An enumerable of <see cref="CalendarItemStartDates"/> objects.</returns>
+        [Obsolete("Use GetInstances method instead.")]
         public virtual IEnumerable<CalendarItemStartDates> GetStartDates(PatternRuleGetDatesParams prm)
         {
             foreach (var item in Items)
@@ -262,7 +275,8 @@ namespace Alternet.UI
         {
             if (item.Document is not null && item.Document != this)
             {
-                throw new InvalidOperationException("The CalendarItem is already associated with a SchedulerDocument.");
+                throw new InvalidOperationException(
+                    "The CalendarItem is already associated with a SchedulerDocument.");
             }
 
             item.Document = this;

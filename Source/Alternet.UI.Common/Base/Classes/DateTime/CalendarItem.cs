@@ -599,4 +599,32 @@ namespace Alternet.UI
         /// </summary>
         public CalendarItem Item { get; set; }
     }
+
+    /// <summary>
+    /// Represents a single instance of a <see cref="CalendarItem"/> with its corresponding start date.
+    /// </summary>
+    public readonly struct CalendarItemInstance
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItemInstance"/> struct
+        /// with the specified calendar item and start date.
+        /// </summary>
+        /// <param name="item">The calendar item.</param>
+        /// <param name="startDate">The start date of the calendar item instance.</param>
+        public CalendarItemInstance(CalendarItem item, DateOnly startDate)
+        {
+            Item = item;
+            StartDate = startDate;
+        }
+
+        /// <summary>
+        /// Gets the calendar item associated with this instance.
+        /// </summary>
+        public CalendarItem Item { get; }
+
+        /// <summary>
+        /// Gets the start date of the calendar item instance.
+        /// </summary>
+        public DateOnly StartDate { get; }
+    }
 }
