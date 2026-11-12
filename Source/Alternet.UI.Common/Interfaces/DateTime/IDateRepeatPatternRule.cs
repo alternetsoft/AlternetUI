@@ -54,6 +54,33 @@ namespace Alternet.UI
     public struct PatternRuleGetDatesParams
     {
         /// <summary>
+        /// Gets a <see cref="PatternRuleGetDatesParams"/> instance that represents the current year.
+        /// </summary>
+        public static PatternRuleGetDatesParams ThisYear
+        {
+            get
+            {
+                var today = DateUtils.Today();
+                return new(
+                    new DateOnly(today.Year, 1, 1),
+                    new DateOnly(today.Year, 12, 31));
+            }
+        }
+
+        /// <summary>
+        /// Gets a <see cref="PatternRuleGetDatesParams"/> instance that represents the current month.
+        /// </summary>
+        public static PatternRuleGetDatesParams ThisMonth
+        {
+            get
+            {
+                return new(
+                    DateUtils.GetFirstDateOfMonth(DateUtils.Today()),
+                    DateUtils.GetLastDateOfMonth(DateUtils.Today()));
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PatternRuleGetDatesParams"/> struct using
         /// the specified minimum and maximum dates.
         /// </summary>
