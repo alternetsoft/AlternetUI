@@ -134,6 +134,14 @@ namespace Alternet.UI
         /// <param name="endDate">The end date of the range.</param>
         /// <param name="isSelected"><c>true</c> to select the dates; <c>false</c> to deselect them.</param>    
         void SelectRange(DateOnly startDate, DateOnly endDate, bool isSelected = true);
+
+        /// <summary>
+        /// Selects or deselects a range of dates based on the provided selection state.
+        /// </summary>
+        /// <param name="dates">The dates to select or deselect.</param>
+        /// <param name="isSelected"><c>true</c> to select the dates; <c>false</c> to deselect them.</param>
+        /// <returns><c>true</c> if the selection state changed for any of the dates; otherwise, <c>false</c>.</returns>
+        bool SelectRange(IEnumerable<DateOnly>? dates, bool isSelected = true);
     }
 
     /// <summary>
@@ -168,7 +176,7 @@ namespace Alternet.UI
                 {
                     var year = yearSelection.Key;
                     var selection = yearSelection.Value;
-                    for (int day = 1; day <= 366; day++)
+                    for (int day = 1; day <= DateUtils.DaysInYear(year); day++)
                     {
                         if (selection.IsSelected(day))
                         {
@@ -351,6 +359,30 @@ namespace Alternet.UI
 
         /// <summary>
         /// Selects or deselects a range of dates based on the provided selection state.
+        /// </summary>
+        /// <param name="dates">The dates to select or deselect.</param>
+        /// <param name="isSelected"><c>true</c> to select the dates; <c>false</c> to deselect them.</param>
+        /// <returns><c>true</c> if the selection state changed for any of the dates; otherwise, <c>false</c>.</returns>
+        public virtual bool SelectRange(IEnumerable<DateOnly>? dates, bool isSelected = true)
+        {
+            if (dates is null)
+                return false;
+
+            var result = false;
+
+            DoInsideSuspendedPropertyChanged(() =>
+            {
+                foreach (var date in dates)
+                {
+                    result |= Select(date, isSelected);
+                }
+            });
+
+            return result;
+        }
+
+        /// <summary>
+        /// Selects or deselects a range of dates based on the provided selection state.
         /// Range is inclusive of both start and end dates.
         /// </summary>
         /// <param name="startDate">The start date of the range.</param>
@@ -495,7 +527,7 @@ namespace Alternet.UI
         /// </summary>
         private class YearSelection : IYearSelectionManager
         {
-            private readonly BitArray selectedDays = new(366);
+            private readonly BitArray selectedDays = new(367);
 
             /// <summary>
             /// Initializes a new instance of the <see cref="YearSelection"/> class.
