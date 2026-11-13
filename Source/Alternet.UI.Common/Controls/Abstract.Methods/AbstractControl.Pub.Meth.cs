@@ -42,22 +42,15 @@ namespace Alternet.UI
             DrawBorderAndBackground = DrawBackground | DrawBorder,
 
             /// <summary>
-            /// Specifies that background should be red.
-            /// This option has sense only when application is compiled in DEBUG mode and
-            /// can be used to test whether background is drawn correctly.
-            /// </summary>
-            BackgroundIsRed = 4,
-
-            /// <summary>
             /// Specifies that parent color should be used for background.
             /// </summary>
-            UseParentBackColor = 8,
+            UseParentBackColor = 4,
 
             /// <summary>
             /// Specifies that background is rectangle. This option is useful when border has non-rectangular shape
             /// and background should be drawn as rectangle.
             /// </summary>
-            BackgroundIsRectangle = 16,
+            BackgroundIsRectangle = 8,
         }
 
         /// <summary>
@@ -810,16 +803,16 @@ namespace Alternet.UI
                     {
                         brush = GetBackground(state);
                     }
-
-#if DEBUG
-                    if (flags.HasFlag(DrawDefaultBackgroundFlags.BackgroundIsRed))
-                        brush = Brushes.Red;
-#endif
                 }
                 else
                 {
                     brush = null;
-                    action(this, e);
+
+                    e.Graphics.EnabledOrDisabledPaint(IsEnabled, () =>
+                    {
+                        action(this, e);
+                    });
+
                     return;
                 }
             }
@@ -846,14 +839,17 @@ namespace Alternet.UI
                 border.InnerBorderVisible = true;
             }
 
-            var prm = new DrawingUtils.DrawBorderParams(
-                rect,
-                brush,
-                border,
-                HasBorder && flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder),
-                this);
-            prm.BackgroundIsRectangle = flags.HasFlag(DrawDefaultBackgroundFlags.BackgroundIsRectangle);
-            DrawingUtils.FillBorderRectangle(dc, ref prm);
+            dc.EnabledOrDisabledPaint(IsEnabled, () =>
+            {
+                var prm = new DrawingUtils.DrawBorderParams(
+                    rect,
+                    brush,
+                    border,
+                    HasBorder && flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder),
+                    this);
+                prm.BackgroundIsRectangle = flags.HasFlag(DrawDefaultBackgroundFlags.BackgroundIsRectangle);
+                DrawingUtils.FillBorderRectangle(dc, ref prm);
+            });
 
             if (savedInnerBorders is not null && border is not null)
             {
