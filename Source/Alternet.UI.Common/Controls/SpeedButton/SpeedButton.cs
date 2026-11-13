@@ -53,7 +53,6 @@ namespace Alternet.UI
         private bool isNormalTransparent;
         private bool isDisabledTransparent;
         private bool useTextColorForSvg;
-        private bool textTransparent;
         private bool? hasVisibleTextOverride;
 
         static SpeedButton()
@@ -177,14 +176,14 @@ namespace Alternet.UI
         {
             get
             {
-                return textTransparent;
+                return Label.TextTransparent;
             }
 
             set
             {
-                if (textTransparent == value)
+                if (TextTransparent == value)
                     return;
-                textTransparent = value;
+                Label.TextTransparent = value;
                 if (TextVisible)
                     Invalidate();
             }
