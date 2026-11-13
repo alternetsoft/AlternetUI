@@ -80,7 +80,7 @@ namespace Alternet.UI
         /// This is calculated based on the <see cref="Duration"/> property
         /// and can be set to coerce the duration to an all-day duration.
         /// </summary>
-        public bool IsAllDay
+        public virtual bool IsAllDay
         {
             get => rule.IsAllDay;
             set
