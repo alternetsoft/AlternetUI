@@ -71,6 +71,8 @@ namespace Alternet.UI
 
         private IFormatProvider? formatProvider;
         private DateUtils.TimePeriodUnitTextFormat timeUnitTextFormat = DefaultTimeUnitTextFormat;
+        private int valueToControlsSuspendCounter;
+        private bool valuesTransparent = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternPicker"/> class.
@@ -203,6 +205,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Wraps the specified event handler with logic to suspend and resume property change notifications
+        /// </summary>
+        /// <param name="handler">The event handler to wrap.</param>
+        /// <returns>A new event handler that suspends and resumes property change notifications.</returns>
+        public EventHandler WithValueToControlsSuspended(EventHandler handler)
+        {
+            return (s, e) =>
+            {
+                valueToControlsSuspendCounter++;
+                try
+                {
+                    handler(s, e);
+                }
+                finally
+                {
+                    valueToControlsSuspendCounter--;
+                }
+            };
+        }
+
+        /// <summary>
         /// Occurs when the selected repeat pattern changes.
         /// </summary>
         public event EventHandler? ValueChanged;
@@ -294,6 +317,28 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public TransparentPanel EndTimePanel => endTimePanel;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the values of the inner controls are transparent.
+        /// </summary>
+        public virtual bool ValuesTransparent
+        {
+            get => valuesTransparent;
+            set
+            {
+                if (valuesTransparent == value)
+                    return;
+                valuesTransparent = value;
+                startPicker.TextTransparent = value;
+                endDatePicker.MainControl.TextTransparent = value;
+                endTimePicker.MainControl.TextTransparent = value;
+                occurrencePicker.IntPicker.TextPicker.TextTransparent = value;
+                dailyPicker.ValuesTransparent = value;
+                weeklyPicker.ValuesTransparent = value;
+                monthlyPicker.ValuesTransparent = value;
+                yearlyPicker.ValuesTransparent = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the borders of inner panels are shown
@@ -483,31 +528,43 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ValueToControls()
         {
-            allDayCheckBox.Checked = data.IsAllDay;
+            if (valueToControlsSuspendCounter > 0)
+                return;
 
-            var tabIndex = (int)SelectedPattern;
-            tabControl.SelectedIndex = tabIndex;
+            try
+            {
+                valueToControlsSuspendCounter++;
 
-            tabControl.SelectedIndex = (int)SelectedPattern;
-            startPicker.AsDateOnly = data.ValidFromDate;
-            startPicker.AsTimeOnly = data.StartTime;
-            endDatePicker.MainControl.AsDateOnly = data.ValidToDate;
-            endTimePicker.MainControl.AsTimeOnly = data.EndTime;
+                allDayCheckBox.Checked = data.IsAllDay;
 
-            UpdateDurationText();
+                var tabIndex = (int)SelectedPattern;
+                tabControl.SelectedIndex = tabIndex;
 
-            endsOnRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.OnDate;
-            endsAfterOccurrenceRadioButton.IsChecked
-                = data.EndCondition == RepeatPatternEndCondition.AfterOccurrence;
-            endsNeverRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.Never;
+                tabControl.SelectedIndex = (int)SelectedPattern;
+                startPicker.AsDateOnly = data.ValidFromDate;
+                startPicker.AsTimeOnly = data.StartTime;
+                endDatePicker.MainControl.AsDateOnly = data.ValidToDate;
+                endTimePicker.MainControl.AsTimeOnly = data.EndTime;
 
-            occurrencePicker.Value = data.OccurrenceCount;
-            UpdateOccurrenceText();
+                UpdateDurationText();
 
-            dailyPicker.ValueToControls();
-            weeklyPicker.ValueToControls();
-            monthlyPicker.ValueToControls();
-            yearlyPicker.ValueToControls();
+                endsOnRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.OnDate;
+                endsAfterOccurrenceRadioButton.IsChecked
+                    = data.EndCondition == RepeatPatternEndCondition.AfterOccurrence;
+                endsNeverRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.Never;
+
+                occurrencePicker.Value = data.OccurrenceCount;
+                UpdateOccurrenceText();
+
+                dailyPicker.ValueToControls();
+                weeklyPicker.ValueToControls();
+                monthlyPicker.ValueToControls();
+                yearlyPicker.ValueToControls();
+            }
+            finally
+            {
+                valueToControlsSuspendCounter--;
+            }
         }
 
         /// <summary>
