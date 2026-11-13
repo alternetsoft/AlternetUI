@@ -36,11 +36,12 @@ namespace Alternet.UI
             ItemSize = 32,
         };
 
-        private readonly ObjectUniqueId buttonIdAdd;
-        private readonly ObjectUniqueId buttonIdRemove;
-        private readonly ObjectUniqueId buttonIdRemoveAll;
-        private readonly ObjectUniqueId buttonIdAddChild;
-        private readonly ObjectUniqueId buttonIdOk;
+        private readonly SpeedButton buttonAdd;
+        private readonly SpeedButton buttonRemove;
+        private readonly SpeedButton buttonRemoveAll;
+        private readonly SpeedButton buttonAddChild;
+        private readonly SpeedButton buttonSave;
+        private readonly SpeedButton buttonClose;
 
         private readonly XEnumerableTreeView treeView = new()
         {
@@ -92,28 +93,30 @@ namespace Alternet.UI
             Title = s;
             StartLocation = WindowStartLocation.CenterScreen;
 
-            if (source.AllowAdd)
-            {
-                buttonIdAdd = toolbar.AddSpeedBtn(KnownButton.Add, OnAddButtonClick);
-            }
+            buttonAdd = toolbar.AddSpeedBtnCore(KnownButton.Add, OnAddButtonClick);
+            buttonAdd.Visible = source.AllowAdd;
 
-            if (source.AllowSubItems && source.AllowAdd)
-            {
-                buttonIdAddChild = toolbar.AddSpeedBtn(KnownButton.AddChild, OnAddChildButtonClick);
-            }
+            buttonAddChild = toolbar.AddSpeedBtnCore(KnownButton.AddChild, OnAddChildButtonClick);
+            buttonAddChild.Visible = source.AllowSubItems && source.AllowAdd;
 
-            if (source.AllowDelete)
-            {
-                buttonIdRemove = toolbar.AddSpeedBtn(KnownButton.Remove, OnRemoveButtonClick);
-                buttonIdRemoveAll = toolbar.AddSpeedBtn(KnownButton.Clear, OnRemoveAllButtonClick);
-            }
+            buttonRemove = toolbar.AddSpeedBtnCore(KnownButton.Remove, OnRemoveButtonClick);
+            buttonRemoveAll = toolbar.AddSpeedBtnCore(KnownButton.Clear, OnRemoveAllButtonClick);
+            buttonRemove.Visible = source.AllowDelete;
+            buttonRemoveAll.Visible = source.AllowDelete;
 
-            if (source.AllowApplyData)
-            {
-                buttonIdOk = toolbar.AddSpeedBtn(KnownButton.OK, OnOkButtonClick);
-            }
+            var addSeparator = source.AllowApplyData || source.AllowAdd || source.AllowDelete || source.AllowSubItems;
 
-            var buttonIdCancel = toolbar.AddSpeedBtn(KnownButton.Cancel, OnCancelButtonClick);
+            if (addSeparator)
+                toolbar.AddSeparator();
+
+            buttonSave = toolbar.AddSpeedBtnCore(KnownButton.Save, OnSaveButtonClick);
+            buttonSave.Visible = source.AllowApplyData;
+            buttonSave.TextVisible = true;
+            buttonSave.Text = CommonStrings.Default.ButtonSave;
+
+            buttonClose = toolbar.AddSpeedBtnCore(KnownButton.Close, OnCloseButtonClick);
+            buttonClose.TextVisible = true;
+            buttonClose.Text = CommonStrings.Default.ButtonClose;
 
             toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
             toolbar.SetVisibleBorders(false, false, false, true);
@@ -138,29 +141,34 @@ namespace Alternet.UI
         public XTreeView MainView => treeView;
 
         /// <summary>
-        /// Gets the unique identifier of the "Add" button in the collection editor window.
+        /// Gets the "Add" button in the collection editor window.
         /// </summary>
-        public ObjectUniqueId ButtonIdAdd => buttonIdAdd;
+        public SpeedButton ButtonAdd => buttonAdd;
 
         /// <summary>
-        /// Gets the unique identifier of the "Remove" button in the collection editor window.
+        /// Gets the "Remove" button.
         /// </summary>
-        public ObjectUniqueId ButtonIdRemove => buttonIdRemove;
+        public SpeedButton ButtonRemove => buttonRemove;
 
         /// <summary>
-        /// Gets the unique identifier of the "Remove All" button in the collection editor window.
+        /// Gets the "Remove All" button.
         /// </summary>
-        public ObjectUniqueId ButtonIdRemoveAll => buttonIdRemoveAll;
+        public SpeedButton ButtonRemoveAll => buttonRemoveAll;
 
         /// <summary>
-        /// Gets the unique identifier of the "Add Child" button in the collection editor window.
+        /// Gets the "Add Child" button.
         /// </summary>
-        public ObjectUniqueId ButtonIdAddChild => buttonIdAddChild;
+        public SpeedButton ButtonAddChild => buttonAddChild;
         
         /// <summary>
-        /// Gets the unique identifier of the "OK" button in the collection editor window.
+        /// Gets the "Save" button.
         /// </summary>
-        public ObjectUniqueId ButtonIdOk => buttonIdOk;
+        public SpeedButton ButtonSave => buttonSave;
+
+        /// <summary>
+        /// Gets the "Close" button.
+        /// </summary>
+        public SpeedButton ButtonClose => buttonClose;
 
         /// <summary>
         /// Gets or sets the data source for the list editor.
@@ -227,17 +235,17 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnCancelButtonClick(object? sender, EventArgs e)
+        protected virtual void OnCloseButtonClick(object? sender, EventArgs e)
         {
             Close();
         }
 
         /// <summary>
-        /// Handles the click event of the "OK" button in the collection editor window.
+        /// Handles the click event of the "Save" button in the collection editor window.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnOkButtonClick(object? sender, EventArgs e)
+        protected virtual void OnSaveButtonClick(object? sender, EventArgs e)
         {
             SetFocusIfPossible();
 
@@ -246,8 +254,6 @@ namespace Alternet.UI
                 SaveData();
                 Designer?.RaisePropertyChanged(DataSource?.Instance, DataSource?.PropInfo?.Name);
             }
-
-            Close();
         }
 
         /// <summary>
@@ -386,11 +392,11 @@ namespace Alternet.UI
                 canApply = dataSource.AllowApplyData;
             }
 
-            toolbar.SetToolEnabled(buttonIdAdd, canAdd);
-            toolbar.SetToolEnabled(buttonIdRemove, canRemove);
-            toolbar.SetToolEnabled(buttonIdRemoveAll, canRemoveAll);
-            toolbar.SetToolEnabled(buttonIdAddChild, canAddChild);
-            toolbar.SetToolEnabled(buttonIdOk, canApply);
+            buttonAdd.Enabled = canAdd;
+            buttonRemove.Enabled = canRemove;
+            buttonRemoveAll.Enabled = canRemoveAll;
+            buttonAddChild.Enabled = canAddChild;
+            buttonSave.Enabled = canApply;
         }
 
         /// <summary>
