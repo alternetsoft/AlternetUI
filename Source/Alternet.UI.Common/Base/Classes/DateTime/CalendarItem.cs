@@ -34,6 +34,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItem"/> class with the specified title.
+        /// </summary>
+        /// <param name="title">The title of the calendar item.</param>
+        public CalendarItem(string title)
+            : this()
+        {
+            this.title = title;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItem"/> class
         /// with the specified unique id.
         /// </summary>
@@ -259,7 +269,7 @@ namespace Alternet.UI
         /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
         public IEnumerable<CalendarItemInstance> GetTodayInstances()
         {
-            return GetInstances(DateUtils.Today());
+            return GetInstances(DateUtils.Today);
         }
 
         /// <summary>
@@ -700,6 +710,17 @@ namespace Alternet.UI
             StartDate = startDate;
             changeToken = Item.ChangeToken;
             hashCode = HashCode.Combine(Item.GetHashCode(), StartDate.GetHashCode());
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItemInstance"/> struct
+        /// with the specified calendar item and start date.
+        /// </summary>
+        /// <param name="item">The calendar item.</param>
+        /// <param name="startDate">The start date of the calendar item instance.</param>
+        public CalendarItemInstance(CalendarItem item, DateTime startDate)
+            : this(item, DateOnly.FromDateTime(startDate))
+        {
         }
 
         /// <summary>
