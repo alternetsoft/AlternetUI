@@ -1215,6 +1215,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the effective cursor that the control should display, taking into account whether the
+        /// control is enabled or disabled.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Cursor EffectiveCursor
+        {
+            get
+            {
+                if (Enabled)
+                    return Cursor ?? Cursors.Default;
+                return Cursors.Default;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether <see cref="Text"/> property should be localizable.
         /// </summary>
         [Browsable(false)]

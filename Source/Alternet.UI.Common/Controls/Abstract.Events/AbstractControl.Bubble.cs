@@ -590,7 +590,7 @@ namespace Alternet.UI
 
             if (!currentTarget.IsPlatformControl)
             {
-                newCursor = currentTarget.Cursor ?? Cursors.Default;
+                newCursor = currentTarget.EffectiveCursor;
                 lastCursorControl.Value = originalTargetControl;
             }
             else

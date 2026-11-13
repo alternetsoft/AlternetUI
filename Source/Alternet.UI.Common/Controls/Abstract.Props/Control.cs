@@ -745,7 +745,7 @@ namespace Alternet.UI
         public virtual void UpdateCursor(Cursor? overrideCursor = null)
         {
             if (overrideCursor is null)
-                SafeHandler?.SetCursor(Cursor);
+                SafeHandler?.SetCursor(EffectiveCursor);
             else
                 SafeHandler?.SetCursor(overrideCursor);
         }
