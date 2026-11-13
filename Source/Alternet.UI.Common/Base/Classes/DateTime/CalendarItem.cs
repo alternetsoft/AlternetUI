@@ -477,29 +477,7 @@ namespace Alternet.UI
         /// <param name="other">The instance from which to copy values.</param>
         public virtual void Assign(object? other)
         {
-            if (other == null)
-            {
-                DoInsideSuspendedPropertyChanged(() =>
-                {
-                    Text = null;
-                    Description = null;
-                    AlarmInfo.Assign(null);
-                    Location = null;
-                    Category = KnownCalendarItemMarkers.CategoryNone;
-                    Status = KnownCalendarItemMarkers.StatusUnknown;
-                    UserData = null;
-                    UserName = null;
-                    Visible = true;
-                    Rule.Assign(null);
-                });
-
-                return;
-            }
-
-            if (other is CalendarItem otherItem)
-            {
-                Assign(otherItem);
-            }
+            Assign(other as CalendarItem);
         }
 
         /// <summary>
@@ -510,7 +488,7 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     Category = KnownCalendarItemMarkers.CategoryNone;
                     Status = KnownCalendarItemMarkers.StatusUnknown;
@@ -530,7 +508,7 @@ namespace Alternet.UI
             if (Equals(other))
                 return;
 
-            DoInsideSuspendedPropertyChanged(() =>
+            DoInsideTransaction(() =>
             {
                 Text = other.Text;
                 Description = other.Description;
