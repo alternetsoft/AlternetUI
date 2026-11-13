@@ -97,6 +97,24 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Gets or sets a value indicating whether the values of the inner controls are transparent.
+            /// </summary>
+            public virtual bool ValuesTransparent
+            {
+                get
+                {
+                    return intervalDayPicker.IntPicker.TextPicker.TextTransparent;
+                }
+
+                set
+                {
+                    if (ValuesTransparent == value)
+                        return;
+                    intervalDayPicker.IntPicker.TextPicker.TextTransparent = value;
+                }
+            }
+
+            /// <summary>
             /// Gets the integer picker control for selecting the interval day value in the daily repeat pattern.
             /// </summary>
             [Browsable(false)]

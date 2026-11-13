@@ -51,5 +51,20 @@ namespace Alternet.UI
         /// Gets the <see cref="Label"/> control used for displaying a label for the picker.
         /// </summary>
         public Label Label => label;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the values of the month and day pickers are transparent.
+        /// </summary>
+        public virtual bool ValuesTransparent
+        {
+            get => monthPicker.TextTransparent;
+            set
+            {
+                if (ValuesTransparent == value)
+                    return;
+                monthPicker.TextTransparent = value;
+                dayPicker.TextPicker.TextTransparent = value;
+            }
+        }
     }
 }

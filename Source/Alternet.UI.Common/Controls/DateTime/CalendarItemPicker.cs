@@ -30,9 +30,9 @@ namespace Alternet.UI
         /// </summary>
         public static float DefaultMinWidth = 300;
 
-        private readonly GenericRoundBorderWithTitle detailsPanel = new(CommonStrings.Default.CalendarItemLabelDetails);
-        private readonly GenericRoundBorderWithTitle moreOptionsPanel = new(CommonStrings.Default.CalendarItemLabelMoreOptions);
-        private readonly GenericRoundBorderWithTitle alarmPanel = new(CommonStrings.Default.CalendarItemLabelReminder);
+        private readonly GenericRoundBorderWithTitle detailsPanel = new(Localized.CalendarItemLabelDetails);
+        private readonly GenericRoundBorderWithTitle moreOptionsPanel = new(Localized.CalendarItemLabelMoreOptions);
+        private readonly GenericRoundBorderWithTitle alarmPanel = new(Localized.CalendarItemLabelReminder);
         private readonly Label titleLabel = new();
         private readonly TextPicker titlePicker = new();
 
@@ -51,9 +51,10 @@ namespace Alternet.UI
         private readonly RepeatPatternPicker rulePicker = new();
         private readonly CalendarAlarmPicker alarmPicker = new();
 
-        private readonly LinkLabel editExcludedDatesLinkLabel = new(CommonStrings.Default.CalendarItemLabelEditExcludedDates);
+        private readonly LinkLabel editExcludedDatesLinkLabel = new(Localized.CalendarItemLabelEditExcludedDates);
 
         private CalendarItem? calendarItem;
+        private bool valuesTransparent = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarItemPicker"/> class.
@@ -68,11 +69,11 @@ namespace Alternet.UI
             moreOptionsPanel.Margin = DefaultMinChildMargin;
             alarmPanel.Margin = DefaultMinChildMargin;
 
-            titleLabel.Text = CommonStrings.Default.CalendarItemLabelTitle;
-            descriptionLabel.Text = CommonStrings.Default.CalendarItemLabelDescription;
-            locationLabel.Text = CommonStrings.Default.CalendarItemLabelLocation;
-            categoryLabel.Text = CommonStrings.Default.CalendarItemLabelCategory;
-            statusLabel.Text = CommonStrings.Default.CalendarItemLabelStatus;
+            titleLabel.Text = Localized.CalendarItemLabelTitle;
+            descriptionLabel.Text = Localized.CalendarItemLabelDescription;
+            locationLabel.Text = Localized.CalendarItemLabelLocation;
+            categoryLabel.Text = Localized.CalendarItemLabelCategory;
+            statusLabel.Text = Localized.CalendarItemLabelStatus;
 
             ValueToControls();
 
@@ -149,6 +150,33 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public RepeatPatternPicker RulePicker => rulePicker;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the values are transparent
+        /// in the inner controls of <see cref="CalendarItemPicker"/>.
+        /// </summary>
+        public virtual bool ValuesTransparent
+        {
+            get
+            {
+                return valuesTransparent;
+            }
+
+            set
+            {
+                if (valuesTransparent == value)
+                    return;
+                valuesTransparent = value;
+
+                descriptionPicker.TextTransparent = value;
+                locationPicker.TextTransparent = value;
+                titlePicker.TextTransparent = value;
+                rulePicker.ValuesTransparent = value;
+                alarmPicker.ValuesTransparent = value;
+                categoryPicker.TextTransparent = value;
+                statusPicker.TextTransparent = value;
+            }
+        }
 
         /// <summary>
         /// Gets the <see cref="CalendarAlarmPicker"/> that is used to edit the alarms

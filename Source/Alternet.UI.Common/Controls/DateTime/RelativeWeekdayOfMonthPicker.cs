@@ -131,6 +131,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the text values of the inner picker controls are transparent.
+        /// </summary>
+        public virtual bool ValuesTransparent
+        {
+            get
+            {
+                return monthPicker.TextTransparent;
+            }
+
+            set
+            {
+                if (ValuesTransparent == value)
+                    return;
+                monthPicker.TextTransparent = value;
+                dayOfWeekPicker.TextTransparent = value;
+                relativeWeekdayPicker.TextTransparent = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the drop-down image for the combo controls is visible.
         /// </summary>
         public virtual bool ImageVisible

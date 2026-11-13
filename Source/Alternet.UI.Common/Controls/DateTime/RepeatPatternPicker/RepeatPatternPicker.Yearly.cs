@@ -104,6 +104,26 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Gets or sets a value indicating whether the values in the inner controls are transparent.
+            /// </summary>
+            public virtual bool ValuesTransparent
+            {
+                get
+                {
+                    return intervalYearPicker.IntPicker.TextPicker.TextTransparent;
+                }
+
+                set
+                {
+                    if (ValuesTransparent == value)
+                        return;
+                    intervalYearPicker.IntPicker.TextPicker.TextTransparent = value;
+                    relativeWeekdayOfMonthPicker.ValuesTransparent = value;
+                    monthAndDayPicker.ValuesTransparent = value;
+                }
+            }
+
+            /// <summary>
             /// Gets the integer picker control for selecting the interval year value in the yearly repeat pattern.
             /// </summary>
             [Browsable(false)]

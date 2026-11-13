@@ -37,6 +37,7 @@ namespace Alternet.UI
         private readonly XCheckBox playSoundCheckBox = new(CommonStrings.Default.PlaySound);
 
         private bool valueChanging;
+        private bool valuesTransparent = false;
 
         private readonly TransparentPanel firstRowPanel = new()
         {
@@ -177,6 +178,23 @@ namespace Alternet.UI
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public PictureBox SoundImage => soundImage;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the values of the controls
+        /// in the <see cref="CalendarAlarmPicker"/> are transparent.
+        /// </summary>
+        public virtual bool ValuesTransparent
+        {
+            get => valuesTransparent;
+            set
+            {
+                if (valuesTransparent == value)
+                    return;
+                valuesTransparent = value;
+                timePeriodPicker.TextTransparent = value;
+                soundFilePicker.MainControl.TextTransparent = value;
+            }
+        }
 
         /// <summary>
         /// Gets the <see cref="XCheckBox"/> control that allows users to enable or disable sound playback.

@@ -60,7 +60,10 @@ namespace Alternet.UI
                     relativeWeekdayRadioButton.IsChecked = true;
                 };
 
-                XRadioButton[] radioGroup = { dayOfMonthRadioButton.MainControl, relativeWeekdayRadioButton.MainControl };
+                XRadioButton[] radioGroup = {
+                    dayOfMonthRadioButton.MainControl,
+                    relativeWeekdayRadioButton.MainControl,
+                };
 
                 dayOfMonthRadioButton.MainControl.RadioSiblings = radioGroup;
                 relativeWeekdayRadioButton.MainControl.RadioSiblings = radioGroup;
@@ -96,6 +99,26 @@ namespace Alternet.UI
                     Value.DayOfWeekIndex = v.RelativeWeekday;
                     Value.DayOfWeek = v.DayOfWeek;
                 };
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the values of the inner controls are transparent.
+            /// </summary>
+            public virtual bool ValuesTransparent
+            {
+                get
+                {
+                    return intervalMonthPicker.IntPicker.TextPicker.TextTransparent;
+                }
+
+                set
+                {
+                    if (ValuesTransparent == value)
+                        return;
+                    relativeWeekdayOfMonthPicker.ValuesTransparent = value;
+                    intervalMonthPicker.IntPicker.TextPicker.TextTransparent = value;
+                    dayOfMonthPicker.IntPicker.TextPicker.TextTransparent = value;
+                }
             }
 
             /// <summary>

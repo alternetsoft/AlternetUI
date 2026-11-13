@@ -76,24 +76,46 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Gets the panel that contains the checkboxes for selecting the days of the week in the weekly repeat pattern.
+            /// Gets or sets a value indicating whether the values of the inner controls are transparent.
+            /// </summary>
+            public virtual bool ValuesTransparent
+            {
+                get
+                {
+                    return intervalWeekPicker.IntPicker.TextPicker.TextTransparent;
+                }
+
+                set
+                {
+                    if (ValuesTransparent == value)
+                        return;
+                    intervalWeekPicker.IntPicker.TextPicker.TextTransparent = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets the panel that contains the checkboxes for selecting the days
+            /// of the week in the weekly repeat pattern.
             /// </summary>
             public PanelSettings WeekdaysPanel => panel;
 
             /// <summary>
-            /// Gets the integer picker control for selecting the interval week value in the weekly repeat pattern.
+            /// Gets the integer picker control for selecting the interval
+            /// week value in the weekly repeat pattern.
             /// </summary>
             [Browsable(false)]
             public XIntPickerWithLabels IntervalWeekPicker => intervalWeekPicker;
 
             /// <summary>
-            /// Gets the label that displays the suffix text for the interval week picker in the weekly repeat pattern.
+            /// Gets the label that displays the suffix text for the
+            /// interval week picker in the weekly repeat pattern.
             /// </summary>
             [Browsable(false)]
             public Label IntervalWeekSuffixLabel => intervalWeekPicker.SuffixLabel;
 
             /// <summary>
-            /// Gets the label that displays the prefix text for the interval week picker in the weekly repeat pattern.
+            /// Gets the label that displays the prefix text for the interval
+            /// week picker in the weekly repeat pattern.
             /// </summary>
             [Browsable(false)]
             public Label IntervalWeekPrefixLabel => intervalWeekPicker.PrefixLabel;
