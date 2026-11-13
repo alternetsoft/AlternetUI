@@ -74,6 +74,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes the specified function inside a transaction and returns its result.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result returned by the function.</typeparam>
+        /// <param name="func">The function to execute inside the transaction.</param>
+        /// <returns>The result of the function.</returns>
+        public TResult DoInsideTransaction<TResult>(Func<TResult> func)
+        {
+            StartTransaction();
+            try
+            {
+                return func();
+            }
+            finally
+            {
+                EndTransaction();
+            }
+        }
+
+        /// <summary>
         /// Starts a transaction.
         /// </summary>
         /// <remarks>
