@@ -101,7 +101,7 @@ namespace Alternet.UI
             var endDateControlsPanel = new TransparentPanel();
             endDateControlsPanel.Layout = LayoutStyle.Vertical;
 
-            endDatePicker.Label.Text = CommonStrings.Default.OnPrefix;
+            endDatePicker.Label.Text = Localized.OnPrefix;
             endDatePicker.Label.InputTransparent = true;
             endDatePicker.MainControl.ImageVisible = DefaultShowDropDownImage;
             
@@ -111,7 +111,7 @@ namespace Alternet.UI
 
             // Ends after occurrence
 
-            occurrencePicker.PrefixText = CommonStrings.Default.After;
+            occurrencePicker.PrefixText = Localized.After;
 
             endsAfterOccurrenceRadioButton = new(occurrencePicker);
             endsAfterOccurrenceRadioButton.MarginTop = DefaultMinChildMargin.Top;
@@ -169,11 +169,11 @@ namespace Alternet.UI
             tabControl.TabTheme = SpeedButton.KnownTheme.Default;
             tabControl.ContentVisible = false;
 
-            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternNone, nonePicker);
-            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternDaily, dailyPicker);
-            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternWeekly, weeklyPicker);
-            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternMonthly, monthlyPicker);
-            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternYearly, yearlyPicker);
+            tabControl.Add(Localized.ScheduleRepeatPatternNone, nonePicker);
+            tabControl.Add(Localized.ScheduleRepeatPatternDaily, dailyPicker);
+            tabControl.Add(Localized.ScheduleRepeatPatternWeekly, weeklyPicker);
+            tabControl.Add(Localized.ScheduleRepeatPatternMonthly, monthlyPicker);
+            tabControl.Add(Localized.ScheduleRepeatPatternYearly, yearlyPicker);
 
             HasBorder = false;
 
@@ -182,7 +182,6 @@ namespace Alternet.UI
             tabControlPanel.Parent = this;
 
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
-            data.PropertyChanged += OnValuePropertyChanged;
 
             DateFormat = DefaultDateFormat;
 
@@ -194,6 +193,7 @@ namespace Alternet.UI
             SecondsVisible = false;
             endTimePicker.SuffixControl.Sticky = true;
 
+            data.PropertyChanged += OnValuePropertyChanged;
             allDayCheckBox.CheckedChanged += OnAllDayCheckedChanged;
             startPicker.ValueChanged += OnStartPickerChanged;
             endTimePicker.MainControl.ValueChanged += OnEndTimePickerChanged;
@@ -560,6 +560,8 @@ namespace Alternet.UI
                 weeklyPicker.ValueToControls();
                 monthlyPicker.ValueToControls();
                 yearlyPicker.ValueToControls();
+
+                IsTimeEnabled = !allDayCheckBox.Checked;
             }
             finally
             {
@@ -667,7 +669,6 @@ namespace Alternet.UI
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected virtual void OnAllDayCheckedChanged(object? sender, EventArgs e)
         {
-            IsTimeEnabled = !allDayCheckBox.Checked;
             data.IsAllDay = allDayCheckBox.Checked;
         }
 
