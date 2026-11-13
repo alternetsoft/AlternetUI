@@ -120,7 +120,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns a hash code that uniquely identifies the specified object instance during the application's lifetime.
+        /// Returns a hash code that uniquely identifies the specified object instance
+        /// during the application's lifetime.
         /// This value is guaranteed to be unique only for the lifetime of the
         /// object within the current application domain.
         /// When object is disposed, the same hash code may be returned for another object instance.
@@ -138,8 +139,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a <see cref="CommonStrings"/> instance that provides access to common strings
+        /// used in the application.
+        /// </summary>
+        [Browsable(false)]
+        public static CommonStrings Localized => CommonStrings.Default;
+
+        /// <summary>
         /// Gets a string that combines the runtime type name and the runtime key.
-        /// Result is guaranteed to be unique only for the lifetime of the object within the current application domain.
+        /// Result is guaranteed to be unique only for the lifetime of the object
+        /// within the current application domain.
         /// When object is disposed, the same hash code may be returned for another object instance.
         /// </summary>
         /// <remarks>This property is useful for scenarios where a distinct identifier is needed for an
