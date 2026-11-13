@@ -60,7 +60,7 @@ namespace Alternet.UI
         {
             get
             {
-                var today = DateUtils.Today();
+                var today = DateUtils.Today;
                 return new(
                     new DateOnly(today.Year, 1, 1),
                     new DateOnly(today.Year, 12, 31));
@@ -75,8 +75,8 @@ namespace Alternet.UI
             get
             {
                 return new(
-                    DateUtils.GetFirstDateOfMonth(DateUtils.Today()),
-                    DateUtils.GetLastDateOfMonth(DateUtils.Today()));
+                    DateUtils.GetFirstDateOfMonth(DateUtils.Today),
+                    DateUtils.GetLastDateOfMonth(DateUtils.Today));
             }
         }
 

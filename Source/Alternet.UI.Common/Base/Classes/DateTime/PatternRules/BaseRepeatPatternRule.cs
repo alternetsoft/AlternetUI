@@ -46,7 +46,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsAllDay
         {
-            get => DateUtils.IsValidAllDayDuration(Duration);
+            get
+            {
+                return DateUtils.IsValidAllDayDuration(Duration);
+            }
+
             set
             {
                 if (value)

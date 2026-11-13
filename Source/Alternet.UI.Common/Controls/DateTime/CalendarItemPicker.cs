@@ -477,7 +477,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override object? CreateNewItem()
         {
-            return DateUtils.Today();
+            return DateUtils.Today;
         }
 
         /// <inheritdoc/>
