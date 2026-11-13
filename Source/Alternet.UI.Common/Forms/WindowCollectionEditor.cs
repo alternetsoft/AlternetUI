@@ -689,8 +689,8 @@ namespace Alternet.UI
         {
             AutoSuffixNewTitle = false;
             ItemEditor.ValueChanged += OnValueChanged;
-            ItemEditor.ScrolledControl.MinWidth = 300;
-            ItemEditor.ScrolledControl.MaxWidth = 300;
+            ItemEditor.ScrolledControl.MinWidth = 350;
+            ItemEditor.ScrolledControl.MaxWidth = 350;
         }
 
         /// <summary>
@@ -709,17 +709,29 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Updates the enabled state of the item editor control based on the
+        /// specified <paramref name="enabled"/> value. Also update the visibility of the text
+        /// in the item editor control based on the enabled state.
+        /// </summary>
+        /// <param name="enabled">A value indicating whether the item editor should be enabled.</param>
+        protected virtual void UpdateItemEditorState(bool enabled)
+        {
+            ItemEditor.Enabled = enabled;
+            ItemEditor.ScrolledControl.ValuesTransparent = !enabled;
+        }
+
         /// <inheritdoc/>
         protected override void UpdateItemEditor()
         {
             var item = MainView.SelectedItem;
             if (item == null)
             {
-                ItemEditor.Enabled = false;
+                UpdateItemEditorState(false);
                 return;
             }
 
-            ItemEditor.Enabled = true;
+            UpdateItemEditorState(true);
 
             if (item.Tag is CalendarItem calendarItem)
             {
@@ -752,7 +764,7 @@ namespace Alternet.UI
                 item.Text = value.Text ?? CommonStrings.Default.UntitledItemText;
             }
 
-            ItemEditor.Enabled = item is not null;
+            UpdateItemEditorState(item is not null);
         }
     }
 
