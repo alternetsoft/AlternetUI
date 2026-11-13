@@ -12,8 +12,13 @@ namespace Alternet.UI
     /// </summary>
     public partial class SchedulerDocument : SerializableObject
     {
-        private static SchedulerDocument? instance;
+        /// <summary>
+        /// Gets or sets a value indicating whether the seconds component of the time should be cleared.
+        /// </summary>
+        public static bool DefaultClearSeconds = true;
 
+        private static SchedulerDocument? instance;
+        private bool? clearSeconds;
         private readonly ListSource<CalendarItem> items = new ();
 
         /// <summary>
@@ -46,6 +51,33 @@ namespace Alternet.UI
             {
                 return items;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the seconds component of the time should
+        /// be cleared each time a <see cref="CalendarItem"/> is modified.
+        /// </summary>
+        public virtual bool? ClearSeconds
+        {
+            get
+            {
+                return clearSeconds;
+            }
+            set
+            {
+                if (clearSeconds == value)
+                    return;
+                clearSeconds = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the effective value indicating whether the seconds component of the time should be cleared.
+        /// </summary>
+        /// <returns> <c>true</c> if the seconds component should be cleared; otherwise, <c>false</c>.</returns>
+        public virtual bool EffectiveClearSeconds()
+        {
+            return ClearSeconds ?? DefaultClearSeconds;
         }
 
         /// <summary>
@@ -153,24 +185,6 @@ namespace Alternet.UI
                 {
                     yield return instance;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Gets the dates for each <see cref="CalendarItem"/> in
-        /// the source that match the specified repeat pattern rule.
-        /// </summary>
-        /// <param name="prm">The parameters for getting the dates.</param>
-        /// <returns>An enumerable of <see cref="CalendarItemStartDates"/> objects.</returns>
-        [Obsolete("Use GetInstances method instead.")]
-        public virtual IEnumerable<CalendarItemStartDates> GetStartDates(PatternRuleGetDatesParams prm)
-        {
-            foreach (var item in Items)
-            {
-                var dates = item.Rule.GetDates(prm);
-                var d = dates.Dates.ToArray();
-                if (d.Length > 0)
-                    yield return new CalendarItemStartDates(item, d);
             }
         }
 
