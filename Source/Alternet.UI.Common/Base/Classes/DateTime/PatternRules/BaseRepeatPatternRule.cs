@@ -34,7 +34,7 @@ namespace Alternet.UI
     {
         private DateOnly validFromDate;
         private TimeOnly startTime;
-        private TimeSpan duration = TimeSpan.FromDays(1);
+        private TimeSpan duration;
         private DateOnly validToDate;
         private int occurrenceCount = 1;
         private RepeatPatternEndCondition endCondtion = RepeatPatternEndCondition.OnDate;
@@ -48,13 +48,29 @@ namespace Alternet.UI
         {
             get
             {
-                return DateUtils.IsValidAllDayDuration(Duration);
+                return StartTime == DateUtils.Midnight && DateUtils.IsValidAllDayDuration(Duration);
             }
 
             set
             {
+                if (IsAllDay == value)
+                    return;
                 if (value)
-                    Duration = DateUtils.CoerceAllDayDuration(Duration);
+                {
+                    DoInsideTransaction(() =>
+                    {
+                        StartTime = DateUtils.Midnight;
+                        Duration = DateUtils.CoerceAllDayDuration(Duration);
+                    });
+                }
+                else
+                {
+                    DoInsideTransaction(() =>
+                    {
+                        StartTime = DateUtils.CurrentTimeRoundUpToFiveMinutes;
+                        Duration = new TimeSpan(0, 15, 0);
+                    });
+                }
             }
         }
 
