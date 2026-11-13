@@ -57,6 +57,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the <see cref="SchedulerDocument"/> associated with this calendar item,
+        /// or returns the default instance if none is set.
+        /// </summary>
+        /// <returns>The associated <see cref="SchedulerDocument"/> or the default instance.</returns>
+        public SchedulerDocument GetDocumentOrDefault()
+        {
+            return Document ?? SchedulerDocument.Instance;
+        }
+
+        /// <summary>
         /// Gets the change token of the item, which is updated
         /// whenever a property of the item changes.
         /// </summary>
