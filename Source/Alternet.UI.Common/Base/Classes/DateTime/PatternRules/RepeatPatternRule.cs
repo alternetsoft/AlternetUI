@@ -29,11 +29,6 @@ namespace Alternet.UI
         public RepeatPatternRule(IRepeatPatternRuleOwner? owner = null)
             : base(owner)
         {
-            var now = DateTime.Now;
-            ValidFromDate = now.ToDateOnly();
-            StartTime = now.ToTimeOnly();
-            ValidToDate = ValidFromDate;
-
             dailyRule = CreateDailyRule();
             weeklyRule = CreateWeeklyRule();
             monthlyRule = CreateMonthlyRule();
@@ -43,6 +38,8 @@ namespace Alternet.UI
             rules.Add(weeklyRule);
             rules.Add(monthlyRule);
             rules.Add(yearlyRule);
+
+            Assign(null);
 
             dailyRule.PropertyChanged += OnChildRulePropertyChanged;
             weeklyRule.PropertyChanged += OnChildRulePropertyChanged;
@@ -162,7 +159,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            return DoInsideSuspendedPropertyChanged(() =>
+            return DoInsideTransaction<bool>(() =>
             {
                 Reset();
 
@@ -346,17 +343,16 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
-                    var now = DateTime.Now;
+                    Kind = ScheduleRepeatPattern.None;
+                    var now = DateUtils.NowRoundUpToFiveMinutes;
                     ValidFromDate = now.ToDateOnly();
                     StartTime = now.ToTimeOnly();
-                    Duration = TimeSpan.Zero;
+                    Duration = TimeSpan.FromDays(1);
+                    ValidToDate = ValidFromDate;
                     OccurrenceCount = 1;
                     EndCondition = RepeatPatternEndCondition.OnDate;
-                    ValidToDate = ValidFromDate;
-                    Kind = ScheduleRepeatPattern.None;
-
                     DailyRule.Assign(null);
                     WeeklyRule.Assign(null);
                     MonthlyRule.Assign(null);
@@ -371,7 +367,7 @@ namespace Alternet.UI
                 if (Equals(other))
                     return false;
 
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     ValidFromDate = otherRule.ValidFromDate;
                     StartTime = otherRule.StartTime;
