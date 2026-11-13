@@ -36,6 +36,11 @@ namespace Alternet.UI
         public static readonly DateTime MinimumDateMidnight = DateTime.MinValue.Date.AddHours(0);
 
         /// <summary>
+        /// Represents 12:00 AM (midnight) on the minimum date as a <see cref="TimeOnly"/> value.
+        /// </summary>
+        public static readonly TimeOnly Midnight = new(0, 0, 0);
+
+        /// <summary>
         /// Represents 12:00 PM (noon) on the minimum date.
         /// </summary>
         public static readonly DateTime MinimumDateNoon = DateTime.MinValue.Date.AddHours(12);
@@ -104,6 +109,56 @@ namespace Alternet.UI
             get
             {
                 return Today.AddDays(1);
+            }
+        }
+
+        /// <summary>
+        /// Returns the current date and time with the seconds component cleared (set to zero).
+        /// </summary>
+        /// <returns>A <see cref="DateTime"/> value representing the current date and time
+        /// with the seconds component cleared.</returns>
+        public static DateTime NowWithoutSeconds
+        {
+            get
+            {
+                var now = DateTime.Now;
+                return new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+            }
+        }
+
+        /// <summary>
+        /// Returns the current date and time rounded up to the next multiple of five minutes.
+        /// </summary>
+        public static DateTime NowRoundUpToFiveMinutes
+        {
+            get
+            {
+                var now = DateTime.Now;
+                var roundedTime = RoundUpToMinutes(TimeOnly.FromDateTime(now), 5);
+                return new DateTime(now.Year, now.Month, now.Day, roundedTime.Hour, roundedTime.Minute, 0);
+            }
+        }
+
+        /// <summary>
+        /// Returns the current time with the seconds component cleared (set to zero).
+        /// </summary>
+        public static TimeOnly CurrentTimeWithoutSeconds
+        {
+            get
+            {
+                var now = DateTime.Now;
+                return new TimeOnly(now.Hour, now.Minute, 0);
+            }
+        }
+
+        /// <summary>
+        /// Gets the current time rounded up to the next multiple of five minutes as a <see cref="TimeOnly"/> value.
+        /// </summary>
+        public static TimeOnly CurrentTimeRoundUpToFiveMinutes
+        {
+            get
+            {
+                return RoundUpToMinutes(CurrentTime, 5);
             }
         }
 
@@ -576,6 +631,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Rounds a time up to the next multiple of the specified number of minutes.
+        /// </summary>
+        /// <param name="time">The time to round.</param>
+        /// <param name="intervalMinutes">
+        /// The rounding interval in minutes. If this value is less than or equal to zero,
+        /// <paramref name="time"/> is returned unchanged.
+        /// </param>
+        /// <returns>
+        /// The rounded time, or the original time if it is already on an interval boundary
+        /// or <paramref name="intervalMinutes"/> is less than or equal to zero.
+        /// </returns>
+        /// <remarks>
+        /// When <paramref name="intervalMinutes"/> is 1, the time is rounded up to a whole
+        /// minute, clearing seconds and smaller parts.
+        /// </remarks>
+        public static TimeOnly RoundUpToMinutes(TimeOnly time, int intervalMinutes = 1)
+        {
+            if (intervalMinutes <= 0)
+                return time;
+
+            long intervalTicks = (long)intervalMinutes * TimeSpan.TicksPerMinute;
+            long remainder = time.Ticks % intervalTicks;
+
+            return remainder == 0
+                ? time
+                : time.Add(TimeSpan.FromTicks(intervalTicks - remainder));
+        }
+
+        /// <summary>
         /// Determines whether the specified duration is valid for an all-day event.
         /// It means that the duration is greater than zero and is a whole number
         /// of days (i.e., no fractional days).
@@ -586,6 +670,34 @@ namespace Alternet.UI
         {
             return duration > TimeSpan.Zero &&
                    duration.Ticks % TimeSpan.TicksPerDay == 0;
+        }
+
+        /// <summary>
+        /// Clears the seconds component of the specified <see cref="TimeSpan"/>
+        /// value if the 'clear' parameter is true.
+        /// </summary>
+        /// <param name="time">The <see cref="TimeSpan"/> value to clear the seconds from.</param>
+        /// <param name="clear">A boolean value indicating whether to clear the seconds component.</param>
+        /// <returns>A <see cref="TimeSpan"/> value with the seconds component cleared if 'clear' is true;
+        /// otherwise, the original value.</returns>
+        public static TimeSpan ClearSeconds(TimeSpan time, bool clear = true)
+        {
+            return clear
+                ? TimeSpan.FromTicks(time.Ticks - time.Ticks % TimeSpan.TicksPerMinute)
+                : time;
+        }
+
+        /// <summary>
+        /// Clears the seconds component of the specified <see cref="TimeOnly"/>
+        /// value if the 'clear' parameter is true.
+        /// </summary>
+        /// <param name="time">The <see cref="TimeOnly"/> value to clear the seconds from.</param>
+        /// <param name="clear">A boolean value indicating whether to clear the seconds component.</param>
+        /// <returns>A <see cref="TimeOnly"/> value with the seconds component cleared if 'clear' is true;
+        /// otherwise, the original value.</returns>
+        public static TimeOnly ClearSeconds(TimeOnly time, bool clear = true)
+        {
+            return clear ? new TimeOnly(time.Hour, time.Minute) : time;
         }
 
         /// <summary>
