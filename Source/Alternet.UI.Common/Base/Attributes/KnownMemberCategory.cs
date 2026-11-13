@@ -67,7 +67,13 @@ namespace Alternet.UI
         /// Indicates that the member belongs to the "Appearance" category,
         /// which includes properties and events related to the visual appearance of the control.
         /// </summary>
-        public const string Appearance = "Appearance";       
+        public const string Appearance = "Appearance";
+
+        /// <summary>
+        /// Indicates that the member belongs to the "Scheduler" category,
+        /// which includes properties and events related to scheduling operations.
+        /// </summary>
+        public const string Scheduler = "Scheduler";
     }
 }
 
