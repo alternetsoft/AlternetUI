@@ -410,7 +410,7 @@ namespace Alternet.UI
         /// <summary>
         /// Starts editing the text in the control using popup text box.
         /// </summary>
-        public virtual void BeginEdit(bool selectAll = true)
+        public void BeginEdit(bool selectAll = true)
         {
             BeginEdit(selectAll, null);
         }
@@ -420,6 +420,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void BeginEdit(bool selectAll, Action<PopupEntryParams>? updateParams)
         {
+            if (!IsEditable || !Enabled)
+                return;
+
             var prm = CreatePopupEditorParams();
 
             if (prm is null)
@@ -573,7 +576,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Reopens the popup entry for editing. This method cancels the current edit and starts a new edit session.
+        /// Reopens the popup entry for editing. This method cancels
+        /// the current edit and starts a new edit session.
         /// </summary>
         protected virtual void ReopenPopupEntry()
         {
@@ -586,6 +590,7 @@ namespace Alternet.UI
                 var caretPosition = entry.CaretPosition;
 
                 CancelEdit();
+
                 BeginEdit(selectAll: false, updateParams: OnUpdateParams);
 
                 void OnUpdateParams(PopupEntryParams prm)
@@ -599,6 +604,15 @@ namespace Alternet.UI
             {
                 BeginEdit(selectAll: false);
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+
+            if (!Enabled && IsEditing)
+                CancelEdit();
         }
 
         /// <inheritdoc/>
@@ -617,6 +631,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            if (!Enabled)
+                return;
+
             if (e.Button == MouseButtons.Left)
             {
                 if (Label.Bounds.Contains(e.Location) && IsEditable)
