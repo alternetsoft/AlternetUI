@@ -159,7 +159,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether control is editable. If false, user cannot change value by typing in the text picker.
+        /// Gets or sets whether control is editable. If false, user
+        /// cannot change value by typing in the text picker.
         /// </summary>
         public virtual bool IsEditable
         {

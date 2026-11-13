@@ -12,8 +12,10 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>Use this control to display content with visually distinct borders. Border properties such as
     /// width, color, and margin can be set individually or uniformly for all sides. The control provides methods to
-    /// configure which borders are visible and to reset border settings to their defaults. Padding can be automatically
-    /// adjusted to accommodate border changes. Inherits from GenericControl and extends its appearance customization
+    /// configure which borders are visible and to reset border settings
+    /// to their defaults. Padding can be automatically
+    /// adjusted to accommodate border changes. Inherits from <see cref="GenericControl"/>
+    /// and extends its appearance customization
     /// capabilities.</remarks>
     public partial class GenericBorder : GenericControl
     {
@@ -708,7 +710,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets default border width for the control. This method is called in the constructor to initialize border width.
+        /// Gets default border width for the control. This method is called in
+        /// the constructor to initialize border width.
         /// If this method returns null, border width is initialized with default global settings.
         /// </summary>
         protected virtual Thickness? GetDefaultBorderWidth()
