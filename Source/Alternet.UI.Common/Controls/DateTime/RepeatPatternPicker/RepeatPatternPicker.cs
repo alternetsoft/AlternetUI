@@ -48,16 +48,16 @@ namespace Alternet.UI
         private readonly ControlAndSuffix<TimePicker, SpeedTextButton> endTimePicker = new();
         private readonly PictureBox endDateIcon;
         private readonly PictureBox endTimeIcon;
-        private readonly RoundBorderWithTitle tabControlPanel = new(CommonStrings.Default.Repeat);      
-        private readonly GenericRoundBorderWithTitle startPanel = new(CommonStrings.Default.Starts);
-        private readonly GenericRoundBorderWithTitle endPanel = new (CommonStrings.Default.Ends);
+        private readonly RoundBorderWithTitle tabControlPanel = new(CommonStrings.Default.SeriesPattern);      
+        private readonly GenericRoundBorderWithTitle startPanel = new(CommonStrings.Default.SeriesStarts);
+        private readonly GenericRoundBorderWithTitle endPanel = new (CommonStrings.Default.SeriesEnds);
         private readonly TransparentPanel endDatePanel = new ();
         private readonly TransparentPanel endTimePanel = new ();
 
-        private readonly GenericControlAndLabel<DatePicker, Label> endDatePicker = new();
+        private readonly GenericControlAndLabel<DatePicker, Label> untilDatePicker = new();
         private readonly XCheckBox allDayCheckBox = new(CommonStrings.Default.FullDayDuration);
         private readonly XRadioButtonAndSuffix endsNeverRadioButton;
-        private readonly XRadioButtonAndSuffix endsOnRadioButton;
+        private readonly XRadioButtonAndSuffix untilRadioButton;
         private readonly XRadioButtonAndSuffix endsAfterOccurrenceRadioButton;
         private readonly XIntPickerWithLabels occurrencePicker = new();
 
@@ -101,13 +101,13 @@ namespace Alternet.UI
             var endDateControlsPanel = new TransparentPanel();
             endDateControlsPanel.Layout = LayoutStyle.Vertical;
 
-            endDatePicker.Label.Text = Localized.OnPrefix;
-            endDatePicker.Label.InputTransparent = true;
-            endDatePicker.MainControl.ImageVisible = DefaultShowDropDownImage;
+            untilDatePicker.Label.Text = Localized.UntilDatePrefix;
+            untilDatePicker.Label.InputTransparent = true;
+            untilDatePicker.MainControl.ImageVisible = DefaultShowDropDownImage;
             
-            endsOnRadioButton = new(endDatePicker);
-            endsOnRadioButton.Parent = endDateControlsPanel;
-            endDatePicker.Click += (s, e) => endsOnRadioButton.IsChecked = true;
+            untilRadioButton = new(untilDatePicker);
+            untilRadioButton.Parent = endDateControlsPanel;
+            untilDatePicker.Click += (s, e) => untilRadioButton.IsChecked = true;
 
             // Ends after occurrence
 
@@ -144,16 +144,14 @@ namespace Alternet.UI
             endTimePicker.Parent = endTimePanel;
             endTimePanel.Parent = endPanel;
 
-            endPanel.Parent = this;
-
             // Other
 
             XRadioButton[] radioButtons = {
-                endsOnRadioButton.MainControl,
+                untilRadioButton.MainControl,
                 endsAfterOccurrenceRadioButton.MainControl,
                 endsNeverRadioButton.MainControl };
 
-            endsOnRadioButton.MainControl.RadioSiblings = radioButtons;
+            untilRadioButton.MainControl.RadioSiblings = radioButtons;
             endsAfterOccurrenceRadioButton.MainControl.RadioSiblings = radioButtons;
             endsNeverRadioButton.MainControl.RadioSiblings = radioButtons;
 
@@ -181,6 +179,8 @@ namespace Alternet.UI
 
             tabControlPanel.Parent = this;
 
+            endPanel.Parent = this;
+
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
 
             DateFormat = DefaultDateFormat;
@@ -197,10 +197,10 @@ namespace Alternet.UI
             allDayCheckBox.CheckedChanged += OnAllDayCheckedChanged;
             startPicker.ValueChanged += OnStartPickerChanged;
             endTimePicker.MainControl.ValueChanged += OnEndTimePickerChanged;
-            endDatePicker.MainControl.ValueChanged += OnEndDatePickerChanged;
+            untilDatePicker.MainControl.ValueChanged += OnEndDatePickerChanged;
             occurrencePicker.ValueChanged += OnOccurrencePickerValueChanged;
             endsNeverRadioButton.CheckedChanged += OnEndsNeverRadioChanged;
-            endsOnRadioButton.CheckedChanged += OnEndsOnRadioButton;
+            untilRadioButton.CheckedChanged += OnEndsOnRadioButton;
             endsAfterOccurrenceRadioButton.CheckedChanged += OnEndsAfterOccurrenceRadioChanged;
         }
 
@@ -330,7 +330,7 @@ namespace Alternet.UI
                     return;
                 valuesTransparent = value;
                 startPicker.TextTransparent = value;
-                endDatePicker.MainControl.TextTransparent = value;
+                untilDatePicker.MainControl.TextTransparent = value;
                 endTimePicker.MainControl.TextTransparent = value;
                 occurrencePicker.IntPicker.TextPicker.TextTransparent = value;
                 dailyPicker.ValuesTransparent = value;
@@ -371,7 +371,7 @@ namespace Alternet.UI
 
                 formatProvider = value;
                 startPicker.FormatProvider = value;
-                endDatePicker.MainControl.FormatProvider = value;
+                untilDatePicker.MainControl.FormatProvider = value;
                 dailyPicker.FormatProvider = value;
                 weeklyPicker.FormatProvider = value;
                 monthlyPicker.FormatProvider = value;
@@ -502,7 +502,7 @@ namespace Alternet.UI
             set
             {
                 startPicker.Format = value;
-                endDatePicker.MainControl.Format = value;
+                untilDatePicker.MainControl.Format = value;
             }
         }
 
@@ -543,12 +543,12 @@ namespace Alternet.UI
                 tabControl.SelectedIndex = (int)SelectedPattern;
                 startPicker.AsDateOnly = data.ValidFromDate;
                 startPicker.AsTimeOnly = data.StartTime;
-                endDatePicker.MainControl.AsDateOnly = data.ValidToDate;
+                untilDatePicker.MainControl.AsDateOnly = data.ValidToDate;
                 endTimePicker.MainControl.AsTimeOnly = data.EndTime;
 
                 UpdateDurationText();
 
-                endsOnRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.OnDate;
+                untilRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.OnDate;
                 endsAfterOccurrenceRadioButton.IsChecked
                     = data.EndCondition == RepeatPatternEndCondition.AfterOccurrence;
                 endsNeverRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.Never;
@@ -587,7 +587,7 @@ namespace Alternet.UI
 
             SelectedPattern = newPattern;
 
-            endsOnRadioButton.IsChecked = true;
+            untilRadioButton.IsChecked = true;
 
             endsNeverRadioButton.SetEnabled(index > 0);
             endsAfterOccurrenceRadioButton.SetEnabled(index > 0);
@@ -702,7 +702,7 @@ namespace Alternet.UI
         /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
         protected virtual void OnEndDatePickerChanged(object? s, EventArgs e)
         {
-            data.ValidToDate = endDatePicker.MainControl.AsDateOnlyOrToday;
+            data.ValidToDate = untilDatePicker.MainControl.AsDateOnlyOrToday;
         }
 
         /// <summary>
@@ -736,7 +736,7 @@ namespace Alternet.UI
         /// <param name="e"> The <see cref="EventArgs"/> instance containing the event data. </param>
         protected virtual void OnEndsOnRadioButton(object? s, EventArgs e)
         {
-            if (endsOnRadioButton.IsChecked)
+            if (untilRadioButton.IsChecked)
             {
                 data.EndCondition = RepeatPatternEndCondition.OnDate;
             }

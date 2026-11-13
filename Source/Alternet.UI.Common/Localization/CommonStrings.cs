@@ -261,6 +261,12 @@ namespace Alternet.UI.Localization
 
         // ========================
 
+        public string AddTitle { get; set; } = "Add title";
+
+        public string AddDescription { get; set; } = "Add description";
+
+        public string AddLocation { get; set; } = "Add location";
+
         public string LineNumber { get; set; } = "Line Number";
 
         public string LoadingPleaseWait { get; set; } = "Please wait...";
@@ -397,6 +403,8 @@ namespace Alternet.UI.Localization
 
         public string OnPrefix { get; set; } = "On";
 
+        public string UntilDatePrefix { get; set; } = "Until";
+
         public string OnDayPrefix { get; set; } = "On day";
 
         public string Never { get; set; } = "Never";
@@ -408,6 +416,12 @@ namespace Alternet.UI.Localization
         public string Occurrences { get; set; } = "occurrences";
 
         public string Repeat { get; set; } = "Repeat";
+
+        public string SeriesPattern { get; set; } = "Series Pattern";
+
+        public string SeriesEnds { get; set; } = "Series Ends";
+
+        public string SeriesStarts { get; set; } = "Series Starts";
 
         public string Today { get; set; } = "Today";
 

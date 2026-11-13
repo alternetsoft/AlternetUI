@@ -33,13 +33,10 @@ namespace Alternet.UI
         private readonly GenericRoundBorderWithTitle detailsPanel = new(Localized.CalendarItemLabelDetails);
         private readonly GenericRoundBorderWithTitle moreOptionsPanel = new(Localized.CalendarItemLabelMoreOptions);
         private readonly GenericRoundBorderWithTitle alarmPanel = new(Localized.CalendarItemLabelReminder);
-        private readonly Label titleLabel = new();
         private readonly TextPicker titlePicker = new();
 
-        private readonly Label descriptionLabel = new();
         private readonly MultilineTextPicker descriptionPicker = new();
 
-        private readonly Label locationLabel = new();
         private readonly TextPicker locationPicker = new();
 
         private readonly Label categoryLabel = new();
@@ -69,9 +66,6 @@ namespace Alternet.UI
             moreOptionsPanel.Margin = DefaultMinChildMargin;
             alarmPanel.Margin = DefaultMinChildMargin;
 
-            titleLabel.Text = Localized.CalendarItemLabelTitle;
-            descriptionLabel.Text = Localized.CalendarItemLabelDescription;
-            locationLabel.Text = Localized.CalendarItemLabelLocation;
             categoryLabel.Text = Localized.CalendarItemLabelCategory;
             statusLabel.Text = Localized.CalendarItemLabelStatus;
 
@@ -79,7 +73,10 @@ namespace Alternet.UI
 
             alarmPicker.Parent = alarmPanel;
 
-            titleLabel.Parent = detailsPanel;
+            titlePicker.EmptyTextHint = Localized.AddTitle + "...";
+            descriptionPicker.EmptyTextHint = Localized.AddDescription + "...";
+            locationPicker.EmptyTextHint = Localized.AddLocation + "...";
+
             titlePicker.Parent = detailsPanel;
 
             categoryLabel.Parent = detailsPanel;
@@ -93,10 +90,8 @@ namespace Alternet.UI
             rulePicker.Padding = 0;
             rulePicker.Parent = this;
 
-            locationLabel.Parent = moreOptionsPanel;
             locationPicker.Parent = moreOptionsPanel;
 
-            descriptionLabel.Parent = moreOptionsPanel;
             descriptionPicker.Parent = moreOptionsPanel;
 
             void OnEditExcludedDatesLinkLabelClick(object? sender, CancelEventArgs e)
@@ -186,13 +181,6 @@ namespace Alternet.UI
         public CalendarAlarmPicker AlarmPicker => alarmPicker;
 
         /// <summary>
-        /// Gets the <see cref="Label"/> that displays the label which is shown
-        /// above the <see cref="TitlePicker"/> control.
-        /// </summary>
-        [Browsable(false)]
-        public Label TitleLabel => titleLabel;
-
-        /// <summary>
         /// Gets the <see cref="TextPicker"/> that is used to edit the title
         /// of the <see cref="CalendarItem"/> being edited.
         /// </summary>
@@ -200,25 +188,11 @@ namespace Alternet.UI
         public TextPicker TitlePicker => titlePicker;
 
         /// <summary>
-        /// Gets the <see cref="Label"/> that displays the label which is
-        /// shown above the <see cref="DescriptionPicker"/> control.
-        /// </summary>
-        [Browsable(false)]
-        public Label DescriptionLabel => descriptionLabel;
-
-        /// <summary>
         /// Gets the <see cref="MultilineTextPicker"/> that is used to edit
         /// the description of the <see cref="CalendarItem"/> being edited.
         /// </summary>
         [Browsable(false)]
         public MultilineTextPicker DescriptionPicker => descriptionPicker;
-
-        /// <summary>
-        /// Gets the <see cref="Label"/> that displays the label which
-        /// is shown above the <see cref="LocationPicker"/> control.
-        /// </summary>
-        [Browsable(false)]
-        public Label LocationLabel => locationLabel;
 
         /// <summary>
         /// Gets the <see cref="TextPicker"/> that is used to edit the location
