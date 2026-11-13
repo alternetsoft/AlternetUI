@@ -8,21 +8,21 @@ namespace Alternet.UI
 {
     public partial class VirtualListBox
     {
-        private Color? emptyTextForeColor;
+        private ThemedColor? emptyTextForeColor;
         private DrawItemEventArgs? drawItemArgs;
         private MeasureItemEventArgs? measureItemArgs;
 
         /// <summary>
         /// Represents the default foreground color used for empty text elements.
         /// </summary>
-        public static Color DefaultEmptyTextForeColor = Color.Gray;
+        public static ThemedColor DefaultEmptyTextForeColor = ExactColors.Gray;
 
         /// <summary>
         /// Gets or sets the foreground color used to render the empty text string.
         /// Default is <see langword="null"/>, which indicates that the
         /// <see cref="DefaultEmptyTextForeColor"/> is used.
         /// </summary>
-        public virtual Color? EmptyTextForeColor
+        public virtual ThemedColor? EmptyTextForeColor
         {
             get => emptyTextForeColor;
             set
@@ -80,6 +80,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the effective foreground color for the empty text,
+        /// considering the specified <see cref="EmptyTextForeColor"/> and the default color.
+        /// </summary>
+        /// <returns>The effective foreground color for the empty text.</returns>
+        public virtual ThemedColor EffectiveEmptyTextForeColor()
+        {
+            return EmptyTextForeColor ?? DefaultEmptyTextForeColor;
+        }
+
+        /// <summary>
         /// Paints <see cref="EmptyText"/> in the specified rectangle using the provided graphics context.
         /// This method is called when the list box has no items to display.
         /// Override this method to customize the appearance of the empty text.
@@ -88,7 +98,8 @@ namespace Alternet.UI
         /// <see cref="EmptyTextForeColor"/> and is centered both horizontally and vertically
         /// within the specified rectangle.</remarks>
         /// <param name="dc">The graphics context used to render the empty text.</param>
-        /// <param name="paintRectangle">The rectangle that defines the area in which to center and draw the empty text.</param>
+        /// <param name="paintRectangle">The rectangle that defines the area in which
+        /// to center and draw the empty text.</param>
         protected virtual void PaintEmptyText(Graphics dc, RectD paintRectangle)
         {
             var s = EmptyText;
@@ -96,11 +107,13 @@ namespace Alternet.UI
             if (s is null)
                 return;
 
+            var color = EffectiveEmptyTextForeColor();
+
             PaintText(
                     dc,
                     s,
                     paintRectangle,
-                    EmptyTextForeColor ?? DefaultEmptyTextForeColor,
+                    color.GetColor(this),
                     Color.Empty);
         }
 
@@ -108,7 +121,8 @@ namespace Alternet.UI
         /// Paints a single row in the list control using the specified drawing parameters.
         /// </summary>
         /// <remarks>Override this method to customize the appearance of individual rows. The method
-        /// adapts its painting logic based on the current draw mode and selection state. When overriding, ensure that
+        /// adapts its painting logic based on the current draw mode and selection state.
+        /// When overriding, ensure that
         /// custom drawing respects the provided drawing context and item state.</remarks>
         /// <param name="dc">The graphics context used to render the row.</param>
         /// <param name="rowIndex">The zero-based index of the row to paint.</param>
