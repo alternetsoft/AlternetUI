@@ -124,6 +124,9 @@ namespace Alternet.UI
         private static SvgImage? imgFolderEllipsis;
         private static SvgImage? imgHourglassHalf;
         private static SvgImage? imgHourglass;
+        private static SvgImage? imgSlash;
+        private static SvgImage? imgSmallPen;
+        private static SvgImage? imgArrowsSpinPencil;
 
         static KnownSvgImages()
         {
@@ -134,6 +137,55 @@ namespace Alternet.UI
                     image.ResetCachedImages();
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets or sets "Arrows Spin Pencil" svg image which includes a pencil icon
+        /// in the center of a spinning arrows icon.
+        /// </summary>
+        public static SvgImage ImgArrowsSpinPencil
+        {
+            get
+            {
+                return imgArrowsSpinPencil ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowsSpinPencil);
+            }
+
+            set
+            {
+                imgArrowsSpinPencil = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Slash" svg image.
+        /// </summary>
+        public static SvgImage ImgSlash
+        {
+            get
+            {
+                return imgSlash ??= new MonoSvgImage(KnownSvgUrls.UrlImageSlash);
+            }
+
+            set
+            {
+                imgSlash = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Small Pen" svg image.
+        /// </summary>
+        public static SvgImage ImgSmallPen
+        {
+            get
+            {
+                return imgSmallPen ??= new MonoSvgImage(KnownSvgUrls.UrlImageSmallPen);
+            }
+
+            set
+            {
+                imgSmallPen = value;
+            }
         }
 
         /// <summary>

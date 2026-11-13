@@ -34,6 +34,21 @@ namespace Alternet.UI
             = GetImageUrl("alternet-square-check-filled");
 
         /// <summary>
+        /// Gets or sets url used to load "Arrows Spin Pencil" svg image.
+        /// </summary>
+        public static string UrlImageArrowsSpinPencil { get; set; } = GetImageUrl("alternet-arrows-spin-pencil");
+
+        /// <summary>
+        /// Gets or sets url used to load "Slash" svg image.
+        /// </summary>
+        public static string UrlImageSlash { get; set; } = GetImageUrl("alternet-slash");
+
+        /// <summary>
+        /// Gets or sets url used to load "Small Pen" svg image.
+        /// </summary>
+        public static string UrlImageSmallPen { get; set; } = GetImageUrl("alternet-small-pen");
+
+        /// <summary>
         /// Gets or sets url used to load "Backspace" svg image.
         /// </summary>
         public static string UrlImageBackspace { get; set; } = GetImageUrl("alternet-backspace");
