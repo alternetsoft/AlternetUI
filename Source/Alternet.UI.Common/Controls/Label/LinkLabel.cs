@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -52,7 +53,6 @@ namespace Alternet.UI
             HorizontalAlignment = HorizontalAlignment.Left;
             CanSelect = false;
             TabStop = false;
-            IsUnderline = true;
             ParentForeColor = false;
             Cursor = Cursors.Hand;
             OnLinkColorChanged(invalidate: false);
@@ -130,7 +130,7 @@ namespace Alternet.UI
 
             set
             {
-                if(hoverColor == value)
+                if (hoverColor == value)
                     return;
                 hoverColor = value;
                 OnLinkColorChanged();
@@ -152,7 +152,7 @@ namespace Alternet.UI
 
             set
             {
-                if(normalColor == value)
+                if (normalColor == value)
                     return;
                 normalColor = value;
                 OnLinkColorChanged();
@@ -174,7 +174,7 @@ namespace Alternet.UI
 
             set
             {
-                if(visitedColor == value)
+                if (visitedColor == value)
                     return;
                 visitedColor = value;
                 OnLinkColorChanged();
@@ -195,7 +195,7 @@ namespace Alternet.UI
 
             set
             {
-                if(visited == value)
+                if (visited == value)
                     return;
                 visited = value;
                 OnLinkColorChanged();
@@ -262,6 +262,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override ThemedColor GetLabelForeColor(VisualControlState state)
         {
+            if (!IsEnabled)
+                return ThemedColors.GrayText;
+
             if (state == VisualControlState.Hovered)
             {
                 var realHoveredColor = HoverColor ?? DefaultHoverColor;

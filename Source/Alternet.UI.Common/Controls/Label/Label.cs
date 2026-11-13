@@ -921,6 +921,12 @@ namespace Alternet.UI
         {
             BeforeDrawText?.Invoke(this, EventArgs.Empty);
             UpdateDrawParamsAction?.Invoke(ref prm);
+
+            if (TextTransparent)
+            {
+                prm.ForegroundColor = Color.Empty;
+            }
+
             var result = dc.DrawLabel(ref prm);
             AfterDrawText?.Invoke(this, EventArgs.Empty);
             return result;
@@ -1141,7 +1147,7 @@ namespace Alternet.UI
         protected override ThemedColor GetLabelForeColor(VisualControlState state)
         {
             if (Text.Length == 0)
-                return DefaultColors.EmptyTextHintColor;
+                return IsEnabled ? DefaultColors.EmptyTextHintColor : ThemedColors.GrayText;
             return base.GetLabelForeColor(state);
         }
 
