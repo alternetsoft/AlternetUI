@@ -56,6 +56,8 @@ namespace Alternet.UI
         /// <param name="source">The list edit source.</param>
         public WindowCollectionEditor(IListEditSource source)
         {
+            treeView.ListBox.EmptyText = CommonStrings.Default.CollectionIsEmpty;
+
             Icon = KnownIcons.Default;
             Layout = LayoutStyle.Vertical;
             Size = new(750, 600);
@@ -607,6 +609,15 @@ namespace Alternet.UI
         {
             VerticalAlignment = VerticalAlignment.Fill,
             HorizontalAlignment = HorizontalAlignment.Fill,
+            Visible = false,
+        };
+
+        private readonly Label noPreviewLabel = new()
+        {
+            Text = CommonStrings.Default.SelectItemToPreview,
+            HorizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Center,
+            Visible = true,
         };
 
         /// <summary>
@@ -617,10 +628,18 @@ namespace Alternet.UI
         {
             MainPanel.RightVisible = true;
             itemEditor.Parent = MainPanel.RightPanel;
-            itemEditor.Enabled = false;
+            noPreviewLabel.Parent = MainPanel.RightPanel;
             MainView.RootItem.ItemSource.ItemInserted += OnItemInserted;
             MainView.RootItem.ItemSource.ItemRemoved += OnItemRemoved;
+
+            noPreviewLabel.ParentForeColor = false;
+            noPreviewLabel.ForegroundColor = MainView.ListBox.EffectiveEmptyTextForeColor();
         }
+
+        /// <summary>
+        /// Gets the label control that displays a message when no item is selected for preview.
+        /// </summary>
+        public Label NoPreviewLabel => noPreviewLabel;
 
         /// <summary>
         /// Gets the item editor control used for editing individual items in the collection.
@@ -637,7 +656,21 @@ namespace Alternet.UI
         {
             UpdateItemEditor();
         }
-        
+
+        /// <summary>
+        /// Updates the state of the item editor control based on the
+        /// specified <paramref name="enabled"/> value. 
+        /// </summary>
+        /// <param name="enabled">A value indicating whether the item editor should be enabled.</param>
+        protected virtual void UpdateItemEditorState(bool enabled)
+        {
+            DoInsideUpdate(() =>
+            {
+                NoPreviewLabel.Visible = !enabled;
+                ItemEditor.Visible = enabled;
+            });
+        }
+
         /// <summary>
         /// Called when an item is removed from the collection editor's tree view.
         /// </summary>
@@ -707,18 +740,6 @@ namespace Alternet.UI
             {
                 e.Title = CommonStrings.Default.WindowTitleSchedulerDocumentBrowser;
             }
-        }
-
-        /// <summary>
-        /// Updates the enabled state of the item editor control based on the
-        /// specified <paramref name="enabled"/> value. Also update the visibility of the text
-        /// in the item editor control based on the enabled state.
-        /// </summary>
-        /// <param name="enabled">A value indicating whether the item editor should be enabled.</param>
-        protected virtual void UpdateItemEditorState(bool enabled)
-        {
-            ItemEditor.Enabled = enabled;
-            ItemEditor.ScrolledControl.ValuesTransparent = !enabled;
         }
 
         /// <inheritdoc/>
@@ -792,11 +813,11 @@ namespace Alternet.UI
             var item = MainView.SelectedItem;
             if (item == null)
             {
-                ItemEditor.Enabled = false;
+                UpdateItemEditorState(false);
                 return;
             }
 
-            ItemEditor.Enabled = true;
+            UpdateItemEditorState(true);
 
             if (item.Tag is DateOnly date)
             {
@@ -829,7 +850,7 @@ namespace Alternet.UI
                 item.Text = value.ToString();
             }
 
-            ItemEditor.Enabled = item is not null;
+            UpdateItemEditorState(item is not null);
         }
     }
 }

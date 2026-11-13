@@ -18,6 +18,8 @@ namespace Alternet.UI.Localization
         /// </summary>
         public static CommonStrings Default { get; set; } = new();
 
+        public string CollectionIsEmpty { get; set; } = "The collection is empty.";
+
         public string NewItemText { get; set; } = "New Item";
 
         public string UntitledItemText { get; set; } = "Untitled Item";
@@ -268,6 +270,8 @@ namespace Alternet.UI.Localization
         public string NoPreviewAvailable { get; set; } = "No preview available.";
 
         public string SelectFileToPreview { get; set; } = "Select a file to preview.";
+
+        public string SelectItemToPreview { get; set; } = "Select an item to preview.";
 
         public string Starts { get; set; } = "Starts";
 
