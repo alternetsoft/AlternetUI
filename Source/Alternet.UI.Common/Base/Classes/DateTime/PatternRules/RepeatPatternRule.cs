@@ -200,6 +200,16 @@ namespace Alternet.UI
                     EndCondition = endCondition;
                 }
 
+                if (propertyBag.HasProperty(prefix + nameof(ExcludedDates)))
+                {
+                    excludedDates = new DateSelectionManager();
+
+                    excludedDates.LoadFrom(
+                                new SerializableObjectContext(
+                                    propertyBag,
+                                    prefix + nameof(ExcludedDates)));
+                }
+
                 switch (Kind)
                 {
                     case ScheduleRepeatPattern.Daily:
@@ -256,6 +266,11 @@ namespace Alternet.UI
             propertyBag.SetStringProperty(prefix + nameof(EndCondition), EndCondition.ToString());
             propertyBag.SetDateProperty(prefix + nameof(ValidFromDate), ValidFromDate);
             propertyBag.SetDateProperty(prefix + nameof(ValidToDate), ValidToDate);
+
+            if (HasExcludedDates())
+            {
+                excludedDates?.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(ExcludedDates)));
+            }
 
             switch (Kind)
             {
@@ -322,7 +337,8 @@ namespace Alternet.UI
                    DailyRule.Equals(other.DailyRule) &&
                    WeeklyRule.Equals(other.WeeklyRule) &&
                    MonthlyRule.Equals(other.MonthlyRule) &&
-                   YearlyRule.Equals(other.YearlyRule);
+                   YearlyRule.Equals(other.YearlyRule) &&
+                   ExcludedDates.SequenceEqual(other.ExcludedDates);
         }
 
         /// <summary>
@@ -357,6 +373,7 @@ namespace Alternet.UI
                     WeeklyRule.Assign(null);
                     MonthlyRule.Assign(null);
                     YearlyRule.Assign(null);
+                    ClearExcludedDates();
                 });
 
                 return true;
@@ -380,6 +397,8 @@ namespace Alternet.UI
                     WeeklyRule.Assign(otherRule.WeeklyRule);
                     MonthlyRule.Assign(otherRule.MonthlyRule);
                     YearlyRule.Assign(otherRule.YearlyRule);
+
+                    ExcludedDates = otherRule.ExcludedDates;
 
                     Kind = otherRule.Kind;
                 });

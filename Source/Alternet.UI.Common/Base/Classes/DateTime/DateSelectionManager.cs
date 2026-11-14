@@ -155,7 +155,6 @@ namespace Alternet.UI
 
         static DateSelectionManager()
         {
-            TestSerialization();
         }
 
         [Conditional("DEBUG")]
