@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Represents a marker for a calendar item, providing properties such as name, title, visibility,
     /// and brush getters for light and dark themes.
     /// </summary>
-    public abstract class CalendarItemMarker : ImmutableObject, IThemedDrawingResource
+    public abstract class CalendarItemMarker : SchedulerDocumentItem, IThemedDrawingResource
     {
         private readonly Func<Brush>? lightBrushCreate;
         private readonly Func<Brush>? darkBrushCreate;
@@ -27,6 +27,16 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CalendarItemMarker"/> class.
         /// </summary>
         public CalendarItemMarker()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItemMarker"/> class
+        /// with the specified unique identifier.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier of the calendar item marker.</param>
+        public CalendarItemMarker(ObjectUniqueId uniqueId)
+            : base(uniqueId)
         {
         }
 
@@ -189,6 +199,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool SaveTo(ISerializableObjectContext? context)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override bool LoadFrom(ISerializableObjectContext? context)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Represents a picker for calendar item markers, allowing users to select a marker.
         /// </summary>
@@ -213,6 +235,16 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CalendarItemCategory"/> class.
         /// </summary>
         public CalendarItemCategory()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItemCategory"/> class
+        /// with the specified unique identifier.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier of the calendar item category.</param>
+        public CalendarItemCategory(ObjectUniqueId uniqueId)
+            : base(uniqueId)
         {
         }
 
@@ -266,6 +298,16 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CalendarItemStatus"/> class.
         /// </summary>
         public CalendarItemStatus()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarItemStatus"/> class
+        /// with the specified unique identifier.
+        /// </summary>
+        /// <param name="uniqueId">The unique identifier of the calendar item status.</param>
+        public CalendarItemStatus(ObjectUniqueId uniqueId)
+            : base(uniqueId)
         {
         }
 
@@ -557,10 +599,37 @@ namespace Alternet.UI
         { IsVisible = false };
 
         /// <summary>
+        /// Gets the "WorkingElsewhere" calendar item status, which is used to indicate
+        /// that a person's availability is uncertain or subject to change.
+        /// </summary>
+        public static CalendarItemStatus StatusWorkingElsewhere { get; set; } = new CalendarItemStatus(
+            "WorkingElsewhere",
+            CommonStrings.Default.CalendarItemStatusWorkingElsewhere,
+            () => new HatchBrush(HatchStyle.Vertical, Color.White, Color.FromArgb(31, 118, 193)),
+            () => new HatchBrush(HatchStyle.Vertical, Color.FromArgb(41, 41, 41), Color.FromArgb(68, 152, 234)));
+
+        /// <summary>
+        /// Gets the "OutOfOffice" calendar item status, which is used to indicate
+        /// that a person is not available for work or meetings.
+        /// </summary>
+        public static CalendarItemStatus StatusOutOfOffice { get; set; } = new CalendarItemStatus(
+            "StatusOutOfOffice",
+            CommonStrings.Default.CalendarItemStatusOutOfOffice,
+            () => new HatchBrush(HatchStyle.Cross, Color.FromArgb(41, 41, 41), Color.FromArgb(179, 21, 166)),
+            () => new HatchBrush(HatchStyle.Cross, Color.White, Color.FromArgb(225, 9, 208)));
+
+        /// <summary>
         /// Gets the collection of all calendar item statuses.
         /// </summary>
-        public static Collection<CalendarItemStatus> Statuses { get; set; } =
-            [StatusAbsent, StatusBusy, StatusFree, StatusTentative, StatusUnknown];
+        public static BaseCollection<CalendarItemStatus> Statuses { get; set; } = [
+            StatusFree,
+            StatusWorkingElsewhere,
+            StatusTentative,
+            StatusBusy,
+            StatusOutOfOffice,
+            StatusAbsent,
+            StatusUnknown,
+        ];
 
         /// <summary>
         /// Finds a calendar item status by its name.

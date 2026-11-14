@@ -491,7 +491,7 @@ namespace Alternet.UI
                 DoInsideTransaction(() =>
                 {
                     Category = KnownCalendarItemMarkers.CategoryNone;
-                    Status = KnownCalendarItemMarkers.StatusUnknown;
+                    Status = KnownCalendarItemMarkers.StatusBusy;
                     Text = null;
                     Description = null;
                     Location = null;

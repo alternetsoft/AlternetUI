@@ -182,6 +182,10 @@ namespace Alternet.UI.Localization
 
         public string WindowTitleApplicationAlert { get; set; } = "Application Says";
 
+        public string WindowTitleSelectCategory { get; set; } = "Select a Category";
+
+        public string WindowTitleSelectStatus { get; set; } = "Select a Status";
+
         public string WindowTitleSelectColor { get; set; } = "Select a Color";
 
         public string WindowTitleSelectSoundFile { get; set; } = "Select Sound File";
@@ -474,6 +478,10 @@ namespace Alternet.UI.Localization
         public string CalendarItemStatusTentative { get; set; } = "Tentative";
 
         public string CalendarItemStatusUnknown { get; set; } = "Unknown";
+
+        public string CalendarItemStatusWorkingElsewhere { get; set; } = "Working Elsewhere";
+
+        public string CalendarItemStatusOutOfOffice { get; set; } = "Out of Office";
 
         // ========================
 
