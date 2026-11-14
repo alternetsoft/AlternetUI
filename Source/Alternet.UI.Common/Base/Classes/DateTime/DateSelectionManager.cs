@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -147,10 +148,32 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a manager for selecting dates, allowing for selection of individual dates or ranges of dates.
     /// </summary>
-    public partial class DateSelectionManager : BaseObjectWithNotify, IDateSelectionManager
+    public partial class DateSelectionManager : SerializableObject, IDateSelectionManager, IPropertyBagSerialize
     {
         private readonly BaseDictionary<int, IYearSelectionManager> yearSelections = new();
         private IYearSelectionManager? cachedYearSelection;
+
+        static DateSelectionManager()
+        {
+            TestSerialization();
+        }
+
+        [Conditional("DEBUG")]
+        internal static void TestSerialization()
+        {
+            var manager = new DateSelectionManager();
+            manager.Select(new(2020, 1, 1));
+            manager.Select(new(2021, 1, 1));
+            manager.Select(new(2022, 1, 1));
+
+            manager.SaveToString(out var s);
+
+            Debug.WriteLine(s);
+
+            manager.Clear();
+
+            manager.LoadFromString(s);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateSelectionManager"/> class.
@@ -485,6 +508,66 @@ namespace Alternet.UI
             }
 
             return null;
+        }
+
+        /// <inheritdoc/>
+        public override bool LoadFrom(ISerializableObjectContext? context)
+        {
+            if (context == null)
+                return false;
+
+            var propertyBag = context.PropertyBag;
+
+            if (propertyBag == null)
+                return false;
+
+            var prefix = context.Prefix;
+
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            return DoInsideSuspendedPropertyChanged(() =>
+            {
+                Clear();
+                propertyBag.TryGetCollectionProperty(prefix + "Items", out var itemsCollection);
+
+                if (itemsCollection != null)
+                {
+                    foreach (var pb in itemsCollection)
+                    {
+                        if (pb.TryGetDateProperty("Value", out var date))
+                        {
+                            Select(date, true);
+                        }
+                    }
+                }
+
+                return true;
+            });
+        }
+
+        /// <inheritdoc/>
+        public override bool SaveTo(ISerializableObjectContext? context)
+        {
+            if (context == null)
+                return false;
+
+            var propertyBag = context.PropertyBag;
+            var prefix = context.Prefix;
+
+            if (propertyBag == null)
+                return false;
+
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            propertyBag.SetCollectionProperty(prefix + "Items", SelectedDates);
+
+            return true;
         }
 
         /// <summary>
