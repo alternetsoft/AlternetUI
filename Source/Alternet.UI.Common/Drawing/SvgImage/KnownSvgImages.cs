@@ -131,6 +131,8 @@ namespace Alternet.UI
         private static SvgImage? imgLocation;
         private static SvgImage? imgUser;
         private static SvgImage? imgWorkOutline;
+        private static SvgImage? imgTag;
+        private static SvgImage? imgPenToSquare;
 
         static KnownSvgImages()
         {
@@ -173,6 +175,38 @@ namespace Alternet.UI
             set
             {
                 imgFormatAlignLeft = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Pen To Square" svg image which includes a pen icon pointing to a square icon.
+        /// </summary>
+        public static SvgImage ImgPenToSquare
+        {
+            get
+            {
+                return imgPenToSquare ??= CreateMonoSvgImage(KnownSvgUrls.UrlImagePenToSquare);
+            }
+
+            set
+            {
+                imgPenToSquare = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Tag" svg image which includes a tag icon.
+        /// </summary>
+        public static SvgImage ImgTag
+        {
+            get
+            {
+                return imgTag ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageTag);
+            }
+
+            set
+            {
+                imgTag = value;
             }
         }
 

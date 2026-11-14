@@ -33,6 +33,16 @@ namespace Alternet.UI
         public static string UrlImageFormatAlignLeft { get; set; } = GetImageUrl("alternet-format-align-left");
 
         /// <summary>
+        /// Gets or sets url used to load "Pen to Square" svg image.
+        /// </summary>
+        public static string UrlImagePenToSquare { get; set; } = GetImageUrl("alternet-pen-to-square");
+
+        /// <summary>
+        /// Gets or sets url used to load "Tag" svg image.
+        /// </summary>
+        public static string UrlImageTag { get; set; } = GetImageUrl("alternet-tag");
+
+        /// <summary>
         /// Gets or sets url used to load "Location" svg image.
         /// </summary>
         public static string UrlImageLocation { get; set; } = GetImageUrl("alternet-location");
