@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether the calendar item has a repeat pattern rule applied.
         /// </summary>
-        public bool IsRepeated => Rule.Kind != ScheduleRepeatPattern.None;
+        public bool IsRepeated => Rule.Kind != ScheduleRepeatPattern.Once;
 
         /// <summary>
         /// Gets the <see cref="CalendarAlarmInfo"/> associated with this calendar item.

@@ -375,7 +375,7 @@ namespace Alternet.UI.Localization
 
         // ========================
 
-        public string ScheduleRepeatPatternNone { get; set; } = "None";
+        public string ScheduleRepeatPatternOnce { get; set; } = "Once";
 
         public string ScheduleRepeatPatternDaily { get; set; } = "Daily";
 

@@ -19,8 +19,9 @@ namespace Alternet.UI
         private readonly WeeklyRepeatPatternRule weeklyRule;
         private readonly MonthlyRepeatPatternRule monthlyRule;
         private readonly YearlyRepeatPatternRule yearlyRule;
-        private readonly List<BaseRepeatPatternRule> rules = new();
-        private ScheduleRepeatPattern kind = ScheduleRepeatPattern.None;
+        private readonly OnceRepeatPatternRule onceRule;
+
+        private ScheduleRepeatPattern kind = ScheduleRepeatPattern.Once;
         private DateSelectionManager? excludedDates;
 
         /// <summary>
@@ -33,11 +34,7 @@ namespace Alternet.UI
             weeklyRule = CreateWeeklyRule();
             monthlyRule = CreateMonthlyRule();
             yearlyRule = CreateYearlyRule();
-
-            rules.Add(dailyRule);
-            rules.Add(weeklyRule);
-            rules.Add(monthlyRule);
-            rules.Add(yearlyRule);
+            onceRule = CreateOnceRule();
 
             Assign(null);
 
@@ -45,13 +42,14 @@ namespace Alternet.UI
             weeklyRule.PropertyChanged += OnChildRulePropertyChanged;
             monthlyRule.PropertyChanged += OnChildRulePropertyChanged;
             yearlyRule.PropertyChanged += OnChildRulePropertyChanged;
+            onceRule.PropertyChanged += OnChildRulePropertyChanged;
         }
 
         /// <summary>
         /// Gets a value indicating whether the repeat pattern rule is used.
-        /// (i.e., not set to <see cref="ScheduleRepeatPattern.None"/>).
+        /// (i.e., not set to <see cref="ScheduleRepeatPattern.Once"/>).
         /// </summary>
-        public bool IsRepeated => Kind != ScheduleRepeatPattern.None;
+        public bool IsRepeated => Kind != ScheduleRepeatPattern.Once;
 
         /// <summary>
         /// Gets or sets the kind of repeat pattern represented by this composite rule.
@@ -86,9 +84,9 @@ namespace Alternet.UI
         public YearlyRepeatPatternRule YearlyRule => yearlyRule;
 
         /// <summary>
-        /// Gets a read-only list of all the repeat pattern rules contained in this composite rule.
+        /// Gets the <see cref="OnceRepeatPatternRule"/> instance for one-time event settings.
         /// </summary>
-        public IReadOnlyList<BaseRepeatPatternRule> Rules => rules;
+        public OnceRepeatPatternRule OnceRule => onceRule;
 
         /// <summary>
         /// Gets the list of excluded dates in the repeat pattern rule.
@@ -212,6 +210,11 @@ namespace Alternet.UI
 
                 switch (Kind)
                 {
+                    case ScheduleRepeatPattern.Once:
+                        return onceRule.LoadFrom(
+                            new SerializableObjectContext(
+                                propertyBag,
+                                prefix + nameof(onceRule)));
                     case ScheduleRepeatPattern.Daily:
                         return DailyRule.LoadFrom(
                             new SerializableObjectContext(
@@ -274,6 +277,9 @@ namespace Alternet.UI
 
             switch (Kind)
             {
+                case ScheduleRepeatPattern.Once:
+                    onceRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(onceRule)));
+                    break;
                 case ScheduleRepeatPattern.Daily:
                     DailyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(DailyRule)));
                     break;
@@ -334,6 +340,7 @@ namespace Alternet.UI
                    ValidToDate == other.ValidToDate &&
                    OccurrenceCount == other.OccurrenceCount &&
                    EndCondition == other.EndCondition &&
+                   OnceRule.Equals(other.OnceRule) &&
                    DailyRule.Equals(other.DailyRule) &&
                    WeeklyRule.Equals(other.WeeklyRule) &&
                    MonthlyRule.Equals(other.MonthlyRule) &&
@@ -361,7 +368,7 @@ namespace Alternet.UI
             {
                 DoInsideTransaction(() =>
                 {
-                    Kind = ScheduleRepeatPattern.None;
+                    Kind = ScheduleRepeatPattern.Once;
                     var now = DateUtils.NowRoundUpToFiveMinutes;
                     ValidFromDate = now.ToDateOnly();
                     StartTime = now.ToTimeOnly();
@@ -373,6 +380,7 @@ namespace Alternet.UI
                     WeeklyRule.Assign(null);
                     MonthlyRule.Assign(null);
                     YearlyRule.Assign(null);
+                    OnceRule.Assign(null);
                     ClearExcludedDates();
                 });
 
@@ -393,6 +401,7 @@ namespace Alternet.UI
                     OccurrenceCount = otherRule.OccurrenceCount;
                     EndCondition = otherRule.EndCondition;
 
+                    OnceRule.Assign(otherRule.OnceRule);
                     DailyRule.Assign(otherRule.DailyRule);
                     WeeklyRule.Assign(otherRule.WeeklyRule);
                     MonthlyRule.Assign(otherRule.MonthlyRule);
@@ -418,6 +427,8 @@ namespace Alternet.UI
         {
             switch (Kind)
             {
+                case ScheduleRepeatPattern.Once:
+                    return onceRule;
                 case ScheduleRepeatPattern.Daily:
                     return dailyRule;
                 case ScheduleRepeatPattern.Weekly:
@@ -606,6 +617,15 @@ namespace Alternet.UI
         protected virtual YearlyRepeatPatternRule CreateYearlyRule()
         {
             return new YearlyRepeatPatternRule(this);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="OnceRepeatPatternRule"/> class.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="OnceRepeatPatternRule"/> class.</returns>
+        protected virtual OnceRepeatPatternRule CreateOnceRule()
+        {
+            return new OnceRepeatPatternRule(this);
         }
 
         /// <summary>

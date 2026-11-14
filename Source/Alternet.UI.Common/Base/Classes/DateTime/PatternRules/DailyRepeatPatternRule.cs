@@ -86,7 +86,8 @@ namespace Alternet.UI
         /// <summary>
         /// Loads the state of this instance from the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
-        /// <param name="context">The context containing the property bag and optional prefix for property names.</param>
+        /// <param name="context">The context containing the property bag and optional
+        /// prefix for property names.</param>
         /// <returns><c>true</c> if the state was successfully loaded; otherwise, <c>false</c>.</returns>
         public override bool LoadFrom(ISerializableObjectContext? context)
         {

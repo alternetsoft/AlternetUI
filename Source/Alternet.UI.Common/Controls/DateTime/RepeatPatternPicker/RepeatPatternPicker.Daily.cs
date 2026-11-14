@@ -11,6 +11,23 @@ namespace Alternet.UI
     public partial class RepeatPatternPicker
     {
         /// <summary>
+        /// Represents a control that allows users to select a repeat pattern for an
+        /// event or task, including options for once, daily, weekly, monthly, and yearly repeat patterns.
+        /// </summary>
+        public partial class OncePatternPicker : DateRepeatPatternRulePicker<OnceRepeatPatternRule>
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="OncePatternPicker"/>
+            /// class with the specified <see cref="OnceRepeatPatternRule"/> data.
+            /// </summary>
+            /// <param name="data">The <see cref="OnceRepeatPatternRule"/> data.</param>
+            public OncePatternPicker(OnceRepeatPatternRule data) : base(data)
+            {
+                Add<Label>("Under construction");
+            }
+        }
+
+        /// <summary>
         /// Represents a control that allows users to select a daily repeat pattern for an event or task.
         /// </summary>
         [ControlCategory(KnownControlCategory.Date)]

@@ -10,9 +10,9 @@ namespace Alternet.UI
     public enum ScheduleRepeatPattern
     {
         /// <summary>
-        /// Represents no repeat pattern.
+        /// Represents a one-time event with no repetition.
         /// </summary>
-        None,
+        Once,
 
         /// <summary>
         /// Represents a daily repeat pattern.

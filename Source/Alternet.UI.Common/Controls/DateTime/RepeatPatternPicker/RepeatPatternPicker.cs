@@ -60,7 +60,7 @@ namespace Alternet.UI
         private readonly WeeklyPatternPicker weeklyPicker;
         private readonly MonthlyPatternPicker monthlyPicker;
         private readonly YearlyPatternPicker yearlyPicker;
-        private readonly HiddenBorder nonePicker = new();
+        private readonly OncePatternPicker oncePicker;
         private readonly RepeatPatternRule data;
 
         private IFormatProvider? formatProvider;
@@ -129,6 +129,7 @@ namespace Alternet.UI
             endsAfterOccurrenceRadioButton.MainControl.RadioSiblings = radioButtons;
             endsNeverRadioButton.MainControl.RadioSiblings = radioButtons;
 
+            oncePicker = CreateOncePatternPicker();
             dailyPicker = CreateDailyPatternPicker();
             weeklyPicker = CreateWeeklyPatternPicker();
             monthlyPicker = CreateMonthlyPatternPicker();
@@ -139,9 +140,11 @@ namespace Alternet.UI
             tabControl.HasInteriorBorder = false;
             tabControl.ActiveTabTheme = SpeedButton.KnownTheme.StaticBorder;
             tabControl.TabTheme = SpeedButton.KnownTheme.Default;
+            
             tabControl.ContentVisible = false;
+            rangePanel.Visible = false;
 
-            tabControl.Add(Localized.ScheduleRepeatPatternNone, nonePicker);
+            tabControl.Add(Localized.ScheduleRepeatPatternOnce, oncePicker);
             tabControl.Add(Localized.ScheduleRepeatPatternDaily, dailyPicker);
             tabControl.Add(Localized.ScheduleRepeatPatternWeekly, weeklyPicker);
             tabControl.Add(Localized.ScheduleRepeatPatternMonthly, monthlyPicker);
@@ -160,9 +163,6 @@ namespace Alternet.UI
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
 
             DateFormat = DefaultDateFormat;
-
-            endsNeverRadioButton.IsEnabled = false;
-            endsAfterOccurrenceRadioButton.IsEnabled = false;
 
             ValueToControls();
 
@@ -338,7 +338,7 @@ namespace Alternet.UI
         /// Gets the control for selecting "no repeat" pattern.
         /// </summary>
         [Browsable(false)]
-        public HiddenBorder NonePicker => nonePicker;
+        public HiddenBorder NonePicker => oncePicker;
 
         /// <summary>
         /// Provides access to the <see cref="RepeatPatternRule"/> representing the selected repeat
@@ -459,19 +459,20 @@ namespace Alternet.UI
         {
             var index = tabControl.SelectedIndex;
 
-            var newPattern = ScheduleRepeatPattern.None;
+            var newPattern = ScheduleRepeatPattern.Once;
 
             if (index >= 0 && index <= (int)ScheduleRepeatPattern.Yearly)
                 newPattern = (ScheduleRepeatPattern)index;
 
-            tabControl.ContentVisible = newPattern != ScheduleRepeatPattern.None;
+            bool isRepeatPattern = newPattern != ScheduleRepeatPattern.Once;
 
             SelectedPattern = newPattern;
 
-            untilRadioButton.IsChecked = true;
-
-            endsNeverRadioButton.SetEnabled(index > 0);
-            endsAfterOccurrenceRadioButton.SetEnabled(index > 0);
+            DoInsideLayout(() =>
+            {
+                tabControl.ContentVisible = isRepeatPattern;
+                rangePanel.Visible = isRepeatPattern;
+            });
         }
 
         /// <summary>
@@ -515,6 +516,12 @@ namespace Alternet.UI
         /// </summary>
         /// <returns> A new instance of the <see cref="DailyPatternPicker"/> control. </returns>
         protected virtual DailyPatternPicker CreateDailyPatternPicker() => new(data.DailyRule);
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="OncePatternPicker"/> control.
+        /// </summary>
+        /// <returns> A new instance of the <see cref="OncePatternPicker"/> control. </returns>
+        protected virtual OncePatternPicker CreateOncePatternPicker() => new(data.OnceRule);
 
         /// <summary>
         /// Creates a new instance of the <see cref="WeeklyPatternPicker"/> control.
