@@ -94,8 +94,6 @@ namespace Alternet.UI
 
             allDayCheckBox.Parent = startPanel;
 
-            startPanel.Parent = this;
-
             // End on date
 
             var endDateControlsPanel = new TransparentPanel();
@@ -178,7 +176,7 @@ namespace Alternet.UI
             tabControl.Parent = tabControlPanel;
 
             tabControlPanel.Parent = this;
-
+            startPanel.Parent = this;
             endPanel.Parent = this;
 
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;

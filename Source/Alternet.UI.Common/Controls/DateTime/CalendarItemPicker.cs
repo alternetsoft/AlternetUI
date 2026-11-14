@@ -31,16 +31,14 @@ namespace Alternet.UI
         public static float DefaultMinWidth = 300;
 
         private readonly GenericRoundBorderWithTitle detailsPanel = new(Localized.CalendarItemLabelDetails);
-        private readonly GenericRoundBorderWithTitle moreOptionsPanel = new(Localized.CalendarItemLabelMoreOptions);
         private readonly GenericRoundBorderWithTitle alarmPanel = new(Localized.CalendarItemLabelReminder);
-        private readonly TextPicker titlePicker = new();
+        private readonly TextPickerAndImage titlePicker = new(KnownSvgImages.ImgPenToSquare);
 
         private readonly MultilineTextPickerAndImage descriptionPicker = new(KnownSvgImages.ImgFormatAlignLeft);
 
         private readonly TextPickerAndImage locationPicker = new(KnownSvgImages.ImgLocation);
 
-        private readonly Label categoryLabel = new();
-        private readonly CalendarItemCategoryPicker categoryPicker = new();
+        private readonly GenericControlAndImage<CalendarItemCategoryPicker> categoryPicker = new(KnownSvgImages.ImgTag);
 
         private readonly GenericControlAndImage<CalendarItemStatusPicker> statusPicker = new(KnownSvgImages.ImgWorkOutline);
 
@@ -62,50 +60,44 @@ namespace Alternet.UI
             Padding = DefaultPadding;
 
             detailsPanel.Margin = DefaultMinChildMargin;
-            moreOptionsPanel.Margin = DefaultMinChildMargin;
             alarmPanel.Margin = DefaultMinChildMargin;
-
-            categoryLabel.Text = Localized.CalendarItemLabelCategory;
 
             ValueToControls();
 
             alarmPicker.Parent = alarmPanel;
 
-            titlePicker.EmptyTextHint = Localized.AddTitle + "...";
+            titlePicker.MainControl.EmptyTextHint = Localized.AddTitle + "...";
             descriptionPicker.MainControl.EmptyTextHint = Localized.AddDescription + "...";
             locationPicker.MainControl.EmptyTextHint = Localized.AddLocation + "...";
 
+            categoryPicker.MainControl.PopupWindowTitle = Localized.WindowTitleSelectCategory;
+            statusPicker.MainControl.PopupWindowTitle = Localized.WindowTitleSelectStatus;
+
             titlePicker.Parent = detailsPanel;
-
-            categoryLabel.Parent = detailsPanel;
             categoryPicker.Parent = detailsPanel;
-
             statusPicker.Parent = detailsPanel;
 
-            detailsPanel.Parent = this;
-
             rulePicker.Padding = 0;
+
+            detailsPanel.Parent = this;
+            alarmPanel.Parent = this;
             rulePicker.Parent = this;
 
-            locationPicker.Parent = moreOptionsPanel;
-
-            descriptionPicker.Parent = moreOptionsPanel; // ImgFormatAlignLeft
+            locationPicker.Parent = detailsPanel;
+            descriptionPicker.Parent = detailsPanel;
 
             void OnEditExcludedDatesLinkLabelClick(object? sender, CancelEventArgs e)
             {
                 ShowExcludedDatesEditor();
             }
 
-            editExcludedDatesLinkLabel.Parent = moreOptionsPanel;
+            editExcludedDatesLinkLabel.Parent = detailsPanel;
             editExcludedDatesLinkLabel.LinkClicked += OnEditExcludedDatesLinkLabelClick;
 
-            alarmPanel.Parent = this;
-            moreOptionsPanel.Parent = this;
-
-            titlePicker.ValueChanged += OnTitlePickerValueChanged;
+            titlePicker.MainControl.ValueChanged += OnTitlePickerValueChanged;
             locationPicker.MainControl.ValueChanged += OnLocationPickerValueChanged;
             descriptionPicker.MainControl.ValueChanged += OnDescriptionPickerValueChanged;
-            categoryPicker.ValueChanged += OnCategoryPickerValueChanged;
+            categoryPicker.MainControl.ValueChanged += OnCategoryPickerValueChanged;
             statusPicker.MainControl.ValueChanged += OnStatusPickerValueChanged;
             rulePicker.ValueChanged += OnRulePickerValueChanged;
             alarmPicker.ValueChanged += OnAlarmPickerValueChanged;
@@ -129,13 +121,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public GenericRoundBorderWithTitle AlarmPanel => alarmPanel;
-
-        /// <summary>
-        /// Gets the <see cref="GenericRoundBorderWithTitle"/> that contains the controls for editing
-        /// the more options of the <see cref="CalendarItem"/>.
-        /// </summary>
-        [Browsable(false)]
-        public GenericRoundBorderWithTitle MoreOptionsPanel => moreOptionsPanel;
 
         /// <summary>
         /// Gets the <see cref="RepeatPatternPicker"/> that is used to edit the recurrence rule.
@@ -162,10 +147,10 @@ namespace Alternet.UI
 
                 descriptionPicker.MainControl.TextTransparent = value;
                 locationPicker.MainControl.TextTransparent = value;
-                titlePicker.TextTransparent = value;
+                titlePicker.MainControl.TextTransparent = value;
                 rulePicker.ValuesTransparent = value;
                 alarmPicker.ValuesTransparent = value;
-                categoryPicker.TextTransparent = value;
+                categoryPicker.MainControl.TextTransparent = value;
                 statusPicker.MainControl.TextTransparent = value;
             }
         }
@@ -182,7 +167,7 @@ namespace Alternet.UI
         /// of the <see cref="CalendarItem"/> being edited.
         /// </summary>
         [Browsable(false)]
-        public TextPicker TitlePicker => titlePicker;
+        public TextPickerAndImage TitlePicker => titlePicker;
 
         /// <summary>
         /// Gets the <see cref="MultilineTextPickerAndImage"/> that is used to edit
@@ -199,18 +184,11 @@ namespace Alternet.UI
         public TextPickerAndImage LocationPicker => locationPicker;
 
         /// <summary>
-        /// Gets the <see cref="Label"/> that displays the label which is shown
-        /// above the <see cref="CategoryPicker"/> control.
-        /// </summary>
-        [Browsable(false)]
-        public Label CategoryLabel => categoryLabel;
-
-        /// <summary>
         /// Gets the <see cref="DrawingResourcePicker"/> that is used to select
         /// the category of the <see cref="CalendarItem"/> being edited.
         /// </summary>
         [Browsable(false)]
-        public DrawingResourcePicker CategoryPicker => categoryPicker;
+        public GenericControlAndImage<CalendarItemCategoryPicker> CategoryPicker => categoryPicker;
 
         /// <summary>
         /// Gets the <see cref="DrawingResourcePicker"/> used to select the status
@@ -280,7 +258,7 @@ namespace Alternet.UI
             descriptionPicker.Text = Value.Description ?? string.Empty;
             locationPicker.Text = Value.Location?.ToString() ?? string.Empty;
             statusPicker.MainControl.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
-            categoryPicker.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
+            categoryPicker.MainControl.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
             rulePicker.Value = Value.Rule;
             alarmPicker.Value = Value.AlarmInfo;
         }
@@ -346,7 +324,7 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnCategoryPickerValueChanged(object? s, EventArgs e)
         {
-            var newValue = categoryPicker.Value;
+            var newValue = categoryPicker.MainControl.Value;
             Value.Category = newValue ?? KnownCalendarItemMarkers.CategoryNone;
         }
 

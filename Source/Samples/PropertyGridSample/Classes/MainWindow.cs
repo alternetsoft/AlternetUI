@@ -180,6 +180,7 @@ namespace PropertyGridSample
 
                 ControlParent.HasBorder = true;
 
+                toolBoxFilterEdit.EmptyTextHint = "Filter controls...";
                 toolBoxFilterEdit.VerticalAlignment = VerticalAlignment.Top;
                 toolBoxFilterEdit.MarginBottom = 5;
                 toolBoxFilterEdit.MarginTop = 5;
