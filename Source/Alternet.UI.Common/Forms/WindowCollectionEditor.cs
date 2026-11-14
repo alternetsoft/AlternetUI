@@ -120,7 +120,6 @@ namespace Alternet.UI
 
             toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
             toolbar.SetVisibleBorders(false, false, false, true);
-            BackgroundColor = ThemedColors.Window;
 
             DataSource = source;
         }

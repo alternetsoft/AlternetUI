@@ -238,7 +238,10 @@ namespace Alternet.UI
         {
             IListEditSource source = new DatesListEditSource(
                 () => Value.Rule.ExcludedDates,
-                items => Value.Rule.ExcludedDates = items);
+                items =>
+                {
+                    Value.Rule.ExcludedDates = items;
+                });
 
             WindowCollectionEditor.ShowCollectionEditor<WindowDateCollectionEditor>(source, OnCreate);
 
