@@ -28,6 +28,23 @@ namespace Alternet.UI
     public struct SerializableObjectContext : ISerializableObjectContext
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SerializableObjectContext"/> struct.
+        /// </summary>
+        public SerializableObjectContext()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerializableObjectContext"/>
+        /// </summary>
+        /// <param name="createPropertyBag">Indicates whether to create a new property bag.</param>
+        public SerializableObjectContext(bool createPropertyBag)
+        {
+            PropertyBag = createPropertyBag ? UI.PropertyBag.Create() : null;
+            Prefix = null;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SerializableObjectContext"/>
         /// struct with the specified property bag.
         /// </summary>
