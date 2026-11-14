@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 576 576"
+   version="1.1"
+   id="svg1"
+   width="576"
+   height="576"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <path
+     d="M 192,96 C 86,96 0,182 0,288 0,394 86,480 192,480 H 384 C 490,480 576,394 576,288 576,182 490,96 384,96 Z m 192,96 a 96,96 0 1 1 0,192 96,96 0 1 1 0,-192 z"
+     id="path1" />
+</svg>
