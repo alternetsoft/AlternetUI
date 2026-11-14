@@ -520,7 +520,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates an image using the specified SVG color and theme, with an optional size and control context. If no
+        /// Creates an image using the specified SVG color and theme,
+        /// with an optional size and control context. If no
         /// size is provided, the default image size for the specified control is used.
         /// </summary>
         /// <param name="knownColor">The known SVG color to apply to the image.</param>

@@ -28,6 +28,26 @@ namespace Alternet.UI
             "embres:Alternet.UI.Common.Resources.Svg.{0}.svg?assembly=Alternet.UI.Common";
 
         /// <summary>
+        /// Gets or sets url used to load "Format Align Left" svg image.
+        /// </summary>
+        public static string UrlImageFormatAlignLeft { get; set; } = GetImageUrl("alternet-format-align-left");
+
+        /// <summary>
+        /// Gets or sets url used to load "Location" svg image.
+        /// </summary>
+        public static string UrlImageLocation { get; set; } = GetImageUrl("alternet-location");
+
+        /// <summary>
+        /// Gets or sets url used to load "User" svg image.
+        /// </summary>
+        public static string UrlImageUser { get; set; } = GetImageUrl("alternet-user");
+
+        /// <summary>
+        /// Gets or sets url used to load "Work Outline" svg image.
+        /// </summary>
+        public static string UrlImageWorkOutline { get; set; } = GetImageUrl("alternet-work-outline");
+
+        /// <summary>
         /// Gets or sets url used to load "Square Check Filled" svg image.
         /// </summary>
         public static string UrlImageSquareCheckFilled { get; set; }

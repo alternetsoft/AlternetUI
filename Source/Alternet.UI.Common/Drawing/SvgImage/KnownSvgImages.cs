@@ -127,6 +127,10 @@ namespace Alternet.UI
         private static SvgImage? imgSlash;
         private static SvgImage? imgSmallPen;
         private static SvgImage? imgArrowsSpinPencil;
+        private static SvgImage? imgFormatAlignLeft;
+        private static SvgImage? imgLocation;
+        private static SvgImage? imgUser;
+        private static SvgImage? imgWorkOutline;
 
         static KnownSvgImages()
         {
@@ -147,12 +151,76 @@ namespace Alternet.UI
         {
             get
             {
-                return imgArrowsSpinPencil ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowsSpinPencil);
+                return imgArrowsSpinPencil ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageArrowsSpinPencil);
             }
 
             set
             {
                 imgArrowsSpinPencil = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Format Align Left" svg image which includes a left-aligned text icon.
+        /// </summary>
+        public static SvgImage ImgFormatAlignLeft
+        {
+            get
+            {
+                return imgFormatAlignLeft ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageFormatAlignLeft);
+            }
+
+            set
+            {
+                imgFormatAlignLeft = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Location" svg image which includes a location pin icon.
+        /// </summary>
+        public static SvgImage ImgLocation
+        {
+            get
+            {
+                return imgLocation ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageLocation);
+            }
+
+            set
+            {
+                imgLocation = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "User" svg image which includes a user icon.
+        /// </summary>
+        public static SvgImage ImgUser
+        {
+            get
+            {
+                return imgUser ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageUser);
+            }
+
+            set
+            {
+                imgUser = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Work Outline" svg image which includes a briefcase icon.
+        /// </summary>
+        public static SvgImage ImgWorkOutline
+        {
+            get
+            {
+                return imgWorkOutline ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageWorkOutline);
+            }
+
+            set
+            {
+                imgWorkOutline = value;
             }
         }
 
@@ -163,7 +231,7 @@ namespace Alternet.UI
         {
             get
             {
-                return imgSlash ??= new MonoSvgImage(KnownSvgUrls.UrlImageSlash);
+                return imgSlash ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSlash);
             }
 
             set
@@ -179,7 +247,7 @@ namespace Alternet.UI
         {
             get
             {
-                return imgSmallPen ??= new MonoSvgImage(KnownSvgUrls.UrlImageSmallPen);
+                return imgSmallPen ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSmallPen);
             }
 
             set
@@ -194,7 +262,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCircleCheckmark
         {
-            get => imgCircleCheckmark ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleCheckmark);
+            get => imgCircleCheckmark ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCircleCheckmark);
             set => imgCircleCheckmark = value;
         }
 
@@ -203,7 +271,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgFolderEllipsis
         {
-            get => imgFolderEllipsis ??= new MonoSvgImage(KnownSvgUrls.UrlImageFolderEllipsis);
+            get => imgFolderEllipsis ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageFolderEllipsis);
             set => imgFolderEllipsis = value;
         }
 
@@ -212,7 +280,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgHourglassHalf
         {
-            get => imgHourglassHalf ??= new MonoSvgImage(KnownSvgUrls.UrlImageHourglassHalf);
+            get => imgHourglassHalf ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageHourglassHalf);
             set => imgHourglassHalf = value;
         }
 
@@ -221,7 +289,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgHourglass
         {
-            get => imgHourglass ??= new MonoSvgImage(KnownSvgUrls.UrlImageHourglass);
+            get => imgHourglass ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageHourglass);
             set => imgHourglass = value;
         }
 
@@ -230,7 +298,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgBackspace
         {
-            get => imgBackspace ??= new MonoSvgImage(KnownSvgUrls.UrlImageBackspace);
+            get => imgBackspace ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageBackspace);
             set => imgBackspace = value;
         }
 
@@ -239,7 +307,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgBell
         {
-            get => imgBell ??= new MonoSvgImage(KnownSvgUrls.UrlImageBell);
+            get => imgBell ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageBell);
             set => imgBell = value;
         }
 
@@ -297,7 +365,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgRotate
         {
-            get => imgRotate ??= new MonoSvgImage(KnownSvgUrls.UrlImageRotate);
+            get => imgRotate ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRotate);
             set => imgRotate = value;
         }
 
@@ -308,7 +376,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgClock
         {
-            get => imgClock ??= new MonoSvgImage(KnownSvgUrls.UrlImageClock);
+            get => imgClock ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageClock);
             set => imgClock = value;
         }
 
@@ -317,7 +385,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAddressCard
         {
-            get => imgAddressCard ??= new MonoSvgImage(KnownSvgUrls.UrlImageAddressCard);
+            get => imgAddressCard ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAddressCard);
             set => imgAddressCard = value;
         }
 
@@ -328,7 +396,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgCalendar
         {
-            get => imgCalendar ??= new MonoSvgImage(KnownSvgUrls.UrlImageCalendar);
+            get => imgCalendar ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCalendar);
             set => imgCalendar = value;
         }
 
@@ -339,7 +407,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgCalendarCheck
         {
-            get => imgCalendarCheck ??= new MonoSvgImage(KnownSvgUrls.UrlImageCalendarCheck);
+            get => imgCalendarCheck ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCalendarCheck);
             set => imgCalendarCheck = value;
         }
 
@@ -350,7 +418,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgRightFromBracket
         {
-            get => imgRightFromBracket ??= new MonoSvgImage(KnownSvgUrls.UrlImageRightFromBracket);
+            get => imgRightFromBracket ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRightFromBracket);
             set => imgRightFromBracket = value;
         }
 
@@ -361,7 +429,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgRightToBracket
         {
-            get => imgRightToBracket ??= new MonoSvgImage(KnownSvgUrls.UrlImageRightToBracket);
+            get => imgRightToBracket ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRightToBracket);
             set => imgRightToBracket = value;
         }
 
@@ -372,7 +440,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgBars
         {
-            get => imgBars ??= new MonoSvgImage(KnownSvgUrls.UrlImageBars);
+            get => imgBars ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageBars);
             set => imgBars = value;
         }
 
@@ -383,7 +451,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgFilter
         {
-            get => imgFilter ??= new MonoSvgImage(KnownSvgUrls.UrlImageFilter);
+            get => imgFilter ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageFilter);
             set => imgFilter = value;
         }
 
@@ -392,7 +460,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCheck
         {
-            get => imgCheck ??= new MonoSvgImage(KnownSvgUrls.UrlImageCheck);
+            get => imgCheck ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCheck);
             set => imgCheck = value;
         }
 
@@ -403,7 +471,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgSizingGripLeft
         {
-            get => imgSizingGripLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageSizingGripLeft);
+            get => imgSizingGripLeft ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSizingGripLeft);
             set => imgSizingGripLeft = value;
         }
 
@@ -414,7 +482,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgSizingGripRight
         {
-            get => imgSizingGripRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageSizingGripRight);
+            get => imgSizingGripRight ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSizingGripRight);
             set => imgSizingGripRight = value;
         }
 
@@ -425,7 +493,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgIconFile
         {
-            get => imgIconFile ??= new MonoSvgImage(KnownSvgUrls.UrlIconFile);
+            get => imgIconFile ??= CreateMonoSvgImage(KnownSvgUrls.UrlIconFile);
             set => imgIconFile = value;
         }
 
@@ -436,7 +504,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgIconFileSolid
         {
-            get => imgIconFileSolid ??= new MonoSvgImage(KnownSvgUrls.UrlIconFileSolid);
+            get => imgIconFileSolid ??= CreateMonoSvgImage(KnownSvgUrls.UrlIconFileSolid);
             set => imgIconFileSolid = value;
         }
 
@@ -447,7 +515,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgIconFolderSolid
         {
-            get => imgIconFolderSolid ??= new MonoSvgImage(KnownSvgUrls.UrlIconFolderSolid);
+            get => imgIconFolderSolid ??= CreateMonoSvgImage(KnownSvgUrls.UrlIconFolderSolid);
             set => imgIconFolderSolid = value;
         }
 
@@ -458,7 +526,7 @@ namespace Alternet.UI
         /// to override the default icon.</remarks>
         public static SvgImage ImgIconFolder
         {
-            get => imgIconFolder ??= new MonoSvgImage(KnownSvgUrls.UrlIconFolder);
+            get => imgIconFolder ??= CreateMonoSvgImage(KnownSvgUrls.UrlIconFolder);
             set => imgIconFolder = value;
         }
 
@@ -467,7 +535,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgEyeOn
         {
-            get => imgEyeOn ??= new MonoSvgImage(KnownSvgUrls.UrlImageEyeOn);
+            get => imgEyeOn ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageEyeOn);
             set => imgEyeOn = value;
         }
 
@@ -476,7 +544,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgSearch
         {
-            get => imgSearch ??= new MonoSvgImage(KnownSvgUrls.UrlImageSearch);
+            get => imgSearch ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSearch);
             set => imgSearch = value;
         }
 
@@ -485,7 +553,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgEyeOff
         {
-            get => imgEyeOff ??= new MonoSvgImage(KnownSvgUrls.UrlImageEyeOff);
+            get => imgEyeOff ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageEyeOff);
             set => imgEyeOff = value;
         }
 
@@ -494,7 +562,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCircleFilled
         {
-            get => imgCircleFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleFilled);
+            get => imgCircleFilled ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCircleFilled);
             set => imgCircleFilled = value;
         }
 
@@ -503,7 +571,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgDebugRun
         {
-            get => imgDebugRun ??= new MonoSvgImage(KnownSvgUrls.UrlImageDebugRun);
+            get => imgDebugRun ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageDebugRun);
             set => imgDebugRun = value;
         }
 
@@ -512,7 +580,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCopy
         {
-            get => imgCopy ??= new MonoSvgImage(KnownSvgUrls.UrlImageCopy);
+            get => imgCopy ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCopy);
             set => imgCopy = value;
         }
 
@@ -521,7 +589,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCut
         {
-            get => imgCut ??= new MonoSvgImage(KnownSvgUrls.UrlImageCut);
+            get => imgCut ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCut);
             set => imgCut = value;
         }
 
@@ -530,7 +598,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgTrashCan
         {
-            get => imgTrashCan ??= new MonoSvgImage(KnownSvgUrls.UrlImageTrashCan);
+            get => imgTrashCan ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageTrashCan);
             set => imgTrashCan = value;
         }
 
@@ -539,7 +607,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgPaste
         {
-            get => imgPaste ??= new MonoSvgImage(KnownSvgUrls.UrlImagePaste);
+            get => imgPaste ??= CreateMonoSvgImage(KnownSvgUrls.UrlImagePaste);
             set => imgPaste = value;
         }
 
@@ -548,7 +616,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgDiamondFilled
         {
-            get => imgDiamondFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageDiamondFilled);
+            get => imgDiamondFilled ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageDiamondFilled);
             set => imgDiamondFilled = value;
         }
 
@@ -557,7 +625,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgKeyboard
         {
-            get => imgKeyboard ??= new MonoSvgImage(KnownSvgUrls.UrlImageKeyboard);
+            get => imgKeyboard ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageKeyboard);
             set => imgKeyboard = value;
         }
 
@@ -566,7 +634,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgTriangleArrowDown
         {
-            get => imgTriangleArrowDown ??= new MonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowDown);
+            get => imgTriangleArrowDown ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowDown);
             set => imgTriangleArrowDown = value;
         }
 
@@ -575,7 +643,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgTriangleArrowUp
         {
-            get => imgTriangleArrowUp ??= new MonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowUp);
+            get => imgTriangleArrowUp ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowUp);
             set => imgTriangleArrowUp = value;
         }
 
@@ -584,7 +652,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgTriangleArrowLeft
         {
-            get => imgTriangleArrowLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowLeft);
+            get => imgTriangleArrowLeft ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowLeft);
             set => imgTriangleArrowLeft = value;
         }
 
@@ -593,7 +661,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgTriangleArrowRight
         {
-            get => imgTriangleArrowRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowRight);
+            get => imgTriangleArrowRight ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageTriangleArrowRight);
             set => imgTriangleArrowRight = value;
         }
 
@@ -602,7 +670,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgOk
         {
-            get => imgOk ??= new MonoSvgImage(KnownSvgUrls.UrlImageOk);
+            get => imgOk ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageOk);
             set => imgOk = value;
         }
 
@@ -611,7 +679,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgArrowDown
         {
-            get => imgArrowDown ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowDown);
+            get => imgArrowDown ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageArrowDown);
             set => imgArrowDown = value;
         }
 
@@ -620,7 +688,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgArrowRight
         {
-            get => imgArrowRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowRight);
+            get => imgArrowRight ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageArrowRight);
             set => imgArrowRight = value;
         }
 
@@ -629,7 +697,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgArrowLeft
         {
-            get => imgArrowLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowLeft);
+            get => imgArrowLeft ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageArrowLeft);
             set => imgArrowLeft = value;
         }
 
@@ -638,7 +706,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgArrowUp
         {
-            get => imgArrowUp ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowUp);
+            get => imgArrowUp ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageArrowUp);
             set => imgArrowUp = value;
         }
 
@@ -647,7 +715,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgReplace
         {
-            get => imgReplace ??= new MonoSvgImage(KnownSvgUrls.UrlImageReplace);
+            get => imgReplace ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageReplace);
             set => imgReplace = value;
         }
 
@@ -656,7 +724,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgReplaceAll
         {
-            get => imgReplaceAll ??= new MonoSvgImage(KnownSvgUrls.UrlImageReplaceAll);
+            get => imgReplaceAll ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageReplaceAll);
             set => imgReplaceAll = value;
         }
 
@@ -665,7 +733,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgRegularExpr
         {
-            get => imgRegularExpr ??= new MonoSvgImage(KnownSvgUrls.UrlImageRegularExpr);
+            get => imgRegularExpr ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRegularExpr);
             set => imgRegularExpr = value;
         }
 
@@ -674,7 +742,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgFindMatchCase
         {
-            get => imgFindMatchCase ??= new MonoSvgImage(KnownSvgUrls.UrlImageFindMatchCase);
+            get => imgFindMatchCase ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageFindMatchCase);
             set => imgFindMatchCase = value;
         }
 
@@ -683,7 +751,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgFindMatchFullWord
         {
-            get => imgFindMatchFullWord ??= new MonoSvgImage(KnownSvgUrls.UrlImageFindMatchFullWord);
+            get => imgFindMatchFullWord ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageFindMatchFullWord);
             set => imgFindMatchFullWord = value;
         }
 
@@ -692,7 +760,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgEmpty
         {
-            get => imgEmpty ??= new MonoSvgImage(KnownSvgUrls.UrlImageEmpty);
+            get => imgEmpty ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageEmpty);
             set => imgEmpty = value;
         }
 
@@ -701,7 +769,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAngleDown
         {
-            get => imgAngleDown ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleDown);
+            get => imgAngleDown ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAngleDown);
             set => imgAngleDown = value;
         }
 
@@ -710,7 +778,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAngleUp
         {
-            get => imgAngleUp ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleUp);
+            get => imgAngleUp ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAngleUp);
             set => imgAngleUp = value;
         }
 
@@ -719,7 +787,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAngleRight
         {
-            get => imgAngleRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleRight);
+            get => imgAngleRight ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAngleRight);
             set => imgAngleRight = value;
         }
 
@@ -728,7 +796,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAngleLeft
         {
-            get => imgAngleLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageAngleLeft);
+            get => imgAngleLeft ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAngleLeft);
             set => imgAngleLeft = value;
         }
 
@@ -737,7 +805,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgGear
         {
-            get => imgGear ??= new MonoSvgImage(KnownSvgUrls.UrlImageGear);
+            get => imgGear ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageGear);
             set => imgGear = value;
         }
 
@@ -746,7 +814,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCircle
         {
-            get => imgCircle ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircle);
+            get => imgCircle ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCircle);
             set => imgCircle = value;
         }
 
@@ -756,7 +824,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgBrowserBack
         {
-            get => imgBrowserBack ??= new MonoSvgImage(KnownSvgUrls.UrlImageWebBrowserBack);
+            get => imgBrowserBack ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageWebBrowserBack);
             set => imgBrowserBack = value;
         }
 
@@ -766,7 +834,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgBrowserForward
         {
-            get => imgBrowserForward ??= new MonoSvgImage(KnownSvgUrls.UrlImageWebBrowserForward);
+            get => imgBrowserForward ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageWebBrowserForward);
             set => imgBrowserForward = value;
         }
 
@@ -775,7 +843,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgMessageBoxError
         {
-            get => imgMessageBoxError ??= new MonoSvgImage(KnownSvgUrls.UrlImageMessageBoxError);
+            get => imgMessageBoxError ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageMessageBoxError);
             set => imgMessageBoxError = value;
         }
 
@@ -784,7 +852,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgMessageBoxInformation
         {
-            get => imgMessageBoxInformation ??= new MonoSvgImage(KnownSvgUrls.UrlImageMessageBoxInformation);
+            get => imgMessageBoxInformation ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageMessageBoxInformation);
             set => imgMessageBoxInformation = value;
         }
 
@@ -793,7 +861,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgFileNew
         {
-            get => imgFileNew ??= new MonoSvgImage(KnownSvgUrls.UrlImageFileNew);
+            get => imgFileNew ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageFileNew);
             set => imgFileNew = value;
         }
 
@@ -802,7 +870,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgFileSave
         {
-            get => imgFileSave ??= new MonoSvgImage(KnownSvgUrls.UrlImageFileSave);
+            get => imgFileSave ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageFileSave);
             set => imgFileSave = value;
         }
 
@@ -811,7 +879,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgPlus
         {
-            get => imgPlus ??= new MonoSvgImage(KnownSvgUrls.UrlImagePlus);
+            get => imgPlus ??= CreateMonoSvgImage(KnownSvgUrls.UrlImagePlus);
             set => imgPlus = value;
         }
 
@@ -820,7 +888,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgMinus
         {
-            get => imgMinus ??= new MonoSvgImage(KnownSvgUrls.UrlImageMinus);
+            get => imgMinus ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageMinus);
             set => imgMinus = value;
         }
 
@@ -829,7 +897,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgSquarePlus
         {
-            get => imgSquarePlus ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquarePlus);
+            get => imgSquarePlus ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSquarePlus);
             set => imgSquarePlus = value;
         }
 
@@ -838,7 +906,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgSquareMinus
         {
-            get => imgSquareMinus ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquareMinus);
+            get => imgSquareMinus ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSquareMinus);
             set => imgSquareMinus = value;
         }
 
@@ -847,7 +915,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgFileOpen
         {
-            get => imgFileOpen ??= new MonoSvgImage(KnownSvgUrls.UrlImageFileOpen);
+            get => imgFileOpen ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageFileOpen);
             set => imgFileOpen = value;
         }
 
@@ -856,7 +924,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgMessageBoxWarning
         {
-            get => imgMessageBoxWarning ??= new MonoSvgImage(KnownSvgUrls.UrlImageMessageBoxWarning);
+            get => imgMessageBoxWarning ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageMessageBoxWarning);
             set => imgMessageBoxWarning = value;
         }
 
@@ -865,7 +933,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgZoomIn
         {
-            get => imgZoomIn ??= new MonoSvgImage(KnownSvgUrls.UrlImageZoomIn);
+            get => imgZoomIn ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageZoomIn);
             set => imgZoomIn = value;
         }
 
@@ -874,7 +942,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgZoomOut
         {
-            get => imgZoomOut ??= new MonoSvgImage(KnownSvgUrls.UrlImageZoomOut);
+            get => imgZoomOut ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageZoomOut);
             set => imgZoomOut = value;
         }
 
@@ -884,7 +952,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgBrowserGo
         {
-            get => imgBrowserGo ??= new MonoSvgImage(KnownSvgUrls.UrlImageWebBrowserGo);
+            get => imgBrowserGo ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageWebBrowserGo);
             set => imgBrowserGo = value;
         }
 
@@ -893,7 +961,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAdd
         {
-            get => imgAdd ??= new MonoSvgImage(KnownSvgUrls.UrlImagePlus);
+            get => imgAdd ??= CreateMonoSvgImage(KnownSvgUrls.UrlImagePlus);
             set => imgAdd = value;
         }
 
@@ -902,7 +970,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgYes
         {
-            get => imgYes ??= new MonoSvgImage(KnownSvgUrls.UrlImageYes);
+            get => imgYes ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageYes);
             set => imgYes = value;
         }
 
@@ -911,7 +979,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgNo
         {
-            get => imgNo ??= new MonoSvgImage(KnownSvgUrls.UrlImageNo);
+            get => imgNo ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageNo);
             set => imgNo = value;
         }
 
@@ -920,7 +988,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAbort
         {
-            get => imgAbort ??= new MonoSvgImage(KnownSvgUrls.UrlImageAbort);
+            get => imgAbort ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAbort);
             set => imgAbort = value;
         }
 
@@ -929,7 +997,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgRetry
         {
-            get => imgRetry ??= new MonoSvgImage(KnownSvgUrls.UrlImageRetry);
+            get => imgRetry ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRetry);
             set => imgRetry = value;
         }
 
@@ -938,7 +1006,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgArrowsSpin
         {
-            get => imgArrowsSpin ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowsSpin);
+            get => imgArrowsSpin ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageArrowsSpin);
             set => imgArrowsSpin = value;
         }
 
@@ -947,7 +1015,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgIgnore
         {
-            get => imgIgnore ??= new MonoSvgImage(KnownSvgUrls.UrlImageIgnore);
+            get => imgIgnore ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageIgnore);
             set => imgIgnore = value;
         }
 
@@ -956,7 +1024,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgHelp
         {
-            get => imgHelp ??= new MonoSvgImage(KnownSvgUrls.UrlImageHelp);
+            get => imgHelp ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageHelp);
             set => imgHelp = value;
         }
 
@@ -965,7 +1033,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgMoreActions
         {
-            get => imgMoreActions ??= new MonoSvgImage(KnownSvgUrls.UrlImageMoreActions);
+            get => imgMoreActions ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageMoreActions);
             set => imgMoreActions = value;
         }
 
@@ -974,7 +1042,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgMoreActionsHorz
         {
-            get => imgMoreActionsHorz ??= new MonoSvgImage(KnownSvgUrls.UrlImageMoreActionsHorz);
+            get => imgMoreActionsHorz ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageMoreActionsHorz);
             set => imgMoreActionsHorz = value;
         }
 
@@ -983,7 +1051,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgPaintBrush
         {
-            get => imgPaintBrush ??= new MonoSvgImage(KnownSvgUrls.UrlImagePaintBrush);
+            get => imgPaintBrush ??= CreateMonoSvgImage(KnownSvgUrls.UrlImagePaintBrush);
             set => imgPaintBrush = value;
         }
 
@@ -992,7 +1060,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgRemove
         {
-            get => imgRemove ??= new MonoSvgImage(KnownSvgUrls.UrlImageMinus);
+            get => imgRemove ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageMinus);
             set => imgRemove = value;
         }
 
@@ -1001,7 +1069,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCancel
         {
-            get => imgCancel ??= new MonoSvgImage(KnownSvgUrls.UrlImageCancel);
+            get => imgCancel ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCancel);
             set => imgCancel = value;
         }
 
@@ -1010,7 +1078,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgClose
         {
-            get => imgClose ??= new MonoSvgImage(KnownSvgUrls.UrlImageClose);
+            get => imgClose ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageClose);
             set => imgClose = value;
         }
 
@@ -1019,7 +1087,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAddChild
         {
-            get => imgAddChild ??= new MonoSvgImage(KnownSvgUrls.UrlImageAddChild);
+            get => imgAddChild ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAddChild);
             set => imgAddChild = value;
         }
 
@@ -1028,7 +1096,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgRemoveAll
         {
-            get => imgRemoveAll ??= new MonoSvgImage(KnownSvgUrls.UrlImageRemoveAll);
+            get => imgRemoveAll ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRemoveAll);
             set => imgRemoveAll = value;
         }
 
@@ -1037,7 +1105,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgUndo
         {
-            get => imgUndo ??= new MonoSvgImage(KnownSvgUrls.UrlImageUndo);
+            get => imgUndo ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageUndo);
             set => imgUndo = value;
         }
 
@@ -1046,7 +1114,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgRedo
         {
-            get => imgRedo ??= new MonoSvgImage(KnownSvgUrls.UrlImageRedo);
+            get => imgRedo ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRedo);
             set => imgRedo = value;
         }
 
@@ -1055,7 +1123,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgBold
         {
-            get => imgBold ??= new MonoSvgImage(KnownSvgUrls.UrlImageBold);
+            get => imgBold ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageBold);
             set => imgBold = value;
         }
 
@@ -1064,7 +1132,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgItalic
         {
-            get => imgItalic ??= new MonoSvgImage(KnownSvgUrls.UrlImageItalic);
+            get => imgItalic ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageItalic);
             set => imgItalic = value;
         }
 
@@ -1073,7 +1141,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgUnderline
         {
-            get => imgUnderline ??= new MonoSvgImage(KnownSvgUrls.UrlImageUnderline);
+            get => imgUnderline ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageUnderline);
             set => imgUnderline = value;
         }
 
@@ -1082,7 +1150,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgSquareCheckFilled
         {
-            get => imgSquareCheckFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquareCheckFilled);
+            get => imgSquareCheckFilled ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSquareCheckFilled);
             set => imgSquareCheckFilled = value;
         }
 
@@ -1091,7 +1159,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgSquareMinusFilled
         {
-            get => imgSquareMinusFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquareMinusFilled);
+            get => imgSquareMinusFilled ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSquareMinusFilled);
             set => imgSquareMinusFilled = value;
         }
 
@@ -1100,7 +1168,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgSquarePlusFilled
         {
-            get => imgSquarePlusFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquarePlusFilled);
+            get => imgSquarePlusFilled ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSquarePlusFilled);
             set => imgSquarePlusFilled = value;
         }
 
@@ -1109,7 +1177,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgSquare
         {
-            get => imgSquare ??= new MonoSvgImage(KnownSvgUrls.UrlImageSquare);
+            get => imgSquare ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageSquare);
             set => imgSquare = value;
         }
 
@@ -1118,7 +1186,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCircleDotFilled
         {
-            get => imgCircleDotFilled ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleDotFilled);
+            get => imgCircleDotFilled ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCircleDotFilled);
             set => imgCircleDotFilled = value;
         }
 
@@ -1127,7 +1195,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgCircleDot
         {
-            get => imgCircleDot ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleDot);
+            get => imgCircleDot ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageCircleDot);
             set => imgCircleDot = value;
         }
 
@@ -1136,7 +1204,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAnglesDown
         {
-            get => imgAnglesDown ??= new MonoSvgImage(KnownSvgUrls.UrlImageAnglesDown);
+            get => imgAnglesDown ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAnglesDown);
             set => imgAnglesDown = value;
         }
 
@@ -1145,7 +1213,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAnglesUp
         {
-            get => imgAnglesUp ??= new MonoSvgImage(KnownSvgUrls.UrlImageAnglesUp);
+            get => imgAnglesUp ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAnglesUp);
             set => imgAnglesUp = value;
         }
 
@@ -1154,7 +1222,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAnglesRight
         {
-            get => imgAnglesRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageAnglesRight);
+            get => imgAnglesRight ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAnglesRight);
             set => imgAnglesRight = value;
         }
 
@@ -1163,7 +1231,7 @@ namespace Alternet.UI
         /// </summary>
         public static SvgImage ImgAnglesLeft
         {
-            get => imgAnglesLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageAnglesLeft);
+            get => imgAnglesLeft ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageAnglesLeft);
             set => imgAnglesLeft = value;
         }
 
@@ -1219,6 +1287,16 @@ namespace Alternet.UI
                 default:
                     return ImgEmpty;
             }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MonoSvgImage"/> instance from the specified URL.
+        /// </summary>
+        /// <param name="url">The URL of the SVG image.</param>
+        /// <returns>A <see cref="MonoSvgImage"/> instance.</returns>
+        public static MonoSvgImage CreateMonoSvgImage(string url)
+        {
+            return new MonoSvgImage(url, SvgImageDataKind.Url, throwException: false);
         }
 
         /// <summary>
