@@ -118,7 +118,7 @@ namespace Alternet.UI
         /// <param name="s">The output string representation of the current state.</param>
         /// <param name="format">The format in which to save the current state.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool SaveToString(out string s, SerializableSaveFormat format)
+        public virtual bool SaveToString(out string s, SerializableSaveFormat format = SerializableSaveFormat.Json)
         {
             switch (format)
             {
@@ -140,7 +140,7 @@ namespace Alternet.UI
         /// <param name="s">The input string representation of the state.</param>
         /// <param name="format">The format in which the state is represented.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool LoadFromString(string s, SerializableLoadFormat format)
+        public virtual bool LoadFromString(string s, SerializableLoadFormat format = SerializableLoadFormat.Json)
         {
             switch (format)
             {
@@ -162,7 +162,7 @@ namespace Alternet.UI
         /// <param name="fileName">The name of the file to which the state will be saved.</param>
         /// <param name="format">The format in which to save the current state.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool SaveToFile(string fileName, SerializableSaveFormat format)
+        public virtual bool SaveToFile(string fileName, SerializableSaveFormat format = SerializableSaveFormat.Json)
         {
             using var fileStream = FileSystem.Create(fileName);
             return SaveToStream(fileStream, format);
@@ -175,7 +175,7 @@ namespace Alternet.UI
         /// <param name="fileName">The name of the file from which the state will be loaded.</param>
         /// <param name="format">The format in which the state is represented.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool LoadFromFile(string fileName, SerializableLoadFormat format)
+        public virtual bool LoadFromFile(string fileName, SerializableLoadFormat format = SerializableLoadFormat.Json)
         {
             using var fileStream = FileSystem.OpenRead(fileName);
             return LoadFromStream(fileStream, format);
@@ -187,7 +187,7 @@ namespace Alternet.UI
         /// <param name="stream">The output stream to which the serialized data will be written.</param>
         /// <param name="format">The format in which to save the current state.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool SaveToStream(Stream stream, SerializableSaveFormat format)
+        public virtual bool SaveToStream(Stream stream, SerializableSaveFormat format = SerializableSaveFormat.Json)
         {
             SaveToString(out var s, format);
             return StreamUtils.StringToStreamSafe(stream, s, Encoding.UTF8);
@@ -199,7 +199,7 @@ namespace Alternet.UI
         /// <param name="stream">The input stream containing the serialized data.</param>
         /// <param name="format">The format in which the data is serialized.</param>
         /// <returns>True if the operation was successful; otherwise, false.</returns>
-        public virtual bool LoadFromStream(Stream stream, SerializableLoadFormat format)
+        public virtual bool LoadFromStream(Stream stream, SerializableLoadFormat format = SerializableLoadFormat.Json)
         {
             var s = StreamUtils.StringFromStreamOrNull(stream, Encoding.UTF8);
 
