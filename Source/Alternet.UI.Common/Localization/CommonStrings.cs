@@ -423,9 +423,7 @@ namespace Alternet.UI.Localization
 
         public string SeriesPattern { get; set; } = "Series Pattern";
 
-        public string SeriesEnds { get; set; } = "Series Ends";
-
-        public string SeriesStarts { get; set; } = "Series Starts";
+        public string SeriesRange { get; set; } = "Series Range";
 
         public string Today { get; set; } = "Today";
 

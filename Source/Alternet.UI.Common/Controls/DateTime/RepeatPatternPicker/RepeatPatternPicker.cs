@@ -44,10 +44,10 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness DefaultPadding = 5;
 
-        private readonly DatePicker startPicker = new();
+        private readonly LinkLabel editExcludedDatesLinkLabel = new(Localized.CalendarItemLabelEditExcludedDates);
+        private readonly GenericControlAndImage<DatePicker> startPicker = new();
         private readonly RoundBorderWithTitle tabControlPanel = new(CommonStrings.Default.SeriesPattern);      
-        private readonly GenericRoundBorderWithTitle startPanel = new(CommonStrings.Default.SeriesStarts);
-        private readonly GenericRoundBorderWithTitle endPanel = new (CommonStrings.Default.SeriesEnds);
+        private readonly GenericRoundBorderWithTitle rangePanel = new(CommonStrings.Default.SeriesRange);
         private readonly TransparentPanel endDatePanel = new ();
         private readonly GenericControlAndLabel<DatePicker, Label> untilDatePicker = new();
         private readonly XRadioButtonAndSuffix endsNeverRadioButton;
@@ -80,7 +80,7 @@ namespace Alternet.UI
 
             // Start on date
 
-            startPicker.Parent = startPanel;
+            startPicker.Parent = rangePanel;
 
             // End on date
 
@@ -116,7 +116,7 @@ namespace Alternet.UI
             endDatePanel.SetLayout(LayoutStyle.Horizontal);
 
             endDateControlsPanel.SetParent(endDatePanel);
-            endDatePanel.Parent = endPanel;
+            endDatePanel.Parent = rangePanel;
 
             // Other
 
@@ -149,11 +149,13 @@ namespace Alternet.UI
 
             HasBorder = false;
 
+            editExcludedDatesLinkLabel.Parent = rangePanel;
+            editExcludedDatesLinkLabel.LinkClicked += OnEditExcludedDatesLinkLabelClick;
+
             tabControl.Parent = tabControlPanel;
 
             tabControlPanel.Parent = this;
-            startPanel.Parent = this;
-            endPanel.Parent = this;
+            rangePanel.Parent = this;
 
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
 
@@ -165,7 +167,7 @@ namespace Alternet.UI
             ValueToControls();
 
             data.PropertyChanged += OnValuePropertyChanged;
-            startPicker.ValueChanged += OnStartPickerChanged;
+            startPicker.MainControl.ValueChanged += OnStartPickerChanged;
             untilDatePicker.MainControl.ValueChanged += OnEndDatePickerChanged;
             occurrencePicker.ValueChanged += OnOccurrencePickerValueChanged;
             endsNeverRadioButton.CheckedChanged += OnEndsNeverRadioChanged;
@@ -219,8 +221,7 @@ namespace Alternet.UI
             set
             {
                 tabControlPanel.HeaderToolBar.CollapseButton.Visible = value;
-                startPanel.HeaderToolBar.CollapseButton.Visible = value;
-                endPanel.HeaderToolBar.CollapseButton.Visible = value;
+                rangePanel.HeaderToolBar.CollapseButton.Visible = value;
             }
         }
 
@@ -232,18 +233,11 @@ namespace Alternet.UI
         public TabControl InnerTabControl => tabControl;
 
         /// <summary>
-        /// Gets the end condition panel which contains controls for specifying
-        /// the end condition of the repeat pattern.
-        /// </summary>
-        [Browsable(false)]
-        public TransparentPanel EndPanel => endPanel;
-
-        /// <summary>
         /// Gets the start date panel which contains controls for specifying
         /// the start date and time of the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public TransparentPanel StartPanel => startPanel;
+        public TransparentPanel RangePanel => rangePanel;
 
         /// <summary>
         /// Gets the end date panel which contains controls for specifying the end date of the repeat pattern.
@@ -262,7 +256,7 @@ namespace Alternet.UI
                 if (valuesTransparent == value)
                     return;
                 valuesTransparent = value;
-                startPicker.TextTransparent = value;
+                startPicker.MainControl.TextTransparent = value;
                 untilDatePicker.MainControl.TextTransparent = value;
                 occurrencePicker.IntPicker.TextPicker.TextTransparent = value;
                 dailyPicker.ValuesTransparent = value;
@@ -280,13 +274,12 @@ namespace Alternet.UI
         {
             get
             {
-                return startPanel.HasBorder;
+                return rangePanel.HasBorder;
             }
 
             set
             {
-                startPanel.HasBorder = value;
-                endPanel.HasBorder = value;
+                rangePanel.HasBorder = value;
                 tabControlPanel.HasBorder = value;
             }
         }
@@ -302,7 +295,7 @@ namespace Alternet.UI
                 if (value == formatProvider) return;
 
                 formatProvider = value;
-                startPicker.FormatProvider = value;
+                startPicker.MainControl.FormatProvider = value;
                 untilDatePicker.MainControl.FormatProvider = value;
                 dailyPicker.FormatProvider = value;
                 weeklyPicker.FormatProvider = value;
@@ -315,7 +308,7 @@ namespace Alternet.UI
         /// Gets the start date picker control used for selecting the start date and time of the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public DatePicker StartPicker => startPicker;
+        public GenericControlAndImage<DatePicker> StartPicker => startPicker;
 
         /// <summary>
         /// Gets the <see cref="DailyPatternPicker"/> control for selecting a daily repeat pattern.
@@ -372,10 +365,10 @@ namespace Alternet.UI
         /// </summary>
         public virtual string? DateFormat
         {
-            get => startPicker.Format;
+            get => startPicker.MainControl.Format;
             set
             {
-                startPicker.Format = value;
+                startPicker.MainControl.Format = value;
                 untilDatePicker.MainControl.Format = value;
             }
         }
@@ -397,6 +390,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows the editor for excluded dates in the repeat pattern.
+        /// This method opens a collection editor window allowing users to add or remove excluded dates
+        /// from the repeat pattern.
+        /// </summary>
+        public virtual void ShowExcludedDatesEditor()
+        {
+            IListEditSource source = new DatesListEditSource(
+                () => Value.ExcludedDates,
+                items =>
+                {
+                    Value.ExcludedDates = items;
+                });
+
+            WindowCollectionEditor.ShowCollectionEditor<WindowDateCollectionEditor>(source, OnCreate);
+
+            void OnCreate(WindowDateCollectionEditor e)
+            {
+                e.Title = CommonStrings.Default.WindowTitleExcludedDatesEditor;
+            }
+        }
+
+        /// <summary>
         /// Called to update the control values based on the current
         /// state of the <see cref="RepeatPatternRule"/> instance.
         /// </summary>
@@ -413,7 +428,7 @@ namespace Alternet.UI
                 tabControl.SelectedIndex = tabIndex;
 
                 tabControl.SelectedIndex = (int)SelectedPattern;
-                startPicker.AsDateOnly = data.ValidFromDate;
+                startPicker.MainControl.AsDateOnly = data.ValidFromDate;
                 untilDatePicker.MainControl.AsDateOnly = data.ValidToDate;
 
                 untilRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.OnDate;
@@ -480,6 +495,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the "Edit Excluded Dates" link label is clicked.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="CancelEventArgs"/> instance containing the event data.</param>
+        protected virtual void OnEditExcludedDatesLinkLabelClick(object? sender, CancelEventArgs e)
+        {
+            ShowExcludedDatesEditor();
+        }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="RepeatPatternRule"/> class.
         /// </summary>
         /// <returns> A new instance of the <see cref="RepeatPatternRule"/> class. </returns>
@@ -516,7 +541,7 @@ namespace Alternet.UI
         {
             data.DoInsideSuspendedPropertyChanged(() =>
             {
-                data.ValidFromDate = startPicker.AsDateOnlyOrToday;
+                data.ValidFromDate = startPicker.MainControl.AsDateOnlyOrToday;
             });
         }
 

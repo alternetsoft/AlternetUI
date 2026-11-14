@@ -45,8 +45,6 @@ namespace Alternet.UI
         private readonly RepeatPatternPicker rulePicker = new();
         private readonly CalendarAlarmPicker alarmPicker = new();
 
-        private readonly LinkLabel editExcludedDatesLinkLabel = new(Localized.CalendarItemLabelEditExcludedDates);
-
         private CalendarItem? calendarItem;
         private bool valuesTransparent = false;
 
@@ -85,14 +83,6 @@ namespace Alternet.UI
 
             locationPicker.Parent = detailsPanel;
             descriptionPicker.Parent = detailsPanel;
-
-            void OnEditExcludedDatesLinkLabelClick(object? sender, CancelEventArgs e)
-            {
-                ShowExcludedDatesEditor();
-            }
-
-            editExcludedDatesLinkLabel.Parent = detailsPanel;
-            editExcludedDatesLinkLabel.LinkClicked += OnEditExcludedDatesLinkLabelClick;
 
             titlePicker.MainControl.ValueChanged += OnTitlePickerValueChanged;
             locationPicker.MainControl.ValueChanged += OnLocationPickerValueChanged;
@@ -228,26 +218,6 @@ namespace Alternet.UI
                 calendarItem = value;
                 calendarItem.PropertyChanged += OnCalendarItemChanged;
                 ValueToControls();
-            }
-        }
-
-        /// <summary>
-        /// Shows the editor for excluded dates of the <see cref="CalendarItem"/> being edited.
-        /// </summary>
-        public virtual void ShowExcludedDatesEditor()
-        {
-            IListEditSource source = new DatesListEditSource(
-                () => Value.Rule.ExcludedDates,
-                items =>
-                {
-                    Value.Rule.ExcludedDates = items;
-                });
-
-            WindowCollectionEditor.ShowCollectionEditor<WindowDateCollectionEditor>(source, OnCreate);
-
-            void OnCreate(WindowDateCollectionEditor e)
-            {
-                e.Title = CommonStrings.Default.WindowTitleExcludedDatesEditor;
             }
         }
 
