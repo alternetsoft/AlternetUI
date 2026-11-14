@@ -53,6 +53,7 @@ namespace Alternet.UI
         private bool useFontSizeAsValueImageSize = true;
 
         private SpeedButton? gearButton;
+        private string popupWindowTitle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawingResourcePicker"/> class.
@@ -69,6 +70,7 @@ namespace Alternet.UI
         /// </summary>
         public DrawingResourcePicker()
         {
+            popupWindowTitle = CommonStrings.Default.WindowTitleSelectValue;
             TextVisible = true;
             ShowComboBoxImageAtRight(DefaultShowDropDownImage);
             ClickTrigger = ClickTriggerKind.MouseDown;
@@ -88,6 +90,32 @@ namespace Alternet.UI
         /// Occurs when the gear button of the picker is clicked.
         /// </summary>
         public event EventHandler<HandledEventArgs>? GearButtonClick;
+
+        /// <summary>
+        /// Gets or sets the title of the popup window.
+        /// </summary>
+        public virtual string PopupWindowTitle
+        {
+            get
+            {
+                return popupWindowTitle;
+            }
+
+            set
+            {
+                if (popupWindowTitle == value)
+                    return;
+                popupWindowTitle = value;
+                if (IsPopupWindowCreated)
+                    PopupWindow.Title = popupWindowTitle;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the popup window is created.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsPopupWindowCreated => popupWindow is not null;
 
         /// <summary>
         /// Gets or sets a value indicating whether to close the popup window when the gear button is clicked.
@@ -172,7 +200,7 @@ namespace Alternet.UI
                 if (popupWindow is null)
                 {
                     popupWindow = new(defaultColors: false);
-                    popupWindow.Title = CommonStrings.Default.WindowTitleSelectValue;
+                    popupWindow.Title = PopupWindowTitle;
                     popupWindow.AfterHide += OnPopupWindowAfterHide;
                 }
 
