@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -15,6 +16,38 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Other)]
     public partial class CalendarItemPicker : HiddenBorder
     {
+        /// <summary>
+        /// Represents the default images used in the <see cref="CalendarItemPicker"/> control.
+        /// This is a static class that provides default images for the control.
+        /// </summary>
+        public static class DefaultImages
+        {
+            /// <summary>
+            /// Gets or sets the default title image for the <see cref="CalendarItemPicker"/> control.
+            /// </summary>
+            public static SvgImage? Title { get; set; }
+
+            /// <summary>
+            /// Gets or sets the default description image for the <see cref="CalendarItemPicker"/> control.
+            /// </summary>
+            public static SvgImage? Description { get; set; }
+
+            /// <summary>
+            /// Gets or sets the default category image for the <see cref="CalendarItemPicker"/> control.
+            /// </summary>
+            public static SvgImage? Category { get; set; }
+
+            /// <summary>
+            /// Gets or sets the default status image for the <see cref="CalendarItemPicker"/> control.
+            /// </summary>
+            public static SvgImage? Status { get; set; }
+
+            /// <summary>
+            /// Gets or sets the default location image for the <see cref="CalendarItemPicker"/> control.
+            /// </summary>
+            public static SvgImage? Location { get; set; }
+        }
+
         /// <summary>
         /// Gets the default padding for the <see cref="CalendarItemPicker"/> control.
         /// </summary>
@@ -32,15 +65,23 @@ namespace Alternet.UI
 
         private readonly GenericRoundBorderWithTitle detailsPanel = new(Localized.CalendarItemLabelDetails);
         private readonly GenericRoundBorderWithTitle alarmPanel = new(Localized.CalendarItemLabelReminder);
-        private readonly TextPickerAndImage titlePicker = new(KnownSvgImages.ImgPenToSquare);
 
-        private readonly MultilineTextPickerAndImage descriptionPicker = new(KnownSvgImages.ImgFormatAlignLeft);
+        /// <summary>
+        /// Gets the <see cref="TextPicker"/> that is used to edit the title of the <see cref="CalendarItem"/> being edited.
+        /// </summary>
+        private readonly TextPickerAndImage titlePicker = new(DefaultImages.Title ?? KnownSvgImages.ImgSmallPen);
 
-        private readonly TextPickerAndImage locationPicker = new(KnownSvgImages.ImgLocation);
+        private readonly MultilineTextPickerAndImage descriptionPicker
+            = new(DefaultImages.Description ?? KnownSvgImages.ImgFormatAlignLeft);
 
-        private readonly GenericControlAndImage<CalendarItemCategoryPicker> categoryPicker = new(KnownSvgImages.ImgTag);
+        private readonly TextPickerAndImage locationPicker
+            = new(DefaultImages.Location ?? KnownSvgImages.ImgLocation);
 
-        private readonly GenericControlAndImage<CalendarItemStatusPicker> statusPicker = new(KnownSvgImages.ImgWorkOutline);
+        private readonly GenericControlAndImage<CalendarItemCategoryPicker> categoryPicker
+            = new(DefaultImages.Category ?? KnownSvgImages.ImgTag);
+
+        private readonly GenericControlAndImage<CalendarItemStatusPicker> statusPicker
+            = new(DefaultImages.Status ?? KnownSvgImages.ImgWorkOutline);
 
         private readonly RepeatPatternPicker rulePicker = new();
         private readonly CalendarAlarmPicker alarmPicker = new();

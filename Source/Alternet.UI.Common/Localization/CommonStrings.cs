@@ -483,7 +483,7 @@ namespace Alternet.UI.Localization
 
         // ========================
 
-        public string CalendarItemLabelEditExcludedDates { get; set; } = "Edit Excluded Dates";
+        public string CalendarItemLabelExcludeDates { get; set; } = "Exclude Dates";
 
         public string CalendarItemLabelDetails { get; set; } = "Details";
 

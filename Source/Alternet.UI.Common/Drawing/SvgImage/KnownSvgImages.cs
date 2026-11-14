@@ -133,6 +133,9 @@ namespace Alternet.UI
         private static SvgImage? imgWorkOutline;
         private static SvgImage? imgTag;
         private static SvgImage? imgPenToSquare;
+        private static SvgImage? imgRangeDistance;
+        private static SvgImage? imgRangeEnd;
+        private static SvgImage? imgRangeStart;
 
         static KnownSvgImages()
         {
@@ -191,6 +194,54 @@ namespace Alternet.UI
             set
             {
                 imgPenToSquare = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Range Distance" svg image which includes a distance icon.
+        /// </summary>
+        public static SvgImage ImgRangeDistance
+        {
+            get
+            {
+                return imgRangeDistance ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRangeDistance);
+            }
+
+            set
+            {
+                imgRangeDistance = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Range End" svg image which includes an end range icon.
+        /// </summary>
+        public static SvgImage ImgRangeEnd
+        {
+            get
+            {
+                return imgRangeEnd ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRangeEnd);
+            }
+
+            set
+            {
+                imgRangeEnd = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Range Start" svg image which includes a start range icon.
+        /// </summary>
+        public static SvgImage ImgRangeStart
+        {
+            get
+            {
+                return imgRangeStart ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRangeStart);
+            }
+
+            set
+            {
+                imgRangeStart = value;
             }
         }
 

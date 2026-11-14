@@ -44,8 +44,8 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness DefaultPadding = 5;
 
-        private readonly LinkLabel editExcludedDatesLinkLabel = new(Localized.CalendarItemLabelEditExcludedDates);
-        private readonly GenericControlAndImage<DatePicker> startPicker = new();
+        private readonly LinkLabel editExcludedDatesLinkLabel = new(Localized.CalendarItemLabelExcludeDates);
+        private readonly GenericControlAndImage<DatePicker> startPicker = new(KnownSvgImages.ImgCalendar);
         private readonly RoundBorderWithTitle tabControlPanel = new(CommonStrings.Default.SeriesPattern);      
         private readonly GenericRoundBorderWithTitle rangePanel = new(CommonStrings.Default.SeriesRange);
         private readonly TransparentPanel endDatePanel = new ();

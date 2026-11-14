@@ -28,6 +28,21 @@ namespace Alternet.UI
             "embres:Alternet.UI.Common.Resources.Svg.{0}.svg?assembly=Alternet.UI.Common";
 
         /// <summary>
+        /// Gets or sets url used to load "Range Distance" svg image.
+        /// </summary>
+        public static string UrlImageRangeDistance { get; set; } = GetImageUrl("alternet-range-dist");
+        
+        /// <summary>
+        /// Gets or sets url used to load "Range End" svg image.
+        /// </summary>
+        public static string UrlImageRangeEnd { get; set; } = GetImageUrl("alternet-range-end");
+        
+        /// <summary>
+        /// Gets or sets url used to load "Range Start" svg image.
+        /// </summary>
+        public static string UrlImageRangeStart { get; set; } = GetImageUrl("alternet-range-start");
+
+        /// <summary>
         /// Gets or sets url used to load "Format Align Left" svg image.
         /// </summary>
         public static string UrlImageFormatAlignLeft { get; set; } = GetImageUrl("alternet-format-align-left");
