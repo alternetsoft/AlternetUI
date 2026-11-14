@@ -14,7 +14,7 @@ namespace Alternet.UI
     public partial class PropertyBag : IPropertyBag
     {
         private readonly BaseDictionary<string, object?> properties = new();
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyBag"/> class.
         /// </summary>
@@ -50,7 +50,7 @@ namespace Alternet.UI
                 });
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the JSON string representation of the property bag.
         /// </summary>
@@ -108,6 +108,12 @@ namespace Alternet.UI
                 {
                     var newPropertyBag = PropertyBag.Create();
                     serialize.SaveTo(new SerializableObjectContext(newPropertyBag));
+                    propertyBags.Add(newPropertyBag);
+                }
+                else
+                {
+                    var newPropertyBag = PropertyBag.Create();
+                    newPropertyBag.ConvertAndSetProperty("Value", item);
                     propertyBags.Add(newPropertyBag);
                 }
             }
@@ -375,7 +381,7 @@ namespace Alternet.UI
             XmlUtils.StringFormatFlags flags = XmlUtils.StringFormatFlags.None)
         {
             var properties = GetAllProperties();
-            
+
             if (IsRoot)
             {
                 flags |= XmlUtils.StringFormatFlags.AddXmlDeclaration;
@@ -637,6 +643,30 @@ namespace Alternet.UI
             if (value is int intValue)
             {
                 SetIntProperty(name, intValue);
+                return;
+            }
+
+            if (value is DateTime dateTimeValue)
+            {
+                SetDateTimeProperty(name, dateTimeValue);
+                return;
+            }
+
+            if (value is DateOnly dateValue)
+            {
+                SetDateProperty(name, dateValue);
+                return;
+            }
+
+            if (value is TimeOnly timeValue)
+            {
+                SetTimeProperty(name, timeValue);
+                return;
+            }
+
+            if (value is TimeSpan timespanValue)
+            {
+                SetTimeSpanProperty(name, timespanValue);
                 return;
             }
 
