@@ -24,9 +24,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets function that creates default labels used in the control.
         /// </summary>
-        public static Func<GenericControl> CreateDefaultLabel = () => new TLabel();
+        public static Func<TLabel> CreateDefaultLabel = () => new TLabel();
 
-        private readonly GenericControl label;
+        private readonly TLabel label;
         private readonly TControl mainControl;
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// Gets attached <see cref="Label"/> control.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl Label => label;
+        public TLabel Label => label;
 
         /// <summary>
         /// Gets or sets visibility of the attached <see cref="Label"/> control.
@@ -264,11 +264,11 @@ namespace Alternet.UI
         /// <remarks>
         /// By default <see cref="Label"/> is created.
         /// </remarks>
-        protected virtual GenericControl CreateLabel(Type? typeOfLabel)
+        protected virtual TLabel CreateLabel(Type? typeOfLabel)
         {
             if (typeOfLabel is not null)
             {
-                var label = Activator.CreateInstance(typeOfLabel) as GenericControl;
+                var label = Activator.CreateInstance(typeOfLabel) as TLabel;
                 if (label is not null)
                     return label;
             }
@@ -284,6 +284,91 @@ namespace Alternet.UI
 
             InnerPicture.IsImageCentered = !LabelVisible
                 || LabelToControl == StackPanelOrientation.Horizontal;
+        }
+    }
+
+    /// <summary>
+    /// This is the base class for controls which consist of a label and an inner control.
+    /// </summary>
+    /// <typeparam name="TControl">The type of the main control.</typeparam>
+    public partial class GenericControlAndLabel<TControl>
+        : GenericControlAndLabel<TControl, Label>
+        where TControl : GenericControl, new()
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControlAndLabel{TControl}"/> class
+        /// with the specified type of the label control and the type of the main control.
+        /// </summary>
+        /// <param name="typeOfLabel">The type of the label control.</param>
+        /// <param name="typeOfControl">The type of the main control.</param>
+        public GenericControlAndLabel(Type? typeOfLabel, Type? typeOfControl = null)
+            : base(typeOfLabel, typeOfControl)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControlAndLabel{TControl}"/> class.
+        /// </summary>
+        public GenericControlAndLabel()
+            : base(typeOfLabel: null, typeOfControl: null)
+        {
+        }
+    }
+
+    /// <summary>
+    /// This is the base class for controls which consist of a label and an inner control.
+    /// </summary>
+    /// <typeparam name="TControl"></typeparam>
+    public partial class GenericControlAndImage<TControl>
+        : GenericControlAndLabel<TControl, PictureBox>
+        where TControl : GenericControl, new()
+    {
+        /// <summary>
+        /// Gets or sets default size of the image in the <see cref="GenericControlAndImage{TControl}"/> control.
+        /// </summary>
+        public static SizeD? DefaultImageSize;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControlAndImage{TControl}"/> class
+        /// with the specified type of the main control.
+        /// </summary>
+        /// <param name="typeOfControl">The type of the main control.</param>
+        public GenericControlAndImage(Type? typeOfControl = null)
+            : base(typeOfLabel: null, typeOfControl: typeOfControl)
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControlAndImage{TControl}"/> class.
+        /// </summary>
+        public GenericControlAndImage()
+            : base(typeOfLabel: null, typeOfControl: null)
+        {
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControlAndImage{TControl}"/> class
+        /// with the specified <see cref="SvgImage"/> to be displayed in the label.
+        /// </summary>
+        /// <param name="svgImage">The <see cref="SvgImage"/> to be displayed in the label.</param>
+        public GenericControlAndImage(SvgImage svgImage)
+            : base(typeOfLabel: null, typeOfControl: null)
+        {
+            Initialize();
+            Label.SvgImage = svgImage;
+        }
+
+        /// <summary>
+        /// Initializes the <see cref="GenericControlAndImage{TControl}"/> control.
+        /// This method is called from the constructor and can be overridden
+        /// in derived classes to perform additional initialization.
+        /// </summary>
+        protected virtual void Initialize()
+        {
+            if (DefaultImageSize is not null)
+                Label.SuggestedSize = DefaultImageSize.Value;
         }
     }
 }
