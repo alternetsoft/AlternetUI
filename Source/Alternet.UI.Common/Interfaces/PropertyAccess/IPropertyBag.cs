@@ -374,5 +374,13 @@ namespace Alternet.UI
         /// Logs the properties of the property bag.
         /// </summary>
         void Log(IStructuredTextWriter? writer = null);
+
+        /// <summary>
+        /// Determines whether the property bag contains a property with the specified name.
+        /// </summary>
+        /// <param name="name">The name of the property to check for.</param>
+        /// <returns><c>true</c> if the property bag contains a property with the specified name;
+        /// otherwise, <c>false</c>.</returns>
+        bool HasProperty(string name);
     }
 }

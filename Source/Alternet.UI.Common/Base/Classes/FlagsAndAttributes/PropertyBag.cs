@@ -739,5 +739,11 @@ namespace Alternet.UI
         {
             return (SerializationManager ?? ISerializableObjectManager.Instance).DateTimeManager;
         }
+
+        /// <inheritdoc/>
+        public bool HasProperty(string name)
+        {
+            return properties.ContainsKey(name);
+        }
     }
 }
