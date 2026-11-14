@@ -427,6 +427,11 @@ namespace PropertyGridSample
         {
         }
 
+        public static void InitTextPickerAndImage(TextPickerAndImage control)
+        {
+            control.Label.SvgImage = KnownSvgImages.ImgLocation;
+        }
+
         public static void InitTimePicker(TimePicker control)
         {
         }

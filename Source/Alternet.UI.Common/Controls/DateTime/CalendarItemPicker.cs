@@ -35,15 +35,14 @@ namespace Alternet.UI
         private readonly GenericRoundBorderWithTitle alarmPanel = new(Localized.CalendarItemLabelReminder);
         private readonly TextPicker titlePicker = new();
 
-        private readonly MultilineTextPicker descriptionPicker = new();
+        private readonly MultilineTextPickerAndImage descriptionPicker = new(KnownSvgImages.ImgFormatAlignLeft);
 
-        private readonly TextPicker locationPicker = new();
+        private readonly TextPickerAndImage locationPicker = new(KnownSvgImages.ImgLocation);
 
         private readonly Label categoryLabel = new();
         private readonly CalendarItemCategoryPicker categoryPicker = new();
 
-        private readonly Label statusLabel = new();
-        private readonly CalendarItemStatusPicker statusPicker = new();
+        private readonly GenericControlAndImage<CalendarItemStatusPicker> statusPicker = new(KnownSvgImages.ImgWorkOutline);
 
         private readonly RepeatPatternPicker rulePicker = new();
         private readonly CalendarAlarmPicker alarmPicker = new();
@@ -67,22 +66,20 @@ namespace Alternet.UI
             alarmPanel.Margin = DefaultMinChildMargin;
 
             categoryLabel.Text = Localized.CalendarItemLabelCategory;
-            statusLabel.Text = Localized.CalendarItemLabelStatus;
 
             ValueToControls();
 
             alarmPicker.Parent = alarmPanel;
 
             titlePicker.EmptyTextHint = Localized.AddTitle + "...";
-            descriptionPicker.EmptyTextHint = Localized.AddDescription + "...";
-            locationPicker.EmptyTextHint = Localized.AddLocation + "...";
+            descriptionPicker.MainControl.EmptyTextHint = Localized.AddDescription + "...";
+            locationPicker.MainControl.EmptyTextHint = Localized.AddLocation + "...";
 
             titlePicker.Parent = detailsPanel;
 
             categoryLabel.Parent = detailsPanel;
             categoryPicker.Parent = detailsPanel;
 
-            statusLabel.Parent = detailsPanel;
             statusPicker.Parent = detailsPanel;
 
             detailsPanel.Parent = this;
@@ -92,7 +89,7 @@ namespace Alternet.UI
 
             locationPicker.Parent = moreOptionsPanel;
 
-            descriptionPicker.Parent = moreOptionsPanel;
+            descriptionPicker.Parent = moreOptionsPanel; // ImgFormatAlignLeft
 
             void OnEditExcludedDatesLinkLabelClick(object? sender, CancelEventArgs e)
             {
@@ -106,10 +103,10 @@ namespace Alternet.UI
             moreOptionsPanel.Parent = this;
 
             titlePicker.ValueChanged += OnTitlePickerValueChanged;
-            locationPicker.ValueChanged += OnLocationPickerValueChanged;
-            descriptionPicker.ValueChanged += OnDescriptionPickerValueChanged;
+            locationPicker.MainControl.ValueChanged += OnLocationPickerValueChanged;
+            descriptionPicker.MainControl.ValueChanged += OnDescriptionPickerValueChanged;
             categoryPicker.ValueChanged += OnCategoryPickerValueChanged;
-            statusPicker.ValueChanged += OnStatusPickerValueChanged;
+            statusPicker.MainControl.ValueChanged += OnStatusPickerValueChanged;
             rulePicker.ValueChanged += OnRulePickerValueChanged;
             alarmPicker.ValueChanged += OnAlarmPickerValueChanged;
         }
@@ -163,13 +160,13 @@ namespace Alternet.UI
                     return;
                 valuesTransparent = value;
 
-                descriptionPicker.TextTransparent = value;
-                locationPicker.TextTransparent = value;
+                descriptionPicker.MainControl.TextTransparent = value;
+                locationPicker.MainControl.TextTransparent = value;
                 titlePicker.TextTransparent = value;
                 rulePicker.ValuesTransparent = value;
                 alarmPicker.ValuesTransparent = value;
                 categoryPicker.TextTransparent = value;
-                statusPicker.TextTransparent = value;
+                statusPicker.MainControl.TextTransparent = value;
             }
         }
 
@@ -188,18 +185,18 @@ namespace Alternet.UI
         public TextPicker TitlePicker => titlePicker;
 
         /// <summary>
-        /// Gets the <see cref="MultilineTextPicker"/> that is used to edit
+        /// Gets the <see cref="MultilineTextPickerAndImage"/> that is used to edit
         /// the description of the <see cref="CalendarItem"/> being edited.
         /// </summary>
         [Browsable(false)]
-        public MultilineTextPicker DescriptionPicker => descriptionPicker;
+        public MultilineTextPickerAndImage DescriptionPicker => descriptionPicker;
 
         /// <summary>
         /// Gets the <see cref="TextPicker"/> that is used to edit the location
         /// of the <see cref="CalendarItem"/> being edited.
         /// </summary>
         [Browsable(false)]
-        public TextPicker LocationPicker => locationPicker;
+        public TextPickerAndImage LocationPicker => locationPicker;
 
         /// <summary>
         /// Gets the <see cref="Label"/> that displays the label which is shown
@@ -216,18 +213,11 @@ namespace Alternet.UI
         public DrawingResourcePicker CategoryPicker => categoryPicker;
 
         /// <summary>
-        /// Gets the <see cref="Label"/> that displays the label which is shown
-        /// above the <see cref="StatusPicker"/> control.
-        /// </summary>
-        [Browsable(false)]
-        public Label StatusLabel => statusLabel;
-
-        /// <summary>
         /// Gets the <see cref="DrawingResourcePicker"/> used to select the status
         /// of the <see cref="CalendarItem"/> being edited.
         /// </summary>
         [Browsable(false)]
-        public DrawingResourcePicker StatusPicker => statusPicker;
+        public GenericControlAndImage<CalendarItemStatusPicker> StatusPicker => statusPicker;
 
         /// <summary>
         /// Gets or sets the <see cref="CalendarItem"/> that is being edited by the picker.
@@ -289,7 +279,7 @@ namespace Alternet.UI
             titlePicker.Text = Value.Text ?? string.Empty;
             descriptionPicker.Text = Value.Description ?? string.Empty;
             locationPicker.Text = Value.Location?.ToString() ?? string.Empty;
-            statusPicker.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
+            statusPicker.MainControl.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
             categoryPicker.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
             rulePicker.Value = Value.Rule;
             alarmPicker.Value = Value.AlarmInfo;
@@ -368,7 +358,7 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnStatusPickerValueChanged(object? s, EventArgs e)
         {
-            var newValue = statusPicker.Value;
+            var newValue = statusPicker.MainControl.Value;
             Value.Status = newValue ?? KnownCalendarItemMarkers.StatusUnknown;
         }
 
