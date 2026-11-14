@@ -33,6 +33,67 @@ namespace Alternet.UI
     }
 
     /// <summary>
+    /// Represents a generic control that allows to edit text and has an image as a label.
+    /// </summary>
+    [ControlCategory(KnownControlCategory.Editors)]
+    public partial class TextPickerAndImage : GenericControlAndImage<TextPicker>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextPickerAndImage"/> class
+        /// </summary>
+        public TextPickerAndImage()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextPickerAndImage"/> class
+        /// with the specified image which is displayed as a label.
+        /// </summary>
+        /// <param name="image">The image to display as a label.</param>
+        public TextPickerAndImage(SvgImage? image)
+        {
+            Label.SvgImage = image;
+        }
+    }
+
+    /// <summary>
+    /// Represents a generic control that allows to edit text and has an image as a label.
+    /// </summary>
+    [ControlCategory(KnownControlCategory.Editors)]
+    public partial class MultilineTextPickerAndImage : GenericControlAndImage<MultilineTextPicker>
+    {
+        /// <summary>
+        /// Gets the default top margin for the image in the <see cref="MultilineTextPickerAndImage"/> control.
+        /// </summary>
+        public static float DefaultImageMarginTopIncrement => 4;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultilineTextPickerAndImage"/> class
+        /// </summary>
+        public MultilineTextPickerAndImage()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultilineTextPickerAndImage"/> class
+        /// with the specified image which is displayed as a label.
+        /// </summary>
+        /// <param name="image">The image to display as a label.</param>
+        public MultilineTextPickerAndImage(SvgImage? image)
+        {
+            Label.SvgImage = image;
+        }
+
+        /// <inheritdoc/>
+        protected override void Initialize()
+        {
+            base.Initialize();
+            Label.VerticalAlignment = VerticalAlignment.Top;
+            Label.MarginTop += DefaultImageMarginTopIncrement;
+        }
+    }
+
+    /// <summary>
     /// Represents a generic control that allows to edit text and has a button.
     /// </summary>
     public partial class TextPickerAndButton : GenericControlAndButton<TextPicker>
