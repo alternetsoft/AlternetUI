@@ -44,18 +44,12 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness DefaultPadding = 5;
 
-        private readonly DateTimePicker startPicker = new();
-        private readonly ControlAndSuffix<TimePicker, SpeedTextButton> endTimePicker = new();
-        private readonly PictureBox endDateIcon;
-        private readonly PictureBox endTimeIcon;
+        private readonly DatePicker startPicker = new();
         private readonly RoundBorderWithTitle tabControlPanel = new(CommonStrings.Default.SeriesPattern);      
         private readonly GenericRoundBorderWithTitle startPanel = new(CommonStrings.Default.SeriesStarts);
         private readonly GenericRoundBorderWithTitle endPanel = new (CommonStrings.Default.SeriesEnds);
         private readonly TransparentPanel endDatePanel = new ();
-        private readonly TransparentPanel endTimePanel = new ();
-
         private readonly GenericControlAndLabel<DatePicker, Label> untilDatePicker = new();
-        private readonly XCheckBox allDayCheckBox = new(CommonStrings.Default.FullDayDuration);
         private readonly XRadioButtonAndSuffix endsNeverRadioButton;
         private readonly XRadioButtonAndSuffix untilRadioButton;
         private readonly XRadioButtonAndSuffix endsAfterOccurrenceRadioButton;
@@ -70,7 +64,6 @@ namespace Alternet.UI
         private readonly RepeatPatternRule data;
 
         private IFormatProvider? formatProvider;
-        private DateUtils.TimePeriodUnitTextFormat timeUnitTextFormat = DefaultTimeUnitTextFormat;
         private int valueToControlsSuspendCounter;
         private bool valuesTransparent = false;
 
@@ -87,12 +80,7 @@ namespace Alternet.UI
 
             // Start on date
 
-            startPicker.Kind = DateTimePickerKind.DateTime;
-            startPicker.ForceDateIcon = true;
-            startPicker.DatePicker.ImageVisible = DefaultShowDropDownImage;
             startPicker.Parent = startPanel;
-
-            allDayCheckBox.Parent = startPanel;
 
             // End on date
 
@@ -125,22 +113,10 @@ namespace Alternet.UI
 
             // End panels
 
-            endDateIcon = startPicker.CreatePictureBox(DateTimePickerKind.Date);
-            endTimeIcon = startPicker.CreatePictureBox(DateTimePickerKind.Time);
-
             endDatePanel.SetLayout(LayoutStyle.Horizontal);
-            endDateIcon.WithAlignment(VerticalAlignment.Top)
-                .WithMarginTop(DefaultMinChildMargin.Top).SetParent(endDatePanel);
 
             endDateControlsPanel.SetParent(endDatePanel);
             endDatePanel.Parent = endPanel;
-
-            endTimePanel.SetLayout(LayoutStyle.Horizontal);
-            endTimeIcon.WithAlignment(VerticalAlignment.Center).SetParent(endTimePanel);
-            endTimePicker.SuffixControl.MarginLeft = DefaultMinChildMargin.Left;
-            endTimePicker.SuffixControl.VerticalAlignment = VerticalAlignment.Stretch;
-            endTimePicker.Parent = endTimePanel;
-            endTimePanel.Parent = endPanel;
 
             // Other
 
@@ -188,13 +164,8 @@ namespace Alternet.UI
 
             ValueToControls();
 
-            SecondsVisible = false;
-            endTimePicker.SuffixControl.Sticky = true;
-
             data.PropertyChanged += OnValuePropertyChanged;
-            allDayCheckBox.CheckedChanged += OnAllDayCheckedChanged;
             startPicker.ValueChanged += OnStartPickerChanged;
-            endTimePicker.MainControl.ValueChanged += OnEndTimePickerChanged;
             untilDatePicker.MainControl.ValueChanged += OnEndDatePickerChanged;
             occurrencePicker.ValueChanged += OnOccurrencePickerValueChanged;
             endsNeverRadioButton.CheckedChanged += OnEndsNeverRadioChanged;
@@ -234,19 +205,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public RoundBorderWithTitle TabControlPanel => tabControlPanel;
 
-        [Browsable(false)]
-        DateUtils.TimePeriodUnitTextFormat TimeUnitTextFormat
-        {
-            get => timeUnitTextFormat;
-            set
-            {
-                if (timeUnitTextFormat == value)
-                    return;
-                timeUnitTextFormat = value;
-                UpdateDurationText();
-            }
-        }
-
         /// <summary>
         /// Gets or sets a value indicating whether the collapse buttons
         /// are displayed in the <see cref="RepeatPatternPicker"/> control.
@@ -263,23 +221,6 @@ namespace Alternet.UI
                 tabControlPanel.HeaderToolBar.CollapseButton.Visible = value;
                 startPanel.HeaderToolBar.CollapseButton.Visible = value;
                 endPanel.HeaderToolBar.CollapseButton.Visible = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the seconds selection
-        /// is visible in the <see cref="RepeatPatternPicker"/> control.
-        /// </summary>
-        public virtual bool SecondsVisible
-        {
-            get => startPicker.TimePicker.SecondsVisible;
-            set
-            {
-                if (SecondsVisible == value)
-                    return;
-                startPicker.TimePicker.SecondsVisible = value;
-                endTimePicker.MainControl.SecondsVisible = value;
-                UpdateDurationText();
             }
         }
 
@@ -311,12 +252,6 @@ namespace Alternet.UI
         public TransparentPanel EndDatePanel => endDatePanel;
 
         /// <summary>
-        /// Gets the end time panel which contains controls for specifying the end time of the repeat pattern.
-        /// </summary>
-        [Browsable(false)]
-        public TransparentPanel EndTimePanel => endTimePanel;
-
-        /// <summary>
         /// Gets or sets a value indicating whether the values of the inner controls are transparent.
         /// </summary>
         public virtual bool ValuesTransparent
@@ -329,7 +264,6 @@ namespace Alternet.UI
                 valuesTransparent = value;
                 startPicker.TextTransparent = value;
                 untilDatePicker.MainControl.TextTransparent = value;
-                endTimePicker.MainControl.TextTransparent = value;
                 occurrencePicker.IntPicker.TextPicker.TextTransparent = value;
                 dailyPicker.ValuesTransparent = value;
                 weeklyPicker.ValuesTransparent = value;
@@ -381,58 +315,7 @@ namespace Alternet.UI
         /// Gets the start date picker control used for selecting the start date and time of the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public DateTimePicker StartPicker => startPicker;
-
-        /// <summary>
-        /// Gets the end date picker control used for selecting the end time of the repeat pattern.
-        /// </summary>
-        [Browsable(false)]
-        public TimePicker EndTimePicker => endTimePicker.MainControl;
-
-        /// <summary>
-        /// Gets the end date icon control used for displaying the end date icon
-        /// in the <see cref="RepeatPatternPicker"/> control.
-        /// </summary>
-        [Browsable(false)]
-        public PictureBox EndDateIcon => endDateIcon;
-
-        /// <summary>
-        /// Gets the end time icon control used for displaying the end time icon
-        /// in the <see cref="RepeatPatternPicker"/> control.
-        /// </summary>
-        [Browsable(false)]
-        public PictureBox EndTimeIcon => endTimeIcon;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the time selection is visible
-        /// in the <see cref="RepeatPatternPicker"/> control.
-        /// </summary>
-        public virtual bool IsTimeVisible
-        {
-            get => startPicker.Kind == DateTimePickerKind.DateTime;
-            set
-            {
-                startPicker.Kind = value ? DateTimePickerKind.DateTime : DateTimePickerKind.Date;
-                AllDayCheckBox.Visible = value;
-                endTimePanel.Visible = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the time selection is enabled
-        /// in the <see cref="RepeatPatternPicker"/> control.
-        /// </summary>
-        public virtual bool IsTimeEnabled
-        {
-            get => startPicker.TimePicker.Enabled;
-            set
-            {
-                startPicker.TimePicker.Enabled = value;
-                startPicker.TimeIcon.Enabled = value;
-                endTimePicker.Enabled = value;
-                endTimeIcon.Enabled = value;
-            }
-        }
+        public DatePicker StartPicker => startPicker;
 
         /// <summary>
         /// Gets the <see cref="DailyPatternPicker"/> control for selecting a daily repeat pattern.
@@ -485,13 +368,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the "All Day" check box control that allows users to specify whether
-        /// the event or task is an all-day event.
-        /// </summary>
-        [Browsable(false)]
-        public XCheckBox AllDayCheckBox => allDayCheckBox;
-
-        /// <summary>
         /// Gets or sets the date format used for displaying dates in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public virtual string? DateFormat
@@ -533,18 +409,12 @@ namespace Alternet.UI
             {
                 valueToControlsSuspendCounter++;
 
-                allDayCheckBox.Checked = data.IsAllDay;
-
                 var tabIndex = (int)SelectedPattern;
                 tabControl.SelectedIndex = tabIndex;
 
                 tabControl.SelectedIndex = (int)SelectedPattern;
                 startPicker.AsDateOnly = data.ValidFromDate;
-                startPicker.AsTimeOnly = data.StartTime;
                 untilDatePicker.MainControl.AsDateOnly = data.ValidToDate;
-                endTimePicker.MainControl.AsTimeOnly = data.EndTime;
-
-                UpdateDurationText();
 
                 untilRadioButton.IsChecked = data.EndCondition == RepeatPatternEndCondition.OnDate;
                 endsAfterOccurrenceRadioButton.IsChecked
@@ -558,8 +428,6 @@ namespace Alternet.UI
                 weeklyPicker.ValueToControls();
                 monthlyPicker.ValueToControls();
                 yearlyPicker.ValueToControls();
-
-                IsTimeEnabled = !allDayCheckBox.Checked;
             }
             finally
             {
@@ -589,25 +457,6 @@ namespace Alternet.UI
 
             endsNeverRadioButton.SetEnabled(index > 0);
             endsAfterOccurrenceRadioButton.SetEnabled(index > 0);
-        }
-
-        /// <summary>
-        /// Updates the duration text displayed in the end time picker based
-        /// on the current duration of the repeat pattern.
-        /// </summary>
-        protected virtual void UpdateDurationText()
-        {
-            DateUtils.DurationTextParams prmDurationText = new()
-            {
-                UnitTextFormat = timeUnitTextFormat,
-            };
-
-            if (!SecondsVisible)
-                prmDurationText.Flags |= DateUtils.DurationTextFlags.HideSeconds;
-
-            prmDurationText.Flags |= DateUtils.DurationTextFlags.ReturnIfZero;
-
-            endTimePicker.SuffixControl.Text = DateUtils.GetDurationText(data.Duration, prmDurationText);
         }
 
         /// <summary>
@@ -661,16 +510,6 @@ namespace Alternet.UI
         protected virtual YearlyPatternPicker CreateYearlyPatternPicker() => new(data.YearlyRule);
 
         /// <summary>
-        /// Handles the CheckedChanged event of the "All Day" check box control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnAllDayCheckedChanged(object? sender, EventArgs e)
-        {
-            data.IsAllDay = allDayCheckBox.Checked;
-        }
-
-        /// <summary>
         /// Handles the ValueChanged event of the <see cref="StartPicker"/> control.
         /// </summary>
         protected virtual void OnStartPickerChanged(object? s, EventArgs e)
@@ -678,19 +517,7 @@ namespace Alternet.UI
             data.DoInsideSuspendedPropertyChanged(() =>
             {
                 data.ValidFromDate = startPicker.AsDateOnlyOrToday;
-                data.StartTime = startPicker.TimePicker.AsTimeOnly;
             });
-        }
-
-        /// <summary>
-        /// Handles the ValueChanged event of the <see cref="EndTimePicker"/> control.
-        /// </summary>
-        protected virtual void OnEndTimePickerChanged(object? s, EventArgs e)
-        {
-            var duration = endTimePicker.MainControl.AsTimeOnly - data.StartTime;
-            if (duration < TimeSpan.Zero)
-                duration = TimeSpan.Zero;
-            data.Duration = duration;
         }
 
         /// <summary>
