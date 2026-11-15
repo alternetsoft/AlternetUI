@@ -46,7 +46,7 @@ namespace Alternet.UI
 
         private readonly LinkLabel editExcludedDatesLinkLabel = new(Localized.CalendarItemLabelExcludeDates);
         private readonly GenericControlAndImage<DatePicker> startPicker = new(KnownSvgImages.ImgCalendar);
-        private readonly RoundBorderWithTitle tabControlPanel = new(CommonStrings.Default.SeriesPattern);      
+        private readonly RoundBorderWithTitle seriesPanel = new(CommonStrings.Default.SeriesPattern);      
         private readonly GenericRoundBorderWithTitle rangePanel = new(CommonStrings.Default.SeriesRange);
         private readonly TransparentPanel endDatePanel = new ();
         private readonly GenericControlAndLabel<DatePicker, Label> untilDatePicker = new();
@@ -144,20 +144,20 @@ namespace Alternet.UI
             tabControl.ContentVisible = false;
             rangePanel.Visible = false;
 
-            tabControl.Add(Localized.ScheduleRepeatPatternOnce, oncePicker);
-            tabControl.Add(Localized.ScheduleRepeatPatternDaily, dailyPicker);
-            tabControl.Add(Localized.ScheduleRepeatPatternWeekly, weeklyPicker);
-            tabControl.Add(Localized.ScheduleRepeatPatternMonthly, monthlyPicker);
-            tabControl.Add(Localized.ScheduleRepeatPatternYearly, yearlyPicker);
+            tabControl.Add(GetLocalizedText(ScheduleRepeatPattern.Once), oncePicker);
+            tabControl.Add(GetLocalizedText(ScheduleRepeatPattern.Daily), dailyPicker);
+            tabControl.Add(GetLocalizedText(ScheduleRepeatPattern.Weekly), weeklyPicker);
+            tabControl.Add(GetLocalizedText(ScheduleRepeatPattern.Monthly), monthlyPicker);
+            tabControl.Add(GetLocalizedText(ScheduleRepeatPattern.Yearly), yearlyPicker);
 
             HasBorder = false;
 
             editExcludedDatesLinkLabel.Parent = rangePanel;
             editExcludedDatesLinkLabel.LinkClicked += OnEditExcludedDatesLinkLabelClick;
 
-            tabControl.Parent = tabControlPanel;
+            tabControl.Parent = seriesPanel;
 
-            tabControlPanel.Parent = this;
+            seriesPanel.Parent = this;
             rangePanel.Parent = this;
 
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
@@ -205,7 +205,7 @@ namespace Alternet.UI
         /// Gets the panel which contains the <see cref="TabControl"/> used for selecting the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public RoundBorderWithTitle TabControlPanel => tabControlPanel;
+        public RoundBorderWithTitle SeriesPanel => seriesPanel;
 
         /// <summary>
         /// Gets or sets a value indicating whether the collapse buttons
@@ -215,12 +215,12 @@ namespace Alternet.UI
         {
             get
             {
-                return tabControlPanel.HeaderToolBar.CollapseButton.Visible;
+                return seriesPanel.HeaderToolBar.CollapseButton.Visible;
             }
 
             set
             {
-                tabControlPanel.HeaderToolBar.CollapseButton.Visible = value;
+                seriesPanel.HeaderToolBar.CollapseButton.Visible = value;
                 rangePanel.HeaderToolBar.CollapseButton.Visible = value;
             }
         }
@@ -280,7 +280,7 @@ namespace Alternet.UI
             set
             {
                 rangePanel.HasBorder = value;
-                tabControlPanel.HasBorder = value;
+                seriesPanel.HasBorder = value;
             }
         }
 
@@ -506,6 +506,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the localized text for the specified repeat pattern.
+        /// </summary>
+        /// <param name="pattern">The repeat pattern.</param>
+        /// <returns>The localized text for the specified repeat pattern.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the specified pattern
+        /// is not a valid <see cref="ScheduleRepeatPattern"/> value.</exception>
+        public virtual string GetLocalizedText(ScheduleRepeatPattern pattern)
+        {
+            switch (pattern)
+            {
+                case ScheduleRepeatPattern.Once:
+                    return Localized.ScheduleRepeatPatternOnce;
+                case ScheduleRepeatPattern.Daily:
+                    return Localized.ScheduleRepeatPatternDaily;
+                case ScheduleRepeatPattern.Weekly:
+                    return Localized.ScheduleRepeatPatternWeekly;
+                case ScheduleRepeatPattern.Monthly:
+                    return Localized.ScheduleRepeatPatternMonthly;
+                case ScheduleRepeatPattern.Yearly:
+                    return Localized.ScheduleRepeatPatternYearly;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(pattern), pattern, null);
+            }
+        }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="RepeatPatternRule"/> class.
         /// </summary>
         /// <returns> A new instance of the <see cref="RepeatPatternRule"/> class. </returns>
@@ -515,31 +541,31 @@ namespace Alternet.UI
         /// Creates a new instance of the <see cref="DailyPatternPicker"/> control.
         /// </summary>
         /// <returns> A new instance of the <see cref="DailyPatternPicker"/> control. </returns>
-        protected virtual DailyPatternPicker CreateDailyPatternPicker() => new(data.DailyRule);
+        protected virtual DailyPatternPicker CreateDailyPatternPicker() => new(data.Daily);
 
         /// <summary>
         /// Creates a new instance of the <see cref="OncePatternPicker"/> control.
         /// </summary>
         /// <returns> A new instance of the <see cref="OncePatternPicker"/> control. </returns>
-        protected virtual OncePatternPicker CreateOncePatternPicker() => new(data.OnceRule);
+        protected virtual OncePatternPicker CreateOncePatternPicker() => new(data.Once);
 
         /// <summary>
         /// Creates a new instance of the <see cref="WeeklyPatternPicker"/> control.
         /// </summary>
         /// <returns> A new instance of the <see cref="WeeklyPatternPicker"/> control. </returns>
-        protected virtual WeeklyPatternPicker CreateWeeklyPatternPicker() => new(data.WeeklyRule);
+        protected virtual WeeklyPatternPicker CreateWeeklyPatternPicker() => new(data.Weekly);
 
         /// <summary>
         /// Creates a new instance of the <see cref="MonthlyPatternPicker"/> control.
         /// </summary>
         /// <returns> A new instance of the <see cref="MonthlyPatternPicker"/> control. </returns>
-        protected virtual MonthlyPatternPicker CreateMonthlyPatternPicker() => new(data.MonthlyRule);
+        protected virtual MonthlyPatternPicker CreateMonthlyPatternPicker() => new(data.Monthly);
 
         /// <summary>
         /// Creates a new instance of the <see cref="YearlyPatternPicker"/> control.
         /// </summary>
         /// <returns> A new instance of the <see cref="YearlyPatternPicker"/> control. </returns>
-        protected virtual YearlyPatternPicker CreateYearlyPatternPicker() => new(data.YearlyRule);
+        protected virtual YearlyPatternPicker CreateYearlyPatternPicker() => new(data.Yearly);
 
         /// <summary>
         /// Handles the ValueChanged event of the <see cref="StartPicker"/> control.
