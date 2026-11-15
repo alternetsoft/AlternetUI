@@ -1,0 +1,37 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Scheduler/">
+    <Project Path="../../../../AlterNET-UI-Pro/Scheduler/Scheduler.Demo.AlternetUI/Scheduler.Demo.AlternetUI.csproj" />
+    <Project Path="../../../../AlterNET-UI-Pro/Scheduler/Scheduler.Demo.MAUI/Scheduler.Demo.MAUI.csproj" />
+    <Project Path="../../../../AlterNET-UI-Pro/Scheduler/Scheduler.MAUI/Alternet.Scheduler.MAUI.csproj" />
+    <Project Path="../../../../AlterNET-UI-Pro/Scheduler/Scheduler/Alternet.Scheduler.AlternetUI.csproj" />
+  </Folder>
+  <Folder Name="/Studio/">
+    <Project Path="../../../../AlternetStudio/Source/Common.AlternetUI/Alternet.Common.AlternetUI.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Common/Alternet.Common.csproj" />
+  </Folder>
+  <Folder Name="/UI/">
+    <File Path="../../../../AlternetStudio/Demo/.editorconfig" />
+    <Project Path="../../Alternet.UI.Common/Alternet.UI.Common.csproj" />
+    <Project Path="../../Alternet.UI.Controls/Alternet.UI.Controls.csproj" />
+    <Project Path="../../Alternet.UI.Generator/Alternet.UI.Generator.csproj" />
+    <Project Path="../../Alternet.UI.Maui/Alternet.UI.Maui.csproj" />
+    <Project Path="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" Id="79f2529c-c711-457a-9087-325c333cde60" />
+    <Project Path="../../Alternet.UI/Alternet.UI.csproj">
+      <BuildDependency Project="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="../../Samples/ApiDocDll/ApiDocDll.csproj" />
+    <Project Path="../../Samples/ControlsSample/ControlsSample.csproj">
+      <BuildDependency Project="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="../../Samples/ControlsSampleDll/ControlsSampleDll.csproj" />
+  </Folder>
+</Solution>
