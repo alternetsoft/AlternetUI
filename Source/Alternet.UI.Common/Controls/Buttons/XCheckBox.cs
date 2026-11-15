@@ -262,9 +262,20 @@ namespace Alternet.UI
         public static ThemedColor? DefaultOffSwitchColor;
 
         /// <summary>
+        /// Gets or sets the default color used for a toggle switch in the "intermediate" state,
+        /// supporting both light and dark themes.
+        /// </summary>
+        public static ThemedColor? DefaultIntermediateSwitchColor;
+
+        /// <summary>
         /// Gets or sets the default image used for a toggle switch in the "on" state.
         /// </summary>
         public static SvgImage? DefaultOnSwitchImage;
+
+        /// <summary>
+        /// Gets or sets the default image used for a toggle switch in the "intermediate" state.
+        /// </summary>
+        public static SvgImage? DefaultIntermediateSwitchImage;
 
         /// <summary>
         /// Gets or sets the default image used for a toggle switch in the "off" state.
@@ -308,24 +319,11 @@ namespace Alternet.UI
         {
             CheckImageChecked = DefaultOnSwitchImage ?? KnownSvgImages.ImgToggleOn;
             CheckImageUnchecked = DefaultOffSwitchImage ?? KnownSvgImages.ImgToggleOff;
+            CheckImageIndeterminate = DefaultIntermediateSwitchImage ?? KnownSvgImages.ImgToggleIntermediate;
             IsCheckRightAligned = true;
             Item.CheckBoxSize = DefaultCheckBoxSize;
             Item.CheckBoxMargin = DefaultToggleSwitchMargin;
             PreferredSizeMode = PreferredSizeMode.AvailableWidth;
-        }
-
-        /// <inheritdoc/>
-        [Browsable(false)]
-        public override bool ThreeState
-        {
-            get
-            {
-                return false;
-            }
-
-            set
-            {
-            }
         }
 
         /// <inheritdoc/>
@@ -334,13 +332,19 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
 
-            if (IsChecked)
+            switch (CheckState)
             {
-                checkBoxInfo.SvgImageColor = (DefaultOnSwitchColor ?? DefaultColors.AccentColor)?.GetColor(this);
-            }
-            else
-            {
-                checkBoxInfo.SvgImageColor = DefaultOffSwitchColor?.GetColor(this);
+                case CheckState.Checked:
+                    checkBoxInfo.SvgImageColor = (DefaultOnSwitchColor ?? DefaultColors.AccentColor)?.GetColor(this);
+                    break;
+                case CheckState.Unchecked:
+                    checkBoxInfo.SvgImageColor = DefaultOffSwitchColor?.GetColor(this);
+                    break;
+                case CheckState.Indeterminate:
+                    checkBoxInfo.SvgImageColor = DefaultIntermediateSwitchColor?.GetColor(this);
+                    break;
+                default:
+                    break;
             }
         }
     }
