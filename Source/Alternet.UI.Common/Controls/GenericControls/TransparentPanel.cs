@@ -148,6 +148,15 @@ namespace Alternet.UI
         public SectionHeaderToolBar HeaderToolBar => toolBar;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="RoundBorderWithTitle"/> control is collapsed.
+        /// </summary>
+        public bool IsCollapsed
+        {
+            get => toolBar.IsCollapsed;
+            set => toolBar.IsCollapsed = value;
+        }
+
+        /// <summary>
         /// Gets or sets the title format of the <see cref="GenericRoundBorderWithTitle"/> control.
         /// This format is used to construct the title in the header toolbar.
         /// Title format is specified in the same way as in <see cref="string.Format(string, object[])"/>.
@@ -171,7 +180,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual object[]? TitleFormatArgs
         {
-            get => field;
+            get;
             set
             {
                 if (field == value)
