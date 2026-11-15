@@ -121,22 +121,9 @@ namespace Alternet.UI
 
             ValueToControls();
 
-            timePeriodPicker.ValueChanged += (s, e) =>
-            {
-                var value = timePeriodPicker.Value;
-                data.Advance = value.Value ?? TimeSpan.Zero;
-                data.Enabled = value.Value is not null;
-            };
-
-            playSoundCheckBox.CheckedChanged += (s, e) =>
-            {
-                data.PlaySound = playSoundCheckBox.Checked;
-            };
-
-            soundFilePicker.MainControl.TextChanged += (s, e) =>
-            {
-                data.SoundPath = soundFilePicker.MainControl.Text;
-            };
+            timePeriodPicker.ValueChanged += OnTimePeriodPickerChanged;
+            playSoundCheckBox.CheckedChanged += OnPlaySoundCheckBoxChanged;
+            soundFilePicker.MainControl.TextChanged += OnSoundFilePickerTextChanged;
         }
 
         /// <summary>
@@ -261,6 +248,38 @@ namespace Alternet.UI
             {
                 timePeriodPicker.Value = TimePeriod.None;
             }
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="TimePeriodPicker"/> changes.
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnTimePeriodPickerChanged(object? s, EventArgs e)
+        {
+            var value = timePeriodPicker.Value;
+            data.Advance = value.Value ?? TimeSpan.Zero;
+            data.Enabled = !value.IsNull;
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="PlaySoundCheckBox"/> changes.
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnPlaySoundCheckBoxChanged(object? s, EventArgs e)
+        {
+            data.PlaySound = playSoundCheckBox.Checked;
+        }
+
+        /// <summary>
+        /// Called when the text of the <see cref="SoundFilePicker"/> changes.
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnSoundFilePickerTextChanged(object? s, EventArgs e)
+        {
+            data.SoundPath = soundFilePicker.MainControl.Text;
         }
 
         /// <summary>
