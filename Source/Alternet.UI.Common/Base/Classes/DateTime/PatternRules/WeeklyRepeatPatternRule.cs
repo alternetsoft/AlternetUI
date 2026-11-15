@@ -47,14 +47,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets the current instance to its default state which was set when the instance was created.
-        /// </summary>
-        public virtual void Reset()
-        {
-            Assign(null);
-        }
-
-        /// <summary>
         /// Loads the state of this instance from the specified <see cref="ISerializableObjectContext"/>.
         /// </summary>
         /// <param name="context">The context from which to load the state.</param>
@@ -144,7 +136,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
         /// If the instance is not of type <see cref="WeeklyRepeatPatternRule"/>, no values are copied.</param>
-        public virtual void Assign(object? other)
+        /// <returns><c>true</c> if the values were successfully assigned; otherwise, <c>false</c>.</returns>
+        public override bool Assign(object? other)
         {
             if (other == null)
             {
@@ -153,20 +146,25 @@ namespace Alternet.UI
                     IntervalWeeks = 1;
                     WeekDays = DaysOfWeek.None;
                 });
-                return;
+
+                return true;
             }
 
             if (other is WeeklyRepeatPatternRule otherRule)
             {
                 if (Equals(other))
-                    return;
+                    return false;
 
                 DoInsideSuspendedPropertyChanged(() =>
                 {
                     IntervalWeeks = otherRule.IntervalWeeks;
                     WeekDays = otherRule.WeekDays;
                 });
+
+                return true;
             }
+
+            return false;
         }
 
         /// <inheritdoc/>

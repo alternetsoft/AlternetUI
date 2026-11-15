@@ -123,14 +123,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets the current instance to its default state which was set when the instance was created.
-        /// </summary>
-        public virtual void Reset()
-        {
-            Assign(null);
-        }
-
-        /// <summary>
         /// Saves the current state of this instance
         /// to the specified <see cref="IPropertyBag"/>.
         /// </summary>
@@ -247,7 +239,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
         /// If the instance is not of type <see cref="YearlyRepeatPatternRule"/>, no values are copied.</param>
-        public virtual void Assign(object? other)
+        public override bool Assign(object? other)
         {
             if (other == null)
             {
@@ -260,13 +252,13 @@ namespace Alternet.UI
                     DayOfWeekIndex = RelativeWeekday.First;
                     Kind = RepeatKind.DayOfMonth;
                 });
-                return;
+                return true;
             }
 
             if (other is YearlyRepeatPatternRule otherRule)
             {
                 if (Equals(other))
-                    return;
+                    return false;
 
                 DoInsideSuspendedPropertyChanged(() =>
                 {
@@ -277,7 +269,11 @@ namespace Alternet.UI
                     DayOfWeekIndex = otherRule.DayOfWeekIndex;
                     Kind = otherRule.Kind;
                 });
+
+                return true;
             }
+
+            return false;
         }
 
         /// <inheritdoc/>

@@ -17,12 +17,10 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
-        /// Resets the current instance to its default state which was set when the instance was created.
-        /// </summary>
-        public virtual void Reset()
+        /// <inheritdoc/>
+        public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
-            Assign(null);
+            return PatternRuleGetDatesResult.Empty;
         }
 
         /// <inheritdoc/>
@@ -53,36 +51,41 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
         /// If the instance is not of type <see cref="OnceRepeatPatternRule"/>, no values are copied.</param>
-        public virtual void Assign(object? other)
+        public override bool Assign(object? other)
         {
             if (other == null)
             {
                 DoInsideSuspendedPropertyChanged(() =>
                 {
                 });
-                return;
+
+                return true;
             }
 
             if (other is OnceRepeatPatternRule otherRule)
             {
                 if (Equals(other))
-                    return;
+                    return false;
                 DoInsideSuspendedPropertyChanged(() =>
                 {
                 });
+
+                return true;
             }
+
+            return false;
         }
 
         /// <inheritdoc/>
         public override bool LoadFrom(ISerializableObjectContext? context)
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         /// <inheritdoc/>
         public override bool SaveTo(ISerializableObjectContext? context)
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

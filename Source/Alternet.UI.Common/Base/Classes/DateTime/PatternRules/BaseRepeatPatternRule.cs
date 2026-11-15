@@ -190,6 +190,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the current instance to its default state which was set when the instance was created.
+        /// </summary>
+        public virtual void Reset()
+        {
+            Assign(null);
+        }
+
+        /// <summary>
+        /// Assigns the values from another instance to the current instance.
+        /// </summary>
+        /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
+        /// If the instance is not of the same type, no values are copied.</param>
+        /// <returns><c>true</c> if the values were successfully assigned; otherwise, <c>false</c>.</returns>
+        public virtual bool Assign(object? other)
+        {
+            return false;
+        }
+
+        /// <summary>
         /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date.
         /// </summary>
         /// <param name="prm">The parameters specifying the minimum and maximum

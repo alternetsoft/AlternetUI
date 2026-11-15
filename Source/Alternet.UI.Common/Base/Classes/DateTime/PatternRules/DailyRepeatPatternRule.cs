@@ -215,19 +215,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets the current instance to its default state which was set when the instance was created.
-        /// </summary>
-        public virtual void Reset()
-        {
-            Assign(null);
-        }
-
-        /// <summary>
         /// Assigns the values from another instance to the current instance.
         /// </summary>
         /// <param name="other">The instance from which to copy values. If <c>null</c>, default values are assigned.
         /// If the instance is not of type <see cref="DailyRepeatPatternRule"/>, no values are copied.</param>
-        public virtual void Assign(object? other)
+        /// <returns><c>true</c> if the values were successfully assigned; otherwise, <c>false</c>.</returns>
+        public override bool Assign(object? other)
         {
             if (other == null)
             {
@@ -236,19 +229,24 @@ namespace Alternet.UI
                     IntervalDays = 1;
                     Kind = RepeatKind.EveryDay;
                 });
-                return;
+
+                return true;
             }
 
             if (other is DailyRepeatPatternRule otherRule)
             {
                 if (Equals(other))
-                    return;
+                    return false;
                 DoInsideSuspendedPropertyChanged(() =>
                 {
                     IntervalDays = otherRule.IntervalDays;
                     Kind = otherRule.Kind;
                 });
+
+                return true;
             }
+
+            return false;
         }
 
         /// <inheritdoc/>
