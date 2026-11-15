@@ -116,15 +116,73 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="RoundBorderWithTitle"/> control is collapsed.
+        /// </summary>
+        public bool IsCollapsed
+        {
+            get => toolBar.IsCollapsed;
+            set => toolBar.IsCollapsed = value;
+        }
+
+        /// <summary>
         /// Gets the header toolbar of the <see cref="RoundBorderWithTitle"/> control.
         /// </summary>
         public SectionHeaderToolBar HeaderToolBar => toolBar;
+
+        /// <summary>
+        /// Gets or sets the title format of the <see cref="GenericRoundBorderWithTitle"/> control.
+        /// This format is used to construct the title in the header toolbar.
+        /// Title format is specified in the same way as in <see cref="string.Format(string, object[])"/>.
+        /// </summary>
+        public virtual string? TitleFormat
+        {
+            get;
+
+            set
+            {
+                if (field == value)
+                    return;
+                field = value;
+                UpdateToolBarTitle();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the format arguments for the title of the <see cref="GenericRoundBorderWithTitle"/> control.
+        /// These arguments are used in conjunction with the <see cref="TitleFormat"/> property to construct the title.
+        /// </summary>
+        public virtual object[]? TitleFormatArgs
+        {
+            get;
+            set
+            {
+                if (field == value)
+                    return;
+                field = value;
+                UpdateToolBarTitle();
+            }
+        }
 
         /// <inheritdoc/>
         protected override void OnTitleChanged(EventArgs e)
         {
             base.OnTitleChanged(e);
-            toolBar.Label.Text = Title;
+            UpdateToolBarTitle();
+        }
+
+        /// <summary>
+        /// Updates the title of the <see cref="GenericRoundBorderWithTitle"/>
+        /// control based on the current title and format arguments.
+        /// By default, <see cref="TitleFormat"/> and <see cref="TitleFormatArgs"/> are used to construct the title
+        /// using the same formatting rules as in <see cref="string.Format(string, object[])"/>.
+        /// Override this method to customize the title update behavior.
+        /// </summary>
+        protected virtual void UpdateToolBarTitle()
+        {
+            if (string.IsNullOrEmpty(TitleFormat) || TitleFormatArgs is null)
+                toolBar.Label.Text = Title;
+            else
+                toolBar.Label.Text = string.Format(TitleFormat, TitleFormatArgs);
         }
     }
 
