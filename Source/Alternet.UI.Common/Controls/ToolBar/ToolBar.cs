@@ -4001,17 +4001,28 @@ namespace Alternet.UI
 
                 if (ToggleSiblingsVisibility)
                 {
-                    DoInsideLayout(() =>
+                    if (HasSiblings)
                     {
-                        foreach (var child in Siblings)
+                        DoInsideLayout(() =>
                         {
-                            child.Visible = !isCollapsed;
-                        }
-                    });
+                            foreach (var child in Siblings)
+                            {
+                                child.Visible = !isCollapsed;
+                            }
+                        });
+                    }
                 }
 
                 OnCollapsedChanged();
             }
+        }
+
+        /// <summary>
+        /// Toggles the collapsed state of the <see cref="SectionHeaderToolBar"/> control.
+        /// </summary>
+        public virtual void ToggleCollapse()
+        {
+            IsCollapsed = !IsCollapsed;
         }
 
         /// <summary>
