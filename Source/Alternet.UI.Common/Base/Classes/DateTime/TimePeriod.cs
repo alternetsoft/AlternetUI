@@ -43,6 +43,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TimePeriod"/> class
+        /// with the specified <see cref="TimeSpan"/> value and an optional text representation.
+        /// </summary>
+        /// <param name="timeSpan">The <see cref="TimeSpan"/> value representing the time period.</param>
+        /// <param name="text">The optional text representation of the time period.</param>
+        public TimePeriod(TimeSpan? timeSpan, string? text)
+        {
+            data = timeSpan;
+            this.text = text;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TimePeriod"/> class with default values (0 minutes).
         /// </summary>
         public TimePeriod()
@@ -58,6 +70,27 @@ namespace Alternet.UI
             get => zeroUnit;
             set => zeroUnit = value;
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="TimePeriod"/> instance represents
+        /// a null time period (no specific value).
+        /// </summary>
+        public bool IsNull => Value is null;
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="TimePeriod"/> instance represents a zero time period.
+        /// </summary>
+        public bool IsZero => Value == TimeSpan.Zero;
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="TimePeriod"/> instance has a non-null value.
+        /// </summary>
+        public bool HasValue => Value is not null;
+
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="TimePeriod"/> instance has a non-null and non-zero value.
+        /// </summary>
+        public bool HasNonZeroValue => Value is not null && Value != TimeSpan.Zero;
 
         /// <summary>
         /// Gets or sets the value representing the time period.
@@ -77,7 +110,15 @@ namespace Alternet.UI
         /// Gets or sets the optional text format for displaying the time period,
         /// allowing customization of how the unit is represented in string form.
         /// </summary>
-        public virtual DateUtils.TimePeriodUnitTextFormat? TextFormat { get; set; }
+        public virtual DateUtils.TimePeriodUnitTextFormat? UnitFormat { get; set; }
+
+        /// <summary>
+        /// Gets or sets the optional text format for displaying the time period,
+        /// allowing customization of how the time period is represented in string form.
+        /// Value should be specified in the same way as in <see cref="string.Format(string, object[])"/>.
+        /// Only the first argument is used, which is the <see cref="TimePeriod"/> instance itself.
+        /// </summary>
+        public virtual string? TextFormat { get; set; }
 
         /// <summary>
         /// Gets or sets an optional title or description for the time period,
@@ -87,18 +128,28 @@ namespace Alternet.UI
         {
             get
             {
-                if (text is not null)
-                    return text;
+                if (TextFormat is not null && TextFormat.Length > 0)
+                {
+                    return string.Format(TextFormat, InternalText());
+                }
 
-                if (Value is null)
-                    return CommonStrings.Default.TimePeriodNone;
+                return InternalText();
 
-                var fmt = TextFormat ?? DateUtils.TimePeriodUnitTextFormat.Long;
+                string InternalText()
+                {
+                    if (text is not null && text.Length > 0)
+                        return text;
 
-                if (Value == TimeSpan.Zero)
-                    return DateUtils.ValueAndUnitToString(0, zeroUnit, fmt);
+                    if (Value is null)
+                        return CommonStrings.Default.TimePeriodNone;
 
-                return text ?? DateUtils.ToDisplayString(Value.Value, fmt);
+                    var fmt = UnitFormat ?? DateUtils.TimePeriodUnitTextFormat.Long;
+
+                    if (Value == TimeSpan.Zero)
+                        return DateUtils.ValueAndUnitToString(0, zeroUnit, fmt);
+
+                    return DateUtils.ToDisplayString(Value.Value, fmt);
+                }
             }
 
             set
