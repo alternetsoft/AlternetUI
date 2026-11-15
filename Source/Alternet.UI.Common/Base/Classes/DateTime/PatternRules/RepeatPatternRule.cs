@@ -66,27 +66,27 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the <see cref="DailyRepeatPatternRule"/> instance for daily recurrence settings.
         /// </summary>
-        public DailyRepeatPatternRule DailyRule => dailyRule;
+        public DailyRepeatPatternRule Daily => dailyRule;
 
         /// <summary>
         /// Gets the <see cref="WeeklyRepeatPatternRule"/> instance for weekly recurrence settings. 
         /// </summary>
-        public WeeklyRepeatPatternRule WeeklyRule => weeklyRule;
+        public WeeklyRepeatPatternRule Weekly => weeklyRule;
 
         /// <summary>
         /// Gets the <see cref="MonthlyRepeatPatternRule"/> instance for monthly recurrence settings.
         /// </summary>
-        public MonthlyRepeatPatternRule MonthlyRule => monthlyRule;
+        public MonthlyRepeatPatternRule Monthly => monthlyRule;
 
         /// <summary>
         /// Gets the <see cref="YearlyRepeatPatternRule"/> instance for yearly recurrence settings.
         /// </summary>
-        public YearlyRepeatPatternRule YearlyRule => yearlyRule;
+        public YearlyRepeatPatternRule Yearly => yearlyRule;
 
         /// <summary>
         /// Gets the <see cref="OnceRepeatPatternRule"/> instance for one-time event settings.
         /// </summary>
-        public OnceRepeatPatternRule OnceRule => onceRule;
+        public OnceRepeatPatternRule Once => onceRule;
 
         /// <summary>
         /// Gets the list of excluded dates in the repeat pattern rule.
@@ -216,25 +216,25 @@ namespace Alternet.UI
                                 propertyBag,
                                 prefix + nameof(onceRule)));
                     case ScheduleRepeatPattern.Daily:
-                        return DailyRule.LoadFrom(
+                        return Daily.LoadFrom(
                             new SerializableObjectContext(
                                 propertyBag,
-                                prefix + nameof(DailyRule)));
+                                prefix + nameof(Daily)));
                     case ScheduleRepeatPattern.Weekly:
-                        return WeeklyRule.LoadFrom(
+                        return Weekly.LoadFrom(
                             new SerializableObjectContext(
                                 propertyBag,
-                                prefix + nameof(WeeklyRule)));
+                                prefix + nameof(Weekly)));
                     case ScheduleRepeatPattern.Monthly:
-                        return MonthlyRule.LoadFrom(
+                        return Monthly.LoadFrom(
                             new SerializableObjectContext(
                                 propertyBag,
-                                prefix + nameof(MonthlyRule)));
+                                prefix + nameof(Monthly)));
                     case ScheduleRepeatPattern.Yearly:
-                        return YearlyRule.LoadFrom(
+                        return Yearly.LoadFrom(
                             new SerializableObjectContext(
                                 propertyBag,
-                                prefix + nameof(YearlyRule)));
+                                prefix + nameof(Yearly)));
                 }
 
                 return true;
@@ -281,16 +281,16 @@ namespace Alternet.UI
                     onceRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(onceRule)));
                     break;
                 case ScheduleRepeatPattern.Daily:
-                    DailyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(DailyRule)));
+                    Daily.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(Daily)));
                     break;
                 case ScheduleRepeatPattern.Weekly:
-                    WeeklyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(WeeklyRule)));
+                    Weekly.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(Weekly)));
                     break;
                 case ScheduleRepeatPattern.Monthly:
-                    MonthlyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(MonthlyRule)));
+                    Monthly.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(Monthly)));
                     break;
                 case ScheduleRepeatPattern.Yearly:
-                    YearlyRule.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(YearlyRule)));
+                    Yearly.SaveTo(new SerializableObjectContext(propertyBag, prefix + nameof(Yearly)));
                     break;
             }
 
@@ -340,11 +340,11 @@ namespace Alternet.UI
                    ValidToDate == other.ValidToDate &&
                    OccurrenceCount == other.OccurrenceCount &&
                    EndCondition == other.EndCondition &&
-                   OnceRule.Equals(other.OnceRule) &&
-                   DailyRule.Equals(other.DailyRule) &&
-                   WeeklyRule.Equals(other.WeeklyRule) &&
-                   MonthlyRule.Equals(other.MonthlyRule) &&
-                   YearlyRule.Equals(other.YearlyRule) &&
+                   Once.Equals(other.Once) &&
+                   Daily.Equals(other.Daily) &&
+                   Weekly.Equals(other.Weekly) &&
+                   Monthly.Equals(other.Monthly) &&
+                   Yearly.Equals(other.Yearly) &&
                    ExcludedDates.SequenceEqual(other.ExcludedDates);
         }
 
@@ -368,11 +368,11 @@ namespace Alternet.UI
                     ValidToDate = ValidFromDate;
                     OccurrenceCount = 1;
                     EndCondition = RepeatPatternEndCondition.OnDate;
-                    DailyRule.Assign(null);
-                    WeeklyRule.Assign(null);
-                    MonthlyRule.Assign(null);
-                    YearlyRule.Assign(null);
-                    OnceRule.Assign(null);
+                    Daily.Assign(null);
+                    Weekly.Assign(null);
+                    Monthly.Assign(null);
+                    Yearly.Assign(null);
+                    Once.Assign(null);
                     ClearExcludedDates();
                 });
 
@@ -393,11 +393,11 @@ namespace Alternet.UI
                     OccurrenceCount = otherRule.OccurrenceCount;
                     EndCondition = otherRule.EndCondition;
 
-                    OnceRule.Assign(otherRule.OnceRule);
-                    DailyRule.Assign(otherRule.DailyRule);
-                    WeeklyRule.Assign(otherRule.WeeklyRule);
-                    MonthlyRule.Assign(otherRule.MonthlyRule);
-                    YearlyRule.Assign(otherRule.YearlyRule);
+                    Once.Assign(otherRule.Once);
+                    Daily.Assign(otherRule.Daily);
+                    Weekly.Assign(otherRule.Weekly);
+                    Monthly.Assign(otherRule.Monthly);
+                    Yearly.Assign(otherRule.Yearly);
 
                     ExcludedDates = otherRule.ExcludedDates;
 

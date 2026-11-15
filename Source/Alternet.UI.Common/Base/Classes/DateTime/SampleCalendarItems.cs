@@ -133,7 +133,7 @@ namespace Alternet.UI
             vacationpicnicwithbarbecue.AlarmInfo.Advance = TimeSpan.FromMinutes(5);
 
             vacationpicnicwithbarbecue.Rule.Kind = ScheduleRepeatPattern.Weekly;
-            vacationpicnicwithbarbecue.Rule.WeeklyRule.WeekDays = DaysOfWeek.Sunday;
+            vacationpicnicwithbarbecue.Rule.Weekly.WeekDays = DaysOfWeek.Sunday;
             server.Add(vacationpicnicwithbarbecue);
         }
 
