@@ -2124,7 +2124,10 @@ namespace Alternet.UI
                 {
                     default:
                     case VisualControlState.Normal:
-                        image = svgImage.AsNormalImage(size, control.IsDarkBackground);
+                        if (info.SvgImageColor is not null)
+                            image = svgImage.ImageWithColor(size, info.SvgImageColor);
+                        else
+                            image = svgImage.AsNormalImage(size, control.IsDarkBackground);
                         break;
                     case VisualControlState.Disabled:
                         image = svgImage.AsDisabledImage(size, control.IsDarkBackground);
@@ -3274,8 +3277,10 @@ namespace Alternet.UI
                 info.SvgState = info.IsCheckBoxEnabled
                     ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
                     : VisualControlState.Disabled;
+
                 if (info.SvgState == VisualControlState.Selected)
                     info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container)?.GetColor(isDark);
+
                 info.IsRadioButton = item.IsRadioButton;
                 BeforeDrawCheckBox?.Invoke(this, info);
 
@@ -3528,6 +3533,9 @@ namespace Alternet.UI
             result.CheckSize = checkRect.Size;
             result.TextRect = textRect;
             result.Bounds = rect;
+
+            container?.CoerceCheckBoxInfo(this, result);
+
             return result;
         }
 

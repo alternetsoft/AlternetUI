@@ -1118,5 +1118,9 @@ namespace Alternet.UI
                 result = savedBestSize.Value;
             return result;
         }
+
+        void IListControlItemContainer.CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo)
+        {
+        }
     }
 }

@@ -1571,6 +1571,10 @@ namespace Alternet.UI
             selectedItems.Clear();
         }
 
+        void IListControlItemContainer.CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo)
+        {
+        }
+
         private bool SetSelectedCore(TreeViewItem item, bool value)
         {
             bool changed;

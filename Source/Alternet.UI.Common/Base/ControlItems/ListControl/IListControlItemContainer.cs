@@ -83,6 +83,14 @@ namespace Alternet.UI
         string GetItemText(int index, bool forDisplay);
 
         /// <summary>
+        /// Prepares the checkbox information for the specified <paramref name="item"/>
+        /// and coerces it to ensure that it is valid.
+        /// </summary>
+        /// <param name="item">The list control item for which to prepare the checkbox information.</param>
+        /// <param name="checkBoxInfo">The checkbox information to be coerced.</param>
+        void CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo);
+
+        /// <summary>
         /// Returns the text representation of the specified list control item.
         /// </summary>
         /// <param name="item">The list control item to retrieve the text for.

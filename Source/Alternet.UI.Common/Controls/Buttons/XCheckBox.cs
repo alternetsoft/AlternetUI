@@ -96,7 +96,7 @@ namespace Alternet.UI
             get => hoveredForeColor;
             set
             {
-                if(hoveredForeColor == value)
+                if (hoveredForeColor == value)
                     return;
                 hoveredForeColor = value;
                 if (UseHoveredForeColor && VisualState == VisualControlState.Hovered)
@@ -121,7 +121,7 @@ namespace Alternet.UI
             get => useHoveredForeColor;
             set
             {
-                if(useHoveredForeColor == value) return;
+                if (useHoveredForeColor == value) return;
                 useHoveredForeColor = value;
                 if (UseHoveredForeColor && VisualState == VisualControlState.Hovered)
                     Invalidate();
@@ -304,6 +304,22 @@ namespace Alternet.UI
 
             set
             {
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo)
+        {
+            if (!Enabled)
+                return;
+
+            if (IsChecked)
+            {
+                checkBoxInfo.SvgImageColor = (DefaultOnSwitchColor ?? DefaultColors.AccentColor)?.GetColor(this);
+            }
+            else
+            {
+                checkBoxInfo.SvgImageColor = DefaultOffSwitchColor?.GetColor(this);
             }
         }
     }

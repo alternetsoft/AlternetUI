@@ -1585,6 +1585,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Allows derived classes to modify the checkbox information for a specific item.
+        /// </summary>
+        /// <param name="item">The list control item for which to modify the checkbox information.</param>
+        /// <param name="checkBoxInfo">The checkbox information to be modified.</param>
+        protected virtual void CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo)
+        {
+        }
+
+        void IListControlItemContainer.CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo)
+        {
+            CoerceCheckBoxInfo(item, checkBoxInfo);
+        }
+
+        /// <summary>
         /// Handles the event when a column is removed from the columns collection.
         /// </summary>
         /// <param name="sender">The source of the event, typically the collection
