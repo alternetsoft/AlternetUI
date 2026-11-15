@@ -198,7 +198,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            return DoInsideSuspendedPropertyChanged(() =>
+            return DoInsideTransaction(() =>
             {
                 Reset();
 
@@ -235,7 +235,7 @@ namespace Alternet.UI
             if (Equals(source))
                 return false;
 
-            DoInsideSuspendedPropertyChanged(() =>
+            DoInsideTransaction(() =>
             {
                 Advance = source.Advance;
                 SnoozeTime = source.SnoozeTime;
@@ -252,7 +252,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Reset()
         {
-            DoInsideSuspendedPropertyChanged(() =>
+            DoInsideTransaction(() =>
             {
                 ResetAdvance();
                 ResetEnabled();

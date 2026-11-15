@@ -67,7 +67,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            return DoInsideSuspendedPropertyChanged(() =>
+            return DoInsideTransaction(() =>
             {
                 Reset();
 
@@ -141,7 +141,7 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     IntervalWeeks = 1;
                     WeekDays = DaysOfWeek.None;
@@ -155,7 +155,7 @@ namespace Alternet.UI
                 if (Equals(other))
                     return false;
 
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     IntervalWeeks = otherRule.IntervalWeeks;
                     WeekDays = otherRule.WeekDays;

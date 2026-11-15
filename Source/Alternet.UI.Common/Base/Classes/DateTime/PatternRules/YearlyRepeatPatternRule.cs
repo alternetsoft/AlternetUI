@@ -174,7 +174,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            return DoInsideSuspendedPropertyChanged(() =>
+            return DoInsideTransaction(() =>
             {
                 Reset();
 
@@ -243,7 +243,7 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     IntervalYears = 1;
                     Month = CalendarMonth.January;
@@ -260,7 +260,7 @@ namespace Alternet.UI
                 if (Equals(other))
                     return false;
 
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     IntervalYears = otherRule.IntervalYears;
                     Month = otherRule.Month;

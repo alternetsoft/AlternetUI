@@ -71,7 +71,10 @@ namespace Alternet.UI
 
             set
             {
-                DoInsideTransaction(() => alarmInfo.Assign(value));
+                if (DoInsideTransaction(() => alarmInfo.Assign(value)))
+                {
+                    RaisePropertyChanged(nameof(AlarmInfo));
+                }
             }
         }
 
@@ -356,7 +359,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            return DoInsideSuspendedPropertyChanged(() =>
+            return DoInsideTransaction(() =>
             {
                 Reset();
 
@@ -748,7 +751,7 @@ namespace Alternet.UI
         /// Gets the start date and time of the calendar item instance.
         /// </summary>
         public DateTime Start => StartDate.ToDateTime(Item.StartTime);
-    
+
         /// <summary>
         /// Gets the end date and time of the calendar item instance.
         /// </summary>

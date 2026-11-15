@@ -206,7 +206,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            return DoInsideSuspendedPropertyChanged(() =>
+            return DoInsideTransaction(() =>
             {
                 Items.DoInsideUpdate(() =>
                 {

@@ -133,7 +133,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            return DoInsideSuspendedPropertyChanged(() =>
+            return DoInsideTransaction(() =>
             {
                 Reset();
 
@@ -230,7 +230,7 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     IntervalMonths = 1;
                     DayOfWeek = ExtendedDayOfWeek.Day;
@@ -247,7 +247,7 @@ namespace Alternet.UI
                 if (Equals(other))
                     return false;
 
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     IntervalMonths = otherRule.IntervalMonths;
                     DayOfWeek = otherRule.DayOfWeek;

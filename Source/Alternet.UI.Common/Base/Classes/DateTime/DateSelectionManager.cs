@@ -304,7 +304,7 @@ namespace Alternet.UI
         /// <param name="date">The date to select.</param>
         public virtual void SelectOnlyDate(DateOnly date)
         {
-            DoInsideSuspendedPropertyChanged(() =>
+            DoInsideTransaction(() =>
             {
                 Clear();
                 Select(date, true);
@@ -318,7 +318,7 @@ namespace Alternet.UI
         /// <param name="endDate">The end date of the range to select.</param>
         public virtual void SelectOnlyRange(DateOnly startDate, DateOnly endDate)
         {
-            DoInsideSuspendedPropertyChanged(() =>
+            DoInsideTransaction(() =>
             {
                 Clear();
                 SelectRange(startDate, endDate, true);
@@ -392,7 +392,7 @@ namespace Alternet.UI
 
             var result = false;
 
-            DoInsideSuspendedPropertyChanged(() =>
+            DoInsideTransaction(() =>
             {
                 foreach (var date in dates)
                 {
@@ -423,7 +423,7 @@ namespace Alternet.UI
                 (startDate, endDate) = (endDate, startDate);
             }
 
-            DoInsideSuspendedPropertyChanged(() =>
+            DoInsideTransaction(() =>
             {
                 if (isSelected)
                 {
@@ -527,7 +527,7 @@ namespace Alternet.UI
             else
                 prefix = "";
 
-            return DoInsideSuspendedPropertyChanged(() =>
+            return DoInsideTransaction(() =>
             {
                 Clear();
                 propertyBag.TryGetCollectionProperty(prefix + "Items", out var itemsCollection);
