@@ -78,7 +78,11 @@ namespace Alternet.UI
             periodImage.Parent = firstRowPanel;
             soundImage.Parent = thirdRowPanel;
 
-            timePeriodPicker.AddNoneItem();
+            timePeriodPicker.AddNoneItem(Localized.CalendarItemLabelDontRemindMe);
+            timePeriodPicker.SetItemText(TimeSpan.Zero, Localized.CalendarItemLabelAtTimeOfEvent);
+
+            timePeriodPicker.SetItemTextFormat(Localized.CalendarItemAlarmTimePeriodFormat);
+
             timePeriodPicker.HorizontalAlignment = HorizontalAlignment.Fill;
             timePeriodPicker.Parent = firstRowPanel;
             soundFilePicker.Parent = thirdRowPanel;
