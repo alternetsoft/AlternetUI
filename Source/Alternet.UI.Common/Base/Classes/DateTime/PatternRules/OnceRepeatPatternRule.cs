@@ -115,13 +115,25 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
-            return PatternRuleGetDatesResult.Empty;
+            IEnumerable<DateOnly> Internal()
+            {
+                var date = StartDate;
+                var endDate = EndDate;
+
+                while (date <= endDate)
+                {
+                    yield return date;
+                    date = date.AddDays(1);
+                }
+            }
+
+            return new (Internal());
         }
 
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return StartDate.GetHashCode();
         }
 
         /// <summary>
@@ -150,7 +162,7 @@ namespace Alternet.UI
         {
             if (other == null)
             {
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     StartDate = DateUtils.Today;
                 });
@@ -162,7 +174,7 @@ namespace Alternet.UI
             {
                 if (Equals(other))
                     return false;
-                DoInsideSuspendedPropertyChanged(() =>
+                DoInsideTransaction(() =>
                 {
                     StartDate = otherRule.StartDate;
                 });
