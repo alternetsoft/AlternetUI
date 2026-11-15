@@ -72,7 +72,7 @@ namespace Alternet.UI
 
             periodImage.SvgImage = KnownSvgImages.ImgHourglass;
             periodImage.MarginRight = DefaultControlDistance;
-            soundImage.SvgImage = KnownSvgImages.ImgBell;
+            soundImage.SvgImage = KnownSvgImages.ImgHeadphones;
             soundImage.MarginRight = DefaultControlDistance;
 
             periodImage.Parent = periodRowPanel;
