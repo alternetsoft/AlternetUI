@@ -9,12 +9,107 @@ namespace Alternet.UI
     /// </summary>
     public partial class OnceRepeatPatternRule : OwnedRepeatPatternRule, IPropertyBagSerialize
     {
+        private DateOnly startDate;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OnceRepeatPatternRule"/> class with the specified owner.
         /// </summary>
         /// <param name="owner">The owner of the repeat pattern rule.</param>
         public OnceRepeatPatternRule(IRepeatPatternRuleOwner owner) : base(owner)
         {
+            startDate = DateUtils.Today;
+        }
+
+        /// <inheritdoc/>
+        public override DateOnly ValidFromDate
+        {
+            get => startDate;
+            set
+            {
+                // The ValidFromDate property is read-only for OnceRepeatPatternRule, so we do not allow setting it.
+            }
+        }
+
+        /// <inheritdoc/>
+        public override DateOnly ValidToDate
+        {
+            get
+            {
+                return EndDate;
+            }
+
+            set
+            {
+                // The ValidToDate property is read-only for OnceRepeatPatternRule, so we do not allow setting it.
+            }
+        }
+
+        /// <summary>
+        /// Gets the end date of the event or task that occurs only once.
+        /// </summary>
+        public virtual DateOnly EndDate
+        {
+            get
+            {
+                return DateOnly.FromDateTime(Ends);
+            }
+        }
+
+        /// <summary>
+        /// Gets the start date and time of the event or task that occurs only once.
+        /// </summary>
+        public virtual DateTime Starts
+        {
+            get
+            {
+                return StartDate.ToDateTime(StartTime);
+            }
+
+            set
+            {
+                if (Starts == value)
+                    return;
+
+                WithoutPropertyChanged(() =>
+                {
+                    StartDate = DateOnly.FromDateTime(value);
+                    StartTime = TimeOnly.FromDateTime(value);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets the end date and time of the event or task that occurs only once.
+        /// </summary>
+        public virtual DateTime Ends
+        {
+            get
+            {
+                return StartDate.ToDateTime(StartTime).Add(Duration);
+            }
+
+            set
+            {
+                if (Ends == value)
+                    return;
+                WithoutPropertyChanged(() =>
+                {
+                    Duration = value - StartDate.ToDateTime(StartTime);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the start date of the event or task that occurs only once.
+        /// This property is used to specify the date on which the event or task is scheduled to take place.
+        /// </summary>
+        public virtual DateOnly StartDate
+        {
+            get => startDate;
+            set
+            {
+                SetProperty(ref startDate, value, nameof(StartDate));
+            }
         }
 
         /// <inheritdoc/>
@@ -43,7 +138,7 @@ namespace Alternet.UI
                 return false;
             }
 
-            return true;
+            return StartDate == other.StartDate;
         }
 
         /// <summary>
@@ -57,6 +152,7 @@ namespace Alternet.UI
             {
                 DoInsideSuspendedPropertyChanged(() =>
                 {
+                    StartDate = DateUtils.Today;
                 });
 
                 return true;
@@ -68,6 +164,7 @@ namespace Alternet.UI
                     return false;
                 DoInsideSuspendedPropertyChanged(() =>
                 {
+                    StartDate = otherRule.StartDate;
                 });
 
                 return true;
@@ -79,13 +176,52 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool LoadFrom(ISerializableObjectContext? context)
         {
-            return false;
+            if (context == null)
+                return false;
+
+            var prefix = context.Prefix;
+            var propertyBag = context.PropertyBag;
+
+            if (propertyBag == null)
+                return false;
+
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            return DoInsideTransaction<bool>(() =>
+            {
+                Reset();
+
+                if (propertyBag.TryGetDateProperty(prefix + nameof(StartDate), out var startDate))
+                {
+                    StartDate = startDate;
+                }
+
+                return true;
+            });
         }
 
         /// <inheritdoc/>
         public override bool SaveTo(ISerializableObjectContext? context)
         {
-            return false;
+            if (context == null)
+                return false;
+
+            var prefix = context.Prefix;
+            var propertyBag = context.PropertyBag;
+
+            if (propertyBag == null)
+                return false;
+
+            if (prefix is not null)
+                prefix += ".";
+            else
+                prefix = "";
+
+            propertyBag.SetDateProperty(prefix + nameof(StartDate), StartDate);
+            return true;
         }
     }
 }
