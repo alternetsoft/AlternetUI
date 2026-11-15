@@ -11,9 +11,22 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Allows to get known svg images as <see cref="ImageSet"/> instances.
+    /// Images are loaded from the URLs defined in <see cref="KnownSvgUrls"/>.
+    /// All images are cached and reused, so the same instance is returned for the same image.
+    /// Images are loaded only on demand, when they are requested for the first time.
+    /// They use so called lazy loading, so the image is not loaded until it is actually used.
+    /// If you change the system colors, all cached images will be reset and reloaded with the new colors.
     /// </summary>
     public static class KnownSvgImages
     {
+        /// <summary>
+        /// Gets or sets a delegate that can be used to override
+        /// the creation of <see cref="MonoSvgImage"/> instances
+        /// for the known svg images. If set, this delegate will be called instead of the default creation logic,
+        /// allowing for custom behavior.
+        /// </summary>
+        public static readonly Func<string, MonoSvgImage>? CreateMonoSvgImageOverride;
+
         private static SvgImage? imgPaintBrush;
         private static SvgImage? imgDebugRun;
         private static SvgImage? imgTrashCan;
@@ -136,6 +149,8 @@ namespace Alternet.UI
         private static SvgImage? imgRangeDistance;
         private static SvgImage? imgRangeEnd;
         private static SvgImage? imgRangeStart;
+        private static SvgImage? imgToggleOn;
+        private static SvgImage? imgToggleOff;
 
         static KnownSvgImages()
         {
@@ -146,6 +161,36 @@ namespace Alternet.UI
                     image.ResetCachedImages();
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets or sets "Toggle On" svg image which includes a toggle switch icon in the "on" position.
+        /// </summary>
+        public static SvgImage ImgToggleOn
+        {
+            get
+            {
+                return imgToggleOn ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageToggleOn);
+            }
+            set
+            {
+                imgToggleOn = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Toggle Off" svg image which includes a toggle switch icon in the "off" position.
+        /// </summary>
+        public static SvgImage ImgToggleOff
+        {
+            get
+            {
+                return imgToggleOff ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageToggleOff);
+            }
+            set
+            {
+                imgToggleOff = value;
+            }
         }
 
         /// <summary>
@@ -1376,11 +1421,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a <see cref="MonoSvgImage"/> instance from the specified URL.
+        /// An exception will not be thrown if the image cannot be loaded. Instead, a placeholder image will be used.
         /// </summary>
         /// <param name="url">The URL of the SVG image.</param>
         /// <returns>A <see cref="MonoSvgImage"/> instance.</returns>
         public static MonoSvgImage CreateMonoSvgImage(string url)
         {
+            if (CreateMonoSvgImageOverride != null)
+                return CreateMonoSvgImageOverride(url);
             return new MonoSvgImage(url, SvgImageDataKind.Url, throwException: false);
         }
 

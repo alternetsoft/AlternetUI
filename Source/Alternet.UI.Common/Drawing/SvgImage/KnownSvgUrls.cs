@@ -28,6 +28,16 @@ namespace Alternet.UI
             "embres:Alternet.UI.Common.Resources.Svg.{0}.svg?assembly=Alternet.UI.Common";
 
         /// <summary>
+        /// Gets or sets url used to load "Toggle Off" svg image.
+        /// </summary>
+        public static string UrlImageToggleOff { get; set; } = GetImageUrl("alternet-toggle-off");
+
+        /// <summary>
+        /// Gets or sets url used to load "Toggle On" svg image.
+        /// </summary>
+        public static string UrlImageToggleOn { get; set; } = GetImageUrl("alternet-toggle-on");
+
+        /// <summary>
         /// Gets or sets url used to load "Range Distance" svg image.
         /// </summary>
         public static string UrlImageRangeDistance { get; set; } = GetImageUrl("alternet-range-dist");
