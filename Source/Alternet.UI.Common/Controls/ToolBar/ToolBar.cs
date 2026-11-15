@@ -1215,13 +1215,22 @@ namespace Alternet.UI
         /// <param name="image">Svg image.</param>
         /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
-        public virtual ObjectUniqueId AddPicture(
-            SvgImage? image = null,
-            object? toolTip = default)
+        public virtual ObjectUniqueId AddPicture(SvgImage? image = null, object? toolTip = default)
+        {
+            return AddPictureCore(image, toolTip).UniqueId;
+        }
+
+        /// <summary>
+        /// Adds <see cref="PictureBox"/> to the control.
+        /// </summary>
+        /// <param name="image">Svg image.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
+        /// <returns><see cref="PictureBox"/> of the added item.</returns>
+        public virtual PictureBox AddPictureCore(SvgImage? image, object? toolTip = default)
         {
             var result = AddPictureCore(null, null, toolTip);
             result.SvgImage = image;
-            return result.UniqueId;
+            return result;
         }
 
         /// <summary>
