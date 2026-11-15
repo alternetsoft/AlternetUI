@@ -86,6 +86,8 @@ namespace Alternet.UI
         private readonly RepeatPatternPicker rulePicker = new();
         private readonly CalendarAlarmPicker alarmPicker = new();
         private readonly ToggleSwitch fullDayDurationSwitch = new(Localized.FullDayDuration);
+        private readonly PictureBox enabledTitlePicture;
+        private readonly PictureBox soundTitlePicture;
 
         private CalendarItem? calendarItem;
         private bool valuesTransparent = false;
@@ -103,6 +105,11 @@ namespace Alternet.UI
             alarmPanel.Margin = DefaultMinChildMargin;
             alarmPanel.HeaderToolBar.IsCollapsed = true;
             alarmPanel.TitleFormat = "{0}: {1}";
+
+            enabledTitlePicture = alarmPanel.HeaderToolBar.AddPictureCore(KnownSvgImages.ImgBell);
+            enabledTitlePicture.Enabled = false;
+            soundTitlePicture = alarmPanel.HeaderToolBar.AddPictureCore(KnownSvgImages.ImgHeadphones);
+            soundTitlePicture.Enabled = false;
 
             ValueToControls();
 
@@ -295,6 +302,9 @@ namespace Alternet.UI
                 Localized.CalendarItemLabelReminder,
                 alarmPicker.TimePeriodPicker.Value,
             };
+
+            enabledTitlePicture.Visible = Value.AlarmInfo.Enabled;
+            soundTitlePicture.Visible = Value.AlarmInfo.PlaySound;
         }
 
         /// <summary>
