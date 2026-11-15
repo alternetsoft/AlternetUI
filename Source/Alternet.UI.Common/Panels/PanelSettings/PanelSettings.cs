@@ -18,6 +18,12 @@ namespace Alternet.UI
     public partial class PanelSettings : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets a default value indicating whether to use <see cref="ToggleSwitch"/> control
+        /// instead of <see cref="XCheckBox"/> control for boolean settings.
+        /// </summary>
+        public static bool DefaultUseToggleSwitch = true;
+
+        /// <summary>
         /// Gets or sets default height of the separator line in the settings panel.
         /// </summary>
         public static float DefaultSeparatorLineHeight = 5;
@@ -171,6 +177,14 @@ namespace Alternet.UI
         {
             get => autoCreate;
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use <see cref="ToggleSwitch"/> control
+        /// instead of <see cref="XCheckBox"/> control for boolean settings.
+        /// This is only used when new controls are created.
+        /// If the control is already created, it will not be replaced with another one.
+        /// </summary>
+        public virtual bool? UseToggleSwitch { get; set; }
 
         /// <summary>
         /// Gets or sets a dictionary of type converters for the settings panel items.
@@ -425,7 +439,10 @@ namespace Alternet.UI
             }
             else
             {
-                checkBox = CreateOrUpdateControl<XCheckBox>(sender, item, control);
+                if (sender.UseToggleSwitch ?? DefaultUseToggleSwitch)
+                    checkBox = CreateOrUpdateControl<ToggleSwitch>(sender, item, control);
+                else
+                    checkBox = CreateOrUpdateControl<XCheckBox>(sender, item, control);
             }
 
             checkBox.Item.CheckBoxMargin = DefaultCheckImageMargin;
