@@ -989,6 +989,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control has any sibling controls.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasSiblings
+        {
+            get
+            {
+                if (Parent is null || Parent.ChildCount < 2)
+                    return false;
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Gets the sibling controls of the current control.
         /// </summary>
         /// <remarks>Sibling controls are the other children of the same parent control,
