@@ -282,6 +282,26 @@ namespace Alternet.UI
         public static Coord DefaultCheckBoxSize = 32;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ToggleSwitch"/> class with the specified text.
+        /// </summary>
+        /// <param name="text">The text of the toggle switch.</param>
+        public ToggleSwitch(string text)
+            : this()
+        {
+            Text = text;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ToggleSwitch"/> class with the specified parent control.
+        /// </summary>
+        /// <param name="parent">The parent control.</param>
+        public ToggleSwitch(AbstractControl parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ToggleSwitch"/> class.
         /// </summary>
         public ToggleSwitch()
@@ -291,6 +311,7 @@ namespace Alternet.UI
             IsCheckRightAligned = true;
             Item.CheckBoxSize = DefaultCheckBoxSize;
             Item.CheckBoxMargin = DefaultToggleSwitchMargin;
+            PreferredSizeMode = PreferredSizeMode.AvailableWidth;
         }
 
         /// <inheritdoc/>
