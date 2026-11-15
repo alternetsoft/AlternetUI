@@ -440,7 +440,7 @@ namespace Alternet.UI
                 return;
             if (ClickTrigger == triggerKind)
                 RaiseClick(e);
-            if (ShowDropDownMenuWhenClicked && DropDownTrigger == triggerKind)
+            if (ShowMenuOnClick && DropDownTrigger == triggerKind)
                 ShowDropDownMenu();
         }
 

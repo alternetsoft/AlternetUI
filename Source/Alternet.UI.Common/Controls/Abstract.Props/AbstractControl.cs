@@ -76,7 +76,7 @@ namespace Alternet.UI
         private static Font? defaultMonoFont;
         private static bool? defaultUseInternalDropDownMenu;
 
-        private bool showDropDownMenuWhenClicked = true;
+        private bool showMenuOnClick = true;
         private bool enabled = true;
         private bool shownCalled;
         private bool isMouseLeftButtonDown;
@@ -426,17 +426,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// This is obsolete. Use <see cref="ShowMenuOnClick"/> instead.
+        /// </summary>
+        [Browsable(false)]
+        [Obsolete("Use ShowMenuOnClick instead")]
+        public bool ShowDropDownMenuWhenClicked
+        {
+            get
+            {
+                return ShowMenuOnClick;
+            }
+
+            set
+            {
+                ShowMenuOnClick = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the drop down menu
         /// is shown when the control is clicked. Default is <see langword="true"/>.
         /// </summary>
         [Browsable(true)]
-        public virtual bool ShowDropDownMenuWhenClicked
+        public virtual bool ShowMenuOnClick
         {
-            get => showDropDownMenuWhenClicked;
+            get => showMenuOnClick;
 
             set
             {
-                showDropDownMenuWhenClicked = value;
+                showMenuOnClick = value;
             }
         }
 

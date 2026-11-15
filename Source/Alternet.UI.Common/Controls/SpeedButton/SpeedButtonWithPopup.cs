@@ -54,7 +54,7 @@ namespace Alternet.UI
         {
             TextVisible = true;
             ShowComboBoxImageAtRight(DefaultShowDropDownImage);
-            ShowDropDownMenuWhenClicked = false;
+            ShowMenuOnClick = false;
             ClickTrigger = ClickTriggerKind.MouseDown;
         }
 

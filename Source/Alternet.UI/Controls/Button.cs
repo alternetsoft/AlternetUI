@@ -509,7 +509,7 @@ namespace Alternet.UI
             base.OnMouseLeftButtonUp(e);
             if (!Enabled)
                 return;
-            if (ShowDropDownMenuWhenClicked)
+            if (ShowMenuOnClick)
                 ShowDropDownMenu();
         }
 
