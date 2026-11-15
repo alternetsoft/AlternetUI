@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.UI.Localization;
@@ -83,6 +84,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the currently selected time period is null,
+        /// which can be used to determine if no specific time period has been chosen by the user.
+        /// </summary>
+        [Browsable(false)]
+        public bool ValuePeriodIsNull => Value.IsNull;
+
+        /// <summary>
+        /// Gets a value indicating whether the currently selected time period is zero,
+        /// which can be used to determine if the selected time period represents a duration of zero.
+        /// </summary>
+        [Browsable(false)]
+        public bool ValuePeriodIsZero => Value.IsZero;
+
+        /// <summary>
         /// Gets the index of the "None" item in the picker, if it exists.
         /// </summary>
         /// <returns>The index of the "None" item, or <c>null</c> if it does not exist.</returns>
@@ -150,7 +165,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns a filtered collection of <see cref="TimePeriod"/> items based on the specified <paramref name="flags"/>.
+        /// Returns a filtered collection of <see cref="TimePeriod"/> items based
+        /// on the specified <paramref name="flags"/>.
         /// </summary>
         /// <param name="flags">The flags that control the filtering behavior.</param>
         /// <returns>A collection of <see cref="TimePeriod"/> items that match the filtering criteria.</returns>
