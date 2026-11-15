@@ -17,7 +17,8 @@ namespace Alternet.UI
         /// Gets the default margin applied to images.
         /// </summary>
         /// <remarks>This static field provides a standard margin value for images used in the
-        /// application. It can be adjusted to change the default spacing around images throughout the UI.</remarks>
+        /// application. It can be adjusted to change the default spacing
+        /// around images throughout the UI.</remarks>
         public static Thickness DefaultImageMargin = 0;
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace Alternet.UI
         /// size of SVG images across all buttons that rely on it, providing
         /// a consistent appearance for vector graphics in the user interface.
         /// </summary>
-        public static int DefaultSvgSize = 16;
+        public static float DefaultSvgSize = 16f;
 
         private readonly ListItemDrawable itemDrawable;
 
@@ -769,7 +770,8 @@ namespace Alternet.UI
         /// Gets or sets the format provider used to control formatting operations for this control.
         /// When this property is set, the control will use the specified format
         /// provider for any culture-specific formatting operations,
-        /// such as displaying dates, numbers, or other formatted values. If the format provider is null, the control will use
+        /// such as displaying dates, numbers, or other formatted values.
+        /// If the format provider is null, the control will use
         /// the default formatting behavior based on the current culture or invariant culture.
         /// Setting this property allows for customization of how values are formatted and displayed by the control,
         /// providing flexibility in localization and presentation of data.

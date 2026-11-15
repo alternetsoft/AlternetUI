@@ -98,8 +98,8 @@ namespace ControlsSample
 
         private void AlignRightCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
-            checkBox.AlignRight = alignRightCheckBox.IsChecked;
-            App.Log($"CheckBox.AlignRight = {checkBox.AlignRight}");
+            checkBox.IsCheckRightAligned = alignRightCheckBox.IsChecked;
+            App.Log($"CheckBox.IsCheckRightAligned = {checkBox.IsCheckRightAligned}");
         }
 
         private void ThreeStatesCheckBox_CheckedChanged(object? sender, EventArgs e)

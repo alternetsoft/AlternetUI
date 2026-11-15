@@ -49,5 +49,10 @@ namespace PropertyGridSample
                 App.LogNameValueReplace("PictureBox.VisualState", (sender as PictureBox)?.VisualState);
             }
         }
+
+        internal static void InitToggleSwitch(ToggleSwitch c)
+        {
+            c.Text = "ToggleSwitch";
+        }
     }
 }

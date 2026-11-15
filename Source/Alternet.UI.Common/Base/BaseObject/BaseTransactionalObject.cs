@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -47,11 +48,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets a value indicating whether a transaction is currently active.
         /// </summary>
+        [Browsable(false)]
         public bool IsTransactionActive => transactionLevel > 0;
 
         /// <summary>
         /// Gets the current transaction nesting level.
         /// </summary>
+        [Browsable(false)]
         public int TransactionLevel => transactionLevel;
 
         /// <summary>

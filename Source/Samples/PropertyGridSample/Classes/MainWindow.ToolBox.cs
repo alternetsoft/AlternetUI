@@ -152,6 +152,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<TimePicker>(ObjectInit.InitTimePicker);
                 ToolBoxAdd<TimePeriodPicker>(ObjectInit.InitTimePeriodPicker);
                 ToolBoxAdd<ToolBar>(ObjectInit.InitGenericToolBar);
+                ToolBoxAdd<ToggleSwitch>(ObjectInit.InitToggleSwitch);
                 ToolBoxAdd<ToolBarSet>(ObjectInit.InitGenericToolBarSet);
                 ToolBoxAdd<UserControl>(ObjectInit.InitUserControl);
                 ToolBoxAdd<UpDownAndLabel>(ObjectInit.InitUpDownAndLabel);
