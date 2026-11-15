@@ -64,7 +64,183 @@ namespace Alternet.UI
         public new virtual TimePeriod Value
         {
             get => (TimePeriod?)SelectedItem ?? new TimePeriod(0, TimePeriodUnit.Minutes);
-            set => SelectedItem = value;
+            set
+            {
+                var index = IndexOfItem(value);
+
+                if (index is not null)
+                {
+                    var item = Items[index.Value] as TimePeriod;
+                    if (item is not null)
+                    {
+                        SelectedItem = item;
+                        return;
+                    }
+                }
+
+                SelectedItem = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the index of the "None" item in the picker, if it exists.
+        /// </summary>
+        /// <returns>The index of the "None" item, or <c>null</c> if it does not exist.</returns>
+        public virtual int? IndexOfNoneItem()
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i] is TimePeriod timePeriod && timePeriod.Value is null)
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the index of the item in the picker that corresponds to the
+        /// specified <see cref="TimeSpan"/>, if it exists.
+        /// </summary>
+        /// <param name="timeSpan">The <see cref="TimeSpan"/> to find.</param>
+        /// <returns>The index of the item that corresponds to the specified <see cref="TimeSpan"/>,
+        /// or <c>null</c> if it does not exist.</returns>
+        public virtual int? IndexOfItem(TimeSpan timeSpan)
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i] is TimePeriod timePeriod && timePeriod.Value is not null
+                    && timePeriod.Value.Value == timeSpan)
+                    return i;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Defines flags that control the filtering behavior of items in the <see cref="TimePeriodPicker"/>.
+        /// </summary>
+        [Flags]
+        public enum FilterItemFlags
+        {
+            /// <summary>
+            /// Indicates that no filtering should be applied to the items in the picker.
+            /// </summary>
+            All,
+
+            /// <summary>
+            /// Indicates that items with a <c>null</c> value should be ignored when filtering the items in the picker.
+            /// </summary>
+            IgnoreNull = 1 << 0,
+
+            /// <summary>
+            /// Indicates that items with a value of zero should be ignored when filtering the items in the picker.
+            /// </summary>
+            IgnoreZero = 1 << 1,
+
+            /// <summary>
+            /// Indicates that both items with a <c>null</c> value and items with
+            /// a value of zero should be ignored when filtering the items in the picker.
+            /// </summary>
+            IgnoreNullAndZero = IgnoreNull | IgnoreZero,
+
+            /// <summary>
+            /// Indicates that items with a non-zero value should be ignored when filtering the items in the picker.
+            /// </summary>
+            IgnoreNonZero = 1 << 2,
+        }
+
+        /// <summary>
+        /// Returns a filtered collection of <see cref="TimePeriod"/> items based on the specified <paramref name="flags"/>.
+        /// </summary>
+        /// <param name="flags">The flags that control the filtering behavior.</param>
+        /// <returns>A collection of <see cref="TimePeriod"/> items that match the filtering criteria.</returns>
+        public virtual IEnumerable<TimePeriod> GetFiltered(FilterItemFlags flags)
+        {
+            foreach (var item in Items)
+            {
+                if (item is TimePeriod timePeriod)
+                {
+                    if (flags.HasFlag(FilterItemFlags.IgnoreNull) && timePeriod.IsNull)
+                        continue;
+                    if (flags.HasFlag(FilterItemFlags.IgnoreZero) && timePeriod.IsZero)
+                        continue;
+                    if (flags.HasFlag(FilterItemFlags.IgnoreNonZero) && timePeriod.HasNonZeroValue)
+                        continue;
+                    yield return timePeriod;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the text format for the items in the picker that match the specified <paramref name="flags"/>.
+        /// </summary>
+        /// <param name="format">The text format to set for the items.</param>
+        /// <param name="flags">The flags that control which items to apply the text format to.</param>
+        public virtual void SetItemTextFormat(string? format, FilterItemFlags flags = FilterItemFlags.IgnoreNullAndZero)
+        {
+            foreach (var item in GetFiltered(flags))
+            {
+                item.TextFormat = format;
+            }
+        }
+
+        /// <summary>
+        /// Sets the text label of the item in the picker that corresponds to the specified <see cref="TimeSpan"/>,
+        /// </summary>
+        /// <param name="timeSpan"></param>
+        /// <param name="text"></param>
+        public virtual bool SetItemText(TimeSpan timeSpan, string text)
+        {
+            return SetItemText(IndexOfItem(timeSpan), text);
+        }
+
+        /// <summary>
+        /// Sets the text label of the item at the specified index in the picker, if it exists.
+        /// </summary>
+        /// <param name="index">The index of the item to set the text for.</param>
+        /// <param name="text">The text to set for the item.</param>
+        public virtual bool SetItemText(int? index, string text)
+        {
+            if (index is not null)
+            {
+                var item = Items[index.Value] as TimePeriod;
+                if (item is not null)
+                {
+                    item.Text = text;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets the index of the specified <see cref="TimePeriod"/> item in the picker, if it exists.
+        /// </summary>
+        /// <param name="item">The <see cref="TimePeriod"/> item to find.</param>
+        /// <returns>The index of the specified item, or <c>null</c> if it does not exist.</returns>
+        public virtual int? IndexOfItem(TimePeriod item)
+        {
+            for (int i = 0; i < Items.Count; i++)
+            {
+                if (Items[i] is TimePeriod timePeriod && timePeriod.Equals(item))
+                    return i;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Selects the item at the specified index in the picker, if it exists.
+        /// </summary>
+        /// <param name="index">The index of the item to select.</param>
+        public virtual void SelectItemWithIndex(int? index)
+        {
+            if (index is not null)
+            {
+                var item = Items[index.Value] as TimePeriod;
+                if (item is not null)
+                    Value = item;
+            }
         }
 
         /// <summary>
@@ -73,23 +249,19 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectNoneItem()
         {
-            for (int i = 0; i < Items.Count; i++)
-            {
-                if (Items[i] is TimePeriod timePeriod && timePeriod.Value is null)
-                {
-                    Value = timePeriod;
-                    return;
-                }
-            }
+            SelectItemWithIndex(IndexOfNoneItem());
         }
 
         /// <summary>
         /// Inserts a "None" item at the beginning of the picker,
         /// allowing users to select a state where no time period is specified.
         /// </summary>
-        public virtual TimePeriod AddNoneItem()
+        public virtual TimePeriod AddNoneItem(string? labelText)
         {
-            Items.Insert(0, TimePeriod.None);
+            if (labelText is null)
+                Items.Insert(0, TimePeriod.None);
+            else
+                Items.Insert(0, new TimePeriod(null, labelText));
             return TimePeriod.None;
         }
 

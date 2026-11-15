@@ -390,13 +390,13 @@ namespace Alternet.UI.Localization
         public string DateRepeatPatternPrefixLabelEvery { get; set; } = "Every";
 
         public string DailyRepeatPatternRuleKindEveryDay { get; set; } = "Every day";
-        
+
         public string DailyRepeatPatternRuleKindEvenDays { get; set; } = "On even days";
-        
+
         public string DailyRepeatPatternRuleKindOddDays { get; set; } = "On odd days";
-        
+
         public string DailyRepeatPatternRuleKindWeekdays { get; set; } = "On weekdays";
-        
+
         public string DailyRepeatPatternRuleKindWeekends { get; set; } = "On weekends";
 
         // ========================
@@ -432,7 +432,7 @@ namespace Alternet.UI.Localization
         public string GoToYear { get; set; } = "Go to Year";
 
         public string GoToDate { get; set; } = "Go to Date";
- 
+
         public string GoToToday { get; set; } = "Go to Today";
 
         public string AllDay { get; set; } = "All Day";
@@ -502,5 +502,11 @@ namespace Alternet.UI.Localization
         public string CalendarItemLabelStatus { get; set; } = "Show as";
 
         // ========================
+
+        public string CalendarItemLabelDontRemindMe { get; set; } = "Don't remind me";
+
+        public string CalendarItemLabelAtTimeOfEvent { get; set; } = "At time of event";
+
+        public string CalendarItemAlarmTimePeriodFormat { get; set; } = "{0} before";
     }
 }
