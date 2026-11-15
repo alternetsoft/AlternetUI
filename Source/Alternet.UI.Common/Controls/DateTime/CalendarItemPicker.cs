@@ -103,7 +103,7 @@ namespace Alternet.UI
 
             detailsPanel.Margin = DefaultMinChildMargin;
             alarmPanel.Margin = DefaultMinChildMargin;
-            alarmPanel.HeaderToolBar.IsCollapsed = true;
+            alarmPanel.IsCollapsed = true;
             alarmPanel.TitleFormat = "{0}: {1}";
 
             enabledTitlePicture = alarmPanel.HeaderToolBar.AddPictureCore(KnownSvgImages.ImgBell);
@@ -132,6 +132,9 @@ namespace Alternet.UI
             locationPicker.Parent = detailsPanel;
             descriptionPicker.Parent = detailsPanel;
             fullDayDurationSwitch.Parent = detailsPanel;
+
+            rulePicker.SeriesPanel.IsCollapsed = true;
+            rulePicker.SeriesPanel.TitleFormat = "{0}: {1}";
 
             detailsPanel.Parent = this;
             alarmPanel.Parent = this;
@@ -291,6 +294,11 @@ namespace Alternet.UI
             alarmPicker.Value = Value.AlarmInfo;
 
             UpdateAlarmPanelTitle();
+
+            rulePicker.SeriesPanel.TitleFormatArgs = new object[] {
+                Localized.SeriesPattern,
+                rulePicker.GetLocalizedText(Value.Rule.Kind),
+            };
         }
 
         /// <summary>
