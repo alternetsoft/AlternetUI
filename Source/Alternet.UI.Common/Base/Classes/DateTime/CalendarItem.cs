@@ -98,7 +98,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the end time of the calendar item.
         /// </summary>
-        public TimeOnly EndTime
+        public virtual TimeOnly EndTime
         {
             get => rule.EndTime;
             set
@@ -114,7 +114,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the start time of the calendar item.
         /// </summary>
-        public TimeOnly StartTime
+        public virtual TimeOnly StartTime
         {
             get => rule.StartTime;
             set
@@ -130,7 +130,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the duration of the calendar item.
         /// </summary>
-        public TimeSpan Duration
+        public virtual TimeSpan Duration
         {
             get => rule.Duration;
 
@@ -148,7 +148,7 @@ namespace Alternet.UI
         /// Gets or sets the repeat pattern rule associated with this calendar item.
         /// When set, the rule is assigned to the existing <see cref="RepeatPatternRule"/> instance.
         /// </summary>
-        public RepeatPatternRule Rule
+        public virtual RepeatPatternRule Rule
         {
             get => rule;
 
@@ -231,6 +231,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a new instance of <see cref="CalendarItemInstance"/> for the specified start date.
+        /// </summary>
+        /// <param name="startDate">The start date for the instance.</param>
+        /// <returns>A new instance of <see cref="CalendarItemInstance"/>.</returns>
+        public virtual CalendarItemInstance CreateInstance(DateOnly startDate)
+        {
+            return new CalendarItemInstance(this, startDate);
+        }
+
+        /// <summary>
         /// Gets the instances of the calendar item based on its repeat pattern
         /// rule within the specified date range.
         /// </summary>
@@ -295,7 +305,7 @@ namespace Alternet.UI
 
             foreach (var date in dates.Dates)
             {
-                yield return new CalendarItemInstance(this, date);
+                yield return CreateInstance(date);
             }
         }
 
