@@ -6,7 +6,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a generic check box control. This control is implemented inside the library and can be used in the
+    /// Represents a generic check box control. This control is implemented
+    /// inside the library and can be used in the
     /// same way as a regular native check box control. <see cref="XCheckBox"/> is used when you need
     /// to have the same code for all platforms. <see cref="XCheckBox"/> provides many additional features,
     /// which are not available in the native check box control.
@@ -19,12 +20,14 @@ namespace Alternet.UI
     public partial class XCheckBox : GenericItemControl
     {
         /// <summary>
-        /// Gets or sets a default value of the check box margin. This margin is used when check box mark is painted.
+        /// Gets or sets a default value of the check box margin.
+        /// This margin is used when check box mark is painted.
         /// </summary>
-        public static Thickness DefaultCheckBoxMargin = (3, 0, 0, 0);
+        public static Thickness DefaultCheckBoxMargin = (0, 0, 0, 0);
 
         /// <summary>
-        /// Gets or sets the default foreground color used when a control is hovered, supporting both light and dark
+        /// Gets or sets the default foreground color used when a control is hovered,
+        /// supporting both light and dark
         /// themes.
         /// </summary>
         /// <remarks>Assign this field to customize the appearance of controls when hovered. If not set,
@@ -83,8 +86,10 @@ namespace Alternet.UI
         /// Gets or sets the foreground color to use when the control is in the hovered state.
         /// <see cref="UseHoveredForeColor"/> must be set to true for this property to take effect.
         /// </summary>
-        /// <remarks>If this property is null, the control uses <see cref="DefaultHoveredForeColor"/> when hovered.
-        /// This property allows customization of the text or foreground appearance specifically for the hovered visual
+        /// <remarks>If this property is null, the control
+        /// uses <see cref="DefaultHoveredForeColor"/> when hovered.
+        /// This property allows customization of the text or foreground appearance
+        /// specifically for the hovered visual
         /// state.</remarks>
         public virtual ThemedColor? HoveredForeColor
         {
@@ -127,7 +132,7 @@ namespace Alternet.UI
         /// Gets or sets whether to align check box on the right side of the text.
         /// </summary>
         [DefaultValue(false)]
-        public virtual bool AlignRight
+        public virtual bool IsCheckRightAligned
         {
             get
             {
@@ -235,6 +240,71 @@ namespace Alternet.UI
             }
             else
                 Item.ForegroundColor = null;
+        }
+    }
+
+    /// <summary>
+    /// Represents a toggle switch control, which is a specialized version of <see cref="XCheckBox"/>.
+    /// </summary>
+    [ControlCategory(KnownControlCategory.Common)]
+    public partial class ToggleSwitch : XCheckBox
+    {
+        /// <summary>
+        /// Gets or sets the default color used for a toggle switch in the "on" state,
+        /// supporting both light and dark themes.
+        /// </summary>
+        public static ThemedColor? DefaultOnSwitchColor;
+
+        /// <summary>
+        /// Gets or sets the default color used for a toggle switch in the "off" state,
+        /// supporting both light and dark themes.
+        /// </summary>
+        public static ThemedColor? DefaultOffSwitchColor;
+
+        /// <summary>
+        /// Gets or sets the default image used for a toggle switch in the "on" state.
+        /// </summary>
+        public static SvgImage? DefaultOnSwitchImage;
+
+        /// <summary>
+        /// Gets or sets the default image used for a toggle switch in the "off" state.
+        /// </summary>
+        public static SvgImage? DefaultOffSwitchImage;
+
+        /// <summary>
+        /// Gets or sets the default margin for the check box in a toggle switch.
+        /// </summary>
+        public static Thickness DefaultToggleSwitchMargin = (4, 0, 0, 0);
+
+        /// <summary>
+        /// Gets or sets the default size of the check box in a toggle switch.
+        /// </summary>
+        public static Coord DefaultCheckBoxSize = 32;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ToggleSwitch"/> class.
+        /// </summary>
+        public ToggleSwitch()
+        {
+            CheckImageChecked = DefaultOnSwitchImage ?? KnownSvgImages.ImgToggleOn;
+            CheckImageUnchecked = DefaultOffSwitchImage ?? KnownSvgImages.ImgToggleOff;
+            IsCheckRightAligned = true;
+            Item.CheckBoxSize = DefaultCheckBoxSize;
+            Item.CheckBoxMargin = DefaultToggleSwitchMargin;
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override bool ThreeState
+        {
+            get
+            {
+                return false;
+            }
+
+            set
+            {
+            }
         }
     }
 }
