@@ -361,11 +361,12 @@ namespace Alternet.UI
                 DoInsideTransaction(() =>
                 {
                     Kind = ScheduleRepeatPattern.Once;
-                    var now = DateUtils.NowRoundUpToFiveMinutes;
-                    ValidFromDate = now.ToDateOnly();
-                    StartTime = now.ToTimeOnly();
-                    Duration = TimeSpan.FromDays(1);
+                    var today = DateUtils.Today;
+                    ValidFromDate = today;
                     ValidToDate = ValidFromDate;
+                    Once.StartDate = today;
+                    StartTime = DateUtils.Midnight;
+                    Duration = TimeSpan.FromDays(1);
                     OccurrenceCount = 1;
                     EndCondition = RepeatPatternEndCondition.OnDate;
                     Daily.Assign(null);

@@ -20,8 +20,8 @@ namespace Alternet.UI
         public static void LoadSampleData(SchedulerDocument server)
         {
             var createNewDemo = server.CreateItem();
-            createNewDemo.Rule.ValidFromDate = DateUtils.Today;
-            createNewDemo.Rule.ValidToDate = DateUtils.Today.AddDays(2);
+            createNewDemo.Rule.Once.StartDate = DateUtils.Today;
+            createNewDemo.Rule.Duration = TimeSpan.FromDays(2);
             createNewDemo.Text = "Create New Demo";
             createNewDemo.Location = "work";
             createNewDemo.Category = KnownCalendarItemMarkers.CategoryImportant;
@@ -35,9 +35,8 @@ namespace Alternet.UI
             server.Add(createNewDemo);
 
             var gototheBeach = server.CreateItem();
-            gototheBeach.Rule.ValidFromDate = DateUtils.Today;
+            gototheBeach.Rule.Once.StartDate = DateUtils.Today;
             gototheBeach.Rule.StartTime = new (18, 0);
-            gototheBeach.Rule.ValidToDate = DateUtils.Today;
             gototheBeach.Rule.Duration = TimeSpan.FromHours(3);
             gototheBeach.Text = "Go to the Beach";
             gototheBeach.Description = "Try to surf-riding.";
@@ -49,9 +48,8 @@ namespace Alternet.UI
             server.Add(gototheBeach);
 
             var calltofather = server.CreateItem();
-            calltofather.Rule.ValidFromDate = DateUtils.Today;
+            calltofather.Rule.Once.StartDate = DateUtils.Today;
             calltofather.Rule.StartTime = new (20, 0);
-            calltofather.Rule.ValidToDate = DateUtils.Today;
             calltofather.Rule.Duration = TimeSpan.FromMinutes(30);
             calltofather.Text = "Call to father";
             calltofather.Category = KnownCalendarItemMarkers.CategoryPhoneCall;
@@ -61,10 +59,9 @@ namespace Alternet.UI
             server.Add(calltofather);
 
             var makeNewInstallation = server.CreateItem();
-            makeNewInstallation.Rule.ValidFromDate = DateUtils.Tomorrow;
-
-            makeNewInstallation.Rule.ValidToDate = DateUtils.Today.AddDays(4);
-            makeNewInstallation.Text = "Make New Installation";
+            makeNewInstallation.Rule.Once.StartDate = DateUtils.Tomorrow;
+            makeNewInstallation.Rule.Duration = TimeSpan.FromDays(4);
+            makeNewInstallation.Text = "Make Installation";
             makeNewInstallation.Description = "The new Scheduler installation.";
             makeNewInstallation.Location = "work";
             makeNewInstallation.Category = KnownCalendarItemMarkers.CategoryImportant;
@@ -74,8 +71,7 @@ namespace Alternet.UI
             server.Add(makeNewInstallation);
 
             var doctorsAppointment = server.CreateItem();
-            doctorsAppointment.Rule.ValidFromDate = DateUtils.Tomorrow;
-            doctorsAppointment.Rule.ValidToDate = DateUtils.Tomorrow;
+            doctorsAppointment.Rule.Once.StartDate = DateUtils.Tomorrow;
             doctorsAppointment.Rule.StartTime = new(17, 0);
             doctorsAppointment.Rule.Duration = TimeSpan.FromMinutes(30);
             doctorsAppointment.Text = "Doctor's Appointment";
@@ -86,8 +82,7 @@ namespace Alternet.UI
             server.Add(doctorsAppointment);
 
             var meetmyfriends = server.CreateItem();
-            meetmyfriends.Rule.ValidFromDate = DateUtils.Tomorrow;
-            meetmyfriends.Rule.ValidToDate = DateUtils.Tomorrow;
+            meetmyfriends.Rule.Once.StartDate = DateUtils.Tomorrow;
             meetmyfriends.Rule.StartTime = new(18, 0);
             meetmyfriends.Rule.Duration = TimeSpan.FromHours(3);
             meetmyfriends.Text = "Meet my friends";
@@ -98,8 +93,7 @@ namespace Alternet.UI
             server.Add(meetmyfriends);
 
             var mydaughtertheatricalperformance = server.CreateItem();
-            mydaughtertheatricalperformance.Rule.ValidFromDate = DateUtils.Today.AddDays(2);
-            mydaughtertheatricalperformance.Rule.ValidToDate = DateUtils.Today.AddDays(2);
+            mydaughtertheatricalperformance.Rule.Once.StartDate = DateUtils.Today.AddDays(2);
             mydaughtertheatricalperformance.Rule.StartTime = new(19, 0);
             mydaughtertheatricalperformance.Rule.Duration = TimeSpan.FromHours(1.5);
             mydaughtertheatricalperformance.Text = "My daughter theatrical performance";
@@ -110,8 +104,7 @@ namespace Alternet.UI
             server.Add(mydaughtertheatricalperformance);
 
             var mybossparty = server.CreateItem();
-            mybossparty.Rule.ValidFromDate = DateUtils.Today.AddDays(4);
-            mybossparty.Rule.ValidToDate = DateUtils.Today.AddDays(4);
+            mybossparty.Rule.Once.StartDate = DateUtils.Today.AddDays(4);
             mybossparty.Rule.StartTime = new(18, 0);
             mybossparty.Rule.Duration = TimeSpan.FromHours(4);
             mybossparty.Text = "My boss party";

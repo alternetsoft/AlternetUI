@@ -36,7 +36,7 @@ namespace Alternet.UI
         public static readonly DateTime MinimumDateMidnight = DateTime.MinValue.Date.AddHours(0);
 
         /// <summary>
-        /// Represents 12:00 AM (midnight) on the minimum date as a <see cref="TimeOnly"/> value.
+        /// Represents 12:00 AM (midnight) as a <see cref="TimeOnly"/> value.
         /// </summary>
         public static readonly TimeOnly Midnight = new(0, 0, 0);
 
