@@ -241,6 +241,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified action inside block with suspended <see cref="PropertyChanged"/> event.
+        /// This allows you to set multiple properties without triggering the <see cref="PropertyChanged"/>
+        /// event for each property change.
+        /// </summary>
+        /// <param name="action">The action that sets the field values.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected void WithoutPropertyChanged(Action action)
+        {
+            DoInsideSuspendedPropertyChanged(action);
+        }
+
+        /// <summary>
+        /// Calls the specified function inside block with suspended <see cref="PropertyChanged"/> event.
+        /// This allows you to set multiple properties without triggering the <see cref="PropertyChanged"/>
+        /// event for each property change.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="action">The action that sets the field values.</param>
+        /// <returns>The result of the action.</returns>
+        protected TResult WithSuspendedEvents<TResult>(Func<TResult> action)
+        {
+            return DoInsideSuspendedPropertyChanged<TResult>(action);
+        }
+
+        /// <summary>
         /// Sets field value and raises property changed events and methods.
         /// This is the same as <see cref="SetProperty{T}(ref T, T, string)"/> but parameters are not nullable.
         /// </summary>
