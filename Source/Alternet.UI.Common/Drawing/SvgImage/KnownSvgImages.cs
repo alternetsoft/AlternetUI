@@ -152,6 +152,9 @@ namespace Alternet.UI
         private static SvgImage? imgToggleOn;
         private static SvgImage? imgToggleIntermediate;
         private static SvgImage? imgToggleOff;
+        private static SvgImage? imgHeadphones;
+        private static SvgImage? imgPaperclip;
+        private static SvgImage? imgRepeat;
 
         static KnownSvgImages()
         {
@@ -207,6 +210,54 @@ namespace Alternet.UI
             set
             {
                 imgToggleOff = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Headphones" svg image which includes a headphones icon.
+        /// </summary>
+        public static SvgImage ImgHeadphones
+        {
+            get
+            {
+                return imgHeadphones ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageHeadphones);
+            }
+
+            set
+            {
+                imgHeadphones = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Paperclip" svg image which includes a paperclip icon.
+        /// </summary>
+        public static SvgImage ImgPaperclip
+        {
+            get
+            {
+                return imgPaperclip ??= CreateMonoSvgImage(KnownSvgUrls.UrlImagePaperclip);
+            }
+
+            set
+            {
+                imgPaperclip = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Repeat" svg image which includes a repeat icon.
+        /// </summary>
+        public static SvgImage ImgRepeat
+        {
+            get
+            {
+                return imgRepeat ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageRepeat);
+            }
+
+            set
+            {
+                imgRepeat = value;
             }
         }
 

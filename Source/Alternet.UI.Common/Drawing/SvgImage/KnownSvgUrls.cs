@@ -28,6 +28,21 @@ namespace Alternet.UI
             "embres:Alternet.UI.Common.Resources.Svg.{0}.svg?assembly=Alternet.UI.Common";
 
         /// <summary>
+        /// Gets or sets url used to load "Headphones" svg image.
+        /// </summary>
+        public static string UrlImageHeadphones { get; set; } = GetImageUrl("alternet-headphones");
+
+        /// <summary>
+        /// Gets or sets url used to load "Paperclip" svg image.
+        /// </summary>
+        public static string UrlImagePaperclip { get; set; } = GetImageUrl("alternet-paperclip");
+
+        /// <summary>
+        /// Gets or sets url used to load "Repeat" svg image.
+        /// </summary>
+        public static string UrlImageRepeat { get; set; } = GetImageUrl("alternet-repeat");
+
+        /// <summary>
         /// Gets or sets url used to load "Toggle Off" svg image.
         /// </summary>
         public static string UrlImageToggleOff { get; set; } = GetImageUrl("alternet-toggle-off");
