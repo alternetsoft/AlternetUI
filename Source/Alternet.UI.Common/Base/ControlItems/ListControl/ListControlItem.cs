@@ -328,6 +328,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the size of the checkbox. 
+        /// If value is null, default checkbox size is used.
+        /// If value is specified, it overrides default checkbox size.
+        /// </summary>
+        public virtual Coord? CheckBoxSize
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets vertical alignment of the image inside the item.
         /// </summary>
         public virtual VerticalAlignment? ImageVerticalAlignment
@@ -1659,7 +1670,7 @@ namespace Alternet.UI
                 maxImageWidthD += imageMargin.Horizontal;
             }
 
-            var checkBoxSize = GetCheckBoxSize(container).Height;
+            var checkBoxSize = GetCheckBoxSize(container, null, null, item).Height;
 
             maxImageHeightD = Math.Max(checkBoxSize, maxImageHeightD);
             maxImageHeightD += GetAdditionalImageMargin() + GetAdditionalTextMargin().Vertical;
@@ -2054,16 +2065,20 @@ namespace Alternet.UI
         /// Gets the size of the checkbox.
         /// </summary>
         /// <param name="container">The container of the item.</param>
+        /// <param name="item">The item for which to get the checkbox size.</param>
         /// <param name="checkState">The state of the checkbox.</param>
         /// <param name="partState">The visual state of the checkbox.</param>
         /// <returns>The size of the checkbox.</returns>
         public static SizeD GetCheckBoxSize(
             IListControlItemContainer? container,
             CheckState? checkState = null,
-            VisualControlState? partState = null)
+            VisualControlState? partState = null,
+            ListControlItem? item = null)
         {
-            if (CheckBoxSizeOverride is not null)
-                return CheckBoxSizeOverride.Value;
+            var sizeOverride = CheckBoxSizeOverride ?? item?.CheckBoxSize;
+
+            if (sizeOverride is not null)
+                return sizeOverride.Value;
 
             var result = DrawingUtils.GetCheckBoxSize(
                             container?.Control ?? App.SafeWindow ?? ControlUtils.Empty,
@@ -3486,7 +3501,7 @@ namespace Alternet.UI
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetCheckState(container);
 
-            result.CheckSize = GetCheckBoxSize(container, result.CheckState, result.PartState);
+            result.CheckSize = GetCheckBoxSize(container, result.CheckState, result.PartState, this);
             result.CheckSize += CheckBoxMargin.Size;
             result.CheckImageSize = result.CheckSize;
 

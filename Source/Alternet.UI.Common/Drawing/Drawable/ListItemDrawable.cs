@@ -59,12 +59,22 @@ namespace Alternet.Drawing
             if (Container?.Control is null)
                 return SizeD.Empty;
 
-            var result = ListControlItem.DefaultMeasureItemSize(Container, Container.Control.MeasureCanvas, 0);
+            var result = ListControlItem.DefaultMeasureItemSize(Container, Container.Control.MeasureCanvas, itemIndex: 0);
             result.Size += Item.ForegroundMargin.Size;
 
             var checkBoxInfo = Item.GetCheckBoxInfo(Container, (PointD.Empty, result));
 
-            result.Width += checkBoxInfo.IsCheckBoxVisible ? checkBoxInfo.TextRect.X : 0;
+            if (checkBoxInfo.IsCheckBoxVisible)
+            {
+                if (Item.IsCheckRightAligned)
+                {
+                    result.Width += checkBoxInfo.CheckRect.Right - checkBoxInfo.TextRect.Right;
+                }
+                else
+                {
+                    result.Width += checkBoxInfo.TextRect.X;
+                }
+            }
 
             return result;
         }

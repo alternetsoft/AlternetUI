@@ -747,7 +747,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual Coord GetLevelMargin()
         {
-            var checkSize = ListControlItem.GetCheckBoxSize(ListBox, null, null).Width;
+            var checkSize = ListControlItem.GetCheckBoxSize(ListBox).Width;
             return checkSize;
         }
 
