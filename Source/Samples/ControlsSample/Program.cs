@@ -85,11 +85,6 @@ namespace ControlsSample
             var testBadFont = false;
 
             var isDark = CommandLineArgs.ParseAndGetIsDarkOrNull();
-            var useLegacyPaint = CommandLineArgs.ParseAndGetBoolOrNull("-UseLegacyPaint");
-
-            if (useLegacyPaint.HasValue)
-            {
-            }
 
             if (isDark.HasValue)
             {

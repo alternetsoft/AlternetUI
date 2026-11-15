@@ -85,6 +85,7 @@ namespace Alternet.UI
 
         private readonly RepeatPatternPicker rulePicker = new();
         private readonly CalendarAlarmPicker alarmPicker = new();
+        private readonly ToggleSwitch fullDayDurationSwitch = new(Localized.FullDayDuration);
 
         private CalendarItem? calendarItem;
         private bool valuesTransparent = false;
@@ -121,13 +122,15 @@ namespace Alternet.UI
 
             rulePicker.Padding = 0;
 
+            locationPicker.Parent = detailsPanel;
+            descriptionPicker.Parent = detailsPanel;
+            fullDayDurationSwitch.Parent = detailsPanel;
+
             detailsPanel.Parent = this;
             alarmPanel.Parent = this;
             rulePicker.Parent = this;
 
-            locationPicker.Parent = detailsPanel;
-            descriptionPicker.Parent = detailsPanel;
-
+            fullDayDurationSwitch.CheckedChanged += OnFullDayDurationSwitchCheckedChanged;
             titlePicker.MainControl.ValueChanged += OnTitlePickerValueChanged;
             locationPicker.MainControl.ValueChanged += OnLocationPickerValueChanged;
             descriptionPicker.MainControl.ValueChanged += OnDescriptionPickerValueChanged;
@@ -271,6 +274,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ValueToControls()
         {
+            fullDayDurationSwitch.IsChecked = Value.IsAllDay;
             titlePicker.Text = Value.Text ?? string.Empty;
             descriptionPicker.Text = Value.Description ?? string.Empty;
             locationPicker.Text = Value.Location?.ToString() ?? string.Empty;
@@ -347,6 +351,16 @@ namespace Alternet.UI
         protected virtual void OnDescriptionPickerValueChanged(object? s, EventArgs e)
         {
             Value.Description = descriptionPicker.Text;
+        }
+
+        /// <summary>
+        /// Called when the "Full Day Duration" switch is checked or unchecked.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnFullDayDurationSwitchCheckedChanged(object? sender, EventArgs e)
+        {
+            Value.IsAllDay = fullDayDurationSwitch.IsChecked;
         }
 
         /// <summary>
