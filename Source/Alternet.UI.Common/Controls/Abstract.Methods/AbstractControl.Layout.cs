@@ -172,7 +172,7 @@ namespace Alternet.UI
                 {
                     if (availableWidth)
                     {
-                        width = context.AvailableSize.Width;
+                        width = context.AvailableSize.Width - Margin.Horizontal;
 
                         if (!MathUtils.SizeSpecified(width))
                         {
@@ -189,7 +189,7 @@ namespace Alternet.UI
                 {
                     if (availableHeight)
                     {
-                        height = context.AvailableSize.Height;
+                        height = context.AvailableSize.Height - Margin.Vertical;
 
                         if (!MathUtils.SizeSpecified(height))
                         {
