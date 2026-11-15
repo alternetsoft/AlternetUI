@@ -34,22 +34,22 @@ namespace Alternet.UI
         private readonly TimePeriodPicker timePeriodPicker = new();
         private readonly PictureBox periodImage = new();
         private readonly PictureBox soundImage = new();
-        private readonly XCheckBox playSoundCheckBox = new(CommonStrings.Default.PlaySound);
+        private readonly ToggleSwitch playSoundCheckBox = new(CommonStrings.Default.PlaySound);
 
         private bool valueChanging;
         private bool valuesTransparent = false;
 
-        private readonly TransparentPanel firstRowPanel = new()
+        private readonly TransparentPanel periodRowPanel = new()
         {
             Layout = LayoutStyle.Horizontal,
         };
 
-        private readonly TransparentPanel secondRowPanel = new()
+        private readonly TransparentPanel playCheckBoxRowPanel = new()
         {
             Layout = LayoutStyle.Horizontal,
         };
 
-        private readonly TransparentPanel thirdRowPanel = new()
+        private readonly TransparentPanel soundRowPanel = new()
         {
             Layout = LayoutStyle.Horizontal,
         };
@@ -75,8 +75,8 @@ namespace Alternet.UI
             soundImage.SvgImage = KnownSvgImages.ImgBell;
             soundImage.MarginRight = DefaultControlDistance;
 
-            periodImage.Parent = firstRowPanel;
-            soundImage.Parent = thirdRowPanel;
+            periodImage.Parent = periodRowPanel;
+            soundImage.Parent = soundRowPanel;
 
             timePeriodPicker.AddNoneItem(Localized.CalendarItemLabelDontRemindMe);
             timePeriodPicker.SetItemText(TimeSpan.Zero, Localized.CalendarItemLabelAtTimeOfEvent);
@@ -84,8 +84,8 @@ namespace Alternet.UI
             timePeriodPicker.SetItemTextFormat(Localized.CalendarItemAlarmTimePeriodFormat);
 
             timePeriodPicker.HorizontalAlignment = HorizontalAlignment.Fill;
-            timePeriodPicker.Parent = firstRowPanel;
-            soundFilePicker.Parent = thirdRowPanel;
+            timePeriodPicker.Parent = periodRowPanel;
+            soundFilePicker.Parent = soundRowPanel;
 
             soundFilePicker.MainControl.EmptyTextHint = CommonStrings.Default.DefaultSound;
             soundFilePicker.MainControl.IsEditable = false;
@@ -104,19 +104,20 @@ namespace Alternet.UI
 
             soundFilePicker.OpenFileProps.InitialDirectory = initialFolder;
 
-            firstRowPanel.Parent = this;
-            firstRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
-            firstRowPanel.MarginBottom = DefaultControlDistance;
+            periodRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
+            periodRowPanel.MarginBottom = DefaultControlDistance;
 
-            playSoundCheckBox.Parent = secondRowPanel;
+            playSoundCheckBox.Parent = playCheckBoxRowPanel;
             playSoundCheckBox.PaddingLeft = 0;
 
-            secondRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
-            secondRowPanel.Parent = this;
+            playCheckBoxRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
 
-            thirdRowPanel.MarginTop = DefaultControlDistance;
-            thirdRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
-            thirdRowPanel.Parent = this;
+            soundRowPanel.MarginTop = DefaultControlDistance;
+            soundRowPanel.HorizontalAlignment = HorizontalAlignment.Fill;
+
+            periodRowPanel.Parent = this;
+            soundRowPanel.Parent = this;
+            playCheckBoxRowPanel.Parent = this;
 
             ValueToControls();
 
@@ -213,14 +214,14 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public TransparentPanel FirstRowPanel => firstRowPanel;
+        public TransparentPanel PeriodRowPanel => periodRowPanel;
 
         /// <summary>
         /// Gets the second row panel of the <see cref="CalendarAlarmPicker"/>, which contains the play sound checkbox.
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public TransparentPanel SecondRowPanel => secondRowPanel;
+        public TransparentPanel PlayCheckBoxRowPanel => playCheckBoxRowPanel;
 
         /// <summary>
         /// Gets the third row panel of the <see cref="CalendarAlarmPicker"/>,
@@ -228,7 +229,7 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public TransparentPanel ThirdRowPanel => thirdRowPanel;
+        public TransparentPanel SoundRowPanel => soundRowPanel;
 
         /// <summary>
         /// Gets or sets the <see cref="CalendarAlarmInfo"/> data of the <see cref="CalendarAlarmPicker"/> control.
