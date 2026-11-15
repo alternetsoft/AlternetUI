@@ -64,7 +64,7 @@ namespace Alternet.UI
         public static float DefaultMinWidth = 300;
 
         private readonly GenericRoundBorderWithTitle detailsPanel = new(Localized.CalendarItemLabelDetails);
-        private readonly GenericRoundBorderWithTitle alarmPanel = new(Localized.CalendarItemLabelReminder);
+        private readonly GenericRoundBorderWithTitle alarmPanel = new();
 
         /// <summary>
         /// Gets the <see cref="TextPicker"/> that is used to edit the title of the <see cref="CalendarItem"/> being edited.
@@ -100,9 +100,12 @@ namespace Alternet.UI
 
             detailsPanel.Margin = DefaultMinChildMargin;
             alarmPanel.Margin = DefaultMinChildMargin;
+            alarmPanel.HeaderToolBar.IsCollapsed = true;
+            alarmPanel.TitleFormat = "{0}: {1}";
 
             ValueToControls();
 
+            alarmPicker.Visible = false;
             alarmPicker.Parent = alarmPanel;
 
             titlePicker.MainControl.EmptyTextHint = Localized.AddTitle + "...";
@@ -275,6 +278,19 @@ namespace Alternet.UI
             categoryPicker.MainControl.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
             rulePicker.Value = Value.Rule;
             alarmPicker.Value = Value.AlarmInfo;
+
+            UpdateAlarmPanelTitle();
+        }
+
+        /// <summary>
+        /// Updates the title of the alarm panel based on the current alarm settings.
+        /// </summary>
+        public virtual void UpdateAlarmPanelTitle()
+        {
+            alarmPanel.TitleFormatArgs = new object[] {
+                Localized.CalendarItemLabelReminder,
+                alarmPicker.TimePeriodPicker.Value,
+            };
         }
 
         /// <summary>
@@ -285,6 +301,9 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="PropertyChangedEventArgs"/> that contains the event data.</param>
         protected virtual void OnCalendarItemChanged(object? sender, PropertyChangedEventArgs e)
         {
+            if (DisposingOrDisposed)
+                return;
+            ValueToControls();
             ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
