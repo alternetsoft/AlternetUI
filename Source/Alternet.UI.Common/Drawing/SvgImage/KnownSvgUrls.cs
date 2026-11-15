@@ -38,6 +38,11 @@ namespace Alternet.UI
         public static string UrlImageToggleOn { get; set; } = GetImageUrl("alternet-toggle-on");
 
         /// <summary>
+        /// Gets or sets url used to load "Toggle Intermediate" svg image.
+        /// </summary>
+        public static string UrlImageToggleIntermediate { get; set; } = GetImageUrl("alternet-toggle-null");
+
+        /// <summary>
         /// Gets or sets url used to load "Range Distance" svg image.
         /// </summary>
         public static string UrlImageRangeDistance { get; set; } = GetImageUrl("alternet-range-dist");

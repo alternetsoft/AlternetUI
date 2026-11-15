@@ -150,6 +150,7 @@ namespace Alternet.UI
         private static SvgImage? imgRangeEnd;
         private static SvgImage? imgRangeStart;
         private static SvgImage? imgToggleOn;
+        private static SvgImage? imgToggleIntermediate;
         private static SvgImage? imgToggleOff;
 
         static KnownSvgImages()
@@ -175,6 +176,22 @@ namespace Alternet.UI
             set
             {
                 imgToggleOn = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Toggle Intermediate" svg image which includes
+        /// a toggle switch icon in the "intermediate" position.
+        /// </summary>
+        public static SvgImage ImgToggleIntermediate
+        {
+            get
+            {
+                return imgToggleIntermediate ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageToggleIntermediate);
+            }
+            set
+            {
+                imgToggleIntermediate = value;
             }
         }
 
