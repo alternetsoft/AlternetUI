@@ -46,6 +46,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the ListControlColumn class with the specified column title
+        /// and suggested width.
+        /// </summary>
+        /// <param name="title">The display title for the column. Cannot be null.</param>
+        /// <param name="suggestedWidth">The suggested width for the column.</param>
+        public ListControlColumn(string? title, float suggestedWidth)
+            : this()
+        {
+            this.title = title;
+            this.suggestedWidth = suggestedWidth;
+        }
+
+        /// <summary>
         /// Gets or sets the unique identifier for the column in the header control.
         /// </summary>
         public virtual ObjectUniqueId? ColumnKey { get; set; }
