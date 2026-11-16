@@ -251,7 +251,7 @@ namespace Alternet.UI
         /// <param name="register">True to register the logger; false to unregister.</param>
         public virtual void RegisterLogger(ILogWriter? writer = null, bool register = true)
         {
-            writer = writer ?? LogWriter.Debug;
+            writer ??= LogWriter.Debug;
 
             if (register)
             {

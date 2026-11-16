@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Threading;
 
 namespace Alternet.UI
 {
@@ -17,7 +18,7 @@ namespace Alternet.UI
     public class ListSource<TItem> : DisposableObject, IListSource<TItem>
         where TItem : class, new()
     {
-        private readonly object syncRoot = new();
+        private readonly Lock syncRoot = new();
         private BaseCollection<TItem> collection;
         private IListSourceListener<TItem>[] listeners = [];
 
