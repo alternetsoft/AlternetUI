@@ -195,7 +195,7 @@ namespace Alternet.UI
         {
             if (destinationType == null)
             {
-                throw new ArgumentNullException("destinationType");
+                throw new ArgumentNullException(nameof(destinationType));
             }
 
             if (value != null && value is Coord v)

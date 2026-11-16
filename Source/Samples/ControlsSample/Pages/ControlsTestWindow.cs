@@ -6,7 +6,7 @@ namespace ControlsSample
 {
     public partial class ControlsTestWindow : Window
     {
-        public static BaseCollection<PageInfo> Pages = new BaseCollection<PageInfo>();
+        public static BaseCollection<PageInfo> Pages = new ();
 
         public static bool TestEdgeBackend = true;
 

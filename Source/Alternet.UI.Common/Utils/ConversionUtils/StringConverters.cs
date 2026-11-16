@@ -358,7 +358,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void RegisterDefaultTypeConverters()
         {
-            RegisterTypeConverter(typeof(Coord), typeof(CoordTypeConverter));
+            RegisterTypeConverter<float, CoordTypeConverter>();
         }
 
         private class TypeConverterItem

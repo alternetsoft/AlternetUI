@@ -418,7 +418,7 @@ namespace Alternet.UI
                     if (z is not null)
                     {
                         ReadOnlySpan<char> txt = (z.Length > 40) ? z.AsSpan(0, 40) : z;
-                        s += $", Items[0]: {txt.ToString()}";
+                        s += $", Items[0]: {txt}";
                     }
                 }
             }

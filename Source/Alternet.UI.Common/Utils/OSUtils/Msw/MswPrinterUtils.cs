@@ -37,14 +37,12 @@ internal static class MswPrinterUtils
 
     public static List<string> GetPrinterNames()
     {
-        List<string> printers = new List<string>();
+        List<string> printers = new ();
         uint flags = PRINTER_ENUM_LOCAL | PRINTER_ENUM_CONNECTIONS;
         uint level = 4;
-        uint cbNeeded = 0;
-        uint cReturned = 0;
 
         // Step 1: Query size needed
-        EnumPrinters(flags, null!, level, IntPtr.Zero, 0, out cbNeeded, out cReturned);
+        EnumPrinters(flags, null!, level, IntPtr.Zero, 0, out var cbNeeded, out _);
 
         if (cbNeeded == 0)
             return printers; // No printers
@@ -54,7 +52,7 @@ internal static class MswPrinterUtils
 
         try
         {
-            if (EnumPrinters(flags, null!, level, pPrinters, cbNeeded, out cbNeeded, out cReturned))
+            if (EnumPrinters(flags, null!, level, pPrinters, cbNeeded, out cbNeeded, out var cReturned))
             {
                 int structSize = Marshal.SizeOf<PRINTER_INFO_4>();
 

@@ -170,7 +170,7 @@ namespace Alternet.UI
                         case "QUOTES": keyFound = Key.Quote; break;
                         case "BACKSLASH": keyFound = Key.Backslash; break;
                         case "PLAY": keyFound = Key.MediaPlayPause; break;
-                        default: keyFound = (Key)Enum.Parse(typeof(Key), keyToken, true); break;
+                        default: keyFound = Enum.Parse<Key>(keyToken, true); break;
                     }
 
                     if ((int)keyFound != -1)

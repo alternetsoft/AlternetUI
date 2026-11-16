@@ -34,8 +34,7 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         public static void TestCompareKnownColorEnums()
         {
-            var systemValues = Enum.GetValues(typeof(System.Drawing.KnownColor));
-            var alternetValues = Enum.GetValues(typeof(Alternet.Drawing.KnownColor));
+            var systemValues = Enum.GetValues<System.Drawing.KnownColor>();
 
             int mismatches = 0;
 

@@ -64,7 +64,7 @@ namespace Alternet.UI
         private bool canNavigate = true;
         private int scriptRunCounter = 0;
         private ActionsListBox? actionsControl;
-        private BaseDictionary<string, string> urlMapping = new();
+        private readonly BaseDictionary<string, string> urlMapping = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.

@@ -10,7 +10,7 @@ namespace Alternet.UI
     internal class UISynchronizationContext : System.Threading.SynchronizationContext
     {
         [ThreadStatic]
-        private static bool doNotAutoInstall = false;
+        private static bool doNotAutoInstall;
 
         [ThreadStatic]
         private static bool contextInstallationInProgress;
@@ -19,6 +19,10 @@ namespace Alternet.UI
         private static System.Threading.SynchronizationContext? previousSynchronizationContext;
 
         private WeakReference? destinationThreadReference;
+
+        static UISynchronizationContext()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UISynchronizationContext"/> class.

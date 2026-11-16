@@ -14,7 +14,6 @@ namespace Alternet.UI
         private bool isDragging = false;
         private PointD clickOffset;
         private int hitTestMouseDown = -1;
-        private int hitTestMouseMove = -1;
         private PointD mouseDownLocation;
         private bool isEnabled = true;
 
@@ -81,11 +80,6 @@ namespace Alternet.UI
         /// The recorded hit test result from the mouse-down event, or <c>null</c> if no hit was recorded.
         /// </value>
         public int HitTestMouseDown => hitTestMouseDown;
-
-        /// <summary>
-        /// Gets the hit test result for the most recent mouse move event.
-        /// </summary>
-        public int HitTestMouseMove => hitTestMouseMove;
 
         /// <summary>
         /// Gets or sets a value indicating whether the activity is enabled.

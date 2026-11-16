@@ -257,12 +257,13 @@ namespace Alternet.Drawing
             }
             else
             {
-                Transform = Transform * matrix;
+                Transform *= matrix;
             }
         }
 
         /// <summary>
-        /// Translates the local geometric transform by the specified amount. This method prepends the translation to the transform. 
+        /// Translates the local geometric transform by the specified amount.
+        /// This method prepends the translation to the transform. 
         /// </summary>
         /// <param name="dx">The amount to translate in the x-direction.</param>
         /// <param name="dy">The amount to translate in the y-direction.</param>

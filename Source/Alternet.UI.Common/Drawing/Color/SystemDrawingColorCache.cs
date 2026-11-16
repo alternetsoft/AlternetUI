@@ -23,7 +23,7 @@ namespace Alternet.Drawing
         {
             try
             {
-                var values = Enum.GetValues(typeof(System.Drawing.KnownColor));
+                var values = Enum.GetValues<System.Drawing.KnownColor>();
                 colors = new System.Drawing.Color[values.Length + 1];
 
                 foreach (System.Drawing.KnownColor kc in values)
