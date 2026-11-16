@@ -1270,6 +1270,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the current item is a cell within a list control
+        /// and should be treated as selected for drawing and other purposes.
+        /// </summary>
+        public virtual bool? CellSelected { get; set; }
+
+        /// <summary>
         /// Gets font of the container.
         /// </summary>
         public static Font GetContainerFont(IListControlItemContainer? container)
@@ -3171,13 +3177,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Determines whether the current item is a cell within a list control
-        /// and should be treated as selected for drawing purposes.
+        /// and should be treated as selected for drawing and other purposes.
+        /// This method is called only when item is a cell inside of other <see cref="ListControlItem"/>.
         /// </summary>
         /// <returns><c>true</c> if the current item is a selected cell; otherwise, <c>false</c>.</returns>
         [Browsable(false)]
         public virtual bool IsSelectedCell(ItemCellContext prm)
         {
-            return false;
+            return CellSelected ?? prm.Container?.IsSelectedCell(this, prm) ?? false;
         }
 
         /// <summary>

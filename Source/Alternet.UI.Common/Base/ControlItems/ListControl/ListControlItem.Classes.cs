@@ -235,7 +235,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Represents the context of a cell within a list control item, including its container, row index, and parent row item.
+        /// Represents the context of a cell within a list control item, including
+        /// its container, row index, and parent row item.
         /// </summary>
         public struct ItemCellContext
         {
