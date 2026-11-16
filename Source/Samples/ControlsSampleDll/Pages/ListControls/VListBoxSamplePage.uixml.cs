@@ -170,6 +170,47 @@ namespace ControlsSample
                 listBox.Add(item2);
             });
 
+            contextMenu.Add("Init data with multiple columns", () =>
+            {
+                DoInsideUpdate(() =>
+                {
+                    listBox.VertGridLines = true;
+                    listBox.RemoveAll();
+                    listBox.Columns.Clear();
+
+                    var col1 = new ListControlColumn("Col1", 25);
+                    var col2 = new ListControlColumn("Col2", 25);
+                    var col3 = new ListControlColumn("Col3", 25);
+                    var col4 = new ListControlColumn("Col4", 25);
+                    var col5 = new ListControlColumn("Col5", 25);
+
+                    listBox.Columns.Add(col1);
+                    listBox.Columns.Add(col2);
+                    listBox.Columns.Add(col3);
+                    listBox.Columns.Add(col4);
+                    listBox.Columns.Add(col5);
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        var item = new ListControlItem();
+                        SetValue(col1, 1);
+                        SetValue(col2, 2);
+                        SetValue(col3, 3);
+                        SetValue(col4, 4);
+                        SetValue(col5, 5);
+
+                        void SetValue(ListControlColumn col, int colIndex)
+                        {
+                            item.SafeCell(col).Value = $"Item {i} Col{colIndex}";
+                        }
+
+                        listBox.Add(item);
+                    }
+
+                    listBox.SetColumnsWidthToMaxContentSize();
+                });
+            });
+
             var item = listBox.GetItem(1);
 
             if (item is not null)
