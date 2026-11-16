@@ -107,6 +107,7 @@ namespace Alternet.UI
             if (transactionLevel == 0)
             {
                 OnTransactionStarted();
+                SuspendPropertyChanged();
             }
 
             transactionLevel++;
@@ -133,6 +134,7 @@ namespace Alternet.UI
 
             if (transactionLevel == 0)
             {
+                ResumePropertyChanged();
                 OnTransactionEnded();
             }
         }
