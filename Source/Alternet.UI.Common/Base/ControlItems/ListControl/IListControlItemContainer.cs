@@ -122,5 +122,13 @@ namespace Alternet.UI
         /// Gets the collection of columns within the list control.
         /// </summary>
         IReadOnlyList<ListControlColumn> Columns { get; }
+
+        /// <summary>
+        /// Determines whether the specified item is a selected cell within the list control.
+        /// </summary>
+        /// <param name="item">The list control item to check.</param>
+        /// <param name="prm">The context information for the item cell.</param>
+        /// <returns><c>true</c> if the specified item is a selected cell; otherwise, <c>false</c>.</returns>
+        bool IsSelectedCell(ListControlItem item, ListControlItem.ItemCellContext prm);
     }
 }

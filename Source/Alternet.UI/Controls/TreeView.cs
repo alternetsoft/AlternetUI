@@ -1575,6 +1575,11 @@ namespace Alternet.UI
         {
         }
 
+        bool IListControlItemContainer.IsSelectedCell(ListControlItem item, ListControlItem.ItemCellContext prm)
+        {
+            return false;
+        }
+
         private bool SetSelectedCore(TreeViewItem item, bool value)
         {
             bool changed;

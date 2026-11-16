@@ -1122,5 +1122,10 @@ namespace Alternet.UI
         void IListControlItemContainer.CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo)
         {
         }
+
+        bool IListControlItemContainer.IsSelectedCell(ListControlItem item, ListControlItem.ItemCellContext prm)
+        {
+            return false;
+        }
     }
 }

@@ -1645,5 +1645,17 @@ namespace Alternet.UI
             base.OnMouseDoubleClick(e);
             RunSelectedItemDoubleClickAction();
         }
+
+        /// <summary>
+        /// Determines whether the specified item and cell context correspond to a selected cell.
+        /// </summary>
+        /// <param name="item">The item to check.</param>
+        /// <param name="prm">The cell context to check.</param>
+        /// <returns><c>true</c> if the specified item and cell context correspond to a selected cell;
+        /// otherwise, <c>false</c>.</returns>
+        public virtual bool IsSelectedCell(ListControlItem item, ListControlItem.ItemCellContext prm)
+        {
+            return item.CellSelected ?? false;
+        }
     }
 }
