@@ -102,7 +102,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Represents a list box used in the calendar control, which displays the days of the month in a grid format.
+        /// Represents a list box used in the calendar control, which displays
+        /// the days of the month in a grid format.
         /// </summary>
         public class CalendarListBox : VirtualListBox
         {
@@ -116,7 +117,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Represents a container panel used in the calendar control, which provides a layout for its child controls.
+        /// Represents a container panel used in the calendar control, which provides
+        /// a layout for its child controls.
         /// </summary>
         public partial class CalendarContainer : HiddenBorder
         {

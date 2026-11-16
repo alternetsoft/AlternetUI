@@ -133,9 +133,9 @@ namespace Alternet.UI
                 {
                 });
 
-            dayView = new();
-            header = new();
-            container = new();
+            dayView = CreateCalendarListBox();
+            header = CreateCalendarHeader();
+            container = CreateCalendarContainer();
 
             dayView.ParentContextMenu = true;
             header.ParentContextMenu = true;
@@ -230,6 +230,36 @@ namespace Alternet.UI
             header.OverlayProvider = dayView;
 
             CalendarCreated?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CalendarContainer"/> class,
+        /// which serves as a container for the calendar control's child controls.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="CalendarContainer"/> class.</returns>
+        protected virtual CalendarContainer CreateCalendarContainer()
+        {
+            return new CalendarContainer();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CalendarHeader"/> class,
+        /// which represents the header of the calendar control.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="CalendarHeader"/> class.</returns>
+        protected virtual CalendarHeader CreateCalendarHeader()
+        {
+            return new CalendarHeader();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CalendarListBox"/> class,
+        /// which displays the days of the month in a grid format.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="CalendarListBox"/> class.</returns>
+        protected virtual CalendarListBox CreateCalendarListBox()
+        {
+            return new CalendarListBox();
         }
 
         /// <summary>
