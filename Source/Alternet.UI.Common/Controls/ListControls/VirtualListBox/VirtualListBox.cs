@@ -2535,7 +2535,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The item to hit test.</param>
         /// <param name="location">The location to hit test.</param>
-        /// <returns>The <see cref="ListControlColumn"/> at the specified location, or null if no column is found.</returns>
+        /// <returns>The <see cref="ListControlColumn"/> at the specified location,
+        /// or null if no column is found.</returns>
         public virtual ListControlColumn? HitTestColumn(ListControlItem item, PointD location)
         {
             if (!HasColumns)
@@ -2543,9 +2544,11 @@ namespace Alternet.UI
 
             var lineInfos = GetVertLinesRectangles();
 
+            var locationX = location.X + scrollOffsetX;
+
             foreach (var lineInfo in lineInfos)
             {
-                if (location.X < lineInfo.StartPoint.X)
+                if (locationX < lineInfo.StartPoint.X)
                     return lineInfo.Column;
             }
 
