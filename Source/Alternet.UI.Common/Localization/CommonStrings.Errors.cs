@@ -11,10 +11,17 @@ namespace Alternet.UI.Localization
     public partial class CommonStrings
     {
         public string ErrInvalidDateFormat { get; set; } = "Invalid date format.";
+        
         public string ErrWrongActionForCtor { get; set; } = "Wrong action {0} for ctor.";
+        
         public string ErrParserAttributeArgsHigh { get; set; } = "Too many attributes are specified for '{0}'.";
+        
         public string ErrParserAttributeArgsLow { get; set; } = "'{0}' requires more attributes.";
+        
         public string ErrRequiresSTA { get; set; } = "The calling thread must be STA, because many UI components require this.";
+
         public string ErrInputBindingExpectedInputGesture { get; set; } = "Gesture accepts only objects of type '{0}'.";
+
+        public string ErrValueTypesNotEqual { get; set; } = "Value types are not equal.";
     }
 }

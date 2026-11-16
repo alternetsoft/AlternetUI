@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal class PlessVariantInt64 : IPlessVariantExtender
+    internal class PlessVariantInt64 : BaseObject, IPlessVariantExtender
     {
         public long ToInt64(in PlessVariant value, IFormatProvider? provider) => value.AsInt64;
 
@@ -87,7 +87,7 @@ namespace Alternet.UI
         {
             if (d1.ValueType == d2.ValueType)
                 return d1.AsInt64.CompareTo(d2.AsInt64);
-            throw new ArgumentException();
+            throw new ArgumentException(Localized.ErrValueTypesNotEqual);
         }
 
         public bool Equals(in PlessVariant d1, in PlessVariant d2)

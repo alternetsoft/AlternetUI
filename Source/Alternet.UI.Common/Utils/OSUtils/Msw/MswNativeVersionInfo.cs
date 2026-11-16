@@ -108,8 +108,7 @@ namespace Alternet.UI
             // Now try low-level Windows Version APIs to get localized string table and fixed file info.
             try
             {
-                int handle;
-                int size = GetFileVersionInfoSize(filePath, out handle);
+                int size = GetFileVersionInfoSize(filePath, out int handle);
                 if (size > 0)
                 {
                     var buffer = new byte[size];

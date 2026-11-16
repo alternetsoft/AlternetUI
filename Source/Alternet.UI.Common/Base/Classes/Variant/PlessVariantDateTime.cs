@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal class PlessVariantDateTime : IPlessVariantExtender
+    internal class PlessVariantDateTime : BaseObject, IPlessVariantExtender
     {
         public long ToInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt64(value.AsDateTime, provider);
@@ -88,7 +88,7 @@ namespace Alternet.UI
         {
             if (d1.ValueType == d2.ValueType)
                 return d1.AsDateTime.CompareTo(d2.AsDateTime);
-            throw new ArgumentException();
+            throw new ArgumentException(Localized.ErrValueTypesNotEqual);
         }
 
         public bool Equals(in PlessVariant d1, in PlessVariant d2)

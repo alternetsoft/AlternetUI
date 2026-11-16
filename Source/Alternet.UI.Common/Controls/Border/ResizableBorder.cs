@@ -85,8 +85,6 @@ namespace Alternet.UI
             LeftGripControl.Target = target;
             TopGripControl.Target = target;
             BottomGripControl.Target = target;
-
-            var isResizable = target != null;
         }
 
         /// <summary>

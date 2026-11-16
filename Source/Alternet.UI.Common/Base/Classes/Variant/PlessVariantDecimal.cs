@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal class PlessVariantDecimal : IPlessVariantExtender
+    internal class PlessVariantDecimal : BaseObject, IPlessVariantExtender
     {
         public long ToInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt64(value.AsDecimal, provider);
@@ -88,7 +88,7 @@ namespace Alternet.UI
         {
             if (d1.ValueType == d2.ValueType)
                 return d1.AsDecimal.CompareTo(d2.AsDecimal);
-            throw new ArgumentException();
+            throw new ArgumentException(Localized.ErrValueTypesNotEqual);
         }
 
         public bool Equals(in PlessVariant d1, in PlessVariant d2)

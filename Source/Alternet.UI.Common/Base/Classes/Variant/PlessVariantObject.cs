@@ -86,7 +86,7 @@ namespace Alternet.UI
 
         public int Compare(in PlessVariant d1, in PlessVariant d2)
         {
-            throw new ArgumentException();
+            throw new NotImplementedException();
         }
 
         public bool Equals(in PlessVariant d1, in PlessVariant d2)

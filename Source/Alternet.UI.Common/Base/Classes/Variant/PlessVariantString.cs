@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal class PlessVariantString : IPlessVariantExtender
+    internal class PlessVariantString : BaseObject, IPlessVariantExtender
     {
         static PlessVariantString()
         {
@@ -99,7 +99,7 @@ namespace Alternet.UI
         {
             if (d1.ValueType == d2.ValueType)
                 return d1.AsString.CompareTo(d2.AsString);
-            throw new ArgumentException();
+            throw new ArgumentException(Localized.ErrValueTypesNotEqual);
         }
 
         public bool Equals(in PlessVariant d1, in PlessVariant d2)

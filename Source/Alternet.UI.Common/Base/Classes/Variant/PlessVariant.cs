@@ -920,7 +920,7 @@ namespace Alternet.UI
                 return 1;
             if (value is PlessVariant variant)
                 return CompareTo(variant);
-            throw new ArgumentException();
+            throw new NotImplementedException();
         }
 
         /// <summary>

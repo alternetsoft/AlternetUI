@@ -101,7 +101,7 @@ namespace Alternet.Drawing
             if (DashPattern != null && DashPattern.Length > 0)
                 sb.Append($", DashPattern=[{string.Join(",", DashPattern)}]");
 
-            sb.Append(")");
+            sb.Append(')');
 
             return sb.ToString();
         }

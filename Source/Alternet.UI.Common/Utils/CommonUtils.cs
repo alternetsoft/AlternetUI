@@ -187,9 +187,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Swap<T>(ref T a, ref T b)
         {
-            T temp = a;
-            a = b;
-            b = temp;
+            (b, a) = (a, b);
         }
 
         /// <summary>

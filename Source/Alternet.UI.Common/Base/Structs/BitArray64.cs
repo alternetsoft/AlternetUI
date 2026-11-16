@@ -174,6 +174,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Operator overload for equality comparison of two <see cref="BitArray64"/> instances.
+        /// </summary>
+        /// <param name="a">The first <see cref="BitArray64"/> instance to compare.</param>
+        /// <param name="b">The second <see cref="BitArray64"/> instance to compare.</param>
+        /// <returns><c>true</c> if the bits of both instances are equal; otherwise, <c>false</c>.</returns>
+        public static bool operator ==(BitArray64 a, BitArray64 b)
+        {
+            return a.Bits == b.Bits;
+        }
+
+        /// <summary>
+        /// Operator overload for inequality comparison of two <see cref="BitArray64"/> instances.
+        /// </summary>
+        /// <param name="a">The first <see cref="BitArray64"/> instance to compare.</param>
+        /// <param name="b">The second <see cref="BitArray64"/> instance to compare.</param>
+        /// <returns><c>true</c> if the bits of both instances are not equal; otherwise, <c>false</c>.</returns>
+        public static bool operator !=(BitArray64 a, BitArray64 b)
+        {
+            return a.Bits != b.Bits;
+        }
+
+        /// <summary>
         /// Checks if this object equals another object.
         /// </summary>
         /// <param name="obj">Object to compare with. May be null.
@@ -208,7 +230,7 @@ namespace Alternet.UI
         /// The hash code of this object, which is the same as
         /// the hash code of <see cref="Bits"/>.
         /// </returns>
-        public override int GetHashCode()
+        public readonly override int GetHashCode()
         {
             return Bits.GetHashCode();
         }

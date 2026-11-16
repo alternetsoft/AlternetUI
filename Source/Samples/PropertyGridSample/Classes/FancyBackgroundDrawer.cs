@@ -3,6 +3,8 @@ using System;
 using Alternet.UI;
 using Alternet.Drawing;
 
+namespace PropertyGridSample;
+
 public static class FancyBackgroundDrawer
 {
     /// <summary>

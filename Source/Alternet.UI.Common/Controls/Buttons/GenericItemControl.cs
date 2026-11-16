@@ -1391,6 +1391,11 @@ namespace Alternet.UI
             CoerceCheckBoxInfo(item, checkBoxInfo);
         }
 
+        bool IListControlItemContainer.IsSelectedCell(ListControlItem item, ListControlItem.ItemCellContext prm)
+        {
+            return false;
+        }
+
         /// <summary>
         /// Invoked when a list item is created or assigned, allowing derived
         /// classes to perform custom processing or

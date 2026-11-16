@@ -129,7 +129,7 @@ public static class NativeLibraryInspector
 
             if (App.IsWindowsOS)
             {
-                if (trimmed.Contains(" ") || !trimmed.Contains("."))
+                if (trimmed.Contains(CharUtils.Space) || !trimmed.Contains('.'))
                     continue;
             }
 

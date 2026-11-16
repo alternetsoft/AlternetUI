@@ -125,7 +125,7 @@ namespace Alternet.UI
 
                 foreach (var asm in allReferenced)
                 {
-                    ThreadPool.QueueUserWorkItem((object? state) =>
+                    ThreadPool.QueueUserWorkItem(state =>
                     {
                         var asmLoaded = Assembly.Load(asm);
                     });
