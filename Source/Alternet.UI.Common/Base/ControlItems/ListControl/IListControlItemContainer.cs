@@ -130,5 +130,13 @@ namespace Alternet.UI
         /// <param name="prm">The context information for the item cell.</param>
         /// <returns><c>true</c> if the specified item is a selected cell; otherwise, <c>false</c>.</returns>
         bool IsSelectedCell(ListControlItem item, ListControlItem.ItemCellContext prm);
+
+        /// <summary>
+        /// Called by the cell item when its cell selection state has changed,
+        /// allowing the container to respond accordingly.
+        /// </summary>
+        /// <param name="item">The cell item whose selection state has changed.</param>
+        /// <param name="selected">The new selection state of the cell.</param>
+        void CellSelectionChanged(ListControlItem item, bool selected);
     }
 }

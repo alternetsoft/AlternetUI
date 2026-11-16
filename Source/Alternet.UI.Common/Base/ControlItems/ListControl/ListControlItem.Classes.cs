@@ -438,6 +438,11 @@ namespace Alternet.UI
             /// </summary>
             public bool IsSelected;
 
+            /// <summary>
+            /// Gets or sets a value indicating whether the item is a cell and it is selected in the container.
+            /// </summary>
+            public bool IsCellSelected;
+
             private FlagsAndAttributesStruct attr = new();
 
             /// <summary>

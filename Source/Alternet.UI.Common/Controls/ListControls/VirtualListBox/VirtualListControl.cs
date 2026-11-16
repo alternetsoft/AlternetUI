@@ -110,8 +110,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the checked state of an item changes.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? CheckedChanged;
+
+        /// <summary>
+        /// Occurs when the selection state of a cell changes.
+        /// </summary>
+        public event EventHandler<CellSelectionEventArgs>? CellSelectionChanged;
 
         /// <summary>
         /// Gets or sets default border of the current item.
@@ -781,7 +786,7 @@ namespace Alternet.UI
                 if (unfocusedSelectedItemBackColor == value)
                     return;
                 unfocusedSelectedItemBackColor = value;
-                if(!Focused)
+                if (!Focused)
                     Invalidate();
             }
         }
@@ -1570,7 +1575,7 @@ namespace Alternet.UI
 
             var button = HeaderControl.GetColumnControl(item.ColumnKey);
 
-            if(button is null)
+            if (button is null)
                 return;
 
             if (e.PropertyName == nameof(ListControlColumn.Title))
@@ -1578,10 +1583,10 @@ namespace Alternet.UI
                 button.Text = item.Title ?? string.Empty;
             }
             else
-            if (e.PropertyName == nameof(ListControlColumn.SuggestedWidth))
-            {
-                button.Width = item.SuggestedWidth;
-            }
+                if (e.PropertyName == nameof(ListControlColumn.SuggestedWidth))
+                {
+                    button.Width = item.SuggestedWidth;
+                }
         }
 
         /// <summary>
@@ -1655,7 +1660,23 @@ namespace Alternet.UI
         /// otherwise, <c>false</c>.</returns>
         public virtual bool IsSelectedCell(ListControlItem item, ListControlItem.ItemCellContext prm)
         {
-            return item.CellSelected ?? false;
+            return item.IsCellSelectedInContainer(this);
+        }
+
+        void IListControlItemContainer.CellSelectionChanged(ListControlItem item, bool selected)
+        {
+            OnCellSelectionChanged(item, selected);
+        }
+
+        /// <summary>
+        /// Called when the selection state of a cell changes.
+        /// </summary>
+        /// <param name="item">The cell which selection state has changed.</param>
+        /// <param name="selected">The new selection state of the cell.</param>
+        protected virtual void OnCellSelectionChanged(ListControlItem item, bool selected)
+        {
+            if (CellSelectionChanged is not null)
+                CellSelectionChanged.Invoke(this, new CellSelectionEventArgs(item, selected));
         }
     }
 }

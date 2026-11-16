@@ -144,13 +144,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when a visual aspect of an owner-drawn control is changed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event DrawItemEventHandler? DrawItem;
 
         /// <summary>
         /// Occurs when the sizes of the list items are determined.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event MeasureItemEventHandler? MeasureItem;
 
         /// <summary>
@@ -444,10 +444,8 @@ namespace Alternet.UI
                         foreach (var cell in item.Cells)
                         {
                             ListControlItem.ItemCellContext context = new(this, index, cell);
-                            if (value.Contains(cell))
-                                cell.CellSelected = true;
-                            else
-                                cell.CellSelected = false;
+                            var newValue = value.Contains(cell);
+                            cell.SetCellSelectedInContainer(this, newValue);
                         }
                     }
                 });
@@ -490,7 +488,7 @@ namespace Alternet.UI
         /// The width, in device-independent units, that the horizontal scroll bar can
         /// scroll the control. The default is zero.
         /// </returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(0)]
         [Localizable(true)]
         [Browsable(false)]
@@ -558,7 +556,7 @@ namespace Alternet.UI
         /// One of the <see cref="DrawMode" /> values representing the mode for drawing
         /// the items of the control. The default is <see langword="DrawMode.Normal" />.
         /// </returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(DrawMode.Normal)]
         [RefreshProperties(RefreshProperties.Repaint)]
         public virtual DrawMode DrawMode
