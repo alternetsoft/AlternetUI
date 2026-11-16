@@ -214,19 +214,21 @@ namespace Alternet.UI
         {
             try
             {
-                var options = new JsonSerializerOptions()
+                prettyJsonOptions ??= new JsonSerializerOptions()
                 {
                     WriteIndented = true,
                 };
 
                 var jsonElement = JsonSerializer.Deserialize<JsonElement>(unPrettyJson);
 
-                return JsonSerializer.Serialize(jsonElement, options);
+                return JsonSerializer.Serialize(jsonElement, prettyJsonOptions);
             }
             catch
             {
                 return unPrettyJson;
             }
         }
+
+        private static JsonSerializerOptions? prettyJsonOptions;
     }
 }

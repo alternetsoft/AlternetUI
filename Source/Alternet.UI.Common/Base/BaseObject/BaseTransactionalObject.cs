@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="TransactionEnded"/> event is raised when the last transaction
     /// is ended.
     /// </remarks>
-    public class BaseTransactionalObject : BaseObjectWithNotify
+    public partial class BaseTransactionalObject : BaseObjectWithNotify
     {
         private int transactionLevel;
 

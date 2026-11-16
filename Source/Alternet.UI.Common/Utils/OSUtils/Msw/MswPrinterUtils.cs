@@ -17,7 +17,7 @@ internal static class MswPrinterUtils
     }
 
     // EnumPrinters function
-    [DllImport("winspool.drv", CharSet = CharSet.Auto, SetLastError = true)]
+    [DllImport("winspool.drv", CharSet = CharSet.Unicode, SetLastError = true)]
     static extern bool EnumPrinters(
         uint flags,
         string name,
@@ -72,7 +72,7 @@ internal static class MswPrinterUtils
     }
 
     // Get Default Printer using WinAPI
-    [DllImport("winspool.drv", CharSet = CharSet.Auto, SetLastError = true)]
+    [DllImport("winspool.drv", CharSet = CharSet.Unicode, SetLastError = true)]
     private static extern bool GetDefaultPrinter(StringBuilder pszBuffer, ref int pcchBuffer);
 
     public static string? GetDefaultPrinterName()

@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    // https://learn.microsoft.com/ru-ru/dotnet/api/system.idisposable?view=net-7.0
-
     /// <summary>
-    /// Provides a mechanism for releasing managed and unmanaged resources.
+    /// Represents a base class for objects that require explicit cleanup of resources.
     /// </summary>
     public partial class DisposableObject : BaseTransactionalObject, IDisposable, IDisposableObject
     {

@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// Gets the items of the <see cref="ListBox" />.</summary>
         /// <returns>An <see cref="ObjectCollection" /> representing the items
         /// in the <see cref="ListBox" /> control.</returns>
-        [Category("Data")]
+        [Category(KnownMemberCategory.Data)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Localizable(true)]
         [MergableProperty(false)]

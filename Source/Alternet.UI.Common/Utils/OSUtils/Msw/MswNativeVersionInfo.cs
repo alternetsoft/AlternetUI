@@ -160,7 +160,7 @@ namespace Alternet.UI
                                     {
                                         string value = Marshal.PtrToStringUni(valPtr) ?? string.Empty;
                                         // prefer low-level read if FileVersionInfo was missing or empty
-                                        if (!result.ContainsKey(key) || string.IsNullOrEmpty(result[key]))
+                                        if (!result.TryGetValue(key, out string? value2) || string.IsNullOrEmpty(value2))
                                             result[key] = value;
                                         else
                                         {
@@ -187,7 +187,7 @@ namespace Alternet.UI
                                     if (VerQueryValue(pBlock, subBlock, out IntPtr valPtr, out uint valLen) && valLen > 0)
                                     {
                                         string value = Marshal.PtrToStringUni(valPtr) ?? string.Empty;
-                                        if (!result.ContainsKey(key) || string.IsNullOrEmpty(result[key]))
+                                        if (!result.TryGetValue(key, out string? value2) || string.IsNullOrEmpty(value2))
                                             result[key] = value;
                                     }
                                 }
@@ -234,14 +234,14 @@ namespace Alternet.UI
             public uint dwFileDateLS;
         }
 
-        [DllImport("version.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("version.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern int GetFileVersionInfoSize(string lptstrFilename, out int lpdwHandle);
 
-        [DllImport("version.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("version.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern bool GetFileVersionInfo(string lptstrFilename, int dwHandle, int dwLen, [In] byte[] lpData);
 
         // Note: we pin the buffer and pass the pointer to VerQueryValue
-        [DllImport("version.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("version.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern bool VerQueryValue(IntPtr pBlock, string lpSubBlock, out IntPtr lplpBuffer, out uint puLen);
 
         #endregion

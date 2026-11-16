@@ -39,7 +39,7 @@ namespace Alternet.UI
         /// Occurs when the <see cref="SelectedIndex" /> property or the <see cref="SelectedIndices" />
         /// collection has changed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? SelectedIndexChanged;
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// of items in the list box. This property may not be supported on some platforms.
         /// Default is false.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(false)]
         [Localizable(true)]
         public new virtual bool HorizontalScrollbar
@@ -88,7 +88,7 @@ namespace Alternet.UI
         /// to prevent partial items from being shown.  Otherwise, they will be shown.
         /// Default is true.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(true)]
         [Localizable(true)]
         [Description("Indicates whether the list box should avoid showing partial items.")]
@@ -114,7 +114,7 @@ namespace Alternet.UI
         /// Gets or sets whether the vertical scrollbar is shown at all times.
         /// Default is false, which means the scrollbar is shown only when needed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(false)]
         [Localizable(true)]
         public bool ScrollAlwaysVisible
@@ -275,7 +275,7 @@ namespace Alternet.UI
         /// Controls how many items at a time can be selected in the list box. Valid
         /// values are from the <see cref="Alternet.UI.SelectionMode"/> enumeration.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(SelectionMode.One)]
         public virtual SelectionMode SelectionMode
         {

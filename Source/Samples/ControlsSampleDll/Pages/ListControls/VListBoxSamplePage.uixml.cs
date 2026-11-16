@@ -210,6 +210,14 @@ namespace ControlsSample
                     listBox.SetColumnsWidthToMaxContentSize();
 
                     listBox.EnableCellSelection(true);
+
+                    listBox.CellSelectionChanged -= OnCellSelection;
+                    listBox.CellSelectionChanged += OnCellSelection;
+
+                    void OnCellSelection(object? sender, CellSelectionEventArgs e)
+                    {
+                        App.Log($"CellSelectionChanged: Item={e.Item}, Selected={e.Selected}");
+                    }
                 });
             });
 

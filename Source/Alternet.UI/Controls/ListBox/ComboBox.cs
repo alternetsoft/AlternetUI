@@ -82,13 +82,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the drop-down portion of the control is no longer visible.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? DropDownClosed;
 
         /// <summary>
         /// Occurs when the drop-down portion of the control is shown.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? DropDown;
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value><c>true</c> if the <see cref="ComboBox"/> can be edited;
         /// otherwise <c>false</c>. The default is <c>false</c>.</value>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [DefaultValue(true)]
         public virtual bool IsEditable
         {
@@ -409,7 +409,7 @@ namespace Alternet.UI
         /// One of the <see cref="ComboBoxStyle" /> values.
         /// The default is <see langword="DropDown" />.
         /// </returns>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [DefaultValue(ComboBoxStyle.DropDown)]
         [RefreshProperties(RefreshProperties.Repaint)]
         [Browsable(false)]
@@ -555,7 +555,7 @@ namespace Alternet.UI
         /// This property is added for the compatibility with legacy code.
         /// Use <see cref="OwnerDrawStyle"/> property as it has more options.
         /// </remarks>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(DrawMode.Normal)]
         [RefreshProperties(RefreshProperties.Repaint)]
         [Browsable(false)]
@@ -1123,6 +1123,9 @@ namespace Alternet.UI
         {
         }
 
+        void IListControlItemContainer.CellSelectionChanged(ListControlItem item, bool selected)
+        {
+        }
         bool IListControlItemContainer.IsSelectedCell(ListControlItem item, ListControlItem.ItemCellContext prm)
         {
             return false;
