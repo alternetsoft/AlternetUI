@@ -3,36 +3,10 @@
    viewBox="0 0 512 512"
    version="1.1"
    id="svg19"
-   sodipodi:docname="alternet-zoomout.svg"
-   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    width="512"
    height="512"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs23" />
-  <sodipodi:namedview
-     id="namedview21"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="1.1131408"
-     inkscape:cx="393.48122"
-     inkscape:cy="256.93066"
-     inkscape:window-width="1920"
-     inkscape:window-height="1009"
-     inkscape:window-x="-8"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg19" />
-  <!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc. -->
   <path
      d="M 205.75769,143.23854 A 117.77151,108.42078 23.592351 1 1 383.35632,295.23232 117.77151,108.42078 23.592351 1 1 205.75769,143.23854 Z m -1.96096,220.56171 c 74.9979,44.92703 172.40403,36.10714 230.30206,-25.14115 C 499.30954,269.67493 489.69921,160.28026 412.63409,94.325833 335.56898,28.371397 220.22597,30.827589 155.01522,99.811753 97.117186,161.06004 98.183154,254.15504 153.05427,320.37346 l -87.819844,92.90153 c -11.8748,12.56193 -10.130792,32.41401 3.90267,44.42423 14.033463,12.01022 34.964994,11.56449 46.839794,-0.99745 z"
      id="path17"

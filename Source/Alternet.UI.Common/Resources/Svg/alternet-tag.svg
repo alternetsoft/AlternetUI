@@ -5,33 +5,8 @@
    viewBox="0 0 24 24"
    version="1.1"
    id="svg1"
-   sodipodi:docname="alternet-tag.svg"
-   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs1" />
-  <sodipodi:namedview
-     id="namedview1"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="33.666667"
-     inkscape:cx="11.985149"
-     inkscape:cy="12"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg1" />
   <path
      d="m 12.42,21.41 9,-9 C 21.78,12.05 22,11.55 22,11 V 4 C 22,2.9 21.1,2 20,2 h -7 c -0.55,0 -1.05,0.22 -1.42,0.59 l -9,9 C 2.22,11.95 2,12.45 2,13 c 0,0.55 0.22,1.05 0.59,1.41 l 7,7 C 9.95,21.78 10.45,22 11,22 c 0.55,0 1.06,-0.23 1.42,-0.59 z M 3.99,13 13,4 h 7 v 7 h 0.01 l -9,9 z"
      id="path1" />
