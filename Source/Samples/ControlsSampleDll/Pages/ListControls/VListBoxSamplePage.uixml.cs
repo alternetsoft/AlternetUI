@@ -208,6 +208,8 @@ namespace ControlsSample
                     }
 
                     listBox.SetColumnsWidthToMaxContentSize();
+
+                    listBox.EnableCellSelection(true);
                 });
             });
 

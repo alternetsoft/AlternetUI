@@ -401,6 +401,60 @@ namespace Alternet.UI
         public IReadOnlyList<ListControlItem> ItemsLastPainted => itemsLastPainted;
 
         /// <summary>
+        /// Gets the collection of selected cells in the control.
+        /// </summary>
+        public virtual IEnumerable<ListControlItem> SelectedCells
+        {
+            get
+            {
+                var selectedCells = new List<ListControlItem>();
+                for (int index = 0; index < Count; index++)
+                {
+                    var item = GetItem(index);
+
+                    if (item is null)
+                        continue;
+
+                    selectedCells.AddRange(item.Cells.Where(c => InternalCellSelected(c, index)));
+                }
+                
+                return selectedCells;
+
+                bool InternalCellSelected(ListControlItem cell, int rowItemIndex)
+                {
+                    ListControlItem.ItemCellContext context = new (this, rowItemIndex, cell);
+
+                    return IsSelectedCell(cell, context);
+                }   
+            }
+
+            set
+            {
+                value ??= [];
+
+                DoInsideUpdate(() =>
+                {
+                    for (int index = 0; index < Count; index++)
+                    {
+                        var item = GetItem(index);
+
+                        if (item is null)
+                            continue;
+
+                        foreach (var cell in item.Cells)
+                        {
+                            ListControlItem.ItemCellContext context = new(this, index, cell);
+                            if (value.Contains(cell))
+                                cell.CellSelected = true;
+                            else
+                                cell.CellSelected = false;
+                        }
+                    }
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the provider used to display tooltips for items.
         /// </summary>
         [Browsable(false)]
@@ -2119,6 +2173,37 @@ namespace Alternet.UI
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Enables or disables cell selection mode in the list control.
+        /// When cell selection mode is enabled, clicking on a cell will select it,
+        /// and other cells will be deselected.
+        /// In cell selection mode, the control does not allow to select the whole item row,
+        /// only individual cells can be selected.
+        /// When disabled, the control behaves in its default selection mode.
+        /// </summary>
+        /// <param name="isEnabled">If set to <c>true</c>, cell selection mode is enabled;
+        /// otherwise, it is disabled.</param>
+        public virtual void EnableCellSelection(bool isEnabled = true)
+        {
+            if (isEnabled)
+            {
+                SelectionMode = ListBoxSelectionMode.None;
+                CellClick += HandleCellClick;
+            }
+            else
+            {
+                SelectionMode = ListBoxSelectionMode.Single;
+                CellClick -= HandleCellClick;
+            }
+
+            void HandleCellClick(object? sender, ListBoxCellClickEventArgs e)
+            {
+                if (e.Cell is null)
+                    return;
+                SelectedCells = [e.Cell];
+            }
         }
 
         /// <summary>
