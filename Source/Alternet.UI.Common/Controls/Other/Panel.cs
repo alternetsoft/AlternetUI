@@ -92,31 +92,31 @@ namespace Alternet.UI
     /// <summary>
     /// Implements a panel with rounded corners, a border, and a title.
     /// </summary>
-    public partial class RoundBorderWithTitle : RoundBorder
+    public partial class SectionPanel : RoundBorder
     {
         private readonly SectionHeaderToolBar toolBar;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RoundBorderWithTitle"/> class.
+        /// Initializes a new instance of the <see cref="SectionPanel"/> class.
         /// </summary>
-        public RoundBorderWithTitle()
+        public SectionPanel()
         {
             toolBar = new();
             toolBar.Parent = this;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RoundBorderWithTitle"/> class with the specified title.
+        /// Initializes a new instance of the <see cref="SectionPanel"/> class with the specified title.
         /// </summary>
         /// <param name="labelTitle">The title of the label.</param>
-        public RoundBorderWithTitle(string labelTitle)
+        public SectionPanel(string labelTitle)
             : this()
         {
             Title = labelTitle;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the <see cref="RoundBorderWithTitle"/> control is collapsed.
+        /// Gets or sets a value indicating whether the <see cref="SectionPanel"/> control is collapsed.
         /// </summary>
         public bool IsCollapsed
         {
@@ -125,12 +125,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the header toolbar of the <see cref="RoundBorderWithTitle"/> control.
+        /// Gets the header toolbar of the <see cref="SectionPanel"/> control.
         /// </summary>
         public SectionHeaderToolBar HeaderToolBar => toolBar;
 
         /// <summary>
-        /// Gets or sets the title format of the <see cref="GenericRoundBorderWithTitle"/> control.
+        /// Gets or sets the title format of the <see cref="GenericSectionPanel"/> control.
         /// This format is used to construct the title in the header toolbar.
         /// Title format is specified in the same way as in <see cref="string.Format(string, object[])"/>.
         /// </summary>
@@ -148,7 +148,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the format arguments for the title of the <see cref="GenericRoundBorderWithTitle"/> control.
+        /// Gets or sets the format arguments for the title of the <see cref="GenericSectionPanel"/> control.
         /// These arguments are used in conjunction with the <see cref="TitleFormat"/> property to construct the title.
         /// </summary>
         public virtual object[]? TitleFormatArgs
@@ -171,7 +171,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates the title of the <see cref="GenericRoundBorderWithTitle"/>
+        /// Updates the title of the <see cref="GenericSectionPanel"/>
         /// control based on the current title and format arguments.
         /// By default, <see cref="TitleFormat"/> and <see cref="TitleFormatArgs"/> are used to construct the title
         /// using the same formatting rules as in <see cref="string.Format(string, object[])"/>.
@@ -189,7 +189,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements a panel with square corners, a border, and a title.
     /// </summary>
-    public partial class SquareBorderWithTitle : RoundBorderWithTitle
+    public partial class SquareBorderWithTitle : SectionPanel
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SquareBorderWithTitle"/> class.

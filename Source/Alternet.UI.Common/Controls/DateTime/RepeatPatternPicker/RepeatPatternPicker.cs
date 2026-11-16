@@ -46,8 +46,8 @@ namespace Alternet.UI
 
         private readonly LinkLabel editExcludedDatesLinkLabel = new(Localized.CalendarItemLabelExcludeDates);
         private readonly GenericControlAndImage<DatePicker> startPicker = new(KnownSvgImages.ImgCalendar);
-        private readonly RoundBorderWithTitle seriesPanel = new(CommonStrings.Default.SeriesPattern);      
-        private readonly GenericRoundBorderWithTitle rangePanel = new(CommonStrings.Default.SeriesRange);
+        private readonly SectionPanel seriesPanel = new(CommonStrings.Default.SeriesPattern);      
+        private readonly GenericSectionPanel rangePanel = new(CommonStrings.Default.SeriesRange);
         private readonly TransparentPanel endDatePanel = new ();
         private readonly GenericControlAndLabel<DatePicker, Label> untilDatePicker = new();
         private readonly XRadioButtonAndSuffix endsNeverRadioButton;
@@ -205,7 +205,7 @@ namespace Alternet.UI
         /// Gets the panel which contains the <see cref="TabControl"/> used for selecting the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public RoundBorderWithTitle SeriesPanel => seriesPanel;
+        public SectionPanel SeriesPanel => seriesPanel;
 
         /// <summary>
         /// Gets or sets a value indicating whether the collapse buttons

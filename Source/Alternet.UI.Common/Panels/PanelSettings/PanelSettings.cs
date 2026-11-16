@@ -1069,9 +1069,9 @@ namespace Alternet.UI
         /// <param name="title">The title of the round border.</param>
         /// <param name="action">An action to perform on the container control.</param>
         /// <returns>The container control that was pushed onto the stack.</returns>
-        public RoundBorderWithTitle RoundBorder(string title, Action<RoundBorderWithTitle> action)
+        public SectionPanel RoundBorder(string title, Action<SectionPanel> action)
         {
-            var result = DoInsideContainer<RoundBorderWithTitle>(action);
+            var result = DoInsideContainer<SectionPanel>(action);
             result.Title = title;
             return result;
         }

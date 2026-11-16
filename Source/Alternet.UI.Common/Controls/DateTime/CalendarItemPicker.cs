@@ -63,8 +63,9 @@ namespace Alternet.UI
         /// </summary>
         public static float DefaultMinWidth = 300;
 
-        private readonly GenericRoundBorderWithTitle detailsPanel = new(Localized.CalendarItemLabelDetails);
-        private readonly GenericRoundBorderWithTitle alarmPanel = new();
+        private readonly GenericSectionPanel detailsPanel = new(Localized.CalendarItemLabelDetails);
+        private readonly GenericSectionPanel alarmPanel = new();
+        private readonly GenericSectionPanel descriptionPanel = new();
 
         /// <summary>
         /// Gets the <see cref="TextPicker"/> that is used to edit the title of the <see cref="CalendarItem"/> being edited.
@@ -156,18 +157,18 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
-        /// Gets the <see cref="GenericRoundBorderWithTitle"/> that contains the controls for editing
+        /// Gets the <see cref="GenericSectionPanel"/> that contains the controls for editing
         /// the details of the <see cref="CalendarItem"/>.
         /// </summary>
         [Browsable(false)]
-        public GenericRoundBorderWithTitle DetailsPanel => detailsPanel;
+        public GenericSectionPanel DetailsPanel => detailsPanel;
 
         /// <summary>
-        /// Gets the <see cref="GenericRoundBorderWithTitle"/> that contains the controls for editing
+        /// Gets the <see cref="GenericSectionPanel"/> that contains the controls for editing
         /// the alarms of the <see cref="CalendarItem"/>.
         /// </summary>
         [Browsable(false)]
-        public GenericRoundBorderWithTitle AlarmPanel => alarmPanel;
+        public GenericSectionPanel AlarmPanel => alarmPanel;
 
         /// <summary>
         /// Gets the <see cref="RepeatPatternPicker"/> that is used to edit the recurrence rule.
