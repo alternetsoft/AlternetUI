@@ -6,12 +6,13 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a client that interacts with a <see cref="SchedulerDocument"/> for scheduling purposes.
-    /// This is a sample implementation that can be used as a base for creating custom clients
-    /// that work with scheduling documents.
+    /// Represents a sample client that interacts with a <see cref="SchedulerDocument"/> for scheduling purposes.
+    /// This is a sample implementation that can be used as an initial reference
+    /// or as a base for creating custom clients that work with scheduling documents.
     /// </summary>
-    public class SampleSchedulerClient : DisposableObject, IListSourceListener<CalendarItem>
+    public class SampleSchedulerClient : DisposableObject
     {
+        private readonly ListSourceListener<CalendarItem> itemsListener = new();
         private SchedulerDocument? document;
 
         /// <summary>
@@ -19,6 +20,17 @@ namespace Alternet.UI
         /// </summary>
         public SampleSchedulerClient()
         {
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ListSourceListener{CalendarItem}"/> associated with this client.
+        /// </summary>
+        public ListSourceListener<CalendarItem> ItemsListener
+        {
+            get
+            {
+                return itemsListener;
+            }
         }
 
         /// <summary>
@@ -57,75 +69,13 @@ namespace Alternet.UI
             }
         }
 
-        void IListSourceListener<CalendarItem>.Changed(IListSource<CalendarItem> sender, ListChangedEventArgs e)
-        {
-        }
-
-        void IListSourceListener<CalendarItem>.ItemInserted(
-            IListSource<CalendarItem> sender,
-            int index,
-            CalendarItem item)
-        {
-        }
-
-        void IListSourceListener<CalendarItem>.ItemRemoved(
-            IListSource<CalendarItem> sender,
-            int index,
-            CalendarItem item)
-        {
-        }
-
-        void IListSourceListener<CalendarItem>.ItemPropertyChanged(
-            IListSource<CalendarItem> sender,
-            CalendarItem item,
-            string? propertyName)
-        {
-        }
-
-        bool IListSourceListener<CalendarItem>.CanChangeItemProperty(
-            IListSource<CalendarItem> sender,
-            CalendarItem item,
-            string propertyName)
-        {
-            return true;
-        }
-
-        void IListSourceListener<CalendarItem>.ItemPropertyChanging(
-            IListSource<CalendarItem> sender,
-            CalendarItem item,
-            string? propertyName)
-        {
-        }
-
-        void IListSourceListener<CalendarItem>.PropertyChanged(
-            IListSource<CalendarItem> sender,
-            PropertyChangedEventArgs e)
-        {
-        }
-
-        void IListSourceListener<CalendarItem>.UpdatesFinished(IListSource<CalendarItem> sender)
-        {
-        }
-
-        void IListSourceListener<CalendarItem>.ItemTransactionEnded(IListSource<CalendarItem> sender, CalendarItem item)
-        {
-        }
-
-        void IListSourceListener<CalendarItem>.ItemTransactionStarted(IListSource<CalendarItem> sender, CalendarItem item)
-        {
-        }
-
-        void IListSourceListener<CalendarItem>.UpdatesStarted(IListSource<CalendarItem> sender)
-        {
-        }
-
         /// <summary>
         /// Binds the necessary events to the specified <see cref="SchedulerDocument"/> instance.
         /// </summary>
         /// <param name="document">Scheduler document instance.</param>
         protected virtual void BindDocumentEvents(SchedulerDocument document)
         {
-            document.Items.Subscribe(this);
+            document.Items.Subscribe(ItemsListener);
         }
 
         /// <summary>
@@ -134,7 +84,7 @@ namespace Alternet.UI
         /// <param name="document">Scheduler document instance.</param>
         protected virtual void UnbindDocumentEvents(SchedulerDocument document)
         {
-            document.Items.Unsubscribe(this);
+            document.Items.Unsubscribe(ItemsListener);
         }
 
         /// <inheritdoc/>
