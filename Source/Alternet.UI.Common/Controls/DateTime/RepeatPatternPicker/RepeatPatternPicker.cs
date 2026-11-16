@@ -427,7 +427,6 @@ namespace Alternet.UI
                 var tabIndex = (int)SelectedPattern;
                 tabControl.SelectedIndex = tabIndex;
 
-                tabControl.SelectedIndex = (int)SelectedPattern;
                 startPicker.MainControl.AsDateOnly = data.ValidFromDate;
                 untilDatePicker.MainControl.AsDateOnly = data.ValidToDate;
 
