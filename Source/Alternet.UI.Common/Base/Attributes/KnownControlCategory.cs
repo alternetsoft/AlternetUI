@@ -50,9 +50,9 @@ namespace Alternet.UI
         public const string Editors = "Editors";
 
         /// <summary>
-        /// Indicates that the control belongs to the date category.
+        /// Indicates that the control belongs to the date/time category.
         /// </summary>
-        public const string Date = "Date";
+        public const string DateTime = "DateTime";
 
         /// <summary>
         /// Indicates that the control belongs to the panels category.

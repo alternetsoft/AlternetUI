@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that allows users to select a year.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class YearPicker : XIntPicker
     {
         /// <summary>

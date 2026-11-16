@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// A control that allows users to select a relative occurrence of a weekday within a month,
     /// combining the relative weekday, day of the week, and month selections.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class RelativeWeekdayOfMonthPicker : TransparentPanel
     {
         /// <summary>

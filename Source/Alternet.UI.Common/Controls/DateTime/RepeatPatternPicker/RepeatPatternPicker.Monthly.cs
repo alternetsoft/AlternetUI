@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a control that allows users to select a monthly repeat pattern for an event or task.
         /// </summary>
-        [ControlCategory(KnownControlCategory.Date)]
+        [ControlCategory(KnownControlCategory.DateTime)]
         public partial class MonthlyPatternPicker : DateRepeatPatternRulePicker<MonthlyRepeatPatternRule>
         {
             private readonly XIntPickerWithLabels intervalMonthPicker = new();

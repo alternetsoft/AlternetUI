@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a control that allows users to select a daily repeat pattern for an event or task.
         /// </summary>
-        [ControlCategory(KnownControlCategory.Date)]
+        [ControlCategory(KnownControlCategory.DateTime)]
         public partial class DailyPatternPicker : DateRepeatPatternRulePicker<DailyRepeatPatternRule>
         {
             private readonly XRadioButtonAndSuffix everyDayRadioButton;

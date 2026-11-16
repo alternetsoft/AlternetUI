@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Represents a control that allows users to select a day of the week,
     /// including extended options such as "Day", "Weekday", and "Weekend".
     /// </summary>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class DayOfWeekPicker : EnumPicker
     {
         /// <summary>

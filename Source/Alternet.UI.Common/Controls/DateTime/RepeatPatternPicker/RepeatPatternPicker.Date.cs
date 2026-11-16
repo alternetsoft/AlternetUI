@@ -12,7 +12,7 @@ namespace Alternet.UI
         /// such as daily, weekly, monthly, and yearly repeat pattern rule pickers.
         /// </summary>
         /// <typeparam name="TValue">The type of the repeat pattern rule.</typeparam>
-        [ControlCategory(KnownControlCategory.Date)]
+        [ControlCategory(KnownControlCategory.DateTime)]
         public abstract partial class DateRepeatPatternRulePicker<TValue> : HiddenBorder
             where TValue : BaseRepeatPatternRule
         {

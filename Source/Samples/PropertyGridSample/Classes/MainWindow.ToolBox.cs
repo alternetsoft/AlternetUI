@@ -97,6 +97,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<ComboBoxAndLabel>();
                 ToolBoxAdd<DatePicker>(ObjectInit.InitDatePicker);
                 ToolBoxAdd<DateTimePicker>(ObjectInit.InitDateTimePicker);
+                ToolBoxAdd<DateTimeRangePicker>();
                 ToolBoxAdd<DayOfWeekPicker>();
                 ToolBoxAdd<EditableListPicker>(ObjectInit.InitListPicker);
                 ToolBoxAdd<EnumPicker>(ObjectInit.InitEnumPicker);

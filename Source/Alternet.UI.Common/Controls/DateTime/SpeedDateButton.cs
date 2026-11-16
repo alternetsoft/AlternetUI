@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Represents a specialized speed button control that displays a date
     /// and shows popup calendar when it is clicked.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class SpeedDateButton : SpeedButtonWithPopup<PopupCalendar, XCalendar>
     {
         /// <summary>

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that allows users to select a repeat pattern for an event or task.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class RepeatPatternPicker : HiddenBorder
     {
         /// <summary>

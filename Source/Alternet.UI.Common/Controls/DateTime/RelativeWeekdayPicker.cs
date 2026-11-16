@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// A control that allows users to select a relative occurrence of a weekday within a month,
     /// such as "first Monday" or "last Friday". Uses the <see cref="RelativeWeekday"/> enum to represent the selected value.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class RelativeWeekdayPicker : EnumPicker
     {
         /// <summary>

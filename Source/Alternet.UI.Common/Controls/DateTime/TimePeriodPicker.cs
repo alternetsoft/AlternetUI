@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// A control that allows users to select a time period, represented by a numeric value and a unit of
     /// measurement (e.g., days, hours, minutes).
     /// </summary>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class TimePeriodPicker : ListPicker
     {
         /// <summary>
@@ -314,7 +314,7 @@ namespace Alternet.UI
     /// Represents a specialized button control that allows users to select a snooze time period from
     /// a predefined list of durations.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class SnoozeSpeedButton : TimePeriodPicker
     {
         private string? labelText;
