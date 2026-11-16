@@ -721,6 +721,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the title of the calendar item instance.
+        /// </summary>
+        public string? Title
+        {
+            get
+            {
+                return Item.Text;
+            }
+        }
+
+        /// <summary>
+        /// Gets the description of the calendar item instance.
+        /// </summary>
+        public string? Description
+        {
+            get
+            {
+                return Item.Description;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the calendar item instance is still valid,
         /// which means the change token has not been renewed.
         /// </summary>
