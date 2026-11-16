@@ -40,6 +40,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PatternRuleGetDatesResult"/> struct
+        /// with a single date.
+        /// </summary>
+        /// <param name="date">The date that matches the repeat pattern within the specified range.</param>
+        public PatternRuleGetDatesResult(DateOnly date)
+        {
+            Dates = new[] { date };
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PatternRuleGetDatesResult"/> struct.
         /// </summary>
         public PatternRuleGetDatesResult()

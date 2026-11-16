@@ -279,7 +279,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
-            return GetDates(prm, GetDatesUnfiltered);
+            return GetSeriesDates(prm, GetDatesUnfiltered);
         }
 
         /// <summary>

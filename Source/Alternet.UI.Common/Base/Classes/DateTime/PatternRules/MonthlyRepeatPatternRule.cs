@@ -265,7 +265,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
-            return GetDates(prm, GetDatesUnfiltered);
+            return GetSeriesDates(prm, GetDatesUnfiltered);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Alternet.UI
         /// <param name="year">The year for which to get the date.</param>
         /// <param name="month">The month for which to get the date.</param>
         /// <returns>The calculated date, or <c>null</c> if the date is invalid.</returns>
-        public virtual DateOnly[]? GetDates(int year, CalendarMonth month)
+        public virtual DateOnly[]? GetSeriesDates(int year, CalendarMonth month)
         {
             if (Kind == RepeatKind.DayOfMonth)
             {
@@ -314,7 +314,7 @@ namespace Alternet.UI
 
                 for (var date = start; date <= end; date = date.AddMonths(IntervalMonths))
                 {
-                    DateOnly[]? occurrenceDates = GetDates(date.Year, (CalendarMonth)date.Month);
+                    DateOnly[]? occurrenceDates = GetSeriesDates(date.Year, (CalendarMonth)date.Month);
 
                     if (occurrenceDates is null)
                         continue;

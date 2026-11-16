@@ -322,7 +322,7 @@ namespace Alternet.UI
         /// <param name="prm">The parameters specifying the date range and maximum date.</param>
         /// <param name="getDatesUnfiltered">A delegate to get unfiltered dates within the specified range.</param>
         /// <returns>A <see cref="PatternRuleGetDatesResult"/> containing the filtered dates.</returns>
-        protected virtual PatternRuleGetDatesResult GetDates(
+        protected virtual PatternRuleGetDatesResult GetSeriesDates(
             in PatternRuleGetDatesParams prm,
             GetDatesDelegate getDatesUnfiltered)
         {

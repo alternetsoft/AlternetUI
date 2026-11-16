@@ -115,19 +115,24 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
         {
-            IEnumerable<DateOnly> Internal()
-            {
-                var date = StartDate;
-                var endDate = EndDate;
+            var startDate = StartDate;
+            var endDate = EndDate;
 
-                while (date <= endDate)
-                {
-                    yield return date;
-                    date = date.AddDays(1);
-                }
+            var startDateInRange = startDate >= prm.MinDate && startDate <= prm.MaxDate;
+
+            if (startDateInRange)
+            {
+                return new(startDate);
             }
 
-            return new (Internal());
+            var endDateInRange = endDate >= prm.MinDate && endDate <= prm.MaxDate;
+
+            if (endDateInRange)
+            {
+                return new(startDate);
+            }
+
+            return new();
         }
 
         /// <inheritdoc/>
