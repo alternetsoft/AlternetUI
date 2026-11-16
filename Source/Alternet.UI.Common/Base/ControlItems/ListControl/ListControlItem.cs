@@ -1270,12 +1270,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the current item is a cell within a list control
-        /// and should be treated as selected for drawing and other purposes.
-        /// </summary>
-        public virtual bool? CellSelected { get; set; }
-
-        /// <summary>
         /// Gets font of the container.
         /// </summary>
         public static Font GetContainerFont(IListControlItemContainer? container)
@@ -3184,7 +3178,12 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsSelectedCell(ItemCellContext prm)
         {
-            return CellSelected ?? prm.Container?.IsSelectedCell(this, prm) ?? false;
+            var container = prm.Container;
+
+            if (container is null)
+                return false;
+
+            return container.IsSelectedCell(this, prm);
         }
 
         /// <summary>
@@ -3416,6 +3415,55 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets "CellSelected" state of the item in the container.
+        /// This is used when item is a cell inside of other <see cref="ListControlItem"/>.
+        /// </summary>
+        public virtual bool IsCellSelectedInContainer(IListControlItemContainer? container)
+        {
+            var item = GetContainerRelated(container);
+            return item.Value.IsCellSelected;
+        }
+
+        /// <summary>
+        /// Sets "CellSelected" state of the item in the container.
+        /// This is used when item is a cell inside of other <see cref="ListControlItem"/>.
+        /// </summary>
+        /// <param name="container">Item container.</param>
+        /// <param name="value">New value for the "CellSelected" state.</param>
+        /// <returns>True if "CellSelected" state was changed; False otherwise.</returns>
+        public virtual bool SetCellSelectedInContainer(IListControlItemContainer? container, bool value)
+        {
+            var item = GetContainerRelated(container);
+            var data = item.Value;
+
+            if (data.IsCellSelected != value)
+            {
+                data.IsCellSelected = value;
+                item.Value = data;
+                container?.CellSelectionChanged(this, value);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Toggles selected state of the item.
+        /// </summary>
+        /// <param name="container">Item container.</param>
+        /// <returns>New value for the selected state.</returns>
+        public virtual bool ToggleSelected(IListControlItemContainer? container)
+        {
+            var item = GetContainerRelated(container);
+            var data = item.Value;
+            var newSelected = !data.IsSelected;
+            data.IsSelected = newSelected;
+            item.Value = data;
+            container?.CellSelectionChanged(this, newSelected);
+            return newSelected;
+        }
+
+        /// <summary>
         /// Sets whether item is selected.
         /// </summary>
         /// <returns>True if selected state was changed; False otherwise.</returns>
@@ -3454,16 +3502,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Toggles selected state of the item.
+        /// Toggles "CellSelected" state of the item in the container.
         /// </summary>
         /// <param name="container">Item container.</param>
-        /// <returns>New value for the selected state.</returns>
-        public virtual bool ToggleSelected(IListControlItemContainer? container)
+        /// <returns>New value for the "CellSelected" state.</returns>
+        public virtual bool ToggleCellSelectedInContainer(IListControlItemContainer? container)
         {
             var item = GetContainerRelated(container);
             var data = item.Value;
-            var newSelected = !data.IsSelected;
-            data.IsSelected = newSelected;
+            var newSelected = !data.IsCellSelected;
+            data.IsCellSelected = newSelected;
             item.Value = data;
             return newSelected;
         }
@@ -3488,7 +3536,7 @@ namespace Alternet.UI
         /// <returns>A string that represents the current object.</returns>
         public override string? ToString()
         {
-            return Text ?? base.ToString();
+            return Text ?? Value?.ToString() ?? base.ToString();
         }
 
         /// <summary>
@@ -3627,7 +3675,8 @@ namespace Alternet.UI
         /// Sets the alignment of the content and the image within the element.
         /// </summary>
         /// <remarks>Use this method to customize both the content and image alignment for the element.
-        /// The default alignment centers both content and image, while other options allow for specific positioning to
+        /// The default alignment centers both content and image,
+        /// while other options allow for specific positioning to
         /// suit layout requirements.</remarks>
         /// <param name="align">The alignment of the content within the element.
         /// Specifies the horizontal and vertical positioning of the
