@@ -104,7 +104,7 @@ namespace Alternet.UI
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        [Category("Focus")]
+        [Category(KnownMemberCategory.Focus)]
         public virtual bool CanFocus
         {
             get

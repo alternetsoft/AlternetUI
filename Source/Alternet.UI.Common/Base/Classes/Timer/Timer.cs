@@ -104,13 +104,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the specified timer interval has elapsed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? Tick;
 
         /// <summary>
         /// Occurs when the specified timer interval has elapsed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event ElapsedEventHandler? Elapsed;
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Alternet.UI
         /// the events each time the interval elapses; <see langword="false"/> if it should
         /// raise the events only once, after the first time the interval elapses.
         /// The default is <see langword="true"/>.</returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(true)]
         public virtual bool AutoReset
         {

@@ -1595,5 +1595,9 @@ namespace Alternet.UI
         {
             return null;
         }
+
+        void IListControlItemContainer.CellSelectionChanged(ListControlItem item, bool selected)
+        {
+        }
     }
 }

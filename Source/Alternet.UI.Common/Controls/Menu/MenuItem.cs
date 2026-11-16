@@ -164,25 +164,25 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? EnabledChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Visible"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? VisibleChanged;
 
         /// <summary>
         /// Occurs when the menu item is clicked.
         /// </summary>
-        [Category("Action")]
+        [Category(KnownMemberCategory.Action)]
         public virtual event EventHandler? Click;
 
         /// <summary>
         /// Occurs when the <see cref="Text" /> property value changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? TextChanged;
 
         /// <summary>
@@ -193,55 +193,55 @@ namespace Alternet.UI
         /// the change through the <see cref="BaseEventArgs{T}"/> parameter.
         /// The <see cref="MenuChangeKind"/> value
         /// indicates the specific type of change that occurred.</remarks>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler<BaseEventArgs<MenuChangeKind>>? Changed;
 
         /// <summary>
         /// Occurs when menu item is opened.
         /// </summary>
-        [Category("Action")]
+        [Category(KnownMemberCategory.Action)]
         public event EventHandler? Opened;
 
         /// <summary>
         /// Occurs when menu item is closed.
         /// </summary>
-        [Category("Action")]
+        [Category(KnownMemberCategory.Action)]
         public event EventHandler? Closed;
 
         /// <summary>
         /// Occurs when menu item is highlighted.
         /// </summary>
-        [Category("Action")]
+        [Category(KnownMemberCategory.Action)]
         public event EventHandler? Highlighted;
 
         /// <summary>
         /// Occurs when the <see cref="Shortcut"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? ShortcutChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Checked"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? CheckedChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Role"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? RoleChanged;
 
         /// <summary>
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? ImageChanged;
 
         /// <summary>
         /// Occurs when the <see cref="DisabledImage"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? DisabledImageChanged;
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This event is triggered whenever the click action is updated,
         /// allowing subscribers to respond to the change.</remarks>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? ClickActionChanged;
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the user scrolls through the control contents using scrollbars.
         /// </summary>
-        [Category("Action")]
+        [Category(KnownMemberCategory.Action)]
         public event ScrollEventHandler? Scroll;
 
         /// <summary>

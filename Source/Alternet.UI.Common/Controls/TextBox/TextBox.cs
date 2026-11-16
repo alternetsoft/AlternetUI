@@ -156,7 +156,7 @@ namespace Alternet.UI
         /// <returns>
         /// The starting position of text selected in the control.
         /// </returns>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual int SelectionStart
@@ -185,7 +185,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If there is no selection, the replacement text is inserted at the caret.
         /// </remarks>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual string SelectedText
@@ -219,7 +219,7 @@ namespace Alternet.UI
         /// <returns>
         /// The number of characters selected in the control.
         /// </returns>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual int SelectionLength

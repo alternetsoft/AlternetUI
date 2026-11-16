@@ -130,13 +130,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the <see cref="SelectedIndex" /> property has changed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? SelectedIndexChanged;
 
         /// <summary>
         /// Occurs when the selected page has changed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? SelectedPageChanged;
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Alternet.UI
         /// The default is -1, which is also the value if no tab page is selected.
         /// </returns>
         [Browsable(false)]
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(-1)]
         public virtual int SelectedIndex
         {
@@ -333,7 +333,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the direction in which vertical text should be drawn.
-        /// If not specified, the default direction is used (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
+        /// If not specified, the default direction is used
+        /// (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
         /// This property is relevant only when <see cref="IsVerticalText"/> is set to <see langword="true"/>.
         /// </summary>
         public virtual VerticalTextDirection? VertDirection
@@ -415,7 +416,7 @@ namespace Alternet.UI
         ///  Gets or sets the currently selected tab page.
         /// </summary>
         [Bindable(true)]
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public virtual AbstractControl? SelectedPage
@@ -452,7 +453,7 @@ namespace Alternet.UI
         /// This property was added for compatibility and currently doesn't change
         /// control behavior.
         /// </remarks>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(TabSizeMode.Normal)]
         [RefreshProperties(RefreshProperties.Repaint)]
         [Browsable(false)]
@@ -481,7 +482,7 @@ namespace Alternet.UI
         /// This property was added for compatibility and currently doesn't change
         /// control behavior.
         /// </remarks>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [Localizable(true)]
         [DefaultValue(TabAppearance.Normal)]
         [Browsable(false)]
@@ -552,7 +553,7 @@ namespace Alternet.UI
         /// Gets the number of tabs in the tab strip.
         /// </summary>
         /// <returns>The number of tabs in the tab strip.</returns>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual int TabCount

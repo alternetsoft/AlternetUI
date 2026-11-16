@@ -173,7 +173,7 @@ namespace Alternet.UI
         /// <returns>
         /// <see langword="true" /> if the background is drawn using visual styles;
         /// otherwise, <see langword="false" />.</returns>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         public virtual bool UseVisualStyleBackColor
         {
             get => useVisualStyleBackColor;

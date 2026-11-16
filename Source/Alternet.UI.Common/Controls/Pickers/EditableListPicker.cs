@@ -184,7 +184,7 @@ namespace Alternet.UI
         /// <returns>
         /// One of the <see cref="ComboBoxStyle" /> values.
         /// </returns>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [DefaultValue(ComboBoxStyle.DropDown)]
         [RefreshProperties(RefreshProperties.Repaint)]
         [Browsable(false)]

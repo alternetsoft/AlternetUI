@@ -102,13 +102,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the splitter control is in the process of moving.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event SplitterEventHandler? SplitterMoving;
 
         /// <summary>
         /// Occurs when the splitter control is moved.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event SplitterEventHandler? SplitterMoved;
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace Alternet.UI
         /// is not occupied by edge docked controls. This is the area that
         /// would be used for any <see cref="DockStyle.Fill"/> docked control.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [Localizable(true)]
         [DefaultValue(25)]
         public virtual Coord MinExtra
@@ -319,7 +319,7 @@ namespace Alternet.UI
         /// Gets or sets the minimum size (in dips) of the target of the splitter.
         /// The target of a splitter is the control that is previous in the docking order
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [Localizable(true)]
         [DefaultValue(25)]
         public virtual Coord MinSize
@@ -393,7 +393,7 @@ namespace Alternet.UI
         /// <remarks>
         /// If the splitter is not bound to a control, <see cref="SplitPosition"/> equals -1.
         /// </remarks>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual Coord SplitPosition

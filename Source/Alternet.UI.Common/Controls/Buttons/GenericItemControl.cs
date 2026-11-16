@@ -1412,5 +1412,9 @@ namespace Alternet.UI
         {
             itemDrawable.Item = item;
         }
+
+        void IListControlItemContainer.CellSelectionChanged(ListControlItem item, bool selected)
+        {
+        }
     }
 }

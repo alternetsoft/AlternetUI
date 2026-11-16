@@ -177,7 +177,7 @@ namespace Alternet.UI
         /// </summary>
         /// <value><c>true</c> if the text in the control can be edited;
         /// otherwise <c>false</c>.</value>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [DefaultValue(true)]
         public virtual bool IsEditable
         {
@@ -201,7 +201,7 @@ namespace Alternet.UI
         /// <returns>
         /// One of the <see cref="ComboBoxStyle" /> values.
         /// </returns>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [DefaultValue(ComboBoxStyle.DropDown)]
         [RefreshProperties(RefreshProperties.Repaint)]
         [Browsable(false)]

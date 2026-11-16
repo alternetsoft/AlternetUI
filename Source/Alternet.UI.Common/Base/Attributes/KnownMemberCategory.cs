@@ -56,7 +56,13 @@ namespace Alternet.UI
         /// which includes properties and events related to keyboard interactions.
         /// </summary>
         public const string Key = "Key";
-        
+
+        /// <summary>
+        /// Indicates that the member belongs to the "Data" category,
+        /// which includes properties and events related to data handling.
+        /// </summary>
+        public const string Data = "Data";
+
         /// <summary>
         /// Indicates that the member belongs to the "Action" category,
         /// which includes properties and events related to actions performed by the control.

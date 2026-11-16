@@ -243,7 +243,7 @@ namespace Alternet.UI
         /// <remarks>
         /// Currently this property doesn't do anything and is added for compatibility.
         /// </remarks>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [Browsable(false)]
         public virtual bool UseVisualStyleBackColor { get; set; } = true;
 

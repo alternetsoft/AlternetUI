@@ -99,7 +99,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when <see cref="ToolTipVisible"/> property is changed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? ToolTipVisibleChanged;
 
         /// <summary>

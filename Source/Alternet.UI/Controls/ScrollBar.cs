@@ -44,13 +44,13 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Value" /> property is changed, either
         /// by a <see cref="AbstractControl.Scroll" /> event or programmatically.
         /// </summary>
-        [Category("Action")]
+        [Category(KnownMemberCategory.Action)]
         public event EventHandler? ValueChanged;
 
         /// <summary>
         /// Occurs when the <see cref="IsVertical" /> property is changed.
         /// </summary>
-        [Category("Action")]
+        [Category(KnownMemberCategory.Action)]
         public event EventHandler? IsVerticalChanged;
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Alternet.UI
         /// <see cref="Value" /> property when the scroll box is moved a large distance.
         /// </summary>
         /// <returns>A numeric value. The default value is 10.</returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(10)]
         [RefreshProperties(RefreshProperties.Repaint)]
         public virtual int LargeChange
@@ -98,7 +98,7 @@ namespace Alternet.UI
         /// <returns>
         /// A numeric value. The default value is 100.
         /// </returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(100)]
         [RefreshProperties(RefreshProperties.Repaint)]
         public virtual int Maximum
@@ -120,7 +120,7 @@ namespace Alternet.UI
         /// <returns>
         /// A numeric value. The default value is 0.
         /// </returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(0)]
         [RefreshProperties(RefreshProperties.Repaint)]
         public virtual int Minimum
@@ -142,7 +142,7 @@ namespace Alternet.UI
         /// a small distance.
         /// </summary>
         /// <returns>A numeric value. The default value is 1.</returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(1)]
         public virtual int SmallChange
         {
@@ -203,7 +203,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A numeric value that is within the <see cref="Minimum" /> and
         /// <see cref="Maximum" /> range. The default value is 0.</returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [DefaultValue(0)]
         [Bindable(true)]
         public virtual int Value

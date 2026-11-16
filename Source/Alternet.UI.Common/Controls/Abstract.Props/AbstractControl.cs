@@ -819,7 +819,7 @@ namespace Alternet.UI
         /// Currently this property is used only when control is placed
         /// inside the <see cref="LayoutPanel"/>.
         /// </remarks>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         [Localizable(true)]
         [RefreshProperties(RefreshProperties.Repaint)]
         [DefaultValue(DockStyle.None)]
@@ -1106,7 +1106,7 @@ namespace Alternet.UI
         /// This property queries internal context menu and does not check whether
         /// the control uses context menu from its parent control.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [Browsable(false)]
         public virtual bool HasContextMenu
         {
@@ -1122,7 +1122,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>One of the <see cref="ImeMode" /> values.
         /// The default is <see cref="ImeMode.Inherit" />.</returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [Localizable(true)]
         [Browsable(false)]
         public virtual ImeMode ImeMode
@@ -1546,7 +1546,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A value representing the distance, in dips, between the right edge of the
         /// control and the left edge of its container's client area.</returns>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -1565,7 +1565,7 @@ namespace Alternet.UI
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public Coord Bottom
         {
             get => Bounds.Bottom;
@@ -3707,7 +3707,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>An <see cref="Image" /> that represents the image to display in
         /// the background of the control.</returns>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [DefaultValue(null)]
         [Localizable(true)]
         [Browsable(false)]
@@ -3854,7 +3854,7 @@ namespace Alternet.UI
         /// <returns>
         /// <see langword="true" /> if the control is currently re-creating its handle;
         /// otherwise, <see langword="false" />.</returns>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
