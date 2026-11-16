@@ -8,6 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
@@ -53,7 +54,7 @@ namespace Alternet.UI
         /// </summary>
         public static LogFlags Flags;
 
-        private static readonly object locker = new();
+        private static readonly Lock locker = new();
         private static readonly ICustomFlags EventLoggedFlags = FlagsFactory.Create();
 
         private static List<(string Name, Action Action)>? registeredLogActions;

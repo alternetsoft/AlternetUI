@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace Alternet.UI
 {
@@ -27,7 +28,7 @@ namespace Alternet.UI
         /// operations.</remarks>
         public static readonly ConcurrentDictionary<string, Assembly> LoadedAssemblies = new ();
 
-        private static readonly object LoadAssemblyMetadataLocker = new object();
+        private static readonly Lock LoadAssemblyMetadataLocker = new ();
 
         /// <summary>
         /// Gets or sets a value indicating whether loaded assemblies should be cached.

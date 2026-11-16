@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alternet.UI
@@ -12,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public class BaseException : Exception, IBaseObjectWithId
     {
-        private readonly object locker = new();
+        private readonly Lock locker = new();
 
         private FlagsAndAttributesStruct attr = new();
         private ObjectUniqueId? uniqueId;

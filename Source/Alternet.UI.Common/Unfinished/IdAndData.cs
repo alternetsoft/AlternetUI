@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alternet.UI
@@ -11,7 +12,7 @@ namespace Alternet.UI
     {
         private readonly ConcurrentStack<int> freedIds = new();
         private readonly List<T?> dataList;
-        private readonly object lockObject = new();
+        private readonly Lock lockObject = new();
 
         public IdAndData(int capacity = 32000)
         {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Alternet.UI.Localization;
 
@@ -13,7 +14,7 @@ namespace Alternet.UI
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class ControlCategoryAttribute : BaseAttribute
     {
-        private readonly object locker = new();
+        private readonly Lock locker = new();
         private readonly string categoryId;
         private bool localized;
         private string? categoryTitle;

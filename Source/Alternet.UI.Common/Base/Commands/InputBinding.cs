@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Security;
+using System.Threading;
 
 namespace Alternet.UI
 {
@@ -10,7 +11,7 @@ namespace Alternet.UI
     /// </summary>
     public class InputBinding : BaseObjectWithAttr, ICommandSource
     {
-        private static readonly object DataLock = new();
+        private static readonly Lock dataLock = new();
 
         private InputGesture? gesture = null;
         private ICommand? command;
@@ -109,7 +110,7 @@ namespace Alternet.UI
             {
                 value ??= new InputGesture();
 
-                lock (DataLock)
+                lock (dataLock)
                 {
                     gesture = value;
                 }

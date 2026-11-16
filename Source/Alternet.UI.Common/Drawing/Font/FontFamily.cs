@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 using Alternet.Skia;
 using Alternet.UI;
@@ -16,7 +17,7 @@ namespace Alternet.Drawing
     /// </summary>
     public partial class FontFamily : BaseObject
     {
-        private static readonly object syncRoot = new();
+        private static readonly Lock syncRoot = new();
         private static BaseDictionary<string, FontFamily>? items;
         private static List<string>? namesAscending;
 

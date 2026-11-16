@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Threading;
 
 namespace Alternet.UI
 {
@@ -8,7 +9,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class BaseObjectWithId : BaseObject, IBaseObjectWithId
     {
-        private readonly object locker = new();
+        private readonly Lock locker = new();
 
         private ObjectUniqueId uniqueId = ObjectUniqueId.Empty;
 

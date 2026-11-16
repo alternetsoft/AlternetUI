@@ -8,7 +8,7 @@ namespace Alternet.UI
     {
         private readonly Delegate? mTargetDelegate;
         private readonly object?[]? mTargetDelegateArgs;
-        private readonly object mInvokeSyncObject = new();
+        private readonly Lock mInvokeSyncObject = new();
         private readonly bool mSynchronous;
         private ManualResetEvent? mCompletedSyncEvent;
 

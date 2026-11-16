@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 using Alternet.Base.Collections;
 
@@ -26,7 +27,7 @@ namespace Alternet.UI
     /// <seealso cref="IList"/>
     public class ListBoxItems : DisposableObject, IListSource<object?>, IList
     {
-        private readonly object syncRoot = new();
+        private readonly Lock syncRoot = new();
         private IListSourceListener<object?>[] listeners = [];
 
         private readonly ListSource<ListControlItem>? items;

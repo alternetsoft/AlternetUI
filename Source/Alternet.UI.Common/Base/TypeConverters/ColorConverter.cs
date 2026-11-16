@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
+using System.Threading;
 
 using Alternet.UI;
 
@@ -15,9 +16,9 @@ namespace Alternet.Drawing
     /// <see cref="TypeDescriptor" />.</summary>
     public class ColorConverter : BaseTypeConverter
     {
-        private static readonly string ColorConstantsLock = "colorConstants";
-        private static readonly string SystemColorConstantsLock = "systemColorConstants";
-        private static readonly string ValuesLock = "values";
+        private static readonly Lock ColorConstantsLock = new();
+        private static readonly Lock SystemColorConstantsLock = new();
+        private static readonly Lock ValuesLock = new();
 
         private static Hashtable? colorConstants;
         private static Hashtable? systemColorConstants;
@@ -29,7 +30,7 @@ namespace Alternet.Drawing
             {
                 if (ColorConverter.colorConstants == null)
                 {
-                    string colorConstantsLock = ColorConverter.ColorConstantsLock;
+                    var colorConstantsLock = ColorConverter.ColorConstantsLock;
                     lock (colorConstantsLock)
                     {
                         if (ColorConverter.colorConstants == null)
@@ -51,7 +52,7 @@ namespace Alternet.Drawing
             {
                 if (ColorConverter.systemColorConstants == null)
                 {
-                    string systemColorConstantsLock =
+                    var systemColorConstantsLock =
                         ColorConverter.SystemColorConstantsLock;
                     lock (systemColorConstantsLock)
                     {
@@ -75,8 +76,10 @@ namespace Alternet.Drawing
         /// <remarks>For colors with an alpha value less than 255, the string includes the alpha
         /// component. The separator used between components is determined by the specified culture. This method is
         /// useful for serializing colors for display or storage in a culture-sensitive format.</remarks>
-        /// <param name="color">The color to convert to a string. If the color is empty, an empty string is returned.</param>
-        /// <param name="context">An optional type descriptor context that can provide additional information about the conversion.
+        /// <param name="color">The color to convert to a string. If the color is empty,
+        /// an empty string is returned.</param>
+        /// <param name="context">An optional type descriptor context that can provide additional
+        /// information about the conversion.
         /// May be null.</param>
         /// <param name="culture">An optional culture information object used to format the string output. If null,
         /// the invariant culture is used.</param>
@@ -308,7 +311,7 @@ namespace Alternet.Drawing
         {
             if (ColorConverter.values == null)
             {
-                string valuesLock = ColorConverter.ValuesLock;
+                var valuesLock = ColorConverter.ValuesLock;
                 lock (valuesLock)
                 {
                     if (ColorConverter.values == null)

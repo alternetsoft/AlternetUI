@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Threading;
 
 namespace Alternet.UI
 {
     internal struct FlagsAndAttributesStruct
     {
-        private readonly object locker = new();
+        private readonly Lock locker = new();
 
         private IFlagsAndAttributes? flagsAndAttributes;
         private IIntFlagsAndAttributes? intFlagsAndAttributes;
