@@ -254,6 +254,27 @@ namespace Alternet.UI
             /// The row item which is the parent of the cell.
             /// </summary>
             public ListControlItem? RowItem { get; set; }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ItemCellContext"/> struct with
+            /// the specified container, row item index, and row item.
+            /// </summary>
+            /// <param name="container">The container that holds the list control item.</param>
+            /// <param name="rowItemIndex">The index of the row item within the container.</param>
+            /// <param name="rowItem">The row item which is the parent of the cell.</param>
+            public ItemCellContext(IListControlItemContainer? container, int rowItemIndex, ListControlItem? rowItem)
+            {
+                Container = container;
+                RowItemIndex = rowItemIndex;
+                RowItem = rowItem;
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ItemCellContext"/> struct.
+            /// </summary>
+            public ItemCellContext()
+            {
+            }
         }
 
         /// <summary>
