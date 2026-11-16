@@ -79,6 +79,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the calendar item has a description.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasDescription => Description is null || Description.Length == 0;
+
+        /// <summary>
         /// Gets or sets a value indicating whether it is an all-day event.
         /// This is calculated based on the <see cref="Duration"/> property
         /// and can be set to coerce the duration to an all-day duration.

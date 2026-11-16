@@ -65,7 +65,7 @@ namespace Alternet.UI
 
         private readonly GenericSectionPanel detailsPanel = new(Localized.CalendarItemLabelDetails);
         private readonly GenericSectionPanel alarmPanel = new();
-        private readonly GenericSectionPanel descriptionPanel = new();
+        private readonly GenericSectionPanel descriptionPanel = new(Localized.CalendarItemLabelDescription);
 
         /// <summary>
         /// Gets the <see cref="TextPicker"/> that is used to edit the title of the <see cref="CalendarItem"/> being edited.
@@ -103,6 +103,7 @@ namespace Alternet.UI
             Padding = DefaultPadding;
 
             detailsPanel.Margin = DefaultMinChildMargin;
+            descriptionPanel.Margin = DefaultMinChildMargin;
             alarmPanel.Margin = DefaultMinChildMargin;
             alarmPanel.IsCollapsed = true;
             alarmPanel.TitleFormat = "{0}: {1}";
@@ -131,15 +132,18 @@ namespace Alternet.UI
             rulePicker.Padding = 0;
 
             locationPicker.Parent = detailsPanel;
-            descriptionPicker.Parent = detailsPanel;
+            descriptionPicker.Parent = descriptionPanel;
             fullDayDurationSwitch.Parent = detailsPanel;
 
             rulePicker.SeriesPanel.IsCollapsed = true;
             rulePicker.SeriesPanel.TitleFormat = "{0}: {1}";
 
+            UpdateDescriptionPanel();
+
             detailsPanel.Parent = this;
             alarmPanel.Parent = this;
             rulePicker.Parent = this;
+            descriptionPanel.Parent = this;
 
             fullDayDurationSwitch.CheckedChanged += OnFullDayDurationSwitchCheckedChanged;
             titlePicker.MainControl.ValueChanged += OnTitlePickerValueChanged;
@@ -286,9 +290,9 @@ namespace Alternet.UI
         public virtual void ValueToControls()
         {
             fullDayDurationSwitch.IsChecked = Value.IsAllDay;
-            titlePicker.Text = Value.Text ?? string.Empty;
-            descriptionPicker.Text = Value.Description ?? string.Empty;
-            locationPicker.Text = Value.Location?.ToString() ?? string.Empty;
+            titlePicker.MainControl.Text = Value.Text ?? string.Empty;
+            descriptionPicker.MainControl.Text = Value.Description ?? string.Empty;
+            locationPicker.MainControl.Text = Value.Location?.ToString() ?? string.Empty;
             statusPicker.MainControl.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
             categoryPicker.MainControl.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
             rulePicker.Value = Value.Rule;
@@ -300,6 +304,13 @@ namespace Alternet.UI
                 Localized.SeriesPattern,
                 rulePicker.GetLocalizedText(Value.Rule.Kind),
             };
+
+            if (Value.Rule.IsRepeated)
+                rulePicker.SeriesPanel.IsCollapsed = false;
+            else
+                rulePicker.SeriesPanel.IsCollapsed = true;
+
+            UpdateDescriptionPanel();
         }
 
         /// <summary>
@@ -340,6 +351,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates the description panel based on the current state of the <see cref="CalendarItem"/> being edited.
+        /// </summary>
+        protected virtual void UpdateDescriptionPanel()
+        {
+            if (Value.HasDescription)
+                descriptionPanel.IsCollapsed = true;
+            else
+                descriptionPanel.IsCollapsed = false;
+        }
+
+        /// <summary>
         /// Called when the value of the title picker changes.
         /// This method updates the <see cref="CalendarItem.Text"/> property
         /// </summary>
@@ -347,7 +369,7 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnTitlePickerValueChanged(object? s, EventArgs e)
         {
-            Value.Text = titlePicker.Text;
+            Value.Text = titlePicker.MainControl.Text;
         }
 
         /// <summary>
@@ -358,7 +380,7 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnLocationPickerValueChanged(object? s, EventArgs e)
         {
-            Value.Location = locationPicker.Text;
+            Value.Location = locationPicker.MainControl.Text;
         }
 
         /// <summary>
@@ -369,7 +391,7 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnDescriptionPickerValueChanged(object? s, EventArgs e)
         {
-            Value.Description = descriptionPicker.Text;
+            Value.Description = descriptionPicker.MainControl.Text;
         }
 
         /// <summary>
