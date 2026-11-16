@@ -46,13 +46,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws the specified text within the given rectangle using the provided graphics context and alignment settings.
+        /// Draws the specified text within the given rectangle using the provided graphics
+        /// context and alignment settings.
         /// </summary>
         /// <param name="dc">The graphics context used to draw the text.</param>
         /// <param name="s">The text to be drawn.</param>
         /// <param name="paintRectangle">The rectangle that defines the area in which to draw the text.</param>
         /// <param name="foreColor">The color of the text.</param>
-        /// <param name="backColor">The background color of the text. Pass <see cref="Color.Empty"/> to indicate no background.</param>
+        /// <param name="backColor">The background color of the text. Pass <see cref="Color.Empty"/>
+        /// to indicate no background.</param>
         /// <param name="horizontalAlignment">The horizontal alignment of the text within the rectangle.</param>
         /// <param name="verticalAlignment">The vertical alignment of the text within the rectangle.</param>
         public virtual void PaintText(
@@ -177,7 +179,8 @@ namespace Alternet.UI
                 else
                 {
                     drawItemArgs.BackColor = RealBackgroundColor.GetColor(isDark);
-                    drawItemArgs.ForeColor = (ListControlItem.GetItemTextColor(item, this) ?? RealForegroundColor).GetColor(isDark);
+                    drawItemArgs.ForeColor = (ListControlItem.GetItemTextColor(item, this)
+                        ?? RealForegroundColor).GetColor(isDark);
                 }
 
                 RaiseDrawItem(drawItemArgs);
@@ -446,6 +449,23 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Sets the width of all columns to the maximum content size of the respective columns.
+        /// This method measures the content size of each column and each row.
+        /// </summary>
+        public virtual void SetColumnsWidthToMaxContentSize()
+        {
+            DoInsideUpdate(() =>
+            {
+                var preferredContentSize = GetPreferredContentSize(MeasureCanvas);
+                var maxWidth = preferredContentSize.GetMaxColumnContentSize().Width;
+                foreach (var col in Columns)
+                {
+                    col.SuggestedWidth = maxWidth;
+                }
+            });
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
@@ -521,6 +541,54 @@ namespace Alternet.UI
             public ListControlItem.MeasureItemSizeResult[] RowSizes { get; set; }
 
             /// <summary>
+            /// Gets the maximum content width of all columns based on the measured row sizes.
+            /// </summary>
+            /// <returns>The maximum content width of all columns.</returns>
+            public readonly SizeD GetMaxColumnContentSize()
+            {
+                SizeD result = SizeD.MinusOne;
+                
+                foreach (ListControlItem.MeasureItemSizeResult rowSize in RowSizes)
+                {
+                    foreach (ListControlItem.MeasureItemSizeResult cellSize in rowSize.Cells)
+                    {
+                        if (cellSize.Item is null)
+                            continue;
+                        var columnId = cellSize.Item.ColumnId;
+                        result = SizeD.Max(result, cellSize.Size);
+                    }
+                }
+
+                return result;
+            }
+
+            /// <summary>
+            /// Gets the maximum content width of the specified column based on the measured row sizes.
+            /// </summary>
+            /// <param name="column">The column for which to get the maximum content width.</param>
+            /// <returns>The maximum content width of the specified column.</returns>
+            public readonly SizeD GetMaxContentWidth(ListControlColumn column)
+            {
+                SizeD result = SizeD.MinusOne;
+
+                foreach (ListControlItem.MeasureItemSizeResult rowSize in RowSizes)
+                {
+                    foreach (ListControlItem.MeasureItemSizeResult cellSize in rowSize.Cells)
+                    {
+                        if (cellSize.Item is null)
+                            continue;
+                        var columnId = cellSize.Item.ColumnId;
+                        if (columnId == column.UniqueId)
+                        {
+                            result = SizeD.Max(result, cellSize.Size);
+                        }
+                    }
+                }
+
+                return result;
+            }
+
+            /// <summary>
             /// Gets content width of the specified column. Returns -1 if
             /// no measurement is available for the column.
             /// </summary>
@@ -551,7 +619,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Represents information about a vertical grid line, including its location, length, width, and associated column.
+        /// Represents information about a vertical grid line, including its location,
+        /// length, width, and associated column.
         /// </summary>
         public struct VertGridLineInfo
         {
