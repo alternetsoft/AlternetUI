@@ -436,6 +436,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the value of all sides except the specified
+        /// ones for an array of <see cref="Thickness"/> objects.
+        /// </summary>
+        /// <param name="thicknesses">The array of <see cref="Thickness"/> objects.</param>
+        /// <param name="sides">The sides to exclude from setting the value.</param>
+        /// <param name="value">The value to set.</param>
+        public static void SetValuesExcept(Thickness[] thicknesses, BorderSides sides, float value)
+        {
+            for (var i = 0; i < thicknesses.Length; i++)
+            {
+                var item = thicknesses[i];
+                item.SetValuesExcept(sides, value);
+                thicknesses[i] = item;
+            }
+        }
+
+        /// <summary>
         /// Sets the value of all sides except the specified ones.
         /// </summary>
         /// <param name="sides">The sides to exclude from setting the value.</param>

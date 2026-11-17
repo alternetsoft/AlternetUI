@@ -139,6 +139,7 @@ namespace Alternet.UI
                 TabIndex = tabIndex,
                 TabCount = tabCount,
                 RoundCorners = prm.RoundCorners,
+                GetHeaderButtonVisibleBorderSides = prm.GetHeaderButtonVisibleBorderSides,
             };
 
             return prmItem;
@@ -262,6 +263,7 @@ namespace Alternet.UI
             var dc = prm.Graphics;
             var brush = prm.Brush;
             var position = prm.TabPosition;
+            var bordersFunc = prm.GetHeaderButtonVisibleBorderSides;
 
             var rects = GetRects(ref prm);
 
@@ -281,8 +283,12 @@ namespace Alternet.UI
                     break;
             }
 
-            void DrawBorders(Thickness[] borders)
+            void DrawBorders(Thickness[] borders, TabControl.TabHeaderButtonPosition position)
             {
+                var visibleSides = GetVisibleSides(position);
+
+                Thickness.SetValuesExcept(borders, visibleSides, 0);
+
 #pragma warning disable
                 DrawingUtils.DrawBordersWithBrush(
                             dc,
@@ -292,6 +298,11 @@ namespace Alternet.UI
 #pragma warning restore
             }
 
+            BorderSides GetVisibleSides(TabControl.TabHeaderButtonPosition position)
+            {
+                return bordersFunc?.Invoke(position) ?? BorderSides.All;
+            }
+
             void DrawOnTop()
             {
                 void DrawTopStart()
@@ -299,7 +310,7 @@ namespace Alternet.UI
                     Thickness otherBorder = new(left: 1, top: 1, right: 0, bottom: 0);
                     Thickness endBorder = new(left: 1, top: 0, right: 0, bottom: 1);
                     Thickness[] borders = { Thickness.Empty, otherBorder, endBorder };
-                    DrawBorders(borders);
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.TopStart);
                 }
 
                 void DrawTopOther()
@@ -308,12 +319,16 @@ namespace Alternet.UI
                     Thickness otherBorder = new(left: 0, top: 1, right: 1, bottom: 0);
                     Thickness endBorder = new(left: 0, top: 0, right: 0, bottom: 1);
                     Thickness[] borders = { startBorder, otherBorder, endBorder };
-                    DrawBorders(borders);
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.TopOther);
                 }
 
                 void DrawTopEnd()
                 {
-                    DrawTopOther();
+                    Thickness startBorder = new(left: 0, top: 0, right: 1, bottom: 1);
+                    Thickness otherBorder = new(left: 0, top: 1, right: 1, bottom: 0);
+                    Thickness endBorder = new(left: 0, top: 0, right: 0, bottom: 1);
+                    Thickness[] borders = { startBorder, otherBorder, endBorder };
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.TopEnd);
                 }
 
                 switch (position)
@@ -337,7 +352,7 @@ namespace Alternet.UI
                     Thickness otherBorder = new(left: 0, top: 1, right: 1, bottom: 1);
                     Thickness endBorder = new(left: 1, top: 0, right: 0, bottom: 0);
                     Thickness[] borders = { Thickness.Empty, otherBorder, endBorder };
-                    DrawBorders(borders);
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.RightStart);
                 }
 
                 void DrawRightOther()
@@ -346,12 +361,16 @@ namespace Alternet.UI
                     Thickness otherBorder = new(left: 0, top: 0, right: 1, bottom: 1);
                     Thickness endBorder = new(left: 1, top: 0, right: 0, bottom: 0);
                     Thickness[] borders = { startBorder, otherBorder, endBorder };
-                    DrawBorders(borders);
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.RightOther);
                 }
 
                 void DrawRightEnd()
                 {
-                    DrawRightOther();
+                    Thickness startBorder = new(left: 1, top: 0, right: 0, bottom: 1);
+                    Thickness otherBorder = new(left: 0, top: 0, right: 1, bottom: 1);
+                    Thickness endBorder = new(left: 1, top: 0, right: 0, bottom: 0);
+                    Thickness[] borders = { startBorder, otherBorder, endBorder };
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.RightEnd);
                 }
 
                 switch (position)
@@ -375,7 +394,7 @@ namespace Alternet.UI
                     Thickness otherBorder = new(left: 1, top: 1, right: 0, bottom: 1);
                     Thickness endBorder = new(left: 0, top: 0, right: 1, bottom: 0);
                     Thickness[] borders = { Thickness.Empty, otherBorder, endBorder };
-                    DrawBorders(borders);
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.LeftStart);
                 }
 
                 void DrawLeftOther()
@@ -384,12 +403,16 @@ namespace Alternet.UI
                     Thickness otherBorder = new(left: 1, top: 0, right: 0, bottom: 1);
                     Thickness endBorder = new(left: 0, top: 0, right: 1, bottom: 0);
                     Thickness[] borders = { startBorder, otherBorder, endBorder };
-                    DrawBorders(borders);
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.LeftOther);
                 }
 
                 void DrawLeftEnd()
                 {
-                    DrawLeftOther();
+                    Thickness startBorder = new(left: 0, top: 0, right: 1, bottom: 1);
+                    Thickness otherBorder = new(left: 1, top: 0, right: 0, bottom: 1);
+                    Thickness endBorder = new(left: 0, top: 0, right: 1, bottom: 0);
+                    Thickness[] borders = { startBorder, otherBorder, endBorder };
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.LeftEnd);
                 }
 
                 switch (position)
@@ -413,7 +436,7 @@ namespace Alternet.UI
                     Thickness otherBorder = new(left: 1, top: 0, right: 1, bottom: 1);
                     Thickness endBorder = new(left: 0, top: 1, right: 0, bottom: 0);
                     Thickness[] borders = { Thickness.Empty, otherBorder, endBorder };
-                    DrawBorders(borders);
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.BottomStart);
                 }
 
                 void DrawBottomOther()
@@ -422,12 +445,16 @@ namespace Alternet.UI
                     Thickness otherBorder = new(left: 0, top: 0, right: 1, bottom: 1);
                     Thickness endBorder = new(left: 0, top: 1, right: 0, bottom: 0);
                     Thickness[] borders = { startBorder, otherBorder, endBorder };
-                    DrawBorders(borders);
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.BottomOther);
                 }
 
                 void DrawBottomEnd()
                 {
-                    DrawBottomOther();
+                    Thickness startBorder = new(left: 0, top: 1, right: 1, bottom: 0);
+                    Thickness otherBorder = new(left: 0, top: 0, right: 1, bottom: 1);
+                    Thickness endBorder = new(left: 0, top: 1, right: 0, bottom: 0);
+                    Thickness[] borders = { startBorder, otherBorder, endBorder };
+                    DrawBorders(borders, TabControl.TabHeaderButtonPosition.BottomEnd);
                 }
 
                 switch (position)
@@ -608,6 +635,12 @@ namespace Alternet.UI
         public struct TabHeaderInteriorDrawParams
         {
             /// <summary>
+            /// Gets or sets a delegate that determines the visible border sides
+            /// of a header button based on its position.
+            /// </summary>
+            public TabControl.HeaderButtonVisibleBorderSidesDelegate? GetHeaderButtonVisibleBorderSides;
+
+            /// <summary>
             /// Gets or sets a value indicating whether border has rounded corners.
             /// </summary>
             public bool RoundCorners;
@@ -648,6 +681,12 @@ namespace Alternet.UI
         /// </summary>
         public struct TabHeaderItemsInteriorDrawParams
         {
+            /// <summary>
+            /// Gets or sets a delegate that determines the visible border sides
+            /// of a header button based on its position.
+            /// </summary>
+            public TabControl.HeaderButtonVisibleBorderSidesDelegate? GetHeaderButtonVisibleBorderSides;
+
             /// <summary>
             /// Start position identifier.
             /// </summary>

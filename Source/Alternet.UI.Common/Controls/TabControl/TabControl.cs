@@ -34,6 +34,13 @@ namespace Alternet.UI
     public partial class TabControl : HiddenBorder
     {
         /// <summary>
+        /// Represents a delegate that determines the visible border sides of a header button based on its position.
+        /// </summary>
+        /// <param name="position">The position of the tab header button.</param>
+        /// <returns>True if the border sides are visible; otherwise, false.</returns>
+        public delegate BorderSides HeaderButtonVisibleBorderSidesDelegate(TabHeaderButtonPosition position);
+
+        /// <summary>
         /// Gets or sets default svg size for normal-dpi displays
         /// used in <see cref="SetTabSvg"/>.
         /// </summary>
@@ -71,6 +78,7 @@ namespace Alternet.UI
         private int addSuspended;
         private TabAlignment? tabPaintAlignment;
         private BorderSides visibleInteriorSides = BorderSides.All;
+        private EnumArray<TabHeaderButtonPosition, BorderSides> visibleBorders = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -87,6 +95,8 @@ namespace Alternet.UI
         /// </summary>
         public TabControl()
         {
+            visibleBorders.Fill(BorderSides.All);
+
             ParentBackColor = true;
             ParentForeColor = true;
 
@@ -143,6 +153,72 @@ namespace Alternet.UI
         /// </summary>
         [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? SelectedPageChanged;
+
+        /// <summary>
+        /// Specifies the position of the tab header button.
+        /// </summary>
+        public enum TabHeaderButtonPosition
+        {
+            /// <summary>
+            /// The tab header button is positioned at the top left corner of the tab header.
+            /// </summary>
+            TopStart,
+
+            /// <summary>
+            /// The tab header button is positioned at the top right corner of the tab header.
+            /// </summary>
+            TopEnd,
+
+            /// <summary>
+            /// The tab header button is positioned at the top and not in the corners.
+            /// </summary>
+            TopOther,
+            
+            /// <summary>
+            /// The tab header button is positioned at the bottom left corner of the tab header.
+            /// </summary>
+            BottomStart,
+            
+            /// <summary>
+            /// The tab header button is positioned at the bottom right corner of the tab header.
+            /// </summary>
+            BottomEnd,
+
+            /// <summary>
+            /// The tab header button is positioned at the bottom and not in the corners.
+            /// </summary>
+            BottomOther,
+
+            /// <summary>
+            /// The tab header button is positioned at the top left corner of the left side of the tab header.
+            /// </summary>
+            LeftStart,
+
+            /// <summary>
+            /// The tab header button is positioned at the bottom left corner of the left side of the tab header.
+            /// </summary>
+            LeftEnd,
+
+            /// <summary>
+            /// The tab header button is positioned at the left side of the tab header and not in the corners.
+            /// </summary>
+            LeftOther,
+
+            /// <summary>
+            /// The tab header button is positioned at the top right corner of the right side of the tab header.
+            /// </summary>
+            RightStart,
+
+            /// <summary>
+            /// The tab header button is positioned at the bottom right corner of the right side of the tab header.
+            /// </summary>
+            RightEnd,
+
+            /// <summary>
+            /// The tab header button is positioned at the right side of the tab header and not in the corners.
+            /// </summary>
+            RightOther,
+        }
 
         /// <summary>
         /// Specifies flags that control the behavior of ensuring a sidebar child element.
@@ -1264,6 +1340,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Hides the outer borders of the bottom tab header buttons.
+        /// </summary>
+        public virtual void HideBottomTabHeaderOuterButtonBorders()
+        {
+            var bottomStart = BorderSides.All.Without(BorderSides.Left | BorderSides.Bottom);
+            var bottomOther = BorderSides.All.Without(BorderSides.Bottom);
+            var bottomEnd = BorderSides.All.Without(BorderSides.Left | BorderSides.Bottom);
+
+            SetHeaderButtonVisibleBorderSides(TabHeaderButtonPosition.BottomStart, bottomStart, invalidate: false);
+            SetHeaderButtonVisibleBorderSides(TabHeaderButtonPosition.BottomOther, bottomOther, invalidate: false);
+            SetHeaderButtonVisibleBorderSides(TabHeaderButtonPosition.BottomEnd, bottomEnd, invalidate: true);
+        }
+
+        /// <summary>
+        /// Sets which sides of the header button border are visible for the specified tab position.
+        /// </summary>
+        /// <param name="position">The position of the tab header button.</param>
+        /// <param name="sides">The sides of the border to make visible.</param>
+        /// <param name="invalidate">If set to <c>true</c>, the control is invalidated
+        /// after setting the visible border sides.</param>
+        public virtual void SetHeaderButtonVisibleBorderSides(
+            TabHeaderButtonPosition position,
+            BorderSides sides,
+            bool invalidate = true)
+        {
+            visibleBorders[position] = sides;
+            if (invalidate)
+                Invalidate();
+        }
+
+        /// <summary>
+        /// Gets which sides of the header button border are visible for the specified tab position.
+        /// </summary>
+        /// <param name="position">The position of the tab header button.</param>
+        /// <returns>The sides of the border that are visible.</returns>
+        public virtual BorderSides GetHeaderButtonVisibleBorderSides(TabHeaderButtonPosition position)
+        {
+            return visibleBorders[position];
+        }
+
+        /// <summary>
         /// Removes tab page from the control.
         /// </summary>
         /// <param name="control">Control to remove</param>
@@ -1574,6 +1691,7 @@ namespace Alternet.UI
                 TabAlignment = tabPaintAlignment ?? TabAlignment,
                 RoundCorners = UseRoundedCorners,
                 DrawTabSeparatorLines = this.DrawTabSeparatorLines,
+                GetHeaderButtonVisibleBorderSides = this.GetHeaderButtonVisibleBorderSides,
             };
 
             return prm;
