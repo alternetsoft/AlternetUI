@@ -168,6 +168,11 @@ namespace PropertyGridSample
 
         internal void InitTestsTabControl()
         {
+            AddControlAction<TabControl>("Hide Bottom Tab Header Outer Button Borders", (c) =>
+            {
+                c.HideBottomTabHeaderOuterButtonBorders();
+            });
+
             AddControlAction<CardPanelHeader>("Apply Default Theme", (c) =>
             {
                 c.ApplyKnownTheme(CardPanelHeader.KnownTheme.Default);

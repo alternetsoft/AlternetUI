@@ -383,6 +383,15 @@ namespace PropertyGridSample
             };
         }
 
+        public static void InitDateTimeRangePicker(DateTimeRangePicker control)
+        {
+            control.ValueChanged += (s, e) =>
+            {
+                App.LogReplace($"DateTimeRangePicker: {control.StartValue} - {control.EndValue}", "DateTimeRangePicker:");
+            };
+        }
+
+
         public static void InitDateTimePicker(DateTimePicker control)
         {
             control.Kind = DateTimePickerKind.DateTime;

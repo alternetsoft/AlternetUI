@@ -25,7 +25,6 @@ namespace PropertyGridSample
             tabControl.Add("Panel 1", panel1);
             tabControl.Add("Panel 2", () => { return Internal("Panel 2"); });
             tabControl.Add("Panel 3", () => { return Internal("Panel 3"); });
-            tabControl.Add("Panel 4", () => { return Internal("Panel 4"); });
 
             tabControl.SetTabSvg(0, KnownSvgImages.ImgGear, null, ThemedColors.Blue.GetColor(tabControl));
             tabControl.SetTabSvg(1, MessageBoxSvg.Error);
