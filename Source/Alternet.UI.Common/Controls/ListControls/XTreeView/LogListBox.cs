@@ -20,6 +20,31 @@ namespace Alternet.UI
     public partial class LogListBox : XTreeView
     {
         /// <summary>
+        /// Gets or sets the default visibility of "Test Actions..." menu item.
+        /// </summary>
+        public static bool DefaultMenuItemTestActionsVisible;
+
+        /// <summary>
+        /// Gets or sets the default visibility of "Search for Members..." menu item.
+        /// </summary>
+        public static bool DefaultMenuItemSearchForMembersVisible;
+        
+        /// <summary>
+        /// Gets or sets the default visibility of "Open log file" menu item.
+        /// </summary>
+        public static bool DefaultMenuItemOpenLogFileVisible;
+        
+        /// <summary>
+        /// Gets or sets the default visibility of "Enable log to file" menu item.
+        /// </summary>
+        public static bool DefaultMenuItemEnableLogToFileVisible;
+
+        /// <summary>
+        /// Gets or sets the default visibility of "Developer Tools..." menu item.
+        /// </summary>
+        public static bool DefaultMenuItemShowDevToolsVisible;
+
+        /// <summary>
         /// Occurs when user selects 'Developer Tools...' menu item in the context menu of the log list box.
         /// </summary>
         public static event Action? ShowDeveloperTools;
@@ -45,11 +70,29 @@ namespace Alternet.UI
         public static SvgImage? InformationImage = null;
 
         private string? lastLogMessage;
-        private MenuItem? menuItemShowDevTools;
         private bool boundToApplicationLog;
         private bool showDebugWelcomeMessage;
         private MenuItem? menuItemClear;
         private MenuItem? menuItemCopy;
+
+        /// <summary>
+        /// Sets the default visibility of debug menu items in the context menu of the log list box.
+        /// </summary>
+        /// <param name="value">If set to <c>true</c>, debug menu items will be visible by default;
+        /// otherwise, they will be hidden.</param>
+        public static void SetDefaultDebugMenuItemsVisible(bool value)
+        {
+            DefaultMenuItemTestActionsVisible = value;
+            DefaultMenuItemSearchForMembersVisible = value;
+            DefaultMenuItemOpenLogFileVisible = value;
+            DefaultMenuItemEnableLogToFileVisible = value;
+            DefaultMenuItemShowDevToolsVisible = value;
+        }
+
+        static LogListBox()
+        {
+            SetDefaultDebugMenuItemsVisible(DebugUtils.IsDebugDefined);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LogListBox"/> class.
@@ -80,10 +123,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets 'Test Actions...' menu item.
+        /// </summary>
+        public MenuItem? MenuItemTestActions { get; private set; }
+
+        /// <summary>
+        /// Gets 'Search for Members...' menu item.
+        /// </summary>
+        public MenuItem? MenuItemSearchForMembers { get; private set; }
+
+        /// <summary>
+        /// Gets 'Open log file' menu item.
+        /// </summary>
+        public MenuItem? MenuItemOpenLogFile { get; private set; }
+
+        /// <summary>
+        /// Gets 'Enable Log to file' menu item.
+        /// </summary>
+        public MenuItem? MenuItemEnableLogToFile { get; private set; }
+
+        /// <summary>
         /// Gets 'Developer Tools' menu item.
         /// </summary>
         [Browsable(false)]
-        public MenuItem? MenuItemShowDevTools => menuItemShowDevTools;
+        public MenuItem? MenuItemShowDevTools { get; private set; }
 
         /// <summary>
         /// Gets 'Clear' menu item.
@@ -306,27 +369,30 @@ namespace Alternet.UI
             ContextMenu.Add(menuItemClear);
             ContextMenu.Add(menuItemCopy);
 
-            ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
-
-            menuItemShowDevTools = ContextMenu.Add("Developer Tools...", ShowDevTools);
-
-            ContextMenu.Add("Test Actions...", LogUtils.ShowTestActionsDialog);
-
-            ContextMenu.Add("Search for Members...", () =>
+            MenuItemOpenLogFile = ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
+            MenuItemShowDevTools = ContextMenu.Add("Developer Tools...", ShowDevTools);
+            MenuItemTestActions = ContextMenu.Add("Test Actions...", LogUtils.ShowTestActionsDialog);
+            MenuItemSearchForMembers = ContextMenu.Add("Search for Members...", () =>
             {
                 WindowSearchForMembers.Default.ShowAndFocus();
             });
 
-            var logToFileItem = ContextMenu.Add(new("Enable Log to file"));
-            logToFileItem.ClickAction = AlsoLogToFile;
+            MenuItemEnableLogToFile = ContextMenu.Add(new("Enable Log to file"));
+            MenuItemEnableLogToFile.ClickAction = AlsoLogToFile;
+
+            MenuItemTestActions.Visible = DefaultMenuItemTestActionsVisible;
+            MenuItemSearchForMembers.Visible = DefaultMenuItemSearchForMembersVisible;
+            MenuItemOpenLogFile.Visible = DefaultMenuItemOpenLogFileVisible;
+            MenuItemEnableLogToFile.Visible = DefaultMenuItemEnableLogToFileVisible;
+            MenuItemShowDevTools.Visible = DefaultMenuItemShowDevToolsVisible;
 
             void AlsoLogToFile()
             {
                 if (App.LogFileIsEnabled)
                     return;
                 App.LogFileIsEnabled = true;
-                logToFileItem.Checked = true;
-                logToFileItem.Enabled = false;
+                MenuItemEnableLogToFile.Checked = true;
+                MenuItemEnableLogToFile.Enabled = false;
             }
 
             void ShowDevTools()
@@ -351,6 +417,7 @@ namespace Alternet.UI
         {
             MenuItemCopy?.SetEnabled(SelectedItems.Count > 0);
             MenuItemClear?.SetEnabled(RootItem.ItemCount > 0);
+            MenuItemShowDevTools?.SetEnabled(ShowDeveloperTools is not null);
         }
 
         private void LogRefresh()
