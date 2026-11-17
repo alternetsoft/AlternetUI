@@ -125,6 +125,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the same value to all the items in the array.
+        /// </summary>
+        /// <param name="value">Value to set.</param>
+        public void Fill(TValue value)
+        {
+            Array.Fill(Data, value);
+        }
+
+        /// <summary>
         /// Assigns properties of this object with the properties of another object.
         /// </summary>
         /// <param name="assignFrom">Object which properties will be assigned to this object.</param>
