@@ -50,4 +50,12 @@ namespace Alternet.UI
         /// </summary>
         Vertical = Top | Bottom,
     }
+
+    internal static class BorderSidesHelper
+    {
+        public static BorderSides Without(this BorderSides sides, BorderSides sidesToRemove)
+        {
+            return sides & ~sidesToRemove;
+        }
+    }
 }
