@@ -357,7 +357,7 @@ namespace Alternet.UI
 
             var result = FromArray(array);
 
-            if(result is null)
+            if (result is null)
             {
                 value = Thickness.Empty;
                 return false;
@@ -433,6 +433,62 @@ namespace Alternet.UI
             Coord[] values = { left, top, right, bottom };
 
             return StringUtils.ToStringWithOrWithoutNames<Coord>(names, values);
+        }
+
+        /// <summary>
+        /// Sets the value of all sides except the specified ones.
+        /// </summary>
+        /// <param name="sides">The sides to exclude from setting the value.</param>
+        /// <param name="value">The value to set.</param>
+        public void SetValuesExcept(BorderSides sides, float value)
+        {
+            if (!sides.HasFlag(BorderSides.Left))
+            {
+                left = value;
+            }
+
+            if (!sides.HasFlag(BorderSides.Right))
+            {
+                right = value;
+            }
+
+            if (!sides.HasFlag(BorderSides.Top))
+            {
+                top = value;
+            }
+
+            if (!sides.HasFlag(BorderSides.Bottom))
+            {
+                bottom = value;
+            }
+        }
+
+        /// <summary>
+        /// Sets the value of the specified sides.
+        /// </summary>
+        /// <param name="sides">The sides to set the value for.</param>
+        /// <param name="value">The value to set.</param>
+        public void SetValues(BorderSides sides, float value)
+        {
+            if (sides.HasFlag(BorderSides.Left))
+            {
+                left = value;
+            }
+
+            if (sides.HasFlag(BorderSides.Right))
+            {
+                right = value;
+            }
+
+            if (sides.HasFlag(BorderSides.Top))
+            {
+                top = value;
+            }
+
+            if (sides.HasFlag(BorderSides.Bottom))
+            {
+                bottom = value;
+            }
         }
 
         /// <summary>
