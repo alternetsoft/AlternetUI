@@ -47,23 +47,14 @@ namespace Alternet.UI
             Format = DefaultDateFormat;
             Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
             PopupWindowTitle = CommonStrings.Default.WindowTitleSelectDate;
-            Value = DateTime.Now;
-
-            /*
-            void UpdateDrawParamsAction(ref Graphics.DrawLabelParams p)
-            {
-                if (p.Text is null || p.Text.Length == 0)
-                {
-                    if (p.ForegroundColor == Color.Empty)
-                    {
-                        p.Text = "Wg";
-                    }
-                }
-            }
-
-            Label.UpdateDrawParamsAction = UpdateDrawParamsAction;
-            */
+            Value = DateUtils.NowWithoutSeconds;
         }
+
+        /// <summary>
+        /// Occurs when the <see cref="Value"/> property is changing.
+        /// In this event, you can cancel the change.
+        /// </summary>
+        public event EventHandler<NullableDateTimeChangingEventArgs>? ValueChanging;
 
         /// <summary>
         /// Gets or sets the format provider used for formatting the date.
@@ -205,6 +196,9 @@ namespace Alternet.UI
 
             set
             {
+                if (!OnValueChanging(Value, value))
+                    return;
+
                 base.Value = value;
             }
         }
@@ -417,6 +411,22 @@ namespace Alternet.UI
             Calendar.MaxDate = effectiveMax.ToDateOnly();
             Calendar.UseMinDate = UseMinDate;
             Calendar.UseMaxDate = UseMaxDate;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ValueChanging"/> event.
+        /// </summary>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        /// <returns><c>true</c> if the value change is not canceled; otherwise, <c>false</c>.</returns>
+        protected virtual bool OnValueChanging(DateTime? oldValue, DateTime? newValue)
+        {
+            if (ValueChanging is null)
+                return true;
+
+            var e = new NullableDateTimeChangingEventArgs(oldValue, newValue);
+            ValueChanging.Invoke(this, e);
+            return !e.Cancel;
         }
 
         /// <inheritdoc/>
