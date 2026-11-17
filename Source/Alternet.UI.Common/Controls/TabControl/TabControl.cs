@@ -13,13 +13,17 @@ using SkiaSharp;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a control that displays multiple tab pages, allowing users to switch between them by clicking tab
+    /// Represents a control that displays multiple tab pages, allowing users
+    /// to switch between them by clicking tab
     /// headers. Provides functionality to add, remove, and manage tab pages and their appearance.
     /// </summary>
     /// <remarks>The TabControl supports customizable tab alignment, appearance, and theming. It exposes
-    /// events for tab selection and close actions, and allows dynamic management of tab pages at runtime. The control
-    /// can be configured to show or hide tab headers and content, and supports both horizontal and vertical tab
-    /// layouts. Use the <see cref="Pages"/> property to access or modify the collection of tab pages.
+    /// events for tab selection and close actions, and allows dynamic
+    /// management of tab pages at runtime. The control
+    /// can be configured to show or hide tab headers and content,
+    /// and supports both horizontal and vertical tab
+    /// layouts. Use the <see cref="Pages"/> property to access
+    /// or modify the collection of tab pages.
     /// Thread safety is not
     /// guaranteed; access the control only from the UI thread.
     /// This control is implemented inside the Alternet.UI and doesn't use native tab control.
@@ -66,6 +70,7 @@ namespace Alternet.UI
         private TabAppearance tabAppearance = TabAppearance.Normal;
         private int addSuspended;
         private TabAlignment? tabPaintAlignment;
+        private BorderSides visibleInteriorSides = BorderSides.All;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabControl"/> class.
@@ -181,6 +186,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the visible sides of the interior border of the tab control.
+        /// </summary>
+        public virtual BorderSides VisibleInteriorSides
+        {
+            get => visibleInteriorSides;
+            set
+            {
+                if (visibleInteriorSides == value)
+                    return;
+                visibleInteriorSides = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets the count of header buttons based on the number of tabs in the header.
         /// </summary>
         [Browsable(false)]
@@ -209,6 +229,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the first page in the <see cref="Pages"/> collection or null if the collection is empty.
         /// </summary>
+        [Browsable(false)]
         public AbstractControl? FirstPage => Pages.FirstOrDefault();
 
         /// <summary>
@@ -1442,6 +1463,7 @@ namespace Alternet.UI
                 HeaderBounds = r,
                 Brush = GetInteriorBorderColor().GetColor(this).AsBrush,
                 TabAlignment = tabPaintAlignment ?? TabAlignment,
+                BorderSides = VisibleInteriorSides,
             };
 
             TabControlDrawInterior.Default.DrawTabControlInterior(ref prm);

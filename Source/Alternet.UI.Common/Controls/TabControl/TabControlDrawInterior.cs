@@ -26,6 +26,8 @@ namespace Alternet.UI
 
             GetTabControlBorderRect(prm.Bounds, prm.HeaderBounds, prm.TabAlignment, out RectD rect, out Thickness border);
 
+            border.SetValuesExcept(prm.BorderSides, 0);
+
             DrawBorder(rect, border);
 
             void DrawBorder(RectD rect, Thickness border)
@@ -761,6 +763,12 @@ namespace Alternet.UI
             /// The rectangle representing the bounds of the tab page header, used for drawing borders.
             /// </summary>
             public RectD HeaderBounds;
+
+            /// <summary>
+            /// Gets or sets the sides of the border to be drawn.
+            /// The default value is <see cref="BorderSides.All"/>.
+            /// </summary>
+            public BorderSides BorderSides;
         }
     }
 }
