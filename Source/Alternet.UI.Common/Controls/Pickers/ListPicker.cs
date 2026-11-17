@@ -96,8 +96,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            if(!UseSpeedButtonTheme())
-                UseControlColors(DefaultUseControlColors);
+            if (AutoUpdateColors)
+            {
+                if (!UseSpeedButtonTheme())
+                    UseControlColors(DefaultUseControlColors);
+            }
+
             base.OnSystemColorsChanged(e);
         }
 
