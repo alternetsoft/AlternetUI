@@ -25,6 +25,7 @@ namespace Alternet.UI
             new (10, TimePeriodUnit.Minutes),
             new (15, TimePeriodUnit.Minutes),
             new (30, TimePeriodUnit.Minutes),
+            new (45, TimePeriodUnit.Minutes),
 
             new (1, TimePeriodUnit.Hours),
             new (2, TimePeriodUnit.Hours),
@@ -50,17 +51,31 @@ namespace Alternet.UI
         ];
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TimePeriodPicker"/> class,
-        /// which allows users to select a time period from a predefined list of durations.
+        /// Initializes a new instance of the <see cref="TimePeriodPicker"/> class.
         /// </summary>
         public TimePeriodPicker()
+            : this(addDefaultItems: true)
         {
-            AddDefaultItems();
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimePeriodPicker"/> class
+        /// with an option to add default time period items to the picker.
+        /// </summary>
+        public TimePeriodPicker(bool addDefaultItems)
+        {
+            if (addDefaultItems)
+            {
+                AddDefaultItems();
+            }
+
             Value = new TimePeriod(15, TimePeriodUnit.Minutes);
         }
 
         /// <summary>
-        /// Gets or sets the currently selected time period, represented by a numeric value and a unit of measurement.
+        /// Gets or sets the currently selected time period,
+        /// represented by a numeric value and a unit of measurement.
         /// </summary>
         public new virtual TimePeriod Value
         {
