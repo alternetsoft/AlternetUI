@@ -257,6 +257,63 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the start time can be changed to the specified new time without violating
+        /// the constraint that the start time must not be later than the end time.
+        /// </summary>
+        /// <param name="oldStartValue">The current start time value.</param>
+        /// <param name="newTime">The new time value to be set.</param>
+        /// <param name="endValue">The current end time value.</param>
+        /// <returns><c>true</c> if the start time can be changed to the new time without violating the constraint;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool CanChangeStartTime(DateTime oldStartValue, TimeOnly newTime, DateTime? endValue)
+        {
+            var newStartValue = new DateTime(oldStartValue.ToDateOnly(), newTime);
+            if (endValue is not null && newStartValue > endValue.Value)
+                return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Determines whether the end time can be changed to the specified new time without violating
+        /// the constraint that the end time must not be earlier than the start time.
+        /// </summary>
+        /// <param name="startValue">The current start time value.</param>
+        /// <param name="oldEndValue">The current end time value.</param>
+        /// <param name="newTime">The new time value to be set.</param>
+        /// <returns><c>true</c> if the end time can be changed to the new time without violating the constraint;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool CanChangeEndTime(DateTime? startValue, DateTime? oldEndValue, TimeOnly newTime)
+        {
+            if (oldEndValue is null)
+                return true;
+
+            var newEndValue = new DateTime(oldEndValue.Value.ToDateOnly(), newTime);
+            if (startValue is not null && newEndValue < startValue.Value)
+                return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Determines whether the end date can be changed to the specified new date without violating
+        /// the constraint that the end date must not be earlier than the start date.
+        /// </summary>
+        /// <param name="startValue">The current start date value.</param>
+        /// <param name="oldEndValue">The current end date value.</param>
+        /// <param name="newDate">The new date value to be set.</param>
+        /// <returns><c>true</c> if the end date can be changed to the new date without violating the constraint;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool CanChangeEndDate(DateTime? startValue, DateTime? oldEndValue, DateOnly newDate)
+        {
+            if (oldEndValue is null)
+                return true;
+
+            var newEndValue = new DateTime(newDate, oldEndValue.Value.ToTimeOnly());
+            if (startValue is not null && newEndValue < startValue.Value)
+                return false;
+            return true;
+        }
+
+        /// <summary>
         /// Enumerates all dates in the specified year.
         /// </summary>
         /// <param name="year">The year for which to enumerate dates.</param>
@@ -380,6 +437,27 @@ namespace Alternet.UI
         public static string GetAmOrPmDesignator(TimeOnly dt, IFormatProvider? formatProvider = null)
         {
             return GetAmOrPmDesignator(dt.ToDateTime(), formatProvider);
+        }
+
+        /// <summary>
+        /// Gets the duration between two date/time values.
+        /// If <paramref name="startTime"/> is greater than <paramref name="endTime"/>,
+        /// the values are automatically swapped.
+        /// </summary>
+        /// <param name="startTime">The first date/time value.</param>
+        /// <param name="endTime">The second date/time value.</param>
+        /// <returns>The absolute duration between the two date/time values.</returns>
+        public static TimeSpan GetDuration(DateTime? startTime, DateTime? endTime)
+        {
+            if (startTime is null || endTime is null)
+                return TimeSpan.Zero;
+
+            if (startTime > endTime)
+            {
+                (startTime, endTime) = (endTime, startTime);
+            }
+
+            return endTime.Value - startTime.Value;
         }
 
         /// <summary>
@@ -592,7 +670,7 @@ namespace Alternet.UI
             TimePeriodUnitTextFormat format = TimePeriodUnitTextFormat.Long)
         {
             string result = string.Empty;
-            
+
             var parts = new[]
             {
                 TimePeriodUnit.Days,

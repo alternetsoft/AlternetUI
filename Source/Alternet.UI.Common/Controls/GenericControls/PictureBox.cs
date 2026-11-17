@@ -287,7 +287,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the SVG color.
         /// </summary>
-        /// <remarks>Setting this property triggers an invalidation of the control if the image is visible.</remarks>
+        /// <remarks>Setting this property triggers an invalidation of the control
+        /// if the image is visible.</remarks>
         public virtual Color? SvgColor
         {
             get => primitive.SvgColor;
@@ -329,7 +330,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the rotation and flip transformation to apply to the image. This property allows for
-        /// rotating and flipping the image in various ways, such as rotating 90 degrees clockwise or flipping horizontally.
+        /// rotating and flipping the image in various ways, such as rotating
+        /// 90 degrees clockwise or flipping horizontally.
         /// </summary>
         public virtual RotateFlipType? RotateFlip
         {
