@@ -290,6 +290,7 @@ namespace Alternet.UI
         public virtual void ValueToControls()
         {
             fullDayDurationSwitch.IsChecked = Value.IsAllDay;
+            rulePicker.IsTimeVisible = !Value.IsAllDay;
             titlePicker.MainControl.Text = Value.Text ?? string.Empty;
             descriptionPicker.MainControl.Text = Value.Description ?? string.Empty;
             locationPicker.MainControl.Text = Value.Location?.ToString() ?? string.Empty;
@@ -306,9 +307,13 @@ namespace Alternet.UI
             };
 
             if (Value.Rule.IsRepeated)
+            {
                 rulePicker.SeriesPanel.IsCollapsed = false;
+            }
             else
+            {
                 rulePicker.SeriesPanel.IsCollapsed = true;
+            }
 
             UpdateDescriptionPanel();
         }

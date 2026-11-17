@@ -66,6 +66,7 @@ namespace Alternet.UI
         private IFormatProvider? formatProvider;
         private int valueToControlsSuspendCounter;
         private bool valuesTransparent = false;
+        private bool timeVisible = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternPicker"/> class.
@@ -141,7 +142,6 @@ namespace Alternet.UI
             tabControl.ActiveTabTheme = SpeedButton.KnownTheme.StaticBorder;
             tabControl.TabTheme = SpeedButton.KnownTheme.Default;
             
-            tabControl.ContentVisible = false;
             rangePanel.Visible = false;
 
             tabControl.Add(GetLocalizedText(ScheduleRepeatPattern.Once), oncePicker);
@@ -200,6 +200,24 @@ namespace Alternet.UI
         /// Occurs when the selected repeat pattern changes.
         /// </summary>
         public event EventHandler? ValueChanged;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the time component is visible
+        /// in the date pickers of the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public virtual bool IsTimeVisible
+        {
+            get => timeVisible;
+            set
+            {
+                timeVisible = value;
+
+                if (timeVisible)
+                    oncePicker.Picker.Kind = DateTimePickerKind.DateTime;
+                else
+                    oncePicker.Picker.Kind = DateTimePickerKind.Date;
+            }
+        }
 
         /// <summary>
         /// Gets the panel which contains the <see cref="TabControl"/> used for selecting the repeat pattern.
@@ -301,6 +319,7 @@ namespace Alternet.UI
                 weeklyPicker.FormatProvider = value;
                 monthlyPicker.FormatProvider = value;
                 yearlyPicker.FormatProvider = value;
+                oncePicker.FormatProvider = value;
             }
         }
 
@@ -338,7 +357,7 @@ namespace Alternet.UI
         /// Gets the control for selecting "no repeat" pattern.
         /// </summary>
         [Browsable(false)]
-        public HiddenBorder NonePicker => oncePicker;
+        public HiddenBorder OncePicker => oncePicker;
 
         /// <summary>
         /// Provides access to the <see cref="RepeatPatternRule"/> representing the selected repeat
@@ -361,7 +380,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the date format used for displaying dates in the <see cref="RepeatPatternPicker"/> control.
+        /// Gets or sets the date format used for displaying dates
+        /// in the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public virtual string? DateFormat
         {
@@ -370,6 +390,7 @@ namespace Alternet.UI
             {
                 startPicker.MainControl.Format = value;
                 untilDatePicker.MainControl.Format = value;
+                oncePicker.Picker.Format = value;
             }
         }
 
@@ -442,6 +463,7 @@ namespace Alternet.UI
                 weeklyPicker.ValueToControls();
                 monthlyPicker.ValueToControls();
                 yearlyPicker.ValueToControls();
+                oncePicker.ValueToControls();
             }
             finally
             {
@@ -469,7 +491,6 @@ namespace Alternet.UI
 
             DoInsideLayout(() =>
             {
-                tabControl.ContentVisible = isRepeatPattern;
                 rangePanel.Visible = isRepeatPattern;
             });
         }

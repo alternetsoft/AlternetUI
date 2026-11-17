@@ -19,6 +19,8 @@ namespace Alternet.UI
         /// </summary>
         public static float DefaultControlDistance = 5;
         private bool valueChangedSuspended;
+        private DateTime startValue;
+        private DateTime endValue;
         private readonly DateTimePicker startPicker;
         private readonly DateTimePicker endPicker;
         private readonly GenericControlAndImage<TimePeriodPicker> durationPicker = new(KnownSvgImages.ImgRangeDistance);
@@ -28,6 +30,8 @@ namespace Alternet.UI
         /// </summary>
         public DateTimeRangePicker()
         {
+            startValue = DateUtils.NowWithoutSeconds;
+            endValue = startValue;
             startPicker = CreateDateTimePicker();
             endPicker = CreateDateTimePicker();
 
@@ -95,21 +99,60 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the end date for the display purposes.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime DisplayEndValue
+        {
+            get
+            {
+                return IsDateOnly
+                ? EndValue.Date.AddDays(-1)
+                : EndValue.Date;
+            }
+
+            set
+            {
+                if (IsDateOnly)
+                {
+                    EndValue = value.Date.AddDays(1);
+                }
+                else
+                {
+                    var newValue = value.Date.Add(EndValue.TimeOfDay);
+                    EndValue = newValue;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the start date and time value of the control.
         /// </summary>
-        public DateTime? StartValue
+        public DateTime StartValue
         {
-            get => startPicker.Value;
-            set => startPicker.Value = value;
+            get => startValue;
+            set
+            {
+                if (startValue == value)
+                    return;
+                startValue = value;
+                OnValueChanged();
+            }
         }
 
         /// <summary>
         /// Gets or sets the end date and time value of the control.
         /// </summary>
-        public DateTime? EndValue
+        public DateTime EndValue
         {
-            get => endPicker.Value;
-            set => endPicker.Value = value;
+            get => endValue;
+            set
+            {
+                if (endValue == value)
+                    return;
+                endValue = value;
+                OnValueChanged();
+            }
         }
 
         /// <summary>
@@ -160,6 +203,7 @@ namespace Alternet.UI
             {
                 startPicker.TextTransparent = value;
                 endPicker.TextTransparent = value;
+                durationPicker.MainControl.TextTransparent = value;
             }
         }
 
@@ -210,6 +254,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the control should force icons to be visible.
         /// </summary>
+        [Browsable(false)]
         public virtual bool ForceIcons
         {
             get => startPicker.ForceIcons;
@@ -221,13 +266,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the duration picker is visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool ShowDuration
+        {
+            get => durationPicker.Visible;
+            set => durationPicker.Visible = value;
+        }
+
+        /// <summary>
         /// Gets the start date and time picker.
         /// </summary>
+        [Browsable(false)]
         public DateTimePicker StartPicker => startPicker;
 
         /// <summary>
         /// Gets the end date and time picker.
         /// </summary>
+        [Browsable(false)]
         public DateTimePicker EndPicker => endPicker;
 
         /// <summary>
@@ -292,6 +349,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the time part of the date and time is visible.
+        /// </summary>
+        public bool IsTimeVisible
+        {
+            get => Kind == DateTimePickerKind.DateTime || Kind == DateTimePickerKind.Time;
+
+            set
+            {
+                if (value)
+                    Kind = DateTimePickerKind.DateTime;
+                else
+                    Kind = DateTimePickerKind.Date;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the picker is set to date only mode.
         /// </summary>
         [Browsable(false)]
@@ -328,16 +401,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the value of the end date and time picker changes.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected virtual void OnEndPickerChanged(object? sender, EventArgs e)
-        {
-            OnValueChanged();
-        }
-
-        /// <summary>
         /// Called when the value of the end time picker is changing.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -364,7 +427,17 @@ namespace Alternet.UI
         /// <param name="e"></param>
         protected virtual void OnStartPickerChanged(object? sender, EventArgs e)
         {
-            OnValueChanged();
+            StartValue = startPicker.Value ?? DateUtils.NowWithoutSeconds;
+        }
+
+        /// <summary>
+        /// Called when the value of the end date and time picker changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void OnEndPickerChanged(object? sender, EventArgs e)
+        {
+            DisplayEndValue = endPicker.Value ?? DateUtils.NowWithoutSeconds;
         }
 
         /// <summary>
@@ -377,10 +450,9 @@ namespace Alternet.UI
             if (valueChangedSuspended)
                 return;
 
-            if (StartValue is null)
-                return;
-
-            EndValue = StartValue.Value + durationPicker.MainControl.Value.Value;
+            var duration = durationPicker.MainControl.Value.Value ?? TimeSpan.Zero;
+            DateTime newEndValue = StartValue + duration;
+            EndValue = newEndValue;
         }
 
         /// <summary>
@@ -397,14 +469,15 @@ namespace Alternet.UI
         /// Called when the value of the end date picker is changing.
         /// </summary>
         /// <param name="sender"> The source of the event.</param>
-        /// <param name="e">The <see cref="NullableDateTimeChangingEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="NullableDateTimeChangingEventArgs"/>
+        /// instance containing the event data.</param>
         /// <exception cref="NotImplementedException"></exception>
         protected virtual void OnEndDatePickerValueChanging(object? sender, NullableDateTimeChangingEventArgs e)
         {
             if (e.NewValue is null)
                 return;
 
-            var canChange = DateUtils.CanChangeEndDate(startPicker.Value, endPicker.Value, e.NewValue.Value.ToDateOnly());
+            var canChange = DateUtils.CanChangeEndDate(StartValue, EndValue, e.NewValue.Value.ToDateOnly());
             e.Cancel = !canChange;
         }
 
@@ -432,10 +505,12 @@ namespace Alternet.UI
 
             try
             {
-                endPicker.MinDate = startPicker.Value ?? DateTime.MinValue;
+                endPicker.MinDate = StartValue;
                 endPicker.UseMinDate = true;
+                startPicker.Value = StartValue;
+                endPicker.Value = DisplayEndValue;
 
-                var duration = DateUtils.GetDuration(startPicker.Value, endPicker.Value);
+                var duration = DateUtils.GetDuration(StartValue, EndValue);
                 durationPicker.MainControl.Value = new(duration);
 
                 ValueChanged?.Invoke(this, EventArgs.Empty);

@@ -16,12 +16,43 @@ namespace Alternet.UI
         /// </summary>
         public partial class OncePatternPicker : DateRepeatPatternRulePicker<OnceRepeatPatternRule>
         {
+            private readonly DateTimeRangePicker picker = new();
+
             /// <summary>
             /// Initializes a new instance of the <see cref="OncePatternPicker"/>
             /// class with the specified <see cref="OnceRepeatPatternRule"/> data.
             /// </summary>
             /// <param name="data">The <see cref="OnceRepeatPatternRule"/> data.</param>
             public OncePatternPicker(OnceRepeatPatternRule data) : base(data)
+            {
+                picker.Parent = this;
+
+                ValueToControls();
+
+                picker.ValueChanged += OnPickerValueChanged;
+            }
+
+            /// <summary>
+            /// Gets the <see cref="DateTimeRangePicker"/> control used for selecting the date
+            /// and time range for the once repeat pattern.
+            /// </summary>
+            public DateTimeRangePicker Picker => picker;
+
+            /// <summary>
+            /// Updates the control values based on the current state of the <see cref="OnceRepeatPatternRule"/> instance.
+            /// </summary>
+            public virtual void ValueToControls()
+            {
+                picker.StartValue = Value.Starts;
+                picker.EndValue = Value.Ends;
+            }
+
+            /// <summary>
+            /// Called when the picker changes the value.
+            /// </summary>
+            /// <param name="sender">The source of the event.</param>
+            /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+            protected virtual void OnPickerValueChanged(object? sender, EventArgs e)
             {
             }
         }
