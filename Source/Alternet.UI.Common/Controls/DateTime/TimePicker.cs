@@ -65,7 +65,7 @@ namespace Alternet.UI
             CanSelect = true;
             TabStop = true;
 
-            time = TimeOnly.FromDateTime(DateTime.Now);
+            time = DateUtils.CurrentTimeWithoutSeconds;
             InnerOuterBorder = InnerOuterSelector.Outer;
 
             hoursButton = MainControl.AddTextBtnCore();
@@ -147,6 +147,12 @@ namespace Alternet.UI
 
             RoundCorners();
         }
+
+        /// <summary>
+        /// Occurs when the <see cref="Value"/> property is changing.
+        /// In this event, you can cancel the change.
+        /// </summary>
+        public event EventHandler<TimeChangingEventArgs>? ValueChanging;
 
         /// <summary>
         /// Occurs when <see cref="Value"/> property is changed.
@@ -309,7 +315,11 @@ namespace Alternet.UI
 
             set
             {
+                if (!SecondsVisible)
+                    value = new TimeOnly(value.Hour, value.Minute);
                 if (time == value)
+                    return;
+                if (!OnValueChanging(time, value))
                     return;
                 time = value;
                 UpdateButtons();
@@ -343,6 +353,15 @@ namespace Alternet.UI
                     return;
                 secondsButton.IsVisible = value;
                 minutesAndSecondsSeparator.IsVisible = value;
+
+                if (!value)
+                {
+                    if (SelectedPart == TimePickerValuePart.Second)
+                        SelectedPart = TimePickerValuePart.Minute;
+
+                    AsTimeOnly = new TimeOnly(time.Hour, time.Minute);
+                }
+
                 UpdateButtons();
                 PerformLayoutAndInvalidate();
             }
@@ -606,7 +625,7 @@ namespace Alternet.UI
                     e.Suppressed();
                     break;
                 case Key.Up:
-                    if(!ReadOnly)
+                    if (!ReadOnly)
                         IncPartValue(1);
                     e.Suppressed();
                     break;
@@ -734,6 +753,22 @@ namespace Alternet.UI
             {
                 child.ContextMenuStrip = ContextMenuStrip;
             }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ValueChanging"/> event.
+        /// </summary>
+        /// <param name="oldTime">The old time value.</param>
+        /// <param name="newTime">The new time value.</param>
+        /// <returns><c>true</c> if the value change is not canceled; otherwise, <c>false</c>.</returns>
+        protected virtual bool OnValueChanging(TimeOnly oldTime, TimeOnly newTime)
+        {
+            if (ValueChanging is null)
+                return true;
+
+            var e = new TimeChangingEventArgs(oldTime, newTime);
+            ValueChanging.Invoke(this, e);
+            return !e.Cancel;
         }
 
         /// <summary>
