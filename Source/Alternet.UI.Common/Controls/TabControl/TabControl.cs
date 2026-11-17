@@ -126,6 +126,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the visibility of the content area changes.
+        /// </summary>
+        public event EventHandler? ContentVisibleChanged
+        {
+            add
+            {
+                cardPanel.VisibleChanged += value;
+            }
+
+            remove
+            {
+                cardPanel.VisibleChanged -= value;
+            }
+        }
+
+        /// <summary>
         /// Occurs when the close button is clicked.
         /// </summary>
         /// <remarks>This event is triggered when the user clicks the close button in the header.
