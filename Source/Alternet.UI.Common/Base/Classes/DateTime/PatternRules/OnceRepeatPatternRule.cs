@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -85,7 +87,8 @@ namespace Alternet.UI
         {
             get
             {
-                return StartDate.ToDateTime(StartTime).Add(Duration);
+                var result = StartDate.ToDateTime(StartTime).Add(Duration);
+                return result;
             }
 
             set
