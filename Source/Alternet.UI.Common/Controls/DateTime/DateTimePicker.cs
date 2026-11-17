@@ -93,7 +93,7 @@ namespace Alternet.UI
             datePicker.ValueChanged += OnDatePickerValueChanged;
             timePicker.ValueChanged += OnTimePickerValueChanged;
 
-            Value = DateTime.Now;
+            Value = DateUtils.NowWithoutSeconds;
         }
 
         /// <summary>
@@ -149,6 +149,16 @@ namespace Alternet.UI
                 datePicker.IsValueEmpty = value;
                 timePicker.IsValueEmpty = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the seconds part of the time
+        /// is visible in the <see cref="DateTimePicker"/> control.
+        /// </summary>
+        public virtual bool SecondsVisible
+        {
+            get => timePicker.SecondsVisible;
+            set => timePicker.SecondsVisible = value;
         }
 
         /// <summary>
@@ -270,6 +280,19 @@ namespace Alternet.UI
                     return;
                 forceTimeIcon = value;
                 UpdateIconVisibility();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the date and time icons are forced to be visible.
+        /// </summary>
+        public virtual bool ForceIcons
+        {
+            get => forceDateIcon && forceTimeIcon;
+            set
+            {
+                ForceDateIcon = value;
+                ForceTimeIcon = value;
             }
         }
 
