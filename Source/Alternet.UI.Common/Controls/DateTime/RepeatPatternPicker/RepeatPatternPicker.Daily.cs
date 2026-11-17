@@ -23,7 +23,6 @@ namespace Alternet.UI
             /// <param name="data">The <see cref="OnceRepeatPatternRule"/> data.</param>
             public OncePatternPicker(OnceRepeatPatternRule data) : base(data)
             {
-                Add<Label>("Under construction");
             }
         }
 
