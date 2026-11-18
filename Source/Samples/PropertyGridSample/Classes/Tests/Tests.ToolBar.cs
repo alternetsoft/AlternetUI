@@ -16,6 +16,14 @@ namespace PropertyGridSample
     {
         void InitTestsToolBar()
         {
+            AddControlAction<ToolBar>("Init with LinkLabel controls", (c) =>
+            {
+                c.RemoveAndDisposeChildren();
+                c.AddLinkLabel("Open", () => { App.Log("Open clicked"); });
+                c.AddLinkLabel("Dismiss All", () => { App.Log("Dismiss All clicked"); }, false);
+                c.AddLinkLabel("Save", () => { App.Log("Save clicked"); });
+            });
+
             AddControlAction<ToolBar>("Add Icon item", (c) =>
             {
                 c.AddIcon(KnownIcons.Default);
