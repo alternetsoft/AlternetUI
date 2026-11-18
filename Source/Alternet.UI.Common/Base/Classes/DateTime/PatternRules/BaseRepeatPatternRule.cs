@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 
+using Alternet.UI.Extensions;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -209,12 +211,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the occurrences of the repeat pattern within the specified range and up to the maximum date.
+        /// Gets all occurrence dates of the repeat pattern within the specified range.
+        /// For example, if some occurrence occupies more than one day, all days will be returned.
         /// </summary>
         /// <param name="prm">The parameters specifying the minimum and maximum
         /// dates to consider for the occurrences.</param>
         /// <returns>An enumerable of the occurrence dates.</returns>
-        public virtual PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
+        public virtual IEnumerable<DateOnly> GetAllDates(PatternRuleGetDatesParams prm)
+        {
+            var startDates = GetStartDates(prm);
+
+            foreach (var startDate in startDates.Dates)
+            {
+                var startDateTime = startDate.ToDateTime(StartTime);
+                var endDateTime = startDateTime.Add(Duration);
+                var endTime = endDateTime.ToTimeOnly();
+                DateOnly endDate = endDateTime.ToDateOnly();
+
+                yield return startDate;
+
+                if (IsAllDay || endTime == TimeOnly.MinValue)
+                {
+                    endDate = endDate.AddDays(-1);
+                }
+
+                for (var date = startDate.AddDays(1); date <= endDate; date = date.AddDays(1))
+                {
+                    if (date >= prm.MinDate && date <= prm.MaxDate)
+                        yield return date;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets start occurrence dates of the repeat pattern within the specified range.
+        /// For example, if some occurrence occupies more than one day, only the first day will be returned.
+        /// </summary>
+        /// <param name="prm">The parameters specifying the minimum and maximum
+        /// dates to consider for the occurrences.</param>
+        /// <returns>An enumerable of the occurrence dates.</returns>
+        public virtual PatternRuleGetDatesResult GetStartDates(PatternRuleGetDatesParams prm)
         {
             return PatternRuleGetDatesResult.Empty;
         }
@@ -228,7 +264,7 @@ namespace Alternet.UI
         /// <param name="predicate">A predicate to filter the dates.</param>
         /// <param name="nextDate">A function to get the next date in the pattern.</param>
         /// <returns>An enumerable of the occurrence dates.</returns>
-        protected virtual PatternRuleGetDatesResult GetDates(
+        protected virtual PatternRuleGetDatesResult GetStartDates(
             PatternRuleGetDatesParams prm,
             Predicate<DateOnly> predicate,
             Func<DateOnly, DateOnly> nextDate)

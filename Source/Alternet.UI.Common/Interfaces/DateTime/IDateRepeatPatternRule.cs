@@ -163,6 +163,6 @@ namespace Alternet.UI
         /// <param name="prm">The parameters specifying the minimum and maximum
         /// dates to consider for the occurrences.</param>
         /// <returns>An enumerable of the occurrence dates.</returns>
-        PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm);
+        PatternRuleGetDatesResult GetStartDates(PatternRuleGetDatesParams prm);
     }
 }

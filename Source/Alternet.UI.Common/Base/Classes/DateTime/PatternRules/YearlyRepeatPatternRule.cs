@@ -277,7 +277,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
+        public override PatternRuleGetDatesResult GetStartDates(PatternRuleGetDatesParams prm)
         {
             return GetSeriesDates(prm, GetDatesUnfiltered);
         }
@@ -287,7 +287,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="year">The year for which to get the date.</param>
         /// <returns>The calculated date, or <c>null</c> if the date is invalid.</returns>
-        public virtual DateOnly[]? GetDates(int year)
+        public virtual DateOnly[]? GetStartDates(int year)
         {
             if (Kind == RepeatKind.DayOfMonth)
             {
@@ -336,7 +336,7 @@ namespace Alternet.UI
 
                 for (int year = startYear; year <= endYear; year += IntervalYears)
                 {
-                    DateOnly[]? occurrenceDates = GetDates(year);
+                    DateOnly[]? occurrenceDates = GetStartDates(year);
 
                     if (occurrenceDates is null)
                         continue;

@@ -52,8 +52,16 @@ namespace Alternet.UI
             /// </summary>
             public virtual void ValueToControls()
             {
-                picker.StartValue = Value.Starts;
-                picker.EndValue = Value.Ends;
+                if (Value.IsAllDay)
+                {
+                    picker.Kind = DateTimePickerKind.Date;
+                }
+                else
+                {
+                    picker.Kind = DateTimePickerKind.DateTime;
+                }
+
+                picker.Value = Value.Interval;
             }
 
             /// <summary>
@@ -63,6 +71,7 @@ namespace Alternet.UI
             /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
             protected virtual void OnPickerValueChanged(object? sender, EventArgs e)
             {
+                Value.Interval = picker.Value;
             }
         }
 

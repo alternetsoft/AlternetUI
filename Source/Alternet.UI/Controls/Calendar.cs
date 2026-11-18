@@ -865,7 +865,7 @@ namespace Alternet.UI
             prm.MinDate = FirstDateOfMonth;
             prm.MaxDate = LastDateOfMonth;
 
-            var result = rule.GetDates(prm).Dates;
+            var result = rule.GetAllDates(prm);
 
             foreach (var date in result)
             {

@@ -58,6 +58,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the interval of the event or task that occurs only once,
+        /// represented by a <see cref="DateTimeInterval"/> object.
+        /// </summary>
+        public virtual DateTimeInterval Interval
+        {
+            get
+            {
+                return new DateTimeInterval(Starts, Duration);
+            }
+
+            set
+            {
+                if (Interval == value)
+                    return;
+                WithoutPropertyChanged(() =>
+                {
+                    StartDate = DateOnly.FromDateTime(value.Start);
+                    StartTime = TimeOnly.FromDateTime(value.Start);
+                    Duration = value.Duration;
+                });
+            }
+        }
+
+
+        /// <summary>
         /// Gets the start date and time of the event or task that occurs only once.
         /// </summary>
         public virtual DateTime Starts
@@ -116,7 +141,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
+        public override PatternRuleGetDatesResult GetStartDates(PatternRuleGetDatesParams prm)
         {
             var startDate = StartDate;
             var endDate = EndDate;

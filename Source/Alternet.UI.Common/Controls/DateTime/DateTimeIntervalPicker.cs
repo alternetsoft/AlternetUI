@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
 namespace Alternet.UI
@@ -18,6 +19,12 @@ namespace Alternet.UI
     public partial class DateTimeIntervalPicker : TransparentPanel, IReadOnlyProperty
     {
         /// <summary>
+        /// Gets or sets the default image for the duration picker.
+        /// If not specified, the default known image will be used.
+        /// </summary>
+        public static SvgImage? DefaultDurationImage;
+
+        /// <summary>
         /// Gets or sets the default distance between the inner controls.
         /// </summary>
         public static float DefaultControlDistance = 5;
@@ -25,7 +32,8 @@ namespace Alternet.UI
         private DateTimeInterval data;
         private readonly DateTimePicker startPicker;
         private readonly DateTimePicker endPicker;
-        private readonly GenericControlAndImage<TimePeriodPicker> durationPicker = new(KnownSvgImages.ImgRangeDistance);
+        private readonly GenericControlAndImage<TimePeriodPicker> durationPicker
+            = new(DefaultDurationImage ?? KnownSvgImages.ImgHourglassHalf);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeIntervalPicker"/> class.

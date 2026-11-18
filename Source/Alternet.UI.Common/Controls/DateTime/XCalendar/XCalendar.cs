@@ -885,7 +885,7 @@ namespace Alternet.UI
             prm.MaxDate = LastDateOfMonth;
             prm.WeekFormat = this;
 
-            var result = rule.GetDates(prm).Dates;
+            var result = rule.GetAllDates(prm);
 
             var needInvalidate = false;
 

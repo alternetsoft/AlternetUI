@@ -310,7 +310,7 @@ namespace Alternet.UI
         /// <returns>An enumerable of <see cref="CalendarItemInstance"/> objects.</returns>
         public virtual IEnumerable<CalendarItemInstance> GetInstances(PatternRuleGetDatesParams prm)
         {
-            var dates = Rule.GetDates(prm);
+            var dates = Rule.GetStartDates(prm);
 
             foreach (var date in dates.Dates)
             {

@@ -515,7 +515,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override PatternRuleGetDatesResult GetDates(PatternRuleGetDatesParams prm)
+        public override PatternRuleGetDatesResult GetStartDates(PatternRuleGetDatesParams prm)
         {
             var rule = GetSelectedRule();
 
@@ -579,7 +579,7 @@ namespace Alternet.UI
                 }
             }
 
-            var result = rule.GetDates(prm);
+            var result = rule.GetStartDates(prm);
 
             return new(WithoutExcludedDates(result.Dates));
         }
