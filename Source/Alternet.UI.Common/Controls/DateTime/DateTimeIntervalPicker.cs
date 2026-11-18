@@ -12,26 +12,24 @@ namespace Alternet.UI
     /// Additionally, a duration can be specified, which will automatically update the end date and time.
     /// </summary>
     [ControlCategory(KnownControlCategory.DateTime)]
-    public partial class DateTimeRangePicker : TransparentPanel
+    public partial class DateTimeIntervalPicker : TransparentPanel, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets the default distance between the inner controls.
         /// </summary>
         public static float DefaultControlDistance = 5;
         private bool valueChangedSuspended;
-        private DateTime startValue;
-        private DateTime endValue;
+        private DateTimeInterval data;
         private readonly DateTimePicker startPicker;
         private readonly DateTimePicker endPicker;
         private readonly GenericControlAndImage<TimePeriodPicker> durationPicker = new(KnownSvgImages.ImgRangeDistance);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DateTimeRangePicker"/> class.
+        /// Initializes a new instance of the <see cref="DateTimeIntervalPicker"/> class.
         /// </summary>
-        public DateTimeRangePicker()
+        public DateTimeIntervalPicker()
         {
-            startValue = DateUtils.NowWithoutSeconds;
-            endValue = startValue;
+            data = new(DateUtils.NowWithoutSeconds);
             startPicker = CreateDateTimePicker();
             endPicker = CreateDateTimePicker();
 
@@ -126,16 +124,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the start date and time value of the control.
+        /// Gets or sets the <see cref="DateTimeInterval"/> value of the control,
+        /// which includes the start date and time and the duration.
         /// </summary>
-        public DateTime StartValue
+        [Browsable(false)]
+        public virtual DateTimeInterval Value
         {
-            get => startValue;
+            get => data;
             set
             {
-                if (startValue == value)
+                if (data == value)
                     return;
-                startValue = value;
+                data = value;
+                OnValueChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the start date and time value of the control.
+        /// </summary>
+        public virtual DateTime StartValue
+        {
+            get => data.Start;
+            set
+            {
+                if (data.Start == value)
+                    return;
+                data = new DateTimeInterval(value, data.Duration);
                 OnValueChanged();
             }
         }
@@ -143,14 +158,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the end date and time value of the control.
         /// </summary>
-        public DateTime EndValue
+        public virtual DateTime EndValue
         {
-            get => endValue;
+            get => data.End;
             set
             {
-                if (endValue == value)
+                if (data.End == value)
                     return;
-                endValue = value;
+                data = new DateTimeInterval(data.Start, value - data.Start);
                 OnValueChanged();
             }
         }
