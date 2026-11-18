@@ -2506,7 +2506,6 @@ namespace Alternet.UI
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
         public virtual void ForEachChild<T>(Action<T> action)
-            where T : AbstractControl
         {
             if (!HasChildren)
                 return;
@@ -2515,6 +2514,26 @@ namespace Alternet.UI
             {
                 if (child is T control)
                     action(control);
+            }
+        }
+
+        /// <summary>
+        /// Performs some action for the each child of the control.
+        /// </summary>
+        /// <typeparam name="TChild">Specifies type of the child control.</typeparam>
+        /// <param name="action">Specifies action which will be called for the each child.</param>
+        /// <param name="recursive">Whether to call action for all child controls recursively.</param>
+        public virtual void ForEachChild<TChild>(Action<TChild> action, bool recursive)
+        {
+            if (!HasChildren)
+                return;
+
+            foreach (var child in Children)
+            {
+                if (child is TChild control)
+                    action(control);
+                if (recursive)
+                    child.ForEachChild(action, true);
             }
         }
 
