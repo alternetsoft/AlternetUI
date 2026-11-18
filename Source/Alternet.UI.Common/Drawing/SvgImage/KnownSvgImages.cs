@@ -136,6 +136,8 @@ namespace Alternet.UI
         private static SvgImage? imgAddressCard;
         private static SvgImage? imgFolderEllipsis;
         private static SvgImage? imgHourglassHalf;
+        private static SvgImage? imgHourglassStart;
+        private static SvgImage? imgHourglassEnd;
         private static SvgImage? imgHourglass;
         private static SvgImage? imgSlash;
         private static SvgImage? imgSmallPen;
@@ -497,6 +499,25 @@ namespace Alternet.UI
         {
             get => imgHourglassHalf ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageHourglassHalf);
             set => imgHourglassHalf = value;
+        }
+
+        /// <summary>
+        /// Gets or sets svg image which can be used for displaying "Hourglass Start" icon.
+        /// </summary>
+        public static SvgImage ImgHourglassStart
+        {
+            get => imgHourglassStart ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageHourglassStart);
+            set => imgHourglassStart = value;
+        }
+
+
+        /// <summary>
+        /// Gets or sets svg image which can be used for displaying "Hourglass End" icon.
+        /// </summary>
+        public static SvgImage ImgHourglassEnd
+        {
+            get => imgHourglassEnd ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageHourglassEnd);
+            set => imgHourglassEnd = value;
         }
 
         /// <summary>
