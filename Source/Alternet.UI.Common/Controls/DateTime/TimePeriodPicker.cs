@@ -302,7 +302,7 @@ namespace Alternet.UI
         public virtual TimePeriod AddNoneItem(string? labelText)
         {
             if (labelText is null)
-                Items.Insert(0, TimePeriod.None);
+                Items.Insert(0, TimePeriod.None.Clone());
             else
                 Items.Insert(0, new TimePeriod(null, labelText));
             return TimePeriod.None;
@@ -340,7 +340,7 @@ namespace Alternet.UI
 
                 if (!allowZero && item.Value.Value == TimeSpan.Zero)
                     continue;
-                Items.Add(item);
+                Items.Add(item.Clone());
             }
         }
     }

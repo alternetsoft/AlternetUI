@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a time period defined by a numeric value and a unit of measurement.
     /// </summary>
-    public class TimePeriod : IEquatable<TimePeriod>
+    public class TimePeriod : BaseObject, IEquatable<TimePeriod>
     {
         /// <summary>
         /// Gets a <see cref="TimePeriod"/> instance that represents no specific time period (null value).
@@ -20,6 +20,8 @@ namespace Alternet.UI
         private string? text;
         private TimeSpan? data;
         private TimePeriodUnit zeroUnit = TimePeriodUnit.Minutes;
+        private DateUtils.TimePeriodUnitTextFormat? unitFormat;
+        private string? textFormat;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TimePeriod"/> class with the specified value and unit.
@@ -110,7 +112,11 @@ namespace Alternet.UI
         /// Gets or sets the optional text format for displaying the time period,
         /// allowing customization of how the unit is represented in string form.
         /// </summary>
-        public virtual DateUtils.TimePeriodUnitTextFormat? UnitFormat { get; set; }
+        public virtual DateUtils.TimePeriodUnitTextFormat? UnitFormat
+        {
+            get => unitFormat;
+            set => unitFormat = value;
+        }
 
         /// <summary>
         /// Gets or sets the optional text format for displaying the time period,
@@ -118,7 +124,11 @@ namespace Alternet.UI
         /// Value should be specified in the same way as in <see cref="string.Format(string, object[])"/>.
         /// Only the first argument is used, which is the <see cref="TimePeriod"/> instance itself.
         /// </summary>
-        public virtual string? TextFormat { get; set; }
+        public virtual string? TextFormat
+        {
+            get => textFormat;
+            set => textFormat = value;
+        }
 
         /// <summary>
         /// Gets or sets an optional title or description for the time period,
@@ -194,6 +204,38 @@ namespace Alternet.UI
         public override int GetHashCode()
         {
             return Value.GetHashCode();
+        }
+
+        /// <summary>
+        /// Assigns the values from another <see cref="TimePeriod"/> instance to the current instance.
+        /// </summary>
+        /// <param name="other">The <see cref="TimePeriod"/> instance to copy values from.</param>
+        public virtual void Assign(TimePeriod? other)
+        {
+            if (other is null)
+            {
+                Value = null;
+                Text = string.Empty;
+                UnitFormat = null;
+                TextFormat = null;
+                return;
+            }
+
+            Value = other.Value;
+            Text = other.Text;
+            UnitFormat = other.UnitFormat;
+            TextFormat = other.TextFormat;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="TimePeriod"/> instance that is a copy of the current instance.
+        /// </summary>
+        /// <returns>A new <see cref="TimePeriod"/> instance that is a copy of the current instance.</returns>
+        public virtual TimePeriod Clone()
+        {
+            var result = new TimePeriod();
+            result.Assign(this);
+            return result;
         }
 
         /// <inheritdoc/>
