@@ -3896,6 +3896,8 @@ namespace Alternet.UI
                     if (c.ParentColorMode)
                         c.ColorMode = value;
                 }, recursive: false);
+
+                Invalidate();
             }
         }
 
