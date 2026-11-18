@@ -1433,6 +1433,7 @@ namespace Alternet.UI
             item.DisabledImage = null;
             item.ImageSet = null;
             item.DisabledImageSet = null;
+            item.SvgImage = null;
         }
 
         /// <summary>
@@ -1474,26 +1475,25 @@ namespace Alternet.UI
         /// defaults will be used.</param>
         /// <param name="color">Color of the svg image. Optional. If not specified,
         /// default svg color is used.</param>
-        public virtual void SetTabSvg(int? index, SvgImage? svg, int? size = null, Color? color = null)
+        public virtual bool SetTabSvg(int? index, SvgImage? svg, int? size = null, Color? color = null)
         {
             if (index is null)
-                return;
+                return false;
             if (svg is null)
             {
                 ResetTabImage(index);
-                return;
+                return false;
             }
 
             size ??= UseSmallImages ? DefaultSmallSvgSize : DefaultLargeSvgSize;
 
-            ImageSet? image;
-
-            if (color is null)
-                image = svg.AsNormal(size.Value, IsDarkBackground);
-            else
-                image = svg.ImageSetWithColor(size.Value, color);
-
-            SetTabImage(index, image);
+            var item = Header.GetTab(index);
+            if (item is null)
+                return false;
+            item.SvgImage = svg;
+            item.SvgSize = size;
+            item.SvgColor = color;
+            return true;
         }
 
         /// <summary>
