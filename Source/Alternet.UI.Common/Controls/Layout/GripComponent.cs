@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// The control is typically placed in the bottom-right corner of a status bar,
     /// but can be used in other contexts as well.
     /// </summary>
-    public class GripComponent : FrameworkElement
+    public partial class GripComponent : FrameworkElement
     {
         private float? minSizeDelta;
         private float? minPositionDelta;
@@ -71,6 +71,8 @@ namespace Alternet.UI
                     interactionControl.MouseUp -= OnMouseUp;
                     interactionControl.MouseCaptureLost -= OnMouseCaptureLost;
                     interactionControl.Disposed -= OnControlDisposed;
+                    interactionControl.Deactivated -= OnControlDeactivated;
+                    interactionControl.Activated -= OnControlActivated;
                 }
 
                 interactionControl = value;
@@ -82,6 +84,8 @@ namespace Alternet.UI
                     interactionControl.MouseUp += OnMouseUp;
                     interactionControl.MouseCaptureLost += OnMouseCaptureLost;
                     interactionControl.Disposed += OnControlDisposed;
+                    interactionControl.Deactivated += OnControlDeactivated;
+                    interactionControl.Activated += OnControlActivated;
                 }
             }
         }
@@ -296,6 +300,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Handles the Activated event for the interaction control.
+        /// </summary>
+        /// <param name="sender">The control that received the event.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnControlActivated(object? sender, EventArgs e)
+        {
+            if (resizing)
+            {
+                if (sender is not Control control) return;
+                resizing = false;
+                control.ReleaseMouseCapture();
+            }
+        }
+
+        /// <summary>
+        /// Handles the Deactivated event for the interaction control.
+        /// </summary>
+        /// <param name="sender">The control that received the event.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnControlDeactivated(object? sender, EventArgs e)
+        {
+            if (resizing)
+            {
+                if (sender is not Control control) return;
+                resizing = false;
+                control.ReleaseMouseCapture();
+            }
+        }
+
+        /// <summary>
         /// Handles the MouseMove event for the interaction control.
         /// This method is called when the mouse is moved.
         /// </summary>
@@ -303,7 +337,7 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnMouseMove(object? sender, MouseEventArgs e)
         {
-            if(sender is not Control control) return;
+            if (sender is not Control control) return;
 
             if (resizing)
             {
@@ -372,7 +406,7 @@ namespace Alternet.UI
                 {
                     if (InvertLeftDelta)
                         bounds.X -= deltaX;
-                    else 
+                    else
                         bounds.X += deltaX;
                 }
 
@@ -453,7 +487,7 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnControlDisposed(object? sender, EventArgs e)
         {
-            if(sender == interactionControl)
+            if (sender == interactionControl)
             {
                 InteractionControl = null;
             }

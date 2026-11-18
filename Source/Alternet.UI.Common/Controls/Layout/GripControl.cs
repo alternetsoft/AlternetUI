@@ -158,7 +158,8 @@ namespace Alternet.UI
         {
             /// <summary>
             /// Dragging the grip does not move the target control.
-            /// The grip can still be used for resizing if the <see cref="GripSizeAction"/> is set to allow resizing.
+            /// The grip can still be used for resizing if the <see cref="GripSizeAction"/>
+            /// is set to allow resizing.
             /// </summary>
             None,
 
@@ -389,14 +390,16 @@ namespace Alternet.UI
         public virtual bool CanResize => CanResizeVertically || CanResizeHorizontally;
 
         /// <summary>
-        /// Gets a value indicating whether the grip can move vertically. If false, only horizontal moving is allowed.
+        /// Gets a value indicating whether the grip can move vertically.
+        /// If false, only horizontal moving is allowed.
         /// </summary>
         [Browsable(false)]
         public virtual bool CanMoveVertically
             => MoveAction == GripMoveAction.ChangeLocation || MoveAction == GripMoveAction.ChangeTop;
 
         /// <summary>
-        /// Gets a value indicating whether the grip can move horizontally. If false, only vertical moving is allowed.
+        /// Gets a value indicating whether the grip can move horizontally.
+        /// If false, only vertical moving is allowed.
         /// </summary>
         [Browsable(false)]
         public virtual bool CanMoveHorizontally
@@ -793,6 +796,30 @@ namespace Alternet.UI
         {
             Target = target;
             return this;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            if (resizing)
+            {
+                resizing = false;
+                this.ReleaseMouseCapture();
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDeactivated(EventArgs e)
+        {
+            base.OnDeactivated(e);
+
+            if (resizing)
+            {
+                resizing = false;
+                this.ReleaseMouseCapture();
+            }
         }
 
         /// <inheritdoc/>
