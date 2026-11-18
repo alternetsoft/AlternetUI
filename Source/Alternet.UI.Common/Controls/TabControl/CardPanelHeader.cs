@@ -994,7 +994,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual CardPanelHeaderItem? GetTab(int? index)
         {
-            if (index is null || index < 0 || index > tabs.Count)
+            if (index is null || index < 0 || index >= tabs.Count)
                 return null;
             var result = Tabs[index.Value];
             return result;
