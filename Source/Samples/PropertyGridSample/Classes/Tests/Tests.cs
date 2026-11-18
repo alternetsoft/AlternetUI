@@ -58,6 +58,7 @@ namespace PropertyGridSample
             InitTestsLabel();
             InitTestsPanel();
             InitTestsShapeControl();
+            InitTestsDateTime();
 
             PropertyGridUtils.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
         }
@@ -85,6 +86,39 @@ namespace PropertyGridSample
             AddControlAction<ShapeControl>("SendToBack rectangle", (c) =>
             {
                 FindRectangleShapeControl(c)?.SendToBack();
+            });
+        }
+
+        void InitTestsDateTime()
+        {
+            AddControlAction<DateTimeIntervalPicker>("Kind = Date", (c) =>
+            {
+                c.Kind = DateTimePickerKind.Date;
+            });
+
+            AddControlAction<DateTimeIntervalPicker>("Kind = Time", (c) =>
+            {
+                c.Kind = DateTimePickerKind.Time;
+            });
+
+            AddControlAction<DateTimeIntervalPicker>("Kind = DateTime", (c) =>
+            {
+                c.Kind = DateTimePickerKind.DateTime;
+            });
+
+            AddControlAction<DateTimePicker>("Kind = Date", (c) =>
+            {
+                c.Kind = DateTimePickerKind.Date;
+            });
+
+            AddControlAction<DateTimePicker>("Kind = Time", (c) =>
+            {
+                c.Kind = DateTimePickerKind.Time;
+            });
+
+            AddControlAction<DateTimePicker>("Kind = DateTime", (c) =>
+            {
+                c.Kind = DateTimePickerKind.DateTime;
             });
         }
 

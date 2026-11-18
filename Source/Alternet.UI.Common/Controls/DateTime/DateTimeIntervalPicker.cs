@@ -116,7 +116,8 @@ namespace Alternet.UI
             {
                 if (IsDateOnly)
                 {
-                    EndValue = value.Date.AddDays(1);
+                    var newValue = value.Date.AddDays(1);
+                    EndValue = newValue;
                 }
                 else
                 {
@@ -143,6 +144,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the duration of the interval represented by the control.
+        /// </summary>
+        public virtual TimeSpan Duration
+        {
+            get => data.Duration;
+            set
+            {
+                Value = new DateTimeInterval(data.Start, value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the start date and time value of the control.
         /// </summary>
         public virtual DateTime StartValue
@@ -156,6 +169,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the end date and time value of the control.
+        /// This is calculated based on the start value and the duration, so setting
+        /// this value will adjust the duration accordingly.
         /// </summary>
         public virtual DateTime EndValue
         {
@@ -163,6 +178,19 @@ namespace Alternet.UI
             set
             {
                 Value = new DateTimeInterval(data.Start, value - data.Start);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the time icon should be ignored when painting the control.
+        /// </summary>
+        public virtual bool IgnoreTimeIconPaint
+        {
+            get => startPicker.TimeIcon.IgnorePaint;
+            set
+            {
+                startPicker.TimeIcon.IgnorePaint = value;
+                endPicker.TimeIcon.IgnorePaint = value;
             }
         }
 
@@ -408,17 +436,28 @@ namespace Alternet.UI
             {
                 if (Kind == value)
                     return;
-                startPicker.Kind = value;
-                endPicker.Kind = value;
-                if (value == DateTimePickerKind.Date)
+
+                DoInsideLayout(() =>
                 {
-                    Value = new DateTimeInterval(Value.Start, TimeSpan.FromDays(1));
-                }
-                else
-                {
-                }
+                    startPicker.Kind = value;
+                    endPicker.Kind = value;
+
+                    switch (value)
+                    {
+                        case DateTimePickerKind.Date:
+                            Value = new DateTimeInterval(Value.Start.Date, TimeSpan.FromDays(1));
+                            break;
+                        case DateTimePickerKind.Time:
+                            break;
+                        case DateTimePickerKind.DateTime:
+                            break;
+                    }
+
+                    IgnoreTimeIconPaint = value != DateTimePickerKind.Time;
+                });
 
                 durationPicker.MainControl.ReadOnly = value != DateTimePickerKind.DateTime;
+                durationPicker.MainControl.Visible = value != DateTimePickerKind.Time;
             }
         }
 

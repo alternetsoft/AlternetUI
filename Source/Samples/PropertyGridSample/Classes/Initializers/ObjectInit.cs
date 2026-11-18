@@ -383,11 +383,11 @@ namespace PropertyGridSample
             };
         }
 
-        public static void InitDateTimeRangePicker(DateTimeIntervalPicker control)
+        public static void InitDateTimeIntervalPicker(DateTimeIntervalPicker control)
         {
             control.ValueChanged += (s, e) =>
             {
-                App.LogReplace($"DateTimeRangePicker: {control.StartValue} - {control.EndValue}", "DateTimeRangePicker:");
+                App.LogReplace($"DateTimeIntervalPicker: {control.StartValue} - {control.EndValue}, {control.Value.Duration}", "DateTimeIntervalPicker:");
             };
         }
 
