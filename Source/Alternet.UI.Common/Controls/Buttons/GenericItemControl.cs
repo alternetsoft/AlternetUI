@@ -10,8 +10,8 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a user interface control that displays a single <see cref="ListControlItem"/> item.
     /// </summary>
-    public partial class GenericItemControl : HiddenGenericBorder, IListControlItemContainer, ICommandSource, 
-        IControlStateObjectChanged, IControlAndLabel, ICheckedProperty
+    public partial class GenericItemControl : HiddenGenericBorder, IListControlItemContainer, ICommandSource,
+        IControlStateObjectChanged, IControlAndLabel, ICheckedProperty, IReadOnlyProperty
     {
         /// <summary>
         /// Gets the default margin applied to images.
@@ -521,6 +521,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control is read-only.
+        /// </summary>
+        public virtual bool ReadOnly { get; set; }
+
+        /// <summary>
         /// Gets or set a value indicating whether the control is in the checked state.
         /// </summary>
         /// <value><c>true</c> if the control is in the checked
@@ -554,7 +559,8 @@ namespace Alternet.UI
         /// Gets or sets the item associated with the control.
         /// If the item has not been created, it is instantiated when accessed.
         /// </summary>
-        /// <remarks>When a new item is assigned, the control's layout is updated to reflect the change.</remarks>
+        /// <remarks>When a new item is assigned, the control's layout
+        /// is updated to reflect the change.</remarks>
         [Browsable(false)]
         public virtual ListControlItem Item
         {
@@ -1261,7 +1267,7 @@ namespace Alternet.UI
         /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
         protected virtual void ToggleCheckedOnMouseClick(MouseEventArgs e)
         {
-            if (DisposingOrDisposed || !Enabled)
+            if (DisposingOrDisposed || !Enabled || ReadOnly)
                 return;
 
             if (Item.IsCheckBoxEnabled is bool b)
@@ -1382,11 +1388,15 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The list control item for which to modify the checkbox information.</param>
         /// <param name="checkBoxInfo">The checkbox information to be modified.</param>
-        protected virtual void CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo)
+        protected virtual void CoerceCheckBoxInfo(
+            ListControlItem item,
+            ListControlItem.ItemCheckBoxInfo checkBoxInfo)
         {
         }
 
-        void IListControlItemContainer.CoerceCheckBoxInfo(ListControlItem item, ListControlItem.ItemCheckBoxInfo checkBoxInfo)
+        void IListControlItemContainer.CoerceCheckBoxInfo(
+            ListControlItem item,
+            ListControlItem.ItemCheckBoxInfo checkBoxInfo)
         {
             CoerceCheckBoxInfo(item, checkBoxInfo);
         }

@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Implements rich text editor functionality.
     /// </summary>
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class RichTextBox : Control, IReadOnlyStrings, IRichTextBox
+    public partial class RichTextBox : Control, IReadOnlyStrings, IRichTextBox, IReadOnlyProperty
     {
         private bool hasBorder = true;
         private StringSearch? search;

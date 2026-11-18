@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Alternet.UI
 {
-    public partial class RepeatPatternPicker
+    public partial class RepeatPatternPicker : IReadOnlyProperty
     {
         /// <summary>
         /// Represents a control that allows users to select a weekly repeat pattern for an event or task.
@@ -73,6 +73,26 @@ namespace Alternet.UI
                 ValueToControls();
 
                 intervalWeekPicker.ValueChanged += OnIntervalWeekPickerValueChanged;
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the control is read-only.
+            /// </summary>
+            public virtual bool ReadOnly
+            {
+                get => intervalWeekPicker.IntPicker.ReadOnly;
+                set
+                {
+                    intervalWeekPicker.IntPicker.ReadOnly = value;
+                    panel.ReadOnly = value;
+                    foreach (var checkBox in checkBoxes)
+                    {
+                        if (checkBox is XCheckBox ch)
+                        {
+                            ch.ReadOnly = value;
+                        }
+                    }
+                }
             }
 
             /// <summary>

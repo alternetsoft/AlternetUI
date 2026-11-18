@@ -15,7 +15,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory(KnownControlCategory.DateTime)]
-    public partial class TimePicker : GenericControlAndButton<ToolBar>
+    public partial class TimePicker : GenericControlAndButton<ToolBar>, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets whether to assign default control colors

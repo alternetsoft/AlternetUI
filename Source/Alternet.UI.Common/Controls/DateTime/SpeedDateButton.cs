@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// and shows popup calendar when it is clicked.
     /// </summary>
     [ControlCategory(KnownControlCategory.DateTime)]
-    public partial class SpeedDateButton : SpeedButtonWithPopup<PopupCalendar, XCalendar>
+    public partial class SpeedDateButton : SpeedButtonWithPopup<PopupCalendar, XCalendar>, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets the default date format used for displaying dates in the control.

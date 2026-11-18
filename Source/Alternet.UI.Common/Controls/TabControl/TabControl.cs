@@ -31,7 +31,7 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Containers)]
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedIndexChanged")]
-    public partial class TabControl : HiddenBorder
+    public partial class TabControl : HiddenBorder, IReadOnlyProperty
     {
         /// <summary>
         /// Represents a delegate that determines the visible border sides of a header button based on its position.
@@ -289,6 +289,19 @@ namespace Alternet.UI
                     return;
                 visibleInteriorSides = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is read-only.
+        /// When control is read-only, user cannot change selected tab page by clicking on tab header buttons.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get => cardPanelHeader.ReadOnly;
+            set
+            {
+                cardPanelHeader.ReadOnly = value;
             }
         }
 

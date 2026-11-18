@@ -106,13 +106,16 @@ namespace Alternet.UI
 
         /// <summary>
         /// Added for the compatibility with the legacy code.
+        /// Currently it is not used in the library and has no effect on the control's behavior.
         /// </summary>
         [Browsable(false)]
         public virtual bool UseVisualStyleBackColor { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the control uses a different foreground color when hovered.
-        /// <see cref="HoveredForeColor"/> and <see cref="DefaultHoveredForeColor"/> are used only if this property
+        /// Gets or sets a value indicating whether the control uses
+        /// a different foreground color when hovered.
+        /// <see cref="HoveredForeColor"/> and <see cref="DefaultHoveredForeColor"/>
+        /// are used only if this property
         /// is set to true. Setting this property to false will make the control
         /// use the same foreground color in all states, including hovered.
         /// </summary>

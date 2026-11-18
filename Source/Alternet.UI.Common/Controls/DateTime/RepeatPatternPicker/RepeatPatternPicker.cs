@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Represents a control that allows users to select a repeat pattern for an event or task.
     /// </summary>
     [ControlCategory(KnownControlCategory.DateTime)]
-    public partial class RepeatPatternPicker : HiddenBorder
+    public partial class RepeatPatternPicker : HiddenBorder, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets the default minimum margin between child controls
@@ -67,6 +67,7 @@ namespace Alternet.UI
         private int valueToControlsSuspendCounter;
         private bool valuesTransparent = false;
         private bool timeVisible = false;
+        private bool readOnly;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternPicker"/> class.
@@ -173,6 +174,35 @@ namespace Alternet.UI
             endsNeverRadioButton.CheckedChanged += OnEndsNeverRadioChanged;
             untilRadioButton.CheckedChanged += OnEndsOnRadioButton;
             endsAfterOccurrenceRadioButton.CheckedChanged += OnEndsAfterOccurrenceRadioChanged;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="RepeatPatternPicker"/> control is read-only.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get
+            {
+                return readOnly;
+            }
+            set
+            {
+                if (readOnly == value)
+                    return;
+                readOnly = value;
+                dailyPicker.ReadOnly = readOnly;
+                weeklyPicker.ReadOnly = readOnly;
+                monthlyPicker.ReadOnly = readOnly;
+                yearlyPicker.ReadOnly = readOnly;
+                oncePicker.ReadOnly = readOnly;
+                startPicker.MainControl.ReadOnly = readOnly;
+                untilDatePicker.MainControl.ReadOnly = readOnly;
+                endsNeverRadioButton.MainControl.ReadOnly = readOnly;
+                untilRadioButton.MainControl.ReadOnly = readOnly;
+                endsAfterOccurrenceRadioButton.MainControl.ReadOnly = readOnly;
+                occurrencePicker.IntPicker.ReadOnly = readOnly;
+                tabControl.ReadOnly = readOnly;
+            }
         }
 
         /// <summary>

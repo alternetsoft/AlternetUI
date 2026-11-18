@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// combining the relative weekday, day of the week, and month selections.
     /// </summary>
     [ControlCategory(KnownControlCategory.DateTime)]
-    public partial class RelativeWeekdayOfMonthPicker : TransparentPanel
+    public partial class RelativeWeekdayOfMonthPicker : TransparentPanel, IReadOnlyProperty
     {
         /// <summary>
         /// The default margin between the label and the picker control.
@@ -131,7 +131,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the text values of the inner picker controls are transparent.
+        /// Gets or sets a value indicating whether the control is read-only,
+        /// preventing user interaction when set to true.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get => relativeWeekdayPicker.ReadOnly;
+            set
+            {
+                relativeWeekdayPicker.ReadOnly = value;
+                dayOfWeekPicker.ReadOnly = value;
+                monthPicker.ReadOnly = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text values
+        /// of the inner picker controls are transparent.
         /// </summary>
         public virtual bool ValuesTransparent
         {

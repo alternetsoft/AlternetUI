@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Items are declared using logical definitions (for example, boolean setting or
     /// string setting) and are not bound to the specific controls.
     /// </summary>
-    public partial class PanelSettings : HiddenBorder
+    public partial class PanelSettings : HiddenBorder, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets a default value indicating whether to use <see cref="ToggleSwitch"/> control
@@ -101,6 +101,7 @@ namespace Alternet.UI
         private readonly bool autoCreate = true;
         private BaseConcurrentStack<ObjectUniqueId>? radioGroupStack;
         private BaseConcurrentStack<AbstractControl>? containerStack;
+        private bool readOnly;
 
         static PanelSettings()
         {
@@ -168,6 +169,25 @@ namespace Alternet.UI
         /// Gets or sets the height of the separator line in the settings panel.
         /// </summary>
         public virtual float SeparatorLineHeight { get; set; } = DefaultSeparatorLineHeight;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the child controls in this panel are read-only.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get => readOnly;
+            set
+            {
+                if (readOnly == value)
+                    return;
+                readOnly = value;
+
+                ForEachChild<IReadOnlyProperty>(c =>
+                {
+                    c.ReadOnly = value;
+                }, recursive: true);
+            }
+        }
 
         /// <summary>
         /// Gets whether controls are automatically created and updated

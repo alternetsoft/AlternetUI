@@ -19,7 +19,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory(KnownControlCategory.DateTime)]
-    public partial class DateTimePicker : GenericDateEdit
+    public partial class DateTimePicker : GenericDateEdit, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets the default distance between date and time pickers in the <see cref="DateTimePicker"/> control.

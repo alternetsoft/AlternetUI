@@ -19,7 +19,6 @@ namespace Alternet.UI
         /// Occurs before the <see cref="AbstractControl.KeyDown" /> event when a key is pressed
         /// while focus is on this control.
         /// </summary>
-        [Category("Key")]
         event PreviewKeyDownEventHandler? PreviewKeyDown;
 
         /// <summary>
@@ -1330,8 +1329,7 @@ namespace Alternet.UI
         /// <typeparam name="T">Specifies type of the child control.</typeparam>
         /// <param name="action">Specifies action which will be called for the
         /// each child.</param>
-        void ForEachChild<T>(Action<T> action)
-            where T : AbstractControl;
+        void ForEachChild<T>(Action<T> action);
 
         /// <summary>
         /// Same as <see cref="App.Log"/>.

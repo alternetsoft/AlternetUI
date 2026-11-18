@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that allows users to select a month and day.
     /// </summary>
-    public partial class MonthAndDayPicker : TransparentPanel
+    public partial class MonthAndDayPicker : TransparentPanel, IReadOnlyProperty
     {
         /// <summary>
         /// The default margin between the label and the picker control.
@@ -51,6 +51,19 @@ namespace Alternet.UI
         /// Gets the <see cref="Label"/> control used for displaying a label for the picker.
         /// </summary>
         public Label Label => label;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is read-only.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get => monthPicker.ReadOnly && dayPicker.ReadOnly;
+            set
+            {
+                monthPicker.ReadOnly = value;
+                dayPicker.ReadOnly = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the values of the month and day pickers are transparent.

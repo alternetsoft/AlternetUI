@@ -14,9 +14,9 @@ namespace Alternet.UI
         /// Represents a control that allows users to select a repeat pattern for an
         /// event or task, including options for once, daily, weekly, monthly, and yearly repeat patterns.
         /// </summary>
-        public partial class OncePatternPicker : DateRepeatPatternRulePicker<OnceRepeatPatternRule>
+        public partial class OncePatternPicker : DateRepeatPatternRulePicker<OnceRepeatPatternRule>, IReadOnlyProperty
         {
-            private readonly DateTimeRangePicker picker = new();
+            private readonly DateTimeIntervalPicker picker = new();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="OncePatternPicker"/>
@@ -33,10 +33,19 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Gets the <see cref="DateTimeRangePicker"/> control used for selecting the date
+            /// Gets or sets a value indicating whether the control is read-only.
+            /// </summary>
+            public virtual bool ReadOnly
+            {
+                get => picker.ReadOnly;
+                set => picker.ReadOnly = value;
+            }
+
+            /// <summary>
+            /// Gets the <see cref="DateTimeIntervalPicker"/> control used for selecting the date
             /// and time range for the once repeat pattern.
             /// </summary>
-            public DateTimeRangePicker Picker => picker;
+            public DateTimeIntervalPicker Picker => picker;
 
             /// <summary>
             /// Updates the control values based on the current state of the <see cref="OnceRepeatPatternRule"/> instance.
@@ -141,6 +150,24 @@ namespace Alternet.UI
                             Value.Kind = kind ?? DailyRepeatPatternRule.RepeatKind.EveryDay;
                     };
                 });
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the control is read-only.
+            /// </summary>
+            public virtual bool ReadOnly
+            {
+                get => intervalDayPicker.IntPicker.ReadOnly;
+                set
+                {
+                    intervalDayPicker.IntPicker.ReadOnly = value;
+                    everyDayRadioButton.MainControl.ReadOnly = value;
+                    evenDaysRadioButton.MainControl.ReadOnly = value;
+                    oddDaysRadioButton.MainControl.ReadOnly = value;
+                    intervalRadioButton.MainControl.ReadOnly = value;
+                    weekdaysRadioButton.MainControl.ReadOnly = value;
+                    weekendsRadioButton.MainControl.ReadOnly = value;
+                }
             }
 
             /// <summary>

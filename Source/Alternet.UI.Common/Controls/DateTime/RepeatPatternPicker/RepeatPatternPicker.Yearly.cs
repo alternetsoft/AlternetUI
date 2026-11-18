@@ -14,7 +14,8 @@ namespace Alternet.UI
         /// Represents a control that allows users to select a yearly repeat pattern for an event or task.
         /// </summary>
         [ControlCategory(KnownControlCategory.DateTime)]
-        public partial class YearlyPatternPicker : DateRepeatPatternRulePicker<YearlyRepeatPatternRule>
+        public partial class YearlyPatternPicker : DateRepeatPatternRulePicker<YearlyRepeatPatternRule>,
+            IReadOnlyProperty
         {
             private readonly XIntPickerWithLabels intervalYearPicker = new();
             private readonly XRadioButtonAndSuffix dayOfMonthRadioButton;
@@ -59,7 +60,11 @@ namespace Alternet.UI
                     relativeWeekdayRadioButton.IsChecked = true;
                 };
 
-                XRadioButton[] radioGroup = { dayOfMonthRadioButton.MainControl, relativeWeekdayRadioButton.MainControl };
+                XRadioButton[] radioGroup =
+                {
+                    dayOfMonthRadioButton.MainControl,
+                    relativeWeekdayRadioButton.MainControl,
+                };
 
                 dayOfMonthRadioButton.MainControl.RadioSiblings = radioGroup;
                 relativeWeekdayRadioButton.MainControl.RadioSiblings = radioGroup;
@@ -120,6 +125,22 @@ namespace Alternet.UI
                     intervalYearPicker.IntPicker.TextPicker.TextTransparent = value;
                     relativeWeekdayOfMonthPicker.ValuesTransparent = value;
                     monthAndDayPicker.ValuesTransparent = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the control is read-only.
+            /// </summary>
+            public virtual bool ReadOnly
+            {
+                get => intervalYearPicker.IntPicker.ReadOnly;
+                set
+                {
+                    intervalYearPicker.IntPicker.ReadOnly = value;
+                    relativeWeekdayOfMonthPicker.ReadOnly = value;
+                    relativeWeekdayRadioButton.MainControl.ReadOnly = value;
+                    monthAndDayPicker.ReadOnly = value;
+                    dayOfMonthRadioButton.MainControl.ReadOnly = value;
                 }
             }
 

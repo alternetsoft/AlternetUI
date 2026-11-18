@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Implements <see cref="SpeedButton"/> for selecting of the enum values.
     /// </summary>
     [ControlCategory(KnownControlCategory.MenusAndToolbars)]
-    public partial class SpeedEnumButton : SpeedButtonWithListPopup
+    public partial class SpeedEnumButton : SpeedButtonWithListPopup, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
@@ -48,6 +48,15 @@ namespace Alternet.UI
             ImageVisible = DefaultShowDropDownImage;
             PopupWindowTitle = CommonStrings.Default.WindowTitleSelectValue;
             PopupKind = DefaultPopupKind;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is read-only.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -201,6 +210,14 @@ namespace Alternet.UI
         {
             cachedItem = null;
             base.ReassignValue();
+        }
+
+        /// <inheritdoc/>
+        public override void ShowPopup()
+        {
+            if (ReadOnly)
+                return;
+            base.ShowPopup();
         }
 
         /// <summary>

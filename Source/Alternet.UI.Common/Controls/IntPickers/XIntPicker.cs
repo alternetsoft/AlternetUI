@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a text editor with spinner buttons that allow the user to increment or decrement the value.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
-    public partial class XIntPicker : ToolBar
+    public partial class XIntPicker : ToolBar, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets default minimum width for the <see cref="XIntPicker"/> control.
@@ -156,6 +156,16 @@ namespace Alternet.UI
                 base.ColorMode = value;
                 UseControlColors(true);
             }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the control is read-only.
+        /// If true, user cannot change value by typing in the text picker or using the plus/minus buttons.
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get => textPicker.ReadOnly;
+            set => textPicker.ReadOnly = value;
         }
 
         /// <summary>
@@ -481,6 +491,9 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="ClickEventArgs"/> that contains the event data.</param>
         public virtual void OnButtonClick(ClickEventArgs e)
         {
+            if (DisposingOrDisposed || ReadOnly)
+                return;
+
             var change = Keyboard.IsControlPressed ? LargeChange : SmallChange;
 
             if (e.ButtonKind == ButtonKind.Minus)

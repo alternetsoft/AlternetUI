@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// on the card title. Also this control is used in the <see cref="TabControl"/> as a part of its template.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Other)]
-    public partial class CardPanelHeader : HiddenGenericBorder, ITextProperty
+    public partial class CardPanelHeader : HiddenGenericBorder, ITextProperty, IReadOnlyProperty
     {
         /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
@@ -292,6 +292,12 @@ namespace Alternet.UI
                 return closeButton;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is read-only.
+        /// When set to <c>true</c>, the user cannot change the selected card.
+        /// </summary>
+        public virtual bool ReadOnly { get; set; }
 
         /// <summary>
         /// Gets the panel where the tabs are located.
@@ -1592,6 +1598,8 @@ namespace Alternet.UI
         /// <param name="e">The event arguments.</param>
         protected virtual void OnCloseButtonClick(object? sender, EventArgs e)
         {
+            if (ReadOnly)
+                return;
             CloseButtonClick?.Invoke(this, EventArgs.Empty);
         }
 
@@ -1625,6 +1633,8 @@ namespace Alternet.UI
         /// <param name="e">The event arguments.</param>
         protected virtual void OnItemClick(object? sender, EventArgs e)
         {
+            if (ReadOnly)
+                return;
             if (sender is not AbstractControl control)
                 return;
 

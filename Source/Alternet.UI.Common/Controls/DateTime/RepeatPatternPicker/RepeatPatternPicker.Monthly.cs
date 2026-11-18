@@ -14,7 +14,8 @@ namespace Alternet.UI
         /// Represents a control that allows users to select a monthly repeat pattern for an event or task.
         /// </summary>
         [ControlCategory(KnownControlCategory.DateTime)]
-        public partial class MonthlyPatternPicker : DateRepeatPatternRulePicker<MonthlyRepeatPatternRule>
+        public partial class MonthlyPatternPicker : DateRepeatPatternRulePicker<MonthlyRepeatPatternRule>,
+            IReadOnlyProperty
         {
             private readonly XIntPickerWithLabels intervalMonthPicker = new();
             private readonly RelativeWeekdayOfMonthPicker relativeWeekdayOfMonthPicker;
@@ -118,6 +119,24 @@ namespace Alternet.UI
                     relativeWeekdayOfMonthPicker.ValuesTransparent = value;
                     intervalMonthPicker.IntPicker.TextPicker.TextTransparent = value;
                     dayOfMonthPicker.IntPicker.TextPicker.TextTransparent = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the control is read-only.
+            /// </summary>
+            public virtual bool ReadOnly
+            {
+                get => intervalMonthPicker.IntPicker.ReadOnly;
+                set
+                {
+                    if (ReadOnly == value)
+                        return;
+                    intervalMonthPicker.IntPicker.ReadOnly = value;
+                    relativeWeekdayOfMonthPicker.ReadOnly = value;
+                    dayOfMonthPicker.IntPicker.ReadOnly = value;
+                    dayOfMonthRadioButton.MainControl.ReadOnly = value;
+                    relativeWeekdayRadioButton.MainControl.ReadOnly = value;
                 }
             }
 
