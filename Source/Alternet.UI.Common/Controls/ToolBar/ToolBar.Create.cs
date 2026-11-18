@@ -64,6 +64,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates control for use in the toolbar as a link label.
+        /// </summary>
+        /// <returns>A new instance of <see cref="LinkLabel"/> representing
+        /// a link label in the toolbar.</returns>
+        protected virtual LinkLabel CreateToolLinkLabel()
+        {
+            var label = new LinkLabel();
+            label.CustomFlags["CreatedByToolBar"] = true;
+            return label;
+        }
+
+        /// <summary>
         /// Creates <see cref="SpeedButton"/> for use in the toolbar.
         /// Override to create customized speed buttons.
         /// </summary>

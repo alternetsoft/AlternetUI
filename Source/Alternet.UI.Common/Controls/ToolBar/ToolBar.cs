@@ -1569,6 +1569,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a link label to the control.
+        /// </summary>
+        /// <param name="text">The text of the link label.</param>
+        /// <param name="linkClicked">The action to perform when the link is clicked.</param>
+        /// <param name="underlined">Whether the link label should be underlined.</param>
+        /// <returns><see cref="LinkLabel"/> representing the added link label.</returns>
+        public virtual LinkLabel AddLinkLabel(string? text = null, Action? linkClicked = null, bool underlined = true)
+        {
+            var label = InsertLinkLabel(Children.Count, text);
+            label.HasBorder = underlined;
+            if (linkClicked is not null)
+                label.LinkClicked += (s, e) => linkClicked();
+            return label;
+        }
+
+        /// <summary>
+        /// Inserts a link label to the control at the specified index.
+        /// </summary>
+        /// <param name="index">The index at which to insert the link label.</param>
+        /// <param name="text">The text of the link label.</param>
+        /// <returns><see cref="LinkLabel"/> representing the inserted link label.</returns>
+        public virtual LinkLabel InsertLinkLabel(int index, string? text = null)
+        {
+            var label = CreateToolLinkLabel();
+            label.VerticalAlignment = UI.VerticalAlignment.Center;
+            label.Text = text ?? string.Empty;
+            label.Margin = DefaultTextMargin;
+            label.Click += RaiseToolClick;
+
+            Children.Insert(index, label);
+
+            return label;
+        }
+
+        /// <summary>
         /// Adds an empty space with the specified or default size.
         /// </summary>
         /// <param name="size">Optional spacer size.</param>
