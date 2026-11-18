@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// measurement (e.g., days, hours, minutes).
     /// </summary>
     [ControlCategory(KnownControlCategory.DateTime)]
-    public partial class TimePeriodPicker : ListPicker
+    public partial class TimePeriodPicker : ListPicker, IReadOnlyProperty
     {
         /// <summary>
         /// Specifies the default set of time period items to be displayed in the picker,
@@ -71,6 +71,15 @@ namespace Alternet.UI
             }
 
             Value = new TimePeriod(15, TimePeriodUnit.Minutes);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the picker is in read-only mode,
+        /// </summary>
+        public virtual bool ReadOnly
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -158,12 +167,14 @@ namespace Alternet.UI
             All,
 
             /// <summary>
-            /// Indicates that items with a <c>null</c> value should be ignored when filtering the items in the picker.
+            /// Indicates that items with a <c>null</c> value should be ignored
+            /// when filtering the items in the picker.
             /// </summary>
             IgnoreNull = 1 << 0,
 
             /// <summary>
-            /// Indicates that items with a value of zero should be ignored when filtering the items in the picker.
+            /// Indicates that items with a value of zero should be ignored
+            /// when filtering the items in the picker.
             /// </summary>
             IgnoreZero = 1 << 1,
 
@@ -174,7 +185,8 @@ namespace Alternet.UI
             IgnoreNullAndZero = IgnoreNull | IgnoreZero,
 
             /// <summary>
-            /// Indicates that items with a non-zero value should be ignored when filtering the items in the picker.
+            /// Indicates that items with a non-zero value should be ignored
+            /// when filtering the items in the picker.
             /// </summary>
             IgnoreNonZero = 1 << 2,
         }
@@ -305,6 +317,14 @@ namespace Alternet.UI
             return true;
         }
 
+        /// <inheritdoc/>
+        public override void ShowPopup()
+        {
+            if (ReadOnly)
+                return;
+            base.ShowPopup();
+        }
+        
         /// <summary>
         /// Adds the default set of time period items to the picker, which can be overridden in derived classes.
         /// By default uses the <see cref="DefaultItems"/> array to populate the picker with common time periods.

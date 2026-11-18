@@ -11,6 +11,9 @@ namespace Alternet.UI
     /// Represents a control that allows the user to select a start date and time and an end date and time.
     /// Additionally, a duration can be specified, which will automatically update the end date and time.
     /// </summary>
+    [DefaultProperty("Value")]
+    [DefaultEvent("ValueChanged")]
+    [DefaultBindingProperty("Value")]
     [ControlCategory(KnownControlCategory.DateTime)]
     public partial class DateTimeIntervalPicker : TransparentPanel, IReadOnlyProperty
     {
@@ -106,7 +109,7 @@ namespace Alternet.UI
             {
                 return IsDateOnly
                 ? EndValue.Date.AddDays(-1)
-                : EndValue.Date;
+                : EndValue;
             }
 
             set
@@ -117,8 +120,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    var newValue = value.Date.Add(EndValue.TimeOfDay);
-                    EndValue = newValue;
+                    EndValue = value;
                 }
             }
         }
@@ -148,10 +150,7 @@ namespace Alternet.UI
             get => data.Start;
             set
             {
-                if (data.Start == value)
-                    return;
-                data = new DateTimeInterval(value, data.Duration);
-                OnValueChanged();
+                Value = new DateTimeInterval(value, data.Duration);
             }
         }
 
@@ -163,10 +162,7 @@ namespace Alternet.UI
             get => data.End;
             set
             {
-                if (data.End == value)
-                    return;
-                data = new DateTimeInterval(data.Start, value - data.Start);
-                OnValueChanged();
+                Value = new DateTimeInterval(data.Start, value - data.Start);
             }
         }
 
@@ -410,8 +406,19 @@ namespace Alternet.UI
 
             set
             {
+                if (Kind == value)
+                    return;
                 startPicker.Kind = value;
                 endPicker.Kind = value;
+                if (value == DateTimePickerKind.Date)
+                {
+                    Value = new DateTimeInterval(Value.Start, TimeSpan.FromDays(1));
+                }
+                else
+                {
+                }
+
+                durationPicker.MainControl.ReadOnly = value != DateTimePickerKind.DateTime;
             }
         }
 
@@ -438,20 +445,24 @@ namespace Alternet.UI
         /// <summary>
         /// Called when the value of the start date and time picker changes.
         /// </summary>
-        /// <param name="sender"> </param>
-        /// <param name="e"></param>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An <see cref="EventArgs"/> that contains the event data. </param>
         protected virtual void OnStartPickerChanged(object? sender, EventArgs e)
         {
+            if (valueChangedSuspended)
+                return;
             StartValue = startPicker.Value ?? DateUtils.NowWithoutSeconds;
         }
 
         /// <summary>
         /// Called when the value of the end date and time picker changes.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An <see cref="EventArgs"/> that contains the event data. </param>
         protected virtual void OnEndPickerChanged(object? sender, EventArgs e)
         {
+            if (valueChangedSuspended)
+                return;
             DisplayEndValue = endPicker.Value ?? DateUtils.NowWithoutSeconds;
         }
 
@@ -466,8 +477,7 @@ namespace Alternet.UI
                 return;
 
             var duration = durationPicker.MainControl.Value.Value ?? TimeSpan.Zero;
-            DateTime newEndValue = StartValue + duration;
-            EndValue = newEndValue;
+            Value = new DateTimeInterval(StartValue, duration);
         }
 
         /// <summary>
@@ -500,7 +510,8 @@ namespace Alternet.UI
         /// Called when the value of the start date picker is changing.
         /// </summary>
         /// <param name="sender"> The source of the event.</param>
-        /// <param name="e">The <see cref="NullableDateTimeChangingEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="NullableDateTimeChangingEventArgs"/>
+        /// instance containing the event data.</param>
         /// <exception cref="NotImplementedException"></exception>
         protected virtual void OnStartDatePickerValueChanging(object? sender, NullableDateTimeChangingEventArgs e)
         {
@@ -525,8 +536,7 @@ namespace Alternet.UI
                 startPicker.Value = StartValue;
                 endPicker.Value = DisplayEndValue;
 
-                var duration = DateUtils.GetDuration(StartValue, EndValue);
-                durationPicker.MainControl.Value = new(duration);
+                durationPicker.MainControl.Value = new(Value.Duration);
 
                 ValueChanged?.Invoke(this, EventArgs.Empty);
             }
