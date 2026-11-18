@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -69,6 +70,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets tab svg color.
+        /// </summary>
+        public virtual Color? SvgColor
+        {
+            get => HeaderButton?.SvgColor;
+            set
+            {
+                if (HeaderButton is null)
+                    return;
+                HeaderButton.SvgColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets tab svg size.
+        /// </summary>
+        public virtual int? SvgSize
+        {
+            get => HeaderButton?.SvgSize;
+            set
+            {
+                if (HeaderButton is null)
+                    return;
+                HeaderButton.SvgSize = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets tab svg image.
+        /// </summary>
+        public virtual SvgImage? SvgImage
+        {
+            get => HeaderButton?.SvgImage;
+            set
+            {
+                if (HeaderButton is null)
+                    return;
+                HeaderButton.SvgImage = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets tab image.
         /// </summary>
         public virtual Image? Image
@@ -76,7 +119,7 @@ namespace Alternet.UI
             get => HeaderButton?.Image;
             set
             {
-                if(HeaderButton is null)
+                if (HeaderButton is null)
                     return;
                 HeaderButton.Image = value;
             }
