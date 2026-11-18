@@ -152,36 +152,50 @@ namespace Alternet.UI
             return false;
         }
 
-        /// <inheritdoc/>
-        protected override void DisposeManaged()
+        /// <summary>
+        /// Removes and disposes all components of the control.
+        /// This method is called when the control is being disposed.
+        /// </summary>
+        protected virtual void RemoveAndDisposeComponents(bool disposeComponents = true)
         {
-            StaticControlEvents.Notification -= OnGlobalControlNotification;
-
-            SuspendLayout();
-
-            if (HasComponents)
+            try
             {
-                var componentsCopy = components!.ToArray();
-                components!.Clear();
-                components = null;
-                foreach (var c in componentsCopy)
+                if (HasComponents)
                 {
-                    var cc = c;
-                    SafeDisposeObject(ref cc);
+                    if (disposeComponents)
+                    {
+                        var componentsCopy = components!.ToArray();
+                        components!.Clear();
+                        components = null;
+
+                        foreach (var c in componentsCopy)
+                        {
+                            var cc = c;
+                            SafeDisposeObject(ref cc);
+                        }
+                    }
+                    else
+                    {
+                        components!.Clear();
+                        components = null;
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                if (DebugUtils.IsDebugDefined)
+                {
+                    LogUtils.LogExceptionToFile(e);
+                    throw;
+                }
+            }
+        }
 
-            if (FocusedControl == this)
-                FocusedControl = null;
-            if (HoveredControl == this)
-                PlessMouse.SetHoveredControl(null);
-            delayedTextChanged.Reset();
-
-            Designer?.RaiseDisposed(this, EventArgs.Empty);
-            StaticControlEvents.RaiseDisposed(this, EventArgs.Empty);
-
-            DetachHandler();
-
+        /// <summary>
+        /// Removes and disposes all child controls of the control.
+        /// </summary>
+        public virtual void RemoveAndDisposeChildren()
+        {
             if (children != null)
             {
                 var allChildren = AllChildren.ToArray();
@@ -202,6 +216,29 @@ namespace Alternet.UI
                     }
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            StaticControlEvents.Notification -= OnGlobalControlNotification;
+
+            SuspendLayout();
+
+            RemoveAndDisposeComponents();
+
+            if (FocusedControl == this)
+                FocusedControl = null;
+            if (HoveredControl == this)
+                PlessMouse.SetHoveredControl(null);
+            delayedTextChanged.Reset();
+
+            Designer?.RaiseDisposed(this, EventArgs.Empty);
+            StaticControlEvents.RaiseDisposed(this, EventArgs.Empty);
+
+            DetachHandler();
+
+            RemoveAndDisposeChildren();
 
             Parent = null;
 
@@ -346,7 +383,7 @@ namespace Alternet.UI
         protected virtual void AssertParentChild(AbstractControl? newParent)
         {
             if (newParent is null || !DebugUtils.AssertParentChildRelationship)
-                return; 
+                return;
 
             if (!IsValidParent(newParent))
             {
