@@ -1956,6 +1956,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Configures the control to behave and appear as a link label.
+        /// </summary>
+        public virtual void ConfigureAsLinkLabel()
+        {
+            DoInsideUpdate(() =>
+            {
+                UseTheme = KnownTheme.None;
+                Cursor = Cursors.Hand;
+                SetLabelTextColor(VisualControlState.Normal, LinkLabel.DefaultNormalColor, InvalidateMethod.None);
+                SetLabelTextColor(VisualControlState.Hovered, LinkLabel.DefaultHoverColor, InvalidateMethod.None);
+            });
+        }
+
+        /// <summary>
+        /// Sets the foreground color for the label based on the specified visual state.
+        /// </summary>
+        /// <param name="state">The visual state for which to set the foreground color.</param>
+        /// <param name="color">The foreground color to set.</param>
+        /// <param name="invalidateMethod">The method to use for invalidating the control.</param>
+        public virtual void SetLabelTextColor(
+            VisualControlState state,
+            ThemedColor? color,
+            InvalidateMethod invalidateMethod = InvalidateMethod.Invalidate)
+        {
+            StateObjects ??= new();
+            StateObjects.Colors ??= new();
+            StateObjects.Colors.SetObject(new FontAndColor(color), state);
+            Invalidate(invalidateMethod);
+        }
+
+        /// <summary>
         /// Retrieves the foreground color for the label based on the specified visual state.
         /// </summary>
         /// <param name="state">The visual state for which to retrieve the foreground color.</param>

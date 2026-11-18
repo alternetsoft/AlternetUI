@@ -288,6 +288,11 @@ namespace PropertyGridSample
 
         internal void InitTestsSpeedButton()
         {
+            AddControlAction<SpeedButton>("Configure as Link Label", (c) =>
+            {
+                c.ConfigureAsLinkLabel();
+            });
+
             AddControlAction<SpeedButton>("Set Icon as Image", (c) =>
             {
                 c.SetIconAsImage(KnownIcons.Default);
