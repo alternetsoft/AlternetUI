@@ -155,6 +155,8 @@ namespace Alternet.UI
         private static SvgImage? imgHeadphones;
         private static SvgImage? imgPaperclip;
         private static SvgImage? imgRepeat;
+        private static SvgImage? imgDebugOutput;
+
 
         static KnownSvgImages()
         {
@@ -165,6 +167,21 @@ namespace Alternet.UI
                     image.ResetCachedImages();
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets or sets "Debug Output" svg image which includes a debug output icon.
+        /// </summary>
+        public static SvgImage ImgDebugOutput
+        {
+            get
+            {
+                return imgDebugOutput ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageDebugOutput);
+            }
+            set
+            {
+                imgDebugOutput = value;
+            }
         }
 
         /// <summary>
