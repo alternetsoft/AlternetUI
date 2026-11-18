@@ -508,5 +508,14 @@ namespace Alternet.UI.Localization
         public string CalendarItemLabelAtTimeOfEvent { get; set; } = "At time of event";
 
         public string CalendarItemAlarmTimePeriodFormat { get; set; } = "{0} before";
+
+        public string CalendarItemIntervalHeaderDate { get; set; } = "Date";
+
+        public string CalendarItemIntervalHeaderTime { get; set; } = "Time";
+
+        public string CalendarItemIntervalHeaderDateTime { get; set; } = "Date and Time";
+
+        // ========================
+
     }
 }

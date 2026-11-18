@@ -44,10 +44,12 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness DefaultPadding = 5;
 
+        private readonly DateTimeIntervalPicker intervalPicker = new();
+        private readonly GenericSectionPanel intervalPanel = new();
         private readonly LinkLabel editExcludedDatesLinkLabel = new(Localized.CalendarItemLabelExcludeDates);
         private readonly GenericControlAndImage<DatePicker> startPicker = new(KnownSvgImages.ImgCalendar);
-        private readonly SectionPanel seriesPanel = new(CommonStrings.Default.SeriesPattern);      
-        private readonly GenericSectionPanel rangePanel = new(CommonStrings.Default.SeriesRange);
+        private readonly SectionPanel seriesPatternPanel = new(CommonStrings.Default.SeriesPattern);      
+        private readonly GenericSectionPanel seriesRangePanel = new(CommonStrings.Default.SeriesRange);
         private readonly TransparentPanel endDatePanel = new ();
         private readonly GenericControlAndLabel<DatePicker, Label> untilDatePicker = new();
         private readonly XRadioButtonAndSuffix endsNeverRadioButton;
@@ -66,7 +68,6 @@ namespace Alternet.UI
         private IFormatProvider? formatProvider;
         private int valueToControlsSuspendCounter;
         private bool valuesTransparent = false;
-        private bool timeVisible = false;
         private bool readOnly;
 
         /// <summary>
@@ -80,9 +81,11 @@ namespace Alternet.UI
 
             data = CreateRule();
 
+            intervalPicker.Parent = intervalPanel;
+
             // Start on date
 
-            startPicker.Parent = rangePanel;
+            startPicker.Parent = seriesRangePanel;
 
             // End on date
 
@@ -118,7 +121,7 @@ namespace Alternet.UI
             endDatePanel.SetLayout(LayoutStyle.Horizontal);
 
             endDateControlsPanel.SetParent(endDatePanel);
-            endDatePanel.Parent = rangePanel;
+            endDatePanel.Parent = seriesRangePanel;
 
             // Other
 
@@ -143,7 +146,7 @@ namespace Alternet.UI
             tabControl.ActiveTabTheme = SpeedButton.KnownTheme.StaticBorder;
             tabControl.TabTheme = SpeedButton.KnownTheme.Default;
             
-            rangePanel.Visible = false;
+            seriesRangePanel.Visible = false;
 
             tabControl.Add(GetLocalizedText(ScheduleRepeatPattern.Once), oncePicker);
             tabControl.Add(GetLocalizedText(ScheduleRepeatPattern.Daily), dailyPicker);
@@ -153,13 +156,14 @@ namespace Alternet.UI
 
             HasBorder = false;
 
-            editExcludedDatesLinkLabel.Parent = rangePanel;
+            editExcludedDatesLinkLabel.Parent = seriesRangePanel;
             editExcludedDatesLinkLabel.LinkClicked += OnEditExcludedDatesLinkLabelClick;
 
-            tabControl.Parent = seriesPanel;
+            tabControl.Parent = seriesPatternPanel;
 
-            seriesPanel.Parent = this;
-            rangePanel.Parent = this;
+            seriesPatternPanel.Parent = this;
+            intervalPanel.Parent = this;
+            seriesRangePanel.Parent = this;
 
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
 
@@ -167,6 +171,7 @@ namespace Alternet.UI
 
             ValueToControls();
 
+            intervalPicker.ValueChanged += OnIntervalPickerValueChanged;
             data.PropertyChanged += OnValuePropertyChanged;
             startPicker.MainControl.ValueChanged += OnStartPickerChanged;
             untilDatePicker.MainControl.ValueChanged += OnEndDatePickerChanged;
@@ -232,28 +237,10 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the time component is visible
-        /// in the date pickers of the <see cref="RepeatPatternPicker"/> control.
-        /// </summary>
-        public virtual bool IsTimeVisible
-        {
-            get => timeVisible;
-            set
-            {
-                timeVisible = value;
-
-                if (timeVisible)
-                    oncePicker.Picker.Kind = DateTimePickerKind.DateTime;
-                else
-                    oncePicker.Picker.Kind = DateTimePickerKind.Date;
-            }
-        }
-
-        /// <summary>
         /// Gets the panel which contains the <see cref="TabControl"/> used for selecting the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public SectionPanel SeriesPanel => seriesPanel;
+        public SectionPanel SeriesPatternPanel => seriesPatternPanel;
 
         /// <summary>
         /// Gets or sets a value indicating whether the collapse buttons
@@ -263,13 +250,14 @@ namespace Alternet.UI
         {
             get
             {
-                return seriesPanel.HeaderToolBar.CollapseButton.Visible;
+                return seriesPatternPanel.HeaderToolBar.CollapseButton.Visible;
             }
 
             set
             {
-                seriesPanel.HeaderToolBar.CollapseButton.Visible = value;
-                rangePanel.HeaderToolBar.CollapseButton.Visible = value;
+                seriesPatternPanel.HeaderToolBar.CollapseButton.Visible = value;
+                seriesRangePanel.HeaderToolBar.CollapseButton.Visible = value;
+                intervalPanel.HeaderToolBar.CollapseButton.Visible = value;
             }
         }
 
@@ -278,14 +266,14 @@ namespace Alternet.UI
         /// Its pages contain controls for selecting specific repeat pattern rules.
         /// </summary>
         [Browsable(false)]
-        public TabControl InnerTabControl => tabControl;
+        public TabControl SeriesTabControl => tabControl;
 
         /// <summary>
         /// Gets the start date panel which contains controls for specifying
         /// the start date and time of the repeat pattern.
         /// </summary>
         [Browsable(false)]
-        public TransparentPanel RangePanel => rangePanel;
+        public TransparentPanel SeriesRangePanel => seriesRangePanel;
 
         /// <summary>
         /// Gets the end date panel which contains controls for specifying the end date of the repeat pattern.
@@ -311,6 +299,7 @@ namespace Alternet.UI
                 weeklyPicker.ValuesTransparent = value;
                 monthlyPicker.ValuesTransparent = value;
                 yearlyPicker.ValuesTransparent = value;
+                intervalPicker.TextTransparent = value;
             }
         }
 
@@ -322,13 +311,14 @@ namespace Alternet.UI
         {
             get
             {
-                return rangePanel.HasBorder;
+                return seriesRangePanel.HasBorder;
             }
 
             set
             {
-                rangePanel.HasBorder = value;
-                seriesPanel.HasBorder = value;
+                seriesRangePanel.HasBorder = value;
+                seriesPatternPanel.HasBorder = value;
+                intervalPanel.HasBorder = value;
             }
         }
 
@@ -350,6 +340,7 @@ namespace Alternet.UI
                 monthlyPicker.FormatProvider = value;
                 yearlyPicker.FormatProvider = value;
                 oncePicker.FormatProvider = value;
+                intervalPicker.FormatProvider = value;
             }
         }
 
@@ -420,7 +411,7 @@ namespace Alternet.UI
             {
                 startPicker.MainControl.Format = value;
                 untilDatePicker.MainControl.Format = value;
-                oncePicker.Picker.Format = value;
+                intervalPicker.Format = value;
             }
         }
 
@@ -494,10 +485,50 @@ namespace Alternet.UI
                 monthlyPicker.ValueToControls();
                 yearlyPicker.ValueToControls();
                 oncePicker.ValueToControls();
+
+                var pickerKind = GetKind(Value.IsAllDay, Value.IsRepeated);
+
+                intervalPicker.Kind = pickerKind ?? DateTimePickerKind.DateTime;
+                intervalPicker.Value = Value.Once.Interval;
+                intervalPanel.Visible = pickerKind.HasValue;
+                intervalPanel.Title = DateUtils.GetIntervalHeaderText(pickerKind);
             }
             finally
             {
                 valueToControlsSuspendCounter--;
+            }
+        }
+
+        /// <summary>
+        /// Gets picker kind based on the specified all-day and repeated flags.
+        /// </summary>
+        /// <param name="allDay">A value indicating whether the event is an all-day event.</param>
+        /// <param name="repeated">A value indicating whether the event is repeated.</param>
+        /// <returns>The corresponding <see cref="DateTimePickerKind"/> value, or <c>null</c>
+        /// if no suitable kind is found.</returns>
+        protected static DateTimePickerKind? GetKind(bool allDay, bool repeated)
+        {
+            if (allDay)
+            {
+                if (repeated)
+                {
+                    return null;
+                }
+                else
+                {
+                    return DateTimePickerKind.Date;
+                }
+            }
+            else
+            {
+                if (repeated)
+                {
+                    return DateTimePickerKind.Time;
+                }
+                else
+                {
+                    return DateTimePickerKind.DateTime;
+                }
             }
         }
 
@@ -521,7 +552,7 @@ namespace Alternet.UI
 
             DoInsideLayout(() =>
             {
-                rangePanel.Visible = isRepeatPattern;
+                seriesRangePanel.Visible = isRepeatPattern;
             });
         }
 
@@ -686,6 +717,16 @@ namespace Alternet.UI
             {
                 data.EndCondition = RepeatPatternEndCondition.AfterOccurrence;
             }
+        }
+
+        /// <summary>
+        /// Called when the interval picker changes the value.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnIntervalPickerValueChanged(object? sender, EventArgs e)
+        {
+            Value.Once.Interval = intervalPicker.Value;
         }
     }
 

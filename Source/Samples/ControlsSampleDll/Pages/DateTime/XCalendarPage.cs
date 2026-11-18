@@ -32,7 +32,7 @@ namespace ControlsSample
         {
             patternPickerContainer = new ScrollableRepeatPatternPicker();
             patternPicker = patternPickerContainer.ScrolledControl;
-            patternPicker.IsTimeVisible = false;
+            patternPicker.Value.IsAllDay = true;
             patternPicker.ShowPanelBorders = false;
             patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
             patternPicker.ShowCollapseButtons = false;

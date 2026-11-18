@@ -30,7 +30,7 @@ namespace ControlsSample
         {
             patternPickerContainer = new ScrollableRepeatPatternPicker();
             patternPicker = patternPickerContainer.ScrolledControl;
-            patternPicker.IsTimeVisible = false;
+            patternPicker.Value.IsAllDay = true;
             patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
 
             blueColor = calendar.CreateDateAttr();

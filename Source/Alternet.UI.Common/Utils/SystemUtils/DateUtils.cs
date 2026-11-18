@@ -294,6 +294,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the title for the interval header based on the specified <see cref="DateTimePickerKind"/>.
+        /// <see cref="CommonStrings"/> is used to retrieve the appropriate title for the interval header
+        /// based on the kind of the DateTimePicker.
+        /// </summary>
+        /// <param name="kind">The kind of the DateTimePicker.</param>
+        /// <returns>The title for the interval header.</returns>
+        public static string GetIntervalHeaderText(DateTimePickerKind? kind)
+        {
+            if (kind is null)
+                return CommonStrings.Default.CalendarItemIntervalHeaderDateTime;
+
+            switch (kind.Value)
+            {
+                case DateTimePickerKind.Date:
+                    return CommonStrings.Default.CalendarItemIntervalHeaderDate;
+                case DateTimePickerKind.Time:
+                    return CommonStrings.Default.CalendarItemIntervalHeaderTime;
+                case DateTimePickerKind.DateTime:
+                default:
+                    return CommonStrings.Default.CalendarItemIntervalHeaderDateTime;
+            }
+        }
+
+        /// <summary>
         /// Determines whether the end date can be changed to the specified new date without violating
         /// the constraint that the end date must not be earlier than the start date.
         /// </summary>

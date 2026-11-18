@@ -135,8 +135,8 @@ namespace Alternet.UI
             descriptionPicker.Parent = descriptionPanel;
             fullDayDurationSwitch.Parent = detailsPanel;
 
-            rulePicker.SeriesPanel.IsCollapsed = true;
-            rulePicker.SeriesPanel.TitleFormat = "{0}: {1}";
+            rulePicker.SeriesPatternPanel.IsCollapsed = true;
+            rulePicker.SeriesPatternPanel.TitleFormat = "{0}: {1}";
 
             UpdateDescriptionPanel();
 
@@ -290,7 +290,6 @@ namespace Alternet.UI
         public virtual void ValueToControls()
         {
             fullDayDurationSwitch.IsChecked = Value.IsAllDay;
-            rulePicker.IsTimeVisible = !Value.IsAllDay;
             titlePicker.MainControl.Text = Value.Text ?? string.Empty;
             descriptionPicker.MainControl.Text = Value.Description ?? string.Empty;
             locationPicker.MainControl.Text = Value.Location?.ToString() ?? string.Empty;
@@ -301,18 +300,18 @@ namespace Alternet.UI
 
             UpdateAlarmPanelTitle();
 
-            rulePicker.SeriesPanel.TitleFormatArgs = new object[] {
+            rulePicker.SeriesPatternPanel.TitleFormatArgs = new object[] {
                 Localized.SeriesPattern,
                 rulePicker.GetLocalizedText(Value.Rule.Kind),
             };
 
             if (Value.Rule.IsRepeated)
             {
-                rulePicker.SeriesPanel.IsCollapsed = false;
+                rulePicker.SeriesPatternPanel.IsCollapsed = false;
             }
             else
             {
-                rulePicker.SeriesPanel.IsCollapsed = true;
+                rulePicker.SeriesPatternPanel.IsCollapsed = true;
             }
 
             UpdateDescriptionPanel();

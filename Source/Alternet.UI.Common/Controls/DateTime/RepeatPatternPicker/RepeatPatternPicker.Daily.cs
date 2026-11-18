@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// </summary>
         public partial class OncePatternPicker : DateRepeatPatternRulePicker<OnceRepeatPatternRule>, IReadOnlyProperty
         {
-            private readonly DateTimeIntervalPicker picker = new();
+            private bool readOnly;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="OncePatternPicker"/>
@@ -25,11 +25,7 @@ namespace Alternet.UI
             /// <param name="data">The <see cref="OnceRepeatPatternRule"/> data.</param>
             public OncePatternPicker(OnceRepeatPatternRule data) : base(data)
             {
-                picker.Parent = this;
-
                 ValueToControls();
-
-                picker.ValueChanged += OnPickerValueChanged;
             }
 
             /// <summary>
@@ -37,41 +33,19 @@ namespace Alternet.UI
             /// </summary>
             public virtual bool ReadOnly
             {
-                get => picker.ReadOnly;
-                set => picker.ReadOnly = value;
+                get => readOnly;
+                set
+                {
+                    readOnly = value;
+                }
             }
 
             /// <summary>
-            /// Gets the <see cref="DateTimeIntervalPicker"/> control used for selecting the date
-            /// and time range for the once repeat pattern.
-            /// </summary>
-            public DateTimeIntervalPicker Picker => picker;
-
-            /// <summary>
-            /// Updates the control values based on the current state of the <see cref="OnceRepeatPatternRule"/> instance.
+            /// Updates the control values based on the current state
+            /// of the <see cref="OnceRepeatPatternRule"/> instance.
             /// </summary>
             public virtual void ValueToControls()
             {
-                if (Value.IsAllDay)
-                {
-                    picker.Kind = DateTimePickerKind.Date;
-                }
-                else
-                {
-                    picker.Kind = DateTimePickerKind.DateTime;
-                }
-
-                picker.Value = Value.Interval;
-            }
-
-            /// <summary>
-            /// Called when the picker changes the value.
-            /// </summary>
-            /// <param name="sender">The source of the event.</param>
-            /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-            protected virtual void OnPickerValueChanged(object? sender, EventArgs e)
-            {
-                Value.Interval = picker.Value;
             }
         }
 
