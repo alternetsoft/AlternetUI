@@ -519,11 +519,15 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="getItems">A function that returns the items.</param>
         /// <param name="applyItems">An action that applies the items.</param>
-        public DatesListEditSource(Func<IEnumerable<DateOnly>> getItems, Action<IEnumerable<DateOnly>> applyItems)
+        /// <param name="instance">The instance of the object that contains the items.</param>
+        public DatesListEditSource(
+            object instance,
+            Func<IEnumerable<DateOnly>> getItems,
+            Action<IEnumerable<DateOnly>> applyItems)
         {
             this.getItems = getItems;
             this.applyItems = applyItems;
-            Instance = new object();
+            Instance = instance;
         }
 
         /// <inheritdoc/>

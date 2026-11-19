@@ -118,7 +118,6 @@ namespace Alternet.UI
             buttonClose.TextVisible = true;
             buttonClose.Text = CommonStrings.Default.ButtonClose;
 
-            toolbar.Margin = (0, 0, 0, ToolBar.DefaultDistanceToContent);
             toolbar.SetVisibleBorders(false, false, false, true);
 
             DataSource = source;

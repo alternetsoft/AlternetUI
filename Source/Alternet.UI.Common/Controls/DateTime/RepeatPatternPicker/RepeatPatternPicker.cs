@@ -439,8 +439,9 @@ namespace Alternet.UI
         public virtual void ShowExcludedDatesEditor()
         {
             IListEditSource source = new DatesListEditSource(
+                Value,
                 () => Value.ExcludedDates,
-                items =>
+                applyItems: items =>
                 {
                     Value.ExcludedDates = items;
                 });
