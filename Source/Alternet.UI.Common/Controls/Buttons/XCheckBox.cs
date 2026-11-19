@@ -83,6 +83,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the size of the check box. If set to null, the default size will be used.
+        /// </summary>
+        public float? CheckBoxSize
+        {
+            get => Item.CheckBoxSize;
+            set => Item.CheckBoxSize = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the margin of the check box. This margin is used when the check box mark is painted.
+        /// </summary>
+        public Thickness CheckBoxMargin
+        {
+            get => Item.CheckBoxMargin;
+            set => Item.CheckBoxMargin = value;
+        }
+
+        /// <summary>
         /// Gets or sets the foreground color to use when the control is in the hovered state.
         /// <see cref="UseHoveredForeColor"/> must be set to true for this property to take effect.
         /// </summary>
@@ -248,6 +266,12 @@ namespace Alternet.UI
 
     /// <summary>
     /// Represents a toggle switch control, which is a specialized version of <see cref="XCheckBox"/>.
+    /// By default control occupies the whole width of the container, you need to set
+    /// <see cref="AbstractControl.PreferredSizeMode"/> property to <see cref="PreferredSizeMode.Content"/>
+    /// to make it occupy only the width of the content.
+    /// Set <see cref="XCheckBox.CheckBoxMargin"/> to zero if you want to change the margin
+    /// of the check box image in a toggle switch.
+    /// Use <see cref="GenericItemControl.TextVisible"/> to control the visibility of the text label.
     /// </summary>
     [ControlCategory(KnownControlCategory.Common)]
     public partial class ToggleSwitch : XCheckBox
@@ -288,7 +312,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default margin for the check box in a toggle switch.
         /// </summary>
-        public static Thickness DefaultToggleSwitchMargin = (4, 0, 0, 0);
+        public static Thickness DefaultToggleSwitchMargin = (4, 0, 4, 0);
 
         /// <summary>
         /// Gets or sets the default size of the check box in a toggle switch.
