@@ -173,6 +173,7 @@ namespace ControlsSample
             {
                 new("XButton", () => new ButtonPage()),
                 new("XCheckBox", () => new CheckBoxesPage()),
+                new("ToggleSwitch", () => new ToggleSwitchPage()),
                 new("XRadioButton", () => new RadioButtonsPage()),
             };
 
