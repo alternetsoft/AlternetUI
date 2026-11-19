@@ -50,35 +50,8 @@ namespace Alternet.UI
 
             MainControl.ToolClick += OnToolClick;
 
-            Subscriber.AfterControlMouseEnter += (s, e) =>
-            {
-                if (!Visible)
-                    return;
-                var control = s as AbstractControl;
-
-                if (PopupOwner?.IsSibling(control) ?? false)
-                {
-                    if (!PopupOwner.HasIndirectParent<PopupToolBar>())
-                        return;
-                    HideAllAfterThis();
-                    HideOnlyThisPopup();
-                }
-            };
-
-            Subscriber.AfterControlVisibleChanged += (s, e) =>
-            {
-                if (!Visible || s == this)
-                    return;
-                if (s is not PopupToolBar control)
-                    return;
-                if (!control.Visible)
-                    return;
-                if (PopupOwner?.IsSibling(control.PopupOwner) ?? false)
-                {
-                    HideAllAfterThis();
-                    HideOnlyThisPopup();
-                }
-            };
+            Subscriber.AfterControlMouseEnter += OnAfterControlMouseEnter;
+            Subscriber.AfterControlMouseLeave += OnAfterControlMouseLeave;
         }
 
         /// <summary>
@@ -198,18 +171,6 @@ namespace Alternet.UI
         public virtual bool NeedsRemainingLabelImages { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the label text width is maximized.
-        /// When set to <c>true</c>, the control will adjust the width of the label text
-        /// to be the same for all toolbar items, based on the widest label text.
-        /// </summary>
-        public virtual bool IsLabelTextWidthMaximized { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the width of the right-side element is maximized.
-        /// </summary>
-        public virtual bool IsRightSideElementWidthMaximized { get; set; } = true;
-
-        /// <summary>
         /// Gets or sets a value indicating whether the remaining images are
         /// required for the toolbar items.
         /// When set to <c>true</c>, the control will ensure that all images
@@ -307,7 +268,8 @@ namespace Alternet.UI
         /// Hides all visible popup toolbars that appear after the current instance in the sequence.
         /// </summary>
         /// <remarks>This method identifies the current instance within the collection of visible popup
-        /// toolbars and hides all subsequent toolbars in the sequence. If the current instance is not found in the
+        /// toolbars and hides all subsequent toolbars in the sequence.
+        /// If the current instance is not found in the
         /// collection, the method performs no action.</remarks>
         public virtual void HideAllAfterThis()
         {
@@ -406,17 +368,51 @@ namespace Alternet.UI
                 {
                     MainControl.AddRemainingLabelImages();
                 }
-
-                if (IsLabelTextWidthMaximized)
-                    MainControl.MaximizeLabelTextWidth();
-
-                if (IsRightSideElementWidthMaximized)
-                    MainControl.MaximizeToolRightSideElementWidth();
             });
 
             var preferredSize = GetPreferredSize();
             ClientSize = preferredSize;
             MinimumSize = MinimumSize.ClampTo(Size);
+        }
+
+        /// <summary>
+        /// Called when the mouse enters some control.
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnAfterControlMouseEnter(object? s, EventArgs e)
+        {
+            if (!Visible)
+                return;
+            var control = s as AbstractControl;
+
+            if (PopupOwner?.IsSibling(control) ?? false)
+            {
+                if (!PopupOwner.HasIndirectParent<PopupToolBar>())
+                    return;
+                HideAllAfterThis();
+                HideOnlyThisPopup();
+            }
+        }
+
+        /// <summary>
+        /// Called when the mouse leaves some control.
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnAfterControlMouseLeave(object? s, EventArgs e)
+        {
+            if (!Visible || s == this)
+                return;
+            if (s is not PopupToolBar control)
+                return;
+            if (!control.Visible)
+                return;
+            if (PopupOwner?.IsSibling(control.PopupOwner) ?? false)
+            {
+                HideAllAfterThis();
+                HideOnlyThisPopup();
+            }
         }
 
         /// <inheritdoc/>

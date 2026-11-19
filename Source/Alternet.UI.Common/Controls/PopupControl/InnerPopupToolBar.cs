@@ -35,6 +35,7 @@ namespace Alternet.UI
         public InnerPopupToolBar(CreateFlags flags = CreateFlags.Resizable)
             : base(flags)
         {
+            BorderControl.ToolBar.Visible = false;
             BorderControl.ToolBar.ParentForeColor = true;
             BorderControl.ToolBar.ParentBackColor = true;
 
@@ -300,18 +301,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the label text width is maximized.
-        /// When set to <c>true</c>, the control will adjust the width of the label text
-        /// to be the same for all toolbar items, based on the widest label text.
-        /// </summary>
-        public virtual bool IsLabelTextWidthMaximized { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the width of the right-side element is maximized.
-        /// </summary>
-        public virtual bool IsRightSideElementWidthMaximized { get; set; } = true;
-
-        /// <summary>
         /// Gets or sets a value indicating whether the remaining images are
         /// required for the toolbar items.
         /// When set to <c>true</c>, the control will ensure that all images
@@ -525,12 +514,6 @@ namespace Alternet.UI
             {
                 Content.AddRemainingLabelImages();
             }
-
-            if (IsLabelTextWidthMaximized)
-                Content.MaximizeLabelTextWidth();
-
-            if (IsRightSideElementWidthMaximized)
-                Content.MaximizeToolRightSideElementWidth();
 
             var preferredSize = Content.GetPreferredSize(PreferredSizeContext.MaxCoord);
             Content.Size = preferredSize;
