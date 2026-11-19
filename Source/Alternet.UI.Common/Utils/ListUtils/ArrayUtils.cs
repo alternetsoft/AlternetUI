@@ -13,6 +13,41 @@ namespace Alternet.UI
     public static class ArrayUtils
     {
         /// <summary>
+        /// Splits an array into a specified number of parts, distributing the elements as evenly as possible.
+        /// </summary>
+        /// <typeparam name="TItem">The type of elements in the array.</typeparam>
+        /// <param name="items">The array to split.</param>
+        /// <param name="numParts">The number of parts to split the array into.</param>
+        /// <returns>An enumerable of arrays, each representing a part of the original array.</returns>
+        public static IEnumerable<TItem[]> SplitArray<TItem>(TItem[] items, int numParts)
+        {
+            if (items == null)
+                yield break;
+
+            if (numParts <= 1)
+            {
+                yield return items;
+                yield break;
+            }
+
+            int baseSize = items.Length / numParts;
+            int remainder = items.Length % numParts;
+            int offset = 0;
+
+            for (int i = 0; i < numParts; i++)
+            {
+                int size = baseSize + (i < remainder ? 1 : 0);
+
+                TItem[] part = new TItem[size];
+                Array.Copy(items, offset, part, 0, size);
+
+                yield return part;
+
+                offset += size;
+            }
+        }
+
+        /// <summary>
         /// Creates a new array by removing the specified element from the source array.
         /// </summary>
         /// <typeparam name="T">The type of elements in the array.</typeparam>
