@@ -68,6 +68,8 @@ namespace ControlsSample
 
         public AnimationPage()
         {
+            selectComboBox.UsePopupItemAsValue = true;
+
             Padding = 10;
 
             animation.Parent = this;
@@ -97,6 +99,8 @@ namespace ControlsSample
                 new ("Spinner", AnimationSpinner),
                 new ("Alternet", AnimationAlternet),
                 new ("Dual Ring", KnownAnimatedImages.DualRingSet),
+                new ("Svg Hour Glass Light", KnownAnimatedImages.SvgHourGlass32Light),
+                new ("Svg Hour Glass Dark", KnownAnimatedImages.SvgHourGlass32Dark),
                 new (AnimationCustom, AnimationCustom),
             };
 

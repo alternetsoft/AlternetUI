@@ -333,12 +333,14 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates a raster image representation of the SVG at the specified size and color scheme.
         /// </summary>
-        /// <param name="size">The width and height, in pixels, of the resulting image. Must be a positive integer.</param>
+        /// <param name="size">The width and height, in pixels, of the resulting image.
+        /// Must be a positive integer.</param>
         /// <param name="knownColor">The base color to apply to the SVG when rendering the image.</param>
         /// <param name="isDark">A value indicating whether to use the dark color variant.
         /// Set to <see langword="true"/> for dark mode;
         /// otherwise, <see langword="false"/>.</param>
-        /// <returns>An <see cref="Image"/> containing the rendered SVG, or <see langword="null"/> if the image could not be
+        /// <returns>An <see cref="Image"/> containing the rendered SVG,
+        /// or <see langword="null"/> if the image could not be
         /// created.</returns>
         public virtual Image AsImage(int size, KnownSvgColor knownColor, bool isDark)
         {
