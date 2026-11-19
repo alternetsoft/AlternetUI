@@ -143,7 +143,7 @@ namespace Alternet.UI
             tabControl.ActiveTabHasBorder = true;
             tabControl.TabHasBorder = true;
             tabControl.HasInteriorBorder = false;
-            tabControl.ActiveTabTheme = SpeedButton.KnownTheme.StaticBorder;
+            tabControl.ActiveTabTheme = SpeedButton.KnownTheme.CheckBorder;
             tabControl.TabTheme = SpeedButton.KnownTheme.Default;
             
             seriesRangePanel.Visible = false;
@@ -156,6 +156,7 @@ namespace Alternet.UI
 
             HasBorder = false;
 
+            editExcludedDatesLinkLabel.HasBorder = false;
             editExcludedDatesLinkLabel.Parent = seriesRangePanel;
             editExcludedDatesLinkLabel.LinkClicked += OnEditExcludedDatesLinkLabelClick;
 
