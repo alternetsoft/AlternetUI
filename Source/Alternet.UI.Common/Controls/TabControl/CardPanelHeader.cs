@@ -1120,6 +1120,8 @@ namespace Alternet.UI
 
             if (button.MinimumSize.IsEmpty)
                 button.MinimumSize = TabControl.DefaultMinTabSize;
+            if (button.MaximumSize.IsEmpty)
+                button.MaximumSize = TabControl.DefaultMaxTabSize;
 
             button.Text = text ?? cardControl?.Title ?? string.Empty;
             button.SizeChanged += OnButtonSizeChanged;

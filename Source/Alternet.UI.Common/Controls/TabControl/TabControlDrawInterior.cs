@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implementation of the <see cref="TabControl"/> interior drawing.
     /// </summary>
-    public partial class TabControlDrawInterior
+    public partial class TabControlDrawInterior : BaseObject
     {
         /// <summary>
         /// Derfault provider for the <see cref="TabControl"/> interior drawing.

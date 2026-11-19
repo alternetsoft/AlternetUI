@@ -57,6 +57,11 @@ namespace Alternet.UI
         /// </summary>
         public static SizeD DefaultMinTabSize = (0, 0);
 
+        /// <summary>
+        /// Gets or sets default maximal tab size in the header.
+        /// </summary>
+        public static SizeD DefaultMaxTabSize = (0, 0);
+
         private readonly TabControlCardPanel cardPanel = new()
         {
             ParentBackColor = true,
@@ -287,8 +292,14 @@ namespace Alternet.UI
             {
                 if (visibleInteriorSides == value)
                     return;
-                visibleInteriorSides = value;
-                Invalidate();
+                PerformLayoutAndInvalidate(() =>
+                {
+                    visibleInteriorSides = value;
+
+                    var newMargin = Thickness.One;
+                    newMargin.SetValuesExcept(visibleInteriorSides, 0);
+                    cardPanel.Margin = newMargin;
+                });
             }
         }
 
