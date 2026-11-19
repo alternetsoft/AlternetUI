@@ -235,13 +235,35 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="items">The collection of <see cref="PanelSettingsItem"/> objects.</param>
         /// <returns>An enumerable collection of <see cref="AbstractControl"/> objects. Each item is not null.</returns>
-        public static IEnumerable<AbstractControl> GetEditors(IEnumerable<PanelSettingsItem> items)
+        public static IEnumerable<AbstractControl> GetEditors(IEnumerable<PanelSettingsItem>? items)
         {
+            if (items is null)
+                yield break;
+
             foreach (var item in items)
             {
                 var editor = item.Editor;
                 if (editor is not null)
                     yield return editor;
+            }
+        }
+
+        /// <summary>
+        /// Gets editors for the specified items of the specified type.
+        /// </summary>
+        /// <typeparam name="TEditor">The type of the editor controls to retrieve.</typeparam>
+        /// <param name="items">The collection of <see cref="PanelSettingsItem"/> objects.</param>
+        /// <returns>An enumerable collection of editor controls of the specified type.</returns>
+        public static IEnumerable<TEditor> GetEditors<TEditor>(IEnumerable<PanelSettingsItem>? items)
+        {
+            if (items is null)
+                yield break;
+
+            foreach (var item in items)
+            {
+                var editor = item.Editor;
+                if (editor is TEditor typedEditor)
+                    yield return typedEditor;
             }
         }
 
