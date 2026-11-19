@@ -13,6 +13,39 @@ namespace Alternet.UI
     /// </summary>
     public partial class GenericControl : AbstractControl
     {
+        /// <summary>
+        /// Gets or sets default bottom border width to use with <see cref="UseSingleBottomBorder"/> method.
+        /// </summary>
+        public static float DefaultSingleBottomBorderWidth = 1;
+
+        private static ControlStateBorders? singleBottomBorder;
+
+        /// <summary>
+        /// Gets a <see cref="ControlStateBorders"/> instance with a single bottom border.
+        /// </summary>
+        public static ControlStateBorders SingleBottomBorder
+        {
+            get
+            {
+                if (singleBottomBorder is null)
+                {
+                    singleBottomBorder = new ControlStateBorders();
+                    var cc = singleBottomBorder.Normal = new();
+                    cc.UniformCornerRadius = 0;
+                    cc.Top.Width = 0;
+                    cc.Left.Width = 0;
+                    cc.Right.Width = 0;
+                    cc.Bottom.Width = DefaultSingleBottomBorderWidth;
+                    singleBottomBorder.Hovered = cc;
+                    singleBottomBorder.Focused = cc;
+                    singleBottomBorder.Disabled = cc;
+                    singleBottomBorder.Pressed = cc;
+                }
+
+                return singleBottomBorder;
+            }
+        }
+
         private bool isClipped = false;
         private bool hasBorder;
         private bool ignorePaint;
@@ -168,6 +201,14 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         public virtual void DefaultPaint(PaintEventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Initializes borders of the control to have a single bottom border.
+        /// </summary>
+        public virtual void UseSingleBottomBorder()
+        {
+            Borders = SingleBottomBorder;
         }
 
         /// <inheritdoc/>

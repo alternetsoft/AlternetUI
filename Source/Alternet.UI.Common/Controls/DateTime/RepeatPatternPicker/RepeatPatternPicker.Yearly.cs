@@ -28,6 +28,8 @@ namespace Alternet.UI
             /// </summary>
             public YearlyPatternPicker(YearlyRepeatPatternRule data) : base(data)
             {
+                intervalYearPicker.IntPicker.UseSingleBottomBorder();
+
                 Layout = LayoutStyle.Vertical;
 
                 intervalYearPicker.PrefixLabel.MarginLeft = XCheckBox.DefaultCheckBoxMargin.Left + 3;

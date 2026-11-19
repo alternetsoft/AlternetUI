@@ -23,6 +23,9 @@ namespace Alternet.UI
         /// </summary>
         public MonthAndDayPicker()
         {
+            monthPicker.UseSingleBottomBorder();
+            dayPicker.UseSingleBottomBorder();
+
             Layout = LayoutStyle.Horizontal;
 
             label.Visible = false;

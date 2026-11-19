@@ -98,6 +98,11 @@ namespace Alternet.UI
         /// </summary>
         public CalendarItemPicker()
         {
+            titlePicker.MainControl.UseSingleBottomBorder();
+            locationPicker.MainControl.UseSingleBottomBorder();
+            categoryPicker.MainControl.UseSingleBottomBorder();
+            statusPicker.MainControl.UseSingleBottomBorder();
+
             MinWidth = DefaultMinWidth;
             Layout = LayoutStyle.Vertical;
             Padding = DefaultPadding;

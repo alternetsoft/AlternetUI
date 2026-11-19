@@ -44,6 +44,12 @@ namespace Alternet.UI
             startPicker = CreateDateTimePicker();
             endPicker = CreateDateTimePicker();
 
+            startPicker.DatePicker.UseSingleBottomBorder();
+            endPicker.DatePicker.UseSingleBottomBorder();
+            startPicker.TimePicker.UseSingleBottomBorder();
+            endPicker.TimePicker.UseSingleBottomBorder();
+            durationPicker.MainControl.UseSingleBottomBorder();
+
             Layout = LayoutStyle.Vertical;
 
             Kind = DateTimePickerKind.DateTime;

@@ -28,6 +28,9 @@ namespace Alternet.UI
             /// </summary>
             public MonthlyPatternPicker(MonthlyRepeatPatternRule data) : base(data)
             {
+                intervalMonthPicker.IntPicker.UseSingleBottomBorder();
+                dayOfMonthPicker.IntPicker.UseSingleBottomBorder();
+
                 Layout = LayoutStyle.Vertical;
 
                 intervalMonthPicker.PrefixLabel.MarginLeft = XCheckBox.DefaultCheckBoxMargin.Left + 3;

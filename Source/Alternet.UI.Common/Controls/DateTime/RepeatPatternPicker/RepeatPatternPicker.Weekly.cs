@@ -26,6 +26,8 @@ namespace Alternet.UI
             /// </summary>
             public WeeklyPatternPicker(WeeklyRepeatPatternRule data) : base(data)
             {
+                intervalWeekPicker.IntPicker.UseSingleBottomBorder();
+
                 Layout = LayoutStyle.Vertical;
 
                 intervalWeekPicker.PrefixLabel.MarginLeft = XCheckBox.DefaultCheckBoxMargin.Left + 3;

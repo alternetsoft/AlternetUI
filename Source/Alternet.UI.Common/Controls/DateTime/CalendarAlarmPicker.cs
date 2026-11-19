@@ -61,6 +61,9 @@ namespace Alternet.UI
         /// <param name="data"></param>
         public CalendarAlarmPicker(CalendarAlarmInfo data)
         {
+            soundFilePicker.UseSingleBottomBorder();
+            timePeriodPicker.UseSingleBottomBorder();
+
             Layout = LayoutStyle.Vertical;
 
             this.data = data;

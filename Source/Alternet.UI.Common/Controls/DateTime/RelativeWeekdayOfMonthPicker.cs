@@ -49,6 +49,10 @@ namespace Alternet.UI
 
             monthPicker = new MonthPicker();
 
+            relativeWeekdayPicker.UseSingleBottomBorder();
+            dayOfWeekPicker.UseSingleBottomBorder();
+            monthPicker.UseSingleBottomBorder();
+
             firstPanel.Layout = LayoutStyle.Horizontal;
             secondPanel.Layout = LayoutStyle.Horizontal;
 

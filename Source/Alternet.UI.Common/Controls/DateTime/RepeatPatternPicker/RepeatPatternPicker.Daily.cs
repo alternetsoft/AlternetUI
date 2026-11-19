@@ -69,6 +69,8 @@ namespace Alternet.UI
             /// </summary>
             public DailyPatternPicker(DailyRepeatPatternRule data) : base(data)
             {
+                intervalDayPicker.IntPicker.UseSingleBottomBorder();
+
                 everyDayRadioButton = new();
                 everyDayRadioButton.MainControl.Tag = DailyRepeatPatternRule.RepeatKind.EveryDay;
                 everyDayRadioButton.SuffixControl.Text = CommonStrings.Default.DailyRepeatPatternRuleKindEveryDay;
