@@ -388,6 +388,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Calculates whether arrows are effectively visible in the scroll bar, considering the
+        /// <see cref="ArrowsVisible"/> property and the default value.
+        /// </summary>
+        /// <returns><c>true</c> if arrows are effectively visible; otherwise, <c>false</c>.</returns>
+        public virtual bool EffectiveArrowsVisible()
+        {
+            return ArrowsVisible ?? DefaultArrowsVisible;
+        }
+
+        /// <summary>
         /// Performs layout of the drawable children and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
@@ -405,7 +415,7 @@ namespace Alternet.Drawing
             var startArrow = GetVisibleStartArrow(VisualControlState.Normal);
             var endArrow = GetVisibleEndArrow(VisualControlState.Normal);
 
-            var arrowsVisible = ArrowsVisible ?? DefaultArrowsVisible;
+            var arrowsVisible = EffectiveArrowsVisible();
 
             var hasStartButton = (startButton is not null || startArrow is not null) && arrowsVisible;
             var hasEndButton = (endButton is not null || endArrow is not null) && arrowsVisible;

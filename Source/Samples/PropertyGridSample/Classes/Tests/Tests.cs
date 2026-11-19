@@ -44,21 +44,21 @@ namespace PropertyGridSample
                 return;
             alreadyRegistered = true;
 
-            InitTestsToolBar();
-            InitTestsTextBoxAndButton();
-            InitTestsTextBox();
-            InitTestsPictureBox();
-            InitTestsListBox();
-            InitTestsStdTreeView();
             InitTestsButton();
-            InitTestsScrollBar();
-            InitTestsSpeedButton();
-            InitTestsTabControl();
-            InitTestsSlider();
-            InitTestsLabel();
-            InitTestsPanel();
-            InitTestsShapeControl();
             InitTestsDateTime();
+            InitTestsLabel();
+            InitTestsListBox();
+            InitTestsPanel();
+            InitTestsPictureBox();
+            InitTestsScrollBar();
+            InitTestsShapeControl();
+            InitTestsSlider();
+            InitTestsSpeedButton();
+            InitTestsStdTreeView();
+            InitTestsTabControl();
+            InitTestsTextBox();
+            InitTestsTextBoxAndButton();
+            InitTestsToolBar();
 
             PropertyGridUtils.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
         }
@@ -267,22 +267,25 @@ namespace PropertyGridSample
 
         internal void InitTestsScrollBar()
         {
+            AddControlAction<XScrollBar>("Toggle arrows", (c) =>
+            {
+                c.ArrowsVisible = !c.ArrowsVisible;
+                c.Invalidate();
+            });
+
             AddControlAction<XScrollBar>("Set auto theme", (c) =>
             {
                 c.ColorMode = null;
-                c.Invalidate();
             });
 
             AddControlAction<XScrollBar>("Set dark theme", (c) =>
             {
                 c.ColorMode = ControlColorMode.Dark;
-                c.Invalidate();
             });
 
             AddControlAction<XScrollBar>("Set light theme", (c) =>
             {
                 c.ColorMode = ControlColorMode.Light;
-                c.Invalidate();
             });
         }
 

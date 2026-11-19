@@ -251,6 +251,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets whether scroll bar arrows are visible.
+        /// </summary>
+        public virtual bool ScrollBarArrowsVisible
+        {
+            get
+            {
+                return VertScrollBar?.EffectiveArrowsVisible() ?? HorzScrollBar?.EffectiveArrowsVisible()
+                    ?? ScrollBarDrawable.DefaultArrowsVisible;
+            }
+
+            set
+            {
+                VertScrollBar?.ArrowsVisible = value;
+                HorzScrollBar?.ArrowsVisible = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets scrollbar metrics.
         /// </summary>
         public virtual ScrollBarMetricsInfo? ScrollBarMetrics
@@ -330,6 +348,17 @@ namespace Alternet.Drawing
         {
             HorzScrollBar?.SetVisible(false);
             VertScrollBar?.SetVisible(false);
+        }
+
+        /// <summary>
+        /// Gets the scrollbar drawable based on the specified orientation.
+        /// </summary>
+        /// <param name="vert">If set to <c>true</c>, gets the vertical scrollbar;
+        /// otherwise, gets the horizontal scrollbar.</param>
+        /// <returns></returns>
+        public ScrollBarDrawable? GetScrollBar(bool vert)
+        {
+            return vert ? VertScrollBar : HorzScrollBar;
         }
 
         /// <summary>

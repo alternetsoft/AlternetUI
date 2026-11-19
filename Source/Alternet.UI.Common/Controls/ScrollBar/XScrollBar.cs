@@ -62,6 +62,22 @@ namespace Alternet.UI
         public event EventHandler? IsVerticalChanged;
 
         /// <summary>
+        /// Gets or sets whether arrows are visible in the scroll bar.
+        /// </summary>
+        public virtual bool ArrowsVisible
+        {
+            get
+            {
+                return Interior.ScrollBarArrowsVisible;
+            }
+            set
+            {
+                Interior.ScrollBarArrowsVisible = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets metrics used to paint this scrollbar when its style is non-system.
         /// </summary>
         [Browsable(false)]
