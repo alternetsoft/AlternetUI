@@ -1835,6 +1835,8 @@ namespace Alternet.UI
 
                 ShowDropDownMenuWhenHovered = false;
 
+                DropDownMenuPosition = Menu.DefaultItemsSubMenuPosition;
+
                 if (!App.IsMaui)
                     UseInternalDropDownMenu = true;
 

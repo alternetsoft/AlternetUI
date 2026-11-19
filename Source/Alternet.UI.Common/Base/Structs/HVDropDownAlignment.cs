@@ -93,6 +93,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a predefined alignment configuration where
+        /// position is aligned to the top and after the end of the anchor element.
+        /// </summary>
+        public static HVDropDownAlignment TopAfterEnd => new(DropDownAlignment.AfterEnd, DropDownAlignment.AfterStart);
+
+        /// <summary>
+        /// Gets a predefined alignment configuration where
         /// position is aligned to the top-left corner.
         /// </summary>
         public static HVDropDownAlignment TopLeft => new(DropDownAlignment.AfterStart, DropDownAlignment.AfterStart);

@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// Gets or sets default alignment for the items popup window when it is displayed
         /// as a sub-menu.
         /// </summary>
-        public static HVDropDownAlignment DefaultItemsSubMenuPosition = HVDropDownAlignment.TopRight;
+        public static HVDropDownAlignment DefaultItemsSubMenuPosition = HVDropDownAlignment.TopAfterEnd;
 
         /// <summary>
         /// Gets or sets default alignment for the items popup window when it is displayed

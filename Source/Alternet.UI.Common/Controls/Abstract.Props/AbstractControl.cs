@@ -348,7 +348,10 @@ namespace Alternet.UI
         public virtual HVDropDownAlignment? DropDownMenuPosition
         {
             get => dropDownMenuPosition;
-            set => dropDownMenuPosition = value;
+            set
+            {
+                dropDownMenuPosition = value;
+            }
         }
 
         /// <summary>
