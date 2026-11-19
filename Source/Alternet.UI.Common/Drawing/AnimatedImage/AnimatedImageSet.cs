@@ -10,8 +10,10 @@ namespace Alternet.Drawing;
 /// Represents a collection of animated images that can be displayed at various scale factors.
 /// </summary>
 /// <remarks>The AnimatedImageSet class provides methods to add, remove, and retrieve animated images based on
-/// specified scale factors. It manages the lifecycle of the images, ensuring proper disposal of resources when images
-/// are removed or the collection is cleared. This class is useful for scenarios where different image resolutions or
+/// specified scale factors. It manages the lifecycle of the images,
+/// ensuring proper disposal of resources when images
+/// are removed or the collection is cleared. This class is useful
+/// for scenarios where different image resolutions or
 /// scale factors are required for display, such as supporting high-DPI environments.</remarks>
 public partial class AnimatedImageSet : DisposableObject
 {
@@ -37,7 +39,8 @@ public partial class AnimatedImageSet : DisposableObject
     /// <remarks>This method compares the provided scale factor to the scale factors of available images using
     /// a precision check. Ensure that the scale factor is within a valid range to retrieve the expected
     /// image item.</remarks>
-    /// <param name="scaleFactor">The scale factor to match against available images. Must be a positive value.</param>
+    /// <param name="scaleFactor">The scale factor to match against available images.
+    /// Must be a positive value.</param>
     /// <returns>An instance of AnimatedImage that corresponds to the specified scale factor,
     /// or null if no matching image item is found.</returns>
     public virtual ImageItem? GetItem(float scaleFactor)
@@ -66,7 +69,8 @@ public partial class AnimatedImageSet : DisposableObject
     /// Retrieves an animated image that is scaled by the specified factor.
     /// </summary>
     /// <param name="scaleFactor">The factor by which to scale the image. Must be a positive value.</param>
-    /// <returns>An instance of <see cref="AnimatedImage"/> representing the scaled image, or <see langword="null"/> if no image
+    /// <returns>An instance of <see cref="AnimatedImage"/> representing the scaled image,
+    /// or <see langword="null"/> if no image
     /// is available for the specified scale factor.</returns>
     public virtual AnimatedImage? GetImage(float scaleFactor)
     {
@@ -108,7 +112,8 @@ public partial class AnimatedImageSet : DisposableObject
     /// </summary>
     /// <param name="image">The animated image to add to the collection. This parameter cannot be null.</param>
     /// <param name="scaleFactor">The scale factor for which the animated image should be displayed.</param>
-    /// <param name="disposeImage">A value indicating whether the image should be disposed of automatically after use.</param>
+    /// <param name="disposeImage">A value indicating whether the image
+    /// should be disposed of automatically after use.</param>
     /// <returns>true if the image was successfully added; otherwise, false.</returns>
     public virtual bool Add(AnimatedImage image, float scaleFactor, bool disposeImage = false)
     {
@@ -137,9 +142,12 @@ public partial class AnimatedImageSet : DisposableObject
         /// </summary>
         /// <remarks>The scale factor determines the size at which the animated image is displayed. Choose
         /// a value appropriate for the intended display context.</remarks>
-        /// <param name="image">The animated image to associate with this item. This parameter cannot be null.</param>
-        /// <param name="scaleFactor">The scale factor to apply to the animated image. Must be a positive value.</param>
-        /// <param name="disposeImage">A value indicating whether the associated image should be disposed of automatically after use.</param>
+        /// <param name="image">The animated image to associate with this item.
+        /// This parameter cannot be null.</param>
+        /// <param name="scaleFactor">The scale factor to apply to the animated image.
+        /// Must be a positive value.</param>
+        /// <param name="disposeImage">A value indicating whether the associated
+        /// image should be disposed of automatically after use.</param>
         public ImageItem(AnimatedImage image, float scaleFactor, bool disposeImage = false)
         {
             Image = image;

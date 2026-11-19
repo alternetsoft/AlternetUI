@@ -8,12 +8,15 @@ using System.Collections.Generic;
 namespace Alternet.Drawing;
 
 /// <summary>
-/// Represents a single frame within an animated image, including its bitmap data, display duration, and compositing
-/// information.
+/// Represents a single frame within an animated image, including its bitmap data,
+/// display duration, and compositing information.
 /// </summary>
-/// <remarks>This class provides access to both the original and fully composited bitmap representations of an
-/// animation frame, as well as metadata such as frame index, display duration, and alpha channel type. It is typically
-/// used when processing or rendering animated images, such as GIFs, where each frame may require compositing with
+/// <remarks>This class provides access to both the original
+/// and fully composited bitmap representations of an
+/// animation frame, as well as metadata such as frame index,
+/// display duration, and alpha channel type. It is typically
+/// used when processing or rendering animated images, such as GIFs,
+/// where each frame may require compositing with
 /// previous frames for correct display.</remarks>
 public class AnimatedImageFrameInfo : DisposableObject
 {
@@ -23,13 +26,66 @@ public class AnimatedImageFrameInfo : DisposableObject
     private List<ScaledImageData>? scaledImages;
 
     /// <summary>
-    /// Gets or sets the original bitmap data as stored in the GIF frame. The bitmap may represent a partial or 'dirty'
+    /// Initializes a new instance of the <see cref="AnimatedImageFrameInfo"/> class.
+    /// </summary>
+    public AnimatedImageFrameInfo()
+    {
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnimatedImageFrameInfo"/> class
+    /// with the specified SVG image, size, and optional color.
+    /// </summary>
+    /// <param name="svg">The SVG image to associate with the frame.</param>
+    /// <param name="size">The size of the image.</param>
+    /// <param name="color">The optional color to apply to the image.</param>
+    /// <param name="isDark">A value indicating whether to use the dark color variant for the SVG image.</param>
+    public AnimatedImageFrameInfo(SvgImage svg, int size, Color? color, bool? isDark = null)
+    {
+        if (color is null)
+        {
+            if (isDark is null)
+            {
+                this.image = svg.AsImage();
+            }
+            else
+            {
+                this.image = svg.AsNormalImage(size, isDark.Value);
+            }
+        }
+        else
+        {
+            this.image = svg.ImageWithColor(size, color);
+        }
+
+        DisposeImage = false;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AnimatedImageFrameInfo"/> class
+    /// with the specified image and disposal behavior.
+    /// </summary>
+    /// <param name="image">The image to associate with the frame.</param>
+    /// <param name="disposeImage">A value indicating whether the image should
+    /// be disposed when the frame is disposed.</param>
+    public AnimatedImageFrameInfo(Image image, bool disposeImage = true)
+    {
+        this.image = image;
+        DisposeImage = disposeImage;
+    }
+
+    /// <summary>
+    /// Gets or sets the original bitmap data as stored in the GIF frame.
+    /// The bitmap may represent a partial or 'dirty'
     /// rectangle of the full image.
     /// </summary>
-    /// <remarks>This property provides access to the unmodified bitmap data extracted from the GIF. The
-    /// bitmap may not cover the entire image area if the frame only updates a portion of the image. Use this property
-    /// when you need the exact pixel data as it appears in the GIF source, including any partial updates.</remarks>
-    public SKBitmap? OriginalBitmap
+    /// <remarks>This property provides access to the unmodified
+    /// bitmap data extracted from the GIF. The
+    /// bitmap may not cover the entire image area if the frame only updates
+    /// a portion of the image. Use this property
+    /// when you need the exact pixel data as it appears in the GIF source,
+    /// including any partial updates.</remarks>
+    public virtual SKBitmap? OriginalBitmap
     {
         get => originalBitmap;
         set => originalBitmap = value;
@@ -38,7 +94,7 @@ public class AnimatedImageFrameInfo : DisposableObject
     /// <summary>
     /// Gets or sets the fully composited bitmap that includes all required animation frames.
     /// </summary>
-    public SKBitmap? CombinedBitmap
+    public virtual SKBitmap? CombinedBitmap
     {
         get => combinedBitmap;
 
@@ -50,12 +106,27 @@ public class AnimatedImageFrameInfo : DisposableObject
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the image should be disposed when the frame is disposed.
+    /// </summary>
+    public virtual bool DisposeImage { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the original bitmap should be disposed when the frame is disposed.
+    /// </summary>
+    public virtual bool DisposeOriginalBitmap { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the combined bitmap should be disposed when the frame is disposed.
+    /// </summary>
+    public virtual bool DisposeCombinedBitmap { get; set; } = true;
+
+    /// <summary>
     /// Gets the image representation associated with this frame, if available.
     /// </summary>
     /// <remarks>The image is initialized on first access from the value of the CombinedBitmap property, if it
     /// has not already been set. This property may return null if neither the image nor the CombinedBitmap is
     /// available.</remarks>
-    public Image? Image
+    public virtual Image? Image
     {
         get
         {
@@ -66,6 +137,12 @@ public class AnimatedImageFrameInfo : DisposableObject
             }
 
             return image;
+        }
+
+        set
+        {
+            combinedBitmap = null;
+            image = value;
         }
     }
 
@@ -98,8 +175,10 @@ public class AnimatedImageFrameInfo : DisposableObject
     /// Returns an image scaled by the specified scale factor.
     /// </summary>
     /// <remarks>If the scale factor is approximately 1.0, the original image is returned without
-    /// modification. Scaled images are cached to improve performance for repeated requests with the same scale factor.</remarks>
-    /// <param name="scaleFactor">The factor by which to scale the image. A value of 1.0 returns the original image. Must be greater than 0.</param>
+    /// modification. Scaled images are cached to improve performance for repeated requests
+    /// with the same scale factor.</remarks>
+    /// <param name="scaleFactor">The factor by which to scale the image.
+    /// A value of 1.0 returns the original image. Must be greater than 0.</param>
     /// <returns>A new image scaled by the specified factor, or null if the original image is not set.</returns>
     public virtual Image? GetScaledImage(float scaleFactor)
     {
@@ -140,9 +219,10 @@ public class AnimatedImageFrameInfo : DisposableObject
             scaledImages = null;
         }
 
-        SafeDispose(ref originalBitmap);
-        SafeDispose(ref combinedBitmap);
-        SafeDispose(ref image);
+        SafeDisposeIf(DisposeOriginalBitmap, ref originalBitmap);
+        SafeDisposeIf(DisposeCombinedBitmap, ref combinedBitmap);
+        SafeDisposeIf(DisposeImage, ref image);
+
         base.DisposeManaged();
     }
 

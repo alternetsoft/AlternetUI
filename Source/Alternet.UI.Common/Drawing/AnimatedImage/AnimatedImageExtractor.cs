@@ -9,19 +9,25 @@ namespace Alternet.Drawing;
 /// <summary>
 /// Provides static methods for extracting individual frames from animated images.
 /// </summary>
-/// <remarks>The AnimatedImageExtractor class enables users to extract all frames from a GIF file, either by
-/// specifying a file path or by providing a stream. Each extracted frame is returned as an AnimatedImageFrameInfo
-/// object, which contains the frame's bitmap, duration, and related metadata. This class is useful for scenarios where
-/// frame-by-frame access to animated images is required, such as custom animation playback or image analysis.</remarks>
+/// <remarks>The AnimatedImageExtractor class enables users
+/// to extract all frames from a GIF file, either by
+/// specifying a file path or by providing a stream.
+/// Each extracted frame is returned as an AnimatedImageFrameInfo
+/// object, which contains the frame's bitmap, duration, and related metadata.
+/// This class is useful for scenarios where
+/// frame-by-frame access to animated images is required, such as custom animation
+/// playback or image analysis.</remarks>
 public static class AnimatedImageExtractor
 {
     /// <summary>
-    /// Logs information about each frame extracted from a GIF located at the specified URL using the provided log
+    /// Logs information about each frame extracted from a GIF located
+    /// at the specified URL using the provided log
     /// writer.
     /// </summary>
     /// <remarks>If no frames are available for the specified URL, a message is logged indicating the absence
     /// of frames. Each frame is logged in a separate section for clarity.</remarks>
-    /// <param name="url">The URL of the GIF from which to extract frames. This parameter can be null, in which case no frames will be
+    /// <param name="url">The URL of the GIF from which to extract frames. This parameter can be null,
+    /// in which case no frames will be
     /// logged.</param>
     /// <param name="logWriter">An optional log writer used to output frame information. If not specified,
     /// a default debug log writer is used.</param>
@@ -83,10 +89,12 @@ public static class AnimatedImageExtractor
     /// </summary>
     /// <remarks>This method extracts all frames from the GIF and returns the bitmap for the specified frame
     /// index. Ensure that the URL points to a valid GIF image.</remarks>
-    /// <param name="url">The URL of the GIF image from which to extract frames. Must reference a valid GIF file.</param>
+    /// <param name="url">The URL of the GIF image from which to extract frames.
+    /// Must reference a valid GIF file.</param>
     /// <param name="frameIndex">The zero-based index of the frame to retrieve.
     /// Must be within the range of available frames in the GIF.</param>
-    /// <returns>An SKBitmap containing the image data for the specified frame, or null if the frame cannot be retrieved.</returns>
+    /// <returns>An SKBitmap containing the image data for the specified frame,
+    /// or null if the frame cannot be retrieved.</returns>
     public static SKBitmap? GetFrame(string? url, int frameIndex = 0)
     {
         var frame = GetFrameInfo(url, frameIndex);
@@ -98,9 +106,12 @@ public static class AnimatedImageExtractor
     /// </summary>
     /// <remarks>If the URL is null or the frame index is invalid, the method returns null. This method is
     /// useful for accessing individual frames in animated images, such as GIFs.</remarks>
-    /// <param name="url">The URL of the animated image from which to extract frame information. This parameter cannot be null.</param>
-    /// <param name="frameIndex">The zero-based index of the frame to retrieve. Must be within the range of available frames.</param>
-    /// <returns>An instance of AnimatedImageFrameInfo containing details of the specified frame, or null if the URL is null or
+    /// <param name="url">The URL of the animated image from which to extract frame information.
+    /// This parameter cannot be null.</param>
+    /// <param name="frameIndex">The zero-based index of the frame to retrieve.
+    /// Must be within the range of available frames.</param>
+    /// <returns>An instance of AnimatedImageFrameInfo containing details
+    /// of the specified frame, or null if the URL is null or
     /// the frame index is out of range.</returns>
     public static AnimatedImageFrameInfo? GetFrameInfo(string? url, int frameIndex = 0)
     {
@@ -119,8 +130,10 @@ public static class AnimatedImageExtractor
     /// </summary>
     /// <remarks>This method opens the specified file for reading and extracts its frames. The file must be in
     /// a valid GIF format.</remarks>
-    /// <param name="url">The resource URL or path to the GIF file to extract frames from. The file must exist and be accessible.</param>
-    /// <returns>An array of AnimatedImageFrameInfo objects, each representing a frame extracted from the GIF image.</returns>
+    /// <param name="url">The resource URL or path to the GIF file to extract frames from.
+    /// The file must exist and be accessible.</param>
+    /// <returns>An array of AnimatedImageFrameInfo objects, each representing
+    /// a frame extracted from the GIF image.</returns>
     public static AnimatedImageFrameInfo[] ExtractFramesFromGif(string? url)
     {
         if (url == null)
@@ -139,13 +152,17 @@ public static class AnimatedImageExtractor
     /// </summary>
     /// <remarks>The method seeks to the beginning of the stream if it is seekable. Each
     /// AnimatedImageFrameInfo in the returned array contains both the original frame bitmap and the composited bitmap,
-    /// which represents the full image as it should appear at that frame in the animation. The caller is responsible
+    /// which represents the full image as it should appear at that frame in the animation.
+    /// The caller is responsible
     /// for disposing the bitmaps contained in the returned objects.</remarks>
-    /// <param name="stream">The input stream containing GIF image data. The stream must support seeking and should be positioned at the
+    /// <param name="stream">The input stream containing GIF image data. The stream must support seeking
+    /// and should be positioned at the
     /// beginning of the GIF data.</param>
-    /// <returns>An array of AnimatedImageFrameInfo objects, each representing a frame extracted from the GIF, including both the
+    /// <returns>An array of AnimatedImageFrameInfo objects, each representing a frame extracted from the GIF,
+    /// including both the
     /// original partial frame and the fully composited frame for playback.</returns>
-    /// <exception cref="Exception">Thrown if the provided stream does not contain a valid or supported GIF image format.</exception>
+    /// <exception cref="Exception">Thrown if the provided stream does not contain
+    /// a valid or supported GIF image format.</exception>
     public static AnimatedImageFrameInfo[] ExtractFramesFromGif(Stream stream)
     {
         if (stream.CanSeek)
@@ -203,7 +220,7 @@ public static class AnimatedImageExtractor
                 Index = i,
                 Duration = frameInfo.Duration,
                 RequiredFrame = frameInfo.RequiredFrame,
-                AlphaType = frameInfo.AlphaType
+                AlphaType = frameInfo.AlphaType,
             };
         }
 

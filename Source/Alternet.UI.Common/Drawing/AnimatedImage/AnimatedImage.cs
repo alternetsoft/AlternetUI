@@ -12,7 +12,8 @@ namespace Alternet.Drawing;
 /// <summary>
 /// Represents an animated image that can be displayed in a user interface.
 /// </summary>
-/// <remarks>This class inherits from <see cref="DisposableObject"/>, which means it should be properly disposed of to free
+/// <remarks>This class inherits from <see cref="DisposableObject"/>,
+/// which means it should be properly disposed of to free
 /// resources. It is designed to handle the loading and rendering of animated images efficiently.</remarks>
 public partial class AnimatedImage : DisposableObject
 {
@@ -24,7 +25,47 @@ public partial class AnimatedImage : DisposableObject
     private int inactiveFrameIndex;
 
     /// <summary>
-    /// Initializes a new instance of the AnimatedImage class using the specified image source URL and an option to
+    /// Initializes a new instance of the AnimatedImage class with no frames.
+    /// </summary>
+    public AnimatedImage()
+    {
+        frames = Array.Empty<AnimatedImageFrameInfo>();
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the AnimatedImage class using an array of SVG images,
+    /// a specified size, and a duration for each frame.
+    /// </summary>
+    /// <param name="svg">An array of SVG images to be used as frames for the animated image.</param>
+    /// <param name="size">The size of each frame in pixels.</param>
+    /// <param name="duration">The duration of each frame in milliseconds.</param>
+    /// <param name="color">An optional color to apply to the SVG images.</param>
+    /// <param name="isDark">A value indicating whether to use the dark color variant for the SVG images.</param>
+    public AnimatedImage(SvgImage[] svg, int size, int duration = 100, Color? color = null, bool? isDark = null)
+    {
+        frames = new AnimatedImageFrameInfo[svg.Length];
+
+        for (int i = 0; i < svg.Length; i++)
+        {
+            var frame = new AnimatedImageFrameInfo(svg[i], size, color, isDark);
+            frame.Duration = duration;
+            frames[i] = frame;
+        }
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the AnimatedImage class using the specified array of frame information.
+    /// </summary>
+    /// <param name="frames">An array of AnimatedImageFrameInfo objects
+    /// representing the frames of the animated image.</param>
+    public AnimatedImage(AnimatedImageFrameInfo[] frames)
+    {
+        this.frames = frames;
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the AnimatedImage class using
+    /// the specified image source URL and an option to
     /// delay loading of animation frames.
     /// </summary>
     /// <remarks>If delayLoading is set to false, all animation frames are loaded during construction, which
@@ -42,7 +83,8 @@ public partial class AnimatedImage : DisposableObject
     }
 
     /// <summary>
-    /// Initializes a new instance of the AnimatedImage class using the specified stream provider and an option to delay
+    /// Initializes a new instance of the AnimatedImage class using the specified
+    /// stream provider and an option to delay
     /// frame loading.
     /// </summary>
     /// <remarks>If <paramref name="delayLoading"/> is set to <see langword="false"/>, all frames are loaded
@@ -50,7 +92,8 @@ public partial class AnimatedImage : DisposableObject
     /// <param name="streamProvider">A function that returns a stream containing the image data
     /// to be used for loading the animated image. This
     /// parameter cannot be null.</param>
-    /// <param name="delayLoading">A value indicating whether to delay loading of image frames until they are needed. If set to <see
+    /// <param name="delayLoading">A value indicating whether to delay loading of
+    /// image frames until they are needed. If set to <see
     /// langword="false"/>, all frames are loaded immediately upon initialization.</param>
     public AnimatedImage(Func<Stream> streamProvider, bool delayLoading = true)
     {
@@ -75,7 +118,8 @@ public partial class AnimatedImage : DisposableObject
     }
 
     /// <summary>
-    /// Occurs when the inactive bitmap is updated, allowing subscribers to respond to changes in the bitmap's state.
+    /// Occurs when the inactive bitmap is updated, allowing subscribers
+    /// to respond to changes in the bitmap's state.
     /// </summary>
     /// <remarks>Subscribers can use this event to refresh the display or perform actions when the inactive
     /// bitmap changes. Handling this event efficiently is recommended to avoid performance issues, especially in
@@ -157,7 +201,8 @@ public partial class AnimatedImage : DisposableObject
 
     /// <summary>
     /// Gets or sets the index of the frame which is shown when animation is stopped or disabled.
-    /// Default is 0, which means that the first frame of the animation is shown when the animation player is inactive.
+    /// Default is 0, which means that the first frame of the animation
+    /// is shown when the animation player is inactive.
     /// </summary>
     /// <remarks>The index must be a valid frame index within the range of available frames.</remarks>
     public virtual int InactiveFrameIndex
@@ -180,7 +225,8 @@ public partial class AnimatedImage : DisposableObject
     /// Gets a value indicating whether the animated image contains valid frame data and is ready for processing.
     /// </summary>
     /// <remarks>Use this property to determine if the object is in a usable state before performing
-    /// operations that require valid frames. Returns <see langword="true"/> if the frames are initialized and the first
+    /// operations that require valid frames. Returns <see langword="true"/>
+    /// if the frames are initialized and the first
     /// frame's bitmap is available; otherwise, returns <see langword="false"/>.</remarks>
     [Browsable(false)]
     public virtual bool IsOk
@@ -190,7 +236,7 @@ public partial class AnimatedImage : DisposableObject
             if (DisposingOrDisposed)
                 return false;
             RequireFrames();
-            return frames != null && frames.Length > 0 && frames[0].CombinedBitmap != null;
+            return frames != null && frames.Length > 0 && (frames[0].CombinedBitmap != null || frames[0].Image != null);
         } 
     }
 
@@ -217,7 +263,8 @@ public partial class AnimatedImage : DisposableObject
     /// Gets a value indicating whether the image frames have been successfully loaded.
     /// </summary>
     /// <remarks>This property returns <see langword="true"/> if the image frames are available; otherwise, it
-    /// returns <see langword="false"/>. Use this property to determine whether the animated image is ready for display
+    /// returns <see langword="false"/>. Use this property to determine whether
+    /// the animated image is ready for display
     /// or processing.</remarks>
     public virtual bool IsLoaded => frames != null;
 
@@ -226,8 +273,10 @@ public partial class AnimatedImage : DisposableObject
     /// </summary>
     /// <remarks>Returns <see langword="null"/> if the object is disposing or disposed, if the frames have not
     /// been initialized, or if the specified index is out of bounds.</remarks>
-    /// <param name="i">The zero-based index of the frame to retrieve. Must be within the range of available frames.</param>
-    /// <returns>An instance of <see cref="AnimatedImageFrameInfo"/> containing the frame information if the index is valid;
+    /// <param name="i">The zero-based index of the frame to retrieve. Must be within
+    /// the range of available frames.</param>
+    /// <returns>An instance of <see cref="AnimatedImageFrameInfo"/> containing the
+    /// frame information if the index is valid;
     /// otherwise, <see langword="null"/>.</returns>
     public virtual AnimatedImageFrameInfo? GetFrameInfo(int i)
     {
@@ -244,9 +293,11 @@ public partial class AnimatedImage : DisposableObject
     /// </summary>
     /// <remarks>If the specified index is out of range or the frame information is unavailable, the method
     /// returns 0. Ensure that the index is valid to obtain the correct duration.</remarks>
-    /// <param name="i">The zero-based index of the frame for which to retrieve the duration. Must be within the range of available
+    /// <param name="i">The zero-based index of the frame for which to retrieve the duration.
+    /// Must be within the range of available
     /// frames.</param>
-    /// <returns>The duration of the specified frame in milliseconds. Returns 0 if the frame does not exist or the index is
+    /// <returns>The duration of the specified frame in milliseconds.
+    /// Returns 0 if the frame does not exist or the index is
     /// invalid.</returns>
     public virtual int GetDuration(int i)
     {
@@ -259,8 +310,10 @@ public partial class AnimatedImage : DisposableObject
     /// </summary>
     /// <remarks>If the frame index is invalid, this method returns null. The scaling operation is applied to
     /// the frame image after retrieval.</remarks>
-    /// <param name="i">The zero-based index of the frame to retrieve. Must be within the range of available frames.</param>
-    /// <param name="scaleFactor">The factor by which to scale the frame image. Values greater than 1 enlarge the image; values less than 1 reduce
+    /// <param name="i">The zero-based index of the frame to retrieve.
+    /// Must be within the range of available frames.</param>
+    /// <param name="scaleFactor">The factor by which to scale the frame image.
+    /// Values greater than 1 enlarge the image; values less than 1 reduce
     /// its size.</param>
     /// <returns>An image representing the scaled frame, or null if the specified frame does not exist.</returns>
     public virtual Image? GetScaledFrame(int i, float scaleFactor)
@@ -272,8 +325,10 @@ public partial class AnimatedImage : DisposableObject
     /// <summary>
     /// Returns the specified frame as a <see cref="Image"/>.
     /// </summary>
-    /// <param name="i">The zero-based index of the frame to retrieve. Must be within the range of available frames.</param>
-    /// <returns>An instance of <see cref="Image"/> representing the specified frame if the index is valid; otherwise, <see langword="null"/>.</returns>
+    /// <param name="i">The zero-based index of the frame to retrieve.
+    /// Must be within the range of available frames.</param>
+    /// <returns>An instance of <see cref="Image"/> representing
+    /// the specified frame if the index is valid; otherwise, <see langword="null"/>.</returns>
     public virtual Image? GetFrame(int i)
     {
         var frame = GetFrameInfo(i);
@@ -291,17 +346,18 @@ public partial class AnimatedImage : DisposableObject
     }
 
     /// <summary>
-    /// Ensures that the required frames are available for processing. If frames are already present, the method exits
+    /// Ensures that the required frames are available for processing.
+    /// If frames are already present, the method exits
     /// without performing any action.
     /// </summary>
     /// <remarks>This method is typically called before operations that depend on the availability of frames.
     /// It is important to ensure that frames are initialized to avoid runtime errors.</remarks>
-    public virtual void RequireFrames()
+    public virtual bool RequireFrames()
     {
         if (DisposingOrDisposed)
-            return;
+            return false;
         if (frames != null)
-            return;
+            return frames.Length > 0;
 
         try
         {
@@ -318,11 +374,13 @@ public partial class AnimatedImage : DisposableObject
                 }
                 else
                     frames = Array.Empty<AnimatedImageFrameInfo>();
+            return frames.Length > 0;
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"Error loading animated image frames: {ex.Message}");
             frames = Array.Empty<AnimatedImageFrameInfo>();
+            return false;
         }
     }
 

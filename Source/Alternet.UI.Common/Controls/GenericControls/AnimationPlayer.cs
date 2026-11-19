@@ -287,8 +287,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="filename">The path to the animation file.</param>
         /// <param name="type">One of the <see cref="AnimationType"/> values;
-        /// <see cref="AnimationType.Any"/> means that the function should try to autodetect the animation type. </param>
-        /// <param name="delayLoading">Whether to delay loading of the animation until it's played for the first time. Default is false.</param>
+        /// <see cref="AnimationType.Any"/> means that the function should
+        /// try to autodetect the animation type. </param>
+        /// <param name="delayLoading">Whether to delay loading of
+        /// the animation until it's played for the first time. Default is false.</param>
         /// <returns></returns>
         public virtual bool LoadFile(string filename, AnimationType type = AnimationType.Any, bool delayLoading = false)
         {
@@ -370,14 +372,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves a frame from the animated image at the specified index and returns a scaled version of that frame.
+        /// Retrieves a frame from the animated image at the specified index and
+        /// returns a scaled version of that frame.
         /// </summary>
         /// <remarks>This method returns null if the object is currently disposing or has already been
-        /// disposed. Ensure that the index is valid and the scale factor is appropriate for the intended use.</remarks>
-        /// <param name="i">The zero-based index of the frame to retrieve from the animated image. Must be within the valid range of
+        /// disposed. Ensure that the index is valid and the scale factor
+        /// is appropriate for the intended use.</remarks>
+        /// <param name="i">The zero-based index of the frame to retrieve from the animated image.
+        /// Must be within the valid range of
         /// available frames.</param>
-        /// <param name="scaleFactor">The factor by which to scale the dimensions of the retrieved frame. Must be greater than zero.</param>
-        /// <returns>An Image object representing the scaled frame at the specified index, or null if the object is disposing or
+        /// <param name="scaleFactor">The factor by which to scale the dimensions of the retrieved frame.
+        /// Must be greater than zero.</param>
+        /// <returns>An Image object representing the scaled frame at the specified index, or null
+        /// if the object is disposing or
         /// has been disposed.</returns>
         public virtual Image? GetScaledFrame(int i, float scaleFactor)
         {
@@ -455,7 +462,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Use this method to determine the current scaling applied to animations, which may
         /// affect animation speed or appearance depending on the application's settings.</remarks>
-        /// <returns>A floating-point value representing the effective animation scale factor. Returns the scale factor if
+        /// <returns>A floating-point value representing the effective animation scale factor.
+        /// Returns the scale factor if
         /// animations are scaled; otherwise, returns 1.</returns>
         public virtual float GetEffectiveAnimationScaleFactor()
         {
