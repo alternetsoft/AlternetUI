@@ -207,6 +207,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Safely disposes specified object which supports <see cref="IDisposable"/>
+        /// interface if specified condition is true.
+        /// </summary>
+        /// <typeparam name="T">Type of the object.</typeparam>
+        /// <param name="disposable">Object to dispose.</param>
+        /// <param name="condition">Condition that determines whether to dispose the object.</param>
+        public static void SafeDisposeIf<T>(bool condition, ref T? disposable)
+            where T : IDisposable
+        {
+            if (condition)
+                SafeDispose(ref disposable);
+        }
+
+        /// <summary>
         /// Safely disposes of the specified disposable object, suppressing any exceptions
         /// that occur during disposal.
         /// </summary>
