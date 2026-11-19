@@ -239,6 +239,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="AbstractControl.HasBorder"/> property for all the controls in the set.
+        /// </summary>
+        /// <param name="value">A boolean value indicating whether the controls should have a border.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet<T> HasBorder(bool value)
+        {
+            foreach (var item in items)
+                item.HasBorder = value;
+            return this;
+        }
+
+        /// <summary>
         /// Sets font for all the controls in the set.
         /// </summary>
         /// <param name="value">New font.</param>
