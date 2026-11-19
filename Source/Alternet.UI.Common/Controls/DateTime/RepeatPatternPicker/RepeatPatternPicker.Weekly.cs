@@ -20,7 +20,6 @@ namespace Alternet.UI
             private readonly XIntPickerWithLabels intervalWeekPicker = new();
             private readonly PanelSettings panel = new();
             private IReadOnlyList<PanelSettingsItem> checkItems = [];
-            private ControlSet checkBoxes = [];
 
             /// <summary>
             /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class.
@@ -37,34 +36,56 @@ namespace Alternet.UI
 
                 GetDaysOfWeekWithTitles(firstDayOfWeek, out var weekdays, out var titles);
 
-                panel.Horizontal((h) =>
+                var weekdayParts = ArrayUtils.SplitArray(weekdays, 2).ToArray();
+                var titleParts = ArrayUtils.SplitArray(titles, 2).ToArray();
+
+                List<PanelSettingsItem> allCheckItems = new();
+
+                void AddColumn(int index)
                 {
-                    panel.Vertical((v) =>
+                    var pnl = panel.Vertical((v) =>
                     {
-                        checkItems = panel.AddFlagCheckBoxes<DaysOfWeek>(
+                        allCheckItems.AddRange(panel.AddFlagCheckBoxes<DaysOfWeek>(
                             label: null,
                             getValue: () => Value.WeekDays,
                             setValue: v => Value.WeekDays = v,
-                            itemTitles: titles,
-                            itemValues: weekdays,
-                            e: null);
+                            itemTitles: titleParts[index],
+                            itemValues: weekdayParts[index],
+                            e: null));
                     });
+                }
 
-                    panel.Vertical((v) =>
+                panel.Horizontal((v) =>
+                {
+                    AddColumn(0);
+                    v.Add<Spacer>().SuggestedWidth = 5;
+                    AddColumn(1);
+                });
+
+                checkItems = allCheckItems;
+
+                foreach (var checkBox in GetCheckBoxes())
+                {
+                    checkBox.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    checkBox.PreferredSizeMode = PreferredSizeMode.Content;
+                }
+
+                panel.Horizontal((h) =>
+                {
+                    panel.AddLabel(Localized.ButtonSelect + " ").Editor?.VerticalAlignment = VerticalAlignment.Center;
+
+                    var c1 = panel.AddLinkLabel(Localized.ButtonNone, () => GetCheckBoxes().Checked(false)).Editor;
+                    var c2 = panel.AddLinkLabel(Localized.ButtonAll, () => GetCheckBoxes().Checked(true)).Editor;
+                    var c3 = panel.AddLinkLabel(Localized.ButtonWeekdays, () =>
                     {
-                        checkBoxes = Group(PanelSettingsItem.GetEditors(checkItems));
+                        GetCheckBoxes().Checked((c) => c.Tag is DaysOfWeek day && day.IsWeekday());
+                    }).Editor;
+                    var c4 = panel.AddLinkLabel(Localized.ButtonWeekends, () =>
+                    {
+                        GetCheckBoxes().Checked((c) => c.Tag is DaysOfWeek day && day.IsWeekend());
+                    }).Editor;
 
-                        panel.AddLinkLabel(CommonStrings.Default.ButtonClearAll, () => checkBoxes.Checked(false));
-                        panel.AddLinkLabel(CommonStrings.Default.ButtonSelectAll, () => checkBoxes.Checked(true));
-                        panel.AddLinkLabel(CommonStrings.Default.ButtonSelectWeekdays, () =>
-                        {
-                            checkBoxes.Checked((c) => c.Tag is DaysOfWeek day && day.IsWeekday());
-                        });
-                        panel.AddLinkLabel(CommonStrings.Default.ButtonSelectWeekends, () =>
-                        {
-                            checkBoxes.Checked((c) => c.Tag is DaysOfWeek day && day.IsWeekend());
-                        });
-                    });
+                    Group(c1!, c2!, c3!, c4!).HasBorder(false);
                 });
 
                 intervalWeekPicker.Parent = this;
@@ -85,7 +106,7 @@ namespace Alternet.UI
                 {
                     intervalWeekPicker.IntPicker.ReadOnly = value;
                     panel.ReadOnly = value;
-                    foreach (var checkBox in checkBoxes)
+                    foreach (var checkBox in GetCheckBoxes())
                     {
                         if (checkBox is XCheckBox ch)
                         {
@@ -148,7 +169,7 @@ namespace Alternet.UI
                 intervalWeekPicker.Value = Value.IntervalWeeks;
                 UpdateSuffixLabelText();
 
-                foreach (var checkBox in checkBoxes)
+                foreach (var checkBox in GetCheckBoxes())
                 {
                     if (checkBox is XCheckBox ch && ch.Tag is DaysOfWeek dof)
                     {
@@ -166,6 +187,16 @@ namespace Alternet.UI
             {
                 Value.IntervalWeeks = intervalWeekPicker.Value;
                 UpdateSuffixLabelText();
+            }
+
+            /// <summary>
+            /// Gets the control set containing the checkboxes for selecting the days of the week.
+            /// </summary>
+            /// <returns>The control set containing the checkboxes.</returns>
+            protected virtual ControlSet<XCheckBox> GetCheckBoxes()
+            {
+                var checkBoxes = new ControlSet<XCheckBox>(PanelSettingsItem.GetEditors<XCheckBox>(checkItems));
+                return checkBoxes;
             }
 
             /// <summary>
@@ -191,7 +222,7 @@ namespace Alternet.UI
                 DateUtils.GetDaysOfWeekWithTitles(
                     out weekdays,
                     out titles,
-                    DayNamesKind.Full,
+                    DayNamesKind.Abbreviated,
                     firstDayOfWeek,
                     FormatProvider);
             }

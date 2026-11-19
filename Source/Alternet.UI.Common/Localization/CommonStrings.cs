@@ -32,6 +32,16 @@ namespace Alternet.UI.Localization
 
         public string ButtonOk { get; set; } = "Ok";
 
+        public string ButtonSelect { get; set; } = "Select";
+
+        public string ButtonAll { get; set; } = "All";
+
+        public string ButtonNone { get; set; } = "None";
+
+        public string ButtonWeekends { get; set; } = "Weekends";
+
+        public string ButtonWeekdays { get; set; } = "Weekdays";
+
         public string TransparentColorDisplayName { get; set; } = "Transparent";
 
         public string EmptyColorDisplayName { get; set; } = "Empty";
@@ -147,8 +157,6 @@ namespace Alternet.UI.Localization
         public string ButtonMoreActions { get; set; } = "More Actions";
 
         public string ButtonHelp { get; set; } = "Help";
-
-        public string ButtonAll { get; set; } = "All";
 
         // ========================
 
