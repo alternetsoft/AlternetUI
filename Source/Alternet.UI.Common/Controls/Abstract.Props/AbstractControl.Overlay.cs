@@ -55,6 +55,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets an overlay with the specified unique identifier from the overlays collection.
+        /// </summary>
+        /// <param name="overlayId">The unique identifier of the overlay to retrieve.</param>
+        /// <returns>The overlay with the specified unique identifier, or <c>null</c> if not found.</returns>
+        public virtual IControlOverlay? GetOverlay(ObjectUniqueId? overlayId)
+        {
+            if (overlays is null || overlayId is null)
+                return null;
+            foreach (var overlay in overlays)
+            {
+                if (overlay.UniqueId == overlayId)
+                    return overlay;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Removes the overlay with the specified identifier from the collection.
         /// After removal, sets the identifier to null.
         /// </summary>
@@ -415,7 +432,11 @@ namespace Alternet.UI
 
             if (data.Options.HasFlag(OverlayToolTipFlags.FitIntoContainer))
             {
-                var newLocation = AlignUtils.FitToolTipIntoContainer(containerBounds, overlay.Bounds, data.LocationOffset, ScaleFactor);
+                var newLocation = AlignUtils.FitToolTipIntoContainer(
+                    containerBounds,
+                    overlay.Bounds,
+                    data.LocationOffset,
+                    ScaleFactor);
                 overlay.Location = newLocation;
             }
 
@@ -423,6 +444,9 @@ namespace Alternet.UI
 
             if (data.DismissAfterInterval)
                 overlay.SetRemovalTimer(data.DismissInterval, this);
+
+            data.OverlayId = overlay.UniqueId;
+
             return overlay.UniqueId;
         }
 
