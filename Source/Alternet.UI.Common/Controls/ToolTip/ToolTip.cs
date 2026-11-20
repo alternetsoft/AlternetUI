@@ -7,8 +7,6 @@ using Alternet.Drawing;
 
 namespace Alternet.UI;
 
-// https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.tooltip?view=windowsdesktop-10.0
-
 /// <summary>
 /// Represents a tooltip component that displays a small pop-up window with a brief description of a control's purpose
 /// when the user hovers the mouse pointer over the control. Currently, this class is not fully implemented and
@@ -73,9 +71,7 @@ public partial class ToolTip : Component
     public ToolTip(IContainer cont)
         : this()
     {
-        ArgumentNullException.ThrowIfNull(cont);
-
-        cont.Add(this);
+        cont?.Add(this);
     }
 
     /// <summary>
@@ -254,7 +250,8 @@ public partial class ToolTip : Component
     /// Gets or sets the title of the tooltip.
     /// </summary>
     /// <remarks>
-    /// The title is displayed within the window as a line of bold text above the standard text of a toolTip description.
+    /// The title is displayed within the window as a line of bold text above
+    /// the standard text of a tooltip description.
     /// Typically, titles are used either to differentiate different categories of controls on a form or as an
     /// introduction to a long description.
     /// </remarks>

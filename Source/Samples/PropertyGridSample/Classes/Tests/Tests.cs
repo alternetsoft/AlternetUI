@@ -54,7 +54,7 @@ namespace PropertyGridSample
             InitTestsShapeControl();
             InitTestsSlider();
             InitTestsSpeedButton();
-            InitTestsStdTreeView();
+            InitTestsXTreeView();
             InitTestsTabControl();
             InitTestsTextBox();
             InitTestsTextBoxAndButton();
@@ -132,6 +132,11 @@ namespace PropertyGridSample
                 };
 
                 c.Refresh();
+            });
+
+            AddControlAction<ScrollableCalendarItemPicker>("Scroll to beginning", (c) =>
+            {
+                c.DoActionScrollToFirstLine();
             });
         }
 

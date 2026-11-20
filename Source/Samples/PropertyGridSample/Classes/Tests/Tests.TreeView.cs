@@ -14,7 +14,7 @@ namespace PropertyGridSample
 {
     public partial class MainControl
     {
-        void InitTestsStdTreeView()
+        void InitTestsXTreeView()
         {
             AddControlAction<XTreeView>("SelectedItem: ExpandAll", (c) =>
             {
