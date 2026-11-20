@@ -91,6 +91,15 @@ public partial class ToolTip : Component
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the tooltip is displayed in an overlay.
+    /// </summary>
+    public virtual bool UseOverlays
+    {
+        get;
+        set;
+    } = false;
+
+    /// <summary>
     /// Gets or sets the initial delay for the tooltip.
     /// Currently this property doesn't have any effect and is implemented for compatibility.
     /// </summary>
@@ -372,7 +381,21 @@ public partial class ToolTip : Component
     public virtual void Show(object? tooltip, AbstractControl control, PointD? point, int? duration = null)
     {
         SetToolTip(control, tooltip);
-        ToolTipWindow.ShowToolTip(control, point);
+
+        if (App.IsMaui || UseOverlays)
+        {
+            ToolTipFactory.ShowInOverlay(
+                control,
+                control,
+                tooltip,
+                point,
+                duration,
+                dismissAfterInterval: duration is not null);
+        }
+        else
+        {
+            ToolTipWindow.ShowToolTip(control, point);
+        }
     }
 
     /// <summary>
@@ -396,7 +419,7 @@ public partial class ToolTip : Component
     /// </summary>
     public virtual void Hide(AbstractControl control)
     {
-        ToolTipWindow.HideGlobalToolTip();
+        ToolTipFactory.HideToolTips();
     }
 
     /// <summary>
