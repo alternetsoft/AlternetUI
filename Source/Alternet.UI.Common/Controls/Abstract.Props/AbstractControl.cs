@@ -552,6 +552,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the tooltip should be shown
+        /// when the mouse hovers over the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool ShowToolTipOnMouseHover
+        {
+            get;
+            set;
+        } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the TAB key is received and
         /// processed by the control.
         /// </summary>

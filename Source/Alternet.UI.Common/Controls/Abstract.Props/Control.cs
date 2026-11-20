@@ -953,6 +953,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnToolTipChanged(EventArgs e)
         {
+            if (!ShowToolTipOnMouseHover)
+                return;
             var toolTip = ToolTipFactory.GetControlToolTip(this);
             SafeHandler?.SetToolTip(toolTip);
         }

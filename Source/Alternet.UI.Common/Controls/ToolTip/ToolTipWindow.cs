@@ -316,6 +316,7 @@ namespace Alternet.UI
             try
             {
                 HideGlobalToolTip();
+                ToolTipFactory.HideLastShownInOverlay();
 
                 var toolTipObject = ToolTipFactory.GetControlToolTip(control);
 
@@ -464,7 +465,11 @@ namespace Alternet.UI
         /// <param name="e">An object that contains the event data.</param>
         private static void OnGlobalMouseHover(object? sender, EventArgs e)
         {
-            ShowToolTip(sender as AbstractControl);
+            if (sender is not AbstractControl control)
+                return;
+            if (!control.ShowToolTipOnMouseHover)
+                return;
+            ShowToolTip(control);
         }
 
         private void HideToolTip<T>(object? sender, T e)

@@ -17,7 +17,8 @@ namespace Alternet.UI
         private RichToolTipParams? toolTip;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OverlayToolTipParams"/> class with the specified tooltip parameters.
+        /// Initializes a new instance of the <see cref="OverlayToolTipParams"/>
+        /// class with the specified tooltip parameters.
         /// </summary>
         public OverlayToolTipParams(RichToolTipParams? toolTip)
         {
@@ -30,6 +31,13 @@ namespace Alternet.UI
         public OverlayToolTipParams()
         {
         }
+
+        /// <summary>
+        /// Gets or sets the unique identifier for the overlay tooltip instance.
+        /// This property is assigned when the overlay tooltip is created and can be used to reference
+        /// the overlay tooltip later.
+        /// </summary>
+        public ObjectUniqueId? OverlayId { get; set; }
 
         /// <summary>
         /// Gets or sets the parameters used to configure the appearance and behavior of the rich tool tip.
