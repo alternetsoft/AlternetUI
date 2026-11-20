@@ -286,7 +286,7 @@ namespace Alternet.UI
         /// whether the opening event should be raised for child items.</param>
         public void RaiseOpening(CancelEventArgs e, bool recursive = true)
         {
-            ToolTipWindow.HideGlobalToolTip();
+            ToolTipFactory.HideToolTips();
 
             try
             {

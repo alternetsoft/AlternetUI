@@ -178,7 +178,8 @@ namespace Alternet.UI
         public RichToolTip RichToolTip => toolTip;
 
         /// <summary>
-        /// Hides the currently displayed tooltip, if any is visible.
+        /// Hides the tooltip currently displayed by this window, if any is visible.
+        /// Do not call this method directly; use <see cref="ToolTipFactory.HideToolTips"/> instead.
         /// </summary>
         /// <remarks>Call this method to programmatically dismiss any tooltip that is currently shown.
         /// If no tooltip is visible, this method has no effect.</remarks>
@@ -315,8 +316,7 @@ namespace Alternet.UI
 
             try
             {
-                HideGlobalToolTip();
-                ToolTipFactory.HideLastShownInOverlay();
+                ToolTipFactory.HideToolTips();
 
                 var toolTipObject = ToolTipFactory.GetControlToolTip(control);
 

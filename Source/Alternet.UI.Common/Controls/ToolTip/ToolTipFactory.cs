@@ -109,7 +109,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Hides all currently displayed tooltips, including those shown in overlays and global tooltips.
+        /// This method only hides tooltips that are shown by the library and does not affect tooltips
+        /// displayed by the operating system.
+        /// </summary>
+        public static void HideToolTips()
+        {
+            ToolTipFactory.HideLastShownInOverlay();
+            ToolTipWindow.HideGlobalToolTip();
+        }
+
+        /// <summary>
         /// Hides the last tooltip displayed in the overlay, if one is currently shown.
+        /// Do not call this method directly; use <see cref="ToolTipFactory.HideToolTips"/> instead.
         /// </summary>
         /// <remarks>This method removes the overlay associated with the last shown tooltip
         /// and resets the internal state tracking the tooltip and its associated control.
@@ -151,7 +163,7 @@ namespace Alternet.UI
             {
                 if (LastControlWithToolTip == s)
                     return;
-                HideLastShownInOverlay();
+                ToolTipFactory.HideToolTips();
             };
 
             subscriber.AfterControlMouseHover += (s, e) =>
@@ -187,7 +199,7 @@ namespace Alternet.UI
         /// until they are explicitly re-bound.</remarks>
         public static void UnbindOverlayToolTips()
         {
-            HideLastShownInOverlay();
+            ToolTipFactory.HideToolTips();
 
             if (notification != null)
             {
@@ -219,7 +231,7 @@ namespace Alternet.UI
             int? dismissInterval = null,
             bool? dismissAfterInterval = null)
         {
-            HideLastShownInOverlay();
+            ToolTipFactory.HideToolTips();
             if (control is null || tooltip is null)
                 return false;
 

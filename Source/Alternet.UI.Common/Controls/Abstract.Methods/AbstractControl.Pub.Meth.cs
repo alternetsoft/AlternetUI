@@ -431,7 +431,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void HideToolTip()
         {
-            ToolTipWindow.HideGlobalToolTip();
+            ToolTipFactory.HideToolTips();
         }
 
         /// <summary>
