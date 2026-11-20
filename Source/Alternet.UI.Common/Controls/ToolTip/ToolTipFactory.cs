@@ -32,7 +32,7 @@ namespace Alternet.UI
         public static GetControlToolTipDelegate? GetControlToolTipOverride { get; set; }
 
         private static IToolTipFactoryHandler? handler;
-        private static WeakReferenceValue<UserControl> lastContainerWithToolTip = new();
+        private static WeakReferenceValue<AbstractControl> lastContainerWithToolTip = new();
         private static WeakReferenceValue<AbstractControl> lastControlWithToolTip = new();
         private static ObjectUniqueId? lastToolTipId;
         private static IControlNotification? notification;
@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// Gets or sets the last <see cref="UserControl"/> that displayed a tooltip.
         /// Typically, this property is managed internally and should not be changed manually.
         /// </summary>
-        public static UserControl? LastContainerWithToolTip
+        public static AbstractControl? LastContainerWithToolTip
         {
             get => lastContainerWithToolTip.Value;
             set => lastContainerWithToolTip.Value = value;
@@ -119,8 +119,13 @@ namespace Alternet.UI
             OverlayToolTipHide?.Invoke(null, EventArgs.Empty);
 
             var lastControl = LastContainerWithToolTip;
-            lastControl?.RemoveOverlay(LastToolTipId);
-            LastContainerWithToolTip = null;
+
+            if (lastControl is not null)
+            {
+                lastControl.RemoveOverlay(LastToolTipId);
+                LastContainerWithToolTip = null;
+            }
+
             LastControlWithToolTip = null;
             LastToolTipId = null;
         }
@@ -154,16 +159,19 @@ namespace Alternet.UI
                 if (s is not AbstractControl control)
                     return;
 
+                if (!control.ShowToolTipOnMouseHover)
+                    return;
+
                 var overlayParent = ControlUtils.GetParentPlatformUserControl(control);
 
-                if (overlayParent is null)
+                var toolTip = ToolTipFactory.GetControlToolTip(control);
+
+                if (toolTip is not null)
                 {
-                    HideLastShownInOverlay();
-                }
-                else
-                {
-                    var toolTip = ToolTipFactory.GetControlToolTip(control);
-                    ShowInOverlay(control, overlayParent, toolTip);
+                    if (overlayParent is not null)
+                    {
+                        ShowInOverlay(control, overlayParent, toolTip);
+                    }
                 }
             };
 
@@ -196,10 +204,20 @@ namespace Alternet.UI
         /// Must be direct or indirect parent of <paramref name="control"/>.</param>
         /// <param name="tooltip">The text to display as a tooltip for the control.
         /// Can be <see langword="null"/> or empty if no tooltip is needed.</param>
+        /// <param name="position">The position at which to display the tooltip.
+        /// Position is specified in the coordinate space of the <paramref name="overlayParent"/>.
+        /// If <see langword="null"/>, the tooltip will be displayed at the default location.</param>  
+        /// <param name="dismissInterval">The duration for which the tooltip should be displayed, in milliseconds.
+        /// If <see langword="null"/>, the tooltip will be displayed for the default duration.</param>
+        /// <param name="dismissAfterInterval">Whether the tooltip should
+        /// be dismissed after the specified duration.</param>
         public static bool ShowInOverlay(
             AbstractControl? control,
-            UserControl overlayParent,
-            object? tooltip)
+            AbstractControl overlayParent,
+            object? tooltip,
+            PointD? position = null,
+            int? dismissInterval = null,
+            bool? dismissAfterInterval = null)
         {
             HideLastShownInOverlay();
             if (control is null || tooltip is null)
@@ -217,7 +235,7 @@ namespace Alternet.UI
             OverlayToolTipParams CreateData(RichToolTipParams? prm)
             {
                 var font = OverlayToolTipFont ?? AbstractControl.DefaultFont;
-                var pos = Mouse.GetPosition(overlayParent);
+                var pos = position ?? Mouse.GetPosition(overlayParent);
 
                 OverlayToolTipFlags defaultOptions = OverlayToolTipFlags.DismissAfterInterval
                     | OverlayToolTipFlags.UseSystemColors | OverlayToolTipFlags.FitIntoContainer;
@@ -232,6 +250,11 @@ namespace Alternet.UI
                     AssociatedControl = control,
                     InitialToolTip = tooltip,
                 };
+
+                if (dismissInterval is not null)
+                    data.DismissInterval = dismissInterval;
+                if (dismissAfterInterval is not null)
+                    data.DismissAfterInterval = dismissAfterInterval.Value;
 
                 if (prm is null)
                 {
@@ -261,7 +284,7 @@ namespace Alternet.UI
                     return true;
             }
 
-            if (control.HasIndirectParent(overlayParent))
+            if (control == overlayParent || control.HasIndirectParent(overlayParent))
             {
                 LastToolTipId = overlayParent.ShowOverlayToolTip(data);
                 LastContainerWithToolTip = overlayParent;
@@ -270,6 +293,22 @@ namespace Alternet.UI
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Gets the last shown overlay tooltip of the specified type.
+        /// </summary>
+        /// <typeparam name="TOverlay">The type of the overlay tooltip.</typeparam>
+        /// <returns>The last shown overlay tooltip of the specified type, or <c>null</c> if not found.</returns>
+        public static TOverlay? GetLastShowToolTipOverlay<TOverlay>()
+        {
+            var lastContainer = LastContainerWithToolTip;
+            if (lastContainer is null || LastToolTipId is null)
+                return default;
+            var overlay = lastContainer.GetOverlay(LastToolTipId);
+            if (overlay is TOverlay typedOverlay)
+                return typedOverlay;
+            return default;
         }
 
         /// <summary>
@@ -351,7 +390,8 @@ namespace Alternet.UI
         /// Retrieves the tooltip content associated with the specified control.
         /// </summary>
         /// <param name="control">The control for which to obtain the tooltip. Can be null.</param>
-        /// <returns>An object representing the tooltip content for the specified control, or null if no tooltip is set or if the
+        /// <returns>An object representing the tooltip content for the specified control,
+        /// or null if no tooltip is set or if the
         /// control is null.</returns>
         public static object? GetControlToolTip(AbstractControl? control)
         {
@@ -407,7 +447,7 @@ namespace Alternet.UI
             /// <param name="data">The parameters used to configure the overlay tooltip.</param>
             public ShowInOverlayParams(
                 AbstractControl? control,
-                UserControl overlayParent,
+                AbstractControl overlayParent,
                 object? toolTip,
                 OverlayToolTipParams data)
             {
@@ -426,7 +466,7 @@ namespace Alternet.UI
             /// Gets or sets the parent control to use as the overlay parent.
             /// Must be a direct or indirect parent of <see cref="Control"/>.
             /// </summary>
-            public UserControl OverlayParent { get; }
+            public AbstractControl OverlayParent { get; }
 
             /// <summary>
             /// Gets or sets the text or object to display as a tooltip for the control.
