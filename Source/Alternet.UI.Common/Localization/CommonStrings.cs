@@ -190,11 +190,11 @@ namespace Alternet.UI.Localization
 
         public string WindowTitleApplicationAlert { get; set; } = "Application Says";
 
-        public string WindowTitleSelectCategory { get; set; } = "Select a Category";
+        public string WindowTitleSelectCategory { get; set; } = "Select Category";
 
-        public string WindowTitleSelectStatus { get; set; } = "Select a Status";
+        public string WindowTitleSelectStatus { get; set; } = "Select Status";
 
-        public string WindowTitleSelectColor { get; set; } = "Select a Color";
+        public string WindowTitleSelectColor { get; set; } = "Select Color";
 
         public string WindowTitleSelectSoundFile { get; set; } = "Select Sound File";
 
@@ -202,23 +202,25 @@ namespace Alternet.UI.Localization
 
         public string WindowTitleCalculator { get; set; } = "Calculator";
 
-        public string WindowTitleSelectValue { get; set; } = "Select a Value";
+        public string WindowTitleSelectValue { get; set; } = "Select Value";
 
         public string WindowTitleSelectValues { get; set; } = "Select Values";
 
+        public string WindowTitleSelectYear { get; set; } = "Select Year";
+
         public string WindowTitleRemindMeIn { get; set; } = "Remind me in…";
 
-        public string WindowTitleSelectItem { get; set; } = "Select an Item";
+        public string WindowTitleSelectItem { get; set; } = "Select Item";
 
-        public string WindowTitleSelectAction { get; set; } = "Select an Action";
+        public string WindowTitleSelectAction { get; set; } = "Select Action";
 
         public string WindowTitleSelectItems { get; set; } = "Select Items";
 
-        public string WindowTitleSelectFontName { get; set; } = "Select a Font Name";
+        public string WindowTitleSelectFontName { get; set; } = "Select Font Name";
 
-        public string WindowTitleSelectFontSize { get; set; } = "Select a Font Size";
+        public string WindowTitleSelectFontSize { get; set; } = "Select Font Size";
 
-        public string WindowTitleSelectDate { get; set; } = "Select a Date";
+        public string WindowTitleSelectDate { get; set; } = "Select Date";
 
         // ========================
 
@@ -490,6 +492,8 @@ namespace Alternet.UI.Localization
         public string CalendarItemStatusOutOfOffice { get; set; } = "Out of Office";
 
         // ========================
+
+        public string CalendarItemLabelTimeZone { get; set; } = "Time Zone";
 
         public string CalendarItemLabelExcludeDates { get; set; } = "Exclude Dates";
 
