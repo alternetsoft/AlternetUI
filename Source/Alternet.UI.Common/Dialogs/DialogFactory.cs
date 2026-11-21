@@ -195,6 +195,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows dialog which asks to enter a year value. Possible values are 1..9999.
+        /// </summary>
+        /// <param name="onApply">Action to call when 'Ok' button is pressed in the dialog.</param>
+        /// <param name="year">The year value. Optional. If not specified, uses the current year.</param>
+        /// <param name="title">Dialog title. Optional. If not specified, uses a default title.</param>
+        /// <param name="minValue">Minimal value. Optional. If not specified, uses 1.</param>
+        /// <param name="maxValue">Maximal value. Optional. If not specified, uses 9999.</param>
+        public static void AskYearAsync(
+            Action<int> onApply,
+            int? year = null,
+            string? title = null,
+            int? minValue = null,
+            int? maxValue = null)
+        {
+            AskIntAsync(
+                        title ?? BaseObject.Localized.WindowTitleSelectYear,
+                        onApply,
+                        year ?? DateTime.Now.Year,
+                        minValue ?? DateOnly.MinValue.Year,
+                        maxValue ?? DateOnly.MaxValue.Year);
+        }
+
+        /// <summary>
         /// Shows dialog which asks to enter a <see cref="byte"/> value.
         /// </summary>
         /// <param name="title">Dialog title.</param>
