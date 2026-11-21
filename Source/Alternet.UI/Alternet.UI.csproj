@@ -8,6 +8,34 @@
 <!-- ================================================= -->
 
   <PropertyGroup>
+
+    <TargetFrameworks>$(TargetFrameworks);net11.0-android;net11.0-ios;net11.0-maccatalyst</TargetFrameworks>
+
+    <TargetFrameworks
+    Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net11.0-windows10.0.19041.0</TargetFrameworks>
+
+    <UseWxWidgets>true</UseWxWidgets>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetPlatformIdentifier)' == 'android'">
+    <UseWxWidgets>false</UseWxWidgets>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetPlatformIdentifier)' == 'ios'">
+    <UseWxWidgets>false</UseWxWidgets>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetPlatformIdentifier)' == 'maccatalyst'">
+    <UseWxWidgets>false</UseWxWidgets>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net11.0-windows10.0.19041.0'">
+    <UseWxWidgets>false</UseWxWidgets>
+  </PropertyGroup>
+
+
+  <PropertyGroup>
+
     <NuGetAuditMode>direct</NuGetAuditMode>
     <NoWarn>$(NoWarn);CS8032</NoWarn>
     <LangVersion>14.0</LangVersion>
@@ -30,17 +58,27 @@
     <None Include="Package\icon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(UseWxWidgets)' == 'false'">
+    <Compile Remove="Native\**" />
+    <EmbeddedResource Remove="Native\**" />
+    <None Remove="Native\**" />
+
+    <Compile Remove="WxWidgets\**" />
+    <EmbeddedResource Remove="WxWidgets\**" />
+    <None Remove="WxWidgets\**" />
+  </ItemGroup>
+
   <ItemGroup>
     <Compile Remove="build\**" />
-    <Compile Remove="Classes\BrowsableProps\**" />
+    <Compile Remove="WxWidgets\Classes\BrowsableProps\**" />
     <Compile Remove="Drawing.System.Imported\**" />
     <Compile Remove="System\**" />
     <EmbeddedResource Remove="build\**" />
-    <EmbeddedResource Remove="Classes\BrowsableProps\**" />
+    <EmbeddedResource Remove="WxWidgets\Classes\BrowsableProps\**" />
     <EmbeddedResource Remove="Drawing.System.Imported\**" />
     <EmbeddedResource Remove="System\**" />
     <None Remove="build\**" />
-    <None Remove="Classes\BrowsableProps\**" />
+    <None Remove="WxWidgets\Classes\BrowsableProps\**" />
     <None Remove="Drawing.System.Imported\**" />
     <None Remove="System\**" />
   </ItemGroup>
