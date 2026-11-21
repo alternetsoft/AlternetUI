@@ -84,11 +84,11 @@ namespace PropertyGridSample
                 bool logAddedControls = false;
                 bool logNotAddedControls = false;
 
+
                 ToolBoxAdd<Border>(ObjectInit.InitBorder);
-                ToolBoxAdd<GenericBorder>(ObjectInit.InitGenericBorder);
                 ToolBoxAdd<Calculator>();
-                ToolBoxAdd<CardPanel>(ObjectInit.InitCardPanel);
                 ToolBoxAdd<CalendarAlarmPicker>(ObjectInit.InitCalendarAlarmPicker);
+                ToolBoxAdd<CardPanel>(ObjectInit.InitCardPanel);
                 ToolBoxAdd<CardPanelHeader>(ObjectInit.InitCardPanelHeader);
                 ToolBoxAdd<ColorListBox>();
                 ToolBoxAdd<ColorPicker>(ObjectInit.InitColorPicker);
@@ -96,8 +96,8 @@ namespace PropertyGridSample
                 ToolBoxAdd<ComboBoxAndButton>();
                 ToolBoxAdd<ComboBoxAndLabel>();
                 ToolBoxAdd<DatePicker>(ObjectInit.InitDatePicker);
-                ToolBoxAdd<DateTimePicker>(ObjectInit.InitDateTimePicker);
                 ToolBoxAdd<DateTimeIntervalPicker>(ObjectInit.InitDateTimeIntervalPicker);
+                ToolBoxAdd<DateTimePicker>(ObjectInit.InitDateTimePicker);
                 ToolBoxAdd<DayOfWeekPicker>();
                 ToolBoxAdd<EditableListPicker>(ObjectInit.InitListPicker);
                 ToolBoxAdd<EnumPicker>(ObjectInit.InitEnumPicker);
@@ -108,6 +108,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<FontListBox>();
                 ToolBoxAdd<FontNamePicker>(ObjectInit.InitFontNamePicker);
                 ToolBoxAdd<FontSizePicker>();
+                ToolBoxAdd<GenericBorder>(ObjectInit.InitGenericBorder);
                 ToolBoxAdd<GenericItemControl>(ObjectInit.InitGenericListItemControl);
                 ToolBoxAdd<HorizontalStackPanel>(ObjectInit.InitStackPanel);
                 ToolBoxAdd<IntPicker>();
@@ -126,17 +127,17 @@ namespace PropertyGridSample
                 ToolBoxAdd<PinCodePicker>();
                 ToolBoxAdd<RelativeWeekdayOfMonthPicker>();
                 ToolBoxAdd<RelativeWeekdayPicker>();
-                ToolBoxAdd<ScrollableRepeatPatternPicker>(ObjectInit.InitRepeatPatternPicker);
                 ToolBoxAdd<ResizableBorder>(ObjectInit.InitResizableBorder);
                 ToolBoxAdd<ResizableWindowBorder>(ObjectInit.InitResizableWindowBorder);
                 ToolBoxAdd<RichToolTip>(ObjectInit.InitRichToolTip);
-                ToolBoxAdd<ScrollablePanelSettings>(ObjectInit.InitScrollablePanelSettings);
                 ToolBoxAdd<ScrollableCalendarItemPicker>(ObjectInit.InitScrollableCalendarItemPicker);
+                ToolBoxAdd<ScrollablePanelSettings>(ObjectInit.InitScrollablePanelSettings);
+                ToolBoxAdd<ScrollableRepeatPatternPicker>(ObjectInit.InitRepeatPatternPicker);
                 ToolBoxAdd<ScrollViewer>(ObjectInit.InitScrollViewer);
                 ToolBoxAdd<ShapeControl>(ObjectInit.InitShapeControl);
                 ToolBoxAdd<SideBarPanel>(ObjectInit.InitSideBarPanel);
-                ToolBoxAdd<SpeedButton>(ObjectInit.InitSpeedButton);
                 ToolBoxAdd<SnoozeSpeedButton>(ObjectInit.InitSnoozeSpeedButton);
+                ToolBoxAdd<SpeedButton>(ObjectInit.InitSpeedButton);
                 ToolBoxAdd<SpeedButtonWithListPopup>(ObjectInit.InitSpeedButtonWithListPopup);
                 ToolBoxAdd<SpeedColorButton>(ObjectInit.InitSpeedColorButton);
                 ToolBoxAdd<SpeedDateButton>();
@@ -150,13 +151,15 @@ namespace PropertyGridSample
                 ToolBoxAdd<TextBoxAndLabel>(ObjectInit.InitTextBoxAndLabel);
                 ToolBoxAdd<TextPicker>();
                 ToolBoxAdd<TextPickerAndImage>(ObjectInit.InitTextPickerAndImage);
-                ToolBoxAdd<TimePicker>(ObjectInit.InitTimePicker);
+                ToolBoxAdd<TextRendererControl>(ObjectInit.InitTextRendererControl);
                 ToolBoxAdd<TimePeriodPicker>(ObjectInit.InitTimePeriodPicker);
-                ToolBoxAdd<ToolBar>(ObjectInit.InitGenericToolBar);
+                ToolBoxAdd<TimePicker>(ObjectInit.InitTimePicker);
+                ToolBoxAdd<TimeZonePicker>();
                 ToolBoxAdd<ToggleSwitch>(ObjectInit.InitToggleSwitch);
+                ToolBoxAdd<ToolBar>(ObjectInit.InitGenericToolBar);
                 ToolBoxAdd<ToolBarSet>(ObjectInit.InitGenericToolBarSet);
-                ToolBoxAdd<UserControl>(ObjectInit.InitUserControl);
                 ToolBoxAdd<UpDownAndLabel>(ObjectInit.InitUpDownAndLabel);
+                ToolBoxAdd<UserControl>(ObjectInit.InitUserControl);
                 ToolBoxAdd<ValueEditorByte>(ObjectInit.InitValueEditorByte);
                 ToolBoxAdd<ValueEditorDouble>(ObjectInit.InitValueEditorDouble);
                 ToolBoxAdd<ValueEditorEMail>(ObjectInit.InitValueEditorEMail);
@@ -186,20 +189,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<XSlider>(ObjectInit.InitXSlider);
                 ToolBoxAdd<XTreeView>(ObjectInit.InitXTreeView);
                 ToolBoxAdd<YearPicker>();
-
-                ToolBoxAdd<TextRendererControl>(ObjectInit.InitTextRendererControl);
-
-                /*
-                ToolBoxAdd<Alternet.UI.VerticalLine>();
-                ToolBoxAdd<Alternet.UI.ScrollableUserControl>();
-                ToolBoxAdd<Alternet.UI.HeaderLabel>();
-                ToolBoxAdd<Alternet.UI.ColorComboBox>();
-                ToolBoxAdd<Alternet.UI.FontComboBox>();
-                ToolBoxAdd<Alternet.UI.VirtualCheckListBox>();
-                ToolBoxAdd<Alternet.UI.AnimationPlayer>();
-                ToolBoxAdd<Alternet.UI.InnerPopupToolBar>();
-                ToolBoxAdd<Alternet.UI.WebBrowser>();
-                */
 
                 if (DebugUtils.IsDebugDefined)
                 {

@@ -74,7 +74,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the picker is in read-only mode,
+        /// Gets or sets a value indicating whether the picker is in read-only mode.
         /// </summary>
         public virtual bool ReadOnly
         {
