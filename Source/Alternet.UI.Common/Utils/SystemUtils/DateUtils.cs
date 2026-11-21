@@ -379,6 +379,47 @@ namespace Alternet.UI
                     throw new ArgumentOutOfRangeException(nameof(unit), unit, null);
             }
         }
+        
+        /// <summary>
+        /// Gets the IANA time zone ID for the specified time zone.
+        /// </summary>
+        /// <param name="timeZone">The time zone for which to get the IANA ID.</param>
+        /// <returns>The IANA time zone ID or <c>null</c> if the time zone is null.</returns>
+        public static string? GetIanaTimeZoneId(TimeZoneInfo? timeZone)
+        {
+            if (timeZone == null)
+                return null;
+
+            var id = timeZone.Id;
+
+            if (!App.IsWindowsOS)
+                return id;
+
+            if (TimeZoneInfo.TryConvertWindowsIdToIanaId(id, out var iana))
+                return iana;
+            return id;
+        }
+
+        /// <summary>
+        /// Converts an IANA time zone ID to a <see cref="TimeZoneInfo"/> object.
+        /// </summary>
+        /// <param name="ianaTimeZoneId">The IANA time zone ID.</param>
+        /// <returns>A <see cref="TimeZoneInfo"/> object representing the time zone,
+        /// or <c>null</c> if the ID is null or empty.</returns>
+        public static TimeZoneInfo? FromIanaTimeZoneId(string? ianaTimeZoneId)
+        {
+            if (ianaTimeZoneId == null || ianaTimeZoneId == "")
+                return null;
+            try
+            {
+                return TimeZoneInfo.FindSystemTimeZoneById(ianaTimeZoneId);
+            }
+            catch (Exception ex)
+            {
+                BaseObject.Nop(ex);
+                return null;
+            }
+        }
 
         /// <summary>
         /// Determines whether the current culture's time format uses AM/PM
