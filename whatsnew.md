@@ -1,3 +1,76 @@
+# 1.2.0 (2026 November 21)
+
+- Add `ToggleSwitch` control. This is a two-state toggle switch with configurable default images, colors, size, and margin. 
+- Add GenericControlAndImage{TControl}, GenericControlAndLabel{TControl}.
+- Update to use WxWidgets 3.3.4 and microsoft.web.webview2.1.0.4314.35.
+- `ToolTip`: Support overlay-based tooltips.
+- Use overlays for tooltips on MAUI or when explicitly enabled.
+- Add lookup by unique ID and store the created tooltip overlay's ID in its data.
+- Enable overlay tooltips on `AbstractControl` level.
+- Add the `ShowToolTipOnMouseHover` property to `AbstractControl`, to control whether tooltips appear when hovering over a control.
+- Update CMakeLists.Common.txt and remove unused wxWidgets libraries.
+- Expose checkbox sizing and margin on `XCheckBox`, add a right margin to toggle switches, and document layout options.
+- Demo: Add ToggleSwitch page.
+- `CalendarItemPicker`: Simplify borders. All pickers now use a single bottom line border.
+- Fix sub-menu position when shown in popup toolbar.
+- Fix popup toolbar width infinite grow.
+- `RepeatPatternPicker.Weekly`: two columns of weekday checks.
+- `PanelSettingsItem`: Support typed and null-safe editor retrieval.
+- Add HasBorder setter to `ControlSet`.
+- Adjust default `LinkLabel` color. Change the default light-theme link color from blue to a darker shade.
+- `TabControl`: Add max tab size and update tab margins.
+- Expose `ArrowsVisible` on `XScrollBar`.
+- Fix collection editor attached to dates collection.
+- Add `AnimatedImage` frame constructors. Support empty, SVG-based, and prebuilt frame arrays.
+- Store SVG settings on tab headers instead of creating an image set.
+- Expose `SvgColor`, `SvgSize`, and `SvgImage` on `CardPanelHeaderItem`.
+- `SpeedButton.ConfigureAsLinkLabel`. Add a link label configuration with a hand cursor and state-specific colors.
+- Stop resizing and release mouse capture when grip controls are activated or deactivated.
+- `ToolBar`: Add methods to create, insert, and add link labels, with optional click handling and underlining.
+- `AbstractControl`: Add reusable methods for removing components and disposing child controls. 
+- Fix repeat pattern rules and `RepeatPatternPicker`.
+- Different `DateTimeIntervalPicker` fixes.
+- Add read-only support across UI controls.
+- `TabControl`: Add `ContentVisibleChanged` to forward the content's visibility event so consumers can observe.
+- `TabControl`: Add Set/GetHeaderButtonVisibleBorderSides to control which border sides are drawn for each header button position.
+- `TabControl`: Add HideBottomTabHeaderOuterButtonBorders helper.
+- `TabControl`: Add VisibleInteriorSides to control which interior borders are drawn.
+- `LogListBox`: Configure log context menu visibility.
+- `TimePicker`: Raise ValueChanging before updating the time.
+- `TimePicker`: When seconds are hidden, clear them and move selection to minutes if necessary.
+- `SpeedDateButton`: Raise a ValueChanging event before updating the value, allowing handlers to cancel changes.
+- `DateTimePicker`: Initialize without seconds and expose properties to control seconds visibility and force both date and time icons.
+- Remove obsolete nodes from svg.
+- `VirtualListControl`: Raise CellSelectionChanged when a cell's selection state changes, and query selection through the item container.
+- `VirtualListBox`: Fix column hit testing with horizontal scroll.
+- Add cell selection mode to `VirtualListBox`. Expose selected cells through the SelectedCells property and add a mode that selects individual cells when clicked instead of selecting rows. EnableCellSelection allows to turn on/off cell selection mode.
+- `VirtualListBox`: Add helpers to measure maximum cell sizes and set all columns to the widest measured content.
+- Allow `ListControlColumn` to be initialized with a title and suggested width.
+- Use `Lock` instead of object for lockers.
+- Rename `RoundBorderWithTitle` and `GenericRoundBorderWithTitle` to `SectionPanel` and `GenericSectionPanel`.
+- Make `ListSourceListener` event-driven.
+- Generate dates for one-time repeat patterns.
+- `TimePeriodPicker`: Expose null and zero period state.
+- `ToolBar`: Add `AddPictureCore` overload with svg param returning the created `PictureBox`.
+- Add new svg images.
+- `PanelSettings`: Use toggle switches for bool settings.
+- `AbstractControl`: Account for margins in available size. This is for PreferredSizeMode.Available modes.
+- `TimePeriodPicker`: Add item lookup, filtering, label formatting, and selection helpers.
+- Enhance `TimePeriod` formatting and value checks.
+- Add `HasSiblings` property to `AbstractControl`.
+- `XCheckBox`: Apply configured colors to checkbox SVGs.
+- `ListControlItem`: Support per-item checkbox sizes.
+- Expand `PropertyBag` value conversion and add date selection serialization.
+- Separate save and close in collection editor. Replace OK and Cancel with labeled Save and Close buttons. 
+- Prevent editing disabled list pickers.
+- LinkLabel: Honor text transparency, use gray text for disabled labels and links, and remove default link underlining.
+- Use a default cursor for disabled controls.
+- Apply disabled styling to background drawing.
+- BaseObject: Add `Localized` property that provides access to `CommonStrings.Default`.
+- Add scheduler document collection browser.
+
+---
+
 # 1.1.17 (2026 November 12)
 
 - Add net11 support.
