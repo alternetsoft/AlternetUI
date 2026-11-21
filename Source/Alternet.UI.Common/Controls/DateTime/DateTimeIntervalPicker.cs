@@ -471,7 +471,7 @@ namespace Alternet.UI
                 });
 
                 durationPicker.MainControl.ReadOnly = value != DateTimePickerKind.DateTime;
-                durationPicker.MainControl.Visible = value != DateTimePickerKind.Time;
+                durationPicker.Visible = value != DateTimePickerKind.Time;
             }
         }
 
