@@ -75,6 +75,10 @@ namespace Alternet.UI
         /// </summary>
         public RepeatPatternPicker()
         {
+            startPicker.MainControl.UseSingleBottomBorder();
+            untilDatePicker.MainControl.UseSingleBottomBorder();
+            occurrencePicker.IntPicker.UseSingleBottomBorder();
+
             Layout = LayoutStyle.Vertical;
             Padding = DefaultPadding;
             MinChildMargin = DefaultMinChildMargin;
@@ -120,7 +124,7 @@ namespace Alternet.UI
 
             endDatePanel.SetLayout(LayoutStyle.Horizontal);
 
-            endDateControlsPanel.SetParent(endDatePanel);
+            endDateControlsPanel.Parent = endDatePanel;
             endDatePanel.Parent = seriesRangePanel;
 
             // Other
