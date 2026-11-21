@@ -34,6 +34,7 @@ namespace Alternet.UI
         private readonly DateTimePicker endPicker;
         private readonly GenericControlAndImage<TimePeriodPicker> durationPicker
             = new(DefaultDurationImage ?? KnownSvgImages.ImgHourglassHalf);
+        private readonly LinkLabel timeZoneLinkLabel = new(Localized.CalendarItemLabelTimeZone);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeIntervalPicker"/> class.
@@ -79,6 +80,11 @@ namespace Alternet.UI
             durationPicker.MainControl.UseTheme = SpeedButton.KnownTheme.Default;
             durationPicker.Parent = this;
 
+            timeZoneLinkLabel.MarginTop = DefaultControlDistance;
+            timeZoneLinkLabel.HasBorder = false;
+            timeZoneLinkLabel.Parent = this;
+            timeZoneLinkLabel.LinkClicked += OnTimeZoneClicked;
+
             startPicker.ValueChanged += OnStartPickerChanged;
             endPicker.ValueChanged += OnEndPickerChanged;
             durationPicker.MainControl.ValueChanged += OnDurationPickerChanged;
@@ -112,6 +118,11 @@ namespace Alternet.UI
                 endPicker.SecondsVisible = value;
             }
         }
+
+        /// <summary>
+        /// Gets the time zone link label control.
+        /// </summary>
+        public LinkLabel TimeZoneLinkLabel => timeZoneLinkLabel;
 
         /// <summary>
         /// Gets or sets the end date for the display purposes.
@@ -472,6 +483,7 @@ namespace Alternet.UI
 
                 durationPicker.MainControl.ReadOnly = value != DateTimePickerKind.DateTime;
                 durationPicker.Visible = value != DateTimePickerKind.Time;
+                timeZoneLinkLabel.Visible = value != DateTimePickerKind.Date;
             }
         }
 
@@ -567,6 +579,15 @@ namespace Alternet.UI
         /// instance containing the event data.</param>
         /// <exception cref="NotImplementedException"></exception>
         protected virtual void OnStartDatePickerValueChanging(object? sender, NullableDateTimeChangingEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the time zone link label is clicked.
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> A <see cref="CancelEventArgs"/> that contains the event data. </param>
+        protected virtual void OnTimeZoneClicked(object? sender, CancelEventArgs e)
         {
         }
 
