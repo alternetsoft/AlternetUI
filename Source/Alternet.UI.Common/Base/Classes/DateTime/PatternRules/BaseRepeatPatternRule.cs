@@ -39,7 +39,20 @@ namespace Alternet.UI
         private TimeSpan duration;
         private DateOnly validToDate;
         private int occurrenceCount = 1;
+        private TimeZoneInfo? timeZone;
         private RepeatPatternEndCondition endCondtion = RepeatPatternEndCondition.OnDate;
+
+        /// <summary>
+        /// Gets or sets the time zone associated with the repeat pattern.
+        /// </summary>
+        public virtual TimeZoneInfo? TimeZone
+        {
+            get => timeZone;
+            set
+            {
+                SetProperty(ref timeZone, value, nameof(TimeZone));
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether it is an all-day event.

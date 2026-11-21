@@ -289,6 +289,22 @@ namespace Alternet.UI
         void SetBoolProperty(string name, bool value);
 
         /// <summary>
+        /// Sets the value of a <see cref="TimeZoneInfo"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">The value to set.</param>
+        void SetTimeZoneProperty(string name, TimeZoneInfo? value);
+
+        /// <summary>
+        /// Tries to get the value of a <see cref="TimeZoneInfo"/> property by name.
+        /// </summary>
+        /// <param name="name">The name of the property.</param>
+        /// <param name="value">When this method returns, contains the value of the <see cref="TimeZoneInfo"/> property
+        /// if the conversion succeeded, or <c>null</c> if the conversion failed.</param>
+        /// <returns><c>true</c> if the conversion succeeded; otherwise, <c>false</c>.</returns>
+        bool TryGetTimeZoneProperty(string name, out TimeZoneInfo? value);
+
+        /// <summary>
         /// Tries to get the value of an enum property by name.
         /// </summary>
         /// <typeparam name="TEnum">The type of the enum.</typeparam>
@@ -340,6 +356,12 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>An enumerable collection of name-value pairs representing the properties.</returns>
         IEnumerable<KeyValuePair<string, object?>> GetAllProperties();
+
+        /// <summary>
+        /// Creates a new child property bag that can be used to store nested properties.
+        /// </summary>
+        /// <returns>A new instance of <see cref="IPropertyBag"/> representing the child property bag.</returns>
+        IPropertyBag CreateChild();
 
         /// <summary>
         /// Converts the property bag to a JSON string representation with the specified indentation level.

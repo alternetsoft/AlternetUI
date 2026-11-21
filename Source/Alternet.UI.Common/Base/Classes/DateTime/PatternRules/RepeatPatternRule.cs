@@ -166,6 +166,11 @@ namespace Alternet.UI
                     Kind = parsedKind;
                 }
 
+                if (propertyBag.TryGetTimeZoneProperty(prefix + nameof(TimeZone), out var timeZone))
+                {
+                    TimeZone = timeZone;
+                }
+
                 if (propertyBag.TryGetDateProperty(prefix + nameof(ValidFromDate), out var validFromDate))
                 {
                     ValidFromDate = validFromDate;
@@ -263,6 +268,7 @@ namespace Alternet.UI
                 prefix = "";
 
             propertyBag.SetStringProperty(prefix + nameof(Kind), Kind.ToString());
+            propertyBag.SetTimeZoneProperty(prefix + nameof(TimeZone), TimeZone);
             propertyBag.SetTimeProperty(prefix + nameof(StartTime), StartTime);
             propertyBag.SetTimeSpanProperty(prefix + nameof(Duration), Duration);
             propertyBag.SetIntProperty(prefix + nameof(OccurrenceCount), OccurrenceCount);
@@ -334,6 +340,7 @@ namespace Alternet.UI
             }
 
             return Kind == other.Kind &&
+                   TimeZone?.Id == other.TimeZone?.Id &&
                    ValidFromDate == other.ValidFromDate &&
                    StartTime == other.StartTime &&
                    Duration == other.Duration &&
@@ -362,6 +369,7 @@ namespace Alternet.UI
                 {
                     Kind = ScheduleRepeatPattern.Once;
                     var today = DateUtils.Today;
+                    TimeZone = null;
                     ValidFromDate = today;
                     ValidToDate = ValidFromDate;
                     Once.StartDate = today;
@@ -388,6 +396,7 @@ namespace Alternet.UI
                 DoInsideTransaction(() =>
                 {
                     ValidFromDate = otherRule.ValidFromDate;
+                    TimeZone = otherRule.TimeZone;
                     StartTime = otherRule.StartTime;
                     Duration = otherRule.Duration;
                     ValidToDate = otherRule.ValidToDate;

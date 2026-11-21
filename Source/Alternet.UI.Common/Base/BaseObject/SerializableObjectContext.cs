@@ -19,6 +19,12 @@ namespace Alternet.UI
         /// Gets or sets an optional prefix for property names in the property bag.
         /// </summary>
         public string? Prefix { get; set; }
+
+        /// <summary>
+        /// Creates a new child <see cref="ISerializableObjectContext"/>.
+        /// </summary>
+        /// <returns>A new instance of <see cref="ISerializableObjectContext"/> representing the child context.</returns>
+        ISerializableObjectContext CreateChild();
     }
 
     /// <summary>
@@ -76,5 +82,14 @@ namespace Alternet.UI
         /// Gets or sets an optional prefix for property names in the property bag.
         /// </summary>
         public string? Prefix { get; set; }
+
+        /// <summary>
+        /// Creates a new child <see cref="ISerializableObjectContext"/>.
+        /// </summary>
+        /// <returns>A new instance of <see cref="ISerializableObjectContext"/> representing the child context.</returns>
+        public readonly ISerializableObjectContext CreateChild()
+        {
+            return new SerializableObjectContext(PropertyBag?.CreateChild() ?? UI.PropertyBag.Create(), Prefix);
+        }
     }
 }

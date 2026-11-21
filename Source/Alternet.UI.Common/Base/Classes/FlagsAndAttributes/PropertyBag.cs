@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a property bag that allows getting and setting properties by name.
     /// It supports both simple properties (string) and complex properties (IPropertyBag).
     /// </summary>
-    public partial class PropertyBag : IPropertyBag
+    public partial class PropertyBag : BaseObject, IPropertyBag
     {
         private readonly BaseDictionary<string, object?> properties = new();
 
@@ -252,6 +252,15 @@ namespace Alternet.UI
         {
             var s = TimeSpanToString(value);
             SetStringProperty(name, s);
+        }
+
+        /// <summary>
+        /// Creates a new child property bag that can be used to store nested properties.
+        /// </summary>
+        /// <returns>A new instance of <see cref="IPropertyBag"/> representing the child property bag.</returns>
+        public virtual IPropertyBag CreateChild()
+        {
+            return PropertyBag.Create();
         }
 
         /// <summary>
@@ -519,6 +528,29 @@ namespace Alternet.UI
             }
 
             value = ObjectUniqueId.Empty;
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public virtual void SetTimeZoneProperty(string name, TimeZoneInfo? value)
+        {
+            SetStringProperty(name, DateUtils.GetIanaTimeZoneId(value) ?? string.Empty);
+        }
+
+        /// <inheritdoc/>
+        public virtual bool TryGetTimeZoneProperty(string name, out TimeZoneInfo? value)
+        {
+            if (TryGetStringProperty(name, out string? stringValue))
+            {
+                value = DateUtils.FromIanaTimeZoneId(stringValue);
+
+                if (value != null)
+                {
+                    return true;
+                }
+            }
+
+            value = null;
             return false;
         }
 
