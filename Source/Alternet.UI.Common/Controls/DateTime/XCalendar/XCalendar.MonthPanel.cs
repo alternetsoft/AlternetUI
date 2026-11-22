@@ -29,9 +29,21 @@ namespace Alternet.UI
                 Padding = 10;
                 HasBorder = true;
 
-                var row1 = CreateRow([CalendarMonth.January, CalendarMonth.February, CalendarMonth.March, CalendarMonth.April]);
-                var row2 = CreateRow([CalendarMonth.May, CalendarMonth.June, CalendarMonth.July, CalendarMonth.August]);
-                var row3 = CreateRow([CalendarMonth.September, CalendarMonth.October, CalendarMonth.November, CalendarMonth.December]);
+                var row1 = CreateRow([
+                    CalendarMonth.January,
+                    CalendarMonth.February,
+                    CalendarMonth.March,
+                    CalendarMonth.April]);
+                var row2 = CreateRow([
+                    CalendarMonth.May,
+                    CalendarMonth.June,
+                    CalendarMonth.July,
+                    CalendarMonth.August]);
+                var row3 = CreateRow([
+                    CalendarMonth.September,
+                    CalendarMonth.October,
+                    CalendarMonth.November,
+                    CalendarMonth.December]);
 
                 rows = [row1, row2, row3];
 
@@ -42,6 +54,12 @@ namespace Alternet.UI
                 row3.Parent = this;
 
                 UpdateMonthNames();
+
+                foreach (var button in buttons)
+                {
+                    button.UseThemeForSticky = SpeedButton.KnownTheme.CheckBorder;
+                    button.UseTheme = SpeedButton.KnownTheme.Default;
+                }
             }
 
             /// <summary>
