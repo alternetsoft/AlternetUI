@@ -387,7 +387,7 @@ namespace PropertyGridSample
         {
             control.ValueChanged += (s, e) =>
             {
-                App.LogReplace($"DateTimeIntervalPicker: {control.StartValue} - {control.EndValue}, {control.Value.Duration}", "DateTimeIntervalPicker:");
+                App.LogReplace($"DateTimeIntervalPicker: {control.StartValue} - {control.EndValue}, {control.Value.Duration}, {control.Value.TimeZone}", "DateTimeIntervalPicker:");
             };
         }
 

@@ -59,6 +59,10 @@ namespace ControlsSample
             propGrid.Add<DayOfWeekPicker>();
             propGrid.AddSeparatorLine();
 
+            propGrid.Add<BoldLabel>("DateTimeIntervalPicker");
+            propGrid.Add<DateTimeIntervalPicker>();
+            propGrid.AddSeparatorLine();
+
             propGrid.Add<BoldLabel>("RelativeWeekdayOfMonthPicker");
             propGrid.Add<RelativeWeekdayOfMonthPicker>();
             propGrid.AddSeparatorLine();

@@ -65,7 +65,7 @@ namespace Alternet.UI
         {
             get
             {
-                return new DateTimeInterval(Starts, Duration);
+                return new DateTimeInterval(Starts, Duration, TimeZone);
             }
 
             set

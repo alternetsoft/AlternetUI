@@ -30,11 +30,30 @@ namespace Alternet.UI
         public static float DefaultControlDistance = 5;
         private bool valueChangedSuspended;
         private DateTimeInterval data;
+        private bool isTimeZoneVisible = true;
         private readonly DateTimePicker startPicker;
         private readonly DateTimePicker endPicker;
         private readonly GenericControlAndImage<TimePeriodPicker> durationPicker
             = new(DefaultDurationImage ?? KnownSvgImages.ImgHourglassHalf);
-        private readonly LinkLabel timeZoneLinkLabel = new(Localized.CalendarItemLabelTimeZone);
+        
+        private readonly LinkLabel timeZoneLinkLabel = new(Localized.CalendarItemLabelTimeZone)
+        {
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        private readonly TransparentPanel timeZonePanel = new()
+        {
+            Layout = LayoutStyle.Horizontal,
+            MarginTop = DefaultControlDistance,
+        };
+
+        private readonly TimeZonePicker timeZonePicker = new()
+        {
+            MarginLeft = DefaultControlDistance,
+            IgnorePaint = true,
+            Enabled = false,
+            HorizontalAlignment = HorizontalAlignment.Fill,
+        };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeIntervalPicker"/> class.
@@ -50,6 +69,7 @@ namespace Alternet.UI
             startPicker.TimePicker.UseSingleBottomBorder();
             endPicker.TimePicker.UseSingleBottomBorder();
             durationPicker.MainControl.UseSingleBottomBorder();
+            timeZonePicker.UseSingleBottomBorder();
 
             Layout = LayoutStyle.Vertical;
 
@@ -80,11 +100,16 @@ namespace Alternet.UI
             durationPicker.MainControl.UseTheme = SpeedButton.KnownTheme.Default;
             durationPicker.Parent = this;
 
-            timeZoneLinkLabel.MarginTop = DefaultControlDistance;
             timeZoneLinkLabel.HasBorder = false;
-            timeZoneLinkLabel.Parent = this;
-            timeZoneLinkLabel.LinkClicked += OnTimeZoneClicked;
+            timeZoneLinkLabel.Parent = timeZonePanel;
 
+            timeZonePicker.Parent = timeZonePanel;
+
+            timeZonePanel.Parent = this;
+
+            timeZonePicker.ValueChanged += OnTimeZonePickerValueChanged;
+
+            timeZoneLinkLabel.LinkClicked += OnTimeZoneClicked;
             startPicker.ValueChanged += OnStartPickerChanged;
             endPicker.ValueChanged += OnEndPickerChanged;
             durationPicker.MainControl.ValueChanged += OnDurationPickerChanged;
@@ -123,6 +148,31 @@ namespace Alternet.UI
         /// Gets the time zone link label control.
         /// </summary>
         public LinkLabel TimeZoneLinkLabel => timeZoneLinkLabel;
+
+        /// <summary>
+        /// Gets the time zone picker control.
+        /// </summary>
+        public TimeZonePicker TimeZonePicker => timeZonePicker;
+
+        /// <summary>
+        /// Gets the time zone panel control where the time zone link label and time zone picker are placed.
+        /// </summary>
+        public TransparentPanel TimeZonePanel => timeZonePanel;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the time zone panel is visible.
+        /// </summary>
+        public virtual bool IsTimeZoneVisible
+        {
+            get => isTimeZoneVisible;
+            set
+            {
+                if (isTimeZoneVisible == value)
+                    return;
+                isTimeZoneVisible = value;
+                UpdateTimeZoneVisibility();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the end date for the display purposes.
@@ -176,7 +226,7 @@ namespace Alternet.UI
             get => data.Duration;
             set
             {
-                Value = new DateTimeInterval(data.Start, value);
+                Value = new DateTimeInterval(data.Start, value, Value.TimeZone);
             }
         }
 
@@ -188,7 +238,7 @@ namespace Alternet.UI
             get => data.Start;
             set
             {
-                Value = new DateTimeInterval(value, data.Duration);
+                Value = new DateTimeInterval(value, data.Duration, Value.TimeZone);
             }
         }
 
@@ -202,7 +252,7 @@ namespace Alternet.UI
             get => data.End;
             set
             {
-                Value = new DateTimeInterval(data.Start, value - data.Start);
+                Value = new DateTimeInterval(data.Start, value - data.Start, Value.TimeZone);
             }
         }
 
@@ -470,7 +520,7 @@ namespace Alternet.UI
                     switch (value)
                     {
                         case DateTimePickerKind.Date:
-                            Value = new DateTimeInterval(Value.Start.Date, TimeSpan.FromDays(1));
+                            Value = new DateTimeInterval(Value.Start.Date, TimeSpan.FromDays(1), Value.TimeZone);
                             break;
                         case DateTimePickerKind.Time:
                             break;
@@ -483,8 +533,16 @@ namespace Alternet.UI
 
                 durationPicker.MainControl.ReadOnly = value != DateTimePickerKind.DateTime;
                 durationPicker.Visible = value != DateTimePickerKind.Time;
-                timeZoneLinkLabel.Visible = value != DateTimePickerKind.Date;
+                UpdateTimeZoneVisibility();
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the time zone panel is visible.
+        /// </summary>
+        protected virtual void UpdateTimeZoneVisibility()
+        {
+            timeZonePanel.Visible = Kind != DateTimePickerKind.Date && IsTimeZoneVisible;
         }
 
         /// <summary>
@@ -542,7 +600,7 @@ namespace Alternet.UI
                 return;
 
             var duration = durationPicker.MainControl.Value.Value ?? TimeSpan.Zero;
-            Value = new DateTimeInterval(StartValue, duration);
+            Value = new DateTimeInterval(StartValue, duration, Value.TimeZone);
         }
 
         /// <summary>
@@ -572,6 +630,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the value of the time zone picker changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected virtual void OnTimeZonePickerValueChanged(object? sender, EventArgs e)
+        {
+            Value = new DateTimeInterval(Value, timeZonePicker.Value);
+        }
+
+        /// <summary>
         /// Called when the value of the start date picker is changing.
         /// </summary>
         /// <param name="sender"> The source of the event.</param>
@@ -589,6 +657,14 @@ namespace Alternet.UI
         /// <param name="e"> A <see cref="CancelEventArgs"/> that contains the event data. </param>
         protected virtual void OnTimeZoneClicked(object? sender, CancelEventArgs e)
         {
+            if (Value.TimeZone is null)
+            {
+                Value = new DateTimeInterval(Value, TimeZoneInfo.Local);
+            }
+            else
+            {
+                Value = new DateTimeInterval(Value, (TimeZoneInfo?)null);
+            }
         }
 
         /// <summary>
@@ -611,6 +687,10 @@ namespace Alternet.UI
                 endPicker.Value = DisplayEndValue;
 
                 durationPicker.MainControl.Value = new(Value.Duration);
+
+                timeZonePicker.Value = Value.TimeZone;
+                timeZonePicker.IgnorePaint = Value.TimeZone is null;
+                timeZonePicker.Enabled = Value.TimeZone is not null;
 
                 ValueChanged?.Invoke(this, EventArgs.Empty);
             }
