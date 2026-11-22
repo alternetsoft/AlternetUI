@@ -123,18 +123,36 @@
 	<ItemGroup>
     		<Linux_Arm64_PalZipFiles Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*linux-arm64-release.zip" />
     		<Linux_X64_PalZipFiles Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*linux-x64-release.zip" />
+    		<Linux_Arm64_PalZipFilesLegacy Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*linux-arm64-release-legacy.zip" />
+    		<Linux_X64_PalZipFilesLegacy Include="$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal*linux-x64-release-legacy.zip" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<Linux_Arm64_NugetDestFolder>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_Arm64)\native</Linux_Arm64_NugetDestFolder>
 		<Linux_X64_NugetDestFolder>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_X64)\native</Linux_X64_NugetDestFolder>
+		<Linux_Arm64_NugetDestFolderLegacy>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_Arm64)\native-legacy</Linux_Arm64_NugetDestFolderLegacy>
+		<Linux_X64_NugetDestFolderLegacy>$(NuGetSourceRuntimesDirectoryPath)\$(NuGetRuntimeId_Linux_X64)\native-legacy</Linux_X64_NugetDestFolderLegacy>
 	</PropertyGroup>
-        
-	<Unzip SourceFiles="@(Linux_Arm64_PalZipFiles)" DestinationFolder="$(Linux_Arm64_NugetDestFolder)" />
-	<Unzip SourceFiles="@(Linux_X64_PalZipFiles)" DestinationFolder="$(Linux_X64_NugetDestFolder)" />
 
         <MakeDir Directories="$(Linux_Arm64_NugetDestFolder)"/>
         <MakeDir Directories="$(Linux_X64_NugetDestFolder)"/>
+        <MakeDir Directories="$(Linux_X64_NugetDestFolderLegacy)"/>
+
+	<Unzip SourceFiles="@(Linux_Arm64_PalZipFiles)" DestinationFolder="$(Linux_Arm64_NugetDestFolder)" />
+
+	<Unzip SourceFiles="@(Linux_X64_PalZipFilesLegacy)" DestinationFolder="$(Linux_X64_NugetDestFolder)" />
+
+	<ItemGroup>
+		<AddLegacySuffixFiles Include="$(Linux_X64_NugetDestFolder)\*.*" />
+	</ItemGroup>
+
+ 	<Move
+    		SourceFiles="@(AddLegacySuffixFiles)"
+		DestinationFiles="@(AddLegacySuffixFiles->'%(RootDir)%(Directory)%(Filename)-legacy%(Extension)')" />
+
+
+	<Unzip SourceFiles="@(Linux_X64_PalZipFiles)" DestinationFolder="$(Linux_X64_NugetDestFolder)" />
+
         <Copy SourceFiles="@(NugetPayload_Native_Linux_Arm64)" DestinationFolder="$(Linux_Arm64_NugetDestFolder)" />
         <Copy SourceFiles="@(NugetPayload_Native_Linux_X64)" DestinationFolder="$(Linux_X64_NugetDestFolder)" />
 
@@ -142,10 +160,10 @@
 
 	<Message Text="Sign Pal libraries" Importance="high" />
 
-	<Exec Command="&quot;$(MSBuildProjectDirectory)\..\..\..\Install.Scripts\SignTools\Sign.Pal.InFolder.bat&quot; &quot;$(NuGetSourceRuntimesDirectoryPath)\&quot;"/>
+	<Exec Condition="false" Command="&quot;$(MSBuildProjectDirectory)\..\..\..\Install.Scripts\SignTools\Sign.Pal.InFolder.bat&quot; &quot;$(NuGetSourceRuntimesDirectoryPath)\&quot;"/>
     </Target>
 <!-- ========================================== -->
-    <Target Name="NuGet_Sign"  Condition="Exists($(SignKeyPath)) and '$(VsixSignPassword)' != ''">
+    <Target Name="NuGet_Sign"  Condition="Exists($(SignKeyPath)) and '$(VsixSignPassword)' != '' and false">
 		<Exec Command="dotnet nuget sign &quot;$(NuGetDirectoryPath)\*.nupkg&quot; --certificate-path &quot;$(SignKeyPath)&quot; --timestamper http://timestamp.digicert.com --certificate-password $(VsixSignPassword)"/>
 		<Message Text="Exec NuGet_Sign" Importance="high" />
 	</Target>
