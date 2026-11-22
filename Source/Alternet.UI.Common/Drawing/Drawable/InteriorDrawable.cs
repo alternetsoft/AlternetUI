@@ -13,11 +13,16 @@ namespace Alternet.Drawing
     public partial class InteriorDrawable : BaseDrawable
     {
         /// <summary>
+        /// Gets or sets the default width, in device-independent units, for a thin scroll bar.
+        /// </summary>
+        public static float DefaultThinScrollBarSize = 7;
+
+        /// <summary>
         /// Gets or sets the minimum size, in device-independent units, for a scroll bar.
         /// </summary>
         /// <remarks>This value is used to ensure that scroll bars are not rendered smaller than the
         /// specified size, providing a consistent and usable interface.</remarks>
-        public static Coord MinScrollBarSize = 17;
+        public static Coord DefaultMinScrollBarSize = 17;
 
         /// <summary>
         /// Gets or sets the default theme for the interior elements, such as scrollbars.
@@ -207,6 +212,11 @@ namespace Alternet.Drawing
         public bool HasHorzScrollBar => HorzScrollBar is not null;
 
         /// <summary>
+        /// Gets or sets a value indicating whether mouse events should be ignored for this interior drawable.
+        /// </summary>
+        public virtual bool IgnoreMouse { get; set; }
+
+        /// <summary>
         /// Gets whether interior has border.
         /// </summary>
         public virtual bool HasBorder
@@ -249,6 +259,17 @@ namespace Alternet.Drawing
                 base.Bounds = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the minimum size, in device-independent units, for a scroll bar.
+        /// </summary>
+        public virtual float MinScrollBarSize { get; set; } = DefaultMinScrollBarSize;
+
+        /// <summary>
+        /// Gets or sets the size, in device-independent units, for a scroll bar.
+        /// If <see cref="ScrollBarSize"/> is set, it overrides the size calculated from <see cref="ScrollBarMetrics"/>.
+        /// </summary>
+        public virtual float? ScrollBarSize { get; set; }
 
         /// <summary>
         /// Gets or sets whether scroll bar arrows are visible.
@@ -452,7 +473,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Requests the preferred size of the vertical and horizontal scrollbars based on the current metrics and scale factor.
+        /// Sets whether the interior drawable should use thin scrollbars.
+        /// </summary>
+        /// <param name="thin">If set to <c>true</c>, thin scrollbars are used; otherwise, default scrollbars are used.</param>
+        public virtual void SetThinScrollBars(bool thin = true)
+        {
+            if (thin)
+            {
+                ScrollBarSize = DefaultThinScrollBarSize;
+                MinScrollBarSize = DefaultThinScrollBarSize;
+                ScrollBarArrowsVisible = false;
+            }
+            else
+            {
+                ScrollBarSize = null;
+                MinScrollBarSize = DefaultMinScrollBarSize;
+                ScrollBarArrowsVisible = true;
+            }
+        }
+
+        /// <summary>
+        /// Requests the preferred size of the vertical and horizontal scrollbars
+        /// based on the current metrics and scale factor.
         /// </summary>
         /// <param name="control">The control for which to request the scrollbar size.</param>
         /// <param name="scaleFactor">The scale factor to apply.</param>
@@ -464,6 +506,13 @@ namespace Alternet.Drawing
             out float vertWidth,
             out float horzHeight)
         {
+            if (ScrollBarSize is not null)
+            {
+                vertWidth = ScrollBarSize.Value;
+                horzHeight = ScrollBarSize.Value;
+                return;
+            }
+
             var metrics = GetRealMetrics(control);
 
             vertWidth = metrics.GetPreferredSize(isVertical: true, scaleFactor).Width;

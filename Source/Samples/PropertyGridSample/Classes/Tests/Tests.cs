@@ -357,6 +357,11 @@ namespace PropertyGridSample
                 c.EmptyText = "No items in the list";
             });
 
+            AddControlAction<VirtualListBox>("Init thin scroll bars", (c) =>
+            {
+                c.Interior.SetThinScrollBars();
+            });
+
             AddControlAction<VirtualListBox>("Show simple tooltip", (c) =>
             {
                 overlayId = c.ShowOverlayToolTipSimple(
