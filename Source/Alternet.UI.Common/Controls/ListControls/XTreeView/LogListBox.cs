@@ -82,11 +82,22 @@ namespace Alternet.UI
         /// otherwise, they will be hidden.</param>
         public static void SetDefaultDebugMenuItemsVisible(bool value)
         {
-            DefaultMenuItemTestActionsVisible = value;
-            DefaultMenuItemSearchForMembersVisible = value;
-            DefaultMenuItemOpenLogFileVisible = value;
-            DefaultMenuItemEnableLogToFileVisible = value;
-            DefaultMenuItemShowDevToolsVisible = value;
+            if (App.IsMaui)
+            {
+                DefaultMenuItemTestActionsVisible = false;
+                DefaultMenuItemSearchForMembersVisible = false;
+                DefaultMenuItemOpenLogFileVisible = false;
+                DefaultMenuItemEnableLogToFileVisible = value;
+                DefaultMenuItemShowDevToolsVisible = false;
+            }
+            else
+            {
+                DefaultMenuItemTestActionsVisible = value;
+                DefaultMenuItemSearchForMembersVisible = value;
+                DefaultMenuItemOpenLogFileVisible = value;
+                DefaultMenuItemEnableLogToFileVisible = value;
+                DefaultMenuItemShowDevToolsVisible = value;
+            }
         }
 
         static LogListBox()
