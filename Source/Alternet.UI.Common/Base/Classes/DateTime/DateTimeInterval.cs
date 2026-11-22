@@ -10,9 +10,11 @@ namespace Alternet.UI
     /// </summary>
     /// <param name="Start">The start time of the interval.</param>
     /// <param name="Duration">The duration of the interval.</param>
+    /// <param name="TimeZone">The time zone associated with the interval.</param>
     public readonly record struct DateTimeInterval(
         DateTime Start,
-        TimeSpan Duration)
+        TimeSpan Duration,
+        TimeZoneInfo? TimeZone = null)
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimeInterval"/> struct
@@ -20,7 +22,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="Start">The start time of the interval.</param>
         public DateTimeInterval(DateTime Start)
-            : this(Start, TimeSpan.Zero)
+            : this(Start, TimeSpan.Zero, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DateTimeInterval"/> struct
+        /// using another <see cref="DateTimeInterval"/> instance and a specified time zone.
+        /// </summary>
+        /// <param name="interval">The interval to copy.</param>
+        /// <param name="timeZone">The time zone associated with the interval.</param>
+        public DateTimeInterval(DateTimeInterval interval, TimeZoneInfo? timeZone)
+            : this(interval.Start, interval.Duration, timeZone)
         {
         }
 
