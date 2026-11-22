@@ -31,7 +31,8 @@ namespace Alternet.UI
         public SpeedButton? ClearButton => clearButton;
 
         /// <summary>
-        /// Gets the "Select Local Time Zone" button in the picker, which allows users to select the local time zone.
+        /// Gets the "Select Local Time Zone" button in the picker,
+        /// which allows users to select the local time zone.
         /// </summary>
         public SpeedButton? LocalTimeZoneButton => localTimeZoneButton;
 
