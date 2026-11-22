@@ -13,6 +13,9 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.DateTime)]
     public partial class TimeZonePicker : ListPicker, IReadOnlyProperty
     {
+        private SpeedButton? clearButton;
+        private SpeedButton? localTimeZoneButton;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="TimeZonePicker"/> class.
         /// </summary>
@@ -20,6 +23,66 @@ namespace Alternet.UI
         {
             AddDefaultItems();
             Value = TimeZoneInfo.Local;
+        }
+
+        /// <summary>
+        /// Gets the "Clear" button in the picker, which allows users to clear the value.
+        /// </summary>
+        public SpeedButton? ClearButton => clearButton;
+
+        /// <summary>
+        /// Gets the "Select Local Time Zone" button in the picker, which allows users to select the local time zone.
+        /// </summary>
+        public SpeedButton? LocalTimeZoneButton => localTimeZoneButton;
+
+        /// <inheritdoc/>
+        protected override void InitPopupWindow()
+        {
+            base.InitPopupWindow();
+
+            clearButton = PopupWindow.AddClearButton(OnClearButtonClick);
+
+            localTimeZoneButton = PopupWindow.AddCustomButton(
+                        null,
+                        KnownSvgImages.ImgGlobeLocation,
+                        Localized.SelectLocalTimeZone,
+                        OnLocalTimeZoneClick);
+        }
+
+        /// <summary>
+        /// Handles the click event of the "Select Local Time Zone" button in the picker.
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnLocalTimeZoneClick(object? sender, EventArgs e)
+        {
+            Value = TimeZoneInfo.Local;
+            PopupWindow.HidePopup(ModalResult.Canceled);
+        }
+        
+        /// <summary>
+        /// Handles the click event of the "Clear" button in the picker.
+        /// </summary>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnClearButtonClick(object? sender, EventArgs e)
+        {
+            Value = null;
+            PopupWindow.HidePopup(ModalResult.Canceled);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the picker can be cleared (i.e., set to no selection).
+        /// </summary>
+        public virtual bool CanClear
+        {
+            get => clearButton?.Visible ?? false;
+            set
+            {
+                if (value == CanClear)
+                    return;
+                clearButton?.Visible = value;
+            }
         }
 
         /// <summary>

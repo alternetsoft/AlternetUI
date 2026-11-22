@@ -527,6 +527,8 @@ namespace Alternet.UI.Localization
 
         public string CalendarItemIntervalHeaderDateTime { get; set; } = "Date and Time";
 
+        public string SelectLocalTimeZone { get; set; } = "Select Local Time Zone";
+
         // ========================
 
     }
