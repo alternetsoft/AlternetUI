@@ -109,6 +109,10 @@ namespace Alternet.UI
 
         private readonly ContextMenu moreActionsMenu = new();
 
+        private SpeedButton? matchCaseButton;
+        private SpeedButton? matchWholeWordButton;
+        private SpeedButton? useRegularExpressionsButton;
+
         private IFindReplaceConnect? manager;
         private bool canFindInCurrentDocument = true;
         private bool canFindInAllOpenDocuments = true;
@@ -212,16 +216,17 @@ namespace Alternet.UI
 
                 IdOptionsEmptyButton1 = OptionsToolBar.AddSpeedBtn();
 
-                IdMatchCase = OptionsToolBar.AddStickyBtn(
+                matchCaseButton = OptionsToolBar.AddStickyBtnCore(
                     text: null,
                     KnownSvgImages.ImgFindMatchCase,
                     toolTip: CommonStrings.Default.FindOptionMatchCase,
                     OnClickMatchCase);
+
                 OptionsToolBar.SetToolShortcut(
                     IdMatchCase,
                     KnownShortcuts.FindReplaceControlKeys.MatchCase);
 
-                IdMatchWholeWord = OptionsToolBar.AddStickyBtn(
+                matchWholeWordButton = OptionsToolBar.AddStickyBtnCore(
                     text: null,
                     KnownSvgImages.ImgFindMatchFullWord,
                     toolTip: CommonStrings.Default.FindOptionMatchWholeWord,
@@ -230,7 +235,7 @@ namespace Alternet.UI
                     IdMatchWholeWord,
                     KnownShortcuts.FindReplaceControlKeys.MatchWholeWord);
 
-                IdUseRegularExpressions = OptionsToolBar.AddStickyBtn(
+                useRegularExpressionsButton = OptionsToolBar.AddStickyBtnCore(
                     text: null,
                     KnownSvgImages.ImgRegularExpr,
                     toolTip: CommonStrings.Default.FindOptionUseRegularExpressions,
@@ -238,6 +243,12 @@ namespace Alternet.UI
                 OptionsToolBar.SetToolShortcut(
                     IdUseRegularExpressions,
                     KnownShortcuts.FindReplaceControlKeys.UseRegularExpressions);
+
+                foreach (var button in new[] { matchCaseButton, matchWholeWordButton, useRegularExpressionsButton })
+                {
+                    button.UseThemeForSticky = SpeedButton.KnownTheme.CheckBorder;
+                    button.UseTheme = SpeedButton.KnownTheme.Default;
+                }
 
                 scopeEdit.HorizontalAlignment = HorizontalAlignment.Fill;
 
@@ -1186,19 +1197,19 @@ namespace Alternet.UI
         /// Gets id of the 'Match Case' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdMatchCase { get; internal set; }
+        public ObjectUniqueId IdMatchCase { get => matchCaseButton?.UniqueId ?? ObjectUniqueId.Empty; }
 
         /// <summary>
         /// Gets id of the 'Match Whole Word' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdMatchWholeWord { get; internal set; }
+        public ObjectUniqueId IdMatchWholeWord { get => matchWholeWordButton?.UniqueId ?? ObjectUniqueId.Empty; }
 
         /// <summary>
         /// Gets id of the 'Use Regular Expressions' button.
         /// </summary>
         [Browsable(false)]
-        public ObjectUniqueId IdUseRegularExpressions { get; internal set; }
+        public ObjectUniqueId IdUseRegularExpressions { get => useRegularExpressionsButton?.UniqueId ?? ObjectUniqueId.Empty; }
 
         /// <summary>
         /// Gets id of the 'Toggle Replace Options' button.
