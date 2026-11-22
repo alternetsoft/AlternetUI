@@ -289,19 +289,8 @@ namespace Alternet.UI
             {
                 if (popupWindow is null)
                 {
-                    popupWindow = new();
-                    popupWindow.Title = popupWindowTitle;
-                    popupWindow.AfterHide += (s, e) =>
-                    {
-                        popupLastClosedAt = DateTime.Now;
-                        OnPopupWindowClosed(s, e);
-                        RaiseDropDownClosed();
-
-                        if (popupWindow.PopupResult == ModalResult.Accepted)
-                        {
-                            RaiseDropDownAccepted();
-                        }
-                    };
+                    popupWindow = CreatePopupWindow();
+                    InitPopupWindow();
                 }
 
                 return popupWindow;
@@ -640,6 +629,42 @@ namespace Alternet.UI
         protected override void OnEnabledChanged(EventArgs e)
         {
             base.OnEnabledChanged(e);
+        }
+
+        /// <summary>
+        /// Creates the popup window of type <typeparamref name="TPopup"/>.
+        /// </summary>
+        /// <returns>The created popup window.</returns>
+        protected virtual TPopup CreatePopupWindow()
+        {
+            var result = new TPopup();
+            return result;
+        }
+
+        /// <summary>
+        /// Initializes the popup window with necessary settings and event handlers.
+        /// </summary>
+        protected virtual void InitPopupWindow()
+        {
+            PopupWindow.Title = popupWindowTitle;
+            PopupWindow.AfterHide += OnPopupWindowAfterHide;
+        }
+
+        /// <summary>
+        /// Called after the popup window is hidden.
+        /// </summary>
+        /// <param name="s">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnPopupWindowAfterHide(object? s, EventArgs e)
+        {
+            popupLastClosedAt = DateTime.Now;
+            OnPopupWindowClosed(s, e);
+            RaiseDropDownClosed();
+
+            if (PopupWindow.PopupResult == ModalResult.Accepted)
+            {
+                RaiseDropDownAccepted();
+            }
         }
 
         /// <summary>
