@@ -182,6 +182,11 @@ namespace Alternet.UI
                 {
                     if (overlayParent is not null)
                     {
+                        if (App.IsMaui)
+                        {
+                            ControlFactory.PopupEntryHandler?.CloseAllPopupEntries();
+                        }
+
                         ShowInOverlay(control, overlayParent, toolTip);
                     }
                 }
