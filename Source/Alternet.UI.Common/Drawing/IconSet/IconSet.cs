@@ -33,6 +33,30 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/> collection.
+        /// </summary>
+        /// <param name="images">The collection of images to be converted to icons and added to the set.</param>
+        public IconSet(IEnumerable<Image> images)
+        {
+            foreach (var image in images)
+            {
+                Add(image);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/> array.
+        /// </summary>
+        /// <param name="images">The array of images to be converted to icons and added to the set.</param>
+        public IconSet(params Image[] images)
+        {
+            foreach (var image in images)
+            {
+                Add(image);
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> class from the specified
         /// data stream. Data stream must contain icon data in .ico format.
         /// </summary>
