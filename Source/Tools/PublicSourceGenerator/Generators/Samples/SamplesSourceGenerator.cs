@@ -149,9 +149,12 @@ namespace Alternet.UI.PublicSourceGenerator.Generators.Samples
             Remove("Alternet.UI");
             Remove("Alternet.UI.Interfaces");
             Remove("Alternet.UI.Common");
+            Remove("Alternet.UI.Controls");
 
             if (addPackage)
+            {
                 csproj.AddPackageReference("Alternet.UI", version);
+            }
 
             csproj.Save();
         }
