@@ -753,6 +753,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a "Clear" button to the left bottom toolbar of the popup window.
+        /// </summary>
+        /// <param name="onClick">The event handler to be invoked when the button is clicked.</param>
+        /// <returns>The created <see cref="SpeedButton"/> instance.</returns>
+        public virtual SpeedButton AddClearButton(EventHandler? onClick)
+        {
+            var clearButton = AddCustomButton(
+                Localized.ButtonClear,
+                KnownSvgImages.ImgRemoveAll,
+                Localized.ButtonClear,
+                onClick);
+            return clearButton;
+        }
+
+        /// <summary>
+        /// Adds a custom button to the left bottom toolbar of the popup window.
+        /// </summary>
+        /// <param name="text">The text to display on the button.</param>
+        /// <param name="image">The image to display on the button.</param>
+        /// <param name="tooltip">The tooltip text for the button.</param>
+        /// <param name="onClick">The event handler to be invoked when the button is clicked.</param>
+        /// <returns>The created <see cref="SpeedButton"/> instance.</returns>
+        public virtual SpeedButton AddCustomButton(
+            string? text,
+            SvgImage? image,
+            string? tooltip,
+            EventHandler? onClick)
+        {
+            var button = LeftBottomToolBar.AddSpeedBtnCore(text, image, tooltip, onClick);
+            button.UseTheme = ButtonOk.UseTheme;
+            return button;
+        }
+
+        /// <summary>
         /// Displays a popup window near the specified control.
         /// If position is not specified, the popup is shown below and to the left of the control.
         /// </summary>
