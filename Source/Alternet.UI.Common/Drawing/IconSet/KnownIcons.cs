@@ -54,7 +54,7 @@ namespace Alternet.UI
         {
             get
             {
-                return calendarIcon ??= CreateDayNumberIcon();
+                return calendarIcon ??= CreateIconWithText(txt: DateTime.Now.Day.ToString());
             }
 
             set
@@ -64,23 +64,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a day number icon with the specified background and foreground colors,
-        /// and an number to display a day number on the icon.
+        /// Creates an icon with the specified background and foreground colors,
+        /// and an optional text to display on the icon.
         /// </summary>
         /// <param name="backColor">The background color of the icon.</param>
         /// <param name="foreColor">The foreground color of the icon.</param>
-        /// <param name="number">An optional number to display on the icon.
-        /// If <c>null</c>, the current day number is used.</param>
+        /// <param name="txt">An optional text to display on the icon.</param>
         /// <returns>The created <see cref="IconSet"/>.</returns>
-        public static IconSet CreateDayNumberIcon(
+        public static IconSet CreateIconWithText(
             SKColor? backColor = null,
             SKColor? foreColor = null,
-            int? number = null)
+            string txt = "")
         {
-            var image16 = CreateDayNumberIcon(16, backColor, foreColor, number);
-            var image32 = CreateDayNumberIcon(32, backColor, foreColor, number);
-            var image48 = CreateDayNumberIcon(48, backColor, foreColor, number);
-            var image64 = CreateDayNumberIcon(64, backColor, foreColor, number);
+            var image16 = CreateIconWithText(16, backColor, foreColor, txt);
+            var image32 = CreateIconWithText(32, backColor, foreColor, txt);
+            var image48 = CreateIconWithText(48, backColor, foreColor, txt);
+            var image64 = CreateIconWithText(64, backColor, foreColor, txt);
 
             Bitmap i16 = (Bitmap)image16;
             Bitmap i32 = (Bitmap)image32;
@@ -92,20 +91,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a day number icon with the specified size, background and foreground colors,
-        /// and an optional number to display a day number on the icon.
+        /// Creates an icon with the specified size, background and foreground colors,
+        /// and an optional text to display on the icon.
         /// </summary>
         /// <param name="size">The size of the icon.</param>
         /// <param name="backColor">The background color of the icon.</param>
         /// <param name="foreColor">The foreground color of the icon.</param>
-        /// <param name="number">An optional number to display on the icon.
-        /// If <c>null</c>, the current day number is used.</param>
+        /// <param name="txt">An optional text to display on the icon.</param>
         /// <returns>The created <see cref="SKBitmap"/>.</returns>
-        public static SKBitmap CreateDayNumberIcon(
+        public static SKBitmap CreateIconWithText(
             int size,
             SKColor? backColor = null,
             SKColor? foreColor = null,
-            int? number = null)
+            string txt = "")
         {
             var bitmap = new SKBitmap(size, size);
 
@@ -124,21 +122,21 @@ namespace Alternet.UI
 
             using var paint = new SKPaint
             {
-                Color = backColor ?? DefaultColors.GetWindowBackColor(!App.IsDark),
+                Color = backColor ?? DefaultColors.GetWindowBackColor(true),
                 IsAntialias = true
             };
 
             canvas.DrawRoundRect(rect, radius, radius, paint);
 
-            paint.Color = DefaultColors.BorderColor.GetColor(App.IsDark);
+            paint.Color = DefaultColors.BorderColor.GetColor(true);
             paint.IsStroke = true;
             canvas.DrawRoundRect(rect, radius, radius, paint);
 
-            string text = number?.ToString() ?? DateTime.Now.Day.ToString();
+            string text = txt;
 
             using var textPaint = new SKPaint
             {
-                Color = foreColor ?? DefaultColors.GetWindowForeColor(!App.IsDark),
+                Color = foreColor ?? DefaultColors.GetWindowForeColor(true),
                 IsAntialias = true,
             };
 
