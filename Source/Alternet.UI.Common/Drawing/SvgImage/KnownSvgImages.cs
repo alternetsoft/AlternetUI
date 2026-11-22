@@ -158,7 +158,8 @@ namespace Alternet.UI
         private static SvgImage? imgPaperclip;
         private static SvgImage? imgRepeat;
         private static SvgImage? imgDebugOutput;
-
+        private static SvgImage? imgGlobeLocation;
+        private static SvgImage? imgGlobe;
 
         static KnownSvgImages()
         {
@@ -1328,7 +1329,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets image that can be used in "Remove" toolbar buttons.
+        /// Gets or sets image that can be used in "Globe Location" toolbar buttons.
+        /// </summary>
+        public static SvgImage ImgGlobeLocation
+        {
+            get => imgGlobeLocation ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageGlobeLocation);
+            set => imgGlobeLocation = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Globe" toolbar buttons.
+        /// </summary>
+        public static SvgImage ImgGlobe
+        {
+            get => imgGlobe ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageGlobe);
+            set => imgGlobe = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Remove All" toolbar buttons.
         /// </summary>
         public static SvgImage ImgRemoveAll
         {

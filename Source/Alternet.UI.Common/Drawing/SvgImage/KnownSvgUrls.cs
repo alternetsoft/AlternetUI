@@ -48,6 +48,16 @@ namespace Alternet.UI
         public static string UrlImageToggleOff { get; set; } = GetImageUrl("alternet-toggle-off");
 
         /// <summary>
+        /// Gets or sets url used to load "Globe Location" svg image.
+        /// </summary>
+        public static string UrlImageGlobeLocation { get; set; } = GetImageUrl("alternet-globe-location");
+
+        /// <summary>
+        /// Gets or sets url used to load "Globe" svg image.
+        /// </summary>
+        public static string UrlImageGlobe { get; set; } = GetImageUrl("alternet-globe");
+
+        /// <summary>
         /// Gets or sets url used to load "Toggle On" svg image.
         /// </summary>
         public static string UrlImageToggleOn { get; set; } = GetImageUrl("alternet-toggle-on");
