@@ -36,6 +36,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterMouseCaptureLost(AbstractControl sender, EventArgs e)
         {
+            if (interior.IgnoreMouse)
+                return;
             ResetDragging(sender);
             sender.ReleaseMouseCapture();
         }
@@ -43,7 +45,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
-            if (!sender.IsEnabled)
+            if (!sender.IsEnabled || interior.IgnoreMouse)
                 return;
 
             if (isDragging && hitTestsMouseDown is not null)
@@ -88,6 +90,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterMouseLeave(AbstractControl sender, EventArgs e)
         {
+            if (interior.IgnoreMouse)
+                return;
             UnsubscribeClickRepeated();
         }
 
@@ -96,6 +100,8 @@ namespace Alternet.UI
         /// </summary>
         public void ResetDragging(AbstractControl sender)
         {
+            if (interior.IgnoreMouse)
+                return;
             if (isDragging)
             {
                 isDragging = false;
@@ -123,6 +129,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterVisibleChanged(AbstractControl sender, EventArgs e)
         {
+            if (interior.IgnoreMouse)
+                return;
             ResetDragging(sender);
             UnsubscribeClickRepeated();
         }
@@ -130,6 +138,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterLostFocus(AbstractControl sender, LostFocusEventArgs e)
         {
+            if (interior.IgnoreMouse)
+                return;
             ResetDragging(sender);
             UnsubscribeClickRepeated();
             sender.ReleaseMouseCapture();
@@ -138,7 +148,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseDown(AbstractControl sender, MouseEventArgs e)
         {
-            if (!sender.IsEnabled)
+            if (!sender.IsEnabled || interior.IgnoreMouse)
                 return;
 
             ResetDragging(sender);
@@ -176,6 +186,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseUp(AbstractControl sender, MouseEventArgs e)
         {
+            if (interior.IgnoreMouse)
+                return;
             sender.ReleaseMouseCapture();
             if (e.Button != MouseButtons.Left)
                 return;
@@ -192,7 +204,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterClick(AbstractControl sender, EventArgs e)
         {
-            if (!sender.IsEnabled)
+            if (!sender.IsEnabled || interior.IgnoreMouse)
                 return;
 
             var mouseLocation = Mouse.GetPosition(sender);
