@@ -16,6 +16,7 @@ namespace Alternet.UI.Native
     internal abstract class NativeApiProvider
     {
         internal const string NativeModuleNameNoExt = "Alternet.UI.Pal";
+        internal const string LegacyNativeModuleNameNoExt = "Alternet.UI.Pal-legacy";
 
         internal const string NativeModuleName = $"{NativeModuleNameNoExt}.dll";
 
@@ -37,11 +38,21 @@ namespace Alternet.UI.Native
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
         internal delegate void PInvokeCallbackActionType();
 
+        internal static bool UseLegacyPal => WxGlobalSettings.Linux.UseLegacyPal;
+
         internal static string NativeModuleNameWithExt
         {
             get
             {
                 return OSUtils.GetNativeModuleName(NativeModuleNameNoExt);
+            }
+        }
+
+        internal static string LegacyNativeModuleNameWithExt
+        {
+            get
+            {
+                return OSUtils.GetNativeModuleName(LegacyNativeModuleNameNoExt);
             }
         }
 
@@ -117,6 +128,7 @@ namespace Alternet.UI.Native
         {
             if (WxGlobalSettings.Pal.FindPalOverride is not null)
                 return WxGlobalSettings.Pal.FindPalOverride(nativeModuleNameWithExt);
+
             return OSUtils.FindNativeDll(nativeModuleNameWithExt);
         }
 
@@ -203,9 +215,35 @@ namespace Alternet.UI.Native
                 {
                     if (LibHandle == default)
                     {
-                        libraryName = NativeModuleNameWithExt;
+                        string? libraryFileName = null;
 
-                        var libraryFileName = FindNativeDll(NativeModuleNameWithExt);
+                        if (App.IsLinuxOS && App.IsX64Process)
+                        {
+                            try
+                            {
+                                if (UseLegacyPal)
+                                {
+                                    libraryName = LegacyNativeModuleNameWithExt;
+                                    libraryFileName = FindNativeDll(libraryName);
+
+                                    if (libraryFileName != null && !File.Exists(libraryFileName))
+                                    {
+                                        libraryFileName = null;
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                BaseObject.Nop(ex);
+                                libraryFileName = null;
+                            }
+                        }
+
+                        if (libraryFileName is null)
+                        {
+                            libraryName = NativeModuleNameWithExt;
+                            libraryFileName = FindNativeDll(libraryName);
+                        }
 
                         if (DebugResolver)
                         {
