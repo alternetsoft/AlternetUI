@@ -12,6 +12,11 @@ namespace Alternet.UI
     public interface IRepeatPatternRuleOwner
     {
         /// <summary>
+        /// Gets or sets the time zone associated with the repeat pattern.
+        /// </summary>
+        TimeZoneInfo? TimeZone { get; set; }
+
+        /// <summary>
         /// Gets or sets the start date of the repeat pattern.
         /// </summary>
         DateOnly ValidFromDate { get; set; }
@@ -54,6 +59,11 @@ namespace Alternet.UI
     /// </summary>
     public struct RepeatPatternRuleOwnerStruct : IRepeatPatternRuleOwner
     {
+        /// <summary>
+        /// Gets or sets the time zone associated with the repeat pattern.
+        /// </summary>
+        public TimeZoneInfo? TimeZone;
+
         /// <summary>
         /// Gets or sets the start date of the repeat pattern.
         /// </summary>
@@ -132,6 +142,13 @@ namespace Alternet.UI
             readonly get => EndCondition;
             set => EndCondition = value;
         }
+
+        /// <inheritdoc/>
+        TimeZoneInfo? IRepeatPatternRuleOwner.TimeZone
+        {
+            readonly get => TimeZone;
+            set => TimeZone = value;
+        }
     }
 
     /// <summary>
@@ -170,6 +187,19 @@ namespace Alternet.UI
         /// Gets the <see cref="SchedulerDocument"/> associated with this repeat pattern rule, if any.
         /// </summary>
         public SchedulerDocument? Document => CalendarItem?.Document;
+
+        /// <inheritdoc/>
+        public override TimeZoneInfo? TimeZone
+        {
+            get => owner?.TimeZone ?? base.TimeZone;
+            set
+            {
+                if (owner is null)
+                    base.TimeZone = value;
+                else
+                    owner.TimeZone = value;
+            }
+        }
 
         /// <inheritdoc/>
         public override DateOnly ValidFromDate
