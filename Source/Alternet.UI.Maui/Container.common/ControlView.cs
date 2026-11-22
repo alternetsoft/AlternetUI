@@ -27,6 +27,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class ControlView : SKCanvasView, IRaiseSystemColorsChanged
     {
+        private TapGestureRecognizer? doubleTabGesture;
         private SwipeGestureRecognizer? swipeGesture;
         private PanGestureRecognizer? panGesture;
         private SkiaGraphics? graphics;
@@ -73,6 +74,16 @@ namespace Alternet.UI
         /// Gets swipe gesture created after call to <see cref="RequireSwipeGesture"/>.
         /// </summary>
         public SwipeGestureRecognizer? SwipeGesture => swipeGesture;
+
+        /// <summary>
+        /// Gets pan gesture created after call to <see cref="RequirePanGesture"/>.
+        /// </summary>
+        public PanGestureRecognizer? PanGesture => panGesture;
+
+        /// <summary>
+        /// Gets double tap gesture created after call to <see cref="RequireDoubleTapGesture"/>.
+        /// </summary>
+        public TapGestureRecognizer? DoubleTapGesture => doubleTabGesture;
 
         /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image. Default is <c>true</c>.
@@ -197,6 +208,8 @@ namespace Alternet.UI
             panGesture = new();
             panGesture.PanUpdated += (sender, e) =>
             {
+                if (!CanHandlePanGesture(e))
+                    return;
                 OnPanGesture(e);
             };
 
@@ -208,18 +221,23 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RequireDoubleTapGesture()
         {
-            TapGestureRecognizer tapGestureRecognizer = new()
+            if (doubleTabGesture is not null)
+                return;
+
+            doubleTabGesture = new()
             {
                 Buttons = ButtonsMask.Primary,
                 NumberOfTapsRequired = 2,
             };
 
-            tapGestureRecognizer.Tapped += (s, e) =>
+            doubleTabGesture.Tapped += (s, e) =>
             {
+                if (!CanHandleDoubleTapGesture(e))
+                    return;
                 OnDoubleTapGesture(e);
             };
 
-            GestureRecognizers.Add(tapGestureRecognizer);
+            GestureRecognizers.Add(doubleTabGesture);
         }
 
         /// <summary>
@@ -237,6 +255,8 @@ namespace Alternet.UI
             swipeGesture = new() { Direction = direction };
             swipeGesture.Swiped += (sender, e) =>
             {
+                if (!CanHandleSwipeGesture(e))
+                    return;
                 OnSwipeGesture(e);
             };
 
@@ -449,6 +469,39 @@ namespace Alternet.UI
                 if (currentIsDark != Alternet.UI.SystemSettings.AppearanceIsDark)
                     RaiseSystemColorsChanged();
             }
+        }
+
+        /// <summary>
+        /// Determines whether the current view can handle pan gesture.
+        /// </summary>
+        /// <param name="e">The pan updated event arguments.</param>
+        /// <returns><see langword="true"/> if the current view can handle pan gesture;
+        /// otherwise, <see langword="false"/>.</returns>
+        protected virtual bool CanHandlePanGesture(PanUpdatedEventArgs e)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Determines whether the current view can handle swipe gesture.
+        /// </summary>
+        /// <param name="e">The swiped event arguments.</param>
+        /// <returns><see langword="true"/> if the current view can handle swipe gesture;
+        /// otherwise, <see langword="false"/>.</returns>
+        protected virtual bool CanHandleSwipeGesture(SwipedEventArgs e)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Determines whether the current view can handle double tap gesture.
+        /// </summary>
+        /// <param name="e">The tapped event arguments.</param>
+        /// <returns><see langword="true"/> if the current view can handle double tap gesture;
+        /// otherwise, <see langword="false"/>.</returns>
+        protected virtual bool CanHandleDoubleTapGesture(TappedEventArgs e)
+        {
+            return true;
         }
 
         /// <summary>
