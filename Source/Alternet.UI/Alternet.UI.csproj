@@ -95,6 +95,8 @@
     </PackageReference>
     <PackageReference Include="Alternet.UI.Common" Version="$(Version)">
     </PackageReference>
+    <PackageReference Include="Alternet.UI.Controls" Version="$(Version)">
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -114,6 +116,8 @@
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' == ''">
 	<ProjectReference Include="..\Alternet.UI.Common\Alternet.UI.Common.csproj">
+	</ProjectReference>
+	<ProjectReference Include="..\Alternet.UI.Controls\Alternet.UI.Controls.csproj">
 	</ProjectReference>
   </ItemGroup>
 
