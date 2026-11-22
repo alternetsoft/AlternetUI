@@ -367,6 +367,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets whether the process architecture of the currently running app is X64.
+        /// </summary>
+        public static bool IsX64Process
+        {
+            get
+            {
+                var arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+                return arch == Architecture.X64;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the operating system architecture is X64.
+        /// </summary>
+        public static bool IsX64OS
+        {
+            get
+            {
+                var arch = System.Runtime.InteropServices.RuntimeInformation.OSArchitecture;
+                return arch == Architecture.X64;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the process architecture of the currently running app is X86.
+        /// </summary>
+        public static bool IsX86Process
+        {
+            get
+            {
+                var arch = System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture;
+                return arch == Architecture.X86;
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the operating system architecture is X86.
+        /// </summary>
+        public static bool IsX86OS
+        {
+            get
+            {
+                var arch = System.Runtime.InteropServices.RuntimeInformation.OSArchitecture;
+                return arch == Architecture.X86;
+            }
+        }
+
+        /// <summary>
         /// Gets whether device the app is running on is tablet.
         /// </summary>
         public static bool IsTabletDevice => DeviceType == GenericDeviceType.Tablet;
