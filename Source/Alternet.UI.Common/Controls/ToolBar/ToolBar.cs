@@ -818,6 +818,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a sticky button to the user interface with the specified text, svg image, tooltip, and action.
+        /// </summary>
+        /// <param name="text">The text to display on the button. Can be <see langword="null"/>
+        /// if no text is required.</param>
+        /// <param name="image">The SVG image to display on the button. Can be <see langword="null"/>
+        /// if no image is required.</param>
+        /// <param name="toolTip">The tooltip text to display when the user hovers over the button.
+        /// Can be <see langword="null"/> if no tooltip is required.</param>
+        /// <param name="action">The event handler to invoke when the button is clicked.
+        /// Can be <see langword="null"/> if no action is required.</param>
+        /// <returns>A <see cref="SpeedButton"/> instance representing the sticky button.</returns>
+        public virtual SpeedButton AddStickyBtnCore(
+            string? text,
+            SvgImage? image,
+            object? toolTip = null,
+            EventHandler? action = null)
+        {
+            var result = AddStickyBtnCore(
+                text,
+                null,
+                null,
+                toolTip,
+                action);
+            result.SvgImage = image;
+            return result;
+        }
+
+        /// <summary>
         /// Adds a sticky button to the user interface with the specified text,
         /// images, tooltip, and action.
         /// </summary>
