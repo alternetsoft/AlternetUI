@@ -1,3 +1,18 @@
+# 1.2.1 (2026 November 23)
+
+- Create TimeZonePicker.
+- Fix scroll bar behavior.
+- Add IconSet constructors for image collections.
+- Load legacy pal if required on linux.
+- FindReplaceControl: Update find option button styling.
+- Apply themed styling to calendar month buttons.
+- Add time zone selection to DateTimeIntervalPicker.
+- Add time zone to DateTimeInterval.
+- Add configurable thin scrollbars. Use Interion.SetThinScrollBars(bool) in scrollable controls to enable/disable them.
+- Fixes in DateTimeIntervalPicker and RepeatPatternPicker.
+
+---
+
 # 1.2.0 (2026 November 21)
 
 - Add `ToggleSwitch` control. This is a two-state toggle switch with configurable default images, colors, size, and margin. 
