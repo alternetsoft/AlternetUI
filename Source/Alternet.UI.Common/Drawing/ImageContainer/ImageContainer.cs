@@ -612,18 +612,27 @@ namespace Alternet.Drawing
         /// <remarks>If a file name does not have a supported image extension (.png, .jpg, .jpeg, .bmp),
         /// the method appends '.png' by default. Existing files with the same names may be overwritten.</remarks>
         /// <param name="basePath">The directory path where the image files will be saved. Must be a valid,
-        /// writable file system path.</param>
+        /// writable file system path. If null or empty, the method uses the user's Documents folder.</param>
         /// <param name="fileNames">An array of file names to use for the exported images.
         /// If the array contains fewer names than images,
         /// default names in the format 'ImageN.png' will be used for remaining images.</param>
-        public virtual void ExportImagesToFiles(string basePath, IReadOnlyList<string>? fileNames = null)
+        /// <param name="namePrefix">The prefix to use for default file names.</param>
+        public virtual void ExportImagesToFiles(
+            string? basePath = null,
+            IReadOnlyList<string>? fileNames = null,
+            string namePrefix = "Image")
         {
             fileNames ??= Array.Empty<string>();
+
+            if (string.IsNullOrEmpty(basePath))
+            {
+                basePath = PathUtils.GetDocumentsPath();
+            }
 
             for (int i = 0; i < Images.Count; i++)
             {
                 var image = Images[i];
-                var fileName = fileNames.Count > i ? fileNames[i] : $"Image{i}.png";
+                var fileName = fileNames.Count > i ? fileNames[i] : $"{namePrefix}{i}.png";
 
                 var extension = System.IO.Path.GetExtension(fileName).ToLowerInvariant();
                 if (extension != ".png" && extension != ".jpg" && extension != ".jpeg" && extension != ".bmp")
@@ -734,10 +743,12 @@ namespace Alternet.Drawing
         /// Creates a single image strip by combining all images in the collection horizontally.
         /// </summary>
         /// <remarks>Each image in the collection is placed side by side in the resulting strip,
-        /// maintaining its original size and order. The width of the strip is the sum of the widths of all images, and
+        /// maintaining its original size and order. The width of the strip
+        /// is the sum of the widths of all images, and
         /// the height matches the individual image height. This method is useful for generating sprite sheets or
         /// preview strips from a sequence of images.</remarks>
-        /// <returns>An <see cref="Image"/> containing the combined image strip, or <see langword="null"/> if the collection
+        /// <returns>An <see cref="Image"/> containing the combined image strip,
+        /// or <see langword="null"/> if the collection
         /// contains no images.</returns>
         /// <param name="imageSize">The size of each individual image in the strip.</param>
         public virtual Image? AsImageStrip(SizeI imageSize)
@@ -754,9 +765,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <remarks>The resulting bitmap arranges each image side by side in the order they appear in the
         /// collection. The width of the strip is the sum of the widths of all images, and the height matches the
-        /// individual image height. The caller is responsible for disposing the returned <see cref="SKBitmap"/> when it
+        /// individual image height. The caller is responsible for disposing
+        /// the returned <see cref="SKBitmap"/> when it
         /// is no longer needed.</remarks>
-        /// <returns>An <see cref="SKBitmap"/> representing the concatenated image strip, or <see langword="null"/> if the
+        /// <returns>An <see cref="SKBitmap"/> representing the concatenated
+        /// image strip, or <see langword="null"/> if the
         /// collection contains no images.</returns>
         /// <param name="imageSize">The size of each individual image in the strip.</param>
         /// <param name="samplingOptions">The sampling options for drawing the images.</param>
