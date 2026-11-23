@@ -12,6 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Popup window with <see cref="XCalendar"/> control.
     /// </summary>
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class PopupCalendar : PopupWindow<XCalendar>
     {
         /// <summary>

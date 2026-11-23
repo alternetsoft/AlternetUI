@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that allows the user to select a calendar alarm.
     /// </summary>
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class CalendarAlarmPicker : TransparentPanel
     {
         /// <summary>

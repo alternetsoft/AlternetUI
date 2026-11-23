@@ -7,6 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that allows users to select a month and day.
     /// </summary>
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class MonthAndDayPicker : TransparentPanel, IReadOnlyProperty
     {
         /// <summary>

@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Represents a control that allows users to edit <see cref="CalendarItem"/>
     /// properties in a user-friendly manner.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Other)]
+    [ControlCategory(KnownControlCategory.DateTime)]
     public partial class CalendarItemPicker : HiddenBorder
     {
         /// <summary>
