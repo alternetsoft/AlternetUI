@@ -1968,6 +1968,7 @@ namespace Alternet.UI
                 Cursor = Cursors.Hand;
                 SetLabelTextColor(VisualControlState.Normal, LinkLabel.DefaultNormalColor, InvalidateMethod.None);
                 SetLabelTextColor(VisualControlState.Hovered, LinkLabel.DefaultHoverColor, InvalidateMethod.None);
+                IsTransparent = true;
             });
         }
 
