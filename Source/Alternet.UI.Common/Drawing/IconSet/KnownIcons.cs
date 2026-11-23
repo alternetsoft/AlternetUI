@@ -18,7 +18,12 @@ namespace Alternet.UI
     public static class KnownIcons
     {
         private static IconSet? defaultIcon;
-        private static IconSet? calendarIcon;
+        private static IconSet? dayNumberIcon;
+        private static IconSet? schedulerIcon;
+
+        static KnownIcons()
+        {
+        }
 
         /// <summary>
         /// Gets template for the resource URLs.
@@ -46,7 +51,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the calendar <see cref="IconSet"/> instance.
+        /// Gets or sets the day number <see cref="IconSet"/> instance.
         /// This icon contains a number of the current day on it.
         /// If not assigned, it will be created with the default settings.
         /// </summary>
@@ -54,12 +59,28 @@ namespace Alternet.UI
         {
             get
             {
-                return calendarIcon ??= CreateIconWithText(txt: DateTime.Now.Day.ToString());
+                return dayNumberIcon ??= CreateIconWithText(txt: DateTime.Now.Day.ToString());
             }
 
             set
             {
-                calendarIcon = value;
+                dayNumberIcon = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the scheduler <see cref="IconSet"/> instance.
+        /// </summary>
+        public static IconSet Scheduler
+        {
+            get
+            {
+                return schedulerIcon ??= CreateIconWithText(txt: "sc");
+            }
+
+            set
+            {
+                schedulerIcon = value;
             }
         }
 
@@ -163,6 +184,12 @@ namespace Alternet.UI
             return stream;
         }
 
-        private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
+        [Conditional("DEBUG")]
+        internal static void ExportIconImages()
+        {
+            Scheduler.ExportImagesToFiles(null, null, "Scheduler");
+        }
+
+        private static string GetImageUrl(string name) => string.Format(ResTemplate, name);        
     }
 }
