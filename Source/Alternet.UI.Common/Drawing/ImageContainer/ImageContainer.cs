@@ -247,24 +247,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Compares two images and returns a value indicating whether the first image is smaller than the second image.
+        /// Compares two images and returns a value indicating whether the first
+        /// image is smaller than the second image.
         /// This method is used for sorting images by size.
         /// </summary>
         /// <param name="image1">The first image to compare.</param>
         /// <param name="image2">The second image to compare.</param>
-        /// <returns><c>true</c> if the first image is smaller than the second image; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the first image is smaller than the second image;
+        /// otherwise, <c>false</c>.</returns>
         public virtual bool IsSmallerThan(Image image1, Image image2)
         {
             return IsSmallerThan(image1.Size, image2.Size);
         }
 
         /// <summary>
-        /// Compares two sizes and returns a value indicating whether the first size is smaller than the second size.
+        /// Compares two sizes and returns a value indicating whether
+        /// the first size is smaller than the second size.
         /// This method is used for sorting images by size.
         /// </summary>
         /// <param name="size1">The first size to compare.</param>
         /// <param name="size2">The second size to compare.</param>
-        /// <returns><c>true</c> if the first size is smaller than the second size; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the first size is smaller than
+        /// the second size; otherwise, <c>false</c>.</returns>
         public virtual bool IsSmallerThan(SizeI size1, SizeI size2)
         {
             int h1 = size1.Height;
@@ -601,17 +605,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Exports all images in the collection to files at the specified base path, using the provided file names or
+        /// Exports all images in the collection to files at the specified base path,
+        /// using the provided file names or
         /// default names if none are specified.
         /// </summary>
         /// <remarks>If a file name does not have a supported image extension (.png, .jpg, .jpeg, .bmp),
         /// the method appends '.png' by default. Existing files with the same names may be overwritten.</remarks>
         /// <param name="basePath">The directory path where the image files will be saved. Must be a valid,
         /// writable file system path.</param>
-        /// <param name="fileNames">An array of file names to use for the exported images. If the array contains fewer names than images,
+        /// <param name="fileNames">An array of file names to use for the exported images.
+        /// If the array contains fewer names than images,
         /// default names in the format 'ImageN.png' will be used for remaining images.</param>
-        public virtual void ExportImagesToFiles(string basePath, IReadOnlyList<string> fileNames)
+        public virtual void ExportImagesToFiles(string basePath, IReadOnlyList<string>? fileNames = null)
         {
+            fileNames ??= Array.Empty<string>();
+
             for (int i = 0; i < Images.Count; i++)
             {
                 var image = Images[i];
@@ -619,7 +627,9 @@ namespace Alternet.Drawing
 
                 var extension = System.IO.Path.GetExtension(fileName).ToLowerInvariant();
                 if (extension != ".png" && extension != ".jpg" && extension != ".jpeg" && extension != ".bmp")
-                    fileName += ".png";
+                {
+                    fileName = System.IO.Path.ChangeExtension(fileName, ".png");
+                }
 
                 var filePath = System.IO.Path.Combine(basePath, fileName);
 

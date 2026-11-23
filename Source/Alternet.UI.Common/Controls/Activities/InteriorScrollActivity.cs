@@ -30,7 +30,8 @@ namespace Alternet.UI
         /// Specifies the available methods for performing scroll actions in response to user input.
         /// </summary>
         /// <remarks>Use this enumeration to select how scrolling behavior is triggered in controls that
-        /// support user-driven scrolling. The selected method determines whether scrolling occurs automatically or only
+        /// support user-driven scrolling. The selected method determines whether
+        /// scrolling occurs automatically or only
         /// in response to specific user actions.</remarks>
         public enum ScrollMethodKind
         {
