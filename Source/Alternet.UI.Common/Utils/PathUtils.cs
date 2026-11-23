@@ -270,6 +270,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the path to the user's Documents folder.
+        /// </summary>
+        /// <returns>The full path to the Documents folder as a string,
+        /// or an empty string if the path cannot be resolved.</returns>
+        public static string GetDocumentsPath()
+        {
+            if (MswKnownFolders.TryResolvePath(MswKnownFolders.Documents, out var path))
+            {
+                if (!string.IsNullOrEmpty(path))
+                    return path;
+            }
+
+            string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
+            return documentsPath;
+        }
+
+        /// <summary>
         /// Gets the path to the local application data directory for the current user.
         /// </summary>
         /// <remarks>By default, this property returns the path provided by the operating system for
