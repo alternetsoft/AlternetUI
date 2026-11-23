@@ -6,7 +6,7 @@
 
     <!-- ================================================= -->
   <Target Name="SignDll" AfterTargets="AfterBuild"
-          Condition="'$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('$(MSBuildThisFileDirectory)\..\Keys\Private.props')">
+          Condition="'$(AlternetUIPackagesBuild)' != '' and '$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('$(MSBuildThisFileDirectory)\..\Keys\Private.props')">
    
     <PropertyGroup>
       <ThisDllPath>$(MSBuildProjectDirectory)\$(OutDir)\$(AssemblyName).dll</ThisDllPath>
@@ -27,8 +27,15 @@
              Condition="$(DebugMessages)" />
 
     <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisDllFullPath)&quot;"
-          Condition="Exists($(ThisDllFullPath))" ContinueOnError="true" />
+	  StandardOutputImportance="High"
+          StandardErrorImportance="High"
+          Condition="Exists('$(ThisDllFullPath)')" ContinueOnError="true">
+    </Exec>
+    <Message Importance="High" Text="%(SignOutput.Identity)" />
+
     <Exec Command="call &quot;$(SignToolBat)&quot; &quot;$(ThisExeFullPath)&quot;"
+	  StandardOutputImportance="High"
+          StandardErrorImportance="High"
           Condition="Exists($(ThisExeFullPath))" ContinueOnError="true" />
 
   </Target>

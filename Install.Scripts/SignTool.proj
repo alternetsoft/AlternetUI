@@ -7,14 +7,14 @@
 
     <WindowsKitsRoot Condition="'$(WindowsKitsRoot)' == ''">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Kits\Installed Roots', 'KitsRoot10', null, RegistryView.Registry32, RegistryView.Default))</WindowsKitsRoot>
 
-    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.26100.0\')">$(WindowsKitsRoot)bin\10.0.26100.0\</SignToolPath>
-    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.22621.0\')">$(WindowsKitsRoot)bin\10.0.22621.0\</SignToolPath>
-    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.19041.0\')">$(WindowsKitsRoot)bin\10.0.19041.0\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And Exists('$(WindowsKitsRoot)bin\10.0.26100.0\')">$(WindowsKitsRoot)bin\10.0.26100.0\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And Exists('$(WindowsKitsRoot)bin\10.0.22621.0\')">$(WindowsKitsRoot)bin\10.0.22621.0\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And Exists('$(WindowsKitsRoot)bin\10.0.19041.0\')">$(WindowsKitsRoot)bin\10.0.19041.0\</SignToolPath>
 
-    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.18362.0\')">$(WindowsKitsRoot)bin\10.0.18362.0\</SignToolPath>
-    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.17763.0\')">$(WindowsKitsRoot)bin\10.0.17763.0\</SignToolPath>
-    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.17134.0\')">$(WindowsKitsRoot)bin\10.0.17134.0\</SignToolPath>
-    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And exists('$(WindowsKitsRoot)bin\10.0.16299.0\')">$(WindowsKitsRoot)bin\10.0.16299.0\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And Exists('$(WindowsKitsRoot)bin\10.0.18362.0\')">$(WindowsKitsRoot)bin\10.0.18362.0\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And Exists('$(WindowsKitsRoot)bin\10.0.17763.0\')">$(WindowsKitsRoot)bin\10.0.17763.0\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And Exists('$(WindowsKitsRoot)bin\10.0.17134.0\')">$(WindowsKitsRoot)bin\10.0.17134.0\</SignToolPath>
+    <SignToolPath Condition="'$(WindowsKitsRoot)' != '' And '$(SignToolPath)' == '' And Exists('$(WindowsKitsRoot)bin\10.0.16299.0\')">$(WindowsKitsRoot)bin\10.0.16299.0\</SignToolPath>
 
     <SignToolExe>$(SignToolPath)\x64\signtool.exe</SignToolExe>
     <SignToolExe>$([System.IO.Path]::GetFullPath('$(SignToolExe)'))</SignToolExe>
@@ -24,7 +24,8 @@
 
     <DllPathForSignTool>$([System.IO.Path]::GetFullPath('$(DllPathForSignTool)'))</DllPathForSignTool>
 
-    <SignCommand>&quot;$(SignToolExe)&quot; sign /f &quot;$(ALTERNET_PFX)&quot; /p $(VsixSignPassword) /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 /v &quot;$(DllPathForSignTool)&quot;</SignCommand>
+    <SignCommand>&quot;$(SignToolExe)&quot; sign /fd SHA256 /td SHA256 /tr http://timestamp.digicert.com /n &quot;ALTERNET SOFTWARE PTY LTD&quot; &quot;$(DllPathForSignTool)&quot;</SignCommand>
+
     <SignVerifyCommand>&quot;$(SignToolExe)&quot; verify /q /pa &quot;$(DllPathForSignTool)&quot;</SignVerifyCommand>
 
 </PropertyGroup>
@@ -43,14 +44,15 @@
 		<CallTarget Targets="WriteInfo" />	
 		<Message Text="Action: Sign" Importance="high" />
 		<Message Text="=======================" Importance="high" />
-        	<Exec Command="$(SignCommand)" IgnoreExitCode="true" Condition="Exists('$(ALTERNET_PFX)')"/>
+		<Message Text="Call: $(SignCommand)" Importance="high" />
+        	<Exec Command="$(SignCommand)" IgnoreExitCode="true" ConsoleToMsBuild="true"/>
 	</Target>
 
 	<Target Name="SignVerify" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 		<CallTarget Targets="WriteInfo" />	
 		<Message Text="Action: Verify" Importance="high" />
 		<Message Text="=======================" Importance="high" />
-                <Exec Command="$(SignVerifyCommand)"/>
+                <Exec Command="$(SignVerifyCommand)" ConsoleToMsBuild="true"/>
 	</Target>
 	
 </Project>
