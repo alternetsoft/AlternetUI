@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 using Alternet.Drawing;
@@ -38,6 +39,7 @@ namespace Alternet.UI
         {
             if (interior.IgnoreMouse)
                 return;
+            LogEvent(sender, e, "AfterMouseCaptureLost");
             ResetDragging(sender);
             sender.ReleaseMouseCapture();
         }
@@ -73,14 +75,14 @@ namespace Alternet.UI
                     }
                 }
                 else
-                if (hitTestsMouseDown.Value.IsVertScrollBar)
-                {
-                    var maxY = afterThumb.Bottom - beforeThumb.Y;
-                    var newY = Math.Max(e.Y - beforeThumb.Y - clickOffset.Y, 0);
-                    var newValue = (int)((maxValue * newY) / maxY);
-                    if (newValue != oldValue)
-                        RaiseScroll(sender, ScrollBarOrientation.Vertical, evType, oldValue, newValue);
-                }
+                    if (hitTestsMouseDown.Value.IsVertScrollBar)
+                    {
+                        var maxY = afterThumb.Bottom - beforeThumb.Y;
+                        var newY = Math.Max(e.Y - beforeThumb.Y - clickOffset.Y, 0);
+                        var newValue = (int)((maxValue * newY) / maxY);
+                        if (newValue != oldValue)
+                            RaiseScroll(sender, ScrollBarOrientation.Vertical, evType, oldValue, newValue);
+                    }
             }
             else
             {
@@ -92,6 +94,7 @@ namespace Alternet.UI
         {
             if (interior.IgnoreMouse)
                 return;
+            LogEvent(sender, e, "AfterMouseLeave");
             UnsubscribeClickRepeated();
         }
 
@@ -118,10 +121,20 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterVisualStateChanged(AbstractControl sender, EventArgs e)
         {
+            if (interior.IgnoreMouse)
+                return;
             var visualState = sender.VisualState;
+
+            LogEvent(sender, e, $"AfterVisualStateChanged {visualState}");
 
             if (visualState != VisualControlState.Pressed)
             {
+                UnsubscribeClickRepeated();
+            }
+
+            if (isDragging && !Mouse.IsPressed(MouseButton.Left))
+            {
+                ResetDragging(sender);
                 UnsubscribeClickRepeated();
             }
         }
@@ -140,6 +153,9 @@ namespace Alternet.UI
         {
             if (interior.IgnoreMouse)
                 return;
+
+            LogEvent(sender, e, "AfterLostFocus");
+
             ResetDragging(sender);
             UnsubscribeClickRepeated();
             sender.ReleaseMouseCapture();
@@ -158,6 +174,8 @@ namespace Alternet.UI
 
             var hitTests = OnClickElement(sender, e.Location);
 
+            LogEvent(sender, e, $"BeforeMouseDown {hitTests}");
+
             hitTestsMouseDown = hitTests;
 
             if (hitTests.NeedRepeatedClick)
@@ -167,14 +185,17 @@ namespace Alternet.UI
 
             if (hitTests.IsThumb)
             {
-                isDragging = true;
+                Post(()=> {
+                    isDragging = true;
 
-                interior.SetThumbState(hitTests.IsVertScrollBar, VisualControlState.Hovered);
+                    interior.SetThumbState(hitTests.IsVertScrollBar, VisualControlState.Hovered);
 
-                var thumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.Thumb];
-                clickOffset = e.Location - thumb.Location;
-                sender.Invalidate();
-                sender.CaptureMouse();
+                    var thumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.Thumb];
+                    clickOffset = e.Location - thumb.Location;
+                    sender.Invalidate();
+
+                    sender.CaptureMouse();
+                });
             }
 
             if (hitTests.IsScrollBar)
@@ -188,6 +209,8 @@ namespace Alternet.UI
         {
             if (interior.IgnoreMouse)
                 return;
+
+            LogEvent(sender, e, "BeforeMouseUp");
             sender.ReleaseMouseCapture();
             if (e.Button != MouseButtons.Left)
                 return;
@@ -344,6 +367,17 @@ namespace Alternet.UI
                 TimerUtils.ClickRepeated += OnClickRepeatTimerEvent;
                 subscribedClickRepeated = true;
             }
+        }
+
+        [Conditional("DEBUG")]
+        private void LogEvent(object? sender, EventArgs e, string message)
+        {
+            /*
+            if (sender?.GetType() != typeof(ScrollableCalendarItemPicker))
+                return;
+
+            App.DebugLogIf($"[{sender?.GetType().Name}] {message}", true);
+            */
         }
     }
 }
