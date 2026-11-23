@@ -411,7 +411,7 @@ namespace Alternet.Drawing
             windowBackColor = new(light: new(240, 240, 240), dark: new Color(51, 51, 51));
             windowForeColor = new(light: Color.Black, dark: Color.White);
 
-            controlBackColor = new(light: Color.White, dark: new Color(25, 25, 25));
+            controlBackColor = new(light: Color.White, dark: new Color(41, 41, 41));
             controlForeColor = new(light: Color.Black, dark: Color.White);
         }
 

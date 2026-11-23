@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a panel with 'Save and Close' and 'Close' buttons.
     /// </summary>
-    public partial class SaveAndClosePanel : HiddenGenericBorder
+    public partial class SaveAndClosePanel : TransparentPanel
     {
         private readonly XButton btSaveAndClose = new();
         private readonly XButton btClose = new();
