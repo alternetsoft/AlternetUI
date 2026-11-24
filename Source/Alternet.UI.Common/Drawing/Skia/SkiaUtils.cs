@@ -970,6 +970,85 @@ namespace Alternet.Drawing
                 font,
                 foreColor.AsStrokeAndFillPaint,
                 backColorIsOk ? backColor?.AsFillPaint : null);
+
+            if (font.IsUnderlined)
+            {
+                DrawTextLine(
+                    canvas,
+                    s,
+                    location,
+                    font,
+                    lineAscent: null,
+                    linePos: null,
+                    lineThickness: null,
+                    foreColor,
+                    linePaint: null);
+            }
+
+            if (font.IsStrikeout)
+            {
+                DrawTextLine(
+                    canvas,
+                    s,
+                    location,
+                    font,
+                    lineAscent: null,
+                    linePos: font.SkiaMetrics.StrikeoutPosition,
+                    lineThickness: font.SkiaMetrics.StrikeoutThickness,
+                    foreColor,
+                    linePaint: null);
+            }
+        }
+
+        /// <summary>
+        /// Draws a line under the specified text on the canvas, using the provided font and color settings.
+        /// </summary>
+        /// <param name="canvas">The canvas on which to draw the line.</param>
+        /// <param name="s">The text for which to draw the line.</param>
+        /// <param name="location">The location at which to draw the line.</param>
+        /// <param name="font">The font of the text.</param>
+        /// <param name="lineAscent">The line accent value.</param>
+        /// <param name="linePos">The line position value. If null, the underline position will be used.</param>
+        /// <param name="lineThickness">The line thickness value. If null, the underline thickness will be used.</param>
+        /// <param name="foreColor">The color of the line.</param>
+        /// <param name="linePaint">The paint to use for the line. If null, a new paint will be created.</param>
+        public static void DrawTextLine(
+                    this SKCanvas canvas,
+                    ReadOnlySpan<char> s,
+                    PointD location,
+                    Font font,
+                    float? lineAscent,
+                    float? linePos,
+                    float? lineThickness,
+                    Color foreColor,
+                    SKPaint? linePaint = null)
+        {
+            var size = font.SkiaFont.MeasureText(s);
+            var metrics = font.SkiaMetrics;
+            linePos ??= metrics.UnderlinePosition;
+
+            if (linePos is null)
+                return;
+
+            float lineY = location.Y + linePos.Value + Math.Abs(lineAscent ?? metrics.Top);
+            lineThickness ??= metrics.UnderlineThickness ?? 1;
+
+            if (linePaint is null)
+            {
+                using var paint = new SKPaint
+                {
+                    Color = foreColor,
+                    StrokeWidth = lineThickness.Value,
+                    IsStroke = true,
+                    IsAntialias = true,
+                };
+
+                canvas.DrawLine(location.X, lineY, location.X + size, lineY, paint);
+            }
+            else
+            {
+                canvas.DrawLine(location.X, lineY, location.X + size, lineY, linePaint);
+            }
         }
 
         /// <summary>
@@ -1002,7 +1081,35 @@ namespace Alternet.Drawing
                 lineAscent,
                 foreColor.AsStrokeAndFillPaint,
                 backColorIsOk ? backColor?.AsFillPaint : null);
-        }        
+
+            if (font.IsUnderlined)
+            {
+                DrawTextLine(
+                    canvas,
+                    s,
+                    location,
+                    font,
+                    lineAscent,
+                    linePos: null,
+                    lineThickness: null,
+                    foreColor,
+                    linePaint: null);
+            }
+
+            if (font.IsStrikeout)
+            {
+                DrawTextLine(
+                    canvas,
+                    s,
+                    location,
+                    font,
+                    lineAscent,
+                    linePos: font.SkiaMetrics.StrikeoutPosition,
+                    lineThickness: font.SkiaMetrics.StrikeoutThickness,
+                    foreColor,
+                    linePaint: null);
+            }
+        }
 
         /// <summary>
         /// Draws a Bezier spline defined by four <see cref="PointD"/> structures.
