@@ -84,7 +84,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
             actions = new();
 
-            Alternet.UI.LogUtils.EnumLogActions(Fn);
+            Alternet.UI.LogUtilsActions.EnumLogActions(Fn);
 
             Fn(
                 "> Show Test Actions Dialog",
@@ -113,7 +113,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
             testActions = new();
 
-            Alternet.UI.LogUtils.EnumLogActions(Fn);
+            Alternet.UI.LogUtilsActions.EnumLogActions(Fn);
 
             var members = Alternet.UI.AssemblyUtils.GetAllPublicMembers(
                 "Test",
