@@ -66,19 +66,28 @@ namespace Alternet.UI
             toolTip.IsScrollable = false;
             toolTip.Parent = this;
 
-            this.Deactivated += HideToolTip;
+            const bool logEvents = true;
+
+            void Log(string message)
+            {
+                App.LogIf(message, logEvents);
+            }
+
             toolTip.MouseDown += HideToolTip;
             subscriber.AfterControlKeyDown += HideToolTip;
-            subscriber.AfterControlMouseLeave += HideToolTip;
 
-            const bool logEvents = true;
+            this.Deactivated += (s, e) =>
+            {
+                HideToolTip(s, e);
+                Log("ToolTipWindow.Deactivated");
+            };
 
             subscriber.AfterControlActivated += (s, e) =>
             {
                 if (s == this || s is not Window)
                     return;
                 HideToolTip(s, e);
-                App.DebugLogIf("ToolTipWindow.AfterControlActivated", logEvents);
+                Log("ToolTipWindow.AfterControlActivated");
             };
 
             subscriber.AfterControlDeactivated += (s, e) =>
@@ -86,7 +95,7 @@ namespace Alternet.UI
                 if (s is not Window)
                     return;
                 HideToolTip(s, e);
-                App.DebugLogIf("ToolTipWindow.AfterControlDeactivated", logEvents);
+                Log("ToolTipWindow.AfterControlDeactivated");
             };
 
             subscriber.AfterControlMouseMove += (s, e) =>
@@ -94,13 +103,13 @@ namespace Alternet.UI
                 if (s == toolTip.ToolTipOwner)
                     return;
                 HideToolTip(s, e);
-                App.DebugLogIf("ToolTipWindow.AfterControlMouseMove", logEvents);
+                Log("ToolTipWindow.AfterControlMouseMove");
             };
 
             subscriber.AfterControlMouseLeave += (s, e) =>
             {
                 HideToolTip(s, e);
-                App.DebugLogIf("ToolTipWindow.AfterControlMouseLeave", logEvents);
+                Log("ToolTipWindow.AfterControlMouseLeave");
             };
 
             subscriber.AfterControlMouseEnter += (s, e) =>
@@ -108,7 +117,7 @@ namespace Alternet.UI
                 if (s == toolTip.ToolTipOwner)
                     return;
                 HideToolTip(s, e);
-                App.DebugLogIf("ToolTipWindow.AfterControlMouseEnter", logEvents);
+                Log("ToolTipWindow.AfterControlMouseEnter");
             };
         }
 
