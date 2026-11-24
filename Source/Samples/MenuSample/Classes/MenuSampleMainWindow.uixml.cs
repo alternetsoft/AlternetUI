@@ -116,6 +116,8 @@ namespace MenuSample
 
             InitializeComponent();
 
+            mainPanel.DrawTabSeparatorLines = false;
+
             rootPanel.Layout = LayoutStyle.Vertical;
             rootPanel.Children.Prepend(toolbar);
 
@@ -214,26 +216,19 @@ namespace MenuSample
                 GetBar().Panels.Add(panel);
             });
 
-            /*
             menu.Add("Add progress bar", () =>
             {
-                var panel = new StatusBarPanel(BarPanelKind.ProgressBar);
+                var panel = new StatusBarPanel(BarPanelKind.CustomControl);
 
-                panel.ControlCreated += (s, e) =>
-                {
-                    var progressBar = panel.Control as XProgressBar;
+                var progressBar = new XProgressBar();
+                progressBar.ConfigureForStatusBar();
+                progressBar.Value = 50;
+                progressBar.Minimum = 0;
+                progressBar.Maximum = 100;
 
-                    if (progressBar != null)
-                    {
-                        progressBar.Value = 50;
-                        progressBar.Minimum = 0;
-                        progressBar.Maximum = 100;
-                    }
-                };
-
+                panel.CustomControl = progressBar;
                 GetBar().Panels.Add(panel);
             });
-            */
 
             menu.Add("Add speed button", () =>
             {

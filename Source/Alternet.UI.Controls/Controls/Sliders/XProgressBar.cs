@@ -938,6 +938,21 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Configures the progress bar for use in a status bar. This method sets the minimum height,
+        /// disables auto-sizing, and adjusts the vertical alignment and suggested dimensions to fit within
+        /// a typical status bar layout. It ensures that the progress bar is appropriately sized and
+        /// positioned for consistent appearance and usability in a status bar context.
+        /// </summary>
+        public virtual void ConfigureForStatusBar()
+        {
+            MinHeight = ToolBar.DefaultProgressBarSize.Height;
+            AutoSize = false;
+            VerticalAlignment = VerticalAlignment.Center;
+            SuggestedWidth = ToolBar.DefaultProgressBarSize.Width;
+            SuggestedHeight = ToolBar.DefaultProgressBarSize.Height;
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
