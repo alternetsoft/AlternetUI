@@ -334,76 +334,83 @@ namespace Alternet.UI
 
             var toolTipShown = false;
 
-            try
+            Post(() =>
             {
                 ToolTipFactory.HideToolTips();
+            });
 
-                var toolTipObject = ToolTipFactory.GetControlToolTip(control);
-
-                if (toolTipObject is null)
-                    return;
-
-                if (!IsRichToolTip(toolTipObject))
+            Post(() =>
+            {
+                try
                 {
-                    if (control is not GenericControl)
-                        return;
-                }
 
-                var toolTip = Instance.RichToolTip;
-                toolTip.ToolTipOwner = control;
-                toolTip.ToolTipLocation = null;
+                    var toolTipObject = ToolTipFactory.GetControlToolTip(control);
 
-                var display = Instance.GetDisplay();
-                var containerRect = display.ClientAreaDip;
-
-                var maxWidth = containerRect.Width * 0.7f;
-
-                if (RichToolTip.DefaultMaxWidth is not null)
-                {
-                    maxWidth = Math.Min(maxWidth, RichToolTip.DefaultMaxWidth.Value);
-                }
-
-                toolTip.MaxTextWidth = maxWidth;
-
-                if (toolTipObject is string toolTipStr)
-                {
-                    if (string.IsNullOrEmpty(toolTipStr))
+                    if (toolTipObject is null)
                         return;
 
-                    Post(() =>
+                    if (!IsRichToolTip(toolTipObject))
                     {
-                        toolTipShown = true;
-                        toolTip.ShowToolTip(toolTipStr, true, location);
-                    });
-                    return;
-                }
-
-                if (toolTipObject is RichToolTipParams prm)
-                {
-                    if (prm.MaxWidth is not null)
-                    {
-                        toolTip.MaxTextWidth = Math.Min(maxWidth, prm.MaxWidth.Value);
+                        if (control is not GenericControl)
+                            return;
                     }
 
-                    toolTipShown = true;
-                    toolTip.SetParams(prm).PostShowToolTip(location);
+                    var toolTip = Instance.RichToolTip;
+                    toolTip.ToolTipOwner = control;
+                    toolTip.ToolTipLocation = null;
+
+                    var display = Instance.GetDisplay();
+                    var containerRect = display.ClientAreaDip;
+
+                    var maxWidth = containerRect.Width * 0.7f;
+
+                    if (RichToolTip.DefaultMaxWidth is not null)
+                    {
+                        maxWidth = Math.Min(maxWidth, RichToolTip.DefaultMaxWidth.Value);
+                    }
+
+                    toolTip.MaxTextWidth = maxWidth;
+
+                    if (toolTipObject is string toolTipStr)
+                    {
+                        if (string.IsNullOrEmpty(toolTipStr))
+                            return;
+
+                        Post(() =>
+                        {
+                            toolTipShown = true;
+                            toolTip.ShowToolTip(toolTipStr, true, location);
+                        });
+                        return;
+                    }
+
+                    if (toolTipObject is RichToolTipParams prm)
+                    {
+                        if (prm.MaxWidth is not null)
+                        {
+                            toolTip.MaxTextWidth = Math.Min(maxWidth, prm.MaxWidth.Value);
+                        }
+
+                        toolTipShown = true;
+                        toolTip.SetParams(prm).PostShowToolTip(location);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Exception in {nameof(ToolTipWindow.OnGlobalMouseHover)}: {ex}");
-            }
-            finally
-            {
-                if (toolTipShown)
+                catch (Exception ex)
                 {
-                    lastToolTipControlId = control.UniqueId;
+                    Debug.WriteLine($"Exception in {nameof(ToolTipWindow.OnGlobalMouseHover)}: {ex}");
                 }
-                else
+                finally
                 {
-                    lastToolTipControlId = null;
+                    if (toolTipShown)
+                    {
+                        lastToolTipControlId = control.UniqueId;
+                    }
+                    else
+                    {
+                        lastToolTipControlId = null;
+                    }
                 }
-            }
+            });
         }
 
         /// <summary>
