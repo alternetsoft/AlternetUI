@@ -121,11 +121,19 @@ namespace Alternet.UI
         public class BoldText<TLabel> : TemplateControl
             where TLabel : AbstractControl, new()
         {
-            private readonly TLabel prefixLabel = new();
-            private readonly TLabel suffixLabel = new();
+            private readonly TLabel prefixLabel = new()
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+            };
+
+            private readonly TLabel suffixLabel = new()
+            {
+                VerticalAlignment = VerticalAlignment.Center,
+            };
 
             private readonly TLabel boldLabel = new()
             {
+                VerticalAlignment = VerticalAlignment.Center,
                 IsBold = true,
             };
 
