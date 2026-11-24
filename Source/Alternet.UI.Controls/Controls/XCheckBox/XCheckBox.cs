@@ -286,13 +286,13 @@ namespace Alternet.UI
         /// Gets or sets the default color used for a toggle switch in the "off" state,
         /// supporting both light and dark themes.
         /// </summary>
-        public static ThemedColor? DefaultOffSwitchColor;
+        public static ThemedColor? DefaultOffSwitchColor = new (206, 206, 206);
 
         /// <summary>
         /// Gets or sets the default color used for a toggle switch in the "intermediate" state,
         /// supporting both light and dark themes.
         /// </summary>
-        public static ThemedColor? DefaultIntermediateSwitchColor;
+        public static ThemedColor? DefaultIntermediateSwitchColor = new(206, 206, 206);
 
         /// <summary>
         /// Gets or sets the default image used for a toggle switch in the "on" state.
