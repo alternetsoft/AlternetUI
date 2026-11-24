@@ -460,9 +460,24 @@ namespace Alternet.Drawing
             for (var i = 0; i < text.Length; i++)
             {
                 var line = text[i];
+
                 var size = DrawTextWithFontStyle(line, location, font, foreColor, backColor);
                 result[i] = size;
                 location.Y += size.Height + lineDistance;
+            }
+
+            return result;
+        }
+
+        public virtual float GetLineAccent(TextAndFontStyle[] line, Font font)
+        {
+            float result = 0;
+
+            for (var j = 0; j < line.Length; j++)
+            {
+                var item = line[j];
+                var itemFont = font.WithStyle(item.FontStyle);
+                result = Math.Max(result, Math.Abs(itemFont.SkiaMetrics.Top));
             }
 
             return result;
@@ -484,6 +499,8 @@ namespace Alternet.Drawing
 
             bool visible = foreColor.IsOk && (foreColor != Color.Empty);
 
+            var lineAccent = GetLineAccent(text, font);
+
             for (int i = 0; i < text.Length; i++)
             {
                 var item = text[i];
@@ -496,7 +513,7 @@ namespace Alternet.Drawing
                     var myForeColor = item.ForeColor ?? foreColor;
                     var myBackColor = item.BackColor ?? backColor ?? Color.Empty;
 
-                    DrawText(item.Text, location, itemFont, myForeColor, myBackColor);
+                    DrawText(item.Text, location, itemFont, lineAccent, myForeColor, myBackColor);
                 }
 
                 text[i].MeasuredBounds = new RectD(location, measure);
@@ -507,6 +524,24 @@ namespace Alternet.Drawing
             }
 
             return result;
+        }
+
+        public virtual void DrawText(
+            ReadOnlySpan<char> s,
+            PointD location,
+            Font font,
+            float lineAscent,
+            Color foreColor,
+            Color? backColor)
+        {
+            SkiaUtils.DrawText(
+                Canvas,
+                s,
+                location,
+                font,
+                lineAscent,
+                foreColor,
+                backColor);
         }
 
         /// <summary>

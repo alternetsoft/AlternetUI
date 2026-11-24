@@ -972,6 +972,28 @@ namespace Alternet.Drawing
                 backColorIsOk ? backColor?.AsFillPaint : null);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawText(
+            this SKCanvas canvas,
+            ReadOnlySpan<char> s,
+            PointD location,
+            Font font,
+            float lineAscent,
+            Color foreColor,
+            Color? backColor)
+        {
+            var backColorIsOk = backColor?.IsOk ?? false;
+
+            SkiaHelper.DrawText(
+                canvas,
+                s,
+                location,
+                font,
+                lineAscent,
+                foreColor.AsStrokeAndFillPaint,
+                backColorIsOk ? backColor?.AsFillPaint : null);
+        }        
+
         /// <summary>
         /// Draws a Bezier spline defined by four <see cref="PointD"/> structures.
         /// </summary>

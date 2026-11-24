@@ -1369,6 +1369,41 @@ namespace Alternet.Common.Skia
             }
         }
 
+        public static void DrawText(
+            SKCanvas canvas,
+            ReadOnlySpan<char> text,
+            SKPoint location,
+            SKFont font,
+            float lineAscent,
+            SKPaint foreColor,
+            SKPaint? backColor = null)
+        {
+            if (text.Length == 0)
+                return;
+
+            float x = location.X;
+            float y = location.Y;
+
+            if (backColor is not null)
+            {
+                float width = font.MeasureText(text);
+
+                var rect = SKRect.Create(
+                    width,
+                    MathF.Abs(font.Metrics.Top) + MathF.Abs(font.Metrics.Bottom));
+
+                rect.Offset(x, y);
+
+                canvas.DrawRect(rect, backColor);
+            }
+
+            using var blob = SKTextBlob.Create(text, font);
+
+            // y is top of line (WinForms-style)
+            // Skia needs baseline Y
+            canvas.DrawText(blob, x, y + lineAscent, foreColor);
+        }
+
         /// <summary>
         /// Fills the specified rectangular area on the canvas with a linear gradient.
         /// </summary>
