@@ -214,13 +214,14 @@ namespace MenuSample
                 GetBar().Panels.Add(panel);
             });
 
+            /*
             menu.Add("Add progress bar", () =>
             {
                 var panel = new StatusBarPanel(BarPanelKind.ProgressBar);
 
                 panel.ControlCreated += (s, e) =>
                 {
-                    var progressBar = panel.AsProgressBar;
+                    var progressBar = panel.Control as XProgressBar;
 
                     if (progressBar != null)
                     {
@@ -232,6 +233,7 @@ namespace MenuSample
 
                 GetBar().Panels.Add(panel);
             });
+            */
 
             menu.Add("Add speed button", () =>
             {

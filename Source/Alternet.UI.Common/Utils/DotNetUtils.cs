@@ -267,45 +267,5 @@ namespace Alternet.UI
 
             return CodeGeneratorUtils.GetDotNetPathFromSystemDllPath();
         }
-
-        internal static void LogInstalledRuntimes()
-        {
-            App.Log(CmdListRuntimesResult);
-        }
-
-        internal static void LogInstalledSdk()
-        {
-            App.Log(CmdListSdksResult);
-        }
-
-        internal static void LogEnvironmentVars()
-        {
-            App.LogNameValue(
-                "DOTNET_ROOT",
-                Environment.GetEnvironmentVariable(EnvironmentVarDotNetRoot));
-
-            App.LogNameValue(
-                "DOTNET_ROOT(x86)",
-                Environment.GetEnvironmentVariable(EnvironmentVarDotNetRootX86v1));
-
-            App.LogNameValue(
-                "DOTNET_ROOT_X86",
-                Environment.GetEnvironmentVariable(EnvironmentVarDotNetRootX86v2));
-
-            App.LogNameValue(
-                "DOTNET_ROOT_X64",
-                Environment.GetEnvironmentVariable(EnvironmentVarDotNetRootX64));
-
-            App.LogNameValue(
-                "DotNetUtils.GetLocationFromEnvironmentVars()",
-                GetLocationFromEnvironmentVars());
-        }
-
-        internal static void LogDefaultLocation()
-        {
-            App.LogNameValue(
-                "DotNetUtils.GetDefaultLocation()",
-                GetDefaultLocation());
-        }
     }
 }

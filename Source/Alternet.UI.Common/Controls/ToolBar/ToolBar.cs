@@ -3276,9 +3276,6 @@ namespace Alternet.UI
                 case BarPanelKind.TextButton:
                     UpdateTextButtonPanelControl(panel, control);
                     break;
-                case BarPanelKind.ProgressBar:
-                    UpdateProgressBarPanelControl(panel, control);
-                    break;
                 case BarPanelKind.Spacer:
                     UpdateSpacerPanelControl(panel, control);
                     break;

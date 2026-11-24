@@ -17,7 +17,7 @@ namespace Alternet.UI.Localization
 
         /// <summary>
         /// Gets or sets default value for the <see cref="TextBox.EmptyTextHint"/>
-        /// property of the find text editor used in <see cref="FindReplaceControl"/>.
+        /// property of the find text editor used in find-replace controls.
         /// </summary>
         public static string FindEdit
         {
@@ -68,7 +68,7 @@ namespace Alternet.UI.Localization
 
         /// <summary>
         /// Gets or sets default value for the <see cref="TextBox.EmptyTextHint"/>
-        /// property of the replace text editor used in <see cref="FindReplaceControl"/>.
+        /// property of the replace text editor used in find-replace controls.
         /// </summary>
         public static string ReplaceEdit
         {

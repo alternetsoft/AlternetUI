@@ -1,0 +1,567 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Alternet.Drawing;
+using Alternet.UI.Extensions;
+using Alternet.UI.Localization;
+
+namespace Alternet.UI
+{
+    /// <summary>
+    /// Represents list control with log and debug related functionality.
+    /// </summary>
+    [ControlCategory(KnownControlCategory.Other)]
+    public partial class LogListBox : XTreeView
+    {
+        /// <summary>
+        /// Gets or sets the default visibility of "Test Actions..." menu item.
+        /// </summary>
+        public static bool DefaultMenuItemTestActionsVisible;
+
+        /// <summary>
+        /// Gets or sets the default visibility of "Search for Members..." menu item.
+        /// </summary>
+        public static bool DefaultMenuItemSearchForMembersVisible;
+        
+        /// <summary>
+        /// Gets or sets the default visibility of "Open log file" menu item.
+        /// </summary>
+        public static bool DefaultMenuItemOpenLogFileVisible;
+        
+        /// <summary>
+        /// Gets or sets the default visibility of "Enable log to file" menu item.
+        /// </summary>
+        public static bool DefaultMenuItemEnableLogToFileVisible;
+
+        /// <summary>
+        /// Gets or sets the default visibility of "Developer Tools..." menu item.
+        /// </summary>
+        public static bool DefaultMenuItemShowDevToolsVisible;
+
+        /// <summary>
+        /// Occurs when user selects 'Developer Tools...' menu item in the context menu of the log list box.
+        /// </summary>
+        public static event Action? ShowDeveloperTools;
+
+        /// <summary>
+        /// Indicates whether message identifiers should be displayed in the log.
+        /// </summary>
+        public static bool ShowMessageIdentifier = true;
+
+        /// <summary>
+        /// Gets or sets image used for error messages.
+        /// </summary>
+        public static SvgImage? ErrorImage = null;
+
+        /// <summary>
+        /// Gets or sets image used for warning messages.
+        /// </summary>
+        public static SvgImage? WarningImage = null;
+
+        /// <summary>
+        /// Gets or sets image used for information messages.
+        /// </summary>
+        public static SvgImage? InformationImage = null;
+
+        private string? lastLogMessage;
+        private bool boundToApplicationLog;
+        private bool showDebugWelcomeMessage;
+        private MenuItem? menuItemClear;
+        private MenuItem? menuItemCopy;
+
+        /// <summary>
+        /// Sets the default visibility of debug menu items in the context menu of the log list box.
+        /// </summary>
+        /// <param name="value">If set to <c>true</c>, debug menu items will be visible by default;
+        /// otherwise, they will be hidden.</param>
+        public static void SetDefaultDebugMenuItemsVisible(bool value)
+        {
+            if (App.IsMaui)
+            {
+                DefaultMenuItemTestActionsVisible = false;
+                DefaultMenuItemSearchForMembersVisible = false;
+                DefaultMenuItemOpenLogFileVisible = false;
+                DefaultMenuItemEnableLogToFileVisible = value;
+                DefaultMenuItemShowDevToolsVisible = false;
+            }
+            else
+            {
+                DefaultMenuItemTestActionsVisible = value;
+                DefaultMenuItemSearchForMembersVisible = value;
+                DefaultMenuItemOpenLogFileVisible = value;
+                DefaultMenuItemEnableLogToFileVisible = value;
+                DefaultMenuItemShowDevToolsVisible = value;
+            }
+        }
+
+        static LogListBox()
+        {
+            SetDefaultDebugMenuItemsVisible(DebugUtils.IsDebugDefined);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogListBox"/> class.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public LogListBox(AbstractControl parent)
+            : this()
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogListBox"/> class.
+        /// </summary>
+        public LogListBox()
+        {
+            HorizontalScrollbar = true;
+            ListBox.SelectionMode = ListBoxSelectionMode.Multiple;
+
+            ListBox.KeyDown += (s, e) =>
+            {
+                if (e.KeyData == (Keys.Control | Keys.C))
+                {
+                    ListBox.SelectedItemsToClipboard();
+                    e.Handled = true;
+                }
+            };
+        }
+
+        /// <summary>
+        /// Gets 'Test Actions...' menu item.
+        /// </summary>
+        public MenuItem? MenuItemTestActions { get; private set; }
+
+        /// <summary>
+        /// Gets 'Search for Members...' menu item.
+        /// </summary>
+        public MenuItem? MenuItemSearchForMembers { get; private set; }
+
+        /// <summary>
+        /// Gets 'Open log file' menu item.
+        /// </summary>
+        public MenuItem? MenuItemOpenLogFile { get; private set; }
+
+        /// <summary>
+        /// Gets 'Enable Log to file' menu item.
+        /// </summary>
+        public MenuItem? MenuItemEnableLogToFile { get; private set; }
+
+        /// <summary>
+        /// Gets 'Developer Tools' menu item.
+        /// </summary>
+        [Browsable(false)]
+        public MenuItem? MenuItemShowDevTools { get; private set; }
+
+        /// <summary>
+        /// Gets 'Clear' menu item.
+        /// </summary>
+        [Browsable(false)]
+        public MenuItem? MenuItemClear => menuItemClear;
+
+        /// <summary>
+        /// Gets 'Copy' menu item.
+        /// </summary>
+        [Browsable(false)]
+        public MenuItem? MenuItemCopy => menuItemCopy;
+
+        /// <summary>
+        /// Gets the last logged message.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string? LastLogMessage
+        {
+            get
+            {
+                if(RootItem.ItemCount > 0)
+                    return lastLogMessage;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether debug welcome message is logged at the application start.
+        /// Default value is <c>false</c>.
+        /// </summary>
+        public virtual bool ShowDebugWelcomeMessage
+        {
+            get => showDebugWelcomeMessage;
+
+            set
+            {
+                if (showDebugWelcomeMessage == value)
+                    return;
+                showDebugWelcomeMessage = value;
+                LogUtils.ShowDebugWelcomeMessage = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to bind this control to the application log.
+        /// </summary>
+        public virtual bool BoundToApplicationLog
+        {
+            get
+            {
+                return boundToApplicationLog;
+            }
+
+            set
+            {
+                if (boundToApplicationLog == value)
+                    return;
+                if (value)
+                    BindApplicationLog();
+                else
+                    UnbindApplicationLog();
+            }
+        }
+
+        /// <summary>
+        /// Gets default <see cref="SvgImage"/> for the specified <see cref="LogItemKind"/>.
+        /// </summary>
+        public static SvgImage? GetDefaultImage(LogItemKind kind)
+        {
+            switch (kind)
+            {
+                case LogItemKind.Error:
+                    ErrorImage ??= KnownColorSvgImages.ImgError;
+                    return ErrorImage;
+                case LogItemKind.Warning:
+                    WarningImage ??= KnownColorSvgImages.ImgWarning;
+                    return WarningImage;
+                case LogItemKind.Information:
+                    InformationImage ??= KnownColorSvgImages.ImgInformation;
+                    return InformationImage;
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ShowDeveloperTools"/> event, indicating
+        /// that the user has requested to show the developer tools window.
+        /// </summary>
+        public static void RaiseShowDeveloperTools()
+        {
+            ShowDeveloperTools?.Invoke();
+        }
+
+        /// <summary>
+        /// Same as <see cref="App.LogReplace"/> but
+        /// uses only this control for the logging.
+        /// </summary>
+        /// <param name="message">Message text.</param>
+        /// <param name="prefix">Message text prefix.</param>
+        /// <param name="kind">Message kind.</param>
+        /// <remarks>
+        /// If last logged message
+        /// contains <paramref name="prefix"/>, last log item is replaced with
+        /// <paramref name="message"/> instead of adding new log item.
+        /// </remarks>
+        public virtual ListControlItem LogReplace(
+            string? message,
+            string? prefix,
+            LogItemKind kind = LogItemKind.Information)
+        {
+            var result = LogReplaceInternal(LogUtils.GenNewId(), message, prefix, kind);
+            LogRefresh();
+            return result;
+        }
+
+        /// <summary>
+        /// Binds this control to show messages which are logged with
+        /// <see cref="App.Log"/>.
+        /// </summary>
+        public virtual void BindApplicationLog()
+        {
+            if (boundToApplicationLog)
+                return;
+
+            boundToApplicationLog = true;
+            ContextMenu.Required();
+            App.LogMessage += Application_LogMessage;
+            LogUtilsActions.DebugLogVersion(ShowDebugWelcomeMessage);
+        }
+
+        /// <summary>
+        /// Unbinds this control from the application log.
+        /// </summary>
+        public virtual void UnbindApplicationLog()
+        {
+            if (!boundToApplicationLog)
+                return;
+            boundToApplicationLog = false;
+
+            App.LogMessage -= Application_LogMessage;
+        }
+
+        /// <summary>
+        /// Same as <see cref="App.Log"/> but
+        /// uses only this control for the logging.
+        /// </summary>
+        /// <param name="obj">Message text.</param>
+        /// <param name="kind">Message kind.</param>
+        public virtual TreeViewItem Log(object? obj, LogItemKind kind = LogItemKind.Information)
+        {
+            var result = LogInternal(LogUtils.GenNewId(), obj, kind);
+            LogRefresh();
+            return result;
+        }
+
+        /// <summary>
+        /// Calls <see cref="Log"/> if <paramref name="condition"/> is <c>true</c>.
+        /// </summary>
+        /// <param name="obj">Message text.</param>
+        /// <param name="kind">Message kind.</param>
+        /// <param name="condition">Whether to log message.</param>
+        public void LogIf(object? obj, bool condition, LogItemKind kind = LogItemKind.Information)
+        {
+            if(condition)
+                Log(obj, kind);
+        }
+
+        /// <summary>
+        /// Creates new empty item.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual TreeViewItem CreateItem()
+        {
+            return new();
+        }
+
+        /// <summary>
+        /// Adds additional information to the log messages.
+        /// </summary>
+        /// <param name="msg">Message to log.</param>
+        /// <param name="id">Message id.</param>
+        /// <remarks>
+        /// By default adds unique integer identifier to the beginning of the <paramref name="msg"/>.
+        /// </remarks>
+        protected virtual string ConstructLogMessage(int id, string? msg)
+        {
+            if (string.IsNullOrWhiteSpace(msg))
+                return string.Empty;
+
+            if(ShowMessageIdentifier)
+                return $" [{id}] {msg}";
+            return msg?.ToString() ?? string.Empty;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            UnbindApplicationLog();
+            base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Gets <see cref="SvgImage"/> for the specified <see cref="LogItemKind"/>.
+        /// </summary>
+        protected virtual SvgImage? GetImage(LogItemKind kind)
+        {
+            return GetDefaultImage(kind);
+        }
+
+        /// <inheritdoc/>
+        protected override void InitContextMenu()
+        {
+            menuItemClear = new(CommonStrings.Default.ButtonClear, Clear);
+            menuItemCopy = new(CommonStrings.Default.ButtonCopy, () => ListBox.SelectedItemsToClipboard());
+
+            menuItemCopy.SetShortcutKeys(Keys.Control | Keys.C);
+
+            ContextMenu.Add(menuItemClear);
+            ContextMenu.Add(menuItemCopy);
+
+            MenuItemOpenLogFile = ContextMenu.Add(new("Open log file", AppUtils.OpenLogFile));
+            MenuItemShowDevTools = ContextMenu.Add("Developer Tools...", ShowDevTools);
+            MenuItemTestActions = ContextMenu.Add("Test Actions...", XControlUtils.ShowTestActionsDialog);
+            MenuItemSearchForMembers = ContextMenu.Add("Search for Members...", () =>
+            {
+                WindowSearchForMembers.Default.ShowAndFocus();
+            });
+
+            MenuItemEnableLogToFile = ContextMenu.Add(new("Enable Log to file"));
+            MenuItemEnableLogToFile.ClickAction = AlsoLogToFile;
+
+            MenuItemTestActions.Visible = DefaultMenuItemTestActionsVisible;
+            MenuItemSearchForMembers.Visible = DefaultMenuItemSearchForMembersVisible;
+            MenuItemOpenLogFile.Visible = DefaultMenuItemOpenLogFileVisible;
+            MenuItemEnableLogToFile.Visible = DefaultMenuItemEnableLogToFileVisible;
+            MenuItemShowDevTools.Visible = DefaultMenuItemShowDevToolsVisible;
+
+            void AlsoLogToFile()
+            {
+                if (App.LogFileIsEnabled)
+                    return;
+                App.LogFileIsEnabled = true;
+                MenuItemEnableLogToFile.Checked = true;
+                MenuItemEnableLogToFile.Enabled = false;
+            }
+
+            void ShowDevTools()
+            {
+                ShowDeveloperTools?.Invoke();
+            }
+
+            ContextMenu.Opening -= OnContextMenuOpening;
+            ContextMenu.Opening += OnContextMenuOpening;
+        }
+
+        /// <summary>
+        /// Invoked when the context menu is about to open, allowing derived classes to handle or cancel the event.
+        /// </summary>
+        /// <remarks>This method is called before the context menu is displayed. Derived classes can
+        /// override this method to perform custom logic, such as modifying the context menu or preventing it from
+        /// opening by setting  <see cref="CancelEventArgs.Cancel"/> to <see langword="true"/>.</remarks>
+        /// <param name="sender">The source of the event, typically the control that triggered the context menu.</param>
+        /// <param name="e">A <see cref="CancelEventArgs"/> instance containing the event data,
+        /// including the ability to cancel the operation.</param>
+        protected virtual void OnContextMenuOpening(object? sender, CancelEventArgs e)
+        {
+            MenuItemCopy?.SetEnabled(SelectedItems.Count > 0);
+            MenuItemClear?.SetEnabled(RootItem.ItemCount > 0);
+            MenuItemShowDevTools?.SetEnabled(ShowDeveloperTools is not null);
+        }
+
+        private void LogRefresh()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            Invoke(Fn);
+
+            void Fn()
+            {
+                if (DisposingOrDisposed)
+                    return;
+
+                if (!App.LogInUpdates() || !BoundToApplicationLog)
+                {
+                    SelectLastItemAndScroll();
+                }
+            }
+        }
+
+        private void Application_LogRefresh(object? sender, EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            LogRefresh();
+        }
+
+        private TreeViewItem LogItemInternal(int id, TreeViewItem item, LogItemKind kind)
+        {
+            if (IsDisposed)
+                return item;
+
+            if (!item.HasImageOrSvg)
+            {
+                item.SvgImage = GetImage(kind);
+                item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
+            }
+
+            lastLogMessage = item.Text;
+            Add(item.Clone());
+            SelectLastItemAndScroll();
+            return item;
+        }
+
+        private TreeViewItem LogInternal(int id, object? obj, LogItemKind kind)
+        {
+            if (DisposingOrDisposed)
+                return new();
+
+            var message = obj.SafeToString();
+
+            lastLogMessage = message;
+
+            TreeViewItem item;
+
+            if(message == LogUtils.SectionSeparator || message == "-")
+            {
+                item = new TreeViewSeparatorItem();
+            }
+            else
+            {
+                item = CreateItem();
+                item.Text = ConstructLogMessage(id, message);
+                item.SvgImage = GetImage(kind);
+                item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
+            }
+
+            Add(item);
+            SelectLastItemAndScroll();
+            return item;
+        }
+
+        private TreeViewItem LogReplaceInternal(
+            int id,
+            string? message,
+            string? prefix,
+            LogItemKind kind)
+        {
+            if (DisposingOrDisposed)
+                return new();
+
+            string? s;
+
+            s = LastLogMessage;
+
+            if (s is null)
+                return Log(message, kind);
+
+            var b = s?.StartsWith(prefix ?? string.Empty) ?? false;
+
+            if (b)
+            {
+                lastLogMessage = message;
+                var item = RootItem.LastChild!;
+                item.Text = ConstructLogMessage(id, message);
+                item.SvgImage = GetImage(kind);
+                item.SvgImageSize = ToolBarUtils.GetDefaultImageSize(this);
+                ListBox.RefreshLastRow();
+
+                SelectLastItemAndScroll();
+                return item;
+            }
+            else
+                return LogInternal(id, message, kind);
+        }
+
+        private void Application_LogMessage(object? sender, LogMessageEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            Invoke(Fn);
+
+            void Fn()
+            {
+                if (DisposingOrDisposed)
+                    return;
+
+                var item = e.Item?.Item;
+
+                if(item is not null)
+                {
+                    LogItemInternal(e.Id, item, e.Kind);
+                    return;
+                }
+
+                if (e.ReplaceLastMessage)
+                    LogReplaceInternal(e.Id, e.Message, e.MessagePrefix, e.Kind);
+                else
+                    LogInternal(e.Id, e.Message, e.Kind);
+            }
+        }
+    }
+}

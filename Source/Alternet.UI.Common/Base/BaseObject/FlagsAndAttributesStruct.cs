@@ -6,13 +6,19 @@ using System.Threading;
 
 namespace Alternet.UI
 {
-    internal struct FlagsAndAttributesStruct
+    /// <summary>
+    /// Represents a structure that provides access to flags and attributes associated with an item.
+    /// </summary>
+    public struct FlagsAndAttributesStruct
     {
         private readonly Lock locker = new();
 
         private IFlagsAndAttributes? flagsAndAttributes;
         private IIntFlagsAndAttributes? intFlagsAndAttributes;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FlagsAndAttributesStruct"/> structure.
+        /// </summary>
         public FlagsAndAttributesStruct()
         {
         }

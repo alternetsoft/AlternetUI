@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements custom console for Windows.
     /// </summary>
-    internal class CustomWindowsConsole : DisposableObject, ICustomConsole
+    public class CustomWindowsConsole : DisposableObject, ICustomConsole
     {
         private static CustomWindowsConsole? defaultConsole;
 

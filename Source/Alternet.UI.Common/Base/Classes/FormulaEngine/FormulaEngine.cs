@@ -14,8 +14,7 @@ namespace Alternet.UI
     /// <remarks>This method uses the Roslyn scripting API to evaluate the provided C# code.
     /// The evaluation is performed in an isolated scripting context.</remarks>
     /// <param name="owner">An optional object that can be passed to the evaluation method
-    /// in order to determine the context of the evaluation. For example <see cref="Calculator"/>
-    /// passes itself.</param>
+    /// in order to determine the context of the evaluation. For example calculator passes itself.</param>
     /// <param name="code">The C# code to evaluate. This cannot be null or empty.</param>
     /// <param name="options">Optional script options to configure the evaluation,
     /// such as references and imports. Can be null.</param>
@@ -62,8 +61,7 @@ namespace Alternet.UI
         /// <remarks>This method uses the Roslyn scripting API to evaluate the provided C# code.
         /// The evaluation is performed in an isolated scripting context.</remarks>
         /// <param name="owner">An optional object that can be passed to the evaluation method
-        /// in order to determine the context of the evaluation. For example <see cref="Calculator"/>
-        /// passes itself.</param>
+        /// in order to determine the context of the evaluation. For example calculator passes itself.</param>
         /// <param name="code">The C# code to evaluate. This cannot be null or empty.</param>
         /// <param name="options">Optional script options to configure the evaluation,
         /// such as references and imports. Can be null.</param>

@@ -66,8 +66,6 @@ namespace Alternet.UI
 
         public bool ThreeState { get; set; }
 
-        public VirtualListBox? PopupControl { get; set; }
-
         public PointI TextMargins { get; }
 
 #pragma warning disable

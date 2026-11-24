@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -138,7 +139,12 @@ namespace Alternet.Drawing
             }
         }
 
-        internal static void LogPartSize(AbstractControl control)
+        /// <summary>
+        /// Logs sizes of control parts, such as check mark, checkbox, expander, header button, etc.
+        /// </summary>
+        /// <param name="control">The control to log part sizes for.</param>
+        [Conditional("DEBUG")]
+        public static void LogPartSize(AbstractControl control)
         {
             App.LogSection(
             () =>

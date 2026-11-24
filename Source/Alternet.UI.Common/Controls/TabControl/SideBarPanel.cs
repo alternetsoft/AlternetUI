@@ -8,12 +8,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements side bar panel with header.
+    /// Represents a panel in a side-bar control. A side bar can contain multiple panels,
     /// </summary>
-    /// <remarks>
-    /// This control can be used in <see cref="SplittedPanel"/> side bars
-    /// or any other places.
-    /// </remarks>
     public partial class SideBarPanel : TabControl
     {
         /// <summary>

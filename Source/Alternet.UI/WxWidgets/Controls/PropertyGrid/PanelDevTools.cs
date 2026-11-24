@@ -154,7 +154,7 @@ namespace Alternet.UI
 
             TypesListBox.SelectionChanged += TypesListBox_SelectionChanged;
 
-            LogUtils.LogVersion();
+            LogUtilsActions.LogVersion();
         }
 
         public static PanelDevTools? DevPanel => devToolsWindow?.DevPanel;
@@ -394,7 +394,7 @@ namespace Alternet.UI
 
         private void InitActions()
         {
-            LogUtils.EnumLogActions(Fn);
+            LogUtilsActions.EnumLogActions(Fn);
 
             void Fn(string title, Action action)
             {

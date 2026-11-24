@@ -1223,20 +1223,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds new page with the specified title and child <see cref="PanelSettings"/> control.
-        /// </summary>
-        /// <param name="title">Page title.</param>
-        /// <param name="configure">Action to configure the panel settings control.</param>
-        /// <returns>Created panel settings.</returns>
-        public virtual PanelSettings AddTabPanelSettings(string title, Action<PanelSettings>? configure = null)
-        {
-            ScrollablePanelSettings result = new();
-            result.Title = title;
-            configure?.Invoke(result.ScrolledControl);
-            return result.ScrolledControl;
-        }
-
-        /// <summary>
         /// Adds new page with the specified title and child control.
         /// </summary>
         /// <param name="title">Page title.</param>

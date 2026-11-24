@@ -50,7 +50,7 @@ namespace Alternet.UI
         };
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowTextInput"/> class.
+        /// Initializes a new instance of the <see cref="WindowMessageBox"/> class.
         /// </summary>
         public WindowMessageBox()
         {

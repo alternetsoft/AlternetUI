@@ -36,11 +36,6 @@ namespace Alternet.UI
         TextButton,
 
         /// <summary>
-        /// The panel is a progress bar panel that displays a progress bar.
-        /// </summary>
-        ProgressBar,
-
-        /// <summary>
         /// The panel is a spacer that takes up space between other panels.
         /// The <see cref="BarPanel.Text"/> and other properties are ignored for this panel.
         /// </summary>

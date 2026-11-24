@@ -1446,7 +1446,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Adds log item using the specified <see cref="ListControlItem"/>.
-        /// <see cref="LogListBox"/> controls attached to the log will paint added item
+        /// Controls attached to the log will paint added item
         /// with image, font and color properties specified in the <paramref name="item"/>.
         /// </summary>
         /// <param name="item">Item to add.</param>

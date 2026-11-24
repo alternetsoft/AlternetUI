@@ -171,19 +171,6 @@ namespace Alternet.UI
                 case BarPanelKind.TextButton:
                     panelControl = InsertTextBtnCore(index, item.Text, item.ToolTip, OnControlClick);
                     break;
-                case BarPanelKind.ProgressBar:
-                    XProgressBar progressBar = new()
-                    {
-                        MinHeight = DefaultProgressBarSize.Height,
-                        AutoSize = false,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        SuggestedWidth = DefaultProgressBarSize.Width,
-                        SuggestedHeight = DefaultProgressBarSize.Height,
-                    };
-
-                    InsertControl(index, progressBar);
-                    panelControl = progressBar;
-                    break;
                 case BarPanelKind.Spacer:
                     float? spacerWidth = float.IsNaN(item.Width) ? null : item.Width;
                     panelControl = InsertSpacerCore(index, spacerWidth);
