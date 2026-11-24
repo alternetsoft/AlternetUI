@@ -286,11 +286,13 @@ namespace Alternet.UI
 
             App.Log(
                 $"Regular: Ascent={regularMetrics.Ascent}, " +
+                $"Top={regularMetrics.Top}, " +
                 $"Descent={regularMetrics.Descent}, " +
                 $"Leading={regularMetrics.Leading}");
 
             App.Log(
                 $"Bold: Ascent={boldMetrics.Ascent}, " +
+                $"Top={boldMetrics.Top}, " +
                 $"Descent={boldMetrics.Descent}, " +
                 $"Leading={boldMetrics.Leading}");
 
