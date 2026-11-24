@@ -1127,7 +1127,8 @@ namespace Alternet.Drawing
         /// Returns whether this font has a glyph for the specified character.
         /// </summary>
         /// <param name="ch">The character to check for a glyph.</param>
-        /// <returns><c>true</c> if the font has a glyph for the specified character; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the font has a glyph for the specified character;
+        /// otherwise, <c>false</c>.</returns>
         public virtual bool HasGlyph(char ch)
         {
             ushort[] glyphs = SkiaFont.GetGlyphs(ch.ToString());
@@ -1146,7 +1147,8 @@ namespace Alternet.Drawing
         /// Returns whether this font has glyphs for all characters in the specified text.
         /// </summary>
         /// <param name="text">The text to check for glyphs.</param>
-        /// <returns><c>true</c> if the font has glyphs for all characters in the specified text; otherwise, <c>false</c>.</returns>
+        /// <returns><c>true</c> if the font has glyphs for all characters in the specified text;
+        /// otherwise, <c>false</c>.</returns>
         public virtual bool HasGlyphs(string text)
         {
             ushort[] glyphs = SkiaFont.GetGlyphs(text);
@@ -1416,6 +1418,25 @@ namespace Alternet.Drawing
                 SizeInPoints,
                 Height,
                 Style);
+        }
+
+        /// <summary>
+        /// Calculates the maximum ascent of a line of text with multiple font styles.
+        /// </summary>
+        /// <param name="line">An array of text segments with associated font styles.</param>
+        /// <returns>The maximum ascent of the line of text.</returns>
+        public virtual float GetLineAccent(TextAndFontStyle[] line)
+        {
+            float result = 0;
+
+            for (var j = 0; j < line.Length; j++)
+            {
+                var item = line[j];
+                var itemFont = WithStyle(item.FontStyle);
+                result = Math.Max(result, Math.Abs(itemFont.SkiaMetrics.Top));
+            }
+
+            return result;
         }
 
         /// <summary>
