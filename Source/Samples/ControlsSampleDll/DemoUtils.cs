@@ -202,7 +202,7 @@ StringUtils.DoubleNewLine +
             item.DisabledImage = item.Image?.ToGrayScale();
             item.ForegroundColor = new(Color.White);
             item.BackgroundColor = new(Color.ForestGreen);
-            item.Text = "Green <b>item</b> at center";
+            item.Text = "Green <u><b>item</b></u> at <u>center</u>";
             item.LabelFlags = DrawLabelFlags.TextHasBold;
         }
 
