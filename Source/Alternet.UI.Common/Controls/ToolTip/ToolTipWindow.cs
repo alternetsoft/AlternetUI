@@ -66,13 +66,6 @@ namespace Alternet.UI
             toolTip.IsScrollable = false;
             toolTip.Parent = this;
 
-            const bool logEvents = true;
-
-            void Log(string message)
-            {
-                App.LogIf(message, logEvents);
-            }
-
             toolTip.MouseDown += HideToolTip;
             subscriber.AfterControlKeyDown += HideToolTip;
 
@@ -167,7 +160,8 @@ namespace Alternet.UI
         /// Gets the singleton instance of the ToolTipWindow class.
         /// </summary>
         /// <remarks>This property ensures that only one instance of ToolTipWindow is created and reused
-        /// throughout the application. The instance is initialized on first access, providing a lazy-loading mechanism.
+        /// throughout the application. The instance is initialized on first access,
+        /// providing a lazy-loading mechanism.
         /// This property is thread-safe only if the underlying implementation of the null-coalescing assignment is
         /// thread-safe.</remarks>
         public static ToolTipWindow Instance
@@ -245,6 +239,8 @@ namespace Alternet.UI
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+            
+            Log("ToolTipWindow.OnVisibleChanged");
 
             if (Visible)
             {
@@ -265,7 +261,10 @@ namespace Alternet.UI
         protected virtual void OnGlobalFocusedChanged(object? sender, EventArgs e)
         {
             if (Visible)
+            {
+                Log("ToolTipWindow.OnGlobalFocusedChanged");
                 Hide();
+            }
         }
 
         /// <summary>
@@ -279,6 +278,7 @@ namespace Alternet.UI
         {
             StaticControlEvents.FocusedChanged += OnGlobalFocusedChanged;
             AddGlobalNotification(subscriber);
+            Log("ToolTipWindow.BindGlobalEvents");
         }
 
         /// <summary>
@@ -291,6 +291,7 @@ namespace Alternet.UI
         {
             StaticControlEvents.FocusedChanged -= OnGlobalFocusedChanged;
             RemoveGlobalNotification(subscriber);
+            Log("ToolTipWindow.UnbindGlobalEvents");
         }
 
         /// <inheritdoc />
@@ -470,6 +471,11 @@ namespace Alternet.UI
                 toolTip.ToolTipOwner = null;
                 toolTip.ToolTipLocation = null;
             }
+        }
+
+        private static void Log(string message)
+        {
+            App.Log(message);
         }
 
         /// <summary>
