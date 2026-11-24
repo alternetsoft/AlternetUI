@@ -54,6 +54,8 @@ namespace Alternet.UI
 
         private readonly List<ListControlItem> itemsLastPainted = new();
 
+        private int? lastHoveredItemIndex;
+        private ObjectUniqueId? lastHoveredItemId;
         private bool isPartialRowVisible = true;
         private int scrollOffsetX;
         private ListBoxItemPaintEventArgs? itemPaintArgs;
@@ -140,6 +142,11 @@ namespace Alternet.UI
         /// or when the offset is changed programmatically.
         /// </summary>
         public event EventHandler? ScrollOffsetXChanged;
+
+        /// <summary>
+        /// Occurs when the hovered item is changed, for example, when the mouse moves over a different item.
+        /// </summary>
+        public event EventHandler? HoveredItemChanged;
 
         /// <summary>
         /// Occurs when a visual aspect of an owner-drawn control is changed.
@@ -480,6 +487,19 @@ namespace Alternet.UI
                 Invalidate();
             }
         }
+
+        /// <summary>
+        /// Gets the index of the last hovered item in the control.
+        /// </summary>
+        [Browsable(false)]
+        public int? LastHoveredItemIndex => lastHoveredItemIndex;
+
+        /// <summary>
+        /// Gets the unique identifier of the last hovered item in the control.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId? LastHoveredItemId => lastHoveredItemId;
+
 
         /// <summary>
         /// Gets or sets the width by which the horizontal scroll bar can scroll.
@@ -2363,6 +2383,9 @@ namespace Alternet.UI
             if (itemIndex is null)
                 return false;
 
+            RemoveOverlay(ref itemToolTipId, false);
+            ToolTipFactory.HideToolTips();
+
             provider ??= ItemToolTipProvider ?? DefaultItemToolTipProvider;
 
             if (provider == ItemToolTipProviderType.None) return false;
@@ -2386,11 +2409,11 @@ namespace Alternet.UI
             var showToolTip = item?.IsToolTipVisible ?? !noToolTipNeeded;
 
             if (!showToolTip)
+            {
                 return false;
+            }
 
             var vertAlignment = NineRects.SuggestVertAlignmentForToolTip(container, rect.Value);
-
-            RemoveOverlay(ref itemToolTipId, false);
 
             ResolveOverlayToolTipColors(out var fColor, out var bColor, out var borderColor);
 
@@ -2474,13 +2497,24 @@ namespace Alternet.UI
 
             var selectedItemChanged = false;
 
+            var mousePos = Mouse.GetPosition(this);
+            var itemIndex = HitTest(mousePos);
+
+            var prevHoveredItemId = lastHoveredItemId;
+
+            lastHoveredItemIndex = itemIndex;
+            lastHoveredItemId = itemIndex is not null ? GetItem(itemIndex.Value)?.UniqueId : null;
+
             if (IsHoverSelectionEnabled)
             {
-                var mousePos = Mouse.GetPosition(this);
-                var itemIndex = HitTest(mousePos);
-
                 selectedItemChanged = SelectedIndex != itemIndex;
                 SelectedIndex = itemIndex;
+            }
+
+            if (lastHoveredItemId != prevHoveredItemId)
+            {
+                HoveredItemChanged?.Invoke(this, EventArgs.Empty);
+                ToolTipFactory.HideToolTips();
             }
 
             var overlayRemoved = RemoveOverlay(ref itemToolTipId, invalidate: false);
