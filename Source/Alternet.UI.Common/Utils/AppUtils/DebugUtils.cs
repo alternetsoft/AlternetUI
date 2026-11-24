@@ -17,9 +17,12 @@ namespace Alternet.UI
     {
         /// <summary>
         /// Gets or sets whether to check parent-child relationship of controls. Default is true.
-        /// If this property is false, the library will not check whether a control can be a child of the specified parent control.
-        /// If this property is true, the library will check whether a control can be a child of the specified parent control.
-        /// <see cref="AbstractControl.IsValidParent"/> and <see cref="AbstractControl.IsValidChild"/> methods are used for this check.
+        /// If this property is false, the library will not check whether a control can be a child
+        /// of the specified parent control.
+        /// If this property is true, the library will check whether a control can be a child
+        /// of the specified parent control.
+        /// <see cref="AbstractControl.IsValidParent"/> and <see cref="AbstractControl.IsValidChild"/>
+        /// methods are used for this check.
         /// </summary>
         public static bool AssertParentChildRelationship = true;
 

@@ -69,6 +69,8 @@ namespace Alternet.UI
             toolTip.MouseDown += HideToolTip;
             subscriber.AfterControlKeyDown += HideToolTip;
 
+            Log("ToolTipWindow.Created");
+
             this.Deactivated += (s, e) =>
             {
                 HideToolTip(s, e);
