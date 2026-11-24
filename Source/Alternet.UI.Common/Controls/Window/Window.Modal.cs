@@ -78,29 +78,32 @@ namespace Alternet.UI
             if (DisposingOrDisposed || Modal)
                 return;
 
-            weakLastFocusedControl.Value = AbstractControl.FocusedControl;
-            modalResult = ModalResult.None;
-            isModal = true;
-            disabledControls = PropInstanceAndValue.DisableAllFormsChildrenExcept(this);
-            onCloseModal = onClose;
-            LastShownAsDialogTime = DateTime.Now;
-
-            try
+            Post(() =>
             {
-                ApplyStartLocationOnce(owner);
-                ShowAndFocus();
+                weakLastFocusedControl.Value = AbstractControl.FocusedControl;
+                modalResult = ModalResult.None;
+                isModal = true;
+                disabledControls = PropInstanceAndValue.DisableAllFormsChildrenExcept(this);
+                onCloseModal = onClose;
+                LastShownAsDialogTime = DateTime.Now;
 
-                Post(() =>
+                try
                 {
-                    ActiveControl?.SetFocusIfPossible();
-                });
-            }
-            catch
-            {
-                PropInstanceAndValue.PopPropertiesMultiple(disabledControls);
-                disabledControls = null;
-                throw;
-            }
+                    ApplyStartLocationOnce(owner);
+                    ShowAndFocus();
+
+                    Post(() =>
+                    {
+                        ActiveControl?.SetFocusIfPossible();
+                    });
+                }
+                catch
+                {
+                    PropInstanceAndValue.PopPropertiesMultiple(disabledControls);
+                    disabledControls = null;
+                    throw;
+                }
+            });
         }
     }
 }

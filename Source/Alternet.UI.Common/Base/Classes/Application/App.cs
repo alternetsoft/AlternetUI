@@ -2389,8 +2389,8 @@ namespace Alternet.UI
         public static IEnumerable<Window> WindowsWithExcept(Window? exceptWindow = null)
         {
             if (exceptWindow is null)
-                return Current.Windows;
-            var result = Current?.Windows.Where(x => (x != exceptWindow)) ?? [];
+                return Current.Windows.ToArray();
+            var result = Current?.Windows.ToArray().Where(x => (x != exceptWindow)) ?? [];
             return result;
         }
 

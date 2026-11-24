@@ -1610,7 +1610,7 @@ namespace Alternet.UI
 
             if (HasChildren)
             {
-                foreach (var child in Children)
+                foreach (var child in Children.ToArray())
                 {
                     child.RaiseEnabledChanged(e);
                 }

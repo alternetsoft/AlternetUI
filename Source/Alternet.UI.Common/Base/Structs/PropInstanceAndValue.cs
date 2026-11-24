@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -70,7 +71,7 @@ namespace Alternet.UI
         /// after saved them using <see cref="PushProperties"/>.
         /// </remarks>
         public static void PushProperties(
-            IEnumerable objects,
+            IEnumerable<object> objects,
             PropertyInfo? propInfo,
             object? newValue,
             ref ConcurrentStack<PropInstanceAndValue>? oldValues)
@@ -78,14 +79,15 @@ namespace Alternet.UI
             if (propInfo is null)
                 return;
 
-            foreach (var obj in objects)
+            foreach (var obj in objects.ToArray())
             {
-                var propValue = propInfo.GetValue(obj);
+                var instance = obj;
+                var propValue = propInfo.GetValue(instance);
                 if (propValue == newValue)
                     continue;
                 oldValues ??= new();
-                oldValues.Push(new(obj, propInfo, propValue));
-                propInfo.SetValue(obj, newValue);
+                oldValues.Push(new(instance, propInfo, propValue));
+                propInfo.SetValue(instance, newValue);
             }
         }
 
@@ -234,7 +236,7 @@ namespace Alternet.UI
         public static ConcurrentStack<SavedPropertiesItem>? DisableAllFormsChildrenExcept(
             Window? window = null)
         {
-            var forms = App.WindowsWithExcept(window);
+            var forms = App.WindowsWithExcept(window).ToArray();
             var result = PushChildrenEnabledMultiple(forms, false);
             return result;
         }
