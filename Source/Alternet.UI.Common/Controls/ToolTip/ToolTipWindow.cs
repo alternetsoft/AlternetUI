@@ -336,7 +336,7 @@ namespace Alternet.UI
 
             Post(() =>
             {
-                ToolTipFactory.HideToolTips();
+                ToolTipFactory.HideLastShownInOverlay();
             });
 
             Post(() =>
