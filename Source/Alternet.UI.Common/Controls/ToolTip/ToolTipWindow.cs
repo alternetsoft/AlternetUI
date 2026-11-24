@@ -71,11 +71,14 @@ namespace Alternet.UI
             subscriber.AfterControlKeyDown += HideToolTip;
             subscriber.AfterControlMouseLeave += HideToolTip;
 
+            const bool logEvents = true;
+
             subscriber.AfterControlActivated += (s, e) =>
             {
                 if (s == this || s is not Window)
                     return;
                 HideToolTip(s, e);
+                App.DebugLogIf("ToolTipWindow.AfterControlActivated", logEvents);
             };
 
             subscriber.AfterControlDeactivated += (s, e) =>
@@ -83,6 +86,7 @@ namespace Alternet.UI
                 if (s is not Window)
                     return;
                 HideToolTip(s, e);
+                App.DebugLogIf("ToolTipWindow.AfterControlDeactivated", logEvents);
             };
 
             subscriber.AfterControlMouseMove += (s, e) =>
@@ -90,11 +94,13 @@ namespace Alternet.UI
                 if (s == toolTip.ToolTipOwner)
                     return;
                 HideToolTip(s, e);
+                App.DebugLogIf("ToolTipWindow.AfterControlMouseMove", logEvents);
             };
 
             subscriber.AfterControlMouseLeave += (s, e) =>
             {
                 HideToolTip(s, e);
+                App.DebugLogIf("ToolTipWindow.AfterControlMouseLeave", logEvents);
             };
 
             subscriber.AfterControlMouseEnter += (s, e) =>
@@ -102,6 +108,7 @@ namespace Alternet.UI
                 if (s == toolTip.ToolTipOwner)
                     return;
                 HideToolTip(s, e);
+                App.DebugLogIf("ToolTipWindow.AfterControlMouseEnter", logEvents);
             };
         }
 
