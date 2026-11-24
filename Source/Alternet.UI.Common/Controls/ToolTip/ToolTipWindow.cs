@@ -241,15 +241,16 @@ namespace Alternet.UI
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
-            
+
             if (Visible)
             {
+                Log("ToolTipWindow.Shown");
+
                 BindGlobalEvents();
             }
             else
             {
                 Log("ToolTipWindow.Hidden");
-                App.LogError(new Exception(Environment.StackTrace.ToString()));
 
                 UnbindGlobalEvents();
                 lastToolTipControlId = null;
@@ -334,83 +335,80 @@ namespace Alternet.UI
 
             var toolTipShown = false;
 
-            Post(() =>
-            {
+            if (App.IsMacOS)
                 ToolTipFactory.HideLastShownInOverlay();
-            });
+            else
+                ToolTipFactory.HideToolTips();
 
-            Post(() =>
+            try
             {
-                try
+
+                var toolTipObject = ToolTipFactory.GetControlToolTip(control);
+
+                if (toolTipObject is null)
+                    return;
+
+                if (!IsRichToolTip(toolTipObject))
                 {
+                    if (control is not GenericControl)
+                        return;
+                }
 
-                    var toolTipObject = ToolTipFactory.GetControlToolTip(control);
+                var toolTip = Instance.RichToolTip;
+                toolTip.ToolTipOwner = control;
+                toolTip.ToolTipLocation = null;
 
-                    if (toolTipObject is null)
+                var display = Instance.GetDisplay();
+                var containerRect = display.ClientAreaDip;
+
+                var maxWidth = containerRect.Width * 0.7f;
+
+                if (RichToolTip.DefaultMaxWidth is not null)
+                {
+                    maxWidth = Math.Min(maxWidth, RichToolTip.DefaultMaxWidth.Value);
+                }
+
+                toolTip.MaxTextWidth = maxWidth;
+
+                if (toolTipObject is string toolTipStr)
+                {
+                    if (string.IsNullOrEmpty(toolTipStr))
                         return;
 
-                    if (!IsRichToolTip(toolTipObject))
+                    Post(() =>
                     {
-                        if (control is not GenericControl)
-                            return;
-                    }
-
-                    var toolTip = Instance.RichToolTip;
-                    toolTip.ToolTipOwner = control;
-                    toolTip.ToolTipLocation = null;
-
-                    var display = Instance.GetDisplay();
-                    var containerRect = display.ClientAreaDip;
-
-                    var maxWidth = containerRect.Width * 0.7f;
-
-                    if (RichToolTip.DefaultMaxWidth is not null)
-                    {
-                        maxWidth = Math.Min(maxWidth, RichToolTip.DefaultMaxWidth.Value);
-                    }
-
-                    toolTip.MaxTextWidth = maxWidth;
-
-                    if (toolTipObject is string toolTipStr)
-                    {
-                        if (string.IsNullOrEmpty(toolTipStr))
-                            return;
-
-                        Post(() =>
-                        {
-                            toolTipShown = true;
-                            toolTip.ShowToolTip(toolTipStr, true, location);
-                        });
-                        return;
-                    }
-
-                    if (toolTipObject is RichToolTipParams prm)
-                    {
-                        if (prm.MaxWidth is not null)
-                        {
-                            toolTip.MaxTextWidth = Math.Min(maxWidth, prm.MaxWidth.Value);
-                        }
-
                         toolTipShown = true;
-                        toolTip.SetParams(prm).PostShowToolTip(location);
-                    }
+                        toolTip.ShowToolTip(toolTipStr, true, location);
+                    });
+                    return;
                 }
-                catch (Exception ex)
+
+                if (toolTipObject is RichToolTipParams prm)
                 {
-                    Debug.WriteLine($"Exception in {nameof(ToolTipWindow.OnGlobalMouseHover)}: {ex}");
+                    if (prm.MaxWidth is not null)
+                    {
+                        toolTip.MaxTextWidth = Math.Min(maxWidth, prm.MaxWidth.Value);
+                    }
+
+                    toolTipShown = true;
+                    toolTip.SetParams(prm).PostShowToolTip(location);
                 }
-                finally
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception in {nameof(ToolTipWindow.OnGlobalMouseHover)}: {ex}");
+            }
+            finally
+            {
+                if (toolTipShown)
                 {
-                    if (toolTipShown)
-                    {
-                        lastToolTipControlId = control.UniqueId;
-                    }
-                    else
-                    {
-                        lastToolTipControlId = null;
-                    }
+                    lastToolTipControlId = control.UniqueId;
                 }
-            });
+                else
+                {
+                    lastToolTipControlId = null;
+                }
+            }
         }
 
         /// <summary>
@@ -485,7 +483,6 @@ namespace Alternet.UI
 
         private static void Log(string message)
         {
-            App.Log(message);
         }
 
         /// <summary>
