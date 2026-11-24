@@ -151,7 +151,7 @@ namespace Alternet.UI
 
         public void UpdateTitle()
         {
-            Title = $"AlterNET UI Demo";
+            Title = $"AlterNET UI and XControls Demo";
 
             if (AddBuildNumber)
             {
