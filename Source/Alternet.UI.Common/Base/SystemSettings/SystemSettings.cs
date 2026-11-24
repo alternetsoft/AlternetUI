@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Alternet.Drawing;
 
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -269,6 +271,28 @@ namespace Alternet.UI
             App.Log($"Control.DefaultFont: {AbstractControl.DefaultFont.ToInfoString()}");
             App.Log($"Default font: {Font.Default.ToInfoString()}");
             App.Log($"Default mono font: {Font.DefaultMono.ToInfoString()}");
+
+            using var regularTypeface = SKTypeface.Default;
+
+            using var boldTypeface = SKTypeface.FromFamilyName(
+                regularTypeface.FamilyName,
+                SKFontStyle.Bold);
+
+            using var regularFont = new SKFont(regularTypeface, 16);
+            using var boldFont = new SKFont(boldTypeface, 16);
+
+            regularFont.GetFontMetrics(out var regularMetrics);
+            boldFont.GetFontMetrics(out var boldMetrics);
+
+            App.Log(
+                $"Regular: Ascent={regularMetrics.Ascent}, " +
+                $"Descent={regularMetrics.Descent}, " +
+                $"Leading={regularMetrics.Leading}");
+
+            App.Log(
+                $"Bold: Ascent={boldMetrics.Ascent}, " +
+                $"Descent={boldMetrics.Descent}, " +
+                $"Leading={boldMetrics.Leading}");
 
             App.LogEndSection();
         }
