@@ -1369,6 +1369,16 @@ namespace Alternet.Common.Skia
             }
         }
 
+        /// <summary>
+        /// Draws the specified text on the canvas at the given location using the specified font and paint settings.
+        /// </summary>
+        /// <param name="canvas">The canvas on which to draw the text.</param>
+        /// <param name="text">The text to draw.</param>
+        /// <param name="location">The location at which to draw the text.</param>
+        /// <param name="font">The font to use for drawing the text.</param>
+        /// <param name="lineAscent">The line ascent value. This is the max of all part ascent values.</param>
+        /// <param name="foreColor">The foreground color of the text.</param>
+        /// <param name="backColor">The background color of the text. If null, no background will be drawn.</param>
         public static void DrawText(
             SKCanvas canvas,
             ReadOnlySpan<char> text,

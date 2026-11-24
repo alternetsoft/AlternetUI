@@ -972,6 +972,16 @@ namespace Alternet.Drawing
                 backColorIsOk ? backColor?.AsFillPaint : null);
         }
 
+        /// <summary>
+        /// Draws text with the specified parameters, including line ascent for vertical alignment.
+        /// </summary>
+        /// <param name="canvas">The canvas on which to draw the text.</param>
+        /// <param name="s">The text to draw.</param>
+        /// <param name="location">The location at which to draw the text.</param>
+        /// <param name="font">The font to use for drawing the text.</param>
+        /// <param name="lineAscent">The line ascent value. This is the max of all part ascent values.</param>
+        /// <param name="foreColor">The foreground color of the text.</param>
+        /// <param name="backColor">The background color of the text. If null, no background will be drawn.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void DrawText(
             this SKCanvas canvas,

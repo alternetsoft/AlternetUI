@@ -469,20 +469,6 @@ namespace Alternet.Drawing
             return result;
         }
 
-        public virtual float GetLineAccent(TextAndFontStyle[] line, Font font)
-        {
-            float result = 0;
-
-            for (var j = 0; j < line.Length; j++)
-            {
-                var item = line[j];
-                var itemFont = font.WithStyle(item.FontStyle);
-                result = Math.Max(result, Math.Abs(itemFont.SkiaMetrics.Top));
-            }
-
-            return result;
-        }
-
         /// <summary>
         /// Draws an array of text elements with custom font styles and colors.
         /// </summary>
@@ -499,7 +485,7 @@ namespace Alternet.Drawing
 
             bool visible = foreColor.IsOk && (foreColor != Color.Empty);
 
-            var lineAccent = GetLineAccent(text, font);
+            var lineAccent = font.GetLineAccent(text);
 
             for (int i = 0; i < text.Length; i++)
             {
@@ -526,6 +512,16 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Draws an array of text elements with custom font styles and colors,
+        /// and returns the bounding rectangle of the drawn text.
+        /// </summary>
+        /// <param name="s"> The text to draw.</param>
+        /// <param name="location">The location at which to draw the text.</param>
+        /// <param name="font">The font to use for drawing the text.</param>
+        /// <param name="lineAscent">The line ascent value. This is the max of all part ascent values.</param>
+        /// <param name="foreColor">The foreground color of the text.</param>
+        /// <param name="backColor">The background color of the text.</param>
         public virtual void DrawText(
             ReadOnlySpan<char> s,
             PointD location,
