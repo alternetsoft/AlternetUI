@@ -263,7 +263,7 @@ namespace Alternet.UI
         {
             App.LogBeginSection("System Fonts");
 
-            App.Log($"Wg measured font sizes for {Font.Default.Size} points: {App.SafeWindow.MeasureCanvas.MeasureText("Wg", Font.Default)}");
+            App.Log($"Wg font size for {Font.Default.Size} pt: {App.SafeWindow.MeasureCanvas.MeasureText("Wg", Font.Default)}");
             App.Log("Windows HDPI Wg measured font sizes: {18.27539, 20.513672}");
 
             App.Log($"Control.DefaultFont: {AbstractControl.DefaultFont.ToInfoString()}");

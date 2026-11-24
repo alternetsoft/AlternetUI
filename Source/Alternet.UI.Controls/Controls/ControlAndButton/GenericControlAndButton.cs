@@ -831,11 +831,11 @@ namespace Alternet.UI
                     break;
                 case InnerOuterSelector.Outer:
                     ParentBackColor = false;
-                    BackColor = MainControl.BackColor;
+                    BackgroundColor = MainControl.RealBackgroundColor;
                     break;
                 case InnerOuterSelector.Both:
                     ParentBackColor = false;
-                    BackColor = MainControl.BackColor;
+                    BackgroundColor = MainControl.RealBackgroundColor;
                     break;
             }
         }

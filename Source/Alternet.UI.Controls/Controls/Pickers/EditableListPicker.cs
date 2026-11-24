@@ -452,8 +452,8 @@ namespace Alternet.UI
         /// <returns>The parameters for the popup text box editor.</returns>
         protected virtual PopupEntryParams? CreatePopupEditorParams()
         {
-            var backColor = GetBackColor(VisualControlState.Normal);
-            var foreColor = GetLabelTextColor(VisualControlState.Normal);
+            var backColor = GetBackColor(VisualControlState.Normal) ?? RealBackgroundColor;
+            var foreColor = GetLabelTextColor(VisualControlState.Normal) ?? RealForegroundColor;
 
             backColor ??= DefaultColors.ControlBackColor;
             foreColor ??= DefaultColors.ControlForeColor;

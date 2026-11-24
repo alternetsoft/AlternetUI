@@ -79,6 +79,8 @@ namespace Alternet.UI
                 Content.VerticalAlignment = VerticalAlignment.Center;
             }
 
+            ParentBackColor = false;
+            ParentForeColor = false;
             BackgroundColor = prm.BackColor ?? prm.ItemContainer.RealBackgroundColor;
             ForegroundColor = prm.ForeColor ?? prm.ItemContainer.RealForegroundColor;
             ParentFont = false;

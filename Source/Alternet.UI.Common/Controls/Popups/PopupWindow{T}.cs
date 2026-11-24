@@ -529,7 +529,16 @@ namespace Alternet.UI
         /// Usually owner of the popup window is a control under which popup is shown.
         /// </remarks>
         [Browsable(false)]
-        public AbstractControl? PopupOwner { get; set; }
+        public AbstractControl? PopupOwner
+        {
+            get;
+            set
+            {
+                if (field == value)
+                    return;
+                field = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to focus <see cref="PopupOwner"/> control when popup is closed.
@@ -995,7 +1004,7 @@ namespace Alternet.UI
                 // shift the window to the left instead of the right.
                 x -= ptSize.Width;
                 // also shift it by window width.
-                x -= sizeSelf.Width;        
+                x -= sizeSelf.Width;
             }
             else
             {

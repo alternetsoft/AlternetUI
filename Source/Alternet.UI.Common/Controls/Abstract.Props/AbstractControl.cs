@@ -3905,13 +3905,18 @@ namespace Alternet.UI
 
                 colorMode = value;
 
-                ForEachChild(c =>
+                DoInsideUpdate(() =>
                 {
-                    if (c.ParentColorMode)
-                        c.ColorMode = value;
-                }, recursive: false);
+                    ForEachChild(c =>
+                    {
+                        if (c.ParentColorMode)
+                            c.ColorMode = value;
+                    }, recursive: false);
 
-                Invalidate();
+                    RaiseSystemColorsChanged(EventArgs.Empty);
+
+                    Invalidate();
+                });
             }
         }
 

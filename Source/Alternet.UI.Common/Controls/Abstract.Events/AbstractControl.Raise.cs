@@ -902,8 +902,10 @@ namespace Alternet.UI
             {
                 DoInsideLayout(UpdateFontAndColor);
             }
-
-            UpdateFontAndColor();
+            else
+            {
+                DoInsideUpdate(UpdateFontAndColor);
+            }
 
             void UpdateFontAndColor()
             {
