@@ -242,14 +242,15 @@ namespace Alternet.UI
         {
             base.OnVisibleChanged(e);
             
-            Log("ToolTipWindow.OnVisibleChanged");
-
             if (Visible)
             {
                 BindGlobalEvents();
             }
             else
             {
+                Log("ToolTipWindow.Hidden");
+                App.LogError(new Exception(Environment.StackTrace.ToString()));
+
                 UnbindGlobalEvents();
                 lastToolTipControlId = null;
             }
