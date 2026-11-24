@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -9,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a panel with 'Save and Close' and 'Close' buttons.
     /// </summary>
-    public partial class SaveAndClosePanel : TransparentPanel
+    public partial class SaveAndClosePanel : HiddenGenericBorder
     {
         private readonly XButton btSaveAndClose = new();
         private readonly XButton btClose = new();
