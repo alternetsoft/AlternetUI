@@ -43,6 +43,9 @@ namespace Alternet.UI
         public EditableListPicker()
         {
             Label.VerticalAlignment = VerticalAlignment.Stretch;
+            IsGraphicControl = false;
+            CanSelect = true;
+            TabStop = true;
         }
 
         /// <summary>
@@ -331,7 +334,28 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool SetFocus()
         {
-            return base.SetFocus();
+            var result = base.SetFocus();
+            return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+
+            Post(() =>
+            {
+                if (IsEditable && CanFocus)
+                {
+                    BeginEdit();
+                }
+            });
+        }
+
+        /// <inheritdoc/>
+        public override bool SetFocusIfPossible()
+        {
+            return base.SetFocusIfPossible();
         }
 
         /// <inheritdoc/>
