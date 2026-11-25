@@ -152,7 +152,7 @@ namespace Alternet.UI
             try
             {
                 CommonProcs.DeleteFilesByMasks(path, "*", Console.WriteLine);
-                if(Directory.Exists(path))
+                if (Directory.Exists(path))
                     Directory.Delete(path, true);
             }
             catch (Exception e)
@@ -188,6 +188,10 @@ namespace Alternet.UI
                     return;
                 }
 
+                settings.SettingsFolder = Path.GetDirectoryName(pathToSettings);
+
+                Console.WriteLine($"Settings folder: {settings.SettingsFolder}");
+
                 if (settings.Items.Count == 0)
                 {
                     Console.WriteLine($"Settings file contains no items");
@@ -203,33 +207,73 @@ namespace Alternet.UI
 
                     itemsProcessed++;
 
-                    item.Prepare();
+                    item.Prepare(settings);
 
                     Console.WriteLine($"======================");
 
                     Console.WriteLine($"RootFolder: {item.RootFolder}");
                     Console.WriteLine($"PathToZip: {item.PathToZip}");
+                    Console.WriteLine($"ZipMask: {item.ZipMask}");
                     Console.WriteLine($"PathToResult: {item.PathToResult}");
                     Console.WriteLine($"FileMasks: {item.FileMasks}");
                     Console.WriteLine($"CommandToRun: {item.CommandToRun}");
                     Console.WriteLine($"CommandArgs: {item.CommandArgs}");
                     Console.WriteLine($"RecreateZip: {item.RecreateZip}");
+                    Console.WriteLine();
 
-                    if (!File.Exists(item.PathToZip))
+                    if (!Directory.Exists(item.PathToZip))
                     {
-                        Console.WriteLine($"File not exists: {item.PathToZip}");
+                        Console.WriteLine($"Directory not exists: {item.PathToZip}");
                         continue;
                     }
 
-                    var destFolder = Path.GetDirectoryName(item.PathToResult);
+                    var files = Directory.GetFiles(item.PathToZip, item.ZipMask ?? "*", SearchOption.TopDirectoryOnly);
 
-                    if (!Path.Exists(destFolder))
+                    foreach (var file in files)
                     {
-                        Console.WriteLine($"Path not exists: {destFolder}");
-                        continue;
+                        Console.WriteLine($"Found zip file: {file}");
                     }
 
-                    item.Execute(settings);
+                    var destFolder = item.PathToResult;
+
+                    if (!Directory.Exists(destFolder))
+                    {
+                        Console.WriteLine($"Path to result not exists: {destFolder}");
+
+                        if (destFolder != null)
+                        {
+                            Directory.CreateDirectory(destFolder);
+                            Console.WriteLine($"Created folder: {destFolder}");
+                        }
+                        else
+                            continue;
+                    }
+
+                    Console.WriteLine();
+                    Console.WriteLine($"Processing zip files...");
+                    Console.WriteLine();
+
+                    foreach (var file in files)
+                    {
+                        var tempFolder = item.ProcessZipFile(file, destFolder);
+
+                        if (tempFolder == null)
+                        {
+                            continue;
+                        }
+
+                        if (item.RecreateZip ?? false)
+                        {
+                            Console.WriteLine($"Recreating zip file: {file}");
+
+                            var fileName = Path.GetFileName(file);
+                            var resultFile = Path.Combine(destFolder, fileName);
+                            FileUtils.DeleteIfExists(resultFile);
+                            SharpCompressUtils.ZipFolder(tempFolder, resultFile, CompressionType.Deflate);
+
+                            Console.WriteLine($"Recreated zip file: {file}");
+                        }
+                    }
                 }
 
                 if (itemsProcessed == 0)
@@ -255,7 +299,7 @@ namespace Alternet.UI
 
             DebugUtils.DebugCallIf(false, GenerateBindableSettings.TestSave);
 
-            if(!File.Exists(pathToSettings))
+            if (!File.Exists(pathToSettings))
             {
                 Console.WriteLine($"Settings file not found");
                 return;
@@ -342,7 +386,7 @@ namespace Alternet.UI
 
             if (App.IsMacOS)
             {
-                if(App.IsArmOS)
+                if (App.IsArmOS)
                     return "maccatalyst-arm64";
                 else
                     return "maccatalyst-x64";
@@ -583,7 +627,7 @@ namespace Alternet.UI
             {
                 var name = Path.GetFileNameWithoutExtension(file);
                 var ext = Path.GetExtension(file);
-                name += "_Dark"+ext;                
+                name += "_Dark" + ext;
 
                 var resultPath = Path.Combine(pathToResult, name);
 
@@ -726,7 +770,7 @@ namespace Alternet.UI
             AddImage(10, "42-Method.png"); //MethodImage-Purple.txt
             AddImage(11, "52-Property.png"); //PropImage-Std.svg
             AddImage(12, "57-Struct.png"); //StructImage-Blue.txt
-            
+
             AddImage(13, "3-ClassPrivate.png"); //ClassImage-Private.txt
             AddImage(14, "8-ConstantPrivate.png"); //ConstImage-Private.txt
             AddImage(15, "13-DelegatePrivate.png"); //DelegateImage-Private.txt
@@ -737,7 +781,7 @@ namespace Alternet.UI
             AddImage(20, "44-MethodPrivate.png"); //MethodImage-Private.txt
             AddImage(21, "54-PropertyPrivate.png"); //PropImage-Private.txt
             AddImage(22, "59-StructPrivate.png"); //StructImage-Private.txt
-            
+
             AddImage(23, "4-ClassProtected.png"); //ClassImage-Protected-Internal.txt
             AddImage(24, "9-ConstantProtected.png"); //ConstImage-Protected-Internal.txt
             AddImage(25, "14-DelegateProtected.png"); //DelegateImage-Protected-Internal.txt
@@ -748,7 +792,7 @@ namespace Alternet.UI
             AddImage(30, "45-MethodProtected.png"); //MethodImage-Protected-Internal.txt
             AddImage(31, "55-PropertyProtected.png"); //PropImage-Protected-Internal.txt
             AddImage(32, "60-StructProtected.png"); //StructImage-Protected-Internal.txt
-            
+
             AddImage(33, "1-Class.png"); //ClassImage-Yellow.txt
             AddImage(34, "6-Constant.png"); //ConstImage-Std.txt
             AddImage(35, "11-Delegate.png"); //DelegateImage-Purple.txt

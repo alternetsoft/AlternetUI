@@ -8,6 +8,8 @@ namespace Alternet.UI
     {
         public BaseCollection<RezipCommandSetting> Items { get; } = new();
 
+        public string? SettingsFolder { get; set; }
+
         public static void TestSave()
         {
             RezipCommandSettings settings = new();

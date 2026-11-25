@@ -46,6 +46,58 @@ namespace Alternet.UI
         public static Color? AccentColor => accentColor.Value;
 
         /// <summary>
+        /// Gets the path to the SignTool executable on Windows, if available.
+        /// This property uses lazy initialization to retrieve the path only when accessed for the first time.
+        /// </summary>
+        public static Lazy<string?> SignToolPath => new(GetSignToolPath);
+
+        /// <summary>
+        /// Gets the path to the SignTool executable on Windows, if available.
+        /// This method doesn't cache the result, so it can be called multiple times to check for updates in the registry.
+        /// If you need cached behavior, use the <see cref="SignToolPath"/> property instead.
+        /// </summary>
+        /// <returns>The full path to the SignTool executable, or <c>null</c> if not found.</returns>
+        public static string? GetSignToolPath()
+        {
+            if (!App.IsWindowsOS)
+                return null;
+
+            var windowsKitsRoot = Registry.GetValue(
+                @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows Kits\Installed Roots",
+                "KitsRoot10",
+                null) as string;
+
+            if (string.IsNullOrEmpty(windowsKitsRoot))
+                return null;
+
+            string[] versions =
+            {
+                "10.0.26100.0",
+                "10.0.22621.0",
+                "10.0.19041.0",
+                "10.0.18362.0",
+                "10.0.17763.0",
+                "10.0.17134.0",
+                "10.0.16299.0",
+            };
+
+            foreach (var version in versions)
+            {
+                var signToolPath = Path.Combine(
+                    windowsKitsRoot,
+                    "bin",
+                    version,
+                    "x64",
+                    "signtool.exe");
+
+                if (File.Exists(signToolPath))
+                    return Path.GetFullPath(signToolPath);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets the path to the Windows Media folder, typically located at "C:\Windows\Media".
         /// </summary>
         /// <returns>The path to the Windows Media folder.</returns>

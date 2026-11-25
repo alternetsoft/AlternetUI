@@ -217,10 +217,16 @@ namespace Alternet.UI
         /// Deletes the specified file if it exists.
         /// </summary>
         /// <param name="pathToFile">Path to file.</param>
-        public static void DeleteIfExists(string pathToFile)
+        /// <returns><c>true</c> if the file was deleted; otherwise, <c>false</c>.</returns>
+        public static bool DeleteIfExists(string pathToFile)
         {
             if (File.Exists(pathToFile))
+            {
                 File.Delete(pathToFile);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -402,10 +408,12 @@ namespace Alternet.UI
         /// Returns a collection of the full file names that match any of the specified search patterns in a given path,
         /// and optionally searches subdirectories.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="searchPattern"></param>
-        /// <param name="searchOption"></param>
-        /// <returns></returns>
+        /// <param name="path">The path to the directory to search.</param>
+        /// <param name="searchPattern">An array of search patterns to match
+        /// against the names of files in the directory.</param>
+        /// <param name="searchOption">Specifies whether the search
+        /// operation should include only the current directory or all subdirectories.</param>
+        /// <returns>A collection of the full file names that match any of the specified search patterns.</returns>
         public static IEnumerable<string> FindFiles(
             string path,
             string[] searchPattern,
@@ -433,6 +441,25 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Returns a collection of the full file names that match any of the specified search patterns in a given path,
+        /// and optionally searches subdirectories.
+        /// </summary>
+        /// <param name="path">The path to the directory to search.</param>
+        /// <param name="searchPatterns">A semicolon-separated string of search patterns to match
+        /// against the names of files in the directory.</param>
+        /// <param name="searchOption">Specifies whether the search
+        /// operation should include only the current directory or all subdirectories.</param>
+        /// <returns>A collection of the full file names that match any of the specified search patterns.</returns>
+        public static IEnumerable<string> FindFiles(
+            string path,
+            string searchPatterns,
+            SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            string[] patterns = searchPatterns.Split(';');
+            return FindFiles(path, patterns, searchOption);
         }
 
         /// <summary>

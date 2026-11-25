@@ -45,7 +45,7 @@
     },
     "Rezip": {
       "commandName": "Project",
-      "commandLineArgs": "-r=rezip Settings=\"E:\\DIMA\\AlternetUI\\Source\\Tools\\Alternet.UI.RunCmd\\RezipCommandSettings.xml\""
+      "commandLineArgs": "-r=rezip Settings=\"..\\..\\..\\..\\..\\..\\..\\AlterNET-UI-Pro\\NugetSign\\NugetSignTaskParams.xml\""
     }
   }
 }

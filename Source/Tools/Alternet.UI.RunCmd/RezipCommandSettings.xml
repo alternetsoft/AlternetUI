@@ -3,7 +3,7 @@
   <Items>
 
     <RezipCommandSetting>
-      <Ignore>false</Ignore>
+      <Ignore>true</Ignore>
       <RootFolder></RootFolder>
       <PathToZip></PathToZip>
       <PathToResult></PathToResult>

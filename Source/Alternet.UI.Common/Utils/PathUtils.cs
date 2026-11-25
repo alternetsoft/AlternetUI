@@ -7,6 +7,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Win32;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -64,7 +66,8 @@ namespace Alternet.UI
         /// Resets the temporary path configuration to use a unique subfolder for the current application.
         /// </summary>
         /// <remarks>Call this method to clear any previously set temporary path subfolder, ensuring that
-        /// subsequent operations will generate a new unique subfolder for the application's temporary files. This can
+        /// subsequent operations will generate a new unique subfolder
+        /// for the application's temporary files. This can
         /// be useful when isolating temporary data after configuration changes.</remarks>
         public static void ResetTempPathUniquePerApp()
         {
@@ -93,9 +96,11 @@ namespace Alternet.UI
         /// <remarks>Use this method to construct file paths for files stored within the application's
         /// designated folder. The returned path is platform-specific and depends on the application's folder
         /// location.</remarks>
-        /// <param name="relativeFileName">The relative file name to append to the application's folder path. Cannot be null or contain invalid path
+        /// <param name="relativeFileName">The relative file name to append to the application's folder path.
+        /// Cannot be null or contain invalid path
         /// characters.</param>
-        /// <returns>A string containing the full file path that combines the application's folder and the specified relative
+        /// <returns>A string containing the full file path that combines
+        /// the application's folder and the specified relative
         /// file name.</returns>
         public static string GetFilePathInAppFolder(string relativeFileName)
         {
@@ -105,11 +110,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Combines the current working directory with a specified relative file name to produce an absolute file path.
+        /// Combines the current working directory with a specified relative
+        /// file name to produce an absolute file path.
         /// </summary>
-        /// <param name="relativeFileName">The name of the file, relative to the current working directory. Cannot be null or contain invalid path
+        /// <param name="relativeFileName">The name of the file, relative to the current working directory.
+        /// Cannot be null or contain invalid path
         /// characters.</param>
-        /// <returns>A string containing the absolute path to the specified file in the current working directory.</returns>
+        /// <returns>A string containing the absolute path to the specified file
+        /// in the current working directory.</returns>
         public static string GetFilePathInCurrentFolder(string relativeFileName)
         {
             string currentFolder = Directory.GetCurrentDirectory();
@@ -141,7 +149,8 @@ namespace Alternet.UI
         /// Gets the full path to a temporary subdirectory named 'Alternet' within the system's temporary folder.
         /// </summary>
         /// <remarks>Use this method to obtain a dedicated temporary directory for storing files related
-        /// to the Alternet application. The returned path is not guaranteed to exist; callers may need to create the
+        /// to the Alternet application. The returned path is not guaranteed
+        /// to exist; callers may need to create the
         /// directory before using it.</remarks>
         /// <returns>A string containing the full path to the 'Alternet' subdirectory
         /// inside the system's temporary directory.</returns>
@@ -298,7 +307,8 @@ namespace Alternet.UI
         {
             get
             {
-                return localApplicationDataPath ??= Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                return localApplicationDataPath
+                    ??= Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             }
 
             set
@@ -633,7 +643,8 @@ namespace Alternet.UI
         /// <remarks>If the URL does not contain a file name segment, the method returns false.</remarks>
         /// <param name="url">The URL to examine. Can be absolute or relative.</param>
         /// <param name="fileName">The file name to compare against the end of the URL. Cannot be null.</param>
-        /// <param name="comparison">The string comparison option to use when comparing the file name. The default is
+        /// <param name="comparison">The string comparison option
+        /// to use when comparing the file name. The default is
         /// StringComparison.OrdinalIgnoreCase.</param>
         /// <returns>true if the URL ends with the specified file name according to the comparison option;
         /// otherwise, false.</returns>
@@ -675,7 +686,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Tries to extract the file name from the given URL.
-        /// The method returns <c>true</c> if the file name was successfully extracted; otherwise, it returns <c>false</c>.
+        /// The method returns <c>true</c> if the file name was successfully extracted;
+        /// otherwise, it returns <c>false</c>.
         /// </summary>
         /// <param name="url">The URL from which to extract the file name.</param>
         /// <param name="fileName">When this method returns, contains the extracted file name if the
