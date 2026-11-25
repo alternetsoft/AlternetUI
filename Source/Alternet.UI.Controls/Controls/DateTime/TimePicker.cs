@@ -151,26 +151,18 @@ namespace Alternet.UI
 
             RoundCorners();
 
-            var itemEnterValue = ellipsisButtonMenu.Add(Localized.EnterValue + "...", () =>
-            {
-                DialogFactory.AskTextAsync(Localized.EnterValue, (result) =>
-                {
-                    if(string.IsNullOrWhiteSpace(result))
-                        return;
-                    AsClipboardString = result;
-                }, AsClipboardString);
-            });
+            var itemEnterValue = ellipsisButtonMenu.Add(Localized.EnterValue + "...", ShowEnterValueDialog);
 
             itemEnterValue.Name = "EnterValue";
 
             ellipsisButtonMenu.AddSeparator();
 
-            var itemSetToNow = ellipsisButtonMenu.Add(Localized.SetToNow, () =>
+            var itemSetCurrentTime = ellipsisButtonMenu.Add(Localized.SetCurrentTime, () =>
             {
                 Value = DateTime.Now;
             });
 
-            itemSetToNow.Name = "SetToNow";
+            itemSetCurrentTime.Name = "SetCurrentTime";
 
             ellipsisButtonMenu.AddSeparator();
 
@@ -206,7 +198,7 @@ namespace Alternet.UI
 
             var itemPaste = ellipsisButtonMenu.Add(Localized.ButtonPaste, () =>
             {
-                AsClipboardString = Clipboard.GetText();
+                SetTimeOrShowError(Clipboard.GetText());
             });
 
             itemPaste.Name = "Paste";
@@ -318,16 +310,29 @@ namespace Alternet.UI
 
             set
             {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    return;
-                }
-
-                if (!DateTime.TryParse(value, FormatProvider, System.Globalization.DateTimeStyles.None, out var dt))
-                    return;
-
-                Value = dt;
+                if (TryParse(value, out var result))
+                    AsTimeOnly = result;
             }
+        }
+
+        /// <summary>
+        /// Tries to parse the specified string value into a <see cref="TimeOnly"/> object.
+        /// </summary>
+        /// <param name="value">The string value to parse.</param>
+        /// <param name="result">The parsed <see cref="TimeOnly"/> result.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        public virtual bool TryParse(string? value, out TimeOnly result)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                result = default;
+                return false;
+            }
+
+            if (!TimeOnly.TryParse(value, FormatProvider, System.Globalization.DateTimeStyles.None, out result))
+                return false;
+
+            return true;
         }
 
         /// <summary>
@@ -506,6 +511,35 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Parses the specified string value into a <see cref="TimeOnly"/> object.
+        /// If parsing fails, a tooltip with an error message is displayed.
+        /// If parsing is successful, the <see cref="AsTimeOnly"/> property is updated with the parsed value.
+        /// </summary>
+        /// <param name="s">The string representation of the time to parse. </param>
+        public virtual void SetTimeOrShowError(string? s)
+        {
+            if (TryParse(s, out var timeValue))
+                AsTimeOnly = timeValue;
+            else
+            {
+                Post(() =>
+                {
+                    if (DisposingOrDisposed)
+                        return;
+
+                    RichToolTipParams tooltip = new()
+                    {
+                        Text = Localized.ErrInvalidTimeFormat,
+                        Icon = MessageBoxIcon.Error,
+                        AutoHideOnEvents = false,
+                    };
+
+                    UI.ToolTip.Instance.ShowTemp(tooltip, MainControl);
+                });
+            }
+        }
+
         /// <inheritdoc/>
         public override void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
@@ -525,6 +559,31 @@ namespace Alternet.UI
                 if (!ReadOnly)
                     IncPartValue(-1);
             }
+        }
+
+        /// <summary>
+        /// Shows a dialog that prompts the user to enter a time value using a text input.
+        /// </summary>
+        public virtual void ShowEnterValueDialog()
+        {
+            TextFromUserParams prm = new()
+            {
+                Title = Localized.EnterValue,
+                DefaultValue = AsClipboardString,
+                OnSetup = (window) =>
+                {
+                    if (window is not WindowTextInput textInputWindow)
+                        return;
+                    var picker = textInputWindow.TextPicker;
+                },
+                OnApply = (s) =>
+                {
+                    if (string.IsNullOrWhiteSpace(s))
+                        return;
+                    SetTimeOrShowError(s);
+                },
+            };
+            DialogFactory.GetTextFromUserAsync(prm);
         }
 
         /// <summary>
