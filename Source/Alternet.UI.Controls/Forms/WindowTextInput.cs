@@ -83,7 +83,8 @@ namespace Alternet.UI
 
             TextPicker.EnterPressed += (s, e) =>
             {
-                Buttons.HandleOkButtonClick(Buttons.OkButton, e);
+                if (Buttons.OkButton.Enabled)
+                    Buttons.HandleOkButtonClick(Buttons.OkButton, e);
             };
 
             TextPicker.EscapePressed += (s, e) =>
@@ -285,9 +286,19 @@ namespace Alternet.UI
             e.DelayedTextChanged -= HandleTextChanged;
             e.DelayedTextChanged += HandleTextChanged;
 
+            e.ValueHelper.ValidatorReporter = Editor.InnerPicture;
+            e.ValueHelper.AutoShowError = true;
+
             void HandleTextChanged(object? sender, EventArgs args)
             {
-                Buttons.OkButton.Enabled = !e.HasErrors;
+                var isValid = !e.HasErrors;
+
+                if (isValid)
+                    TextPicker.ValueHelper.ReportValidatorError(false);
+                else
+                    TextPicker.ValueHelper.ReportValidatorError(true);
+
+                Buttons.OkButton.Enabled = isValid;
             }
         }
 
@@ -299,6 +310,33 @@ namespace Alternet.UI
         {
             Initialize(prm);
             Editor.Text = prm.SafeDefaultValueAsString;
+            TextPicker.ValueHelper.SetErrorText(ValueValidatorKnownError.InvalidFormat);
+
+            TextPicker.DelayedTextChanged -= HandleTextChanged;
+
+            if (prm.IsValidPredicate is not null)
+            {
+                TextPicker.DelayedTextChanged += HandleTextChanged;
+                TextPicker.ValueHelper.ValidatorReporter = Editor.InnerPicture;
+                TextPicker.ValueHelper.AutoShowError = true;
+            }
+            else
+            {
+                TextPicker.ValueHelper.ValidatorReporter = null;
+                TextPicker.ValueHelper.AutoShowError = false;
+            }
+
+            void HandleTextChanged(object? sender, EventArgs args)
+            {
+                var isValid = prm.IsValidPredicate?.Invoke(TextPicker.Text) ?? true;
+
+                if (isValid)
+                    TextPicker.ValueHelper.ReportValidatorError(false);
+                else
+                    TextPicker.ValueHelper.ReportValidatorError(true);
+
+                Buttons.OkButton.Enabled = isValid;
+            }
         }
 
         /// <summary>
@@ -317,6 +355,9 @@ namespace Alternet.UI
             {
                 Editor.MainControl.ValueHelper.MaxLength = maxLength;
             }
+
+            TextPicker.TextEditedAction = null;
+            TextPicker.TextEditingAction = null;
         }
     }
 }
