@@ -81,6 +81,11 @@ namespace Alternet.UI
         public virtual int MaxLength { get; set; } = -1;
 
         /// <summary>
+        /// Gets or sets predicate which is used to validate input value.
+        /// </summary>
+        public virtual Predicate<string?>? IsValidPredicate { get; set; }
+
+        /// <summary>
         /// Gets or sets accept button text.
         /// </summary>
         /// <remarks>
