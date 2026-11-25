@@ -151,57 +151,56 @@ namespace Alternet.UI
 
             RoundCorners();
 
-            var itemEnterValue = ellipsisButtonMenu.Add(Localized.EnterValue + "...", ShowEnterValueDialog);
-
-            itemEnterValue.Name = "EnterValue";
-
-            ellipsisButtonMenu.AddSeparator();
-
-            var itemSetCurrentTime = ellipsisButtonMenu.Add(Localized.SetCurrentTime, () =>
-            {
-                Value = DateTime.Now;
-            });
-
-            itemSetCurrentTime.Name = "SetCurrentTime";
+            var itemEnterValue = ellipsisButtonMenu.Add(
+                "MenuItemEnterValue", Localized.EnterValue + "...", ShowEnterValueDialog);
 
             ellipsisButtonMenu.AddSeparator();
 
-            var itemRoundToMinute = ellipsisButtonMenu.Add(Localized.RoundToMinute, () =>
-            {
-                AsTimeOnly = new TimeOnly(time.Hour, time.Minute);
-            });
-
-            itemRoundToMinute.Name = "RoundToMinute";
-
-            var itemRoundTo5Minutes = ellipsisButtonMenu.Add(string.Format(Localized.RoundToMinutes, 5), () =>
-            {
-                AsTimeOnly = new TimeOnly(time.Hour, time.Minute / 5 * 5);
-            });
-
-            itemRoundTo5Minutes.Name = "RoundTo5Minutes";
-
-            var itemRoundTo15Minutes = ellipsisButtonMenu.Add(string.Format(Localized.RoundToMinutes, 15), () =>
-            {
-                AsTimeOnly = new TimeOnly(time.Hour, time.Minute / 15 * 15);
-            });
-
-            itemRoundTo15Minutes.Name = "RoundTo15Minutes";
+            var itemSetCurrentTime = ellipsisButtonMenu.Add(
+                "MenuItemSetCurrentTime", Localized.SetCurrentTime, SetCurrentTime);
 
             ellipsisButtonMenu.AddSeparator();
 
-            var itemCopy = ellipsisButtonMenu.Add(Localized.ButtonCopy, () =>
-            {
-                Clipboard.SetText(AsClipboardString);
-            });
+            var itemRoundToMinute = ellipsisButtonMenu.Add(
+                "MenuItemRoundToMinute",
+                Localized.RoundToMinute,
+                () =>
+                {
+                    AsTimeOnly = new TimeOnly(time.Hour, time.Minute);
+                });
 
-            itemCopy.Name = "Copy";
+            var itemRoundTo5Minutes = ellipsisButtonMenu.Add(
+                "MenuItemRoundTo5Minutes",
+                string.Format(Localized.RoundToMinutes, 5),
+                () =>
+                {
+                    AsTimeOnly = new TimeOnly(time.Hour, time.Minute / 5 * 5);
+                });
 
-            var itemPaste = ellipsisButtonMenu.Add(Localized.ButtonPaste, () =>
-            {
-                SetTimeOrShowError(Clipboard.GetText());
-            });
+            var itemRoundTo15Minutes = ellipsisButtonMenu.Add(
+                "MenuItemRoundTo15Minutes",
+                string.Format(Localized.RoundToMinutes, 15),
+                () =>
+                {
+                    AsTimeOnly = new TimeOnly(time.Hour, time.Minute / 15 * 15);
+                });
 
-            itemPaste.Name = "Paste";
+            ellipsisButtonMenu.AddSeparator();
+
+            var itemCopy = ellipsisButtonMenu.Add(
+                "MenuItemCopy",
+                Localized.ButtonCopy, () =>
+                {
+                    Clipboard.SetText(AsClipboardString);
+                });
+
+            var itemPaste = ellipsisButtonMenu.Add(
+                "MenuItemPaste",
+                Localized.ButtonPaste,
+                () =>
+                {
+                    SetTimeOrShowError(Clipboard.GetText());
+                });
 
             ContextMenu = ellipsisButtonMenu;
         }
@@ -570,11 +569,11 @@ namespace Alternet.UI
             {
                 Title = Localized.EnterValue,
                 DefaultValue = AsClipboardString,
-                OnSetup = (window) =>
+                IsValidPredicate = (s) =>
                 {
-                    if (window is not WindowTextInput textInputWindow)
-                        return;
-                    var picker = textInputWindow.TextPicker;
+                    if (string.IsNullOrWhiteSpace(s))
+                        return true;
+                    return TryParse(s, out _);
                 },
                 OnApply = (s) =>
                 {
@@ -584,6 +583,19 @@ namespace Alternet.UI
                 },
             };
             DialogFactory.GetTextFromUserAsync(prm);
+        }
+
+        /// <summary>
+        /// Sets the current system time as the value of the <c>TimePicker</c>.
+        /// If the <see cref="SecondsVisible"/> property is true, the current time with seconds is used;
+        /// otherwise, the current time without seconds is used.
+        /// </summary>
+        public virtual void SetCurrentTime()
+        {
+            if (SecondsVisible)
+                AsTimeOnly = DateTime.Now.ToTimeOnly();
+            else
+                AsTimeOnly = DateUtils.CurrentTimeWithoutSeconds;
         }
 
         /// <summary>
