@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Panel with Ok, Cancel and Apply buttons.
     /// </summary>
     [ControlCategory(KnownControlCategory.Containers)]
-    public partial class PanelOkCancelButtons : StackPanel
+    public partial class PanelOkCancelButtons : TransparentPanel
     {
         private XButton? applyButton;
         private XButton? cancelButton;
@@ -71,10 +71,11 @@ namespace Alternet.UI
         /// to create and configure.</param>
         public PanelOkCancelButtons(CreateParameters prm)
         {
+            Layout = LayoutStyle.Horizontal;
+
             SuspendLayout();
             try
             {
-                Orientation = StackPanelOrientation.Horizontal;
                 HorizontalAlignment = UI.HorizontalAlignment.Right;
                 VerticalAlignment = UI.VerticalAlignment.Center;
 
@@ -843,7 +844,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void HandleCancelButtonClick(object? sender, EventArgs e)
+        public virtual void HandleCancelButtonClick(object? sender, EventArgs e)
         {
             OnButtonClicked(KnownButton.Cancel);
             CancelButtonClick?.Invoke(this, e);
@@ -854,7 +855,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void HandleOkButtonClick(object? sender, EventArgs e)
+        public virtual void HandleOkButtonClick(object? sender, EventArgs e)
         {
             OnButtonClicked(KnownButton.OK);
             OkButtonClick?.Invoke(this, e);
@@ -865,7 +866,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
-        protected virtual void HandleApplyButtonClick(object? sender, EventArgs e)
+        public virtual void HandleApplyButtonClick(object? sender, EventArgs e)
         {
             OnButtonClicked(KnownButton.Apply);
             ApplyButtonClick?.Invoke(this, e);
@@ -878,7 +879,7 @@ namespace Alternet.UI
         /// derived class to provide custom handling for button clicks.</remarks>
         /// <param name="button">The button that was clicked, or <see langword="null"/>
         /// if no specific button is associated with the event.</param>
-        protected virtual void OnButtonClicked(KnownButton? button)
+        public virtual void OnButtonClicked(KnownButton? button)
         {
             LastButtonClicked = button;
 
