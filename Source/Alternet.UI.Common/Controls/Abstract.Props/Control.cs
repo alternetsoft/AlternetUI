@@ -35,6 +35,7 @@ namespace Alternet.UI
         /// </summary>
         public Control()
         {
+            CanSelect = true;
         }
 
         /// <summary>
@@ -317,22 +318,6 @@ namespace Alternet.UI
         public override Thickness NativePadding
         {
             get => SafeHandler?.NativePadding ?? Thickness.Empty;
-        }
-
-        /// <inheritdoc/>
-        public override bool IsGraphicControl
-        {
-            get
-            {
-                return !CanSelect;
-            }
-
-            set
-            {
-                if (IsGraphicControl == value)
-                    return;
-                UpdateFocusFlags(!value, !value);
-            }
         }
 
         /// <inheritdoc/>

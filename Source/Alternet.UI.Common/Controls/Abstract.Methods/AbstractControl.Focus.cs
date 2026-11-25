@@ -189,11 +189,14 @@ namespace Alternet.UI
         {
             get
             {
-                return true;
+                return !CanSelect;
             }
 
             set
             {
+                if (IsGraphicControl == value)
+                    return;
+                UpdateFocusFlags(!value, !value);
             }
         }
 
@@ -311,8 +314,10 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual AbstractControl[] GetFocusableChildren(bool recursive, bool sortByTabIndex)
         {
-            var result = GetFocusableChildren(recursive).ToArray();
-            if (sortByTabIndex)
+            var focusableChildren = GetFocusableChildren(recursive);
+            var result = focusableChildren.ToArray();
+
+            if (sortByTabIndex && result.Length > 1)
                 Array.Sort(result, Comparison);
             return result;
 
