@@ -8,13 +8,24 @@ using Alternet.Drawing;
 namespace Alternet.UI;
 
 /// <summary>
-/// Represents a tooltip component that displays a small pop-up window with a brief description of a control's purpose
-/// when the user hovers the mouse pointer over the control. Currently, this class is not fully implemented and
+/// Represents a tooltip component that displays a small pop-up window
+/// with a brief description of a control's purpose
+/// when the user hovers the mouse pointer over the control.
+/// Currently, this class is not fully implemented and
 /// not all features are available.
 /// </summary>
 [DefaultEvent(nameof(Popup))]
 public partial class ToolTip : Component
 {
+    /// <summary>
+    /// Gets or sets the singleton instance of the <see cref="ToolTip"/> class.
+    /// </summary>
+    public static ToolTip Instance
+    {
+        get => instance ??= new ToolTip();
+        set => instance = value;
+    }
+
     /// <summary>
     /// Gets or sets default value of the <see cref="AutomaticDelay"/> property.
     /// This is the time (in milliseconds) that passes before the tooltip appears.
@@ -37,6 +48,8 @@ public partial class ToolTip : Component
     /// instances to appear as the mouse pointer moves from one tooltip region to another.
     /// </summary>
     public static int DefaultReshowDelay = 100;
+
+    private static ToolTip? instance;
 
     private Color backColor;
     private Color foreColor;
@@ -369,7 +382,7 @@ public partial class ToolTip : Component
     }
 
     /// <summary>
-    /// Associates tooltip with the specified control and displays it at the specified point.
+    /// Displays tooltip at the specified point. No tooltip association with the control is made.
     /// </summary>
     /// <param name="point">The point at which to display the tooltip. If null, the tooltip will be displayed
     /// at the default location.</param>
@@ -378,10 +391,8 @@ public partial class ToolTip : Component
     /// <param name="duration">The duration for which the tooltip is displayed (in milliseconds).
     /// If duration is not specified, the tooltip will be displayed until the Hide method is called,
     /// or until the parent form is minimized, hidden, or dismissed.</param>
-    public virtual void Show(object? tooltip, AbstractControl control, PointD? point, int? duration = null)
+    public virtual void ShowUnset(object? tooltip, AbstractControl control, PointD? point, int? duration = null)
     {
-        SetToolTip(control, tooltip);
-
         if (App.IsMaui || UseOverlays)
         {
             ToolTipFactory.ShowInOverlay(
@@ -394,8 +405,37 @@ public partial class ToolTip : Component
         }
         else
         {
-            ToolTipWindow.ShowToolTip(control, point);
+            ToolTipWindow.ShowToolTip(control, point, tooltip);
         }
+    }
+
+    /// <summary>
+    /// Displays tooltip at the specified point for a default duration.
+    /// No tooltip association with the control is made.
+    /// </summary>
+    /// <param name="tooltip">The text to display in the tooltip.</param>
+    /// <param name="control">The control with which the tooltip is associated.</param>
+    /// <param name="point">The point at which to display the tooltip. If null, the tooltip will be displayed
+    /// at the default location.</param>
+    public virtual void ShowTemp(object? tooltip, AbstractControl control, PointD? point = null)
+    {
+        ShowUnset(tooltip, control, point, TimerUtils.DefaultToolTipTimeout);
+    }
+
+    /// <summary>
+    /// Associates tooltip with the specified control and displays it at the specified point.
+    /// </summary>
+    /// <param name="point">The point at which to display the tooltip. If null, the tooltip will be displayed
+    /// at the default location.</param>
+    /// <param name="tooltip">The text to display in the tooltip.</param>
+    /// <param name="control">The control with which the tooltip is associated.</param>
+    /// <param name="duration">The duration for which the tooltip is displayed (in milliseconds).
+    /// If duration is not specified, the tooltip will be displayed until the Hide method is called,
+    /// or until the parent form is minimized, hidden, or dismissed.</param>
+    public virtual void Show(object? tooltip, AbstractControl control, PointD? point, int? duration = null)
+    {
+        SetToolTip(control, tooltip);
+        ShowUnset(tooltip, control, point, duration);
     }
 
     /// <summary>
