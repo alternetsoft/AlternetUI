@@ -3080,6 +3080,9 @@ namespace Alternet.UI
                 RaiseToolClick(s, e);
             };
 
+            speedButton.IsNormalTransparent = true;
+            speedButton.IsDisabledTransparent = true;
+
             speedButton.Padding = DefaultItemPadding;
             speedButton.ImageVisible = imageVisible;
             speedButton.TextVisible = textVisible;
@@ -3796,9 +3799,8 @@ namespace Alternet.UI
             {
                 ParentBackColor = false;
                 ParentForeColor = false;
-                bool isDark = SystemSettings.AppearanceIsDark;
-                BackColor = DefaultColors.MauiToolBar.BackColor(isDark);
-                ForeColor = DefaultColors.MauiToolBar.TextColor(isDark);
+                BackgroundColor = DefaultColors.MauiToolBar.BackColor;
+                ForegroundColor = DefaultColors.MauiToolBar.TextColor;
             }
             else
             {
@@ -3943,10 +3945,26 @@ namespace Alternet.UI
     }
 
     /// <summary>
+    /// Represents a toolbar with a transparent background,
+    /// allowing the underlying content to be visible through it.
+    /// </summary>
+    public partial class TransparentToolBar : ToolBar
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TransparentToolBar"/> class.
+        /// </summary>
+        public TransparentToolBar()
+        {
+            IsTransparent = true;
+            IgnorePaint = true;
+        }
+    }
+
+    /// <summary>
     /// Implements a toolbar with a title label and a collapse button,
     /// allowing the user to collapse or expand the associated content.
     /// </summary>
-    public class SectionHeaderToolBar : ToolBar
+    public partial class SectionHeaderToolBar : TransparentToolBar
     {
         /// <summary>
         /// Gets or sets the default image for the collapse button in the <see cref="SectionHeaderToolBar"/> control.
