@@ -1,3 +1,27 @@
+# 1.2.2 (2026 November 25)
+
+- WindowTextInput: Improve text input validation feedback. The dialog will display the error icon until the input is valid.
+- WindowTextInput: Add input validation predicate to parameters. 
+- Improve generic control focus handling.
+- TimePicker: Parse time-only values and show an error tooltip for invalid pasted or manually entered times.
+- ToolTip: Add a shared ToolTip instance and methods to display tooltips without associating them with a control.
+- WindowTextInput: Improve customization.
+- WindowTextInput: Fixed regression not showing the error tooltip when the input is invalid.
+- WindowTextInput: Fixed regression not handling Enter and Escape keys.
+- Window: Expose events before and after ShowDialogAsync shows and focuses the window.
+- Propagate the auto-hide setting to the tooltip window and allow callers to supply tooltip content directly.
+- TimePicker: Add an ellipsis menu with time entry, set-to-now, rounding, copy, and paste actions.
+- Fix clipboard text retrieval.
+- DrawText: Add support for underline and strikeout text.
+- Font: Add a helper that computes the maximum ascent across text segments with different styles.
+- Graphics: DrawText overload with lineAccent param.
+- Fix exception in ShowDialog when text editor popup is shown.
+- VirtualListBox: Expose the last hovered item index and ID, raise an event when the hovered item changes, and hide stale tooltips.
+- Fix behavior on color mode change for some of the controls.
+- Lighten default dark status bar background
+
+---
+
 # 1.2.1 (2026 November 23)
 
 - Create TimeZonePicker.
