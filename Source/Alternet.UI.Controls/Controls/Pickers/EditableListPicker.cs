@@ -97,6 +97,16 @@ namespace Alternet.UI
         public event EventHandler<KeyEventArgs>? EditorKeyDown;
 
         /// <summary>
+        /// Gets or sets an action which is called when the text is changed.
+        /// </summary>
+        public Action<string?>? TextEditingAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets an action which is called when the text is edited.
+        /// </summary>
+        public Action<string?>? TextEditedAction { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the text in the control is editable.
         /// </summary>
         [Browsable(false)]
@@ -375,6 +385,8 @@ namespace Alternet.UI
         /// <param name="text">The new text.</param>
         protected virtual void RaiseTextEdited(string? text)
         {
+            TextEditedAction?.Invoke(text);
+
             if (TextEdited != null)
             {
                 var args = new StringEventArgs(text ?? string.Empty);
@@ -393,6 +405,8 @@ namespace Alternet.UI
         /// <param name="text">The new text.</param>
         protected virtual void RaiseTextEditing(string? text)
         {
+            TextEditingAction?.Invoke(text);
+
             if (TextEditing != null)
             {
                 var args = new StringEventArgs(text ?? string.Empty);
