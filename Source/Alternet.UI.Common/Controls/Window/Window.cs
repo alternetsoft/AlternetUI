@@ -1016,12 +1016,12 @@ namespace Alternet.UI
         /// Gets or sets the icon for the window.
         /// </summary>
         /// <value>
-        /// An <see cref="ImageSet"/> that represents the icon for the window.
+        /// An <see cref="IconSet"/> that represents the icon for the window.
         /// </value>
         /// <remarks>
         /// A window's icon designates the picture that represents the window in the taskbar
         /// as well as the icon that is displayed for the control box of the window.
-        /// If images of several sizes are contained within the <see cref="ImageSet"/>, the
+        /// If images of several sizes are contained within the <see cref="IconSet"/>, the
         /// most fitting size is selected automatically.
         /// </remarks>
         public virtual IconSet? Icon

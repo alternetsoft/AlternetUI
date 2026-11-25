@@ -173,7 +173,7 @@ namespace Alternet.UI
             Size = (950, 800);
             StartLocation = WindowStartLocation.CenterScreen;
 
-            Icon = IconSet.FromUrlOrDefault("embres:ControlsSampleDll.Sample.ico", App.DefaultIcon);
+            Icon = KnownIcons.CreateIconWithText(null, null, "ui");
 
             AddPages();
 
@@ -204,6 +204,11 @@ namespace Alternet.UI
             }
 
             ActiveControl = pageContainer.LeftControl;
+        }
+
+        internal IconSet? GetIcon(string name)
+        {
+            return IconSet.FromUrlOrDefault("embres:ControlsSampleDll.Sample.ico", App.DefaultIcon);
         }
 
         protected virtual void AddPages()

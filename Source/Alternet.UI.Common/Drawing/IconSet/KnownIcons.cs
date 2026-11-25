@@ -97,10 +97,10 @@ namespace Alternet.UI
             SKColor? foreColor = null,
             string txt = "")
         {
-            var image16 = CreateIconWithText(16, backColor, foreColor, txt);
-            var image32 = CreateIconWithText(32, backColor, foreColor, txt);
-            var image48 = CreateIconWithText(48, backColor, foreColor, txt);
-            var image64 = CreateIconWithText(64, backColor, foreColor, txt);
+            var image16 = CreateBitmapWithText(16, backColor, foreColor, txt);
+            var image32 = CreateBitmapWithText(32, backColor, foreColor, txt);
+            var image48 = CreateBitmapWithText(48, backColor, foreColor, txt);
+            var image64 = CreateBitmapWithText(64, backColor, foreColor, txt);
 
             Bitmap i16 = (Bitmap)image16;
             Bitmap i32 = (Bitmap)image32;
@@ -112,7 +112,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates an icon with the specified size, background and foreground colors,
+        /// Creates a bitmap with the specified size, background and foreground colors,
         /// and an optional text to display on the icon.
         /// </summary>
         /// <param name="size">The size of the icon.</param>
@@ -120,7 +120,7 @@ namespace Alternet.UI
         /// <param name="foreColor">The foreground color of the icon.</param>
         /// <param name="txt">An optional text to display on the icon.</param>
         /// <returns>The created <see cref="SKBitmap"/>.</returns>
-        public static SKBitmap CreateIconWithText(
+        public static SKBitmap CreateBitmapWithText(
             int size,
             SKColor? backColor = null,
             SKColor? foreColor = null,
@@ -187,7 +187,8 @@ namespace Alternet.UI
         [Conditional("DEBUG")]
         internal static void ExportIconImages()
         {
-            Scheduler.ExportImagesToFiles(null, null, "Scheduler");
+            CreateIconWithText(null, null, "ui").ExportImagesToFiles(null, null, "ui");
+            CreateIconWithText(null, null, "ai").ExportImagesToFiles(null, null, "ai");
         }
 
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);        
