@@ -19,6 +19,11 @@ namespace Alternet.UI
         public static bool UseCharValidator = true;
 
         /// <summary>
+        /// Gets or sets default minimum width for the text picker control in the dialog.
+        /// </summary>
+        public static Coord DefaultTextPickerMinWidth = 200;
+
+        /// <summary>
         /// Gets or sets default margin for the controls.
         /// </summary>
         public static Coord DefaultMargin = 5;
@@ -38,11 +43,11 @@ namespace Alternet.UI
         private readonly TextPickerAndButton edit = new()
         {
             Margin = DefaultMargin,
-            MinWidth = 200,
+            MinWidth = DefaultTextPickerMinWidth,
             ButtonsVisible = false,
         };
 
-        private readonly Panel panel = new()
+        private readonly TransparentPanel panel = new()
         {
         };
 
@@ -75,6 +80,16 @@ namespace Alternet.UI
             SetSizeToContent();
             ActiveControl = edit;
             Buttons.UseModalResult = true;
+
+            TextPicker.EnterPressed += (s, e) =>
+            {
+                Buttons.HandleOkButtonClick(Buttons.OkButton, e);
+            };
+
+            TextPicker.EscapePressed += (s, e) =>
+            {
+                Buttons.HandleCancelButtonClick(Buttons.CancelButton, e);
+            };
         }
 
         /// <summary>
@@ -87,7 +102,19 @@ namespace Alternet.UI
         /// Gets value editor.
         /// </summary>
         [Browsable(false)]
-        public TextPickerAndButton Edit => edit;
+        public TextPickerAndButton Editor => edit;
+
+        /// <summary>
+        /// Gets text box control used for text input.
+        /// </summary>
+        [Browsable(false)]
+        public TextPicker TextPicker => edit.MainControl;
+
+        /// <summary>
+        /// Gets main panel of the dialog.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel MainPanel => panel;
 
         /// <summary>
         /// Gets a value indicating whether the message is null or an empty string.
@@ -188,7 +215,7 @@ namespace Alternet.UI
             prm.OnSetup?.Invoke(textDialog);
             textDialog.ShowDialogAsync(prm.Parent as Window, (result) =>
             {
-                var s = textDialog.Edit.Text;
+                var s = textDialog.Editor.Text;
                 prm.RaiseActions(result ? s : null);
             });
         }
@@ -213,7 +240,7 @@ namespace Alternet.UI
 
                 try
                 {
-                    s = (long?)longDialog.Edit.MainControl.ValueHelper.TextAsNumber;
+                    s = (long?)longDialog.Editor.MainControl.ValueHelper.TextAsNumber;
                 }
                 catch
                 {
@@ -243,8 +270,8 @@ namespace Alternet.UI
         {
             Initialize(prm);
 
-            Edit.InnerOuterBorder = InnerOuterSelector.Outer;
-            var e = Edit.MainControl;
+            Editor.InnerOuterBorder = InnerOuterSelector.Outer;
+            var e = Editor.MainControl;
 
             e.ValueHelper.MinValue = prm.MinValue;
             e.ValueHelper.MaxValue = prm.MaxValue;
@@ -271,7 +298,7 @@ namespace Alternet.UI
         public virtual void InitAsText(TextFromUserParams prm)
         {
             Initialize(prm);
-            Edit.Text = prm.SafeDefaultValueAsString;
+            Editor.Text = prm.SafeDefaultValueAsString;
         }
 
         /// <summary>
@@ -288,7 +315,7 @@ namespace Alternet.UI
             var maxLength = prm.MaxLength;
             if (maxLength > 0)
             {
-                Edit.MainControl.ValueHelper.MaxLength = maxLength;
+                Editor.MainControl.ValueHelper.MaxLength = maxLength;
             }
         }
     }
