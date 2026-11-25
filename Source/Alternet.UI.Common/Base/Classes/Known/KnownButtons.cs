@@ -128,6 +128,8 @@ namespace Alternet.UI
 
             data[KnownButton.TextBoxShowPassword] = () => new(KnownSvgImages.ImgEyeOn);
             data[KnownButton.TextBoxHidePassword] = () => new(KnownSvgImages.ImgEyeOff);
+
+            data[KnownButton.VertEllipsis] = () => new(KnownSvgImages.ImgMoreActions);
         }
 
         /// <summary>

@@ -45,6 +45,8 @@ namespace Alternet.UI
         private readonly SpeedButton secondsButton;
         private readonly Spacer secondsAndAmPmSeparator;
         private readonly SpeedButton amPmButton;
+        private readonly SpeedButton ellipsisButton;
+        private readonly ContextMenuStrip ellipsisButtonMenu = new();
 
         private TimePickerHourFormat? hourFormat;
         private IFormatProvider? formatProvider;
@@ -141,11 +143,75 @@ namespace Alternet.UI
 
             HasBtnPlusMinus = true;
             Buttons.DoubleClickAsClick = false;
+            ellipsisButton = Buttons.AddSpeedBtnCore(KnownButton.VertEllipsis);
+            ellipsisButton.DropDownMenu = ellipsisButtonMenu;
             IsBtnClickRepeated = true;
             ButtonPlus?.SetEnabled(false);
             ButtonMinus?.SetEnabled(false);
 
             RoundCorners();
+
+            var itemEnterValue = ellipsisButtonMenu.Add(Localized.EnterValue + "...", () =>
+            {
+                DialogFactory.AskTextAsync(Localized.EnterValue, (result) =>
+                {
+                    if(string.IsNullOrWhiteSpace(result))
+                        return;
+                    AsClipboardString = result;
+                }, AsClipboardString);
+            });
+
+            itemEnterValue.Name = "EnterValue";
+
+            ellipsisButtonMenu.AddSeparator();
+
+            var itemSetToNow = ellipsisButtonMenu.Add(Localized.SetToNow, () =>
+            {
+                Value = DateTime.Now;
+            });
+
+            itemSetToNow.Name = "SetToNow";
+
+            ellipsisButtonMenu.AddSeparator();
+
+            var itemRoundToMinute = ellipsisButtonMenu.Add(Localized.RoundToMinute, () =>
+            {
+                AsTimeOnly = new TimeOnly(time.Hour, time.Minute);
+            });
+
+            itemRoundToMinute.Name = "RoundToMinute";
+
+            var itemRoundTo5Minutes = ellipsisButtonMenu.Add(string.Format(Localized.RoundToMinutes, 5), () =>
+            {
+                AsTimeOnly = new TimeOnly(time.Hour, time.Minute / 5 * 5);
+            });
+
+            itemRoundTo5Minutes.Name = "RoundTo5Minutes";
+
+            var itemRoundTo15Minutes = ellipsisButtonMenu.Add(string.Format(Localized.RoundToMinutes, 15), () =>
+            {
+                AsTimeOnly = new TimeOnly(time.Hour, time.Minute / 15 * 15);
+            });
+
+            itemRoundTo15Minutes.Name = "RoundTo15Minutes";
+
+            ellipsisButtonMenu.AddSeparator();
+
+            var itemCopy = ellipsisButtonMenu.Add(Localized.ButtonCopy, () =>
+            {
+                Clipboard.SetText(AsClipboardString);
+            });
+
+            itemCopy.Name = "Copy";
+
+            var itemPaste = ellipsisButtonMenu.Add(Localized.ButtonPaste, () =>
+            {
+                AsClipboardString = Clipboard.GetText();
+            });
+
+            itemPaste.Name = "Paste";
+
+            ContextMenu = ellipsisButtonMenu;
         }
 
         /// <summary>
@@ -184,6 +250,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the context menu associated with the ellipsis button of the <c>TimePicker</c>.
+        /// </summary>
+        public ContextMenuStrip EllipsisButtonMenu => ellipsisButtonMenu;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the <c>TimePicker</c> is read-only.
         /// </summary>
         public virtual bool ReadOnly
@@ -208,6 +279,11 @@ namespace Alternet.UI
         public SpeedButton MinutesButton => minutesButton;
 
         /// <summary>
+        /// Gets the ellipsis button used for opening a drop down menu.
+        /// </summary>
+        public SpeedButton EllipsisButton => ellipsisButton;
+
+        /// <summary>
         /// Gets the separator control between minutes and seconds buttons.
         /// </summary>
         public AbstractControl MinutesAndSecondsSeparator => minutesAndSecondsSeparator;
@@ -226,6 +302,33 @@ namespace Alternet.UI
         /// Gets the button used for incrementing the time value. 
         /// </summary>
         public SpeedButton AmPmButton => amPmButton;
+
+        /// <summary>
+        /// Gets or sets the time value of the <c>TimePicker</c> as a string for clipboard operations.
+        /// </summary>
+        public string? AsClipboardString
+        {
+            get
+            {
+                if (SecondsVisible)
+                    return Value.ToString("T");
+                else
+                    return Value.ToString("t");
+            }
+
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    return;
+                }
+
+                if (!DateTime.TryParse(value, FormatProvider, System.Globalization.DateTimeStyles.None, out var dt))
+                    return;
+
+                Value = dt;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the text of the control is visible.

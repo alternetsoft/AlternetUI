@@ -205,5 +205,10 @@ namespace Alternet.UI
         /// 'All' button.
         /// </summary>
         All,
+
+        /// <summary>
+        /// 'Vertical ellipsis' button.
+        /// </summary>
+        VertEllipsis,
     }
 }
