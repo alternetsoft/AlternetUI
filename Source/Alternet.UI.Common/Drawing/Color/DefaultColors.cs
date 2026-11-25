@@ -426,17 +426,12 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets the background color for toolbars in dark theme.
             /// </summary>
-            public static Color BackColorDark = (31, 31, 31);
-
-            /// <summary>
-            /// Gets or sets the background color for toolbars in light theme.
-            /// </summary>
-            public static Color BackColorLight = Color.White;
+            public static ThemedColor BackColor = new(light: Color.White, dark: new Color(31, 31, 31));
 
             /// <summary>
             /// Gets or sets the text color for toolbars in dark theme.
             /// </summary>
-            public static Color TextColorDark = (214, 214, 214);
+            public static ThemedColor TextColor = new(light: Color.Black, dark: new Color(214, 214, 214));
 
             /// <summary>
             /// Gets or sets the separator color for toolbars in dark theme.
@@ -496,23 +491,27 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets the background color for toolbars based on the specified theme.
             /// </summary>
-            /// <param name="isDark">Indicates whether the background is dark. If <see langword="true"/>, a color suitable for dark
+            /// <param name="isDark">Indicates whether the background is dark. If <see langword="true"/>,
+            /// a color suitable for dark
             /// backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
-            /// <returns>A <see cref="Color"/> value representing the appropriate text color for the specified background type.</returns>
-            public static Color BackColor(bool isDark)
+            /// <returns>A <see cref="Color"/> value representing the appropriate text color
+            /// for the specified background type.</returns>
+            public static Color GetBackColor(bool isDark)
             {
-                return isDark ? BackColorDark : BackColorLight;
+                return BackColor.GetColor(isDark);
             }
 
             /// <summary>
             /// Returns the recommended text color for either dark or light backgrounds.
             /// </summary>
-            /// <param name="isDark">Indicates whether the background is dark. If <see langword="true"/>, a color suitable for dark
+            /// <param name="isDark">Indicates whether the background is dark. If <see langword="true"/>,
+            /// a color suitable for dark
             /// backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
-            /// <returns>A <see cref="Color"/> value representing the appropriate text color for the specified background type.</returns>
-            public static Color TextColor(bool isDark)
+            /// <returns>A <see cref="Color"/> value representing the appropriate text color
+            /// for the specified background type.</returns>
+            public static Color GetTextColor(bool isDark)
             {
-                return isDark ? TextColorDark : TextColorLight;
+                return TextColor.GetColor(isDark);
             }
         }
     }

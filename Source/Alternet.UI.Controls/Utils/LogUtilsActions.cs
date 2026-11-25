@@ -44,7 +44,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Enumerates and logs debug actions from the specified type, invoking a callback for each eligible method.
+        /// Enumerates and logs debug actions from the specified type,
+        /// invoking a callback for each eligible method.
         /// </summary>
         /// <remarks>This method is only executed in debug builds. It identifies static, public methods in
         /// the specified type whose names start with "Test" and have no parameters.
@@ -245,9 +246,6 @@ namespace Alternet.UI
                 });
             });
 
-            /*
-            Fn("Log useful defines", LogUtils.LogUsefulDefines);
-            */
             Fn("Log system information", LogOSInformation);
             Fn("Log system colors", LogSystemColors);
             Fn("Show Alternet.UI commits", GitHubUtils.ShowCommitsForAlternetUI);

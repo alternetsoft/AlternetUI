@@ -664,6 +664,7 @@ namespace Alternet.UI
             method($"Count: {Count}");
             method($"DefaultDPI: {GraphicsFactory.DefaultDPI}");
             method($"DeviceType: {App.DeviceType}");
+            method($"Windows.Count: {App.Current.Windows.Count}");
 
             for (int i = 0; i < Display.AllScreens.Length; i++)
             {
