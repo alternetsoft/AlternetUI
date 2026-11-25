@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// customization while falling back to default values for unspecified properties.</remarks>
     public partial class RichToolTipParams : BaseObjectWithAttr, IRichToolTipParams, IGetAsToolTip
     {
-        private Record record;
+        private Record record = new();
 
         /// <summary>
         /// Gets or sets a value indicating whether the tooltip should have a border. Default is <c>true</c>.
@@ -25,17 +25,29 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the title associated with this instance.
         /// </summary>
-        public virtual string Title { get => record.Title; set => record.Title = value; }
+        public virtual string Title
+        {
+            get => record.Title;
+            set => record.Title = value;
+        }
 
         /// <summary>
         /// Gets or sets the text content associated with this instance.
         /// </summary>
-        public virtual string Text { get => record.Text; set => record.Text = value; }
+        public virtual string Text
+        {
+            get => record.Text;
+            set => record.Text = value;
+        }
 
         /// <summary>
         /// Gets or sets the font used for rendering text.
         /// </summary>
-        public virtual Font? Font { get => record.Font; set => record.Font = value; }
+        public virtual Font? Font
+        {
+            get => record.Font;
+            set => record.Font = value;
+        }
 
         /// <summary>
         /// Represents the maximum text width as a coordinate value. If text exceeds this width,
@@ -44,33 +56,53 @@ namespace Alternet.UI
         /// <remarks>This field is nullable, meaning it can hold a value
         /// of type <see cref="Coord"/> or be
         /// null. Use this field to specify or retrieve the maximum title and message width.</remarks>
-        public virtual Coord? MaxWidth { get => record.MaxWidth; set => record.MaxWidth = value; }
+        public virtual Coord? MaxWidth
+        {
+            get => record.MaxWidth;
+            set => record.MaxWidth = value;
+        }
 
         /// <summary>
         /// Represents the scale factor to be applied in calculations or transformations.
         /// </summary>
-        public virtual Coord? ScaleFactor { get => record.ScaleFactor; set => record.ScaleFactor = value; }
+        public virtual Coord? ScaleFactor
+        {
+            get => record.ScaleFactor;
+            set => record.ScaleFactor = value;
+        }
 
         /// <summary>
         /// Gets or sets the border settings for the element.
         /// </summary>
-        public virtual BorderSettings? Border { get => record.Border; set => record.Border = value; }
+        public virtual BorderSettings? Border
+        {
+            get => record.Border;
+            set => record.Border = value;
+        }
 
         /// <summary>
         /// Gets or sets the background color.
         /// </summary>
-        public virtual ThemedColor? BackgroundColor { get => record.BackgroundColor; set => record.BackgroundColor = value; }
+        public virtual ThemedColor? BackgroundColor
+        {
+            get => record.BackgroundColor;
+            set => record.BackgroundColor = value;
+        }
 
         /// <summary>
         /// Gets or sets the foreground color to be used for rendering.
         /// </summary>
-        public virtual ThemedColor? ForegroundColor { get => record.ForegroundColor; set => record.ForegroundColor = value; }
+        public virtual ThemedColor? ForegroundColor
+        {
+            get => record.ForegroundColor;
+            set => record.ForegroundColor = value;
+        }
 
         /// <summary>
         /// Gets or sets the foreground color of the title.
         /// </summary>
         public virtual ThemedColor? TitleForegroundColor
-        { 
+        {
             get => record.TitleForegroundColor;
             set => record.TitleForegroundColor = value;
         }
@@ -78,22 +110,50 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the font used for rendering the title.
         /// </summary>
-        public virtual Font? TitleFont { get => record.TitleFont; set => record.TitleFont = value; }
+        public virtual Font? TitleFont
+        {
+            get => record.TitleFont;
+            set => record.TitleFont = value;
+        }
 
         /// <summary>
         /// Gets or sets the icon to display in the tooltip.
         /// </summary>
-        public virtual MessageBoxIcon? Icon { get => record.Icon; set => record.Icon = value; }
+        public virtual MessageBoxIcon? Icon
+        {
+            get => record.Icon;
+            set => record.Icon = value;
+        }
 
         /// <summary>
         /// Gets or sets the brush used to paint the background.
         /// </summary>
-        public virtual Brush? BackgroundBrush { get => record.BackgroundBrush; set => record.BackgroundBrush = value; }
+        public virtual Brush? BackgroundBrush
+        {
+            get => record.BackgroundBrush;
+            set => record.BackgroundBrush = value;
+        }
 
         /// <summary>
         /// Gets or sets an image to display in the tooltip.
         /// </summary>
-        public virtual ImageSet? Image { get => record.Image; set => record.Image = value; }
+        public virtual ImageSet? Image
+        {
+            get => record.Image;
+            set => record.Image = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the tooltip should
+        /// automatically hide when certain events occur. Default is <c>true</c>
+        /// and tooltip will hide on events like mouse clicks, target control leave or focus changes.
+        /// If set to <c>false</c>, the tooltip will remain visible until explicitly hidden by timer or code.
+        /// </summary>
+        public virtual bool AutoHideOnEvents
+        {
+            get => record.AutoHideOnEvents;
+            set => record.AutoHideOnEvents = value;
+        }
 
         /// <summary>
         /// Updates the current instance to use system-defined colors
@@ -143,7 +203,7 @@ namespace Alternet.UI
         /// state. This is typically used to reuse the instance for a new operation or data set.</remarks>
         public virtual void Reset()
         {
-            record = new ();
+            record = new();
         }
 
         /// <summary>
@@ -162,7 +222,8 @@ namespace Alternet.UI
         /// <summary>
         /// Copies the values from the specified source parameters into the current instance.
         /// </summary>
-        /// <param name="source">The source <see cref="RichToolTipParams"/> instance from which to copy values. If <see langword="null"/>,
+        /// <param name="source">The source <see cref="RichToolTipParams"/> instance from which
+        /// to copy values. If <see langword="null"/>,
         /// the current instance is reset to default values.</param>
         public virtual void Assign(RichToolTipParams? source)
         {
@@ -197,6 +258,7 @@ namespace Alternet.UI
             public MessageBoxIcon? Icon;
             public Brush? BackgroundBrush;
             public ImageSet? Image;
+            public bool AutoHideOnEvents = true;
         }
     }
 }

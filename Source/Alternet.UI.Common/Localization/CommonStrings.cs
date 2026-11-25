@@ -531,7 +531,7 @@ namespace Alternet.UI.Localization
 
         // ========================
 
-        public string SetToNow { get; set; } = "Set to Now";
+        public string SetCurrentTime { get; set; } = "Set Current Time";
         public string RoundToMinute { get; set; } = "Round to Minute";
         public string RoundToMinutes { get; set; } = "Round to {0} Minutes";
     }

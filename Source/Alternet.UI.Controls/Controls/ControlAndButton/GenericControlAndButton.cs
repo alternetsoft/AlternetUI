@@ -539,7 +539,7 @@ namespace Alternet.UI
             set
             {
                 MainControl.HasBorder = value;
-                if(substituteControl is not null)
+                if (substituteControl is not null)
                     substituteControl.HasBorder = value;
             }
         }
@@ -648,7 +648,7 @@ namespace Alternet.UI
         public virtual void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
         }
-        
+
         /// <summary>
         /// Gets whether button with the specified id is visible.
         /// </summary>
@@ -739,9 +739,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool SetFocusIfPossible()
+        {
+            return base.SetFocusIfPossible();
+        }
+
+        /// <inheritdoc/>
         public override bool SetFocus()
         {
-            if(MainControl.CanFocus)
+            if (MainControl.CanFocus)
                 return MainControl.SetFocus();
             return base.SetFocus();
         }

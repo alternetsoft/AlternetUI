@@ -11,7 +11,11 @@ namespace Alternet.UI.Localization
     public partial class CommonStrings
     {
         public string ErrInvalidDateFormat { get; set; } = "Invalid date format.";
-        
+
+        public string ErrInvalidTimeFormat { get; set; } = "Invalid time format.";
+
+        public string ErrInvalidFormat { get; set; } = "Invalid format.";
+
         public string ErrWrongActionForCtor { get; set; } = "Wrong action {0} for ctor.";
         
         public string ErrParserAttributeArgsHigh { get; set; } = "Too many attributes are specified for '{0}'.";
