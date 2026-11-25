@@ -315,8 +315,12 @@ namespace Alternet.UI
                 try
                 {
                     suppressCounter++;
-                    datePicker.Value = value;
-                    timePicker.Value = value ?? DateTime.Now.Date;
+
+                    DoInsideUpdate(() =>
+                    {
+                        datePicker.Value = value;
+                        timePicker.Value = value ?? DateTime.Now.Date;
+                    });
                 }
                 finally
                 {

@@ -294,32 +294,35 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ValueToControls()
         {
-            fullDayDurationSwitch.IsChecked = Value.IsAllDay;
-            titlePicker.MainControl.Text = Value.Text ?? string.Empty;
-            descriptionPicker.MainControl.Text = Value.Description ?? string.Empty;
-            locationPicker.MainControl.Text = Value.Location?.ToString() ?? string.Empty;
-            statusPicker.MainControl.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
-            categoryPicker.MainControl.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
-            rulePicker.Value = Value.Rule;
-            alarmPicker.Value = Value.AlarmInfo;
-
-            UpdateAlarmPanelTitle();
-
-            rulePicker.SeriesPatternPanel.TitleFormatArgs = new object[] {
-                Localized.SeriesPattern,
-                rulePicker.GetLocalizedText(Value.Rule.Kind),
-            };
-
-            if (Value.Rule.IsRepeated)
+            DoInsideUpdate(() =>
             {
-                rulePicker.SeriesPatternPanel.IsCollapsed = false;
-            }
-            else
-            {
-                rulePicker.SeriesPatternPanel.IsCollapsed = true;
-            }
+                fullDayDurationSwitch.IsChecked = Value.IsAllDay;
+                titlePicker.MainControl.Text = Value.Text ?? string.Empty;
+                descriptionPicker.MainControl.Text = Value.Description ?? string.Empty;
+                locationPicker.MainControl.Text = Value.Location?.ToString() ?? string.Empty;
+                statusPicker.MainControl.Value = Value.Status ?? KnownCalendarItemMarkers.StatusUnknown;
+                categoryPicker.MainControl.Value = Value.Category ?? KnownCalendarItemMarkers.CategoryNone;
+                rulePicker.Value = Value.Rule;
+                alarmPicker.Value = Value.AlarmInfo;
 
-            UpdateDescriptionPanel();
+                UpdateAlarmPanelTitle();
+
+                rulePicker.SeriesPatternPanel.TitleFormatArgs = new object[] {
+                    Localized.SeriesPattern,
+                    rulePicker.GetLocalizedText(Value.Rule.Kind),
+                };
+
+                if (Value.Rule.IsRepeated)
+                {
+                    rulePicker.SeriesPatternPanel.IsCollapsed = false;
+                }
+                else
+                {
+                    rulePicker.SeriesPatternPanel.IsCollapsed = true;
+                }
+
+                UpdateDescriptionPanel();
+            });
         }
 
         /// <summary>

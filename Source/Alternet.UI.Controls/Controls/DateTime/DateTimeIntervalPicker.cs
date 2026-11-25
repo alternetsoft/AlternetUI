@@ -681,16 +681,19 @@ namespace Alternet.UI
 
             try
             {
-                endPicker.MinDate = StartValue;
-                endPicker.UseMinDate = true;
-                startPicker.Value = StartValue;
-                endPicker.Value = DisplayEndValue;
+                DoInsideUpdate(() =>
+                {
+                    endPicker.MinDate = StartValue;
+                    endPicker.UseMinDate = true;
+                    startPicker.Value = StartValue;
+                    endPicker.Value = DisplayEndValue;
 
-                durationPicker.MainControl.Value = new(Value.Duration);
+                    durationPicker.MainControl.Value = new(Value.Duration);
 
-                timeZonePicker.Value = Value.TimeZone;
-                timeZonePicker.IgnorePaint = Value.TimeZone is null;
-                timeZonePicker.Enabled = Value.TimeZone is not null;
+                    timeZonePicker.Value = Value.TimeZone;
+                    timeZonePicker.IgnorePaint = Value.TimeZone is null;
+                    timeZonePicker.Enabled = Value.TimeZone is not null;
+                });
 
                 ValueChanged?.Invoke(this, EventArgs.Empty);
             }
