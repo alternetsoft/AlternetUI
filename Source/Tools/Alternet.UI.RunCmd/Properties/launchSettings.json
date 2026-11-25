@@ -42,6 +42,10 @@
     "saveCommits": {
       "commandName": "Project",
       "commandLineArgs": "-r=saveCommits Days=7 Branch=\"master\""
+    },
+    "Rezip": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=rezip Settings=\"E:\\DIMA\\AlternetUI\\Source\\Tools\\Alternet.UI.RunCmd\\RezipCommandSettings.xml\""
     }
   }
 }

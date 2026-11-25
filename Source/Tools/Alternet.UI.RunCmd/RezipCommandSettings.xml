@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RezipCommandSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Items>
+    <RezipCommandSetting>
+      <Ignore>true</Ignore>
+      <RootFolder>C:\Path\To\RootFolder</RootFolder>
+      <PathToZip>C:\Path\To\ZipFile.zip</PathToZip>
+      <PathToResult>C:\Path\To\ResultFile.zip</PathToResult>
+      <FileMasks>*.txt</FileMasks>
+      <CommandToRun>echo</CommandToRun>
+      <CommandArgs>Hello, World!</CommandArgs>
+      <RecreateZip>true</RecreateZip>
+    </RezipCommandSetting>
+  </Items>
+</RezipCommandSettings>

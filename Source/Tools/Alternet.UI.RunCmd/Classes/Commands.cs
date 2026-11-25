@@ -113,7 +113,7 @@ namespace Alternet.UI
             path = Path.GetFullPath(path);
             string? pathFolder = Path.GetDirectoryName(path)?.TrimEnd('\\')?.TrimEnd('/');
             Console.WriteLine("Run ControlsSample: " + path);
-            CommonProcs.ProcessStart("dotnet", $"run --framework net8.0", pathFolder);
+            CommonProcs.ProcessStart("dotnet", $"run --framework net10.0", pathFolder);
         }
 
         public static void CmdWaitAnyKey(CommandLineArgs args)
@@ -158,6 +158,89 @@ namespace Alternet.UI
             catch (Exception e)
             {
                 Console.WriteLine($"Error removing folder: [{path}]");
+                LogUtils.LogExceptionToFile(e);
+            }
+        }
+
+        public static void CmdRezip(CommandLineArgs args)
+        {
+            string pathToSettings = args.AsString("Settings");
+            pathToSettings = Path.GetFullPath(pathToSettings);
+
+            Console.WriteLine($"Executing rezip command...");
+            Console.WriteLine($"Settings: {pathToSettings}");
+
+            DebugUtils.DebugCallIf(false, RezipCommandSettings.TestSave);
+
+            if (!File.Exists(pathToSettings))
+            {
+                Console.WriteLine($"Settings file not found");
+                return;
+            }
+
+            try
+            {
+                var settings = XmlUtils.DeserializeFromFile<RezipCommandSettings>(pathToSettings);
+
+                if (settings is null)
+                {
+                    Console.WriteLine($"Settings file reading error");
+                    return;
+                }
+
+                if (settings.Items.Count == 0)
+                {
+                    Console.WriteLine($"Settings file contains no items");
+                    return;
+                }
+
+                var itemsProcessed = 0;
+
+                foreach (var item in settings.Items)
+                {
+                    if (item.Ignore ?? false)
+                        continue;
+
+                    itemsProcessed++;
+
+                    item.Prepare();
+
+                    Console.WriteLine($"======================");
+
+                    Console.WriteLine($"RootFolder: {item.RootFolder}");
+                    Console.WriteLine($"PathToZip: {item.PathToZip}");
+                    Console.WriteLine($"PathToResult: {item.PathToResult}");
+                    Console.WriteLine($"FileMasks: {item.FileMasks}");
+                    Console.WriteLine($"CommandToRun: {item.CommandToRun}");
+                    Console.WriteLine($"CommandArgs: {item.CommandArgs}");
+                    Console.WriteLine($"RecreateZip: {item.RecreateZip}");
+
+                    if (!File.Exists(item.PathToZip))
+                    {
+                        Console.WriteLine($"File not exists: {item.PathToZip}");
+                        continue;
+                    }
+
+                    var destFolder = Path.GetDirectoryName(item.PathToResult);
+
+                    if (!Path.Exists(destFolder))
+                    {
+                        Console.WriteLine($"Path not exists: {destFolder}");
+                        continue;
+                    }
+
+                    item.Execute(settings);
+                }
+
+                if (itemsProcessed == 0)
+                {
+                    Console.WriteLine($"All items were ignored");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error in rezip command");
+                Console.WriteLine($"Error info logged to file");
                 LogUtils.LogExceptionToFile(e);
             }
         }
@@ -939,6 +1022,11 @@ namespace Alternet.UI
                 "deleteBinFolders",
                 CmdDeleteBinFolders,
                 "");
+
+            RegisterCommand(
+                "rezip",
+                CmdRezip,
+                "-r=rezip Settings=\"E:\\RezipSettings.xml\"");
 
             RegisterCommand(
                 "generateBindable",
