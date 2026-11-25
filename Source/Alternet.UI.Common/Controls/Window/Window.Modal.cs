@@ -15,6 +15,18 @@ namespace Alternet.UI
         private ConcurrentStack<PropInstanceAndValue.SavedPropertiesItem>? disabledControls;
 
         /// <summary>
+        /// Occurs when the window is about to be shown as a modal dialog.
+        /// <see cref="ShowDialogAsync"/> method calls this event before the window is shown and focused.
+        /// </summary>
+        public event EventHandler? DialogShowing;
+
+        /// <summary>
+        /// Occurs when the window has been shown as a modal dialog.
+        /// <see cref="ShowDialogAsync"/> method calls this event after the window is shown and focused.
+        /// </summary>
+        public event EventHandler? DialogShown;
+
+        /// <summary>
         /// Gets a value indicating whether this window is displayed modally.
         /// </summary>
         [Browsable(false)]
@@ -90,12 +102,15 @@ namespace Alternet.UI
                 try
                 {
                     ApplyStartLocationOnce(owner);
+                    DialogShowing?.Invoke(this, EventArgs.Empty);
                     ShowAndFocus();
 
                     Post(() =>
                     {
                         ActiveControl?.SetFocusIfPossible();
                     });
+
+                    DialogShown?.Invoke(this, EventArgs.Empty);
                 }
                 catch
                 {

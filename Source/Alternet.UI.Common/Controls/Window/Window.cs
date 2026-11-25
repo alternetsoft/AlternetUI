@@ -2385,6 +2385,8 @@ namespace Alternet.UI
                 App.Current.RegisterWindow(this);
 
             Bounds = GetDefaultBounds();
+
+            CanSelect = true;
         }
 
         private void InitializeColors()
