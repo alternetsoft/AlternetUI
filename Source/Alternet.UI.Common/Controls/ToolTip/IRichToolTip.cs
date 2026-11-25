@@ -12,6 +12,12 @@ namespace Alternet.UI
     public interface IRichToolTip
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the tooltip should automatically hide when
+        /// certain events occur, such as mouse movements or key presses.
+        /// </summary>
+        bool AutoHideOnEvents { get; set; }
+
+        /// <summary>
         /// Gets foreground color of the tooltip title.
         /// </summary>
         ThemedColor? ToolTipTitleForegroundColor { get; set; }

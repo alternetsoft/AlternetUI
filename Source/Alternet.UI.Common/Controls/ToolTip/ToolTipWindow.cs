@@ -8,12 +8,16 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a window that displays tooltips in the application, ensuring a single instance is used throughout.
-    /// You don't need to create multiple instances of this class; instead, use the <see cref="Instance"/> property
+    /// Represents a window that displays tooltips in the application,
+    /// ensuring a single instance is used throughout.
+    /// You don't need to create multiple instances of this class;
+    /// instead, use the <see cref="Instance"/> property
     /// to access the singleton instance.
     /// </summary>
-    /// <remarks>Use this class to provide consistent tooltip display functionality across the application.
-    /// The singleton instance is created on first access, which enables lazy initialization. Thread safety is not
+    /// <remarks>Use this class to provide consistent tooltip
+    /// display functionality across the application.
+    /// The singleton instance is created on first access,
+    /// which enables lazy initialization. Thread safety is not
     /// guaranteed unless the underlying assignment operation is thread-safe.</remarks>
     public partial class ToolTipWindow : Window, IToolTipProvider
     {
@@ -40,6 +44,7 @@ namespace Alternet.UI
         private static bool provideToolTipsForGenericControls;
         private static ObjectUniqueId? lastToolTipControlId;
         private PointD mousePosition;
+        private bool autoHideOnEvents = true;
 
         static ToolTipWindow()
         {
@@ -66,14 +71,22 @@ namespace Alternet.UI
             toolTip.IsScrollable = false;
             toolTip.Parent = this;
 
-            toolTip.MouseDown += HideToolTip;
-            subscriber.AfterControlKeyDown += HideToolTip;
+            toolTip.MouseDown += AutoHideToolTip;
+            subscriber.AfterControlKeyDown += AutoHideToolTip;
 
             Log("ToolTipWindow.Created");
 
+            void AutoHideToolTip(object? sender, EventArgs e)
+            {
+                if (autoHideOnEvents)
+                {
+                    HideToolTip(sender, e);
+                }
+            }
+
             this.Deactivated += (s, e) =>
             {
-                HideToolTip(s, e);
+                AutoHideToolTip(s, e);
                 Log("ToolTipWindow.Deactivated");
             };
 
@@ -81,7 +94,7 @@ namespace Alternet.UI
             {
                 if (s == this || s is not Window)
                     return;
-                HideToolTip(s, e);
+                AutoHideToolTip(s, e);
                 Log("ToolTipWindow.AfterControlActivated");
             };
 
@@ -89,7 +102,7 @@ namespace Alternet.UI
             {
                 if (s is not Window)
                     return;
-                HideToolTip(s, e);
+                AutoHideToolTip(s, e);
                 Log("ToolTipWindow.AfterControlDeactivated");
             };
 
@@ -97,13 +110,13 @@ namespace Alternet.UI
             {
                 if (s == toolTip.ToolTipOwner)
                     return;
-                HideToolTip(s, e);
+                AutoHideToolTip(s, e);
                 Log("ToolTipWindow.AfterControlMouseMove");
             };
 
             subscriber.AfterControlMouseLeave += (s, e) =>
             {
-                HideToolTip(s, e);
+                AutoHideToolTip(s, e);
                 Log("ToolTipWindow.AfterControlMouseLeave");
             };
 
@@ -111,7 +124,7 @@ namespace Alternet.UI
             {
                 if (s == toolTip.ToolTipOwner)
                     return;
-                HideToolTip(s, e);
+                AutoHideToolTip(s, e);
                 Log("ToolTipWindow.AfterControlMouseEnter");
             };
         }
@@ -322,10 +335,16 @@ namespace Alternet.UI
         /// <summary>
         /// Shows the tooltip for the specified control.
         /// </summary>
+        /// <param name="toolTipObject">The tooltip content to display.
+        /// This can be a string or a <see cref="RichToolTipParams"/> object. If not specified, the tooltip
+        /// content is retrieved from the control.</param>
         /// <param name="control">The control for which to show the tooltip.</param>
         /// <param name="location">The location at which to show the tooltip. Optional.
         /// If not specified, the tooltip is shown at a default location determined by the implementation.</param>
-        public static void ShowToolTip(AbstractControl? control, PointD? location = null)
+        public static void ShowToolTip(
+            AbstractControl? control,
+            PointD? location = null,
+            object? toolTipObject = null)
         {
             if (control is null)
                 return;
@@ -342,8 +361,7 @@ namespace Alternet.UI
 
             try
             {
-
-                var toolTipObject = ToolTipFactory.GetControlToolTip(control);
+                toolTipObject ??= ToolTipFactory.GetControlToolTip(control);
 
                 if (toolTipObject is null)
                     return;
@@ -412,6 +430,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Hides the tooltip currently displayed by this window, if any is visible.
+        /// </summary>
+        /// <typeparam name="T"> Type of the event data. </typeparam>
+        /// <param name="sender"> The source of the event. </param>
+        /// <param name="e"> An object that contains the event data. </param>
+        protected virtual void HideToolTip<T>(object? sender, T e)
+        {
+            if (!Visible || DisposingOrDisposed)
+                return;
+            InsideTryCatch(() =>
+            {
+                toolTip.ToolTipVisible = false;
+                Hide();
+            });
+        }
+
+        /// <summary>
         /// Handles the event that occurs when the visibility of the tooltip changes.
         /// </summary>
         /// <param name="s">The source of the event.</param>
@@ -471,6 +506,7 @@ namespace Alternet.UI
                 Location = alignedLocation;
 
                 PerformLayoutAndInvalidate();
+                autoHideOnEvents = toolTip.AutoHideOnEvents;
                 Show();
                 mousePosition = Mouse.GetPosition(this);
             }
@@ -481,8 +517,10 @@ namespace Alternet.UI
             }
         }
 
+        [Conditional("DEBUG")]
         private static void Log(string message)
         {
+            App.DebugLogIf($"ToolTipWindow: {message}", false);
         }
 
         /// <summary>
@@ -499,17 +537,6 @@ namespace Alternet.UI
             if (!control.ShowToolTipOnMouseHover)
                 return;
             ShowToolTip(control);
-        }
-
-        private void HideToolTip<T>(object? sender, T e)
-        {
-            if (!Visible || DisposingOrDisposed)
-                return;
-            InsideTryCatch(() =>
-            {
-                toolTip.ToolTipVisible = false;
-                Hide();
-            });
         }
     }
 }

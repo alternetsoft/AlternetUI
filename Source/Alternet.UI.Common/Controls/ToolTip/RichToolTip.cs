@@ -319,6 +319,19 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
+        public virtual bool AutoHideOnEvents
+        {
+            get => data.AutoHideOnEvents;
+            set
+            {
+                if (data.AutoHideOnEvents == value)
+                    return;
+                data.AutoHideOnEvents = value;
+            }
+        }
+
+        /// <inheritdoc/>
         public virtual Font? ToolTipTitleFont
         {
             get => data.TitleFont;
@@ -799,6 +812,7 @@ namespace Alternet.UI
             data.Font ??= RealFont;
             data.MaxWidth ??= DefaultMaxWidth;
             data.ScaleFactor = ScaleFactor;
+            data.AutoHideOnEvents = prm.AutoHideOnEvents;
             return this;
         }
 
