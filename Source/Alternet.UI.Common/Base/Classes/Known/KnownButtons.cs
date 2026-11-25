@@ -94,7 +94,7 @@ namespace Alternet.UI
             data[KnownButton.Retry] = () => new(strings.ButtonRetry, KnownSvgImages.ImgRetry);
             data[KnownButton.Ignore] = () => new(strings.ButtonIgnore, KnownSvgImages.ImgIgnore);
             data[KnownButton.Help] = () => new(strings.ButtonHelp, KnownSvgImages.ImgHelp);
-            data[KnownButton.Add] = () => new(strings.ButtonAdd, KnownSvgImages.ImgAdd);
+            data[KnownButton.Add] = () => new(strings.ButtonAdd, KnownSvgImages.ImgSquarePlus);
             data[KnownButton.Remove] = () => new(strings.ButtonRemove, KnownSvgImages.ImgTrashCan);
             data[KnownButton.Clear] = () => new(strings.ButtonClear, KnownSvgImages.ImgRemoveAll);
             data[KnownButton.AddChild]
