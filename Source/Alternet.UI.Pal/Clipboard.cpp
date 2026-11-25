@@ -46,6 +46,10 @@ namespace Alternet::UI
         auto myFormat = wxStr(format);
 
         auto compositeDataObject = GetDataObjectWithFormat(myFormat);
+
+		if (compositeDataObject == nullptr)
+			return nullptr;
+
         if (compositeDataObject->GetFormatCount() == 0)
         {
             delete compositeDataObject;
@@ -62,6 +66,10 @@ namespace Alternet::UI
             return nullptr;
 
         auto compositeDataObject = GetCompositeDataObjectFromClipboard();
+
+        if (compositeDataObject == nullptr)
+            return nullptr;
+
         if (compositeDataObject->GetFormatCount() == 0)
         {
             delete compositeDataObject;
@@ -129,6 +137,18 @@ namespace Alternet::UI
 
     wxDataObjectComposite* Clipboard::GetDataObjectWithFormat(wxString format)
     {
+        if (format == "Text")
+        {
+            auto result = new wxDataObjectComposite();
+
+            auto textData = new wxTextDataObject();
+            if (wxTheClipboard->GetData(*textData))
+                result->Add(textData);
+            else
+                delete textData;
+            return result;
+        }
+
         if (wxTheClipboard->IsSupported(format))
         {
             auto result = new wxDataObjectComposite();

@@ -248,7 +248,8 @@ namespace Alternet.UI
         /// </summary>
         public static string? GetText()
         {
-            return GetData(DataFormats.Text) as string;
+            var result = GetData(DataFormats.Text);
+            return result?.ToString();
         }
 
         /// <summary>
