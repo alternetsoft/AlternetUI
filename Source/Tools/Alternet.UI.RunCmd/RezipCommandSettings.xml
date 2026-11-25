@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RezipCommandSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Items>
+
+    <RezipCommandSetting>
+      <Ignore>false</Ignore>
+      <RootFolder></RootFolder>
+      <PathToZip></PathToZip>
+      <PathToResult></PathToResult>
+      <FileMasks>ALternet*.dll;ALternet*.exe</FileMasks>
+      <CommandToRun></CommandToRun>
+      <CommandArgs></CommandArgs>
+      <RecreateZip>true</RecreateZip>
+    </RezipCommandSetting>
+
+
     <RezipCommandSetting>
       <Ignore>true</Ignore>
       <RootFolder>C:\Path\To\RootFolder</RootFolder>
