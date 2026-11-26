@@ -1689,6 +1689,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
+            UpdateDayItems(InvalidateMethod.None);
+            OnListBoxBackColorChanged(this, e);
             base.OnSystemColorsChanged(e);
         }
 
