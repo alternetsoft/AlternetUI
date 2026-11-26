@@ -214,7 +214,10 @@ namespace ControlsSample
             {
                 ShowToolTipButton_Click(this, EventArgs.Empty);
 
-                toolTip.ToolTipVisibleChanged += (s, e) =>
+                toolTip.ToolTipVisibleChanged -= LogToolTipVisible;
+                toolTip.ToolTipVisibleChanged += LogToolTipVisible;
+
+                void LogToolTipVisible(object? s, EventArgs e)
                 {
                     var prefix = "ToolTip.Visible =";
                     App.LogReplace($"{prefix} {toolTip.ToolTipVisible}", prefix);
