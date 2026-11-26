@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RezipCommandSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Items>
+
+    <RezipCommandSetting>
+      <Ignore>false</Ignore>
+      <RootFolder>$(SettingsFolder)</RootFolder>
+      <PathToZip>$(SettingsFolder)\Input\</PathToZip>
+      <ZipMask>*.nupkg</ZipMask>
+      <PathToResult>$(SettingsFolder)\Output\</PathToResult>
+      <FileMasks>Alternet.*.dll;Alternet.*.exe</FileMasks>
+      <CommandToRun>ExecuteTerminalCommand</CommandToRun>
+      <CommandArgs>"$(SignToolPath)" sign /fd SHA256 /td SHA256 /tr http://timestamp.digicert.com /n "ALTERNET SOFTWARE PTY LTD" "$(FilePath)"</CommandArgs>
+      <RecreateZip>true</RecreateZip>
+    </RezipCommandSetting>
+
+  </Items>
+</RezipCommandSettings>
