@@ -2536,8 +2536,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            base.OnSystemColorsChanged(e);
             OnDpiOrSystemColorsChanged();
+            base.OnSystemColorsChanged(e);
         }
 
         /// <inheritdoc/>

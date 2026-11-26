@@ -98,7 +98,8 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the rotation and flip transformation to apply to the image. This property allows for
-        /// rotating and flipping the image in various ways, such as rotating 90 degrees clockwise or flipping horizontally.
+        /// rotating and flipping the image in various ways,
+        /// such as rotating 90 degrees clockwise or flipping horizontally.
         /// </summary>
         public RotateFlipType? RotateFlip
         {
@@ -112,7 +113,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets image sets to draw. This property is used to specify different image sets for different
+        /// Gets or sets image sets to draw. This property
+        /// is used to specify different image sets for different
         /// visual states of the control, such as normal, hovered, pressed, and disabled states.
         /// It allows for a more dynamic and responsive user interface by providing appropriate
         /// visual feedback based on the control's state.
@@ -200,7 +202,8 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets image size fallback options that determine how to handle
-        /// cases where the specified image size is not available in the <see cref="IconSet"/> or other containers.
+        /// cases where the specified image size is not available
+        /// in the <see cref="IconSet"/> or other containers.
         /// </summary>
         public virtual ImageSizeFallbackOptions? SizeFallbackOptions { get; set; }
 
