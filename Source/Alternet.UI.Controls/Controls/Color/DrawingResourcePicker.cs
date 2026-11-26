@@ -523,6 +523,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
+            OnValueImageChanged(refresh: false);
             UseControlColors(DefaultUseControlColors);
             base.OnSystemColorsChanged(e);
         }

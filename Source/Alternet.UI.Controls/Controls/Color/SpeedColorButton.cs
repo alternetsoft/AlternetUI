@@ -61,7 +61,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpeedColorButton"/> class with specified default colors usage flag.
+        /// Initializes a new instance of the <see cref="SpeedColorButton"/>
+        /// class with specified default colors usage flag.
         /// </summary>
         /// <param name="useDefaultColors">A value indicating whether to use default colors.</param>
         public SpeedColorButton(bool useDefaultColors)
@@ -572,6 +573,13 @@ namespace Alternet.UI
             }
 
             return colorImageSize;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            OnColorImageChanged(refresh: false);
+            base.OnSystemColorsChanged(e);
         }
 
         /// <summary>
