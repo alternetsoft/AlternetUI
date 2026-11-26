@@ -277,7 +277,7 @@ namespace PropertyGridSample
         public static readonly Dictionary<Type, Action<Object>> Actions = new();
 
         internal static string AsmResPrefix
-            = AssemblyUtils.GetAssemblyResPrefix(typeof(ObjectInit).Assembly)+"Resources.";
+            = AssemblyUtils.GetAssemblyResPrefix(typeof(ControlsSample.TreeViewPage).Assembly)+"Resources.";
         internal static string ResPrefixImage = $"{DemoUtils.UrlResPrefix}logo128x128.png";
 
         public static Image DefaultImage { get; } = Image.FromUrl(ResPrefixImage);
@@ -736,7 +736,7 @@ namespace PropertyGridSample
 
             largeImageList.ImageSize = new(32, 32);
 
-            var assembly = Assembly.GetExecutingAssembly();
+            var assembly = typeof(ControlsSample.TreeViewPage).Assembly;
             var allResourceNames = assembly.GetManifestResourceNames();
             var allImageResourceNames =
                 allResourceNames.Where(x => x.StartsWith(AsmResPrefix + "ImageListIcons."));

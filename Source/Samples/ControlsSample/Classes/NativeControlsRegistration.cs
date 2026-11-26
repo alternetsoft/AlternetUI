@@ -266,7 +266,7 @@ namespace ControlsSample
             {
                 TreeView treeView = (c as TreeView)!;
                 treeView.SuggestedSize = DemoUtils.DefaultListSize;
-                InitVirtualTreeControl(treeView);
+                InitTreeViewControl(treeView);
             });
 
             ObjectInit.Actions.Add(typeof(ProgressBar), (c) =>
@@ -353,7 +353,7 @@ namespace ControlsSample
                 => ObjectInit.LogItems("ListBox SelectedIndexChanged", listBox.SelectedItems);
         }
 
-        public static void InitVirtualTreeControl(TreeView control)
+        public static void InitTreeViewControl(TreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
                 control.ImageList = ObjectInit.LoadImageLists().Small;

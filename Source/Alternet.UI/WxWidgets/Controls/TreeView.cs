@@ -81,8 +81,8 @@ namespace Alternet.UI
 
         private readonly HashSet<TreeViewItem> selectedItems = new();
         private readonly ListControlItemDefaults itemDefaults = new();
-        private readonly TreeViewRootItem rootItem;
-
+        
+        private TreeViewRootItem? rootItem;
         private ImageList? imageList = null;
         private TreeViewSelectionMode selectionMode = TreeViewSelectionMode.Single;
         private int suspendEventsCounter;
@@ -102,7 +102,6 @@ namespace Alternet.UI
         /// </summary>
         public TreeView()
         {
-            rootItem = new(this);
         }
 
         /// <summary>
@@ -655,7 +654,7 @@ namespace Alternet.UI
         {
             get
             {
-                return rootItem;
+                return rootItem ??= new TreeViewRootItem(this);
             }
         }
 
@@ -666,7 +665,7 @@ namespace Alternet.UI
         {
             get
             {
-                return rootItem.Items;
+                return RootItem.Items;
             }
         }
 
@@ -1057,7 +1056,7 @@ namespace Alternet.UI
         /// <see cref="Items"/> collection.</param>
         public virtual void Add(TreeViewItem item)
         {
-            rootItem.Add(item);
+            RootItem.Add(item);
         }
 
         Coord ITreeViewItemContainer.GetLevelMargin()
@@ -1216,7 +1215,7 @@ namespace Alternet.UI
         public virtual TreeViewItem Add(string s)
         {
             var item = new TreeViewItem(s);
-            rootItem.Add(item);
+            RootItem.Add(item);
             return item;
         }
 
@@ -1327,7 +1326,7 @@ namespace Alternet.UI
             try
             {
                 ClearSelected();
-                rootItem.Clear();
+                RootItem.Clear();
                 Handler.DeleteAllItems();
             }
             finally
