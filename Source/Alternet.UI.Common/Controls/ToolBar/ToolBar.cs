@@ -2713,15 +2713,15 @@ namespace Alternet.UI
         /// <param name="toolTip">The button tooltip.</param>
         /// <param name="action">The button click action.</param>
         /// <returns>The added <see cref="SpeedButton"/>.</returns>
-        public virtual SpeedButton AddTextBtn<TSpeedButton>(
+        public virtual TSpeedButton AddTextBtn<TSpeedButton>(
             string? text = null,
             object? toolTip = null,
             EventHandler? action = null)
             where TSpeedButton : SpeedButton, new()
         {
-            var result = WithButtonTypeOverride(typeof(TSpeedButton), () =>
+            var result = WithButtonTypeOverride<TSpeedButton>(() =>
             {
-                var speedButton = AddTextBtnCore(text, toolTip, action);
+                var speedButton = (TSpeedButton)AddTextBtnCore(text, toolTip, action);
                 return speedButton;
             });
 
@@ -2733,7 +2733,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="action">Click action.</param>
-        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips,
+        /// assign <see cref="RichToolTipParams"/>.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddTextBtn(
             string? text = null,
@@ -3175,6 +3176,26 @@ namespace Alternet.UI
             try
             {
                 customButtonType = type;
+                return func();
+            }
+            finally
+            {
+                customButtonType = null;
+            }
+        }
+
+        /// <summary>
+        /// Overrides button type used when items are created and calls the specified function.
+        /// </summary>
+        /// <typeparam name="TSpeedButton">The type of the button to use as override.</typeparam>
+        /// <param name="func">Function to call.</param>
+        /// <returns>The result of the function.</returns>
+        public virtual TSpeedButton WithButtonTypeOverride<TSpeedButton>(Func<TSpeedButton> func)
+            where TSpeedButton : SpeedButton
+        {
+            try
+            {
+                customButtonType = typeof(TSpeedButton);
                 return func();
             }
             finally
