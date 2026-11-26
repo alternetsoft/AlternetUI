@@ -155,6 +155,18 @@ public partial class AnimatedImage : DisposableObject
     public virtual AnimatedImage? OtherThemeVariant { get; set; }
 
     /// <summary>
+    /// Gets the array of frames that make up the animated image.
+    /// </summary>
+    public AnimatedImageFrameInfo[] Frames
+    {
+        get
+        {
+            RequireFrames();
+            return frames ?? Array.Empty<AnimatedImageFrameInfo>();
+        }
+    } 
+
+    /// <summary>
     /// Gets the number of frames for this animation.
     /// </summary>
     /// <returns></returns>
@@ -279,6 +291,87 @@ public partial class AnimatedImage : DisposableObject
             sourceUrl = value;
             ResetFrames();
         }
+    }
+
+    /// <summary>
+    /// Creates a pair of blinking animated images based on the provided SVG image, size, and optional colors
+    /// for light and dark themes. First frame is the image, second frame is empty.
+    /// </summary>
+    /// <param name="svg">The SVG image to be used for creating the animated images.</param>
+    /// <param name="size">The size of the animated images.</param>
+    /// <param name="lightColor">The optional color for the light theme.</param>
+    /// <param name="duration">The duration of each frame in milliseconds. Default is 600ms.</param>
+    /// <param name="darkColor">The optional color for the dark theme.</param>
+    /// <returns>A tuple containing the light and dark themed animated images.</returns>
+    public static (AnimatedImage Light, AnimatedImage Dark) CreateBlinking(
+        SvgImage svg,
+        int size,
+        int duration = 600,
+        Color? lightColor = null,
+        Color? darkColor = null)
+    {
+        var emptyFrameLight = new AnimatedImageFrameInfo(KnownSvgImages.ImgEmpty, size, null, isDark: false);
+        var emptyFrameDark = new AnimatedImageFrameInfo(KnownSvgImages.ImgEmpty, size, null, isDark: true);
+        var imageFrameLight = new AnimatedImageFrameInfo(svg, size, lightColor, isDark: false);
+        var imageFrameDark = new AnimatedImageFrameInfo(svg, size, darkColor, isDark: true);
+
+        emptyFrameLight.Duration = duration;
+        emptyFrameDark.Duration = duration;
+        imageFrameLight.Duration = duration;
+        imageFrameDark.Duration = duration;
+
+        AnimatedImageFrameInfo[] lightFrames = new[] { imageFrameLight, emptyFrameLight };
+        AnimatedImageFrameInfo[] darkFrames = new[] { imageFrameDark, emptyFrameDark };
+
+        var lightImage = new AnimatedImage(lightFrames) { IsDark = false };
+        var darkImage = new AnimatedImage(darkFrames) { IsDark = true };
+
+        lightImage.OtherThemeVariant = darkImage;
+        darkImage.OtherThemeVariant = lightImage;
+        
+        return (lightImage, darkImage);
+    }
+
+    /// <summary>
+    /// Creates a pair of blinking animated images based on the provided SVG image, size, and optional colors
+    /// for light and dark themes. First frame is the image with first color, second frame is the image with second color.
+    /// This method creates a blinking effect by alternating between two colored frames of the same SVG image.
+    /// </summary>
+    /// <param name="svg">The SVG image to be used for the animated frames.</param>
+    /// <param name="size">The size of the animated images.</param>
+    /// <param name="firstFrameLightColor">The optional color for the first frame in the light theme.</param>
+    /// <param name="firstFrameDarkColor">The optional color for the first frame in the dark theme.</param>
+    /// <param name="secondFrameColor">The color for the second frame.</param>
+    /// <param name="duration">The duration of each frame in milliseconds.</param>
+    /// <returns>A tuple containing the light and dark themed animated images.</returns>
+    public static (AnimatedImage Light, AnimatedImage Dark) CreateBlinkingColor(
+        SvgImage svg,
+        int size,
+        ThemedColor secondFrameColor,
+        int duration = 600,
+        Color? firstFrameLightColor = null,
+        Color? firstFrameDarkColor = null)
+    {
+        var firstFrameLight = new AnimatedImageFrameInfo(svg, size, firstFrameLightColor, isDark: false);
+        var firstFrameDark = new AnimatedImageFrameInfo(svg, size, firstFrameDarkColor, isDark: true);
+        var secondFrameLight = new AnimatedImageFrameInfo(svg, size, secondFrameColor.Light, isDark: false);
+        var secondFrameDark = new AnimatedImageFrameInfo(svg, size, secondFrameColor.Dark, isDark: true);
+
+        firstFrameLight.Duration = duration;
+        firstFrameDark.Duration = duration;
+        secondFrameLight.Duration = duration;
+        secondFrameDark.Duration = duration;
+
+        AnimatedImageFrameInfo[] lightFrames = new[] { firstFrameLight, secondFrameLight };
+        AnimatedImageFrameInfo[] darkFrames = new[] { firstFrameDark, secondFrameDark };
+
+        var lightImage = new AnimatedImage(lightFrames) { IsDark = false };
+        var darkImage = new AnimatedImage(darkFrames) { IsDark = true };
+
+        lightImage.OtherThemeVariant = darkImage;
+        darkImage.OtherThemeVariant = lightImage;
+
+        return (lightImage, darkImage);
     }
 
     /// <summary>
