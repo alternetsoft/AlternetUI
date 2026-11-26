@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
 namespace Alternet.UI
@@ -22,6 +24,8 @@ namespace Alternet.UI
         /// Gets or sets default string prefix for console error messages.
         /// </summary>
         public static string DefaultErrorPrefix = "Error> ";
+
+        private static BaseConcurrentStack<(ConsoleColor Foreground, ConsoleColor Background)>? consoleColors;
 
         private static ConsoleWriter? consoleOut;
         private static ConsoleWriter? consoleError;
@@ -46,7 +50,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(customConsole is null)
+                if (customConsole is null)
                 {
                     if (App.IsWindowsOS)
                         customConsole = CustomWindowsConsole.Default;
@@ -89,6 +93,119 @@ namespace Alternet.UI
                 consoleError = CreateWriter(prefix);
                 Console.SetError(consoleError);
             }
+        }
+
+        /// <summary>
+        /// Pushes console colors to the stack and sets new console colors.
+        /// Use <see cref="PopConsoleColors"/> to restore previous colors.
+        /// </summary>
+        /// <param name="foreground">The foreground color to set. If null, the current foreground color is used.</param>
+        /// <param name="background">The background color to set. If null, the current background color is used.</param>
+        public static void PushConsoleColors(ConsoleColor? foreground, ConsoleColor? background)
+        {
+            consoleColors ??= new BaseConcurrentStack<(ConsoleColor Foreground, ConsoleColor Background)>();
+            consoleColors.Push((Console.ForegroundColor, Console.BackgroundColor));
+            Console.ForegroundColor = foreground ?? Console.ForegroundColor;
+            Console.BackgroundColor = background ?? Console.BackgroundColor;
+        }
+
+        /// <summary>
+        /// Restores console colors pushed with <see cref="PushConsoleColors"/> to the previous state.
+        /// </summary>
+        public static void PopConsoleColors()
+        {
+            if (consoleColors is null || consoleColors.Count == 0)
+                return;
+            var result = consoleColors.TryPop(out var colors);
+            if (result)
+            {
+                Console.ForegroundColor = colors.Foreground;
+                Console.BackgroundColor = colors.Background;
+            }
+        }
+
+        /// <summary>
+        /// Converts <see cref="ConsoleColor"/> to <see cref="Color"/>.
+        /// </summary>
+        /// <param name="consoleColor">The console color to convert.</param>
+        /// <returns>The corresponding <see cref="Color"/>.</returns>
+        public static Color ToColor(ConsoleColor consoleColor)
+        {
+            return consoleColor switch
+            {
+                ConsoleColor.Black => Color.Black,
+                ConsoleColor.DarkBlue => Color.DarkBlue,
+                ConsoleColor.DarkGreen => Color.DarkGreen,
+                ConsoleColor.DarkCyan => Color.DarkCyan,
+                ConsoleColor.DarkRed => Color.DarkRed,
+                ConsoleColor.DarkMagenta => Color.DarkMagenta,
+                ConsoleColor.DarkYellow => Color.Olive,
+                ConsoleColor.Gray => Color.Gray,
+                ConsoleColor.DarkGray => Color.DarkGray,
+                ConsoleColor.Blue => Color.Blue,
+                ConsoleColor.Green => Color.Green,
+                ConsoleColor.Cyan => Color.Cyan,
+                ConsoleColor.Red => Color.Red,
+                ConsoleColor.Magenta => Color.Magenta,
+                ConsoleColor.Yellow => Color.Yellow,
+                ConsoleColor.White => Color.White,
+                _ => Color.Transparent,
+            };
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="ConsoleColor"/> is a dark color.
+        /// </summary>
+        /// <param name="consoleColor">The console color to check.</param>
+        /// <returns><c>true</c> if the specified console color is dark; otherwise, <c>false</c>.</returns>
+        public static bool IsDarkColor(ConsoleColor consoleColor)
+        {
+            var color = ToColor(consoleColor);
+            return color.IsDark();
+        }
+
+        /// <summary>
+        /// Pushes console colors to the stack and sets console foreground color to red.
+        /// </summary>
+        public static void PushErrorConsoleColors()
+        {
+            if (IsDarkColor(Console.BackgroundColor))
+                PushConsoleColors(ConsoleColor.Red, null);
+            else
+                PushConsoleColors(ConsoleColor.DarkRed, null);
+        }
+
+        /// <summary>
+        /// Pushes console colors to the stack and sets console foreground color to yellow.
+        /// </summary>
+        public static void PushWarningConsoleColors()
+        {
+            if (IsDarkColor(Console.BackgroundColor))
+                PushConsoleColors(ConsoleColor.Yellow, null);
+            else
+                PushConsoleColors(ConsoleColor.DarkYellow, null);
+        }
+
+        /// <summary>
+        /// Writes the specified message to the console with red foreground color.
+        /// </summary>
+        /// <param name="message">The message to write.</param>
+        public static void WriteLineError(string? message)
+        {
+            PushErrorConsoleColors();
+            Console.WriteLine(message);
+            PopConsoleColors();
+        }
+
+        /// <summary>
+        /// Writes the specified message to the console with yellow foreground color.
+        /// </summary>
+        /// <param name="message">The message to write.</param>
+        public static void WriteLineWarning(string? message)
+        {
+            PushWarningConsoleColors();
+            Console.WriteLine(message);
+            PopConsoleColors();
         }
 
         /// <summary>

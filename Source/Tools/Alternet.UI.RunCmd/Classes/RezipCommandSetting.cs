@@ -107,9 +107,7 @@ namespace Alternet.UI
 
                     if (!string.IsNullOrEmpty(commandResult.Error))
                     {
-                        Console.WriteLine();
-                        Console.WriteLine($"Command error output: \n{commandResult.Error}");
-                        Console.WriteLine();
+                        ConsoleUtils.WriteLineError($"{commandResult.Error}");
                     }
 
                     Console.WriteLine("<<<<<<<<<<");
@@ -154,6 +152,8 @@ namespace Alternet.UI
                 {
                     result = result.Replace("$(SettingsFolder)", globals.SettingsFolder);
                 }
+
+                result = result.Replace("$(SignToolPath)", MswUtils.SignToolPath.Value);
 
                 return result;
             }
