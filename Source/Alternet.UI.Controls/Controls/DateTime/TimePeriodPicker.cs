@@ -359,12 +359,14 @@ namespace Alternet.UI
         /// </summary>
         public SnoozeSpeedButton()
         {
+            Label.Margin = 0;
             ImageVisible = false;
             PopupWindowTitle = CommonStrings.Default.WindowTitleRemindMeIn;
         }
 
         /// <summary>
-        /// Gets or sets the text label displayed on the button, which can be customized to indicate the snooze action.
+        /// Gets or sets the text label displayed on the button,
+        /// which can be customized to indicate the snooze action.
         /// If not set, a default label text is used.
         /// </summary>
         public virtual string? LabelText
