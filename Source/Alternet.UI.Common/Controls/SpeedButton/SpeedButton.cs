@@ -12,13 +12,17 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements speed button control.
-    /// Speed buttons are often used in toolbars or as part of a user interface.
+    /// Represents a button control that can display an image and text, and can be used in toolbars and menus.
     /// </summary>
     [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class SpeedButton : GenericControl, ICommandSource, IValueHelperProperty,
         IValidatorReporter, INotifyDataErrorInfo
     {
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static bool ShowDebugCorners = false;
+
         private readonly GenericControl pictureSpacer;
         private readonly GenericControl spacer;
         private readonly Label label;
@@ -2110,6 +2114,7 @@ namespace Alternet.UI
             }
 
             DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
+            DefaultPaintDebug(e);
         }
 
         /// <inheritdoc/>
@@ -2638,6 +2643,13 @@ namespace Alternet.UI
         protected virtual Label CreateInnerLabel()
         {
             return new Label();
+        }
+
+        /// <inheritdoc/>
+        protected virtual void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle, IsDarkBackground);
         }
 
         /// <summary>
