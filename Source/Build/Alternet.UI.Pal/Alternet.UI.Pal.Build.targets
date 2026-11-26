@@ -210,7 +210,7 @@
         <CallTarget Targets="Zip_Pal_64" />
 
         <Exec
-            Condition="$(IsLinuxX66)=='true'"
+            Condition="$(IsLinuxX64)=='true'"
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
             Command="dotnet run -- -r=renameLegacyPal Path=&quot;$(UI_PUBLISH_PACKAGES)&quot;" />
 
