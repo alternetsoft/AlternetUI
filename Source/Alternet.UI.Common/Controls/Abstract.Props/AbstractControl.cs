@@ -38,6 +38,16 @@ namespace Alternet.UI
         IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo, IGripControlTarget
     {
         /// <summary>
+        /// Gets or sets the default click trigger for controls.
+        /// </summary>
+        public static ClickTriggerKind DefaultClickTrigger = ClickTriggerKind.MouseUp;
+
+        /// <summary>
+        /// Gets or sets the default drop-down trigger for controls.
+        /// </summary>
+        public static ClickTriggerKind DefaultDropDownTrigger = ClickTriggerKind.MouseDown;
+
+        /// <summary>
         /// Gets the rendering flags used for the control painting.
         /// </summary>
         public static readonly ControlRenderingFlags RenderingFlags = ControlRenderingFlags.UseSkiaSharp;
@@ -171,6 +181,14 @@ namespace Alternet.UI
         private ImeMode imeMode = ImeMode.Off;
         private PreferredSizeMode preferredSizeMode = PreferredSizeMode.Content;
         private bool parentContextMenu = DefaultParentContextMenu;
+
+        static AbstractControl()
+        {
+            if (App.IsLinuxOS && App.PlatformKind == UIPlatformKind.WxWidgets)
+            {
+                DefaultDropDownTrigger = ClickTriggerKind.MouseUp;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
@@ -330,13 +348,13 @@ namespace Alternet.UI
         /// Gets or sets the type of click trigger that determines when a click action is initiated.
         /// </summary>
         [Browsable(false)]
-        public virtual ClickTriggerKind ClickTrigger { get; set; } = ClickTriggerKind.MouseUp;
+        public virtual ClickTriggerKind ClickTrigger { get; set; } = DefaultClickTrigger;
 
         /// <summary>
         /// Gets or sets the type of click trigger that determines when a drop-down menu is shown.
         /// </summary>
         [Browsable(false)]
-        public virtual ClickTriggerKind DropDownTrigger { get; set; } = ClickTriggerKind.MouseDown;
+        public virtual ClickTriggerKind DropDownTrigger { get; set; } = DefaultDropDownTrigger;
 
         /// <summary>
         /// Gets or sets the alignment position of the drop-down menu.
