@@ -1313,7 +1313,7 @@ namespace Alternet.Maui
         private static Color GetRealTextColor(View control)
         {
             if (IsDark)
-                return Alternet.Drawing.DefaultColors.MauiToolBar.TextColorDark.ToMaui();
+                return Alternet.Drawing.DefaultColors.MauiToolBar.TextColor.GetColor(isDark:true).ToMaui();
             return Alternet.Drawing.DefaultColors.MauiToolBar.TextColorLight.ToMaui();
         }
 
