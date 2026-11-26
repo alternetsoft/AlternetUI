@@ -100,11 +100,24 @@ namespace ControlsSample
                 new ("Alternet", AnimationAlternet),
                 new ("Dual Ring", KnownAnimatedImages.DualRingSet),
 
-                // Used animated image for the light theme but it's properties 
+                // Uses animated image for the light theme but it's properties 
                 // OtherThemeVariant and IsDark are property configured for the dark theme.
                 // So, AnimationPlayer will choose the light theme animated image for the light theme
                 // and dark theme animated image for the dark theme.
                 new ("Svg Hour Glass", KnownAnimatedImages.SvgHourGlass32Light),
+
+                // This is an example of how to create a blinking animation from a static image.
+                // The blinking animation is created by using the CreateBlinking method of the
+                // AnimatedImage class, which takes a static image and creates an animated image
+                // that blinks on and off.
+                new ("Blinking ", AnimatedImage.CreateBlinking(KnownSvgImages.ImgBell, 64).Light),
+
+                // This is an example of how to create a blinking animation from a static image with a custom color.
+                // The blinking animation is created by using the CreateBlinkingColor method of the
+                // AnimatedImage class, which takes a static image and creates an animated image
+                // that cycles through a set of colors, creating a blinking effect. In this case,
+                // the color of the second frame is set to blue. The first frame uses the default svg color.
+                new ("Blinking Color", AnimatedImage.CreateBlinkingColor(KnownSvgImages.ImgClock, 64, ThemedColors.Blue).Light),
 
                 new (AnimationCustom, AnimationCustom),
             };
@@ -128,8 +141,7 @@ namespace ControlsSample
 
         private void ShowFrame()
         {
-            var url = animation.AnimationUrl;
-            var bitmap = AnimatedImageExtractor.GetFrame(url, 0);
+            var bitmap = animation.GetFrame(0);
 
             if (bitmap != null)
             {
@@ -142,9 +154,11 @@ namespace ControlsSample
         {
             var url = animation.AnimationUrl;
 
+            if (url is not null)
+                App.Log($"Animation.Url: {url}");
             App.Log($"Animation.IsOk: {animation.IsOk}");
 
-            AnimatedImageExtractor.LogFrames(url, 10, LogWriter.Application);
+            AnimatedImageExtractor.LogFrames(animation.AnimatedImage?.Frames, 10, LogWriter.Application);
         }
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)
