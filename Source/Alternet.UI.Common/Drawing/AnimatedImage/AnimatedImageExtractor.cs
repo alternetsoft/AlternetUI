@@ -35,18 +35,30 @@ public static class AnimatedImageExtractor
     /// only the specified number of frames will be logged.</param>
     public static void LogFrames(string? url, int maxFrames, ILogWriter? logWriter = null)
     {
+        var frames = ExtractFramesFromGif(url);
+        LogFrames(frames, maxFrames, logWriter);
+    }
+
+    /// <summary>
+    /// Logs detailed information about a specific frame extracted from an animated image.
+    /// </summary>
+    /// <param name="frames">The frames of the animated image to be logged.</param>
+    /// <param name="maxFrames">The maximum number of frames to log.</param>
+    /// <param name="logWriter">An optional log writer used to output the frame information.
+    /// If not specified, the default debug log writer is used.</param>
+    public static void LogFrames(AnimatedImageFrameInfo[]? frames, int maxFrames, ILogWriter? logWriter = null)
+    {
         logWriter ??= LogWriter.Debug;
 
-        var frames = ExtractFramesFromGif(url);
         if (frames == null || frames.Length == 0)
         {
-            logWriter?.WriteLine($"No frames available for URL: {url}");
+            logWriter?.WriteLine($"No frames available");
             return;
         }
 
         var effective = Math.Min(frames.Length, maxFrames);
 
-        logWriter.BeginSection($"Logging {effective} of {frames.Length} frames for URL: {url}");
+        logWriter.BeginSection($"Logging {effective} of {frames.Length} frames");
 
         for (int i = 0; i < effective; i++)
         {
@@ -80,8 +92,14 @@ public static class AnimatedImageExtractor
         logWriter.WriteLine($"Duration: {info.Duration} ms");
         logWriter.WriteLine($"Required Frame Index: {info.RequiredFrame}");
         logWriter.WriteLine($"Alpha Type: {info.AlphaType}");
-        logWriter.WriteLine($"Original Bitmap Size: {(info.OriginalBitmap != null ? $"{info.OriginalBitmap.Width}x{info.OriginalBitmap.Height}" : "null")}");
-        logWriter.WriteLine($"Combined Bitmap Size: {(info.CombinedBitmap != null ? $"{info.CombinedBitmap.Width}x{info.CombinedBitmap.Height}" : "null")}");
+        
+        var original = info.OriginalBitmap;
+        var combined = info.CombinedBitmap;
+        var image = info.Image;
+
+        logWriter.WriteLine($"Original Bitmap: {(original != null ? $"{original.Width}x{original.Height}" : "null")}");
+        logWriter.WriteLine($"Combined Bitmap: {(combined != null ? $"{combined.Width}x{combined.Height}" : "null")}");
+        logWriter.WriteLine($"Image: {(image != null ? $"{image.Width}x{image.Height}" : "null")}");
     }
 
     /// <summary>
