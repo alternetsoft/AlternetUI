@@ -6,7 +6,7 @@
 
     <!-- ================================================= -->
   <Target Name="SignDll" AfterTargets="AfterBuild"
-          Condition="'$(AlternetUIPackagesBuild)' != '' and '$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('$(MSBuildThisFileDirectory)\..\Keys\Private.props')">
+          Condition="'$(AlternetUIPackagesBuild)' != '' and '$(Configuration)'!='Debug' and $([MSBuild]::IsOsPlatform('Windows')) and Exists('$(MSBuildThisFileDirectory)\..\Keys\Private.props') and false">
    
     <PropertyGroup>
       <ThisDllPath>$(MSBuildProjectDirectory)\$(OutDir)\$(AssemblyName).dll</ThisDllPath>
