@@ -872,6 +872,7 @@ namespace Alternet.UI
                 App.LogNameValue("IsUbuntu", LinuxUtils.IsUbuntu);
                 App.LogNameValue("DistributionId", LinuxUtils.DistributionId);
                 App.LogNameValue("GlibcVersion", LinuxUtils.GetGlibcVersion());
+                App.LogNameValue("UsesLegacyGlibc", LinuxUtils.UsesLegacyGlibc);
 
                 App.LogSeparator();
                 App.Log($"OsReleaseFileData:");

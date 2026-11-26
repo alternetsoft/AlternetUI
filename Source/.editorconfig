@@ -188,6 +188,8 @@ dotnet_diagnostic.CA1806.severity = none
 
 dotnet_diagnostic.CA1826.severity = none
 
+dotnet_diagnostic.CA1862.severity = none
+
 dotnet_diagnostic.IDE0031.severity = none
 
 # IDE0270: Use coalesce expression

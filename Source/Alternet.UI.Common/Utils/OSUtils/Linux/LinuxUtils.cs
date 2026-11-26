@@ -228,7 +228,7 @@ namespace Alternet.UI
                     try
                     {
                         var id = DistributionId;
-                        isUbuntu = id?.Contains("Ubuntu") ?? false;
+                        isUbuntu = id?.ToLower().Contains("ubuntu") ?? false;
                     }
                     catch (Exception e)
                     {
