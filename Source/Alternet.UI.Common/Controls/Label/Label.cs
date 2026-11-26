@@ -76,6 +76,8 @@ namespace Alternet.UI
         private bool isPassword;
         private bool textTransparent;
         private bool textVisible = true;
+        private ThemedColor? svgColor;
+        private int? svgSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -696,6 +698,71 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the SVG image that is displayed near the text.
+        /// </summary>
+        [DefaultValue(null)]
+        public virtual SvgImage? SvgImage
+        {
+            get
+            {
+                return StateObjects?.SvgImages?.GetObjectOrNull(VisualControlState.Normal);
+            }
+
+            set
+            {
+                if (SvgImage == value)
+                    return;
+                StateObjects ??= new();
+                StateObjects.SvgImages ??= new();
+                StateObjects.SvgImages.Normal = value;
+                RaiseImageChanged(EventArgs.Empty);
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG color.
+        /// </summary>
+        /// <remarks>Setting this property triggers an invalidation of the control
+        /// if the image is visible.</remarks>
+        [Browsable(false)]
+        public virtual ThemedColor? SvgColor
+        {
+            get => svgColor;
+
+            set
+            {
+                if (svgColor == value)
+                    return;
+                svgColor = value;
+                RaiseImageChanged(EventArgs.Empty);
+                if (ImageVisible)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the size of the SVG image in pixels.
+        /// </summary>
+        /// <remarks>Changing this property triggers a layout update and redraw of the associated image if
+        /// it is visible.</remarks>
+        [Browsable(false)]
+        public virtual int? SvgSize
+        {
+            get => svgSize;
+
+            set
+            {
+                if (svgSize == value)
+                    return;
+                svgSize = value;
+                RaiseImageChanged(EventArgs.Empty);
+                if (ImageVisible)
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the disabled image that is displayed near the text.
         /// </summary>
         public virtual Image? DisabledImage
@@ -906,10 +973,22 @@ namespace Alternet.UI
             KnownButton? btn,
             CoordAndUnit? size = null)
         {
-            var (normalImage, disabledImage)
-                = ToolBarUtils.GetNormalAndDisabledSvgImages(svg, btn, this, size);
-
-            SetImages(normalImage, disabledImage);
+            if (svg is null)
+            {
+                if (btn is null)
+                {
+                    SvgImage = null;
+                }
+                else
+                {
+                    var info = KnownButtons.GetInfo(btn.Value);
+                    SvgImage = info?.SvgImage;
+                }
+            }
+            else
+            {
+                SvgImage = svg;
+            }            
         }
 
         /// <summary>
@@ -939,10 +1018,47 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Image? GetImage(VisualControlState state = VisualControlState.Normal)
         {
-            var image = StateObjects?.Images?.GetObjectOrNull(state);
-            image ??= Image;
-            var imageOverride = ImageVisible ? image : null;
-            return imageOverride;
+            if (!ImageVisible)
+                return null;
+
+            var isDark = IsDarkBackground;
+            var sz = SvgSize ?? ToolBarUtils.GetDefaultImageSize(this).Width;
+
+            Image? GetImageInternal(VisualControlState? state = null)
+            {
+                state ??= VisualState;
+
+                Image? image = null;
+
+                if (SvgImage is not null)
+                {
+                    if (SvgColor is null)
+                        image = SvgImage.AsNormalImage(sz, isDark);
+                    else
+                        image = SvgImage.ImageWithColor(sz, SvgColor?.GetColor(this));
+                }
+
+                image ??= StateObjects?.Images?.GetObjectOrNull(state.Value) ?? Image;
+
+                return image;
+            }
+
+            Image? GetDisabledImageInternal()
+            {
+                var image = SvgImage?.AsDisabledImage(sz, isDark);
+                image ??= DisabledImage;
+                image ??= GetImageInternal(VisualControlState.Normal)?.ToGrayScaleCached();
+                return image;
+            }
+
+            if (Enabled)
+            {
+                return GetImageInternal();
+            }
+            else
+            {
+                return GetDisabledImageInternal();
+            }
         }
 
         /// <inheritdoc/>
