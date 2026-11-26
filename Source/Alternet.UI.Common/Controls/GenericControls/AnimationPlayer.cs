@@ -77,7 +77,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a custom scale factor for animations. This property is used when <see cref="IsAnimationScaled"/> is set
+        /// Gets or sets a custom scale factor for animations. This property
+        /// is used when <see cref="IsAnimationScaled"/> is set
         /// to <see langword="true"/>. If not specified (default value), scale factor of the control is used.
         /// </summary>
         public virtual float? CustomAnimationScaleFactor { get; set; }
@@ -208,6 +209,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the <see cref="AnimatedImage"/> object associated with this control.
+        /// This method could return different <see cref="AnimatedImage"/> object
+        /// than the one set in <see cref="AnimatedImage"/> property if the control is using
+        /// a different theme variant of the animation.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual AnimatedImage? GetImage()
+        {
+            return animatedImage?.GetImage(this);
+        }
+
+        /// <summary>
         /// Starts playing the animation.
         /// </summary>
         /// <returns><c>true</c> if the animation started to play; <c>false</c> otherwise.</returns>
@@ -218,30 +231,32 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool Play()
         {
-            if (DisposingOrDisposed || animatedImage is null || !animatedImage.IsOk || isPlaying || !Enabled)
+            var animation = GetImage();
+
+            if (DisposingOrDisposed || animation is null || !animation.IsOk || isPlaying || !Enabled)
                 return default;
 
             timer ??= new Timer();
 
-            if (currentFrame >= animatedImage.FrameCount)
+            if (currentFrame >= animation.FrameCount)
             {
                 currentFrame = 0;
             }
 
             isPlaying = true;
-            timer.Interval = animatedImage.GetDuration(currentFrame);
+            timer.Interval = animation.GetDuration(currentFrame);
             timer.TickAction = () =>
             {
-                if (DisposingOrDisposed || animatedImage is null || !animatedImage.IsOk)
+                if (DisposingOrDisposed || animation is null || !animation.IsOk)
                     return;
                 currentFrame++;
 
-                if (currentFrame >= animatedImage.FrameCount)
+                if (currentFrame >= animation.FrameCount)
                 {
                     currentFrame = 0;
                 }
 
-                timer.Interval = animatedImage.GetDuration(currentFrame);
+                timer.Interval = animation.GetDuration(currentFrame);
                 Refresh();
                 timer.StartOnce();
             };
@@ -390,7 +405,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return null;
-            return animatedImage?.GetScaledFrame(i, scaleFactor);
+            return GetImage()?.GetScaledFrame(i, scaleFactor);
         }
 
         /// <summary>
