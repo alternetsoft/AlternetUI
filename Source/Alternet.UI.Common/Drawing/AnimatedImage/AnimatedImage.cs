@@ -11,10 +11,13 @@ namespace Alternet.Drawing;
 
 /// <summary>
 /// Represents an animated image that can be displayed in a user interface.
+/// Animations can be loaded from a GIF or WEBP image, or created from an array of SVG images.
+/// The class provides methods to retrieve frame information, durations, and scaled frames.
+/// <see cref="AnimationPlayer"/> is a control that can be used to play an animated image.
+/// If <see cref="IsDark"/> is set, <see cref="AnimationPlayer"/> will automatically
+/// select the appropriate variant based on the current theme preference, choosing from
+/// this animated image and image specified in <see cref="OtherThemeVariant"/> property.
 /// </summary>
-/// <remarks>This class inherits from <see cref="DisposableObject"/>,
-/// which means it should be properly disposed of to free
-/// resources. It is designed to handle the loading and rendering of animated images efficiently.</remarks>
 public partial class AnimatedImage : DisposableObject
 {
     private readonly Func<Stream>? streamProvider;
@@ -43,6 +46,8 @@ public partial class AnimatedImage : DisposableObject
     /// <param name="isDark">A value indicating whether to use the dark color variant for the SVG images.</param>
     public AnimatedImage(SvgImage[] svg, int size, int duration = 100, Color? color = null, bool? isDark = null)
     {
+        IsDark = isDark;
+
         frames = new AnimatedImageFrameInfo[svg.Length];
 
         for (int i = 0; i < svg.Length; i++)
@@ -134,6 +139,22 @@ public partial class AnimatedImage : DisposableObject
     public event EventHandler? InactiveFrameIndexChanged;
 
     /// <summary>
+    /// Gets or sets a value indicating whether the animated image is intended for use in a dark theme.
+    /// This property must be specified in order for the <see cref="OtherThemeVariant"/> property to function correctly.
+    /// </summary>
+    [Browsable(false)]
+    public virtual bool? IsDark { get; set; }
+
+    /// <summary>
+    /// Gets or sets the other theme variant of the animated image,
+    /// allowing for easy switching between light and dark themes.
+    /// <see cref="AnimationPlayer"/> will automatically select the appropriate
+    /// variant based on the current theme preference.
+    /// </summary>
+    [Browsable(false)]
+    public virtual AnimatedImage? OtherThemeVariant { get; set; }
+
+    /// <summary>
     /// Gets the number of frames for this animation.
     /// </summary>
     /// <returns></returns>
@@ -206,7 +227,7 @@ public partial class AnimatedImage : DisposableObject
     /// </summary>
     /// <remarks>The index must be a valid frame index within the range of available frames.</remarks>
     public virtual int InactiveFrameIndex
-    { 
+    {
         get
         {
             return inactiveFrameIndex;
@@ -236,8 +257,9 @@ public partial class AnimatedImage : DisposableObject
             if (DisposingOrDisposed)
                 return false;
             RequireFrames();
-            return frames != null && frames.Length > 0 && (frames[0].CombinedBitmap != null || frames[0].Image != null);
-        } 
+            return frames != null && frames.Length > 0
+                && (frames[0].CombinedBitmap != null || frames[0].Image != null);
+        }
     }
 
     /// <summary>
@@ -303,6 +325,56 @@ public partial class AnimatedImage : DisposableObject
     {
         var frame = GetFrameInfo(i);
         return frame?.Duration ?? 0;
+    }
+
+    /// <summary>
+    /// Retrieves the appropriate animated image variant based on the current app theme preference.
+    /// </summary>
+    /// <returns>An instance of <see cref="AnimatedImage"/> that matches the current app theme preference.</returns>
+    public virtual AnimatedImage GetImage()
+    {
+        return GetImage(SystemSettings.AppearanceIsDark);
+    }
+
+    /// <summary>
+    /// Retrieves the appropriate animated image variant based on the color mode of the specified control.
+    /// </summary>
+    /// <param name="control">The control whose color mode is used to determine
+    /// the appropriate animated image variant.</param>
+    /// <returns>An instance of <see cref="AnimatedImage"/> that matches the color
+    /// mode of the specified control.</returns>
+    public virtual AnimatedImage GetImage(AbstractControl control)
+    {
+        var colorMode = control.ColorMode;
+
+        if (colorMode is null)
+            return GetImage();
+
+        return GetImage(colorMode.Value == ControlColorMode.Dark);
+    }
+
+    /// <summary>
+    /// Retrieves the appropriate animated image variant based on the specified theme preference.
+    /// </summary>
+    /// <param name="isDark">A boolean value indicating whether the dark theme is preferred.</param>
+    /// <returns>An instance of <see cref="AnimatedImage"/> that matches the specified theme preference.</returns>
+    public virtual AnimatedImage GetImage(bool isDark)
+    {
+        if (IsDark.HasValue)
+        {
+            if (IsDark == isDark)
+            {
+                return this;
+            }
+            else
+            {
+                return OtherThemeVariant ?? this;
+            }
+        }
+        else
+        {
+            return this;
+        }
     }
 
     /// <summary>

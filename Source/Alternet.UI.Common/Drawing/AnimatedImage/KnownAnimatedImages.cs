@@ -53,12 +53,15 @@ namespace Alternet.UI
         /// Creates an <see cref="AnimatedImage"/> from an array of SVG images,
         /// with the specified size, color, and frame duration.
         /// </summary>
-        /// <param name="svgImages">An array of SVG images to be used as frames for the animated image.</param>
+        /// <param name="svgImages">An array of SVG images to be used
+        /// as frames for the animated image.</param>
         /// <param name="size">The size of each frame in pixels.</param>
-        /// <param name="isDark">A value indicating whether to use the dark color variant for the SVG images.</param>
+        /// <param name="isDark">A value indicating whether
+        /// to use the dark color variant for the SVG images.</param>
         /// <param name="frameDuration">The duration of each frame in milliseconds.</param>
         /// <param name="color">An optional color to apply to the SVG images.</param>
-        /// <returns>An instance of <see cref="AnimatedImage"/> initialized with the specified parameters.</returns>
+        /// <returns>An instance of <see cref="AnimatedImage"/>
+        /// initialized with the specified parameters.</returns>
         public static AnimatedImage CreateAnimation(
             SvgImage[] svgImages,
             int size,
@@ -80,7 +83,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the animated hourglass image used to indicate a loading or processing state.
-        /// This property lazily initializes the hourglass animation on first access, allowing for efficient resource usage.
+        /// This property lazily initializes the hourglass animation on first access,
+        /// allowing for efficient resource usage.
         /// This animation is for the light theme. For dark theme, use <see cref="SvgHourGlass32Dark"/>.
         /// </summary>
         public static AnimatedImage SvgHourGlass32Light
@@ -89,7 +93,8 @@ namespace Alternet.UI
             {
                 if (svgHourGlass32Light is null)
                 {
-                    svgHourGlass32Light = CreateAnimation(SvgHourGlassImages, 32, false, 250);
+                    svgHourGlass32Light = CreateAnimation(SvgHourGlassImages, 32, isDark: false, 250);
+                    svgHourGlass32Light.OtherThemeVariant = SvgHourGlass32Dark;
                 }
 
                 return svgHourGlass32Light;
@@ -103,7 +108,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the animated hourglass image used to indicate a loading or processing state.
-        /// This property lazily initializes the hourglass animation on first access, allowing for efficient resource usage.
+        /// This property lazily initializes the hourglass animation on first access,
+        /// allowing for efficient resource usage.
         /// This animation is for the dark theme. For light theme, use <see cref="SvgHourGlass32Light"/>.
         /// </summary>
         public static AnimatedImage SvgHourGlass32Dark
@@ -112,7 +118,8 @@ namespace Alternet.UI
             {
                 if (svgHourGlass32Dark is null)
                 {
-                    svgHourGlass32Dark = CreateAnimation(SvgHourGlassImages, 32, true, 250);
+                    svgHourGlass32Dark = CreateAnimation(SvgHourGlassImages, 32, isDark: true, 250);
+                    svgHourGlass32Dark.OtherThemeVariant = SvgHourGlass32Light;
                 }
 
                 return svgHourGlass32Dark;

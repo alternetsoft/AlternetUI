@@ -99,8 +99,13 @@ namespace ControlsSample
                 new ("Spinner", AnimationSpinner),
                 new ("Alternet", AnimationAlternet),
                 new ("Dual Ring", KnownAnimatedImages.DualRingSet),
-                new ("Svg Hour Glass Light", KnownAnimatedImages.SvgHourGlass32Light),
-                new ("Svg Hour Glass Dark", KnownAnimatedImages.SvgHourGlass32Dark),
+
+                // Used animated image for the light theme but it's properties 
+                // OtherThemeVariant and IsDark are property configured for the dark theme.
+                // So, AnimationPlayer will choose the light theme animated image for the light theme
+                // and dark theme animated image for the dark theme.
+                new ("Svg Hour Glass", KnownAnimatedImages.SvgHourGlass32Light),
+
                 new (AnimationCustom, AnimationCustom),
             };
 
