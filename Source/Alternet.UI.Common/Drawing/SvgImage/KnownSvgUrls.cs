@@ -88,6 +88,11 @@ namespace Alternet.UI
         public static string UrlImageRangeStart { get; set; } = GetImageUrl("alternet-range-start");
 
         /// <summary>
+        /// Gets or sets url used to load "Output" svg image.
+        /// </summary>
+        public static string UrlImageOutput { get; set; } = GetImageUrl("alternet-output");
+
+        /// <summary>
         /// Gets or sets url used to load "Format Align Left" svg image.
         /// </summary>
         public static string UrlImageFormatAlignLeft { get; set; } = GetImageUrl("alternet-format-align-left");

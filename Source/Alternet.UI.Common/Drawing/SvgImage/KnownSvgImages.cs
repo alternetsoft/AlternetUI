@@ -160,6 +160,7 @@ namespace Alternet.UI
         private static SvgImage? imgDebugOutput;
         private static SvgImage? imgGlobeLocation;
         private static SvgImage? imgGlobe;
+        private static SvgImage? imgOutput;
 
         static KnownSvgImages()
         {
@@ -359,6 +360,22 @@ namespace Alternet.UI
             set
             {
                 imgRangeEnd = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Output" svg image which includes an output icon.
+        /// </summary>
+        public static SvgImage ImgOutput
+        {
+            get
+            {
+                return imgOutput ??= CreateMonoSvgImage(KnownSvgUrls.UrlImageOutput);
+            }
+
+            set
+            {
+                imgOutput = value;
             }
         }
 
