@@ -23,6 +23,11 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Other)]
     public partial class AnimationPlayer : HiddenGenericBorder
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether to show debug corners for the control.
+        /// </summary>
+        public new static bool ShowDebugCorners = false;
+
         private IAnimatedImageSource? animatedImage;
         private int currentFrame;
         private ImageSet? inactiveBitmap;
@@ -59,7 +64,8 @@ namespace Alternet.UI
         /// Default is false.
         /// </summary>
         /// <remarks>When this property is set to <see langword="true"/>, animations are adjusted based on
-        /// the defined scaling parameters. Changing the value triggers a layout update and invalidates the current
+        /// the defined scaling parameters. Changing the value
+        /// triggers a layout update and invalidates the current
         /// layout, which may affect rendering performance.</remarks>
         public virtual bool IsAnimationScaled
         {
@@ -104,6 +110,25 @@ namespace Alternet.UI
                     return;
                 isTransparent = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the animation is currently playing.
+        /// </summary>
+        public virtual bool IsAnimated
+        {
+            get
+            {
+                return IsPlaying();
+            }
+
+            set
+            {
+                if (value)
+                    Play();
+                else
+                    Stop();
             }
         }
 
@@ -218,26 +243,13 @@ namespace Alternet.UI
         /// than the one set in <see cref="AnimatedImage"/> property if the control is using
         /// a different color theme variant of the animation.
         /// </summary>
-        /// <returns>The <see cref="Drawing.AnimatedImage"/> object if available; otherwise, <c>null</c>.</returns>
+        /// <returns>The <see cref="Drawing.AnimatedImage"/> object if available;
+        /// otherwise, <c>null</c>.</returns>
         public virtual AnimatedImage? GetAnimatedImage()
         {
             if (DisposingOrDisposed)
                 return null;
-
-            if (animatedImage is null || animatedImage.DisposingOrDisposed)
-                return null;
-
-            var result = animatedImage.AnimatedImage ?? animatedImage.AnimatedImageSet?.GetImage(ScaleFactor);
-
-            if (result is null || result.DisposingOrDisposed)
-                return null;
-
-            result = result.GetImage(this);
-
-            if (result is null || result.DisposingOrDisposed)
-                return null;
-
-            return result;
+            return animatedImage?.GetAnimatedImage(this);
         }
 
         /// <summary>
@@ -578,6 +590,15 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+
+            if (!Visible)
+                Stop();
+        }
+
+        /// <inheritdoc/>
         protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             var specifiedWidth = SuggestedWidth;
@@ -600,6 +621,13 @@ namespace Alternet.UI
             }
 
             return base.GetPreferredSizeInternal(context);
+        }
+
+        /// <inheritdoc/>
+        protected new virtual void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle, IsDarkBackground);
         }
 
         /// <inheritdoc/>
