@@ -23,11 +23,6 @@ namespace Alternet.UI
     public partial class CardPanelHeader : HiddenGenericBorder, ITextProperty, IReadOnlyProperty
     {
         /// <summary>
-        /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
-        /// </summary>
-        public static Func<SpeedButton>? CreateButton;
-
-        /// <summary>
         /// Gets or sets default value for the tab margin.
         /// </summary>
         /// <remarks>
@@ -219,6 +214,11 @@ namespace Alternet.UI
         /// Gets or sets default inactive tab colors.
         /// </summary>
         public static IReadOnlyFontAndColor? DefaultInactiveTabColors { get; set; }
+
+        /// <summary>
+        /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
+        /// </summary>
+        public Func<SpeedButton>? CreateButton { get; set; }
 
         /// <summary>
         /// Gets or sets the area of the control (for example, along the top) where
@@ -1108,6 +1108,32 @@ namespace Alternet.UI
         /// <summary>
         /// Inserts new item to the control at the specified position.
         /// </summary>
+        /// <typeparam name="TSpeedButton">Type of the speed button to use in the new item.</typeparam>
+        /// <param name="index">Item position.</param>
+        /// <param name="text">Item title.</param>
+        /// <param name="cardControl">Associated card control.</param>
+        /// <returns>
+        /// Created item index.
+        /// </returns>
+        public virtual int Insert<TSpeedButton>(int? index, string? text, AbstractControl? cardControl = null)
+            where TSpeedButton : SpeedButton, new()
+        {
+            var saved = CreateButton;
+
+            try
+            {
+                CreateButton = () => new TSpeedButton();
+                return Insert(index, text, cardControl);
+            }
+            finally
+            {
+                CreateButton = saved;
+            }
+        }
+
+        /// <summary>
+        /// Inserts new item to the control at the specified position.
+        /// </summary>
         /// <param name="index">Item position.</param>
         /// <param name="text">Item title.</param>
         /// <param name="cardControl">Associated card control.</param>
@@ -1116,31 +1142,8 @@ namespace Alternet.UI
         /// </returns>
         public virtual int Insert(int? index, string? text, AbstractControl? cardControl = null)
         {
-            var button = CreateHeaderButton();
-
-            if (button.MinimumSize.IsEmpty)
-                button.MinimumSize = TabControl.DefaultMinTabSize;
-            if (button.MaximumSize.IsEmpty)
-                button.MaximumSize = TabControl.DefaultMaxTabSize;
-
-            button.Text = text ?? cardControl?.Title ?? string.Empty;
-            button.SizeChanged += OnButtonSizeChanged;
-            button.Margin = TabMargin ?? DefaultTabMargin;
-            button.Padding = TabPadding ?? DefaultTabPadding;
-            button.HasBorder = TabHasBorder;
-            button.VerticalAlignment = UI.VerticalAlignment.Center;
-            button.ImageHorizontalAlignment = ImageHorizontalAlignment;
-            button.ImageVerticalAlignment = ImageVerticalAlignment;
-            button.VertDirection = VertDirection;
-            button.IsVerticalText = IsVerticalText;
-            button.SetContentHorizontalAlignment(HorizontalAlignment.Left);
-            fillPanel.Children.Insert(index ?? fillPanel.Children.Count, button);
-            button.Click += OnItemClick;
-
-            var item = new CardPanelHeaderItem(button)
-            {
-                CardControl = cardControl,
-            };
+            var item = InsertHeaderItem(index, text, cardControl);
+            item.CardControl = cardControl;
 
             if (index is null)
                 tabs.Add(item);
@@ -1153,6 +1156,104 @@ namespace Alternet.UI
                 return tabs.Count - 1;
             else
                 return index.Value;
+        }
+
+        /// <summary>
+        /// Changes the header button at the specified index with a new button.
+        /// </summary>
+        /// <param name="index"> The index of the header button to change.</param>
+        /// <param name="newButton">The new header button.</param>
+        /// <returns>True if the header button was successfully changed; otherwise, false.</returns>
+        public virtual bool ChangeHeaderButton(int index, SpeedButton newButton)
+        {
+            if (index < 0 || index >= tabs.Count)
+                return false;
+            var item = tabs[index];
+            var oldButton = item.HeaderButton;
+
+            oldButton.SizeChanged -= OnButtonSizeChanged;
+            oldButton.Click -= OnItemClick;
+
+            fillPanel.Children.Remove(oldButton);
+            InsertHeaderButton(newButton, index, oldButton.Text, item.CardControl);
+
+            item.HeaderButton = newButton;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Initializes and inserts the header button with the specified index, text and associated card control.
+        /// </summary>
+        /// <param name="button">The button to insert.</param>
+        /// <param name="index">The index of the button.</param>
+        /// <param name="text">The text of the button.</param>
+        /// <param name="cardControl">The associated card control.</param>
+        protected virtual void InsertHeaderButton(
+            SpeedButton button,
+            int? index,
+            string? text,
+            AbstractControl? cardControl = null)
+        {
+            if (button.MinimumSize.IsEmpty)
+                button.MinimumSize = TabControl.DefaultMinTabSize;
+            if (button.MaximumSize.IsEmpty)
+                button.MaximumSize = TabControl.DefaultMaxTabSize;
+
+            button.TextVisible = true;
+            button.SizeChanged += OnButtonSizeChanged;
+            button.Text = text ?? cardControl?.Title ?? string.Empty;
+            button.Margin = TabMargin ?? DefaultTabMargin;
+            button.Padding = TabPadding ?? DefaultTabPadding;
+            button.HasBorder = TabHasBorder;
+            button.VerticalAlignment = UI.VerticalAlignment.Center;
+            button.ImageHorizontalAlignment = ImageHorizontalAlignment;
+            button.ImageVerticalAlignment = ImageVerticalAlignment;
+            button.VertDirection = VertDirection;
+            button.IsVerticalText = IsVerticalText;
+            button.SetContentHorizontalAlignment(HorizontalAlignment.Left);
+            fillPanel.Children.Insert(index ?? fillPanel.Children.Count, button);
+            button.Click += OnItemClick;
+        }
+
+        /// <summary>
+        /// Creates and inserts header item with the specified index, text and associated card control.
+        /// </summary>
+        /// <param name="index">Item position.</param>
+        /// <param name="text">Item title.</param>
+        /// <param name="cardControl">Associated card control.</param>
+        /// <returns>The created <see cref="CardPanelHeaderItem"/>.</returns>
+        protected virtual CardPanelHeaderItem InsertHeaderItem(int? index, string? text, AbstractControl? cardControl = null)
+        {
+            var button = CreateHeaderButton();
+            InsertHeaderButton(button, index, text, cardControl);
+            return CreateHeaderItem(button);
+        }
+
+        /// <summary>
+        /// Creates header item with the specified button, index and associated card control.
+        /// </summary>
+        /// <param name="button">The button associated with the header item.</param>
+        /// <param name="index">Item position.</param>
+        /// <param name="cardControl">Associated card control.</param>
+        /// <returns>The created <see cref="CardPanelHeaderItem"/>.</returns>
+        protected virtual CardPanelHeaderItem InsertHeaderItem(
+            SpeedButton button,
+            int? index,
+            AbstractControl? cardControl = null)
+        {
+            InsertHeaderButton(button, index, button.Text, cardControl);
+            return CreateHeaderItem(button);
+        }
+
+        /// <summary>
+        /// Creates header item inherited from <see cref="CardPanelHeaderItem"/>.
+        /// </summary>
+        /// <param name="button">The button associated with the header item.</param>
+        /// <returns>The created <see cref="CardPanelHeaderItem"/>.</returns>
+        protected virtual CardPanelHeaderItem CreateHeaderItem(SpeedButton button)
+        {
+            return new CardPanelHeaderItem(button);
         }
 
         /// <summary>
@@ -1169,6 +1270,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds new item to the control.
+        /// </summary>
+        /// <typeparam name="TSpeedButton">Type of the speed button to use in the new item.</typeparam>
+        /// <param name="text">Item title.</param>
+        /// <param name="cardId">Associated card unique id.</param>
+        /// <returns>
+        /// Created item index.
+        /// </returns>
+        public virtual int Add<TSpeedButton>(string? text, ObjectUniqueId cardId)
+            where TSpeedButton : SpeedButton, new()
+        {
+            return Insert<TSpeedButton>(null, text, cardId);
+        }
+
+        /// <summary>
         /// Inserts new item to the control at the specified position.
         /// </summary>
         /// <param name="index">Item position.</param>
@@ -1180,6 +1296,25 @@ namespace Alternet.UI
         public virtual int Insert(int? index, string? text, ObjectUniqueId cardId)
         {
             var realIndex = Insert(index, text);
+            var item = tabs[realIndex];
+            item.CardUniqueId = cardId;
+            return realIndex;
+        }
+
+        /// <summary>
+        /// Inserts new item to the control at the specified position.
+        /// </summary>
+        /// <typeparam name="TSpeedButton">Type of the speed button to use in the new item.</typeparam>
+        /// <param name="index">Item position.</param>
+        /// <param name="text">Item title.</param>
+        /// <param name="cardId">Associated card unique id.</param>
+        /// <returns>
+        /// Created item index.
+        /// </returns>
+        public virtual int Insert<TSpeedButton>(int? index, string? text, ObjectUniqueId cardId)
+            where TSpeedButton : SpeedButton, new()
+        {
+            var realIndex = Insert<TSpeedButton>(index, text);
             var item = tabs[realIndex];
             item.CardUniqueId = cardId;
             return realIndex;
@@ -1322,7 +1457,6 @@ namespace Alternet.UI
             static SpeedButton Fn()
             {
                 var result = new SpeedButton();
-                result.TextVisible = true;
                 return result;
             }
         }
