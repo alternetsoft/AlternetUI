@@ -13,7 +13,7 @@ namespace Alternet.Drawing;
 /// Defines an interface for sources that provide animated images, allowing for retrieval of the associated
 /// animated image and its set of frames.
 /// </summary>
-public interface IAnimatedImageSource
+public interface IAnimatedImageSource : IDisposableObject
 {
     /// <summary>
     /// Gets the animated image associated with this source.

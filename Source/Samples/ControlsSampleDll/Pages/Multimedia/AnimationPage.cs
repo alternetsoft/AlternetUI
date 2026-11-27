@@ -47,13 +47,7 @@ namespace ControlsSample
                 Url = url;
             }
 
-            public AnimatedImageItem(string name, AnimatedImageSet image)
-            {
-                Text = name;
-                AnimatedImageSet = image;
-            }
-
-            public AnimatedImageItem(string name, AnimatedImage image)
+            public AnimatedImageItem(string name, IAnimatedImageSource image)
             {
                 Text = name;
                 AnimatedImage = image;
@@ -61,9 +55,7 @@ namespace ControlsSample
 
             public string? Url { get; set; }
 
-            public AnimatedImageSet? AnimatedImageSet { get; set; }
-
-            public AnimatedImage? AnimatedImage { get; set; }
+            public IAnimatedImageSource? AnimatedImage { get; set; }
         }
 
         public AnimationPage()
@@ -158,7 +150,7 @@ namespace ControlsSample
                 App.Log($"Animation.Url: {url}");
             App.Log($"Animation.IsOk: {animation.IsOk}");
 
-            AnimatedImageExtractor.LogFrames(animation.AnimatedImage?.Frames, 10, LogWriter.Application);
+            AnimatedImageExtractor.LogFrames(animation.GetAnimatedImage()?.Frames, 10, LogWriter.Application);
         }
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -213,26 +205,19 @@ namespace ControlsSample
                     }
                     else
                     {
-
+                        App.Log($"Loaded animation from url: {item.Url}");
                     }
                 }
                 else
-                    if (item.AnimatedImageSet is not null)
+                    if (item.AnimatedImage is not null)
                     {
-                        animation.IsAnimationScaled = false;
-
-                        animation.AnimatedImage = item.AnimatedImageSet.GetImage(ScaleFactor);
+                        animation.IsAnimationScaled = item.AnimatedImage.AnimatedImageSet is null;
+                        animation.AnimatedImage = item.AnimatedImage;
                     }
                     else
-                        if (item.AnimatedImage is not null)
-                        {
-                            animation.IsAnimationScaled = true;
-                            animation.AnimatedImage = item.AnimatedImage;
-                        }
-                        else
-                        {
-                            App.Log($"No animation source for item: {item.Text}");
-                        }
+                    {
+                        App.Log($"No animation source for item: {item.Text}");
+                    }
 
                 animation.Play();
             }

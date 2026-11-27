@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -22,7 +23,7 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Other)]
     public partial class AnimationPlayer : HiddenGenericBorder
     {
-        private AnimatedImage? animatedImage;
+        private IAnimatedImageSource? animatedImage;
         private int currentFrame;
         private ImageSet? inactiveBitmap;
         private Timer? timer;
@@ -107,10 +108,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="AnimatedImage"/> object associated with this control.
+        /// Gets or sets the <see cref="IAnimatedImageSource"/> object associated with this control.
+        /// You can set this property to an instance of a class that implements
+        /// the <see cref="IAnimatedImageSource"/> interface,
+        /// such as a <see cref="Drawing.AnimatedImage"/> or <see cref="Drawing.AnimatedImageSet"/>.
         /// </summary>
         [Browsable(false)]
-        public virtual AnimatedImage? AnimatedImage
+        public virtual IAnimatedImageSource? AnimatedImage
         {
             get => animatedImage;
             set
@@ -165,7 +169,7 @@ namespace Alternet.UI
         {
             get
             {
-                return animatedImage?.SourceUrl;
+                return GetAnimatedImage()?.SourceUrl;
             }
         }
 
@@ -178,7 +182,7 @@ namespace Alternet.UI
         {
             get
             {
-                return animatedImage?.FrameCount ?? 0;
+                return GetAnimatedImage()?.FrameCount ?? 0;
             }
         }
 
@@ -191,7 +195,7 @@ namespace Alternet.UI
         {
             get
             {
-                return animatedImage?.AnimationSize ?? SizeI.Empty;
+                return GetAnimatedImage()?.AnimationSize ?? SizeI.Empty;
             }
         }
 
@@ -204,20 +208,36 @@ namespace Alternet.UI
         {
             get
             {
-                return animatedImage?.IsOk ?? false;
+                return GetAnimatedImage()?.IsOk ?? false;
             }
         }
 
         /// <summary>
-        /// Gets the <see cref="AnimatedImage"/> object associated with this control.
-        /// This method could return different <see cref="AnimatedImage"/> object
+        /// Gets the <see cref="Drawing.AnimatedImage"/> object associated with this control.
+        /// This method could return different <see cref="Drawing.AnimatedImage"/> object
         /// than the one set in <see cref="AnimatedImage"/> property if the control is using
-        /// a different theme variant of the animation.
+        /// a different color theme variant of the animation.
         /// </summary>
-        /// <returns></returns>
-        protected virtual AnimatedImage? GetImage()
+        /// <returns>The <see cref="Drawing.AnimatedImage"/> object if available; otherwise, <c>null</c>.</returns>
+        public virtual AnimatedImage? GetAnimatedImage()
         {
-            return animatedImage?.GetImage(this);
+            if (DisposingOrDisposed)
+                return null;
+
+            if (animatedImage is null || animatedImage.DisposingOrDisposed)
+                return null;
+
+            var result = animatedImage.AnimatedImage ?? animatedImage.AnimatedImageSet?.GetImage(ScaleFactor);
+
+            if (result is null || result.DisposingOrDisposed)
+                return null;
+
+            result = result.GetImage(this);
+
+            if (result is null || result.DisposingOrDisposed)
+                return null;
+
+            return result;
         }
 
         /// <summary>
@@ -231,7 +251,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool Play()
         {
-            var animation = GetImage();
+            var animation = GetAnimatedImage();
 
             if (DisposingOrDisposed || animation is null || !animation.IsOk || isPlaying || !Enabled)
                 return default;
@@ -371,7 +391,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return animatedImage?.GetDuration(i) ?? 0;
+            return GetAnimatedImage()?.GetDuration(i) ?? 0;
         }
 
         /// <summary>
@@ -383,7 +403,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return null;
-            return animatedImage?.GetFrame(i);
+            return GetAnimatedImage()?.GetFrame(i);
         }
 
         /// <summary>
@@ -405,7 +425,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return null;
-            return GetImage()?.GetScaledFrame(i, scaleFactor);
+            return GetAnimatedImage()?.GetScaledFrame(i, scaleFactor);
         }
 
         /// <summary>
@@ -519,10 +539,12 @@ namespace Alternet.UI
             {
                 frameImage = inactiveBitmap?.AsImage(AnimationSize);
 
-                if (frameImage is null && animatedImage is not null && animatedImage.IsOk)
+                var img = GetAnimatedImage();
+
+                if (frameImage is null && img is not null && img.IsOk)
                 {
-                    frameImage ??= animatedImage.InactiveBitmap?.AsImage(animationSizeScaledI);
-                    frameImage ??= GetScaledFrame(animatedImage.InactiveFrameIndex, animationScaleFactor);
+                    frameImage ??= img.InactiveBitmap?.AsImage(animationSizeScaledI);
+                    frameImage ??= GetScaledFrame(img.InactiveFrameIndex, animationScaleFactor);
                 }
 
                 if (!Enabled)

@@ -14,6 +14,7 @@
 - AnimationPlayer: Use color theme specific images in animation playback (checks OtherThemeVariant and IsDark properties of AnimatedImage when painting animation image).
 - SnoozeButton: Fix LabelText property behavior.
 - PopupWindow.TopToolBarPanel.
+- Support IAnimatedImageSource in AnimationPlayer.
 
 ---
 
