@@ -15,7 +15,7 @@ namespace Alternet.Drawing;
 /// are removed or the collection is cleared. This class is useful
 /// for scenarios where different image resolutions or
 /// scale factors are required for display, such as supporting high-DPI environments.</remarks>
-public partial class AnimatedImageSet : DisposableObject
+public partial class AnimatedImageSet : DisposableObject, IAnimatedImageSource
 {
     private readonly List<ImageItem> images = new();
 
@@ -32,6 +32,12 @@ public partial class AnimatedImageSet : DisposableObject
     /// <remarks>This property provides read-only access to the list of images. The collection is immutable,
     /// meaning that it cannot be modified directly through this property.</remarks>
     public IReadOnlyList<ImageItem> Images => images;
+
+    /// <inheritdoc/>
+    AnimatedImage? IAnimatedImageSource.AnimatedImage => null;
+
+    /// <inheritdoc/>
+    AnimatedImageSet? IAnimatedImageSource.AnimatedImageSet => this;
 
     /// <summary>
     /// Retrieves the animated image item that best matches the specified scale factor.

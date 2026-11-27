@@ -10,6 +10,23 @@ using Alternet.UI;
 namespace Alternet.Drawing;
 
 /// <summary>
+/// Defines an interface for sources that provide animated images, allowing for retrieval of the associated
+/// animated image and its set of frames.
+/// </summary>
+public interface IAnimatedImageSource
+{
+    /// <summary>
+    /// Gets the animated image associated with this source.
+    /// </summary>
+    AnimatedImage? AnimatedImage { get; }
+
+    /// <summary>
+    /// Gets the set of animated images associated with this source, if available.
+    /// </summary>
+    AnimatedImageSet? AnimatedImageSet { get; }
+}
+
+/// <summary>
 /// Represents an animated image that can be displayed in a user interface.
 /// Animations can be loaded from a GIF or WEBP image, or created from an array of SVG images.
 /// The class provides methods to retrieve frame information, durations, and scaled frames.
@@ -18,7 +35,7 @@ namespace Alternet.Drawing;
 /// select the appropriate variant based on the current theme preference, choosing from
 /// this animated image and image specified in <see cref="OtherThemeVariant"/> property.
 /// </summary>
-public partial class AnimatedImage : DisposableObject
+public partial class AnimatedImage : DisposableObject, IAnimatedImageSource
 {
     private readonly Func<Stream>? streamProvider;
 
@@ -382,6 +399,12 @@ public partial class AnimatedImage : DisposableObject
     /// the animated image is ready for display
     /// or processing.</remarks>
     public virtual bool IsLoaded => frames != null;
+
+    /// <inheritdoc/>
+    AnimatedImage? IAnimatedImageSource.AnimatedImage => this;
+
+    /// <inheritdoc/>
+    AnimatedImageSet? IAnimatedImageSource.AnimatedImageSet => null;
 
     /// <summary>
     /// Retrieves information about a specific frame in the animated image.
