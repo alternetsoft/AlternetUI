@@ -1,3 +1,20 @@
+# 1.2.3 (2026 November 27)
+
+- AnimatedImage: Add themed blinking animated image factories (CreateBlinking and CreateBlinkingColor). 
+- AnimatedImage: Add theme metadata (OtherThemeVariant and IsDark props) and methods to select an animated image variant based on the color theme.
+- Demo: Add blinking animation samples.
+- Refresh colors properly on system colors changes in XCalendar, DrawingResourcePicker and SpeedColorButton.
+- Label: Allow labels to display SVG images with configurable color and size (SvgImage, SvgSize, SvgColor properties).
+- AbstractControl: Make default click triggers configurable (DefaultClickTrigger, DefaultDropDownTrigger).
+- Defaults control drop-downs to MouseUp on Linux with wxWidgets.
+- Fix regression: Exception in TreeView constructor.
+- Fix regression: Incorrect Linux determination.
+- Add console color and message helpers to ConsoleUtils.
+- Introduce TransparentToolBar control and use it for section headers.
+- AnimationPlayer: Use color theme specific images in animation playback (checks OtherThemeVariant and IsDark properties of AnimatedImage when painting animation image).
+
+---
+
 # 1.2.2 (2026 November 25)
 
 - WindowTextInput: Improve text input validation feedback. The dialog will display the error icon until the input is valid.
