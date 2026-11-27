@@ -24,6 +24,30 @@ public interface IAnimatedImageSource : IDisposableObject
     /// Gets the set of animated images associated with this source, if available.
     /// </summary>
     AnimatedImageSet? AnimatedImageSet { get; }
+
+    /// <summary>
+    /// Retrieves the appropriate animated image based on the scale factor and color mode
+    /// of the specified container control.
+    /// </summary>
+    /// <param name="container">The container control for which to retrieve the animated image.</param>
+    /// <returns>The appropriate animated image, or null if none is available.</returns>
+    public virtual AnimatedImage? GetAnimatedImage(AbstractControl container)
+    {
+        if (DisposingOrDisposed)
+            return null;
+
+        var result = AnimatedImage ?? AnimatedImageSet?.GetImage(container.ScaleFactor);
+
+        if (result is null || result.DisposingOrDisposed)
+            return null;
+
+        result = result.GetImage(container);
+
+        if (result is null || result.DisposingOrDisposed)
+            return null;
+
+        return result;
+    }
 }
 
 /// <summary>
