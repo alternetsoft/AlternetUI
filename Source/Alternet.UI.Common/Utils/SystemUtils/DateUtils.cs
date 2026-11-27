@@ -545,10 +545,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the names of the months in the Gregorian calendar, based on the specified kind and format provider.
+        /// Gets the names of the months in the Gregorian calendar,
+        /// based on the specified kind and format provider.
         /// </summary>
         /// <param name="kind">The kind of month names to retrieve (full or abbreviated).</param>
-        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// <param name="formatProvider">An optional object
+        /// that supplies culture-specific formatting information.
         /// If null, the current culture is used.</param>
         /// <returns>An array of month names corresponding to the specified kind and format provider.</returns>
         public static string[] GetMonthNames(
@@ -562,6 +564,23 @@ namespace Alternet.UI
                 MonthNamesKind.Abbreviated => info.AbbreviatedMonthNames,
                 _ => info.MonthNames,
             };
+        }
+
+        /// <summary>
+        /// Rounds the specified <see cref="TimeOnly"/> value up to the next multiple of the specified number of minutes.
+        /// </summary>
+        /// <param name="time">The time to round up.</param>
+        /// <param name="factor">The number of minutes to round up to the next multiple of.</param>
+        /// <returns>The rounded <see cref="TimeOnly"/> value.</returns>
+        public static TimeOnly RoundUpMinutes(TimeOnly time, int factor = 5)
+        {
+            if (factor <= 1)
+                return time;
+
+            int totalMinutes = time.Hour * 60 + time.Minute;
+            int roundedMinutes = ((totalMinutes + factor - 1) / factor) * factor;
+
+            return TimeOnly.MinValue.AddMinutes(roundedMinutes);
         }
 
         /// <summary>
