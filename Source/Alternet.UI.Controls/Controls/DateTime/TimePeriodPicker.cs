@@ -352,7 +352,7 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.DateTime)]
     public partial class SnoozeSpeedButton : TimePeriodPicker
     {
-        private string? labelText;
+        private string labelText = Localized.ButtonSnooze;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SnoozeSpeedButton"/> class.
@@ -362,6 +362,7 @@ namespace Alternet.UI
             Label.Margin = 0;
             ImageVisible = false;
             PopupWindowTitle = CommonStrings.Default.WindowTitleRemindMeIn;
+            OnTextChanged(EventArgs.Empty);
         }
 
         /// <summary>
@@ -369,16 +370,23 @@ namespace Alternet.UI
         /// which can be customized to indicate the snooze action.
         /// If not set, a default label text is used.
         /// </summary>
-        public virtual string? LabelText
+        public virtual string LabelText
         {
             get => labelText;
-            set => labelText = value;
+            set
+            {
+                value ??= Localized.ButtonSnooze;
+                if (labelText == value)
+                    return;
+                labelText = value;
+                OnTextChanged(EventArgs.Empty);
+            }
         }
 
         /// <inheritdoc/>
         protected override string CoerceLabelText(string text)
         {
-            return labelText ?? CommonStrings.Default.ButtonSnooze;
+            return labelText;
         }
 
         /// <inheritdoc/>
