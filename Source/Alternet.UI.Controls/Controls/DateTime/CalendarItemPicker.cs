@@ -61,14 +61,20 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default minimum width for the <see cref="CalendarItemPicker"/> control.
         /// </summary>
-        public static float DefaultMinWidth = 300;
+        public static float DefaultMinWidth = 350;
+
+        /// <summary>
+        /// Gets or sets the default maximum width for the <see cref="CalendarItemPicker"/> control.
+        /// </summary>
+        public static float? DefaultMaxWidth = 350;
 
         private readonly GenericSectionPanel detailsPanel = new(Localized.CalendarItemLabelDetails);
         private readonly GenericSectionPanel alarmPanel = new();
         private readonly GenericSectionPanel descriptionPanel = new(Localized.CalendarItemLabelDescription);
 
         /// <summary>
-        /// Gets the <see cref="TextPicker"/> that is used to edit the title of the <see cref="CalendarItem"/> being edited.
+        /// Gets the <see cref="TextPicker"/> that is used to edit the title
+        /// of the <see cref="CalendarItem"/> being edited.
         /// </summary>
         private readonly TextPickerAndImage titlePicker = new(DefaultImages.Title ?? KnownSvgImages.ImgSmallPen);
 
@@ -104,6 +110,7 @@ namespace Alternet.UI
             statusPicker.MainControl.UseSingleBottomBorder();
 
             MinWidth = DefaultMinWidth;
+            MaxWidth = DefaultMaxWidth;
             Layout = LayoutStyle.Vertical;
             Padding = DefaultPadding;
 
