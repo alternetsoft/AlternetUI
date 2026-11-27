@@ -134,6 +134,8 @@ namespace Alternet.UI
         /// </summary>
         public FindReplaceControl()
         {
+            RoundCorners();
+
             findEdit.Label.DebugIdentifier = "FindEditLabel";
             replaceEdit.DebugIdentifier = "ReplaceEdit";
 
