@@ -32,9 +32,9 @@ namespace ControlsSample
                 tabControl.Parent = this;
                 InitializeComponent();
 
-                var page0 = InsertPage();
-                var page1 = InsertPage();
-                var page2 = InsertPage();
+                var page0 = InsertPage<SpeedButton>();
+                var page1 = InsertPage<SpeedButton>();
+                var page2 = InsertPage<SpeedButton>();
 
                 tabAlignmentComboBox.EnumType = typeof(TabAlignment);
                 tabAlignmentComboBox.Value = TabAlignment.Top;
@@ -87,6 +87,20 @@ namespace ControlsSample
                     ToggleVerticalText();
                 });
 
+                this.ContextMenuStrip.Add("Set animated image", () =>
+                {
+                    var newButton = new AnimatedSpeedButton();
+
+                    newButton.SvgImage = KnownSvgImages.ImgBell;
+                    newButton.AnimatedImage
+                        = AnimatedImage.CreateBlinkingColor(KnownSvgImages.ImgBell, 32, ThemedColors.Red).Light;
+                    newButton.IsAnimated = true;
+                    newButton.Text = "AnimatedSpeedButton";
+                    newButton.TextVisible = true;
+
+                    tabControl.HeaderControl.ChangeHeaderButton(0, newButton);
+                });
+
                 this.ContextMenuStrip.Add("Toggle vertical direction", () =>
                 {
                     if (tabControl.VertDirection == VerticalTextDirection.TopToBottom)
@@ -104,6 +118,24 @@ namespace ControlsSample
                 {
                     tabControl.ContentVisible = !tabControl.ContentVisible;
                 });
+
+                this.ContextMenuStrip.Add("Add tab with animated image", () =>
+                {
+                    var idx = InsertPage<AnimatedSpeedButton>();
+                    var panel = tabControl.HeaderControl.Tabs.LastOrDefault();
+                    var button = panel?.HeaderButton;
+
+                    if (button is AnimatedSpeedButton animatedButton)
+                    {
+                        animatedButton.SvgImage = KnownSvgImages.ImgBell;
+                        animatedButton.AnimatedImage
+                            = AnimatedImage.CreateBlinkingColor(KnownSvgImages.ImgBell, 32, ThemedColors.Red).Light;
+                        animatedButton.IsAnimated = true;
+                        animatedButton.Text = "AnimatedSpeedButton";
+                        animatedButton.TextVisible = true;
+                    }
+                });
+
 
                 tabControl.MinHeight = 300;
                 tabControl.HasCloseButton = true;
@@ -144,11 +176,11 @@ namespace ControlsSample
         {
             if (tabControl.TabCount == 0)
             {
-                InsertPage();
+                InsertPage<SpeedButton>();
                 return;
             }
 
-            InsertPage(tabControl.TabCount - 1);
+            InsertPage<SpeedButton>(tabControl.TabCount - 1);
         }
 
         private void RemoveSelectedPageButton_Click(object? sender, EventArgs e)
@@ -158,10 +190,11 @@ namespace ControlsSample
 
         private void AppendPageButton_Click(object? sender, EventArgs e)
         {
-            InsertPage();
+            InsertPage<SpeedButton>();
         }
 
-        private TabPage InsertPage(int? index = null)
+        private TabPage InsertPage<TSpeedButton>(int? index = null)
+            where TSpeedButton : SpeedButton, new()
         {
             var s = "Page " + GenItemIndex();
             TabPage page = new()
@@ -192,7 +225,7 @@ namespace ControlsSample
 
             page.Title = s;
 
-            tabControl.Insert(index, page);
+            tabControl.Insert<TSpeedButton>(index, page);
 
             return page;
         }
