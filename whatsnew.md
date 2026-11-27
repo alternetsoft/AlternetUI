@@ -12,6 +12,8 @@
 - Add console color and message helpers to ConsoleUtils.
 - Introduce TransparentToolBar control and use it for section headers.
 - AnimationPlayer: Use color theme specific images in animation playback (checks OtherThemeVariant and IsDark properties of AnimatedImage when painting animation image).
+- SnoozeButton: Fix LabelText property behavior.
+- PopupWindow.TopToolBarPanel.
 
 ---
 
