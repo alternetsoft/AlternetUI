@@ -314,6 +314,11 @@ namespace Alternet.UI
         /// </summary>
         public AbstractControl BottomToolBarPanel => bottomToolBarPanel;
 
+        /// <summary>
+        /// Gets top toolbar panel which contains title bar and other controls.
+        /// </summary>
+        public AbstractControl TopToolBarPanel => topToolBarPanel;
+
         /// <inheritdoc/>
         public override bool Resizable
         {
