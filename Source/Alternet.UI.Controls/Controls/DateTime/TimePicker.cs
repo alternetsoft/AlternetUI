@@ -219,11 +219,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the button used for incrementing the time value. 
         /// </summary>
+        [Browsable(false)]
         public SpeedButton HoursButton => hoursButton;
 
         /// <summary>
         /// Gets or sets a value indicating whether the <c>TimePicker</c> is empty.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsValueEmpty
         {
             get
@@ -243,6 +245,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the context menu associated with the ellipsis button of the <c>TimePicker</c>.
         /// </summary>
+        [Browsable(false)]
         public ContextMenuStrip EllipsisButtonMenu => ellipsisButtonMenu;
 
         /// <summary>
@@ -262,41 +265,49 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the separator control between hours and minutes buttons.
         /// </summary>
+        [Browsable(false)]
         public AbstractControl HoursAndMinutesSeparator => hoursAndMinutesSeparator;
 
         /// <summary>
         /// Gets the button used for incrementing the time value. 
         /// </summary>
+        [Browsable(false)]
         public SpeedButton MinutesButton => minutesButton;
 
         /// <summary>
         /// Gets the ellipsis button used for opening a drop down menu.
         /// </summary>
+        [Browsable(false)]
         public SpeedButton EllipsisButton => ellipsisButton;
 
         /// <summary>
         /// Gets the separator control between minutes and seconds buttons.
         /// </summary>
+        [Browsable(false)]
         public AbstractControl MinutesAndSecondsSeparator => minutesAndSecondsSeparator;
 
         /// <summary>
         /// Gets the button used for incrementing the time value. 
         /// </summary>
+        [Browsable(false)]
         public SpeedButton SecondsButton => secondsButton;
 
         /// <summary>
         /// Gets the separator control between seconds and AM/PM buttons.
         /// </summary>
+        [Browsable(false)]
         public AbstractControl SecondsAndAmPmSeparator => secondsAndAmPmSeparator;
 
         /// <summary>
         /// Gets the button used for incrementing the time value. 
         /// </summary>
+        [Browsable(false)]
         public SpeedButton AmPmButton => amPmButton;
 
         /// <summary>
         /// Gets or sets the time value of the <c>TimePicker</c> as a string for clipboard operations.
         /// </summary>
+        [Browsable(false)]
         public string? AsClipboardString
         {
             get
