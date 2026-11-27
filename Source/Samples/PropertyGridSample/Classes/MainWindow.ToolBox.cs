@@ -85,6 +85,8 @@ namespace PropertyGridSample
                 bool logNotAddedControls = false;
 
 
+                ToolBoxAdd<AnimatedSpeedButton>(ObjectInit.InitAnimatedSpeedButton);
+                ToolBoxAdd<AnimationPlayer>(ObjectInit.InitAnimationPlayer);
                 ToolBoxAdd<Border>(ObjectInit.InitBorder);
                 ToolBoxAdd<Calculator>();
                 ToolBoxAdd<CalendarAlarmPicker>(ObjectInit.InitCalendarAlarmPicker);

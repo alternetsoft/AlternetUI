@@ -436,6 +436,21 @@ namespace PropertyGridSample
         {
         }
 
+        public static void InitAnimatedSpeedButton(AnimatedSpeedButton control)
+        {
+            control.SvgImage = KnownSvgImages.ImgBell;
+            control.AnimatedImage = AnimatedImage.CreateBlinkingColor(KnownSvgImages.ImgBell, 32, ThemedColors.Red).Light;
+            control.IsAnimated = true;
+            control.Text = "AnimatedSpeedButton";
+            control.TextVisible = true;
+        }
+
+        public static void InitAnimationPlayer(AnimationPlayer control)
+        {
+            control.AnimatedImage = KnownAnimatedImages.DualRing64;
+            control.Play();
+        }
+
         public static void InitTextPickerAndImage(TextPickerAndImage control)
         {
             control.Label.SvgImage = KnownSvgImages.ImgLocation;

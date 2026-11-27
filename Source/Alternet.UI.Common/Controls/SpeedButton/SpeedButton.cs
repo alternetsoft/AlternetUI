@@ -58,6 +58,7 @@ namespace Alternet.UI
         private bool isDisabledTransparent;
         private bool useTextColorForSvg;
         private bool? hasVisibleTextOverride;
+        private bool ignoreImagePaint;
 
         static SpeedButton()
         {
@@ -121,6 +122,23 @@ namespace Alternet.UI
         /// Occurs when <see cref="Sticky"/> property is changed.
         /// </summary>
         public event EventHandler? StickyChanged;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to ignore the image painting.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IgnoreImagePaint
+        {
+            get => ignoreImagePaint;
+            set
+            {
+                if (ignoreImagePaint == value)
+                    return;
+                ignoreImagePaint = value;
+                if (HasVisibleImage)
+                    Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the drop-down menu
@@ -2076,7 +2094,7 @@ namespace Alternet.UI
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
             }
 
-            if (HasVisibleImage)
+            if (HasVisibleImage && !IgnoreImagePaint)
             {
                 /*
                 I have no idea why this is needed. When we switched to generic control for toolbar,
@@ -2668,6 +2686,131 @@ namespace Alternet.UI
             /// Gets or sets the default theme used for all editable picker controls.
             /// </summary>
             public static KnownTheme EditablePicker = KnownTheme.StaticPanelBorderNoHover;
+        }
+    }
+
+    /// <summary>
+    /// Represents a speed button control that paints animation instead of static image.
+    /// </summary>
+    public partial class AnimatedSpeedButton : SpeedButton
+    {
+        private IAnimatedImageSource? imageSource;
+        private AnimationPlayer? player;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnimatedSpeedButton"/> class.
+        /// </summary>
+        public AnimatedSpeedButton()
+        {
+            PictureBoxSpacer.Visible = true;
+            PictureBoxSpacer.Parent = this;
+            SvgImage = KnownSvgImages.ImgEmpty;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the button's animation is enabled.
+        /// </summary>
+        public virtual bool IsAnimated
+        {
+            get => player is not null && player.IsAnimated;
+
+            set
+            {
+                if (IsAnimated == value)
+                    return;
+                if (value)
+                {
+                    Player.IsAnimated = true;
+                    Player.Visible = true;
+                    IgnoreImagePaint = true;
+                }
+                else
+                {
+                    if (player is not null)
+                    {
+                        Player.Visible = false;
+                        player.IsAnimated = false;
+                        IgnoreImagePaint = false;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the animation player associated with the button.
+        /// </summary>
+        [Browsable(false)]
+        public virtual AnimationPlayer Player
+        {
+            get
+            {
+                if(player is null)
+                {
+                    player = CreatePlayer();
+                    InitPlayer(player);
+                }
+                
+                return player;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the animated image source for the button.
+        /// </summary>
+        public virtual IAnimatedImageSource? AnimatedImage
+        {
+            get => imageSource;
+            set
+            {
+                if (imageSource == value)
+                    return;
+                imageSource = value;
+
+                if (value is null)
+                {
+                    SvgSize = null;
+                }
+                else
+                {
+                    SvgSize = value.GetAnimatedImage(this)?.AnimationSize.Width;
+                }
+
+                if (player is not null)
+                {
+                    player.AnimatedImage = imageSource;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="AnimationPlayer"/> class.
+        /// </summary>
+        /// <returns>A new instance of the <see cref="AnimationPlayer"/> class.</returns>
+        protected virtual AnimationPlayer CreatePlayer()
+        {
+            return new AnimationPlayer();
+        }
+
+        /// <summary>
+        /// Initializes the specified <see cref="AnimationPlayer"/> instance
+        /// with the current animated image source
+        /// and other necessary settings. This method can be overridden in derived classes
+        /// to customize the initialization process.
+        /// </summary>
+        /// <param name="instance">The <see cref="AnimationPlayer"/> instance to initialize.</param>
+        protected virtual void InitPlayer(AnimationPlayer instance)
+        {
+            instance.AnimatedImage = imageSource;
+            instance.Visible = false;
+            instance.PreferredSizeMode = PreferredSizeMode.Available;
+            instance.Parent = PictureBoxSpacer;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref player);
+            base.DisposeManaged();
         }
     }
 }
