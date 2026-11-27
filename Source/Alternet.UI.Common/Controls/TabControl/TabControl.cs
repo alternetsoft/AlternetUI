@@ -1148,6 +1148,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds new page with a child control and header button of the specified type.
+        /// </summary>
+        /// <typeparam name="TSpeedButton">The type of the speed button.</typeparam>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Add<TSpeedButton>(AbstractControl control)
+            where TSpeedButton : SpeedButton, new()
+        {
+            return Add<TSpeedButton>(control.Title, control);
+        }
+
+        /// <summary>
         /// Inserts new page at the specified index.
         /// </summary>
         /// <param name="index">The position at which to insert the tab.</param>
@@ -1161,6 +1175,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Inserts new page at the specified index with a child control of the specified type.
+        /// </summary>
+        /// <typeparam name="TSpeedButton">The type of the speed button.</typeparam>
+        /// <param name="index">The position at which to insert the tab.</param>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Insert<TSpeedButton>(int? index, AbstractControl control)
+            where TSpeedButton : SpeedButton, new()
+        {
+            return Insert<TSpeedButton>(index, control.Title, control);
+        }
+
+        /// <summary>
         /// Inserts new page at the specified index.
         /// </summary>
         /// <param name="index">The position at which to insert the tab.</param>
@@ -1171,13 +1200,28 @@ namespace Alternet.UI
         /// </returns>
         public virtual int Insert(int? index, string? title, AbstractControl? control = null)
         {
+            return Insert<SpeedButton>(index, title, control);
+        }
+
+        /// <summary>
+        /// Inserts new page at the specified index.
+        /// </summary>
+        /// <param name="index">The position at which to insert the tab.</param>
+        /// <param name="title">Page title.</param>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Insert<TSpeedButton>(int? index, string? title, AbstractControl? control = null)
+            where TSpeedButton : SpeedButton, new()
+        {
             addSuspended++;
 
             try
             {
                 control ??= new TabPage();
                 var cardIndex = cardPanel.Add(title, control);
-                var headerTabIndex = Header.Insert(index, title, cardPanel[cardIndex].UniqueId);
+                var headerTabIndex = Header.Insert<TSpeedButton>(index, title, cardPanel[cardIndex].UniqueId);
                 if (headerTabIndex == 0)
                     SelectFirstTab();
                 else
@@ -1203,14 +1247,15 @@ namespace Alternet.UI
         /// <returns>
         /// Created page index.
         /// </returns>
-        public virtual int Add(string title, Func<AbstractControl> fnCreate)
+        public virtual int Add<TSpeedButton>(string title, Func<AbstractControl> fnCreate)
+            where TSpeedButton : SpeedButton, new()
         {
             addSuspended++;
 
             try
             {
                 var cardIndex = cardPanel.Add(title, fnCreate);
-                var headerTabIndex = Header.Add(title, cardPanel[cardIndex].UniqueId);
+                var headerTabIndex = Header.Add<TSpeedButton>(title, cardPanel[cardIndex].UniqueId);
                 if (headerTabIndex == 0)
                     SelectFirstTab();
                 Invalidate();
@@ -1220,6 +1265,19 @@ namespace Alternet.UI
             {
                 addSuspended--;
             }
+        }
+
+        /// <summary>
+        /// Adds new page with the specified title and a function that creates the child control.
+        /// </summary>
+        /// <param name="title">Page title.</param>
+        /// <param name="fnCreate">Function which creates the control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Add(string title, Func<AbstractControl> fnCreate)
+        {
+            return Add<SpeedButton>(title, fnCreate);
         }
 
         /// <summary>
@@ -1233,6 +1291,21 @@ namespace Alternet.UI
         public virtual int Add(string? title, AbstractControl? control = null)
         {
             return Insert(Header.Tabs.Count, title, control);
+        }
+
+        /// <summary>
+        /// Adds new page with the specified title and child control of the specified type.
+        /// </summary>
+        /// <typeparam name="TSpeedButton">Type of the speed button to use in the new item.</typeparam>
+        /// <param name="title">Page title.</param>
+        /// <param name="control">Control.</param>
+        /// <returns>
+        /// Created page index.
+        /// </returns>
+        public virtual int Add<TSpeedButton>(string? title, AbstractControl? control = null)
+            where TSpeedButton : SpeedButton, new()
+        {
+            return Insert<TSpeedButton>(Header.Tabs.Count, title, control);
         }
 
         /// <summary>
