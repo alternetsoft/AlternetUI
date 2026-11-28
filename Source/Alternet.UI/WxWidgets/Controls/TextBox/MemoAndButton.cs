@@ -15,6 +15,12 @@ namespace Alternet.UI
         public MemoAndButton()
             : base(typeOfControl: typeof(MultilineTextBox))
         {
+            BtnEllipsisImage = KnownButton.VertEllipsis;
+            InnerOuterBorder = InnerOuterSelector.Inner;
+            MainControl.MinimumSize = 200;
+            HasBtnComboBox = false;
+            HasBtnEllipsis = true;
+            Buttons.VerticalAlignment = VerticalAlignment.Top;
         }
     }
 }

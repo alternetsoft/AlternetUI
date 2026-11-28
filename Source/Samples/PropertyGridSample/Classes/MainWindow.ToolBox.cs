@@ -151,6 +151,9 @@ namespace PropertyGridSample
                 ToolBoxAdd<StatusBar>(ObjectInit.InitStatusBar);
                 ToolBoxAdd<TabControl>(ObjectInit.InitGenericTabControl);
                 ToolBoxAdd<TextBox>(ObjectInit.InitTextBox);
+                ToolBoxAdd<TextBoxAndButton>();
+                ToolBoxAdd<TextBoxWithListPopup>();
+                ToolBoxAdd<MemoAndButton>();
                 ToolBoxAdd<TextBoxAndLabel>(ObjectInit.InitTextBoxAndLabel);
                 ToolBoxAdd<TextPicker>();
                 ToolBoxAdd<TextPickerAndImage>(ObjectInit.InitTextPickerAndImage);

@@ -24,6 +24,7 @@ namespace Alternet.UI
             MainControl.TextChanged += OnMainControlTextChanged;
             MainControl.ValueHelper.AutoShowError = true;
             MainControl.VerticalAlignment = VerticalAlignment.Center;
+            InnerOuterBorder = InnerOuterSelector.Outer;
             AutoBackColor = true;
         }
 
