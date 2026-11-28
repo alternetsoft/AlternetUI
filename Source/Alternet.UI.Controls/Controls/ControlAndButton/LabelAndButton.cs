@@ -22,6 +22,7 @@ namespace Alternet.UI
         /// </summary>
         public LabelAndButton()
         {
+            RoundCorners();
             InnerOuterBorder = InnerOuterSelector.Outer;
             Label.Margin = DefaultLabelMargin;
         }
