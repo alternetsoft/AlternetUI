@@ -383,6 +383,10 @@ namespace PropertyGridSample
             };
         }
 
+        public static void InitComboBoxAndButton(ComboBoxAndButton control)
+        {
+        }
+
         public static void InitDateTimeIntervalPicker(DateTimeIntervalPicker control)
         {
             control.ValueChanged += (s, e) =>

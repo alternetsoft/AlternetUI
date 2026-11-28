@@ -31,6 +31,7 @@ namespace Alternet.UI
         public ComboBoxAndButton()
         {
             SuspendHandlerTextChange();
+            HasBtnEllipsis = true;
         }
 
         /// <summary>

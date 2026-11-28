@@ -95,7 +95,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<ColorListBox>();
                 ToolBoxAdd<ColorPicker>(ObjectInit.InitColorPicker);
                 ToolBoxAdd<ColorPickerAndButton>();
-                ToolBoxAdd<ComboBoxAndButton>();
+                ToolBoxAdd<ComboBoxAndButton>(ObjectInit.InitComboBoxAndButton);
                 ToolBoxAdd<ComboBoxAndLabel>();
                 ToolBoxAdd<DatePicker>(ObjectInit.InitDatePicker);
                 ToolBoxAdd<DateTimeIntervalPicker>(ObjectInit.InitDateTimeIntervalPicker);
