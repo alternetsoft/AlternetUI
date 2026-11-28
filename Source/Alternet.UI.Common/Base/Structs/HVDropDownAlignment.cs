@@ -109,6 +109,11 @@ namespace Alternet.UI
         public static HVDropDownAlignment BottomRight => new(DropDownAlignment.BeforeEnd, DropDownAlignment.BeforeEnd);
 
         /// <summary>
+        /// Gets a value that aligns the dropdown to the bottom-center relative to its anchor element.
+        /// </summary>
+        public static HVDropDownAlignment BottomCenter => new(DropDownAlignment.Center, DropDownAlignment.BeforeEnd);
+
+        /// <summary>
         /// Gets the default drop-down alignment.
         /// </summary>
         public static HVDropDownAlignment Default => new(
