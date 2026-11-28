@@ -3,6 +3,7 @@
   <Import Project="..\..\Version\VersionNugets.props" />
 
   <PropertyGroup>
+    <ValidateSceneManifest>false</ValidateSceneManifest>
     <MauiXamlInflator>SourceGen</MauiXamlInflator>
 
     <NuGetAuditMode>direct</NuGetAuditMode>

@@ -315,7 +315,7 @@ namespace Alternet.Maui
                 Alternet.UI.MauiUtils.SetButtonImage(
                     this,
                     svgImage,
-                    GetDefaultImageSize(),
+                    toolBar.GetImageSize(),
                     !IsEnabled);
             }
 

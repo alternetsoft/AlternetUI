@@ -65,9 +65,14 @@ namespace Alternet.Maui
         public static int DefaultButtonMargin = 1;
 
         /// <summary>
-        /// Gets ot sets default size of the button image on mobile platform.
+        /// Gets ot sets default size of the button image on Android platform.
         /// </summary>
-        public static int DefaultImageButtonSize = 32;
+        public static int DefaultImageButtonSizeAndroid = 32;
+
+        /// <summary>
+        /// Gets ot sets default size of the button image on iOS platform.
+        /// </summary>
+        public static int DefaultImageButtonSizeIOS = 16;
 
         /// <summary>
         /// Gets ot sets default size of the button image on desktop platform.
@@ -565,6 +570,15 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Gets the size of the button image based on the device type.
+        /// </summary>
+        /// <returns>The size of the button image.</returns>
+        public virtual int GetImageSize()
+        {
+            return GetDefaultImageSize();
+        }
+
+        /// <summary>
         /// Gets the default size of the button image based on the device type.
         /// </summary>
         /// <returns>The default size of the button image.</returns>
@@ -576,9 +590,17 @@ namespace Alternet.Maui
             {
                 size = DefaultImageButtonSizeDesktop;
             }
+            else if (Alternet.UI.App.IsIOS)
+            {
+                size = DefaultImageButtonSizeIOS;
+            }
+            else if (Alternet.UI.App.IsAndroidOS)
+            {
+                size = DefaultImageButtonSizeAndroid;
+            }
             else
             {
-                size = DefaultImageButtonSize;
+                size = DefaultImageButtonSizeDesktop;
             }
 
             float sizeF = size * 1f;

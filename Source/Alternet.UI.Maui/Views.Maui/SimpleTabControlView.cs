@@ -68,7 +68,8 @@ namespace Alternet.Maui
         /// Occurs when the currently selected tab is clicked again by the user.
         /// </summary>
         /// <remarks>This event can be used to trigger actions such as refreshing the content of the
-        /// selected tab or displaying additional options. The event is raised only when the user clicks the tab that is
+        /// selected tab or displaying additional options.
+        /// The event is raised only when the user clicks the tab that is
         /// already selected, not when switching between tabs.</remarks>
         public event EventHandler? SelectedTabClickedAgain;
 
