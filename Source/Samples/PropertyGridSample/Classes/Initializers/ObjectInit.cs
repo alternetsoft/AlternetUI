@@ -468,6 +468,11 @@ namespace PropertyGridSample
             };
         }
 
+        public static void InitDrawingResourcePicker(DrawingResourcePicker control)
+        {
+            ControlsSample.ColorListBoxSamplePage.Init(control);
+        }
+
         public static void InitListPicker(ListPicker control)
         {
             control.Add("Item 1");

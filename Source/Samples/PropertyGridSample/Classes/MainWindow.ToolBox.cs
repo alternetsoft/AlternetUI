@@ -101,6 +101,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<DateTimeIntervalPicker>(ObjectInit.InitDateTimeIntervalPicker);
                 ToolBoxAdd<DateTimePicker>(ObjectInit.InitDateTimePicker);
                 ToolBoxAdd<DayOfWeekPicker>();
+                ToolBoxAdd<DrawingResourcePicker>(ObjectInit.InitDrawingResourcePicker);
                 ToolBoxAdd<EditableListPicker>(ObjectInit.InitListPicker);
                 ToolBoxAdd<EnumPicker>(ObjectInit.InitEnumPicker);
                 ToolBoxAdd<EnumPickerAndButton>(ObjectInit.InitEnumPickerAndButton);

@@ -44,6 +44,33 @@ namespace ControlsSample
         {
         }
 
+        public static void Init(DrawingResourcePicker picker)
+        {
+            var brush1Light = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.Light, ThemedColors.Yellow.Light);
+            var brush1Dark = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.Dark, ThemedColors.Yellow.Dark);
+
+            var brush2Light = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Blue.Light, ThemedColors.Yellow.Light);
+            var brush2Dark = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Blue.Dark, ThemedColors.Yellow.Dark);
+
+            ThemedDrawingResource themed1 = new(brush1Light, brush1Dark, "Horizontal Red");
+            ThemedDrawingResource themed2 = new(brush2Light, brush2Dark, "Vertical Blue");
+
+            picker.Add(themed1);
+            picker.Add(themed2);
+
+            foreach (var item in KnownCalendarItemMarkers.Categories)
+            {
+                picker.Add(item);
+            }
+
+            foreach (var item in KnownCalendarItemMarkers.Statuses)
+            {
+                picker.Add(item);
+            }
+
+            picker.Value = themed1;
+        }
+
         public ColorListBoxSamplePage()
         {
             panel.HorizontalAlignment = HorizontalAlignment.Fill;
@@ -84,30 +111,7 @@ namespace ControlsSample
 
             drawingResourcePicker.Parent = settings;
             drawingResourcePicker.MinWidth = 150;
-
-            var brush1Light = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.Light, ThemedColors.Yellow.Light);
-            var brush1Dark = new HatchBrush(BrushHatchStyle.Horizontal, ThemedColors.Red.Dark, ThemedColors.Yellow.Dark);
-
-            var brush2Light = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Blue.Light, ThemedColors.Yellow.Light);
-            var brush2Dark = new HatchBrush(BrushHatchStyle.Vertical, ThemedColors.Blue.Dark, ThemedColors.Yellow.Dark);
-
-            ThemedDrawingResource themed1 = new(brush1Light, brush1Dark, "Horizontal Red");
-            ThemedDrawingResource themed2 = new(brush2Light, brush2Dark, "Vertical Blue");
-
-            drawingResourcePicker.Add(themed1);
-            drawingResourcePicker.Add(themed2);
-
-            foreach (var item in KnownCalendarItemMarkers.Categories)
-            {
-                drawingResourcePicker.Add(item);
-            }
-
-            foreach (var item in KnownCalendarItemMarkers.Statuses)
-            {
-                drawingResourcePicker.Add(item);
-            }
-
-            drawingResourcePicker.Value = themed1;
+            Init(drawingResourcePicker);
 
             settings.AddInput("Item Image Shape:", this, nameof(ItemImageShape));
             settings.AddInput("Show Checkboxes", listBox, nameof(ColorListBox.CheckBoxVisible));
