@@ -2,16 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Maui.Extensions;
+
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
+
+#if WINDOWS
+using Microsoft.UI.Input;
+using Microsoft.UI.Xaml;
+#endif
 
 namespace Alternet.Maui
 {
     /// <summary>
     /// Represents a view that is split into two panes with a movable splitter between them.
     /// </summary>
-    public partial class SplittedContentView : Grid
+    public partial class SplittedContentView : Grid, UI.IRaiseSystemColorsChanged
     {
         /// <summary>
         /// Gets or sets the default thickness of the splitter.
@@ -21,11 +28,16 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets the default color of the splitter.
         /// </summary>
-        public static Color DefaultSplitterColor = Colors.LightGray;
+        public static Drawing.ThemedColor? DefaultSplitterColor;
+
+        /// <summary>
+        /// Gets or sets the default color of the splitter when the pointer is over it.
+        /// </summary>
+        public static Drawing.ThemedColor? DefaultHoverSplitterColor;
 
         readonly ContentView firstPane;
         readonly ContentView secondPane;
-        readonly BoxView splitter;
+        readonly UI.ControlView splitter;
 
         double initialSize;
         private double fixedPaneSize = 200;
@@ -34,6 +46,7 @@ namespace Alternet.Maui
         private bool isFixedVisible = true;
         private bool isFirstPaneFixed = true;
         private double minFixedPaneSize = 50;
+        private Drawing.ThemedColor? savedSplitterColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedContentView"/> class.
@@ -43,22 +56,61 @@ namespace Alternet.Maui
             splitter = CreateSplitter();
             firstPane = CreateFirstPane();
             secondPane = CreateSecondPane();
-            splitter.Color = DefaultSplitterColor;
+            ResetSplitterColor();
 
             var pan = new PanGestureRecognizer();
             pan.PanUpdated += OnPanUpdated;
             splitter.GestureRecognizers.Add(pan);
 
+            var pointer = new PointerGestureRecognizer();
+
+            pointer.PointerEntered += (s, e) =>
+            {
+                if (!UseHoverSplitterColor)
+                    return;
+
+                savedSplitterColor = splitter.Control?.RealBackgroundColor;
+
+                var hoverColor = DefaultHoverSplitterColor ?? Drawing.DefaultColors.AccentColor;
+                splitter.Control?.BackgroundColor = hoverColor;
+
+                if (IsVertical)
+                    splitter.Control?.Cursor = UI.Cursors.SizeWE;
+                else
+                    splitter.Control?.Cursor = UI.Cursors.SizeNS;
+            };
+
+            pointer.PointerExited += (s, e) =>
+            {
+                if (!UseHoverSplitterColor)
+                    return;
+
+                if (savedSplitterColor != null)
+                    splitter.Control?.BackgroundColor = savedSplitterColor;
+                else
+                    ResetSplitterColor();
+
+                splitter.Control?.Cursor = null;
+            };
+
+            splitter.GestureRecognizers.Add(pointer);
+
             RebuildLayout();
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the hover color
+        /// for the splitter when the pointer is over it.
+        /// </summary>
+        public virtual bool UseHoverSplitterColor { get; set; } = DefaultUseHoverSplitterColor;
 
         /// <summary>
         /// Creates the splitter control that separates the two panes.
         /// </summary>
         /// <returns> The splitter control. </returns>
-        protected virtual BoxView CreateSplitter()
+        protected virtual UI.ControlView CreateSplitter()
         {
-            return new BoxView();
+            return new UI.ControlView<UI.Panel>();
         }
 
         /// <summary>
@@ -84,7 +136,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets the splitter control that separates the two panes.
         /// </summary>
-        public BoxView Splitter => splitter;
+        public UI.ControlView Splitter => splitter;
 
         /// <summary>
         /// Gets the first pane of the control.
@@ -223,6 +275,15 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Resets the color of the splitter to the default color based on the current theme (light or dark).
+        /// </summary>
+        public virtual void ResetSplitterColor()
+        {
+            splitter.Control?.BackgroundColor = DefaultSplitterColor
+                ?? Drawing.KnownOSColorConsts.WindowsLightOrDark.ExplorerSplitter;
+        }
+
+        /// <summary>
         /// Gets or sets the minimum size of the fixed pane.
         /// </summary>
         public virtual double MinFixedPaneSize
@@ -237,6 +298,12 @@ namespace Alternet.Maui
                     FixedPaneSize = minFixedPaneSize;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a default value indicating whether
+        /// to use the hover color for the splitter when the pointer is over it.
+        /// </summary>
+        public static bool DefaultUseHoverSplitterColor { get; set; } = true;
 
         /// <summary>
         /// Rebuilds the layout of the control based on the current orientation and sizes of the panes.
@@ -264,7 +331,7 @@ namespace Alternet.Maui
 
                 ColumnDefinition CreateFillPaneColumn()
                 {
-                    return new ColumnDefinition(GridLength.Star);
+                    return new ColumnDefinition(Microsoft.Maui.GridLength.Star);
                 }
 
                 ColumnDefinition CreateSecondPaneColumn()
@@ -303,7 +370,7 @@ namespace Alternet.Maui
 
                 RowDefinition CreateFillPaneRow()
                 {
-                    return new RowDefinition(GridLength.Star);
+                    return new RowDefinition(Microsoft.Maui.GridLength.Star);
                 }
 
                 RowDefinition CreateFirstPaneRow()
@@ -316,7 +383,7 @@ namespace Alternet.Maui
 
                 RowDefinition CreateSecondPaneRow()
                 {
-                    if(IsFirstPaneFixed)
+                    if (IsFirstPaneFixed)
                         return CreateFillPaneRow();
                     else
                         return CreateFixedPaneRow();
@@ -377,10 +444,11 @@ namespace Alternet.Maui
                     if (IsVertical)
                     {
                         double delta;
-                        if(IsFirstPaneFixed)
+                        if (IsFirstPaneFixed)
                             delta = e.TotalX;
                         else
                             delta = -e.TotalX;
+
                         var width = Math.Max(MinFixedPaneSize, initialSize + delta);
                         FixedPaneSize = width;
                     }
@@ -391,11 +459,18 @@ namespace Alternet.Maui
                             delta = e.TotalY;
                         else
                             delta = -e.TotalY;
+
                         var height = Math.Max(MinFixedPaneSize, initialSize + delta);
                         FixedPaneSize = height;
                     }
                     break;
             }
+        }
+
+        /// <inheritdoc/>
+        public virtual void RaiseSystemColorsChanged()
+        {
+            ResetSplitterColor();
         }
     }
 }
